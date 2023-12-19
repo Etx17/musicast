@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Candidate program airs</h1>
+
+<div id="candidate_program_airs">
+  <% @candidate_program_airs.each do |candidate_program_air| %>
+    <%= render candidate_program_air %>
+    <p>
+      <%= link_to "Show this candidate program air", candidate_program_air %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New candidate program air", new_candidate_program_air_path %>

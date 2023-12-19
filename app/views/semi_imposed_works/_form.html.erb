@@ -1,0 +1,16 @@
+
+<%= simple_form_for(@semi_imposed_work) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="form-inputs">
+    <%= f.association :programme_requirement %>
+    <%= f.input :guidelines %>
+    <%= f.input :number %>
+    <%= f.input :max_length_minutes %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

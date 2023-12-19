@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Jures</h1>
+
+<div id="jures">
+  <% @jures.each do |jure| %>
+    <%= render jure %>
+    <p>
+      <%= link_to "Show this jure", jure %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New jure", new_jure_path %>

@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @jure %>
+
+<div>
+  <%= link_to "Edit this jure", edit_jure_path(@jure) %> |
+  <%= link_to "Back to jures", jures_path %>
+
+  <%= button_to "Destroy this jure", @jure, method: :delete %>
+</div>

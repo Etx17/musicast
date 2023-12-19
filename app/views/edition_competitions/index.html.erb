@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Edition competitions</h1>
+
+<div id="edition_competitions">
+  <% @edition_competitions.each do |edition_competition| %>
+    <%= render edition_competition %>
+    <p>
+      <%= link_to "Show this edition competition", edition_competition %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New edition competition", new_edition_competition_path %>

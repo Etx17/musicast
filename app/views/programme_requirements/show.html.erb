@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @programme_requirement %>
+
+<div>
+  <%= link_to "Edit this programme requirement", edit_programme_requirement_path(@programme_requirement) %> |
+  <%= link_to "Back to programme requirements", programme_requirements_path %>
+
+  <%= button_to "Destroy this programme requirement", @programme_requirement, method: :delete %>
+</div>

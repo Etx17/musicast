@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @edition_competition %>
+
+<div>
+  <%= link_to "Edit this edition competition", edit_edition_competition_path(@edition_competition) %> |
+  <%= link_to "Back to edition competitions", edition_competitions_path %>
+
+  <%= button_to "Destroy this edition competition", @edition_competition, method: :delete %>
+</div>

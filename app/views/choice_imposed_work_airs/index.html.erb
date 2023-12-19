@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Choice imposed work airs</h1>
+
+<div id="choice_imposed_work_airs">
+  <% @choice_imposed_work_airs.each do |choice_imposed_work_air| %>
+    <%= render choice_imposed_work_air %>
+    <p>
+      <%= link_to "Show this choice imposed work air", choice_imposed_work_air %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New choice imposed work air", new_choice_imposed_work_air_path %>

@@ -1,0 +1,18 @@
+
+<%= simple_form_for(@air) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="form-inputs">
+    <%= f.input :title %>
+    <%= f.input :length_minutes %>
+    <%= f.input :composer %>
+    <%= f.input :oeuvre %>
+    <%= f.input :character %>
+    <%= f.input :tonality %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

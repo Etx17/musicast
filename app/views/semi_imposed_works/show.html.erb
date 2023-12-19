@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @semi_imposed_work %>
+
+<div>
+  <%= link_to "Edit this semi imposed work", edit_semi_imposed_work_path(@semi_imposed_work) %> |
+  <%= link_to "Back to semi imposed works", semi_imposed_works_path %>
+
+  <%= button_to "Destroy this semi imposed work", @semi_imposed_work, method: :delete %>
+</div>

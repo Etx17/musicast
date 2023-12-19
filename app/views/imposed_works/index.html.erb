@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Imposed works</h1>
+
+<div id="imposed_works">
+  <% @imposed_works.each do |imposed_work| %>
+    <%= render imposed_work %>
+    <p>
+      <%= link_to "Show this imposed work", imposed_work %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New imposed work", new_imposed_work_path %>

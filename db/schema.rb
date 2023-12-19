@@ -10,9 +10,238 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_19_133353) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_19_133948) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "airs", force: :cascade do |t|
+    t.string "title"
+    t.integer "length_minutes"
+    t.string "composer"
+    t.string "oeuvre"
+    t.string "character"
+    t.string "tonality"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "candidate_program_airs", force: :cascade do |t|
+    t.bigint "candidate_program_id", null: false
+    t.bigint "air_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["air_id"], name: "index_candidate_program_airs_on_air_id"
+    t.index ["candidate_program_id"], name: "index_candidate_program_airs_on_candidate_program_id"
+  end
+
+  create_table "candidate_programs", force: :cascade do |t|
+    t.bigint "inscription_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["inscription_id"], name: "index_candidate_programs_on_inscription_id"
+  end
+
+  create_table "candidats", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.text "cv"
+    t.text "bio"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_candidats_on_user_id"
+  end
+
+  create_table "categories", force: :cascade do |t|
+    t.bigint "edition_competition_id", null: false
+    t.string "name"
+    t.text "description"
+    t.integer "min_age"
+    t.integer "max_age"
+    t.integer "discipline"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["edition_competition_id"], name: "index_categories_on_edition_competition_id"
+  end
+
+  create_table "choice_imposed_work_airs", force: :cascade do |t|
+    t.bigint "choice_imposed_work_id", null: false
+    t.bigint "air_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["air_id"], name: "index_choice_imposed_work_airs_on_air_id"
+    t.index ["choice_imposed_work_id"], name: "index_choice_imposed_work_airs_on_choice_imposed_work_id"
+  end
+
+  create_table "choice_imposed_works", force: :cascade do |t|
+    t.bigint "programme_requirement_id", null: false
+    t.string "title"
+    t.text "guidelines"
+    t.integer "number_to_select"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["programme_requirement_id"], name: "index_choice_imposed_works_on_programme_requirement_id"
+  end
+
+  create_table "competitions", force: :cascade do |t|
+    t.bigint "organism_id", null: false
+    t.string "nom_concours"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["organism_id"], name: "index_competitions_on_organism_id"
+  end
+
+  create_table "edition_competitions", force: :cascade do |t|
+    t.bigint "competition_id", null: false
+    t.integer "annee"
+    t.text "details_specifiques"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["competition_id"], name: "index_edition_competitions_on_competition_id"
+  end
+
+  create_table "free_choice_airs", force: :cascade do |t|
+    t.bigint "free_choice_id", null: false
+    t.bigint "air_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["air_id"], name: "index_free_choice_airs_on_air_id"
+    t.index ["free_choice_id"], name: "index_free_choice_airs_on_free_choice_id"
+  end
+
+  create_table "free_choices", force: :cascade do |t|
+    t.bigint "programme_requirement_id", null: false
+    t.integer "number"
+    t.integer "max_length_minutes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["programme_requirement_id"], name: "index_free_choices_on_programme_requirement_id"
+  end
+
+  create_table "imposed_work_airs", force: :cascade do |t|
+    t.bigint "imposed_work_id", null: false
+    t.bigint "air_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["air_id"], name: "index_imposed_work_airs_on_air_id"
+    t.index ["imposed_work_id"], name: "index_imposed_work_airs_on_imposed_work_id"
+  end
+
+  create_table "imposed_works", force: :cascade do |t|
+    t.bigint "programme_requirement_id", null: false
+    t.string "title"
+    t.text "guidelines"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["programme_requirement_id"], name: "index_imposed_works_on_programme_requirement_id"
+  end
+
+  create_table "inscriptions", force: :cascade do |t|
+    t.bigint "candidat_id", null: false
+    t.bigint "category_id", null: false
+    t.string "statut"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["candidat_id"], name: "index_inscriptions_on_candidat_id"
+    t.index ["category_id"], name: "index_inscriptions_on_category_id"
+  end
+
+  create_table "jures", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.text "autres_informations"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_jures_on_user_id"
+  end
+
+  create_table "organisateurs", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "nom_organisme"
+    t.text "description_organisme"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_organisateurs_on_user_id"
+  end
+
+  create_table "organisms", force: :cascade do |t|
+    t.bigint "organisateur_id", null: false
+    t.string "nom"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["organisateur_id"], name: "index_organisms_on_organisateur_id"
+  end
+
+  create_table "partners", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "organism_id", null: false
+    t.string "role_partenaire"
+    t.string "niveau_autorisation"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["organism_id"], name: "index_partners_on_organism_id"
+    t.index ["user_id"], name: "index_partners_on_user_id"
+  end
+
+  create_table "performances", force: :cascade do |t|
+    t.bigint "inscription_id", null: false
+    t.bigint "tour_id", null: false
+    t.datetime "heure_performance"
+    t.text "resultat"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["inscription_id"], name: "index_performances_on_inscription_id"
+    t.index ["tour_id"], name: "index_performances_on_tour_id"
+  end
+
+  create_table "programme_requirements", force: :cascade do |t|
+    t.bigint "category_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_programme_requirements_on_category_id"
+  end
+
+  create_table "requirement_items", force: :cascade do |t|
+    t.bigint "category_id", null: false
+    t.string "type_item"
+    t.text "description_item"
+    t.string "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_requirement_items_on_category_id"
+  end
+
+  create_table "semi_imposed_work_airs", force: :cascade do |t|
+    t.bigint "semi_imposed_work_id", null: false
+    t.bigint "air_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["air_id"], name: "index_semi_imposed_work_airs_on_air_id"
+    t.index ["semi_imposed_work_id"], name: "index_semi_imposed_work_airs_on_semi_imposed_work_id"
+  end
+
+  create_table "semi_imposed_works", force: :cascade do |t|
+    t.bigint "programme_requirement_id", null: false
+    t.text "guidelines"
+    t.integer "number"
+    t.integer "max_length_minutes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["programme_requirement_id"], name: "index_semi_imposed_works_on_programme_requirement_id"
+  end
+
+  create_table "tours", force: :cascade do |t|
+    t.bigint "category_id", null: false
+    t.datetime "start_date"
+    t.datetime "start_time"
+    t.datetime "end_date"
+    t.datetime "end_time"
+    t.boolean "is_online"
+    t.string "title"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_tours_on_category_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -26,4 +255,35 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_19_133353) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "candidate_program_airs", "airs"
+  add_foreign_key "candidate_program_airs", "candidate_programs"
+  add_foreign_key "candidate_programs", "inscriptions"
+  add_foreign_key "candidats", "users"
+  add_foreign_key "categories", "edition_competitions"
+  add_foreign_key "choice_imposed_work_airs", "airs"
+  add_foreign_key "choice_imposed_work_airs", "choice_imposed_works"
+  add_foreign_key "choice_imposed_works", "programme_requirements"
+  add_foreign_key "competitions", "organisms"
+  add_foreign_key "edition_competitions", "competitions"
+  add_foreign_key "free_choice_airs", "airs"
+  add_foreign_key "free_choice_airs", "free_choices"
+  add_foreign_key "free_choices", "programme_requirements"
+  add_foreign_key "imposed_work_airs", "airs"
+  add_foreign_key "imposed_work_airs", "imposed_works"
+  add_foreign_key "imposed_works", "programme_requirements"
+  add_foreign_key "inscriptions", "candidats"
+  add_foreign_key "inscriptions", "categories"
+  add_foreign_key "jures", "users"
+  add_foreign_key "organisateurs", "users"
+  add_foreign_key "organisms", "organisateurs"
+  add_foreign_key "partners", "organisms"
+  add_foreign_key "partners", "users"
+  add_foreign_key "performances", "inscriptions"
+  add_foreign_key "performances", "tours"
+  add_foreign_key "programme_requirements", "categories"
+  add_foreign_key "requirement_items", "categories"
+  add_foreign_key "semi_imposed_work_airs", "airs"
+  add_foreign_key "semi_imposed_work_airs", "semi_imposed_works"
+  add_foreign_key "semi_imposed_works", "programme_requirements"
+  add_foreign_key "tours", "categories"
 end

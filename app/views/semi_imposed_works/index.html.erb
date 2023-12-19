@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Semi imposed works</h1>
+
+<div id="semi_imposed_works">
+  <% @semi_imposed_works.each do |semi_imposed_work| %>
+    <%= render semi_imposed_work %>
+    <p>
+      <%= link_to "Show this semi imposed work", semi_imposed_work %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New semi imposed work", new_semi_imposed_work_path %>

@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Free choice airs</h1>
+
+<div id="free_choice_airs">
+  <% @free_choice_airs.each do |free_choice_air| %>
+    <%= render free_choice_air %>
+    <p>
+      <%= link_to "Show this free choice air", free_choice_air %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New free choice air", new_free_choice_air_path %>
