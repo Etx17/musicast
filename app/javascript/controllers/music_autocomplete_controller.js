@@ -46,7 +46,9 @@ export default class extends Controller {
           this.suggestionsTarget.innerHTML = '';
         }
       })
-      .catch(error => console.error('Error:', error));
+      .catch(error => {
+        this.suggestionsTarget.innerHTML = '';
+      });
   }
 
   searchWork(event) {

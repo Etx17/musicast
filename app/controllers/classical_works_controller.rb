@@ -8,6 +8,8 @@ class ClassicalWorksController < ApplicationController
         render json: { error: "Failed to fetch composers" }, status: :bad_gateway
       end
     elsif params[:query].length >= 4
+      return if params[:query].include?(' ')
+      
       response = Faraday.get("https://api.openopus.org/composer/list/search/#{params[:query]}.json")
       if response.success?
         render json: response.body
