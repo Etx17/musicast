@@ -22,16 +22,24 @@ export default class extends Controller {
     console.log("Connected!");
     this.searchComposer = debounce(this.searchComposer.bind(this), 300);
     this.searchWork = debounce(this.searchWork.bind(this), 300);
+    document.addEventListener('click', this.handleClickOutside.bind(this));
   }
 
 
   searchComposer(event) {
+    document.querySelector('.loader').style.display = 'block';
     const query = this.composerInputTarget.value;
-    console.log('searhComposer fired')
+    if(query == '') {
+      this.suggestionsTarget.innerHTML = '';
+      document.querySelector('.loader').style.display = 'none';
+      return
+    }
     fetch(`/classical_works/composer_search?query=${encodeURIComponent(query)}`)
       .then(response => response.json())
       .then(data => {
         console.log(data, 'data')
+        document.querySelector('.loader').style.display = 'none';
+
         if(!data==null) {
           this.suggestionsTarget.innerHTML = '';
           return
@@ -44,10 +52,12 @@ export default class extends Controller {
           this.suggestionsTarget.innerHTML = suggestionsHtml;
         } else {
           this.suggestionsTarget.innerHTML = '';
+          document.querySelector('.loader').style.display = 'none';
         }
       })
       .catch(error => {
         this.suggestionsTarget.innerHTML = '';
+        document.querySelector('.loader').style.display = 'none';
       });
   }
 
@@ -73,5 +83,15 @@ export default class extends Controller {
 
     // Clear the suggestions
     this.suggestionsTarget.innerHTML = '';
+  }
+
+  handleClickOutside(event) {
+    const withinBoundaries = event.composedPath().includes(this.element);
+    if (!withinBoundaries) {
+      this.suggestionsTarget.innerHTML = '';
+    }
+  }
+  disconnect() {
+    document.removeEventListener('click', this.handleClickOutside.bind(this));
   }
 }
