@@ -31,15 +31,15 @@ export default class extends Controller {
     fetch(`/classical_works/composer_search?query=${encodeURIComponent(query)}`)
       .then(response => response.json())
       .then(data => {
+        console.log(data, 'data')
         if(!data==null) {
           this.suggestionsTarget.innerHTML = '';
           return
         }
-        if(data["composers"]?.length > 0) {
-          console.log(data["composers"])
+        if(data?.length > 0) {
 
-          const suggestionsHtml = data["composers"]?.map(composer =>
-            `<li class="suggestion-item" style="list-style-type: none; text-decoration: none;" data-action="click->music-autocomplete#selectComposer" data-value="${composer.id}">${composer.complete_name}</li>`
+          const suggestionsHtml = data?.map(composer =>
+            `<li class="suggestion-item" style="list-style-type: none; text-decoration: none;" data-action="click->music-autocomplete#selectComposer" data-value="${composer}">${composer}</li>`
           ).join("");
           this.suggestionsTarget.innerHTML = suggestionsHtml;
         } else {
