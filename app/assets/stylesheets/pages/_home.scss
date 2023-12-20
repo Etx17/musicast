@@ -1,1 +1,19 @@
 // Specific CSS for your home-page
+.suggestions-container {
+  border: 1px solid #ccc;
+  position: absolute;
+  z-index: 1000;
+  background: white;
+  width: 100%;
+}
+
+.suggestion-item {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.suggestion-item:hover {
+  background-color: #f1f1f1;
+}

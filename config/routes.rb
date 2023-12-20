@@ -29,4 +29,7 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
+  get '/classical_works/composer_search', to: 'classical_works#composer_search'
+  get '/classical_works/work_search', to: 'classical_works#work_search'
+
 end

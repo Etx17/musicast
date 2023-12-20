@@ -1,0 +1,10 @@
+<div data-controller="music-autocomplete">
+  <!-- Composer Search Input -->
+  <input data-music-autocomplete-target="composerInput" data-action="input->music-autocomplete#searchComposer" type="text" class="form-control" placeholder="Search for Composer...">
+
+  <!-- Work Search Input -->
+  <input data-music-autocomplete-target="workInput" data-action="input->music-autocomplete#searchWork" type="text" class="form-control" placeholder="Search for Work..." disabled>
+
+  <!-- Suggestions -->
+  <div data-music-autocomplete-target="suggestions" class="suggestions-container"></div>
+</div>
