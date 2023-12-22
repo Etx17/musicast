@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :leads
   resources :performances
   resources :candidate_program_airs
   resources :candidate_programs
@@ -23,6 +24,7 @@ Rails.application.routes.draw do
   resources :jures
   resources :candidats
   resources :organisateurs
+  
   devise_for :users
   root to: "pages#home"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

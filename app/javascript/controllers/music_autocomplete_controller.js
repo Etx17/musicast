@@ -1,6 +1,4 @@
 import { Controller } from "@hotwired/stimulus"
-// import debounce from "lodash/debounce";
-// Connects to data-controller="music-autocomplete"
 function debounce(func, wait) {
   let timeout;
 

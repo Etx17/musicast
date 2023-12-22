@@ -17,3 +17,35 @@
 .suggestion-item:hover {
   background-color: #f1f1f1;
 }
+
+.large-button {
+  font-size: 1.25em;
+  padding: 0.40em;
+  border-top-right-radius: 40px;
+  border-bottom-right-radius: 40px;
+}
+
+.gradient-button {
+  background: linear-gradient(to top, #785593, #ae63b9);
+  border: none;
+  color: #ffffff;
+}
+
+.gradient-button:hover {
+  background: linear-gradient(to bottom, #82629b, #ebbaf3);
+  color: #ffffff;
+}
+
+
+.text-gradient {
+  // background: linear-gradient(to top, rgb(115, 0, 50), rgb(255, 180, 230));
+  background: linear-gradient(to bottom, #82629b, #ebbaf3);
+  -webkit-background-clip: text; /* Clip text to the gradient */
+  color: transparent; /* Make text transparent to show the gradient */
+}
+
+.text-secondary-gradient {
+  background: linear-gradient(to right, #8C72A0, #ebbaf3);
+  -webkit-background-clip: text; /* Clip text to the gradient */
+  color: transparent; /* Make text transparent to show the gradient */
+}
