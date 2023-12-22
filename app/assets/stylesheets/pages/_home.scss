@@ -26,26 +26,37 @@
 }
 
 .gradient-button {
-  background: linear-gradient(to top, #785593, #ae63b9);
+  // background: linear-gradient(to top, #785593, #ae63b9);
+  background: linear-gradient(to bottom, #e8c392, rgb(247, 233, 167));
   border: none;
-  color: #ffffff;
+  color: #000000;
 }
 
 .gradient-button:hover {
-  background: linear-gradient(to bottom, #82629b, #ebbaf3);
+  // background: linear-gradient(to bottom, #82629b, #ebbaf3);
+  background: linear-gradient(to bottom, #9b8162, rgb(61, 59, 48));
   color: #ffffff;
 }
 
 
 .text-gradient {
   // background: linear-gradient(to top, rgb(115, 0, 50), rgb(255, 180, 230));
-  background: linear-gradient(to bottom, #82629b, #ebbaf3);
+  background: linear-gradient(to bottom, #9b8162, rgb(247, 233, 167));
   -webkit-background-clip: text; /* Clip text to the gradient */
   color: transparent; /* Make text transparent to show the gradient */
 }
 
+// .text-gradient {
+//   // background: linear-gradient(to top, rgb(115, 0, 50), rgb(255, 180, 230));
+//   background: linear-gradient(to bottom, #82629b, #ebbaf3);
+//   -webkit-background-clip: text; /* Clip text to the gradient */
+//   color: transparent; /* Make text transparent to show the gradient */
+// }
+
+
 .text-secondary-gradient {
-  background: linear-gradient(to right, #8C72A0, #ebbaf3);
+  // background: linear-gradient(to right, #8C72A0, #ebbaf3);VIOLET
+  background: linear-gradient(to bottom, #9b8162, rgb(247, 233, 167));
   -webkit-background-clip: text; /* Clip text to the gradient */
   color: transparent; /* Make text transparent to show the gradient */
 }
