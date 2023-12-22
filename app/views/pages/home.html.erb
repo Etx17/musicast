@@ -4,26 +4,26 @@
           <div class="col-md-5">
 
             <h1 style="font-size: 60px">Welcome to <span style="font-size: 2em;" class="text-gradient">Musicast</span></h1>
-            <p class="lead">Simplifying the process of organizing classic arts competitions and managing contestants</p>
+            <p class="lead">Simplifies the process of organizing classic arts competitions and managing contestants. Adapts to your specific structure requirements.</p>
             <%= simple_form_for(Lead.new) do |f| %>
               <div class="input-group m-3">
                 <%= f.input :email,
                   label: false,
-                  placeholder: "Votre adresse email",
-                  class: 'form-control shadow',
+                  placeholder: "Your email adress",
+                  class: 'form-control',
                   input_html: {style:"width: '75%'; font-size: 1.2em; padding: 0.40em; border-top-left-radius: 40px; border-bottom-left-radius: 40px;"}
                   %>
                 <div class="">
-                  <%= f.button :submit, 'Envoyer', class: 'btn btn-dark shadow large-button gradient-button' %>
+                  <%= f.button :submit, 'Join us', class: 'btn btn-dark shadow large-button gradient-button' %>
                 </div>
               </div>
             <% end %>
 
-            <p class="muted text-secondary"> <i class="fas fa-check text-success"></i> Manage your competition from start to finish</p>
-            <p class="muted text-secondary"> <i class="fas fa-check text-success"></i> Receive complete dossiers</p>
-            <p class="muted text-secondary"> <i class="fas fa-check text-success"></i> Simplify payments and contestant registration</p>
-            <p class="muted text-secondary"> <i class="fas fa-check text-success"></i> Generate performance order, assign rooms, and score contestants</p>
-            <p class="muted text-secondary"> <i class="fas fa-check text-success"></i> Send out invitations and notifications for the competition to all participants with ease</p>
+            <p class="muted text-secondary"> <i class="fas fa-check text-success pe-2"></i> Manage your competition from start to finish</p>
+            <p class="muted text-secondary"> <i class="fas fa-check text-success pe-2"></i> Receive complete dossiers</p>
+            <p class="muted text-secondary"> <i class="fas fa-check text-success pe-2"></i> Simplify payments and contestant registration</p>
+            <p class="muted text-secondary"> <i class="fas fa-check text-success pe-2"></i> Generate performance order, assign rooms, and score contestants</p>
+            <p class="muted text-secondary"> <i class="fas fa-check text-success pe-2"></i> Send out invitations and notifications for the competition to all participants with ease</p>
             <p class="mt-2 text-muted">Get ready to revolutionize your competitions <a href="#" class="text-white">Terms and Conditions</a></p>
           </div>
           <div class="col-md-6">
