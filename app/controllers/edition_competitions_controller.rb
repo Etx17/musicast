@@ -8,11 +8,14 @@ class EditionCompetitionsController < ApplicationController
 
   # GET /edition_competitions/1 or /edition_competitions/1.json
   def show
+    @edition_competition = EditionCompetition.find(params[:id])
+    @competition = @edition_competition.competition
   end
 
   # GET /edition_competitions/new
   def new
-    @edition_competition = EditionCompetition.new
+    @competition = Competition.find(params[:competition_id])
+    @edition_competition = @competition.edition_competitions.build
   end
 
   # GET /edition_competitions/1/edit
@@ -21,16 +24,12 @@ class EditionCompetitionsController < ApplicationController
 
   # POST /edition_competitions or /edition_competitions.json
   def create
-    @edition_competition = EditionCompetition.new(edition_competition_params)
-
-    respond_to do |format|
-      if @edition_competition.save
-        format.html { redirect_to edition_competition_url(@edition_competition), notice: "Edition competition was successfully created." }
-        format.json { render :show, status: :created, location: @edition_competition }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @edition_competition.errors, status: :unprocessable_entity }
-      end
+    @competition = Competition.find(params[:competition_id])
+    @edition_competition = @competition.edition_competitions.build(edition_competition_params)
+    if @edition_competition.save
+      redirect_to @competition, notice: 'Edition was successfully created.'
+    else
+      render :new
     end
   end
 

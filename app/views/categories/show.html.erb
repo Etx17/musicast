@@ -1,5 +1,6 @@
 <p style="color: green"><%= notice %></p>
 
+<%# category info %>
 <%= render @category %>
 
 <div>
@@ -8,3 +9,37 @@
 
   <%= button_to "Destroy this category", @category, method: :delete %>
 </div>
+
+<h2>Tours</h2>
+<%= link_to 'Add Tour', new_competition_edition_competition_category_tour_path(@competition, @edition_competition, @category), class: 'btn btn-primary' %>
+<% @category.tours.each do |tour| %>
+  <%= link_to competition_edition_competition_category_tour_path(@competition, @edition_competition, @category, tour) do %>
+    <div class="card" style="width: 18rem;">
+      <!-- Tour details -->
+    </div>
+  <% end %>
+<% end %>
+
+<h2>Applications</h2>
+<% @category&.inscriptions.each do |inscription| %>
+  <div class="card" style="width: 18rem;">
+    <!-- Application details -->
+  </div>
+<% end %>
+
+<h2>Requirement Items</h2>
+
+<%= simple_form_for([@competition, @edition_competition, @category, RequirementItem.new]) do |f| %>
+  <%= f.input :name %>
+  <%= f.input :description %>
+  <%= f.button :submit %>
+<% end %>
+
+<% @category.requirement_items.each do |item| %>
+  <div class="card" style="width: 18rem;">
+    <div class="card-body">
+      <h5 class="card-title"><%= item.name %></h5>
+      <p class="card-text"><%= item.description %></p>
+    </div>
+  </div>
+<% end %>

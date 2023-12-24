@@ -1,0 +1,19 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <h2>Competitions</h2>
+      <%= link_to 'Add Competition', new_competition_path, class: 'btn btn-primary' %>
+      <div class="list-group">
+        <% @competitions.each do |competition| %>
+          <%= link_to competition.nom_concours, competition_path(competition), class: 'list-group-item' %>
+        <% end %>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <h2>Organism Information</h2>
+      <p>Name: <%= @organism.nom %></p>
+      <p>Description: <%= @organism.description %></p>
+      <!-- Add more organism information here -->
+    </div>
+  </div>
+</div>

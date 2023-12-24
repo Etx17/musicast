@@ -14,18 +14,28 @@ Rails.application.routes.draw do
   resources :imposed_works
   resources :airs
   resources :programme_requirements
-  resources :tours
   resources :requirement_items
+  resources :competitions do
+    resources :edition_competitions, only: [:new, :create] do
+      resources :categories, only: [:new, :create, :destroy] do
+        resources :tours
+        resources :requirement_items 
+      end
+    end
+  end
   resources :categories
-  resources :edition_competitions
-  resources :competitions
+  resources :edition_competitions, only: [:show, :edit, :update, :destroy]
   resources :partners
   resources :organisms
   resources :jures
   resources :candidats
   resources :organisateurs
-  
-  devise_for :users
+
+  devise_for :users, controllers: {
+    registrations: 'users/registrations',
+    sessions: 'users/sessions',
+    # omniauth_callbacks: 'users/omniauth_callbacks'
+  }
   root to: "pages#home"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -33,5 +43,12 @@ Rails.application.routes.draw do
   # root "articles#index"
   get '/classical_works/composer_search', to: 'classical_works#composer_search'
   get '/classical_works/work_search', to: 'classical_works#work_search'
+
+  # User dashboard
+  get 'admin_dashboard', to: 'dashboard#admin'
+  get 'organisateur_dashboard', to: 'dashboard#organiser'
+  get 'candidat_dashboard', to: 'dashboard#candidate'
+  get 'jury_dashboard', to: 'dashboard#jury'
+  get 'partner_dashboard', to: 'dashboard#partner'
 
 end

@@ -1,0 +1,26 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <h2>Jury Information</h2>
+      <p>Bio: <%= @jury.bio %></p>
+      <p>Description: <%= @jury.description %></p>
+      <p>Discipline: <%= @jury.discipline %></p>
+      <%= image_tag @jury.photo.url if @jury.photo.present? %>
+    </div>
+    <div class="col-md-6">
+      <h2>Coming events</h2>
+      <% if @next_tour %>
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title"><%= @next_tour.competition.name %></h5>
+            <p class="card-text">Start Date: <%= @next_tour.start_date %></p>
+            <p class="card-text">Start Time: <%= @next_tour.start_time %></p>
+            <%= link_to 'View Tour', tour_path(@next_tour), class: 'btn btn-primary' %>
+          </div>
+        </div>
+      <% else %>
+        <p>No upcoming tours.</p>
+      <% end %>
+    </div>
+  </div>
+</div>

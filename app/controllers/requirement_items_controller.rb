@@ -1,70 +1,63 @@
 class RequirementItemsController < ApplicationController
-  before_action :set_requirement_item, only: %i[ show edit update destroy ]
+  before_action :set_competition, :set_edition_competition, :set_category
+  before_action :set_requirement_item, only: [:show, :edit, :update, :destroy]
 
-  # GET /requirement_items or /requirement_items.json
   def index
-    @requirement_items = RequirementItem.all
+    @requirement_items = @category.requirement_items
   end
 
-  # GET /requirement_items/1 or /requirement_items/1.json
+  def new
+    @requirement_item = @category.requirement_items.build
+  end
+
+  def create
+    @requirement_item = @category.requirement_items.build(requirement_item_params)
+
+    if @requirement_item.save
+      redirect_to competition_edition_competition_category_requirement_item_path(@competition, @edition_competition, @category, @requirement_item), notice: 'Requirement item was successfully created.'
+    else
+      render :new
+    end
+  end
+
   def show
   end
 
-  # GET /requirement_items/new
-  def new
-    @requirement_item = RequirementItem.new
-  end
-
-  # GET /requirement_items/1/edit
   def edit
   end
 
-  # POST /requirement_items or /requirement_items.json
-  def create
-    @requirement_item = RequirementItem.new(requirement_item_params)
-
-    respond_to do |format|
-      if @requirement_item.save
-        format.html { redirect_to requirement_item_url(@requirement_item), notice: "Requirement item was successfully created." }
-        format.json { render :show, status: :created, location: @requirement_item }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @requirement_item.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # PATCH/PUT /requirement_items/1 or /requirement_items/1.json
   def update
-    respond_to do |format|
-      if @requirement_item.update(requirement_item_params)
-        format.html { redirect_to requirement_item_url(@requirement_item), notice: "Requirement item was successfully updated." }
-        format.json { render :show, status: :ok, location: @requirement_item }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @requirement_item.errors, status: :unprocessable_entity }
-      end
+    if @requirement_item.update(requirement_item_params)
+      redirect_to competition_edition_competition_category_requirement_item_path(@competition, @edition_competition, @category, @requirement_item), notice: 'Requirement item was successfully updated.'
+    else
+      render :edit
     end
   end
 
-  # DELETE /requirement_items/1 or /requirement_items/1.json
   def destroy
     @requirement_item.destroy
-
-    respond_to do |format|
-      format.html { redirect_to requirement_items_url, notice: "Requirement item was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    redirect_to competition_edition_competition_category_requirement_items_path(@competition, @edition_competition, @category), notice: 'Requirement item was successfully destroyed.'
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_requirement_item
-      @requirement_item = RequirementItem.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def requirement_item_params
-      params.require(:requirement_item).permit(:category_id, :type_item, :description_item, :title)
-    end
+  def set_competition
+    @competition = Competition.find(params[:competition_id])
+  end
+
+  def set_edition_competition
+    @edition_competition = @competition.edition_competitions.find(params[:edition_competition_id])
+  end
+
+  def set_category
+    @category = @edition_competition.categories.find(params[:category_id])
+  end
+
+  def set_requirement_item
+    @requirement_item = @category.requirement_items.find(params[:id])
+  end
+
+  def requirement_item_params
+    params.require(:requirement_item).permit(:name, :description)
+  end
 end

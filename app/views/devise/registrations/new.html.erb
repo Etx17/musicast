@@ -1,6 +1,8 @@
-<h2>Sign up</h2>
+<div class=" mt-5 row justify-content-center align-items-center">
+<div class="col-8 col-sm-6 shadow p-3">
+<h2>Créer mon compte</h2>
 
-<%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+<%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), data: { turbo: false }) do |f| %>
   <%= f.error_notification %>
 
   <div class="form-inputs">
@@ -10,16 +12,21 @@
                 input_html: { autocomplete: "email" }%>
     <%= f.input :password,
                 required: true,
-                hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length),
+                label: 'Mot de passe',
+                hint: ("#{@minimum_password_length} caractères minimum" if @minimum_password_length),
                 input_html: { autocomplete: "new-password" } %>
     <%= f.input :password_confirmation,
+                label: 'Confirmation du mot de passe',
                 required: true,
                 input_html: { autocomplete: "new-password" } %>
+
   </div>
 
-  <div class="form-actions">
-    <%= f.button :submit, "Sign up" %>
+  <div class="form-actions d-flex flex-column justify-content-center align-items-center my-3">
+    <%= f.button :submit, "Créer", class: "btn btn-dark text-light w-50" %>
   </div>
 <% end %>
 
 <%= render "devise/shared/links" %>
+</div>
+</div>

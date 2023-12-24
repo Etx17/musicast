@@ -10,27 +10,27 @@ class ToursController < ApplicationController
   def show
   end
 
-  # GET /tours/new
-  def new
-    @tour = Tour.new
-  end
-
   # GET /tours/1/edit
   def edit
   end
 
-  # POST /tours or /tours.json
-  def create
-    @tour = Tour.new(tour_params)
+  def new
+    @category = Category.find(params[:category_id])
+    @edition_competition = @category.edition_competition
+    @competition = @edition_competition.competition
+    @tour = @category.tours.build
+  end
 
-    respond_to do |format|
-      if @tour.save
-        format.html { redirect_to tour_url(@tour), notice: "Tour was successfully created." }
-        format.json { render :show, status: :created, location: @tour }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @tour.errors, status: :unprocessable_entity }
-      end
+  def create
+    @category = Category.find(params[:category_id])
+    @edition_competition = @category.edition_competition
+    @competition = @edition_competition.competition
+    @tour = @category.tours.build(tour_params)
+
+    if @tour.save
+      redirect_to competition_edition_competition_category_tour_path(@competition, @edition_competition, @category, @tour)
+    else
+      render :new
     end
   end
 

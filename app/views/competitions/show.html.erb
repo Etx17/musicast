@@ -1,10 +1,33 @@
-<p style="color: green"><%= notice %></p>
+<div class="row">
+  <div class="col-md-6">
+    <p style="color: green"><%= notice %></p>
+    <h1>Competition</h1>
+    <%= render @competition %>
 
-<%= render @competition %>
+    <div>
+      <%= link_to "Edit this competition", edit_competition_path(@competition) %> |
+      <%= link_to "Back to competitions", competitions_path %>
 
-<div>
-  <%= link_to "Edit this competition", edit_competition_path(@competition) %> |
-  <%= link_to "Back to competitions", competitions_path %>
+      <%= button_to "Destroy this competition", @competition, method: :delete %>
+    </div>
+  </div>
 
-  <%= button_to "Destroy this competition", @competition, method: :delete %>
+  <div class="col-md-6">
+    <% if current_user.organisateur == @competition.organisateur %>
+      <h2>Générer une édition du concours</h2>
+      <%= link_to 'Add Edition', new_competition_edition_competition_path(@competition), class: 'btn btn-primary' %>
+    <% end %>
+
+    <% @competition.edition_competitions.each do |edition_competition| %>
+      <%= link_to edition_competition_path(edition_competition) do %>
+        <div class="card" style="width: 18rem;">
+          <img class="card-img-top" src="https://via.placeholder.com/150" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title"><%= edition_competition.annee %></h5>
+            <p class="card-text"><%= edition_competition.details_specifiques %></p>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
 </div>

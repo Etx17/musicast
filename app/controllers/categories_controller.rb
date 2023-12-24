@@ -8,6 +8,9 @@ class CategoriesController < ApplicationController
 
   # GET /categories/1 or /categories/1.json
   def show
+    @category = Category.find(params[:id])
+    @edition_competition = @category.edition_competition
+    @competition = @edition_competition.competition
   end
 
   # GET /categories/new

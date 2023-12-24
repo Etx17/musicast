@@ -1,10 +1,30 @@
-<p style="color: green"><%= notice %></p>
+<div class="row">
+  <div class="col-md-6">
+    <p style="color: green"><%= notice %></p>
 
-<%= render @edition_competition %>
+    <%= render @edition_competition %>
 
-<div>
-  <%= link_to "Edit this edition competition", edit_edition_competition_path(@edition_competition) %> |
-  <%= link_to "Back to edition competitions", edition_competitions_path %>
+    <div>
+      <%= link_to "Edit this edition competition", edit_edition_competition_path(@edition_competition) %> |
+      <%= link_to "Back to edition competitions", competition_path(@edition_competition.competition) %>
 
-  <%= button_to "Destroy this edition competition", @edition_competition, method: :delete %>
+      <%= button_to "Destroy this edition competition", @edition_competition, method: :delete %>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <%= link_to 'Add Category', new_competition_edition_competition_category_path(@competition, @edition_competition), class: 'btn btn-primary' %>
+
+    <% @edition_competition.categories.each do |category| %>
+      <%= link_to category_path(category) do %>
+        <div class="card" style="width: 18rem;">
+          <img class="card-img-top" src="https://via.placeholder.com/150" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title"><%= category.name %></h5>
+          </div>
+        </div>
+      <% end %>
+      <%= button_to 'Delete Category', competition_edition_competition_category_path(@competition, @edition_competition, category), method: :delete, data: { confirm: 'Are you sure?' } %>
+    <% end %>
+  </div>
 </div>

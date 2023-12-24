@@ -3,4 +3,27 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+
+  has_one :organiser
+  has_one :partner
+  has_one :jury
+  has_one :candidate
+
+  def after_sign_in_path_for(resource)
+    if current_user.role == "admin"
+      admin_dashboard_path
+    elsif current_user.role == "organisateur"
+      organisateur_dashboard_path
+    elsif current_user.role == "candidat"
+      candidat_dashboard_path
+    elsif current_user.role == "jury"
+      jury_dashboard_path
+    else
+      root_path
+    end
+  end
+
+  def organisateur
+    Organisateur.find_by(user: self)
+  end
 end
