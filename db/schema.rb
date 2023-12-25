@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_22_131323) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_25_100215) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -88,6 +88,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_22_131323) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["organism_id"], name: "index_competitions_on_organism_id"
+  end
+
+  create_table "documents", force: :cascade do |t|
+    t.integer "document_type"
+    t.bigint "competition_id", null: false
+    t.string "file_url"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["competition_id"], name: "index_documents_on_competition_id"
+    t.index ["user_id"], name: "index_documents_on_user_id"
   end
 
   create_table "edition_competitions", force: :cascade do |t|
@@ -270,6 +281,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_22_131323) do
   add_foreign_key "choice_imposed_work_airs", "choice_imposed_works"
   add_foreign_key "choice_imposed_works", "programme_requirements"
   add_foreign_key "competitions", "organisms"
+  add_foreign_key "documents", "competitions"
+  add_foreign_key "documents", "users"
   add_foreign_key "edition_competitions", "competitions"
   add_foreign_key "free_choice_airs", "airs"
   add_foreign_key "free_choice_airs", "free_choices"
