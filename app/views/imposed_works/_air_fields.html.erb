@@ -1,0 +1,10 @@
+<div class="nested-fields" data-new-record="<%= f.object.new_record? %>">
+  <%= f.input :title %>
+  <%= f.input :length_minutes %>
+  <%= f.input :composer %>
+  <%= f.input :oeuvre %>
+  <%= f.input :character %>
+  <%= f.input :tonality %>
+  <%= f.input :_destroy, as: :hidden %>
+  <%= link_to "Remove this air", '#', data: { action: 'airs#removeAir' } %>
+</div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_26_112953) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_27_111328) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -23,6 +23,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_26_112953) do
     t.string "tonality"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "imposed_work_id"
+    t.index ["imposed_work_id"], name: "index_airs_on_imposed_work_id"
   end
 
   create_table "candidate_program_airs", force: :cascade do |t|
@@ -127,15 +129,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_26_112953) do
     t.datetime "updated_at", null: false
     t.bigint "category_id", null: false
     t.index ["category_id"], name: "index_free_choices_on_category_id"
-  end
-
-  create_table "imposed_work_airs", force: :cascade do |t|
-    t.bigint "imposed_work_id", null: false
-    t.bigint "air_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["air_id"], name: "index_imposed_work_airs_on_air_id"
-    t.index ["imposed_work_id"], name: "index_imposed_work_airs_on_imposed_work_id"
   end
 
   create_table "imposed_works", force: :cascade do |t|
@@ -273,6 +266,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_26_112953) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "airs", "imposed_works"
   add_foreign_key "candidate_program_airs", "airs"
   add_foreign_key "candidate_program_airs", "candidate_programs"
   add_foreign_key "candidate_programs", "inscriptions"
@@ -287,8 +281,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_26_112953) do
   add_foreign_key "free_choice_airs", "airs"
   add_foreign_key "free_choice_airs", "free_choices"
   add_foreign_key "free_choices", "categories"
-  add_foreign_key "imposed_work_airs", "airs"
-  add_foreign_key "imposed_work_airs", "imposed_works"
   add_foreign_key "imposed_works", "categories"
   add_foreign_key "inscriptions", "candidats"
   add_foreign_key "inscriptions", "categories"

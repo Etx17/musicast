@@ -12,7 +12,10 @@ class ImposedWorksController < ApplicationController
 
   # GET /imposed_works/new
   def new
-    @imposed_work = ImposedWork.new
+    # @category = Category.find(params[:category_id])
+    @category = Category.find(params[:category_id])
+    @imposed_work = @category.build_imposed_work
+    @imposed_work.airs.build
   end
 
   # GET /imposed_works/1/edit
@@ -21,15 +24,16 @@ class ImposedWorksController < ApplicationController
 
   # POST /imposed_works or /imposed_works.json
   def create
-    @imposed_work = ImposedWork.new(imposed_work_params)
+    @category = Category.find(params[:imposed_work][:category_id])
+    @imposed_work = @category.build_imposed_work(imposed_work_params)
 
     respond_to do |format|
       if @imposed_work.save
-        format.html { redirect_to imposed_work_url(@imposed_work), notice: "Imposed work was successfully created." }
-        format.json { render :show, status: :created, location: @imposed_work }
+        format.html { redirect_to category_path(@category), notice: "Imposed work was successfully created." }
+        # format.json { render :show, status: :created, location: @imposed_work }
       else
         format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @imposed_work.errors, status: :unprocessable_entity }
+        # format.json { render json: @imposed_work.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -38,7 +42,7 @@ class ImposedWorksController < ApplicationController
   def update
     respond_to do |format|
       if @imposed_work.update(imposed_work_params)
-        format.html { redirect_to imposed_work_url(@imposed_work), notice: "Imposed work was successfully updated." }
+        format.html { redirect_to category_path(@imposed_work.category), notice: "Imposed work was successfully updated." }
         format.json { render :show, status: :ok, location: @imposed_work }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -51,10 +55,8 @@ class ImposedWorksController < ApplicationController
   def destroy
     @imposed_work.destroy
 
-    respond_to do |format|
-      format.html { redirect_to imposed_works_url, notice: "Imposed work was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    # redirect_back fallback_location: root_path, notice: "Imposed work was successfully destroyed."
+    redirect_to(params[:redirect_path] || root_path, notice: "Imposed work was successfully destroyed.")
   end
 
   private
@@ -65,6 +67,21 @@ class ImposedWorksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def imposed_work_params
-      params.require(:imposed_work).permit(:programme_requirement_id, :title, :guidelines)
+      params.require(:imposed_work).permit(
+        :programme_requirement_id,
+        :title,
+        :guidelines,
+        :category_id,
+        airs_attributes: [
+          :id,
+          :title,
+          :composer,
+          :length_minutes,
+          :tonality,
+          :character,
+          :oeuvre,
+          :_destroy
+        ]
+      )
     end
 end

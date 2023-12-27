@@ -1,4 +1,3 @@
-
 <%= simple_form_for(@imposed_work) do |f| %>
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
@@ -7,6 +6,23 @@
     <%= f.association :category %>
     <%= f.input :title %>
     <%= f.input :guidelines %>
+
+    <h3>Ajouter des airs imposés</h3>
+    <div data-controller="airs">
+      <div data-airs-target="container">
+        <%= f.simple_fields_for :airs do |air| %>
+          <%= render 'air_fields', f: air %>
+        <% end %>
+      </div>
+
+      <div data-airs-target="template" style="display: none">
+        <%= f.simple_fields_for :airs, Air.new, child_index: 'NEW_RECORD' do |air| %>
+          <%= render 'air_fields', f: air %>
+        <% end %>
+      </div>
+
+      <%= link_to 'Add another air', '#', data: { action: 'airs#addAir' } %>
+    </div>
   </div>
 
   <div class="form-actions">

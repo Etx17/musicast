@@ -120,28 +120,53 @@
 <%# Faire 2 colonnes, suaf pour le mobile ou tout sera sur une seule %>
 
 
-<!-- Section Oeuvres obligatoires: table "imposed_works" -->
 <!-- Section Oeuvres à choisir parmi une liste. table "choice_imposed_works" -->
 <!-- Section Œuvres à Contraintes Spécifiques : table "semi_imposed_works"-->
 <!-- Oeuvres au choix , table "free_choices"-->
 <div class="row">
+<!-- Section Oeuvres obligatoires: table "imposed_works" -->
   <div class="col-md-6">
-    <h3>Oeuvres obligatoires</h2>
-    
-    <% @category.imposed_works.first&.airs&.each do |work| %>
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title"><%= work.title %></h5>
-          <p class="card-text"><%= work.composer %></p>
-          <p class="card-text"><%= work.length_minutes %> minutes </p>
-          <%# <%= link_to 'Delete', work_path(work), method: :delete, data: { confirm: 'Are you sure?' } %>
+    <h3>Oeuvres obligatoires</h3>
+
+    <% imposed_work = @category.imposed_work %>
+    <% if imposed_work.present? %>
+    <div class="container border shadow p-3">
+      <div class="d-flex justify-content-between align-items-start">
+        <div>
+          <h2 class="text-dark"><%= imposed_work.title %></h2>
+          <p class="text-secondary"><%= imposed_work.guidelines %></p>
+        </div>
+
+        <div class="d-flex gap-2">
+          <%= link_to edit_imposed_work_path(imposed_work), class: 'btn btn-light border', data: { toggle: 'modal', target: '#imposedWorkModal' } do %>
+            <i class="fas fa-edit"></i>
+          <% end %>
+
+          <%= button_to imposed_work_path(imposed_work, redirect_path: category_path(@category)), method: :delete, data: { confirm: 'Are you sure?', turbo_confirm: "Are you sure?" }, class: 'btn btn-light border' do %>
+            <i class="fas fa-trash"></i>
+          <% end %>
         </div>
       </div>
+
+        <% imposed_work.airs.each do |work| %>
+          <div class="card mt-3">
+            <div class="card-body">
+              <h5 class="card-title"><%= work.title %></h5>
+              <p class="card-text"><%= work.composer %></p>
+              <p class="card-text"><%= work.length_minutes %> minutes </p>
+              <%# Button to delete the imposed_work.air %>
+              <%= button_to 'Delete', air_path(work, redirect_path: category_path(@category)), method: :delete, data: { confirm: 'Are you sure?', turbo_confirm: "Are you sure?" }, class: 'btn btn-danger' %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <%= link_to 'Add', new_imposed_work_path(category_id: @category.id), class: 'btn btn-primary', data: { toggle: 'modal', target: '#imposedWorkModal' } %>
     <% end %>
-    <%= link_to 'Add', new_imposed_work_path, class: 'btn btn-primary' %>
-    <!-- Repeat for other work types -->
+
   </div>
-<div class="col-md-6">
+
+  <div class="col-md-6">
     <!-- Compulsory Works section -->
 
     <h2>Works to Choose From a List</h2>

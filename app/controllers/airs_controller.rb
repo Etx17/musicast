@@ -50,11 +50,8 @@ class AirsController < ApplicationController
   # DELETE /airs/1 or /airs/1.json
   def destroy
     @air.destroy
-
-    respond_to do |format|
-      format.html { redirect_to airs_url, notice: "Air was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    redirect_back fallback_location: root_path, notice: "Air was successfully destroyed."
+    # redirect_to params[:redirect_path] || root_path, notice: "Air was successfully destroyed."
   end
 
   private
