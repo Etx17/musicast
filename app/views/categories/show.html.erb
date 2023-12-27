@@ -133,21 +133,21 @@
     <% imposed_work = @category.imposed_work %>
     <% if imposed_work.present? %>
       <div class="container p-3">
-        <div class="d-flex justify-content-between align-items-start">
-          <div>
+        <div class="d-flex flex-column">
+          <div class="w-100 d-flex justify-content-between">
             <h2 class="text-dark"><%= imposed_work.title %></h2>
-            <p class="text-secondary"><%= imposed_work.guidelines %></p>
-          </div>
+            <div class="d-flex gap-2 align-items-center">
+              <%= link_to edit_imposed_work_path(imposed_work), class: 'btn p-0' do %>
+                <i class="fas fa-edit"></i>
+              <% end %>
 
-          <div class="d-flex gap-2">
-            <%= link_to edit_imposed_work_path(imposed_work), class: 'btn btn-light border' do %>
-              <i class="fas fa-edit"></i>
-            <% end %>
-
-            <%= button_to imposed_work_path(imposed_work, redirect_path: category_path(@category)), method: :delete, data: { confirm: 'Are you sure?', turbo_confirm: "Are you sure?" }, class: 'btn btn-light border' do %>
-              <i class="fas fa-trash"></i>
-            <% end %>
+              <%= button_to imposed_work_path(imposed_work, redirect_path: category_path(@category)), method: :delete, data: { confirm: 'Are you sure?', turbo_confirm: "Are you sure?" }, class: 'btn ' do %>
+                <i class="fas fa-trash"></i>
+              <% end %>
+            </div>
           </div>
+          <p class="text-secondary"><%= imposed_work.guidelines %></p>
+
         </div>
 
         <div class="d-flex flex-column gap-3">

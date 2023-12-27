@@ -1,6 +1,6 @@
-<div class=" mt-5 row justify-content-center align-items-center">
-  <div class="col-8 col-sm-6 shadow p-3">
-    <h1>Modifier les oeuvres imposées</h1>
-    <%= render 'form', imposed_work: @imposed_work %>
-  </div>
+<div class="container">
+  <h1 class="text-center" style="font-size: 3.5em;">Modifier les oeuvres imposées</h1>
+
+  <div class="text-center text-white rounded-pill bg-info mb-5 w-50 mx-auto d-block" style="font-size: 3em;"><%= @imposed_work.category.name %></div>
+  <%= render 'form', imposed_work: @imposed_work %>
 </div>

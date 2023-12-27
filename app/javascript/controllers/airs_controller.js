@@ -19,7 +19,7 @@ export default class extends Controller {
     const wrapper = event.target.closest('.nested-fields')
     if (wrapper.dataset.newRecord == 'true') {
       wrapper.remove()
-    } else {
+    // } else {
       wrapper.querySelector("input[name*='_destroy']").value = '1'
       wrapper.style.display = 'none'
     }

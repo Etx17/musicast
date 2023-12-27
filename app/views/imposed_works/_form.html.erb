@@ -1,16 +1,19 @@
 <%= simple_form_for(@imposed_work) do |f| %>
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+  <%= f.hidden_field :category, value: @imposed_work.category.name, disabled: true %>
 
-  <div class="form-inputs">
-    <div class="d-flex gap-3 justify-content-center">
-    <%= f.association :category %>
-    <%= f.input :title %>
+  <div class="form-inputs p-3">
+    <div class="shadow p-3 mb-5" style="border-radius: 10px;">
+      <%= f.input :title, label_html: { class: ' h2' }, input_html: { class: 'p-2 border' }, hint: "(ex: 2 oeuvres de Fauré)", label: '<i class="fas fa-book text-gradient "></i> Titre'.html_safe %>
+      <%= f.input :guidelines, label_html: { class: 'h2' }, input_html: { class: 'p-2 border' },hint: "(ex: Ces oeuvres imposées seront réparties aléatoirement dans le programme du candidat entre les tours)", label: '<i class="fas fa-info-circle text-gradient "></i> Consignes'.html_safe %>
     </div>
-    <%= f.input :guidelines %>
+    <%# put h3 in center automatically bootstrap mx %>
+    <h3 class="text-center mb-5" style="font-size: 3em;"> Airs imposés</h3>
 
-    <h3>Ajouter des airs imposés</h3>
     <div data-controller="airs">
+
+
       <div data-airs-target="container">
         <%= f.simple_fields_for :airs do |air| %>
           <%= render 'air_fields', f: air %>
@@ -23,11 +26,17 @@
         <% end %>
       </div>
 
-      <%= link_to 'Add another air', '#', data: { action: 'airs#addAir' } %>
+      <div class="d-flex gap-3 justify-content-center">
+        <%= link_to '#', data: { action: 'airs#addAir' }, class: 'p-3 rounded-pill btn btn-outline-primary mb-5' do %>
+          <i class="fas fa-plus"></i> Ajouter un morceau
+        <% end %>
+
+        <%= button_tag(type: 'submit', class: 'p-3 rounded-pill btn btn-primary mb-5') do %>
+          <i class="fa-solid fa-floppy-disk"></i> Enregistrer les modifications
+        <% end %>
+      </div>
     </div>
   </div>
 
-  <div class="form-actions">
-    <%= f.button :submit %>
-  </div>
+
 <% end %>
