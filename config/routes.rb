@@ -19,7 +19,8 @@ Rails.application.routes.draw do
     resources :edition_competitions, only: [:new, :create] do
       resources :categories, only: [:new, :create, :destroy] do
         resources :tours
-        resources :requirement_items 
+        resources :requirement_items
+        resources :inscriptions
       end
     end
   end

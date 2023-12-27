@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_25_100215) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_26_112953) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -72,13 +72,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_25_100215) do
   end
 
   create_table "choice_imposed_works", force: :cascade do |t|
-    t.bigint "programme_requirement_id", null: false
     t.string "title"
     t.text "guidelines"
     t.integer "number_to_select"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["programme_requirement_id"], name: "index_choice_imposed_works_on_programme_requirement_id"
+    t.bigint "category_id", null: false
+    t.index ["category_id"], name: "index_choice_imposed_works_on_category_id"
   end
 
   create_table "competitions", force: :cascade do |t|
@@ -92,12 +92,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_25_100215) do
 
   create_table "documents", force: :cascade do |t|
     t.integer "document_type"
-    t.bigint "competition_id", null: false
     t.string "file_url"
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["competition_id"], name: "index_documents_on_competition_id"
+    t.string "parent_type", null: false
+    t.bigint "parent_id", null: false
+    t.index ["parent_type", "parent_id"], name: "index_documents_on_parent"
     t.index ["user_id"], name: "index_documents_on_user_id"
   end
 
@@ -120,12 +121,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_25_100215) do
   end
 
   create_table "free_choices", force: :cascade do |t|
-    t.bigint "programme_requirement_id", null: false
     t.integer "number"
     t.integer "max_length_minutes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["programme_requirement_id"], name: "index_free_choices_on_programme_requirement_id"
+    t.bigint "category_id", null: false
+    t.index ["category_id"], name: "index_free_choices_on_category_id"
   end
 
   create_table "imposed_work_airs", force: :cascade do |t|
@@ -138,12 +139,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_25_100215) do
   end
 
   create_table "imposed_works", force: :cascade do |t|
-    t.bigint "programme_requirement_id", null: false
     t.string "title"
     t.text "guidelines"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["programme_requirement_id"], name: "index_imposed_works_on_programme_requirement_id"
+    t.bigint "category_id", null: false
+    t.index ["category_id"], name: "index_imposed_works_on_category_id"
   end
 
   create_table "inscriptions", force: :cascade do |t|
@@ -237,13 +238,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_25_100215) do
   end
 
   create_table "semi_imposed_works", force: :cascade do |t|
-    t.bigint "programme_requirement_id", null: false
     t.text "guidelines"
     t.integer "number"
     t.integer "max_length_minutes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["programme_requirement_id"], name: "index_semi_imposed_works_on_programme_requirement_id"
+    t.bigint "category_id", null: false
+    t.index ["category_id"], name: "index_semi_imposed_works_on_category_id"
   end
 
   create_table "tours", force: :cascade do |t|
@@ -279,17 +280,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_25_100215) do
   add_foreign_key "categories", "edition_competitions"
   add_foreign_key "choice_imposed_work_airs", "airs"
   add_foreign_key "choice_imposed_work_airs", "choice_imposed_works"
-  add_foreign_key "choice_imposed_works", "programme_requirements"
+  add_foreign_key "choice_imposed_works", "categories"
   add_foreign_key "competitions", "organisms"
-  add_foreign_key "documents", "competitions"
   add_foreign_key "documents", "users"
   add_foreign_key "edition_competitions", "competitions"
   add_foreign_key "free_choice_airs", "airs"
   add_foreign_key "free_choice_airs", "free_choices"
-  add_foreign_key "free_choices", "programme_requirements"
+  add_foreign_key "free_choices", "categories"
   add_foreign_key "imposed_work_airs", "airs"
   add_foreign_key "imposed_work_airs", "imposed_works"
-  add_foreign_key "imposed_works", "programme_requirements"
+  add_foreign_key "imposed_works", "categories"
   add_foreign_key "inscriptions", "candidats"
   add_foreign_key "inscriptions", "categories"
   add_foreign_key "jures", "users"
@@ -303,6 +303,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_25_100215) do
   add_foreign_key "requirement_items", "categories"
   add_foreign_key "semi_imposed_work_airs", "airs"
   add_foreign_key "semi_imposed_work_airs", "semi_imposed_works"
-  add_foreign_key "semi_imposed_works", "programme_requirements"
+  add_foreign_key "semi_imposed_works", "categories"
   add_foreign_key "tours", "categories"
 end

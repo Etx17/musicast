@@ -3,7 +3,7 @@ class Competition < ApplicationRecord
   belongs_to :organism
 
   has_many :documents, as: :parent, dependent: :destroy
-
+  
   def organisateur
     # returns the association organisateur of the competition
     organism.organisateur

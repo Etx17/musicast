@@ -14,7 +14,7 @@ class RequirementItemsController < ApplicationController
     @requirement_item = @category.requirement_items.build(requirement_item_params)
 
     if @requirement_item.save
-      redirect_to competition_edition_competition_category_requirement_item_path(@competition, @edition_competition, @category, @requirement_item), notice: 'Requirement item was successfully created.'
+      redirect_to competition_edition_competition_category_path(@competition, @edition_competition, @category), notice: 'Requirement item was successfully created.'
     else
       render :new
     end
@@ -58,6 +58,6 @@ class RequirementItemsController < ApplicationController
   end
 
   def requirement_item_params
-    params.require(:requirement_item).permit(:name, :description)
+    params.require(:requirement_item).permit(:title, :type_item, :description_item, :category_id)
   end
 end
