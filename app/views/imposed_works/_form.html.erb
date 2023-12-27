@@ -3,8 +3,10 @@
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
+    <div class="d-flex gap-3 justify-content-center">
     <%= f.association :category %>
     <%= f.input :title %>
+    </div>
     <%= f.input :guidelines %>
 
     <h3>Ajouter des airs imposés</h3>

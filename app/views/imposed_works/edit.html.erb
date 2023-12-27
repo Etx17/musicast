@@ -1,10 +1,6 @@
-<h1>Editing imposed work</h1>
-
-<%= render "form", imposed_work: @imposed_work %>
-
-<br>
-
-<div>
-  <%= link_to "Show this imposed work", @imposed_work %> |
-  <%= link_to "Back to imposed works", imposed_works_path %>
+<div class=" mt-5 row justify-content-center align-items-center">
+  <div class="col-8 col-sm-6 shadow p-3">
+    <h1>Modifier les oeuvres imposées</h1>
+    <%= render 'form', imposed_work: @imposed_work %>
+  </div>
 </div>
