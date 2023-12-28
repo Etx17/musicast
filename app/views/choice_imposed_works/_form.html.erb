@@ -2,12 +2,12 @@
 <%= simple_form_for(@choice_imposed_work) do |f| %>
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+  <%= f.hidden_field :category, value: @choice_imposed_work.category, disabled: true %>
 
   <div class="form-inputs">
-    <%= f.association :programme_requirement %>
     <%= f.input :title %>
-    <%= f.input :guidelines %>
     <%= f.input :number_to_select %>
+    <%= f.input :guidelines %>
   </div>
 
   <div class="form-actions">
