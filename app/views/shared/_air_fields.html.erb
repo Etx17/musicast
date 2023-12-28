@@ -1,0 +1,33 @@
+<div class="nested-fields row border shadow my-3 px-3 pt-2" data-new-record="<%= f.object.new_record? %>">
+  <div class="col-12">
+    <div class="d-flex justify-content-between align-items-center">
+      <h2><i class="fas fa-music text-gradient"></i> #<%= f.index.is_a?(Integer) ? f.index + 1 : 'NEW' %></h2>
+      <% if f.object.new_record? %>
+        <%= link_to '#', data: { action: 'removeAir' }, class: 'btn btn-primary' do %>
+          <i class="fas fa-trash pe-2"></i>Supprimer
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  <div class="col-6 col-md-6">
+    <%= f.input :title, label: false, required: true, input_html: { class: 'p-2 border rounded-pill', placeholder: 'Title *' } %>
+  </div>
+  <div class="col-6 col-md-6">
+    <%= f.input :composer, label: false, required: true, input_html: { class: 'p-2 border rounded-pill', placeholder: 'Composer *' } %>
+  </div>
+  <div class="col-6">
+    <%= f.input :oeuvre, label: false, required: true, input_html: { class: 'p-2 border rounded-pill', placeholder: 'Oeuvre *' } %>
+  </div>
+  <div class="col-6 col-md-4">
+    <%= f.input :character, label: false, input_html: { class: 'p-2 border rounded-pill', placeholder: 'Character' } if true %>
+  </div>
+  <div class="col-6 col-md-4">
+    <%= f.input :length_minutes, label: false, required: true, input_html: { class: 'p-2 border rounded-pill', placeholder: 'Minutes *' } %>
+  </div>
+  <div class="col-6 col-md-4">
+    <%= f.input :tonality, label: false, required: true, input_html: { class: 'p-2 border rounded-pill', placeholder: 'Tonality *' } %>
+  </div>
+  <div class="col-6">
+    <%= f.input :_destroy, as: :hidden %>
+  </div>
+</div>

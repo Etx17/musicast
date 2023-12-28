@@ -10,7 +10,6 @@ Rails.application.routes.draw do
   resources :imposed_work_airs
   resources :semi_imposed_works
   resources :free_choices
-  resources :choice_imposed_works
   resources :imposed_works
   resources :airs
   resources :programme_requirements
@@ -21,6 +20,7 @@ Rails.application.routes.draw do
         resources :tours
         resources :requirement_items
         resources :inscriptions
+        resources :choice_imposed_works
       end
     end
   end

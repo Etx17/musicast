@@ -13,13 +13,13 @@
     <div data-controller="airs">
       <div data-airs-target="container">
         <%= f.simple_fields_for :airs do |air| %>
-          <%= render 'air_fields', f: air %>
+          <%= render 'shared/air_fields', f: air %>
         <% end %>
       </div>
 
       <div data-airs-target="template" style="display: none">
         <%= f.simple_fields_for :airs, Air.new, child_index: 'NEW_RECORD' do |air| %>
-          <%= render 'air_fields', f: air %>
+          <%= render 'shared/air_fields', f: air %>
         <% end %>
       </div>
 
