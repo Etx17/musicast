@@ -1,17 +1,13 @@
 <div id="<%= dom_id competition %>">
-  <p>
-    <strong>Organism:</strong>
-    <%= competition.organism_id %>
-  </p>
 
-  <p>
-    <strong>Nom concours:</strong>
-    <%= competition.nom_concours %>
-  </p>
+  <div class="mb-3">
+    <span class="badge bg-white border border-dark text-dark">Nom:</span>
+    <span class="ms-2"><%= competition.nom_concours %></span>
+  </div>
 
-  <p>
-    <strong>Description:</strong>
-    <%= competition.description %>
-  </p>
+  <div>
+    <span class="badge bg-white border border-dark text-dark">Description:</span>
+    <span class="ms-2"><%= competition.description %></span>
+  </div>
 
 </div>

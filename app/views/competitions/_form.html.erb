@@ -4,12 +4,11 @@
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
-    <%= f.association :organism %>
-    <%= f.input :nom_concours %>
+    <%= f.input :nom_concours, class: " p-3 border border-1" %>
     <%= f.input :description %>
   </div>
 
   <div class="form-actions">
-    <%= f.button :submit %>
+    <%= f.button :submit, class: "btn btn-dark" %>
   </div>
 <% end %>
