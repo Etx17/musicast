@@ -1,0 +1,52 @@
+ <!-- Section Œuvres à Contraintes Spécifiques : table "semi_imposed_works"-->
+  <div class="col-lg-4 border p-3 shadow d-flex flex-column align-items-center">
+    <h3 style="font-size: 3em;" class="px-3 rounded-pill text-white">Oeuvres à contraintes spécifiées</h3>
+    <% if @category.semi_imposed_works.none? %>
+      <p class="text-muted p-2 padding border border-2 rounded"> <i class="fas fa-circle-info pe-2 "></i>Renseignez ici le programme à choix guidé du candidat. Chaque ligne ajoutée doit comporter un nombre d'oeuvres, et la consigne attenante. Par exemple: <br/> <br/>"Cinq mélodies en langue française (dont deux au moins composées après 1900), à l’exclusion de
+      Gabriel Fauré et d’Édouard Lalo..." </p>
+    <% end %>
+    <% @category.semi_imposed_works.each do |semi_imposed_work| %>
+      <div class="card mb-3 shadow-sm w-100 bg-light" style="border-radius: 15px;">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h4 class="card-title mb-0"><%= semi_imposed_work.title %></h4>
+          <div class="d-flex gap-3" >
+            <%= link_to edit_competition_edition_competition_category_semi_imposed_work_path(@competition, @edition_competition, @category, semi_imposed_work), class: 'btn btn-light text-dark btn-sm' do %>
+              <i class="fas fa-edit"></i>
+            <% end %>
+            <%= button_to competition_edition_competition_category_semi_imposed_work_path(@competition, @edition_competition, @category, semi_imposed_work), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-light text-dark btn-sm' do %>
+              <i class="fas fa-trash"></i>
+            <% end %>
+          </div>
+        </div>
+        <div class="card-body">
+          <p class="card-title text-secondary"><i class="fas fa-feather text-gradient"></i> <%= semi_imposed_work.guidelines %></p>
+          <span class="badge bg-primary rounded-pill">
+            <%= semi_imposed_work.number %> oeuvres
+          </span>
+          <span class="badge bg-warning rounded-pill">
+            <i class="fas fa-clock"></i><%= semi_imposed_work.max_length_minutes %> minutes max total
+          </span>
+        </div>
+      </div>
+    <% end %>
+    <button type="button" class="btn btn-outline-light my-3" data-bs-toggle="modal" data-bs-target="#semiImposedWorkModal">
+      + Ajouter
+    </button>
+  </div>
+<!-- Modal -->
+  <div class="modal fade" id="semiImposedWorkModal" tabindex="-1" aria-labelledby="semiImposedWorkModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="semiImposedWorkModalLabel">Ajouter un semi-imposed work</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <%= render "semi_imposed_works/form", semi_imposed_work: @semi_imposed_work %>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
