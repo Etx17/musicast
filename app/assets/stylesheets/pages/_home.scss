@@ -60,3 +60,7 @@
   -webkit-background-clip: text; /* Clip text to the gradient */
   color: transparent; /* Make text transparent to show the gradient */
 }
+
+body {
+  padding-top: 70px; /* Adjust this value based on the height of your navbar */
+}
