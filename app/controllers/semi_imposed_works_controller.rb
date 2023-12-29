@@ -12,7 +12,10 @@ class SemiImposedWorksController < ApplicationController
 
   # GET /semi_imposed_works/new
   def new
-    @semi_imposed_work = SemiImposedWork.new
+    @category = Category.find(params[:category_id])
+    @edition_competition = @category.edition_competition
+    @competition = @edition_competition.competition
+    @semi_imposed_work = SemiImposedWork.new()
   end
 
   # GET /semi_imposed_works/1/edit
@@ -21,16 +24,14 @@ class SemiImposedWorksController < ApplicationController
 
   # POST /semi_imposed_works or /semi_imposed_works.json
   def create
-    @semi_imposed_work = SemiImposedWork.new(semi_imposed_work_params)
-
-    respond_to do |format|
-      if @semi_imposed_work.save
-        format.html { redirect_to semi_imposed_work_url(@semi_imposed_work), notice: "Semi imposed work was successfully created." }
-        format.json { render :show, status: :created, location: @semi_imposed_work }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @semi_imposed_work.errors, status: :unprocessable_entity }
-      end
+    @competition = Competition.find(params[:competition_id])
+    @edition_competition = @competition.edition_competitions.find(params[:edition_competition_id])
+    @category = @edition_competition.categories.find(params[:category_id])
+    @semi_imposed_work = @category.semi_imposed_works.build(semi_imposed_work_params)
+    if @semi_imposed_work.save
+      redirect_to category_path(@category), notice: "Semi imposed work was successfully created."
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -38,7 +39,7 @@ class SemiImposedWorksController < ApplicationController
   def update
     respond_to do |format|
       if @semi_imposed_work.update(semi_imposed_work_params)
-        format.html { redirect_to semi_imposed_work_url(@semi_imposed_work), notice: "Semi imposed work was successfully updated." }
+        format.html { redirect_to category_path(@semi_imposed_work.category), notice: "Semi imposed work was successfully updated." }
         format.json { render :show, status: :ok, location: @semi_imposed_work }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -51,10 +52,7 @@ class SemiImposedWorksController < ApplicationController
   def destroy
     @semi_imposed_work.destroy
 
-    respond_to do |format|
-      format.html { redirect_to semi_imposed_works_url, notice: "Semi imposed work was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    redirect_to category_path(@semi_imposed_work.category), notice: "Semi imposed work was successfully destroyed."
   end
 
   private
@@ -65,6 +63,6 @@ class SemiImposedWorksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def semi_imposed_work_params
-      params.require(:semi_imposed_work).permit(:programme_requirement_id, :guidelines, :number, :max_length_minutes)
+      params.require(:semi_imposed_work).permit(:programme_requirement_id, :guidelines, :title, :number, :max_length_minutes)
     end
 end

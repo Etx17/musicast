@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_28_112237) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_29_110544) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -25,8 +25,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_28_112237) do
     t.datetime "updated_at", null: false
     t.bigint "imposed_work_id"
     t.bigint "choice_imposed_work_id"
+    t.bigint "semi_imposed_work_id"
     t.index ["choice_imposed_work_id"], name: "index_airs_on_choice_imposed_work_id"
     t.index ["imposed_work_id"], name: "index_airs_on_imposed_work_id"
+    t.index ["semi_imposed_work_id"], name: "index_airs_on_semi_imposed_work_id"
   end
 
   create_table "candidate_program_airs", force: :cascade do |t|
@@ -214,15 +216,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_28_112237) do
     t.index ["category_id"], name: "index_requirement_items_on_category_id"
   end
 
-  create_table "semi_imposed_work_airs", force: :cascade do |t|
-    t.bigint "semi_imposed_work_id", null: false
-    t.bigint "air_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["air_id"], name: "index_semi_imposed_work_airs_on_air_id"
-    t.index ["semi_imposed_work_id"], name: "index_semi_imposed_work_airs_on_semi_imposed_work_id"
-  end
-
   create_table "semi_imposed_works", force: :cascade do |t|
     t.text "guidelines"
     t.integer "number"
@@ -230,6 +223,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_28_112237) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "category_id", null: false
+    t.string "title"
     t.index ["category_id"], name: "index_semi_imposed_works_on_category_id"
   end
 
@@ -261,6 +255,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_28_112237) do
 
   add_foreign_key "airs", "choice_imposed_works"
   add_foreign_key "airs", "imposed_works"
+  add_foreign_key "airs", "semi_imposed_works"
   add_foreign_key "candidate_program_airs", "airs"
   add_foreign_key "candidate_program_airs", "candidate_programs"
   add_foreign_key "candidate_programs", "inscriptions"
@@ -285,8 +280,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_28_112237) do
   add_foreign_key "performances", "tours"
   add_foreign_key "programme_requirements", "categories"
   add_foreign_key "requirement_items", "categories"
-  add_foreign_key "semi_imposed_work_airs", "airs"
-  add_foreign_key "semi_imposed_work_airs", "semi_imposed_works"
   add_foreign_key "semi_imposed_works", "categories"
   add_foreign_key "tours", "categories"
 end

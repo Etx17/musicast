@@ -3,9 +3,7 @@
     <%= notice %>
   </div>
 
-<%# category info %>
-  <%= render @category %>
-
+  <%= render @category %> <!-- Render the partial -->
 
   <div>
     <%= link_to "Edit this category", edit_category_path(@category) %> |
@@ -39,7 +37,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <%= render "form", tour: @tour %>
+          <%= render "tours/form", tour: @tour %>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -50,19 +48,18 @@
 
   <div class="d-flex gap-3 flex-wrap">
     <% @category.tours.each do |tour| %>
-      <%= link_to competition_edition_competition_category_tour_path(@competition, @edition_competition, @category, tour) do %>
-        <div class="card" style="width: 18rem;">
-          <%# Placeholder for picture %>
-          <img class="card-img-top" src="https://via.placeholder.com/150" alt="Card image cap">
-          <%# tour name , start date, etc... title, description%>
-          <%=  tour.title %>
-          <%=  tour.description %>
-          <%=  tour.start_date %>
-          <%=  tour.start_time %>
-          <%=  tour.end_date %>
-          <%=  tour.end_time %>
-          <%=  tour.is_online %>
-
+      <%= link_to competition_edition_competition_category_tour_path(@competition, @edition_competition, @category, tour), class: "text-decoration-none" do %>
+        <div class="card shadow-sm" style="width: 18rem;">
+          <div class="card-body">
+            <h4 class="card-title text-dark font-weight-bold"><%= tour.title %> <%= tour.is_online ? raw('<span class="badge rounded-pill bg-success">En ligne</span>') : ''%> </h4>
+            <p class="card-text text-secondary"><i class="fas fa-info-circle"></i> <%= tour.description %></p>
+            <p class="card-text">
+              <small class="text-muted">
+                <i class="fas fa-calendar-alt"></i> Début: <%= tour.start_date.strftime("%d/%m/%Y") %> à <%= tour.start_time.strftime("%H:%M") %><br>
+                <i class="fas fa-calendar-check"></i> Fin: <%= tour.end_date.strftime("%d/%m/%Y") %> à <%= tour.end_time.strftime("%H:%M") %>
+              </small>
+            </p>
+          </div>
         </div>
       <% end %>
     <% end %>
@@ -99,33 +96,33 @@
     </div>
   </div>
 </div>
+
 <div class="d-flex gap-3 flex-wrap">
   <% @category.requirement_items.each do |item| %>
     <div class="card bg-dark text-white rounded" style="width: 18rem;">
-  <div class="card-body">
-    <div class="icon-placeholder mx-auto" style="width: 100px; height: 100px;">
-      <%= image_tag "https://source.unsplash.com/random/?#{item.type_item}/300/200", alt: "Photo d'item requis", class: "img-fluid w-100 d-block rounded-circle", style: "object-fit: cover; aspect-ratio: 1 / 1; overflow: hidden; ", loading: 'lazy' %>
-    </div>
-    <h5 class="card-title"><%= item.title %></h5>
-    <p class="card-text text-light"><%= item.description_item %></p>
+      <div class="card-body">
+        <div class="icon-placeholder mx-auto" style="width: 100px; height: 100px;">
+          <%= image_tag "https://source.unsplash.com/random/?#{item.type_item}/300/200", alt: "Photo d'item requis", class: "img-fluid w-100 d-block rounded-circle", style: "object-fit: cover; aspect-ratio: 1 / 1; overflow: hidden; ", loading: 'lazy' %>
+        </div>
+        <h5 class="card-title"><%= item.title %></h5>
+        <p class="card-text text-light"><%= item.description_item %></p>
 
-    <span class="badge bg-warning text-dark rounded-pill border border-success"><%= item.type_item %></span>
-  </div>
-</div>
+        <span class="badge bg-warning text-dark rounded-pill border border-success"><%= item.type_item %></span>
+      </div>
+    </div>
   <% end %>
 </div>
 
+
+<!-- Section Programme Demandé-->
 <div class="bg-dark text-center py-5 my-5">
   <h2 class="text-white" style="font-size: 4em;">Programme demandé</h2>
 </div>
-<%# Faire 2 colonnes, suaf pour le mobile ou tout sera sur une seule %>
 
 
-<!-- Section Œuvres à Contraintes Spécifiques : table "semi_imposed_works"-->
-<!-- Oeuvres au choix , table "free_choices"-->
-<div class="row">
-<!-- Section Oeuvres obligatoires: table "imposed_works" -->
-  <div class="col-md-6 border p-3 shadow d-flex flex-column align-items-center">
+<div class="d-flex flex-column align-items-center gap-5">
+  <!-- Section Oeuvres obligatoires: table "imposed_works" -->
+  <div class="col-md-8 border p-3 shadow d-flex flex-column align-items-center">
     <h3 style="font-size: 3em;" class=" px-3 rounded-pill">Oeuvres imposées</h3>
     <% imposed_work = @category.imposed_work %>
     <% if imposed_work.present? %>
@@ -172,7 +169,7 @@
   </div>
 
   <!-- Section Oeuvres à choisir parmi une liste. table "choice_imposed_works" -->
-  <div class="col-md-6 border p-3 shadow d-flex flex-column align-items-center">
+  <div class="col-md-8 border p-3 shadow d-flex flex-column align-items-center">
     <h3 style="font-size: 3em;" class=" px-3 rounded-pill">Oeuvres au choix dans une liste</h3>
     <% if @category.choice_imposed_works.none? %>
       <p>Créez ici une liste d'oeuvres et précisez le nombre que le candidat doit sélectionner. Vous pouvez aussi ajouter des consignes et un titre à cette liste si vous le souhaitez. </p>
@@ -221,21 +218,63 @@
     <%= link_to '+ Ajouter une liste à choix multiple', new_competition_edition_competition_category_choice_imposed_work_path(@competition, @edition_competition, @category), class:" btn btn-outline-dark my-3" %>
   </div>
 
-  <div class="col-md-6">
-    <h2>Semi-Free Works</h2>
-    <%# Si ca n'est pas crée, proposer de crée un semi-impoed work ou on précise le nombre d'airs a choisir dans la liste, ou toute autre guideline %>
+  <!-- Section Œuvres à Contraintes Spécifiques : table "semi_imposed_works"-->
 
-    <% @category.semi_imposed_works.last&.airs&.each do |work| %>
-      <div class="card">
+  <div class="col-md-8 border p-3 shadow d-flex flex-column align-items-center">
+    <h3 style="font-size: 3em;" class=" px-3 rounded-pill">Oeuvres à contraintes spécifiées</h3>
+    <% if @category.semi_imposed_works.none? %>
+      <p class="text-muted p-2 padding border border-2 rounded"> <i class="fas fa-circle-info pe-2 "></i>Renseignez ici le programme à choix guidé du candidat. Chaque ligne ajoutée doit comporter un nombre d'oeuvres, et la consigne attenante. Par exemple: <br/> <br/>"Cinq mélodies en langue française (dont deux au moins composées après 1900), à l’exclusion de
+      Gabriel Fauré et d’Édouard Lalo..." </p>
+    <% end %>
+    <% @category.semi_imposed_works.each do |semi_imposed_work| %>
+      <div class="card mb-3 shadow-sm w-100 bg-light" style="border-radius: 15px;">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h4 class="card-title mb-0"><%= semi_imposed_work.title %></h4>
+          <div class="d-flex gap-3" >
+            <%= link_to edit_competition_edition_competition_category_semi_imposed_work_path(@competition, @edition_competition, @category, semi_imposed_work), class: 'btn btn-light text-dark btn-sm' do %>
+              <i class="fas fa-edit"></i>
+            <% end %>
+            <%= button_to competition_edition_competition_category_semi_imposed_work_path(@competition, @edition_competition, @category, semi_imposed_work), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-light text-dark btn-sm' do %>
+              <i class="fas fa-trash"></i>
+            <% end %>
+          </div>
+        </div>
         <div class="card-body">
-          <h5 class="card-title"><%= work.title %></h5>
-          <p class="card-text">Duration: TODO</p>
-          <%# <%= link_to 'Delete', work_path(work), method: :delete, data: { confirm: 'Are you sure?' } %>
+          <p class="card-title text-secondary"><i class="fas fa-feather text-gradient"></i> <%= semi_imposed_work.guidelines %></p>
+          <span class="badge bg-primary rounded-pill">
+            <%= semi_imposed_work.number %> oeuvres
+          </span>
+          <span class="badge bg-warning rounded-pill">
+            <i class="fas fa-clock"></i><%= semi_imposed_work.max_length_minutes %> minutes max total
+          </span>
         </div>
       </div>
     <% end %>
-    <%= link_to 'Add', new_semi_imposed_work_path, class: 'btn btn-primary' %>
+    <button type="button" class="text-white btn btn-dark my-3" data-bs-toggle="modal" data-bs-target="#semiImposedWorkModal">
+      + Ajouter
+    </button>
+  </div>
+  <!-- Modal -->
+  <div class="modal fade" id="semiImposedWorkModal" tabindex="-1" aria-labelledby="semiImposedWorkModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="semiImposedWorkModalLabel">Ajouter un semi-imposed work</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <%= render "semi_imposed_works/form", semi_imposed_work: @semi_imposed_work %>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
+
+  <!-- Oeuvres au choix , table "free_choices"
+  <div class="col-md-8">
     <h2>Free Works</h2>
     <% @category.free_choices.each do |work| %>
       <div class="card">
@@ -247,5 +286,5 @@
       </div>
     <% end %>
     <%= link_to 'Add', new_free_choice_path, class: 'btn btn-primary' %>
-  </div>
+  </div>-->
 </div>

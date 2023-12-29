@@ -11,6 +11,8 @@ class CategoriesController < ApplicationController
     @category = Category.find(params[:id])
     @edition_competition = @category.edition_competition
     @competition = @edition_competition.competition
+    @semi_imposed_work = SemiImposedWork.new()
+    @tour = Tour.new()
   end
 
   # GET /categories/new

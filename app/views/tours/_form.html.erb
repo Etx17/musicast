@@ -1,20 +1,45 @@
-
 <%= simple_form_for([@competition, @edition_competition, @category, @tour]) do |f| %>
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
-    <%= f.association :category %>
-    <%= f.input :start_date %>
-    <%= f.input :start_time %>
-    <%= f.input :end_date %>
-    <%= f.input :end_time %>
-    <%= f.input :is_online %>
-    <%= f.input :title %>
-    <%= f.input :description %>
+
+    <%= f.label :title, "Titre", class: "form-label" %>
+    <%= f.text_field :title, class: "form-control" %>
+
+    <%= f.label :description, "Description", class: "form-label" %>
+    <%= f.text_area :description, class: "form-control" %>
+
+
+    <%= f.label :start_date, "Date de début", class: "form-label" %>
+    <div class="d-flex">
+      <%= f.date_select :start_date, { order: [:day, :month, :year] }, { class: "form-control" } %>
+    </div>
+
+    <%= f.label :start_time, "Heure de début", class: "form-label" %>
+    <div class="d-flex">
+      <%= f.time_select :start_time, { ignore_date: true }, class: "form-control" %>
+    </div>
+
+    <%= f.label :end_date, "Date de fin", class: "form-label" %>
+    <div class="d-flex">
+      <%= f.date_select :end_date, { order: [:day, :month, :year] }, { class: "form-control" } %>
+    </div>
+
+    <%= f.label :end_time, "Heure de fin", class: "form-label" %>
+    <div class="d-flex">
+      <%= f.time_select :end_time, { ignore_date: true }, class: "form-control" %>
+    </div>
+
+    <div class="form-check">
+      <%= f.check_box :is_online, class: "form-check-input" %>
+      <%= f.label :is_online, "Est en ligne", class: "form-check-label" %>
+    </div>
+
+
   </div>
 
   <div class="form-actions">
-    <%= f.button :submit %>
+    <%= f.button :submit, "Enregistrer", class:"btn btn-dark" %>
   </div>
 <% end %>

@@ -21,6 +21,7 @@ Rails.application.routes.draw do
         resources :requirement_items
         resources :inscriptions
         resources :choice_imposed_works
+        resources :semi_imposed_works
       end
     end
   end

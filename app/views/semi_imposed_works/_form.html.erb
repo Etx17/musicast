@@ -1,16 +1,17 @@
 
-<%= simple_form_for(@semi_imposed_work) do |f| %>
+<%= simple_form_for([@competition, @edition_competition, @category, @semi_imposed_work]) do |f| %>
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
-    <%= f.association :programme_requirement %>
-    <%= f.input :guidelines %>
-    <%= f.input :number %>
-    <%= f.input :max_length_minutes %>
+    <%= f.input :title, hint: 'Donnez un titre à votre ligne, par exemple "Lieds Allemands"', label: "Titre", required: true %>
+    <%= f.input :guidelines, hint:"Décrivez votre consigne ici le plus précisément", label: "Consignes", required: true  %>
+    <%= f.input :number, hint: "Combien d'oeuvres sont demandées dans cette consigne? ", label: "Nombre d'oeuvres", required: true  %>
+    <%= f.input :max_length_minutes, hint: 'Cette durée permettra de calculer le planning', label: 'Durée totale maximale', required: true  %>
   </div>
 
   <div class="form-actions">
-    <%= f.button :submit %>
+    <%= f.button :submit, 'Enregistrer', class:"btn btn-dark" %>
   </div>
+
 <% end %>

@@ -5,4 +5,6 @@ class Air < ApplicationRecord
   has_many :candidate_program_airs
   belongs_to :imposed_work, optional: true
   belongs_to :choice_imposed_work, optional: true
+  belongs_to :semi_imposed_work, optional: true
+
 end

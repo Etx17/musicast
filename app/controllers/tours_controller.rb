@@ -28,7 +28,7 @@ class ToursController < ApplicationController
     @tour = @category.tours.build(tour_params)
 
     if @tour.save
-      redirect_to competition_edition_competition_category_tour_path(@competition, @edition_competition, @category, @tour)
+      redirect_to category_path(@category), notice: "Tour crée avec succès."
     else
       render :new
     end
