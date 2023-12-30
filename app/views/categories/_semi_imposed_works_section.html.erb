@@ -1,29 +1,33 @@
  <!-- Section Œuvres à Contraintes Spécifiques : table "semi_imposed_works"-->
-  <div class="col-lg-4 border p-3 shadow d-flex flex-column align-items-center">
-    <h3 style="font-size: 3em;" class="px-3 rounded-pill text-white">Oeuvres à contraintes spécifiées</h3>
+  <div class="col-lg-4 border border-secondary pe-3 d-flex flex-column align-items-center">
+    <h3 style="font-size: 3em; color: rgb(247, 233, 167);" class="px-3 rounded-pill">Oeuvres à contraintes spécifiées</h3>
     <% if @category.semi_imposed_works.none? %>
-      <p class="text-muted p-2 padding border border-2 rounded"> <i class="fas fa-circle-info pe-2 "></i>Renseignez ici le programme à choix guidé du candidat. Chaque ligne ajoutée doit comporter un nombre d'oeuvres, et la consigne attenante. Par exemple: <br/> <br/>"Cinq mélodies en langue française (dont deux au moins composées après 1900), à l’exclusion de
+      <p class="text-muted p-2 padding border rounded"> <i class="fas fa-circle-info pe-2 "></i>Renseignez ici le programme à choix guidé du candidat. Chaque ligne ajoutée doit comporter un nombre d'oeuvres, et la consigne attenante. Par exemple: <br/> <br/>"Cinq mélodies en langue française (dont deux au moins composées après 1900), à l’exclusion de
       Gabriel Fauré et d’Édouard Lalo..." </p>
     <% end %>
     <% @category.semi_imposed_works.each do |semi_imposed_work| %>
-      <div class="card mb-3 shadow-sm w-100 bg-light" style="border-radius: 15px;">
-        <div class="card-header d-flex justify-content-between align-items-center">
-          <h4 class="card-title mb-0"><%= semi_imposed_work.title %></h4>
-          <div class="d-flex gap-3" >
-            <%= link_to edit_competition_edition_competition_category_semi_imposed_work_path(@competition, @edition_competition, @category, semi_imposed_work), class: 'btn btn-light text-dark btn-sm' do %>
-              <i class="fas fa-edit"></i>
-            <% end %>
-            <%= button_to competition_edition_competition_category_semi_imposed_work_path(@competition, @edition_competition, @category, semi_imposed_work), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-light text-dark btn-sm' do %>
-              <i class="fas fa-trash"></i>
-            <% end %>
+      <div class="text-white mb-3 w-100 border-top border-secondary">
+        <div class="d-flex justify-content-between align-items-center">
+          <div class="d-flex flex-column align-items-start pe-2">
+            <div class="d-flex justify-content-between w-100">
+              <h3 class="mb-0 border-top border-4 border-info text-start" style="font-weight: bold; font-size: <%= semi_imposed_work.title.length > 20 ? '1.7em' : '2em' %>;"><%= semi_imposed_work.title %></h3>              <div class="d-flex gap-3" >
+              <%= link_to edit_competition_edition_competition_category_semi_imposed_work_path(@competition, @edition_competition, @category, semi_imposed_work), class: 'btn btn-outline-light btn-sm border-0' do %>
+                <i class="fas fa-pencil"></i>
+              <% end %>
+              <%= button_to competition_edition_competition_category_semi_imposed_work_path(@competition, @edition_competition, @category, semi_imposed_work), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-outline-light btn-sm border-0' do %>
+                <i class="fas fa-trash"></i>
+              <% end %>
           </div>
+            </div>
+            <p class="text-start mb-0 " style="font-style: italic; color: #CCCCCC"><%= semi_imposed_work.guidelines %></p>
+          </div>
+
         </div>
-        <div class="card-body">
-          <p class="card-title text-secondary"><i class="fas fa-feather text-gradient"></i> <%= semi_imposed_work.guidelines %></p>
-          <span class="badge bg-primary rounded-pill">
+        <div class="d-flex justify-content-between align-items-center">
+          <span class="badge border border-info rounded-pill">
             <%= semi_imposed_work.number %> oeuvres
           </span>
-          <span class="badge bg-warning rounded-pill">
+          <span class="badge border border-info rounded-pill">
             <i class="fas fa-clock"></i><%= semi_imposed_work.max_length_minutes %> minutes max total
           </span>
         </div>
