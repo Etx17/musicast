@@ -83,6 +83,7 @@ class ChoiceImposedWorksController < ApplicationController
           :id,
           :title,
           :composer,
+          :infos,
           :length_minutes,
           :tonality,
           :character,
