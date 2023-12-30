@@ -27,6 +27,11 @@
   <div class="col-6 col-md-4">
     <%= f.input :tonality, label: false, required: true, input_html: { class: 'p-2 border rounded-pill', placeholder: 'Tonality *' } %>
   </div>
+
+  <div class="col-6 col-md-4">
+    <%= f.input :infos, label: false, required: true, input_html: { class: 'p-2 border rounded-pill', placeholder: 'Informations additionelles *' } %>
+  </div>
+
   <div class="col-6">
     <%= f.input :_destroy, as: :hidden %>
   </div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_29_145612) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_30_114616) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -54,6 +54,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_29_145612) do
     t.bigint "imposed_work_id"
     t.bigint "choice_imposed_work_id"
     t.bigint "semi_imposed_work_id"
+    t.text "infos"
     t.index ["choice_imposed_work_id"], name: "index_airs_on_choice_imposed_work_id"
     t.index ["imposed_work_id"], name: "index_airs_on_imposed_work_id"
     t.index ["semi_imposed_work_id"], name: "index_airs_on_semi_imposed_work_id"

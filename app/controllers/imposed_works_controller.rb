@@ -79,6 +79,7 @@ class ImposedWorksController < ApplicationController
           :length_minutes,
           :tonality,
           :character,
+          :infos,
           :oeuvre,
           :_destroy
         ]
