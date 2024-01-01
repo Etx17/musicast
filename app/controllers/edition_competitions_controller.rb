@@ -14,6 +14,7 @@ class EditionCompetitionsController < ApplicationController
 
   # GET /edition_competitions/new
   def new
+    @organism = Organism.find(params[:organism_id])
     @competition = Competition.find(params[:competition_id])
     @edition_competition = @competition.edition_competitions.build
   end
@@ -24,10 +25,11 @@ class EditionCompetitionsController < ApplicationController
 
   # POST /edition_competitions or /edition_competitions.json
   def create
+    @organism = Organism.find(params[:organism_id])
     @competition = Competition.find(params[:competition_id])
     @edition_competition = @competition.edition_competitions.build(edition_competition_params)
     if @edition_competition.save
-      redirect_to @competition, notice: 'Edition was successfully created.'
+      redirect_to organism_competition_path(@organism, @competition), notice: 'Edition was successfully created.'
     else
       render :new
     end

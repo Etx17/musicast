@@ -24,6 +24,8 @@ class CompetitionsController < ApplicationController
 
   # GET /competitions/1/edit
   def edit
+    @organism = Organism.find(params[:organism_id])
+    @competition = Competition.find(params[:id])
   end
 
   # POST /competitions or /competitions.json
@@ -41,14 +43,12 @@ class CompetitionsController < ApplicationController
 
   # PATCH/PUT /competitions/1 or /competitions/1.json
   def update
-    respond_to do |format|
-      if @competition.update(competition_params)
-        format.html { redirect_to competition_url(@competition), notice: "Competition was successfully updated." }
-        format.json { render :show, status: :ok, location: @competition }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @competition.errors, status: :unprocessable_entity }
-      end
+    @organism = Organism.find(params[:organism_id])
+    @competition = Competition.find(params[:id])
+    if @competition.update(competition_params)
+      redirect_to organism_competition_path(@organism,@competition), notice: "Competition was successfully updated."
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -56,10 +56,7 @@ class CompetitionsController < ApplicationController
   def destroy
     @competition.destroy
 
-    respond_to do |format|
-      format.html { redirect_to competitions_url, notice: "Competition was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    redirect_to organisateur_dashboard_path, notice: "Competition was successfully destroyed."
   end
 
   private

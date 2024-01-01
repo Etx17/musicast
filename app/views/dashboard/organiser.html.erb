@@ -7,7 +7,7 @@
           <h1 class="mb-4">Vos concours</h1>
           <div class="list-group">
             <% @competitions.each do |competition| %>
-              <%= link_to competition_path(competition) do %>
+              <%= link_to organism_competition_path(@organism, competition) do %>
                 <div class="card" data-controller="hover" data-action="mouseenter->hover#hover mouseleave->hover#unhover" style="width: 100%; height: 300px; background-image: url('https://source.unsplash.com/random/?applications/300/200'); background-size: cover;">
                   <div class="card-img-overlay d-flex justify-content-center align-items-center" style="background-color: rgba(0, 0, 0, 0.7);" >
                     <h2 class="card-title text-white text-center" style="font-size: 3em;" data-hover-target="text"><%= competition.nom_concours %></h1>
@@ -17,7 +17,7 @@
 
             <% end %>
           </div>
-          <%= link_to 'Créer une compétition', new_organism_competition_path(@organism), class: 'btn btn-outline-dark mt-3' %>
+          <%= link_to 'Créer un concours', new_organism_competition_path(@organism), class: 'btn btn-outline-dark mt-3' %>
         </div>
       </div>
     </div>
