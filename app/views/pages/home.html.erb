@@ -1,89 +1,41 @@
-    <section class="text-white py-5 bg-black" style=" background-image: url('<%= asset_path('9.png') %>'); background-size: cover;">
-      <div class="container">
-        <div class="row align-items-center">
-          <div class="col-md-6">
 
-            <%# <h1 style="font-size: 60px">Welcome to <span style="font-size: 2em;" class="text-gradient">Musicast</span></h1> %>
-            <h1 style="font-size: 60px"><span class="text-gradient", style="font-size: 1.3em;">Musicast</span> <br>Organize competitions</h1>
-            <%# <p class="lead">Simplifies the process of organizing classic arts competitions and managing contestants. Adapts to your specific structure requirements.</p> %>
-            <p class="lead" style="color: rgb(200, 200, 200)">A set of tools for a seamless experience of organising, managing and promoting your competition and auditions to a broad variety of artists. </p>
-            <%= simple_form_for(Lead.new) do |f| %>
-              <div class="input-group">
-                <%= f.input :email,
-                  label: false,
-                  placeholder: "Your email adress",
-                  class: 'form-control text-white',
-                  # hint: 'Sign up to get notified when we launch!',
-                  input_html: {style:"color: 'white';width: '75%'; font-size: 1.2em; padding: 0.40em; border-top-left-radius: 40px; border-bottom-left-radius: 40px;"}
-                  %>
-                <div class="">
-                  <%= f.button :submit, 'Join us', class: 'btn btn-dark shadow large-button gradient-button' %>
-                </div>
-              </div>
-                <small class="text-gradient">Sign up to get notified when we launch!</small>
-            <% end %>
-
-            <p class="muted text-secondary"> <i class="fas fa-check text-success pe-2"></i> Manage your competition from start to finish</p>
-            <p class="muted text-secondary"> <i class="fas fa-check text-success pe-2"></i> Receive complete dossiers</p>
-            <p class="muted text-secondary"> <i class="fas fa-check text-success pe-2"></i> Simplify payments and contestant registration</p>
-            <p class="muted text-secondary"> <i class="fas fa-check text-success pe-2"></i> Generate performance order, assign rooms, and score contestants</p>
-            <p class="muted text-secondary"> <i class="fas fa-check text-success pe-2"></i> Send out invitations and notifications for the competition to all participants with ease</p>
-            <p class="mt-2 text-muted">Get ready to revolutionize your competitions <a href="#" class="text-white">Terms and Conditions</a></p>
-          </div>
-          <div class="col-md-6">
-            <img src="/placeholder.svg" alt="App Mockup" class="img-fluid rounded-lg shadow">
-          </div>
-        </div>
-      </div>
-
-
-    <div class="container" style="margin-top: 130px;">
-      <div class="row gap-5 justify-content-center">
-        <div class="col-md-3 bg-black border-top" style="border-radius: 8px; padding: 16px;">
-          <div class="text-center mb-4">
-            <i class="text-secondary far fa-user-circle fa-5x"></i>
-          </div>
-          <h2 class="h2 text-secondary-gradient">Registration Management</h2>
-          <p>Manage sign-ups, document fees, and receive organized submissions of audios, videos, MP3s, and photos from contestants.</p>
-        </div>
-        <div class="col-md-3 bg-black border-top" style="border-radius: 8px; padding: 16px;">
-          <div class="text-center mb-4">
-            <i class="text-secondary fa-regular fa-clipboard fa-5x"></i>
-          </div>
-          <h2 class="h2 text-secondary-gradient">Order Management</h2>
-          <p>Efficiently manage the order of performances and logistics to ensure a smooth competition.</p>
-        </div>
-        <div class="col-md-3 bg-black border-top" style="border-radius: 8px; padding: 16px;">
-          <div class="text-center mb-4">
-            <i class="text-secondary fa-regular fa-envelope fa-5x"></i>
-          </div>
-          <h2 class="h2 text-secondary-gradient">Effective Communication</h2>
-          <p>Send out invitations and notifications for the competition to all participants with ease.</p>
-        </div>
-      </div>
-
-      <div class="row mt-4 gap-5 justify-content-center">
-        <div class="col-md-3 bg-black border-top" style="border-radius: 8px; padding: 16px;">
-          <div class="text-center mb-4">
-            <i class="text-secondary fa-regular fa-file-alt fa-5x"></i>
-          </div>
-          <h2 class="h2 text-secondary-gradient">Complete Dossier Reception</h2>
-          <p>Receive only complete dossiers, view and sort applications effortlessly.</p>
-        </div>
-        <div class="col-md-3 bg-black border-top" style="border-radius: 8px; padding: 16px;">
-          <div class="text-center mb-4">
-            <i class="text-secondary fas fa-globe fa-5x"></i>
-          </div>
-          <h2 class="h2 text-secondary-gradient">Online Presence</h2>
-          <p>Have a personalized competition page, simplify payments and contestant registration.</p>
-        </div>
-        <div class="col-md-3 bg-black border-top" style="border-radius: 8px; padding: 16px;">
-          <div class="text-center mb-4">
-            <i class="text-secondary fas fa-tools fa-5x"></i>
-          </div>
-          <h2 class="h2 text-secondary-gradient">Simplify Your Life</h2>
-          <p>Generate performance order, assign rooms, and score contestants, all in one place.</p>
-        </div>
-      </div>
-    </div>
-    </section>
+<div class="d-flex container justify-content-center mt-4 gap-3">
+  <input
+    class="form-control rounded-md border-gray-300"
+    placeholder="Instrument..."
+    type="text"
+  />
+  <input
+    class="form-control rounded-md border-gray-300"
+    placeholder="Age Range..."
+    type="text"
+  />
+  <input
+    class="form-control rounded-md border-gray-300"
+    placeholder="Country..."
+    type="text"
+  />
+  <button
+    class="btn btn-secondary d-inline-flex align-items-center justify-content-center"
+    type="button"
+  >
+    Participation Type
+    <!-- SVG icon -->
+  </button>
+</div>
+<main class="container mt-4">
+  <h2 class="text-center fw-bold mb-4">
+    Competitions
+    <!-- Labels for Instrument and Country -->
+  </h2>
+  <div class="row g-4">
+    <%= render "edition_competition_card" %>
+    <%= render "edition_competition_card" %>
+    <%= render "edition_competition_card" %>
+    <%= render "edition_competition_card" %>
+    <%= render "edition_competition_card" %>
+    <%= render "edition_competition_card" %>
+    <%= render "edition_competition_card" %>
+    <!-- Repeat for other competitions -->
+  </div>
+</main>

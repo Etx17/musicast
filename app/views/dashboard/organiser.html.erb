@@ -1,33 +1,31 @@
 <div class="container mt-5">
-  <h1 class="text-center" style='font-size: 6em;'>Tableau de Bord</h1>
   <div class="row">
-    <div class="col-md-6">
-      <div class="card border-0 shadow-sm rounded">
+  <h1 class="text-center" style='font-size: 5em;'>Tableau de Bord</h1>
+    <div class="col-12 col-md-6">
+      <div class="card border-0 shadow-sm rounded" style="background: #EEEEEE;">
         <div class="card-body">
           <h1 class="mb-4">Vos concours</h1>
           <div class="list-group">
             <% @competitions.each do |competition| %>
               <%= link_to competition_path(competition) do %>
-                <div class="card" style="width: 100%; height: 300px; background-image: url('https://source.unsplash.com/random/?applications/300/200'); background-size: cover;">
-                  <div class="card-img-overlay d-flex justify-content-center align-items-center" style="background-color: rgba(0, 0, 0, 0.5);">
-                    <h2 class="card-title text-white" style="font-size: 3em;"><%= competition.nom_concours %></h1>
+                <div class="card" data-controller="hover" data-action="mouseenter->hover#hover mouseleave->hover#unhover" style="width: 100%; height: 300px; background-image: url('https://source.unsplash.com/random/?applications/300/200'); background-size: cover;">
+                  <div class="card-img-overlay d-flex justify-content-center align-items-center" style="background-color: rgba(0, 0, 0, 0.7);" >
+                    <h2 class="card-title text-white text-center" style="font-size: 3em;" data-hover-target="text"><%= competition.nom_concours %></h1>
                   </div>
                 </div>
               <% end %>
 
             <% end %>
           </div>
-          <%= link_to 'Créer une compétition', new_competition_path, class: 'btn btn-secondary mt-3' %>
+          <%= link_to 'Créer une compétition', new_organism_competition_path(@organism), class: 'btn btn-outline-dark mt-3' %>
         </div>
       </div>
     </div>
-    <div class="col-md-6">
-      <div class="card border-0 shadow-sm rounded mb-4">
+    <div class="col-12 col-md-6">
+      <div class="card border-0 shadow-sm rounded mb-4" style="background: #EEEEEE;">
         <div class="card-body">
           <h2 class="mb-4">Informations de l'organisme</h2>
-          <p><strong>Nom:</strong> <%= @organism.nom %></p>
-          <p><strong>Description:</strong> <%= @organism.description %></p>
-          <!-- Add more organism information here -->
+          <%= turbo_frame_tag 'organism_frame', src: organism_path(@organism) %>
         </div>
       </div>
     </div>

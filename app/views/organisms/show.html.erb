@@ -1,10 +1,8 @@
+<%= turbo_frame_tag 'organism_frame' do %>
+
 <p style="color: green"><%= notice %></p>
 
 <%= render @organism %>
+<%= button_to 'Modifier', edit_organism_path(@organism), method: :get, data: { turbo_action: 'replace', turbo_frame: 'organism_frame' }, class: 'btn btn-outline-dark' %>
 
-<div>
-  <%= link_to "Edit this organism", edit_organism_path(@organism) %> |
-  <%= link_to "Back to organisms", organisms_path %>
-
-  <%= button_to "Destroy this organism", @organism, method: :delete %>
-</div>
+<% end %>

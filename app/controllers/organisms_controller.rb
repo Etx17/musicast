@@ -36,14 +36,10 @@ class OrganismsController < ApplicationController
 
   # PATCH/PUT /organisms/1 or /organisms/1.json
   def update
-    respond_to do |format|
-      if @organism.update(organism_params)
-        format.html { redirect_to organism_url(@organism), notice: "Organism was successfully updated." }
-        format.json { render :show, status: :ok, location: @organism }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @organism.errors, status: :unprocessable_entity }
-      end
+    if @organism.update(organism_params)
+      redirect_to @organism, status: :see_other
+    else
+      render :edit
     end
   end
 
@@ -65,6 +61,6 @@ class OrganismsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def organism_params
-      params.require(:organism).permit(:organisateur_id, :nom, :description)
+      params.require(:organism).permit(:organisateur_id, :nom, :description, :photo, :address_id)
     end
 end

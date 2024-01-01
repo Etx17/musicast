@@ -1,0 +1,37 @@
+<div class="col-12 col-md-6 col-lg-4">
+  <div class="card h-100 shadow-sm position-relative">
+    <img src="https://source.unsplash.com/random/?competition/300x200" class="card-img-top" alt="Competition Image" style="max-height: 300px; object-fit: cover;">
+    <small class="text-white badge border bg-primary rounded-pill position-absolute " style="top: 10px; left: 10px;">10 days remaining</small>
+    <small class="text-muted position-absolute "style="top: 10px; right: 10px;">Inscriptions: 10 jour(s) restants</small>
+    <div class="card-body">
+      <h3 class="card-title">Competition 1</h3>
+      <div class="d-flex flex-column">
+        <span class="card-text text-secondary border-end border-light "><i class="fas fa-location text-dark me-2"></i>New York, Illinois, USA</span>
+        <small class=" text-secondary "><i class="fas fa-calendar text-dark me-2"></i>du <span class="text-dark border-bottom border-info" style="font-size: 1.2em"><strong>10 août</strong></span> au <span style="font-size: 1.2em" class="text-dark border-bottom border-info"><strong>16 juillet</strong></span> 2024</small>
+      </div>
+      <div class="mt-2">
+      <%# Prendre un array de tous les isntruments des categories et faire .uniq pour avoir les differentes disciplines %>
+        <span class="badge bg-primary">Subcategory 1</span>
+        <span class="badge bg-secondary">Subcategory 2</span>
+      </div>
+
+
+
+      <div class="mt-2">
+      <!--
+
+      < if start_date.month == end_date.month %>
+        <p class="text-muted">du < start_date.day %> au < end_date.day %> < I18n.t("date.month_names")[start_date.month] %> < start_date.year %></p>
+      <  else %>
+        <p class="text-muted">du < start_date.day %> < I18n.t("date.month_names")[start_date.month] %> au < end_date.day %> < I18n.t("date.month_names")[end_date.month] %> < start_date.year %></p>
+      < end %>
+      -->
+</div>
+    </div>
+
+    <div class="card-footer d-flex justify-content-between">
+
+      <small class="text-muted">Inscription: $50</small>
+    </div>
+  </div>
+</div>

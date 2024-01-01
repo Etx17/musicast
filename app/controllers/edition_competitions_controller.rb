@@ -48,12 +48,12 @@ class EditionCompetitionsController < ApplicationController
 
   # DELETE /edition_competitions/1 or /edition_competitions/1.json
   def destroy
-    @edition_competition.destroy
-
-    respond_to do |format|
-      format.html { redirect_to edition_competitions_url, notice: "Edition competition was successfully destroyed." }
-      format.json { head :no_content }
+    unless @edition_competition.destroy
+      @edition_competition.errors.full_messages.each do |message|
+        puts message
+      end
     end
+    redirect_to competitions_url(@edition_competition.competition), notice: "Edition competition was successfully destroyed."
   end
 
   private

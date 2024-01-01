@@ -1,10 +1,5 @@
-<h1>Editing organism</h1>
-
-<%= render "form", organism: @organism %>
-
+<%= turbo_frame_tag 'organism_frame' do %>
+  <%= render "form", organism: @organism %>
+  <%= link_to "Retour", organism_path(@organism), method: :get, data: { turbo_action: 'replace', turbo_frame: 'organism_frame' }, class: 'btn btn-outline-dark mt-2' %>
+<% end %>
 <br>
-
-<div>
-  <%= link_to "Show this organism", @organism %> |
-  <%= link_to "Back to organisms", organisms_path %>
-</div>

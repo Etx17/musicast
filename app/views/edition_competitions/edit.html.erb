@@ -1,2 +1,4 @@
-
-<%= render "form", edition_competition: @edition_competition %>
+<%= turbo_frame_tag 'edition_competition_frame' do %>
+  <%= render "form", edition_competition: @edition_competition %>
+    <%= button_to 'Back', edition_competition_path(@edition_competition), method: :get, data: { turbo_action: 'replace', turbo_frame: 'edition_competition_frame' }, class: 'btn btn-secondary' %>
+<% end %>

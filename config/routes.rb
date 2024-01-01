@@ -14,21 +14,23 @@ Rails.application.routes.draw do
   resources :airs
   resources :programme_requirements
   resources :requirement_items
-  resources :competitions do
-    resources :edition_competitions, only: [:new, :create] do
-      resources :categories, only: [:new, :create, :destroy] do
-        resources :tours
-        resources :requirement_items
-        resources :inscriptions
-        resources :choice_imposed_works
-        resources :semi_imposed_works
+  resources :organisms do
+    resources :competitions do
+      resources :edition_competitions, only: [:new, :create] do
+        resources :categories, only: [:new, :create, :destroy] do
+          resources :tours
+          resources :requirement_items
+          resources :inscriptions
+          resources :choice_imposed_works
+          resources :semi_imposed_works
+        end
       end
     end
   end
   resources :categories
   resources :edition_competitions, only: [:show, :edit, :update, :destroy]
   resources :partners
-  resources :organisms
+
   resources :jures
   resources :candidats
   resources :organisateurs
@@ -38,7 +40,8 @@ Rails.application.routes.draw do
     sessions: 'users/sessions',
     # omniauth_callbacks: 'users/omniauth_callbacks'
   }
-  root to: "pages#home"
+  root to: "pages#landing"
+  get "pages/home", to: 'pages#home'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")

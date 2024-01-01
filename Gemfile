@@ -7,6 +7,7 @@ ruby "3.0.4"
 gem "rails", "~> 7.0.8"
 gem 'faraday'
 gem 'nokogiri'
+
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
 
@@ -60,6 +61,9 @@ group :development, :test do
   gem "dotenv-rails"
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
+  gem 'pry-rails'
+  gem 'pry-byebug'
+  gem 'annotate'
 end
 
 group :development do

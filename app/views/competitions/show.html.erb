@@ -17,10 +17,10 @@
         <% end %>
       <% end %>
        <% if current_user.organisateur == @competition.organisateur %>
-        <div class="card border-0 shadow-sm rounded mb-4 mt-4">
+        <div class="card border-0 shadow-sm rounded mb-4 mt-4 bg-grey">
           <div class="card-body">
             <h2 class="mb-4">Générer une édition du concours</h2>
-            <%= link_to new_competition_edition_competition_path(@competition), class: 'btn btn-dark w-100' do %>
+            <%= link_to new_organism_competition_edition_competition_path(@organism, @competition), class: 'btn btn-dark w-100' do %>
               <i class="fas fa-plus"></i> Ajouter une édition
             <% end %>
           </div>
@@ -30,21 +30,22 @@
 
     <div class="col-md-6">
       <h1 class="text-center mb-5" style="font-size: 5em;">Compétition</h1>
-      <div class="card border-0 shadow-sm rounded">
+      <div class="card border-0 shadow-sm rounded bg-grey">
         <div class="card-body">
           <p class="text-success"><%= notice %></p>
 
-            <div class="mt-3 d-flex justify-content-between">
-              <h2>Informations</h2>
-              <div class="d-flex gap-3">
-                <%= link_to edit_competition_path(@competition), data: { turbo_action: 'replace', turbo_frame: "competition_#{@competition.id}" }, class: 'btn btn-outline-dark', style: 'width: 100px; height: 40px;' do %>
-                  <i class="fas fa-pencil"></i>
-                <% end %>
+          <div class="mt-3 d-flex justify-content-between">
+            <h2>Informations</h2>
+            <div class="d-flex gap-3">
+              <%= link_to edit_organism_competition_path(@organism, @competition), data: { turbo_action: 'replace', turbo_frame: "competition_#{@competition.id}" }, class: 'btn btn-outline-dark', style: 'width: 100px; height: 40px;' do %>
+                <i class="fas fa-pencil"></i>
+              <% end %>
 
-                <%= button_to @competition, method: :delete, class: 'btn btn-outline-dark', style: 'width: 100px; height: 40px;' do %>
-                  <i class="fas fa-trash"></i>
-                <% end %>
-              </div>
+              <%= button_to organism_competition_path(@organism, @competition), method: :delete, class: 'btn btn-outline-dark', style: 'width: 100px; height: 40px;' do %>
+                <i class="fas fa-trash"></i>
+              <% end %>
+            </div>
+
           </div>
           <%= turbo_frame_tag "competition_#{@competition.id}" do %>
             <%= render @competition %>

@@ -24,14 +24,14 @@ class Users::SessionsController < Devise::SessionsController
   def after_sign_in_path_for(resource)
     if Organisateur.exists?(user: resource)
       organisateur_dashboard_path
-    elsif Candidate.exists?(user: resource)
+    elsif Candidat.exists?(user: resource)
       candidat_dashboard_path
-    elsif Jury.exists?(user: resource)
+    elsif Jure.exists?(user: resource)
       jury_dashboard_path
     elsif Partner.exists?(user: resource)
       partner_dashboard_path
     else
-      competitions_path
+      home_path
     end
   end
   # protected

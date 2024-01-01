@@ -1,15 +1,37 @@
+<%= simple_form_for([@organism, @competition]) do |f| %>
+    <%= f.error_notification %>
+    <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
-<%= simple_form_for(@competition) do |f| %>
-  <%= f.error_notification %>
-  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
-  <div class="form-inputs">
-    <%= f.input :nom_concours, class: " p-3 border border-1" %>
-    <%= f.input :description %>
-    <%= f.file_field :photo %>
-  </div>
 
-  <div class="form-actions">
-    <%= f.button :submit, class: "btn btn-dark" %>
-  </div>
+    <div class="my-5 w-100">
+      <h1 class="text-center" style="font-size: 3em;">Créer un concours</h1>
+      <div class="p-2 bg-light text-dark border col-12 col-sm-6 mx-auto" style="border-radius: 12px;">
+        <span class="text-secondary" > <i class="fas fa-info-circle" ></i>
+          Attention: ne renseignez pas d'année dans le titre du concours.
+          Vous publierez ensuite des éditions de ce concours avec tous les détails nécessaires
+        </span>
+      </div>
+    </div>
+    <div class="row mt-5">
+      <div class="form-inputs col-12 col-md-6">
+        <%= f.input :nom_concours, class: " p-3 border border-1" %>
+        <%= f.input :description %>
+      </div>
+
+      <div class="form-inputs col-12 col-md-6 d-flex flex-column gap-1">
+        <%= f.label :photo, "Ajouter une bannière (vous pouvez le faire plus tard). Dimensions recommandées : Largeur complète, hauteur 100px." %>
+        <div data-controller="image-preview">
+          <%= f.input :photo, as: :file, input_html: { data: { image_preview_target: "input" } }, label: false %>
+          <div class="w-100" style="height: 150px; background: #f8f9fa; max-width: 500px;">
+            <div data-image-preview-target="preview" class="h-100 w-100" style="background-size: contain; display: none;"></div>
+            <div data-image-preview-target="placeholder" class="text-center p-5">No image yet</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <%= f.button :submit, class: "btn btn-dark my-3" %>
+    </div>
 <% end %>

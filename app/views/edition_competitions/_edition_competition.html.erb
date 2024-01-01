@@ -1,3 +1,5 @@
+<%= turbo_frame_tag 'edition_competition_frame' do %>
+
 <div id="<%= dom_id edition_competition %>">
   <p>
     <strong>Competition:</strong>
@@ -13,5 +15,10 @@
     <strong>Details specifiques:</strong>
     <%= edition_competition.details_specifiques %>
   </p>
-
+  <div class="d-flex justify-content-between">
+    <%= button_to "Modifier", edit_edition_competition_path(edition_competition), method: :get, data: { turbo_action: 'replace', turbo_frame: 'edition_competition_frame' }, class: 'btn btn-outline-dark' %>
+    <%= button_to "Supprimer cette édition", edition_competition, method: :delete, class: 'btn btn-outline-dark', data: { confirm: "Supprimer l'édition?" } %>
+  </div>
 </div>
+
+<% end %>
