@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_01_115612) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_02_123438) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -149,6 +149,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_01_115612) do
     t.text "details_specifiques"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "end_of_registration"
+    t.date "start_date"
+    t.date "end_date"
     t.index ["competition_id"], name: "index_edition_competitions_on_competition_id"
   end
 

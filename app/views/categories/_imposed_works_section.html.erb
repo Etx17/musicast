@@ -11,7 +11,7 @@
             <i class="fas fa-pencil"></i> Editer la liste
           <% end %>
 
-          <%= button_to imposed_work_path(imposed_work, redirect_path: category_path(@category)), method: :delete, data: { confirm: 'Are you sure?', turbo_confirm: "Are you sure?" }, class: 'btn btn-light btn-sm', style: 'width: 100px;' do %>
+          <%= button_to imposed_work_path(imposed_work, redirect_path: organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category)), method: :delete, data: { confirm: 'Are you sure?', turbo_confirm: "Are you sure?" }, class: 'btn btn-light btn-sm', style: 'width: 100px;' do %>
             <i class="fas fa-trash"></i> Supprimer
           <% end %>
         </div>
@@ -26,7 +26,7 @@
               <p class="text-start mb-0" style="font-size: 0.8em; color: #CCCCCC;"><%= work.infos %></p>
             </div>
             <div class="d-flex flex-column align-items-center pe-2">
-              <%= button_to air_path(work, redirect_path: category_path(@category)), method: :delete, data: { confirm: 'Are you sure?', turbo_confirm: "Are you sure?" }, class: 'btn btn-outline-light btn-sm border-0' do %>
+              <%= button_to air_path(work, redirect_path: organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category)), method: :delete, data: { confirm: 'Are you sure?', turbo_confirm: "Are you sure?" }, class: 'btn btn-outline-light btn-sm border-0' do %>
                 <i class="fas fa-trash"></i>
               <% end %>
               <span class="text-start mb-0 badge border rounded-pill mt-2" style="font-size: 0.8em; color: #CCCCCC;"><i class="fas fa-key me-2"></i><%= work.tonality %></span>
@@ -38,5 +38,5 @@
     </div>
   <% end %>
 
- 
+
 </div>

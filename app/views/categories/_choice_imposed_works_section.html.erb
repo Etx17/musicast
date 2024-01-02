@@ -10,10 +10,10 @@
           <div class="d-flex justify-content-between w-100">
             <h2 class="text-light" style="font-weight: bold; font-size: <%= choice_imposed_work.title.length > 20 ? '2.5em' : '3em' %>;"><%= choice_imposed_work.title %></h2>
             <div class="d-flex justify-content-start align-items-center">
-              <%= link_to edit_competition_edition_competition_category_choice_imposed_work_path(@competition, @edition_competition, @category, choice_imposed_work), class: 'btn btn-outline-light btn-sm border-0 mb-2' do %>
+              <%= link_to edit_organism_competition_edition_competition_category_choice_imposed_work_path(@organism, @competition, @edition_competition, @category, choice_imposed_work), class: 'btn btn-outline-light btn-sm border-0 mb-2' do %>
                 <i class="fas fa-edit"></i>
               <% end %>
-              <%= button_to competition_edition_competition_category_choice_imposed_work_path(@competition, @edition_competition, @category, choice_imposed_work, redirect_path: category_path(@category)), method: :delete, data: { confirm: 'Are you sure?', turbo_confirm: "Are you sure?" }, class: 'btn btn-outline-light btn-sm border-0 mb-2' do %>
+              <%= button_to organism_competition_edition_competition_category_choice_imposed_work_path(@organism, @competition, @edition_competition, @category, choice_imposed_work, redirect_path: organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category)), method: :delete, data: { confirm: 'Are you sure?', turbo_confirm: "Are you sure?" }, class: 'btn btn-outline-light btn-sm border-0 mb-2' do %>
                 <i class="fas fa-trash"></i>
               <% end %>
             </div>
@@ -37,10 +37,10 @@
             </div>
             <div class="d-flex flex-column align-items-end pe-2">
               <div class="d-flex">
-                <%= link_to edit_air_path(work, redirect_path: category_path(@category)), class: 'btn btn-outline-light btn-sm border-0' do %>
+                <%= link_to edit_air_path(work, redirect_path: organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category)), class: 'btn btn-outline-light btn-sm border-0' do %>
                   <i class="fas fa-pencil"></i>
                 <% end %>
-                <%= button_to air_path(work, redirect_path: category_path(@category)), method: :delete, data: { confirm: 'Are you sure?', turbo_confirm: "Are you sure?" }, class: 'btn btn-outline-light btn-sm border-0' do %>
+                <%= button_to air_path(work, redirect_path: organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category)), method: :delete, data: { confirm: 'Are you sure?', turbo_confirm: "Are you sure?" }, class: 'btn btn-outline-light btn-sm border-0' do %>
                   <i class="fas fa-trash"></i>
                 <% end %>
               </div>
@@ -55,7 +55,7 @@
     </div>
   <% end %>
 
-    <%= link_to new_competition_edition_competition_category_choice_imposed_work_path(@competition, @edition_competition, @category), class: 'btn btn-outline-light btn-sm border-1 w-100 mt-3' do %>
+    <%= link_to new_organism_competition_edition_competition_category_choice_imposed_work_path(@organism, @competition, @edition_competition, @category), class: 'btn btn-outline-light btn-sm border-1 w-100 mt-3' do %>
       <i class="fas fa-plus"></i> Ajouter une nouvelle liste à choix
     <% end %>
 </div>

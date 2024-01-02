@@ -3,7 +3,7 @@ class EditionCompetition < ApplicationRecord
   belongs_to :competition
   has_one_attached :photo, dependent: :destroy
   has_one :address, as: :addressable, dependent: :destroy
-
+  accepts_nested_attributes_for :address, allow_destroy: true
 
   def disciplines
     categories.map(&:discipline).uniq

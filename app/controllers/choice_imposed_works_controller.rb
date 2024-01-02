@@ -21,6 +21,7 @@ class ChoiceImposedWorksController < ApplicationController
 
   # GET /choice_imposed_works/1/edit
   def edit
+    @organism = Organism.find(params[:organism_id])
     @competition = Competition.find(params[:competition_id])
     @edition_competition = EditionCompetition.find(params[:edition_competition_id])
     @category = Category.find(params[:category_id])

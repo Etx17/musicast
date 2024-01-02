@@ -8,15 +8,17 @@ class EditionCompetitionsController < ApplicationController
 
   # GET /edition_competitions/1 or /edition_competitions/1.json
   def show
+    @organism = Organism.find(params[:organism_id])
+    @competition = Competition.find(params[:competition_id])
     @edition_competition = EditionCompetition.find(params[:id])
-    @competition = @edition_competition.competition
   end
 
   # GET /edition_competitions/new
   def new
     @organism = Organism.find(params[:organism_id])
     @competition = Competition.find(params[:competition_id])
-    @edition_competition = @competition.edition_competitions.build
+    @edition_competition = EditionCompetition.new
+    @edition_competition.build_address
   end
 
   # GET /edition_competitions/1/edit
@@ -31,7 +33,7 @@ class EditionCompetitionsController < ApplicationController
     if @edition_competition.save
       redirect_to organism_competition_path(@organism, @competition), notice: 'Edition was successfully created.'
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -66,6 +68,11 @@ class EditionCompetitionsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def edition_competition_params
-      params.require(:edition_competition).permit(:competition_id, :annee, :details_specifiques)
+      params.require(:edition_competition).permit(
+        :competition_id,
+        :annee,
+        :details_specifiques,
+        address_attributes: [:line1, :line2, :zipcode, :city, :country]
+      )
     end
 end

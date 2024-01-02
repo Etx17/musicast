@@ -16,8 +16,8 @@ Rails.application.routes.draw do
   resources :requirement_items
   resources :organisms do
     resources :competitions do
-      resources :edition_competitions, only: [:new, :create] do
-        resources :categories, only: [:new, :create, :destroy] do
+      resources :edition_competitions do
+        resources :categories do
           resources :tours
           resources :requirement_items
           resources :inscriptions
@@ -27,8 +27,6 @@ Rails.application.routes.draw do
       end
     end
   end
-  resources :categories
-  resources :edition_competitions, only: [:show, :edit, :update, :destroy]
   resources :partners
 
   resources :jures

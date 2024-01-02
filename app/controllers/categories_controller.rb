@@ -1,3 +1,4 @@
+require 'music_categories'
 class CategoriesController < ApplicationController
   before_action :set_category, only: %i[ show edit update destroy ]
 
@@ -8,6 +9,7 @@ class CategoriesController < ApplicationController
 
   # GET /categories/1 or /categories/1.json
   def show
+    @organism = Organism.find(params[:organism_id])
     @category = Category.find(params[:id])
     @edition_competition = @category.edition_competition
     @competition = @edition_competition.competition
@@ -17,11 +19,19 @@ class CategoriesController < ApplicationController
 
   # GET /categories/new
   def new
+    @organism = Organism.find(params[:organism_id])
+    @competition = Competition.find(params[:competition_id])
+    @edition_competition = EditionCompetition.find(params[:edition_competition_id])
+
     @category = Category.new
   end
 
   # GET /categories/1/edit
   def edit
+    @organism = Organism.find(params[:organism_id])
+    @competition = Competition.find(params[:competition_id])
+    @edition_competition = EditionCompetition.find(params[:edition_competition_id])
+    @category = Category.find(params[:id])
   end
 
   # POST /categories or /categories.json

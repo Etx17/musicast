@@ -1,32 +1,16 @@
 
 <div class="d-flex container justify-content-center mt-4 gap-3">
-  <input
-    class="form-control rounded-md border-gray-300"
-    placeholder="Instrument..."
-    type="text"
-  />
-  <input
-    class="form-control rounded-md border-gray-300"
-    placeholder="Age Range..."
-    type="text"
-  />
-  <input
-    class="form-control rounded-md border-gray-300"
-    placeholder="Country..."
-    type="text"
-  />
-  <button
-    class="btn btn-secondary d-inline-flex align-items-center justify-content-center"
-    type="button"
-  >
-    Participation Type
-    <!-- SVG icon -->
-  </button>
+  <%= form_tag(request.path, method: :get) do %>
+    <div class="d-flex container justify-content-center mt-4 gap-3">
+      <%= select_tag :discipline, options_for_select( @disciplines.map { |id, name| [name, id] } ), class: "form-control rounded-md border-gray-300", prompt: "Discipline" %>
+      <%= country_select :country, :country, { prompt: "Country" }, { class: "form-control rounded-md border-gray-300" } %>
+      <%= submit_tag "Search", class: "btn btn-primary" %>
+    </div>
+  <% end %>
 </div>
 <main class="container mt-4">
   <h2 class="text-center fw-bold mb-4">
     Competitions
-    <!-- Labels for Instrument and Country -->
   </h2>
   <div class="row g-4">
     <%= render "edition_competition_card" %>
