@@ -13,6 +13,6 @@
   <%# Photo  %>
   <div class="mt-3">
     <span class="badge bg-white border border-dark text-dark">Photo:</span>
-    <span class="ms-2"><%= competition.photo.name %></span>
+     <%= cl_image_tag competition.photo.key, height: 300, width: 400, crop: :fill   if competition.photo.attached? %>
   </div>
 </div>

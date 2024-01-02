@@ -5,6 +5,15 @@ export default class extends Controller {
   static targets = ["input", "preview", "placeholder"]
 
   connect() {
+    // Check if an image URL is set on the data attribute
+    const imageUrl = this.data.get("url");
+    if (imageUrl) {
+      // If an image URL is set, display the existing image
+      this.previewTarget.style.backgroundImage = `url('${imageUrl}')`;
+      this.previewTarget.style.display = 'block';
+      this.placeholderTarget.style.display = 'none';
+    }
+
     this.inputTarget.addEventListener("change", (event) => {
       if (event.target.files.length) {
         this.updateThumbnail(event.target.files[0]);

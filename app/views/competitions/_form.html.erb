@@ -20,9 +20,8 @@
       </div>
 
       <div class="form-inputs col-12 col-md-6 d-flex flex-column gap-1">
-        <%= f.label :photo, "Ajouter une bannière (vous pouvez le faire plus tard). Dimensions recommandées : Largeur complète, hauteur 100px." %>
-        <div data-controller="image-preview">
-          <%= f.input :photo, as: :file, input_html: { data: { image_preview_target: "input" } }, label: false %>
+       <div data-controller="image-preview" data-image-preview-url="<%= @competition.photo.attached? ? url_for(@competition.photo) : '' %>">
+          <%= f.input :photo, as: :file, input_html: { data: { image_preview_target: "input" } }, label: "Ajouter une bannière (vous pouvez le faire plus tard). Dimensions recommandées : Largeur complète, hauteur 100px." %>
           <div class="w-100" style="height: 150px; background: #f8f9fa; max-width: 500px;">
             <div data-image-preview-target="preview" class="h-100 w-100" style="background-size: contain; display: none;"></div>
             <div data-image-preview-target="placeholder" class="text-center p-5">No image yet</div>
@@ -32,6 +31,6 @@
     </div>
 
     <div class="form-actions">
-      <%= f.button :submit, class: "btn btn-dark my-3" %>
+      <%= f.button :submit, "Enregistrer", class: "btn btn-dark my-3" %>
     </div>
 <% end %>

@@ -26,6 +26,10 @@ class CompetitionsController < ApplicationController
   def edit
     @organism = Organism.find(params[:organism_id])
     @competition = Competition.find(params[:id])
+
+    unless request.xhr?
+      redirect_to organisateur_dashboard_path # replace with the path of your main page
+    end
   end
 
   # POST /competitions or /competitions.json
