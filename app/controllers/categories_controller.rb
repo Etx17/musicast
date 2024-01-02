@@ -1,6 +1,8 @@
 require 'music_categories'
+
 class CategoriesController < ApplicationController
   before_action :set_category, only: %i[ show edit update destroy ]
+  before_action :set_parent_resources, only: %i[ show new edit create update destroy ]
 
   # GET /categories or /categories.json
   def index
@@ -9,66 +11,44 @@ class CategoriesController < ApplicationController
 
   # GET /categories/1 or /categories/1.json
   def show
-    @organism = Organism.find(params[:organism_id])
-    @category = Category.find(params[:id])
-    @edition_competition = @category.edition_competition
-    @competition = @edition_competition.competition
     @semi_imposed_work = SemiImposedWork.new()
     @tour = Tour.new()
   end
 
   # GET /categories/new
   def new
-    @organism = Organism.find(params[:organism_id])
-    @competition = Competition.find(params[:competition_id])
-    @edition_competition = EditionCompetition.find(params[:edition_competition_id])
-
     @category = Category.new
   end
 
   # GET /categories/1/edit
   def edit
-    @organism = Organism.find(params[:organism_id])
-    @competition = Competition.find(params[:competition_id])
-    @edition_competition = EditionCompetition.find(params[:edition_competition_id])
-    @category = Category.find(params[:id])
   end
 
   # POST /categories or /categories.json
   def create
     @category = Category.new(category_params)
+    @category.edition_competition = @edition_competition
 
-    respond_to do |format|
-      if @category.save
-        format.html { redirect_to category_url(@category), notice: "Category was successfully created." }
-        format.json { render :show, status: :created, location: @category }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @category.errors, status: :unprocessable_entity }
-      end
+    if @category.save
+      redirect_to organism_competition_edition_competition_path(@organism, @competition, @edition_competition), notice: "Category was successfully created."
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /categories/1 or /categories/1.json
   def update
-    respond_to do |format|
-      if @category.update(category_params)
-        format.html { redirect_to category_url(@category), notice: "Category was successfully updated." }
-        format.json { render :show, status: :ok, location: @category }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @category.errors, status: :unprocessable_entity }
-      end
+    if @category.update(category_params)
+      redirect_to category_url(@category), notice: "Category was successfully updated."
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
   # DELETE /categories/1 or /categories/1.json
   def destroy
     @category.destroy
-    # respond_to do |format|
-    #   format.html { redirect_to categories_url, notice: "Category was successfully destroyed." }
-    #   format.json { head :no_content }
-    # end
+    # redirect_to categories_url, notice: "Category was successfully destroyed."
   end
 
   private
@@ -77,8 +57,14 @@ class CategoriesController < ApplicationController
       @category = Category.find(params[:id])
     end
 
+    def set_parent_resources
+      @organism = Organism.find(params[:organism_id])
+      @competition = Competition.find(params[:competition_id])
+      @edition_competition = EditionCompetition.find(params[:edition_competition_id])
+    end
+
     # Only allow a list of trusted parameters through.
     def category_params
-      params.require(:category).permit(:edition_competition_id, :name, :description, :min_age, :max_age, :discipline)
+      params.require(:category).permit(:photo, :edition_competition_id, :name, :description, :min_age, :max_age, :discipline)
     end
 end

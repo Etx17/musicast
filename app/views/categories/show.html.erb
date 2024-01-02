@@ -1,11 +1,11 @@
-<div class="container mt-5">
+<div class="pt-5 bg-black">
   <div class="row">
     <div class="col-md-6 offset-md-3">
-      <h1 class="text-center mb-3" style="font-size: 5.5em;"><%= @category.name %></h1>
-      <div class="card border-0 rounded mb-5">
+      <h1 class="text-center mb-3 text-light" style="font-size: 5.5em;"><%= @category.name %></h1>
+      <div class="border-0 rounded mb-5">
           <div class="mt-3 d-flex justify-content-between">
-            <%= link_to "Modifier cette catégorie", edit_organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category), class: 'btn btn-outline-dark' %>
-            <%= button_to "Supprimer cette catégorie", organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category), method: :delete, class: 'btn btn-outline-dark', data: { confirm: 'Are you sure?' } %>
+            <%= link_to "Modifier cette catégorie", edit_organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category), class: 'btn btn-outline-light' %>
+            <%= button_to "Supprimer cette catégorie", organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category), method: :delete, class: 'btn btn-outline-light', data: { confirm: 'Are you sure?' } %>
           </div>
         </div>
       </div>

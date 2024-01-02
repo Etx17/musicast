@@ -1,17 +1,44 @@
-
 <%= simple_form_for([@organism, @competition, @edition_competition, @category]) do |f| %>
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
-  <div class="form-inputs">
-    <%= f.input :name %>
-    <%= f.input :description %>
-    <%= f.input :min_age %>
-    <%= f.input :max_age %>
-    <%= f.input :discipline %>
+  <div class="row bg-light p-3 shadow mb-3" style="border-radius: 12px;">
+    <div class="col-md-6">
+      <div class="form-inputs w-100">
+        <div class="row">
+          <div class="col-md-6">
+            <%= f.input :name, required: true %>
+          </div>
+          <div class="col-md-6">
+            <%= f.input :discipline, required: true %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <%= f.input :min_age, required: true %>
+          </div>
+          <div class="col-md-6">
+            <%= f.input :max_age, required: true %>
+          </div>
+        </div>
+        <%= f.input :description, required: true %>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="form-inputs col-12 d-flex flex-column gap-1">
+        <div data-controller="image-preview" data-image-preview-url="<%= @category.photo.attached? ? cl_image_path(@category.photo.key, crop: :fill, width: 200, height: 200) : '' %>">
+          <%= f.input :photo, as: :file, input_html: { data: { image_preview_target: "input" } }, label: "Ajouter une photo" %>
+          <div class="w-100" style="height: 400px; background: #f8f9fa;">
+            <div data-image-preview-target="preview" class="h-100 w-100" style="background-size: contain; display: none;"></div>
+            <div data-image-preview-target="placeholder" class="text-center text-muted border p-5 w-100">Vous n'avez pas encore ajouté d'image</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <div class="form-actions">
+    <%= f.button :submit, 'Enregistrer', class:"btn btn-dark w-100 p-3 mb-5" %>
+  </div>
   </div>
 
-  <div class="form-actions">
-    <%= f.button :submit %>
-  </div>
 <% end %>
