@@ -4,8 +4,6 @@
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
-    <%# hide th %>
-    <%# <%= f.association :competition %>
     <%= f.input :annee, input_html: { value: Date.today.year } %>
 
 
@@ -13,6 +11,6 @@
   </div>
 
   <div class="form-actions">
-    <%= f.button :submit %>
+    <%= f.button :submit, 'Enregistrer', class: "btn btn-dark w-100 py-3" %>
   </div>
 <% end %>

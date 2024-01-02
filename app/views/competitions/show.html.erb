@@ -20,9 +20,10 @@
         <div class="card border-0 shadow-sm rounded mb-4 mt-4 bg-grey">
           <div class="card-body">
             <h2 class="mb-4">Générer une édition du concours</h2>
-            <%= link_to new_organism_competition_edition_competition_path(@organism, @competition), class: 'btn btn-dark w-100' do %>
+            <%= link_to new_organism_competition_edition_competition_path(@organism, @competition), data: { turbo_action: 'replace', turbo_frame: "new_edition_competition" }, class: 'btn btn-outline-dark w-100' do %>
               <i class="fas fa-plus"></i> Ajouter une édition
             <% end %>
+            <%= turbo_frame_tag "new_edition_competition" %>
           </div>
         </div>
       <% end %>
