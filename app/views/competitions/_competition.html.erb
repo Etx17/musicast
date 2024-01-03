@@ -1,18 +1,18 @@
 <div id="<%= dom_id competition %>">
 
   <div class="mb-3">
-    <span class="badge bg-white border border-dark text-dark">Nom:</span>
+    <span class=" text-dark">Nom:</span>
     <span class="ms-2"><%= competition.nom_concours %></span>
   </div>
 
   <div>
-    <span class="badge bg-white border border-dark text-dark">Description:</span>
+    <span class="text-dark">Description:</span>
     <span class="ms-2"><%= competition.description %></span>
   </div>
 
   <%# Photo  %>
-  <div class="mt-3">
-    <span class="badge bg-white border border-dark text-dark">Photo:</span>
-     <%= cl_image_tag competition.photo.key, height: 300, width: 400, crop: :fill   if competition.photo.attached? %>
+  <div class="d-flex flex-column mt-3 w-100">
+    <span class="text-dark">Photo de couverture:</span>
+     <%= cl_image_tag competition.photo.key, height: 300, crop: :fill, class:"w-100"   if competition.photo.attached? %>
   </div>
 </div>

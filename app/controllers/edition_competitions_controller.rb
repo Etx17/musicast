@@ -1,5 +1,5 @@
 class EditionCompetitionsController < ApplicationController
-  before_action :set_edition_competition, only: %i[ show edit update destroy ]
+  before_action :set_organism_and_competition, only: [:edit, :update]
 
   # GET /edition_competitions or /edition_competitions.json
   def index
@@ -23,6 +23,9 @@ class EditionCompetitionsController < ApplicationController
 
   # GET /edition_competitions/1/edit
   def edit
+    @organism = Organism.find(params[:organism_id])
+    @competition = Competition.find(params[:competition_id])
+    @edition_competition = EditionCompetition.find(params[:id])
   end
 
   # POST /edition_competitions or /edition_competitions.json
@@ -62,8 +65,10 @@ class EditionCompetitionsController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_edition_competition
+    def set_organism_and_competition
       @edition_competition = EditionCompetition.find(params[:id])
+      @competition = @edition_competition.competition
+      @organism = @competition.organism
     end
 
     # Only allow a list of trusted parameters through.
@@ -72,7 +77,11 @@ class EditionCompetitionsController < ApplicationController
         :competition_id,
         :annee,
         :details_specifiques,
-        address_attributes: [:line1, :line2, :zipcode, :city, :country]
+        :start_date,
+        :end_date,
+        :end_of_registration,
+        address_attributes: [:line1, :line2, :zipcode, :city, :country],
+        documents_attributes: [:file, :file_url, :document_type]
       )
     end
 end
