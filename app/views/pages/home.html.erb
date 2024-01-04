@@ -13,13 +13,8 @@
     Competitions
   </h2>
   <div class="row g-4">
-    <%= render "edition_competition_card" %>
-    <%= render "edition_competition_card" %>
-    <%= render "edition_competition_card" %>
-    <%= render "edition_competition_card" %>
-    <%= render "edition_competition_card" %>
-    <%= render "edition_competition_card" %>
-    <%= render "edition_competition_card" %>
-    <!-- Repeat for other competitions -->
+    <% @edition_competitions.each do |edition_competition| %>
+      <%= render "edition_competition_card", edition_competition: edition_competition %>
+    <% end %>
   </div>
 </main>

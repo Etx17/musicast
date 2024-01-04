@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
 
 
   def set_breadcrumbs
-    add_breadcrumb "Tableau de bord", organisateur_dashboard_path if current_user.organisateur.present?
+    add_breadcrumb "Tableau de bord", organisateur_dashboard_path if current_user&.organisateur&.present?
     path = request.path.split('/')
     path.each_with_index do |segment, index|
       next if segment.empty? || index == 1 || path[index - 1] == "organisms" || segment == "categories" || segment == "edition_competitions" || segment == "competitions"

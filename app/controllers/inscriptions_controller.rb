@@ -1,25 +1,29 @@
 class InscriptionsController < ApplicationController
   before_action :set_inscription, only: %i[ show edit update destroy ]
 
-  # GET /inscriptions or /inscriptions.json
   def index
-    @inscriptions = Inscription.all
+    if params[:category_id].present?
+      @category = Category.friendly.find(params[:category_id])
+      if @category
+        @inscriptions = Inscription.by_category(@category.id)
+      else
+        flash[:alert] = "Category not found"
+      end
+    else
+      @inscriptions = Inscription.all
+    end
   end
 
-  # GET /inscriptions/1 or /inscriptions/1.json
   def show
   end
 
-  # GET /inscriptions/new
   def new
     @inscription = Inscription.new
   end
 
-  # GET /inscriptions/1/edit
   def edit
   end
 
-  # POST /inscriptions or /inscriptions.json
   def create
     @inscription = Inscription.new(inscription_params)
 
@@ -34,7 +38,6 @@ class InscriptionsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /inscriptions/1 or /inscriptions/1.json
   def update
     respond_to do |format|
       if @inscription.update(inscription_params)
@@ -47,7 +50,6 @@ class InscriptionsController < ApplicationController
     end
   end
 
-  # DELETE /inscriptions/1 or /inscriptions/1.json
   def destroy
     @inscription.destroy
 
@@ -58,12 +60,10 @@ class InscriptionsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_inscription
       @inscription = Inscription.find(params[:id])
     end
 
-    # Only allow a list of trusted parameters through.
     def inscription_params
       params.require(:inscription).permit(:candidat_id, :category_id, :statut)
     end

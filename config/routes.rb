@@ -43,8 +43,16 @@ Rails.application.routes.draw do
   # User dashboard
   get 'admin_dashboard', to: 'dashboard#admin'
   get 'organisateur_dashboard', to: 'dashboard#organiser'
-  get 'candidat_dashboard', to: 'dashboard#candidate'
+  get 'candidat_dashboard', to: 'dashboard#candidate' do
+    resources :candidatures
+  end
   get 'jury_dashboard', to: 'dashboard#jury'
   get 'partner_dashboard', to: 'dashboard#partner'
 
+  resources :edition_competitions, only: [:show] do
+    resources :categories, only: [:show] do
+      resources :candidatures, only: [:new, :create]
+    end
+  end
+  
 end
