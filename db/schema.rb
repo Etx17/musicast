@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_02_123438) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_04_140025) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -109,7 +109,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_02_123438) do
     t.integer "discipline"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "slug"
     t.index ["edition_competition_id"], name: "index_categories_on_edition_competition_id"
+    t.index ["slug"], name: "index_categories_on_slug", unique: true
   end
 
   create_table "choice_imposed_works", force: :cascade do |t|
@@ -128,7 +130,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_02_123438) do
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "slug"
     t.index ["organism_id"], name: "index_competitions_on_organism_id"
+    t.index ["slug"], name: "index_competitions_on_slug", unique: true
   end
 
   create_table "documents", force: :cascade do |t|
@@ -171,6 +175,17 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_02_123438) do
     t.datetime "updated_at", null: false
     t.bigint "category_id", null: false
     t.index ["category_id"], name: "index_free_choices_on_category_id"
+  end
+
+  create_table "friendly_id_slugs", force: :cascade do |t|
+    t.string "slug", null: false
+    t.integer "sluggable_id", null: false
+    t.string "sluggable_type", limit: 50
+    t.string "scope"
+    t.datetime "created_at"
+    t.index ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true
+    t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
+    t.index ["sluggable_type", "sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_type_and_sluggable_id"
   end
 
   create_table "imposed_works", force: :cascade do |t|
@@ -221,7 +236,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_02_123438) do
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "slug"
     t.index ["organisateur_id"], name: "index_organisms_on_organisateur_id"
+    t.index ["slug"], name: "index_organisms_on_slug", unique: true
   end
 
   create_table "partners", force: :cascade do |t|

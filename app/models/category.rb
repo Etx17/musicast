@@ -1,4 +1,7 @@
 class Category < ApplicationRecord
+  extend FriendlyId
+  friendly_id :name, use: :slugged
+
   belongs_to :edition_competition, dependent: :destroy
   has_many :tours, dependent: :destroy
   has_many :requirement_items, dependent: :destroy

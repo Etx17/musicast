@@ -54,12 +54,12 @@ class CategoriesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_category
-      @category = Category.find(params[:id])
+      @category = Category.friendly.find(params[:id])
     end
 
     def set_parent_resources
-      @organism = Organism.find(params[:organism_id])
-      @competition = Competition.find(params[:competition_id])
+      @organism = Organism.friendly.find(params[:organism_id])
+      @competition = Competition.friendly.find(params[:competition_id])
       @edition_competition = EditionCompetition.find(params[:edition_competition_id])
     end
 

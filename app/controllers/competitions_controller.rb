@@ -55,11 +55,11 @@ class CompetitionsController < ApplicationController
 
     # Use callbacks to share common setup or constraints between actions.
     def set_competition
-      @competition = Competition.find(params[:id])
+      @competition = Competition.friendly.find(params[:id])
     end
 
     def set_organism
-      @organism = Organism.find(params[:organism_id])
+      @organism = Organism.friendly.find(params[:organism_id])
     end
 
     # Only allow a list of trusted parameters through.

@@ -138,6 +138,8 @@ GEM
     ffi (1.16.3)
     font-awesome-sass (6.5.1)
       sassc (~> 2.0)
+    friendly_id (5.4.2)
+      activerecord (>= 4.0.0)
     globalid (1.2.1)
       activesupport (>= 6.1)
     http-accept (1.7.0)
@@ -319,6 +321,7 @@ DEPENDENCIES
   dotenv-rails
   faraday
   font-awesome-sass (~> 6.1)
+  friendly_id (~> 5.4.0)
   importmap-rails
   jbuilder
   nokogiri
