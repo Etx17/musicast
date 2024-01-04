@@ -64,6 +64,17 @@
   background-color: #EEEEEE; /* Adjust the color code to your preferred shade of grey */
 }
 
+.text-light-grey {
+  color: #EEEEEE; /* Adjust the color code to your preferred shade of grey */
+}
+
 body {
   padding-top: 70px; /* Adjust this value based on the height of your navbar */
+}
+
+.card-hover {
+  transition: transform 0.3s;
+  &:hover {
+    transform: scale(1.05);
+  }
 }

@@ -18,17 +18,19 @@ class ToursController < ApplicationController
     @category = Category.find(params[:category_id])
     @edition_competition = @category.edition_competition
     @competition = @edition_competition.competition
-    @tour = @category.tours.build
+    @tour = Tour.new
   end
 
   def create
+    @organism = Organism.find(params[:organism_id])
     @category = Category.find(params[:category_id])
     @edition_competition = @category.edition_competition
     @competition = @edition_competition.competition
-    @tour = @category.tours.build(tour_params)
+    @tour = Tour.new(tour_params)
+    @tour.category = @category
 
     if @tour.save
-      redirect_to category_path(@category), notice: "Tour crée avec succès."
+      redirect_to organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category), notice: "Tour crée avec succès."
     else
       render :new
     end
@@ -36,25 +38,27 @@ class ToursController < ApplicationController
 
   # PATCH/PUT /tours/1 or /tours/1.json
   def update
-    respond_to do |format|
-      if @tour.update(tour_params)
-        format.html { redirect_to tour_url(@tour), notice: "Tour was successfully updated." }
-        format.json { render :show, status: :ok, location: @tour }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @tour.errors, status: :unprocessable_entity }
-      end
+    @organism = Organism.find(params[:organism_id])
+    @category = Category.find(params[:category_id])
+    @edition_competition = @category.edition_competition
+    @competition = @edition_competition.competition
+    @tour = Tour.find(params[:id])
+    if @tour.update(tour_params)
+      redirect_to organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category), notice: "Tour mis à jour avec succès."
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
   # DELETE /tours/1 or /tours/1.json
   def destroy
+    @organism = Organism.find(params[:organism_id])
+    @category = Category.find(params[:category_id])
+    @edition_competition = @category.edition_competition
+    @competition = @edition_competition.competition
     @tour.destroy
 
-    respond_to do |format|
-      format.html { redirect_to tours_url, notice: "Tour was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    redirect_to organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category), notice: "Tour supprimé."
   end
 
   private

@@ -12,7 +12,7 @@ class CategoriesController < ApplicationController
   # GET /categories/1 or /categories/1.json
   def show
     @semi_imposed_work = SemiImposedWork.new()
-    @tour = Tour.new()
+    @tour = Tour.new
   end
 
   # GET /categories/new

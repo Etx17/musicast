@@ -13,22 +13,22 @@
 
     <%= f.label :start_date, "Date de début", class: "form-label" %>
     <div class="d-flex">
-      <%= f.date_select :start_date, { order: [:day, :month, :year] }, { class: "form-control" } %>
+      <%= f.datetime_select :start_date %>
     </div>
 
     <%= f.label :start_time, "Heure de début", class: "form-label" %>
     <div class="d-flex">
-      <%= f.time_select :start_time, { ignore_date: true }, class: "form-control" %>
+      <%= f.datetime_select :start_time %>
     </div>
 
     <%= f.label :end_date, "Date de fin", class: "form-label" %>
     <div class="d-flex">
-      <%= f.date_select :end_date, { order: [:day, :month, :year] }, { class: "form-control" } %>
+      <%= f.datetime_select :end_time %>
     </div>
 
     <%= f.label :end_time, "Heure de fin", class: "form-label" %>
     <div class="d-flex">
-      <%= f.time_select :end_time, { ignore_date: true }, class: "form-control" %>
+      <%= f.datetime_select :end_time %>
     </div>
 
     <div class="form-check">

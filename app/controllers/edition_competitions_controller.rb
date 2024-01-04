@@ -11,6 +11,7 @@ class EditionCompetitionsController < ApplicationController
     @organism = Organism.find(params[:organism_id])
     @competition = Competition.find(params[:competition_id])
     @edition_competition = EditionCompetition.find(params[:id])
+    @categories = @edition_competition.categories.order(created_at: :desc)
   end
 
   # GET /edition_competitions/new
