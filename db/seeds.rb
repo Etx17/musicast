@@ -13,8 +13,9 @@
   competition = Competition.create!(organism_id: organism.id, nom_concours: "Young Musicians #{n}", description: "A platform for young musicians to showcase their skills #{n}")
 
   # EditionCompetition
-  edition = EditionCompetition.create!(competition_id: competition.id, annee: 2023 + n, details_specifiques: "Special edition focusing on classical music #{n}")
-
+  edition = EditionCompetition.create!(competition_id: competition.id, annee: 2024 + n, details_specifiques: "Special edition focusing on classical music #{n}", end_of_registration: Date.today + 30, start_date: Date.today + 60, end_date: Date.today + 90)
+  # Add Address to EditionCompetition
+  edition.address = Address.create!(addressable_id: edition.id, addressable_type: "EditionCompetition", line1: "Rue de la Paix #{n}", city: "Paris #{n}", country: "France #{n}", zipcode: "75000 #{n}")
   # Categories
   category1 = Category.create!(edition_competition_id: edition.id, name: "Piano under 18 #{n}", description: "Category for participants under 18 years #{n}", min_age: 10, max_age: 18, discipline: 1)
   category2 = Category.create!(edition_competition_id: edition.id, name: "Piano under 12 #{n}", description: "Category for children under 12 years #{n}", min_age: 6, max_age: 12, discipline: 2)
@@ -89,3 +90,5 @@
     end
   end
 end
+
+User.create(email: "candidat@musicast.fr", password: password, password_confirmation: password)

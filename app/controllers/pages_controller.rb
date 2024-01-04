@@ -7,7 +7,8 @@ class PagesController < ApplicationController
 
   def home
     @disciplines = MusicCategories::DISCIPLINES
-    @edition_competitions = EditionCompetition.where('end_registration_date > ?', Time.now)
+    
+    @edition_competitions = EditionCompetition.where('end_of_registration > ?', Time.now)
 
     if params[:discipline].present?
       @edition_competitions = @edition_competitions.joins(:categories).where(categories: { discipline: params[:discipline] })
