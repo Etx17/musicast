@@ -19,10 +19,9 @@
     <!-- Navbar -->
     <%= render "shared/navbar"%>
 
-    <!-- Breadcrumbs -->
-    <div class="p-4 breadcrumbs">
-  <%= render_breadcrumbs separator: ' ' %>
-</div>
+    <div class="d-flex flex-wrap d-md-none p-2 breadcrumbs-xs">
+      <%= render_breadcrumbs separator: '/' %>
+    </div>
 
     <!-- Flash messages -->
     <%= render "shared/flashes" %>
