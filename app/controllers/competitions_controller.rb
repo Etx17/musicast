@@ -1,6 +1,6 @@
 class CompetitionsController < ApplicationController
   before_action :set_competition, only: %i[ show edit update destroy ]
-
+  before_action :set_organism, only: %i[ show new edit create update ]
 
   # GET /competitions or /competitions.json
   def index
@@ -9,29 +9,24 @@ class CompetitionsController < ApplicationController
 
   # GET /competitions/1 or /competitions/1.json
   def show
-    @organism = Organism.find(params[:organism_id])
-    @competition = Competition.find(params[:id])
     @edition_competition = EditionCompetition.new
     @categories = @competition.edition_competitions.map(&:categories).flatten
     @categories = @categories.sort_by(&:discipline)
+
   end
 
   # GET /competitions/new
   def new
     @competition = Competition.new
-    @organism = Organism.find(params[:organism_id])
   end
 
   # GET /competitions/1/edit
   def edit
-    @organism = Organism.find(params[:organism_id])
-    @competition = Competition.find(params[:id])
   end
 
   # POST /competitions or /competitions.json
   def create
     @competition = Competition.new(competition_params)
-    @organism = Organism.find(params[:organism_id])
     @competition.organism = @organism
 
     if @competition.save
@@ -43,8 +38,6 @@ class CompetitionsController < ApplicationController
 
   # PATCH/PUT /competitions/1 or /competitions/1.json
   def update
-    @organism = Organism.find(params[:organism_id])
-    @competition = Competition.find(params[:id])
     if @competition.update(competition_params)
       redirect_to organism_competition_path(@organism,@competition), notice: "Competition was successfully updated."
     else
@@ -55,7 +48,6 @@ class CompetitionsController < ApplicationController
   # DELETE /competitions/1 or /competitions/1.json
   def destroy
     @competition.destroy
-
     redirect_to organisateur_dashboard_path, notice: "Competition was successfully destroyed."
   end
 
@@ -64,6 +56,10 @@ class CompetitionsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_competition
       @competition = Competition.find(params[:id])
+    end
+
+    def set_organism
+      @organism = Organism.find(params[:organism_id])
     end
 
     # Only allow a list of trusted parameters through.

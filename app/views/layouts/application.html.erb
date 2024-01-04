@@ -16,7 +16,15 @@
   </head>
 
   <body>
-    <%= render "shared/navbar" %>
+    <!-- Navbar -->
+    <%= render "shared/navbar"%>
+
+    <!-- Breadcrumbs -->
+    <div class="p-4 breadcrumbs">
+  <%= render_breadcrumbs separator: ' ' %>
+</div>
+
+    <!-- Flash messages -->
     <%= render "shared/flashes" %>
 
     <%= yield %>

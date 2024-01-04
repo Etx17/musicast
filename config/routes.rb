@@ -1,15 +1,8 @@
 Rails.application.routes.draw do
   resources :leads
   resources :performances
-  resources :candidate_program_airs
   resources :candidate_programs
   resources :inscriptions
-  resources :semi_imposed_work_airs
-  resources :free_choice_airs
-  resources :choice_imposed_work_airs
-  resources :imposed_work_airs
-  resources :semi_imposed_works
-  resources :free_choices
   resources :imposed_works
   resources :airs
   resources :programme_requirements

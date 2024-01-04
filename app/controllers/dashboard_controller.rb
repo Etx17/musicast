@@ -1,4 +1,6 @@
 class DashboardController < ApplicationController
+  before_action :set_breadcrumbs
+
   def admin
   end
 
@@ -18,4 +20,7 @@ class DashboardController < ApplicationController
 
   def partner
   end
+
+  private
+
 end

@@ -4,6 +4,7 @@ class PagesController < ApplicationController
   def landing
   end
 
+
   def home
     @disciplines = MusicCategories::DISCIPLINES
     @edition_competitions = EditionCompetition.where('end_registration_date > ?', Time.now)
