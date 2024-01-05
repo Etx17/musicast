@@ -14,7 +14,7 @@
 
         <!-- Breadcrumbs -->
     <div class="d-none d-md-block breadcrumbs">
-      <%= render_breadcrumbs separator: '/ ' %>
+      <%= render_breadcrumbs separator: '/ ' if current_user&.organiser%>
     </div>
 
 

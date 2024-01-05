@@ -1,18 +1,20 @@
 <div class="col-12 col-md-6 col-lg-4">
-  <div class="card h-100 shadow-sm position-relative">
-    <img src="https://source.unsplash.com/random/?competition/300x200" class="card-img-top" alt="Competition Image" style="max-height: 300px; object-fit: cover;">
-    <small class="text-white badge border bg-primary rounded-pill position-absolute " style="top: 10px; left: 10px;"><%= edition_competition.days_remaining %> days remaining</small>
-    <div class="card-body">
-      <h3 class="card-title"><%= edition_competition.competition.nom_concours %></h3>
-      <div class="d-flex flex-column">
-        <span class="card-text text-secondary border-end border-light "><i class="fas fa-location text-dark me-2"></i>Paris, France</span>
-        <small class=" text-secondary "><i class="fas fa-calendar text-dark me-2"></i>du <span class="text-dark border-bottom border-info" style="font-size: 1.2em"><strong><%= edition_competition.start_date.strftime("%d %B") %></strong></span> au <span style="font-size: 1.2em" class="text-dark border-bottom border-info"><strong><%= edition_competition.end_date.strftime("%d %B %Y") %></strong></span></small>
+  <div class="card h-100 shadow-sm position-relative card-hover" data-bs-toggle="modal" data-bs-target="#categoryModal" data-edition-competition-id="<%= edition_competition.id %>">
+    <%= link_to organism_competition_edition_competition_path(edition_competition.organism, edition_competition.competition, edition_competition), class: "text-decoration-none text-dark" do %>
+      <img src="https://source.unsplash.com/random/?competition/300x200" class="card-img-top" alt="Competition Image" style="max-height: 300px; object-fit: cover;">
+      <small class="text-white badge border bg-primary rounded-pill position-absolute " style="top: 10px; left: 10px;"><%= edition_competition.days_remaining %> days remaining</small>
+      <div class="card-body">
+        <h3 class="card-title"><%= edition_competition.competition.nom_concours %></h3>
+        <div class="d-flex flex-column">
+          <span class="card-text text-secondary border-end border-light "><i class="fas fa-location text-dark me-2"></i>Paris, France</span>
+          <small class=" text-secondary "><i class="fas fa-calendar text-dark me-2"></i>du <span class="text-dark border-bottom border-info" style="font-size: 1.2em"><strong><%= edition_competition.start_date.strftime("%d %B") %></strong></span> au <span style="font-size: 1.2em" class="text-dark border-bottom border-info"><strong><%= edition_competition.end_date.strftime("%d %B %Y") %></strong></span></small>
+        </div>
+        <div class="mt-2">
+          <% edition_competition.categories.each do |category| %>
+            <span class="badge border bg-secondary text-light rounded-pill p-1"><%= category.name %></span>
+          <% end %>
+        </div>
       </div>
-      <div class="mt-2">
-        <% edition_competition.disciplines.each do |discipline| %>
-          <span class="badge bg-primary"><%= discipline.name %></span>
-        <% end %>
-      </div>
-    </div>
+    <% end %>
   </div>
 </div>

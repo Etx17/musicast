@@ -8,10 +8,25 @@ class EditionCompetition < ApplicationRecord
   accepts_nested_attributes_for :documents
 
   def disciplines
-    categories.map(&:discipline).uniq
+    categories.pluck(:name).uniq
   end
 
   def days_remaining
     (end_of_registration.to_date - Date.today).to_i
   end
+
+  def category_details
+    categories.select(:name, :min_age, :max_age).map do |category|
+      {
+        name: category.name,
+        min_age: category.min_age,
+        max_age: category.max_age
+      }
+    end
+  end
+
+  def organism
+    competition.organism
+  end
+
 end

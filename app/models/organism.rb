@@ -4,6 +4,7 @@ class Organism < ApplicationRecord
   belongs_to :organisateur
   has_one :address, as: :addressable, dependent: :destroy
 
+  has_many :edition_competitions, through: :competitions
   extend FriendlyId
   friendly_id :nom, use: :slugged
 end

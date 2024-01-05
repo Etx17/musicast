@@ -16,4 +16,6 @@ class Category < ApplicationRecord
 
   has_one_attached :photo
 
+  enum discipline: MusicCategories::DISCIPLINES.invert
+
 end

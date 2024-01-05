@@ -91,4 +91,4 @@
   end
 end
 
-User.create(email: "candidat@musicast.fr", password: password, password_confirmation: password)
+User.create(email: "candidat@musicast.fr", password: "password", password_confirmation: "password")
