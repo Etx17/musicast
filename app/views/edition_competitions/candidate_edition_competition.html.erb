@@ -115,7 +115,7 @@
                 <% end %>
               </div>
               <div class="modal-footer">
-                <%= link_to "Continuer", new_inscription_path(category_id: category.id), class: "btn btn-primary" %>
+                <%= link_to "Continuer", new_inscription_path(category_id: category.id, candidate_id: current_user.id), class: "btn btn-primary" %>
               </div>
             </div>
           </div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_05_145203) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_05_160751) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -198,6 +198,16 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_05_145203) do
     t.index ["category_id"], name: "index_imposed_works_on_category_id"
   end
 
+  create_table "inscription_item_requirements", force: :cascade do |t|
+    t.bigint "inscription_id", null: false
+    t.bigint "requirement_item_id", null: false
+    t.text "submitted_content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["inscription_id"], name: "index_inscription_item_requirements_on_inscription_id"
+    t.index ["requirement_item_id"], name: "index_inscription_item_requirements_on_requirement_item_id"
+  end
+
   create_table "inscriptions", force: :cascade do |t|
     t.bigint "candidat_id", null: false
     t.bigint "category_id", null: false
@@ -336,6 +346,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_05_145203) do
   add_foreign_key "free_choice_airs", "free_choices"
   add_foreign_key "free_choices", "categories"
   add_foreign_key "imposed_works", "categories"
+  add_foreign_key "inscription_item_requirements", "inscriptions"
+  add_foreign_key "inscription_item_requirements", "requirement_items"
   add_foreign_key "inscriptions", "candidats"
   add_foreign_key "inscriptions", "categories"
   add_foreign_key "jures", "users"

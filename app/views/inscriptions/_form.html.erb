@@ -1,15 +1,40 @@
 
+<div class="container">
 <%= simple_form_for(@inscription) do |f| %>
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
-    <%= f.association :candidat %>
-    <%= f.association :category %>
-    <%= f.input :statut %>
+
+
+    <% @inscription.inscription_item_requirements.each do |item_requirement| %>
+      <div>
+        <h3><%= item_requirement.requirement_item.title %></h3>
+        <p><%= item_requirement.requirement_item.description_item %></p>
+        <%= f.simple_fields_for :inscription_item_requirements, item_requirement do |irf| %>
+
+          <% case item_requirement.requirement_item.type_item %>
+          <% when 'filePDF' %>
+            <%= irf.input :submitted_content, as: :file, label: "Fichier PDF", required: true  %>
+
+          <% when 'lienvideo' %>
+            <%= irf.input :submitted_content, as: :url, label: "YouTube URL", hint: "Assurez vous que la vidéo soit publique et qu'elle soit bien accessible.", required: true %>
+
+          <% when 'mp3' %>
+            <%= irf.input :submitted_content, as: :file, label: "Upload MP3", required: true  %>
+
+          <% else %>
+            <%= irf.input :submitted_content %>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
+
+
   </div>
 
   <div class="form-actions">
     <%= f.button :submit %>
   </div>
 <% end %>
+</div>

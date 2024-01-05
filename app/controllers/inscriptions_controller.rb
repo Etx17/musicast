@@ -19,6 +19,10 @@ class InscriptionsController < ApplicationController
 
   def new
     @inscription = Inscription.new
+    category = Category.friendly.find(params[:category_id])
+    category.requirement_items.each do |item|
+      @inscription.inscription_item_requirements.build(requirement_item: item)
+    end
   end
 
   def edit
@@ -26,7 +30,7 @@ class InscriptionsController < ApplicationController
 
   def create
     @inscription = Inscription.new(inscription_params)
-
+    
     respond_to do |format|
       if @inscription.save
         format.html { redirect_to inscription_url(@inscription), notice: "Inscription was successfully created." }
