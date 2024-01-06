@@ -20,7 +20,7 @@
     <%= render "shared/navbar"%>
 
     <div class="d-flex flex-wrap d-md-none p-2 breadcrumbs-xs">
-      <%= render_breadcrumbs separator: '/' if current_user&.organiser %>
+      <%= render_breadcrumbs separator: '/' if current_user&.organisateur.present? %>
     </div>
 
     <!-- Flash messages -->

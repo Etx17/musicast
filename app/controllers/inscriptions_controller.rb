@@ -23,6 +23,7 @@ class InscriptionsController < ApplicationController
     category.requirement_items.each do |item|
       @inscription.inscription_item_requirements.build(requirement_item: item)
     end
+    @inscription.category = category
   end
 
   def edit
@@ -30,15 +31,13 @@ class InscriptionsController < ApplicationController
 
   def create
     @inscription = Inscription.new(inscription_params)
-    
-    respond_to do |format|
-      if @inscription.save
-        format.html { redirect_to inscription_url(@inscription), notice: "Inscription was successfully created." }
-        format.json { render :show, status: :created, location: @inscription }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @inscription.errors, status: :unprocessable_entity }
-      end
+    @inscription.candidat = current_user.candidat
+    @inscription.category = Category.friendly.find(inscription_params[:category_id])
+
+    if @inscription.save
+      redirect_to root_path, notice: "Inscription was successfully created."
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -69,6 +68,6 @@ class InscriptionsController < ApplicationController
     end
 
     def inscription_params
-      params.require(:inscription).permit(:candidat_id, :category_id, :statut)
+      params.require(:inscription).permit(:candidat_id, :category_id, :statut, inscription_item_requirements_attributes: [:id, :submitted_content, :document_id, :requirement_item_id, :_destroy])
     end
 end

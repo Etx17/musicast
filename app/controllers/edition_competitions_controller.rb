@@ -8,7 +8,7 @@ class EditionCompetitionsController < ApplicationController
 
   def show
     @categories = @edition_competition.categories.order(created_at: :desc)
-    if current_user&.organiser?
+    if current_user&.organisateur
       render :show
     else
       render :candidate_edition_competition

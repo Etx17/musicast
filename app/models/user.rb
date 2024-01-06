@@ -9,6 +9,8 @@ class User < ApplicationRecord
   has_one :jury
   has_one :candidate
 
+  has_many :documents
+
   def after_sign_in_path_for(resource)
     if current_user.role == "admin"
       admin_dashboard_path
@@ -25,5 +27,9 @@ class User < ApplicationRecord
 
   def organisateur
     Organisateur.find_by(user: self)
+  end
+
+  def candidat
+    Candidat.find_by(user: self)
   end
 end
