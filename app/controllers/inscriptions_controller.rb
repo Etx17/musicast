@@ -34,8 +34,9 @@ class InscriptionsController < ApplicationController
   def create
     @inscription = Inscription.new(inscription_params)
     @inscription.candidat = current_user.candidat
-    @inscription.category = Category.friendly.find(inscription_params[:category_id])
-
+    # raise
+    # @inscription.category = Category.friendly.find(inscription_params[:category_id])
+    raise "NoCandidatError" unless @inscription.candidat
     if @inscription.save
       redirect_to new_inscription_order_path(inscription: @inscription), notice: "Inscription was successfully created."
     else
@@ -71,7 +72,7 @@ class InscriptionsController < ApplicationController
   end
 
   def inscription_params
-    params.require(:inscription).permit(:candidat_id, :category_id, :statut,
+    params.require(:inscription).permit(:candidat_id, :category_id, :status,
                                         inscription_item_requirements_attributes: %i[id submitted_content document_id requirement_item_id _destroy])
   end
 end

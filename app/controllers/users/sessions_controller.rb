@@ -31,7 +31,7 @@ class Users::SessionsController < Devise::SessionsController
     elsif Partner.exists?(user: resource)
       partner_dashboard_path
     else
-      home_path
+      pages_home_path
     end
   end
   # protected

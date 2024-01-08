@@ -6,20 +6,37 @@
       <div class="col-lg-4 col-xs-12 mb-3">
         <div class="card card-hover" style="border-radius: 16px;">
           <div class="card-body bg-white"style="border-radius: 16px;" >
-            <h5 class="card-title"><%= inscription.category.edition_competition.competition.nom_concours %> - <%= inscription.category.name %> </h5>
+            <div class="d-flex align-items-center gap-3">
+              <h5 class="card-title m-0"><%= inscription.category.edition_competition.competition.nom_concours %> - <%= inscription.category.name %> </h5>
+
+                <div class="dropdown">
+                  <button class="btn btn-outline-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-ellipsis-v"></i>
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <% if inscription.order_state != 'paid' %>
+                      <li>
+                        <%= link_to inscription_path(inscription), method: :delete, data: { confirm: 'Are you sure?'}, class: 'dropdown-item' do %>
+                          <i class="fas fa-trash"></i> Delete
+                        <% end %>
+                      </li>
+                    <% end %>
+                    <li><%= link_to edit_inscription_path(inscription), class: 'dropdown-item' do %>
+                      <i class="fas fa-edit"></i> Edit
+                    <% end %></li>
+                  </ul>
+              </div>
+            </div>
             <p class="card-text">
               Start Date: <%= inscription.category.edition_competition.start_date %><br>
             </p>
             <span class="badge rounded-pill <%= inscription.order_state == 'paid' ? 'text-success border border-success bg-success-secondary' : 'text-warning border border-warning bg-warning-secondary' %>">
               <i class="fas fa-circle small"></i> <%= inscription.order_state.capitalize %>
             </span>
-            <%= raise %>
             <span class="badge rounded-pill <%= inscription.draft? ? 'text-secondary border border-secondary bg-grey' : inscription.in_review? ? 'text-info border border-info bg-info-secondary' : inscription.accepted? ? 'text-success border-success bg-success-secondary' : 'text-danger border-danger bg-danger-secondary' %>">
               <i class="fas fa-circle small"></i> <%= inscription.status&.capitalize %>
             </span>
-            <% if inscription.order_state != 'paid' %>
-              <%= button_to 'Delete', inscription_path(inscription), method: :delete, data: { turbo_confirm: 'Are you sure?'} , class: 'btn btn-danger mt-3' %>
-            <% end %>
+
           </div>
         </div>
       </div>

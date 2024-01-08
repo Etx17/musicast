@@ -92,3 +92,4 @@
 end
 
 User.create(email: "candidat@musicast.fr", password: "password", password_confirmation: "password")
+Candidat.create(user_id: User.last.id, cv: "Link to CV of candidate 1 - #{n}", bio: "Short bio of candidate 1 - #{n}")

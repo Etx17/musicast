@@ -226,7 +226,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_08_143451) do
   create_table "inscriptions", force: :cascade do |t|
     t.bigint "candidat_id", null: false
     t.bigint "category_id", null: false
-    t.string "status", default: "0"
+    t.integer "status", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "price_cents", default: 0, null: false
