@@ -4,7 +4,7 @@
   <div class="row">
     <% @inscriptions.each do |inscription| %>
       <div class="col-lg-4 col-xs-12 mb-3">
-        <div class="card card-hover" style="border-radius: 16px;">
+        <div class="card" style="border-radius: 16px;">
           <div class="card-body bg-white"style="border-radius: 16px;" >
             <div class="d-flex align-items-center gap-3">
               <h5 class="card-title m-0"><%= inscription.category.edition_competition.competition.nom_concours %> - <%= inscription.category.name %> </h5>

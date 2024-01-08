@@ -11,7 +11,6 @@ class Inscription < ApplicationRecord
   scope :by_category, ->(category_id) { where(category_id: category_id) }
   scope :by_candidat, ->(candidat_id) { where(candidat_id: candidat_id) }
 
-
   enum status: {
     draft: 0,
     in_review: 1,
