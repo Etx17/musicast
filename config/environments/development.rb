@@ -4,6 +4,9 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: "http://localhost:3000" }
   # Settings specified here will take precedence over those in config/application.rb.
 
+  # Allow ngrok for testing webhooks
+  config.hosts << "2765-217-111-150-34.ngrok-free.app"
+
   # In the development environment your application's code is reloaded any time
   # it changes. This slows down response time but is perfect for development
   # since you don't have to restart the web server when you make code changes.

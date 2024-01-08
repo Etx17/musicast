@@ -10,7 +10,7 @@ class DashboardController < ApplicationController
   end
 
   def candidate
-    redirect_to competitions_path
+    redirect_to pages_home_path
   end
 
   def jury

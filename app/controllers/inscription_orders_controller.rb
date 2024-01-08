@@ -4,7 +4,7 @@ class InscriptionOrdersController < ApplicationController
   end
 
   def show
-    @inscription_order = InscriptionOrder.where(state: 'pending').find(params[:id])
+    @inscription_order = current_user.inscription_orders.find(params[:id])
   end
 
   def create
@@ -17,6 +17,7 @@ class InscriptionOrdersController < ApplicationController
     )
     session = Stripe::Checkout::Session.create(
       payment_method_types: ['card'],
+      customer_email: current_user.email,
       line_items: [
         {
           price_data: {

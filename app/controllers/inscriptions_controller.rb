@@ -10,8 +10,10 @@ class InscriptionsController < ApplicationController
         flash[:alert] = "Category not found"
       end
     else
+      # if user is organisateur show the scope for him, if he is candidat show his scope
       @inscriptions = Inscription.all
     end
+    render :candidate_index if current_user.candidat
   end
 
   def show
@@ -57,7 +59,7 @@ class InscriptionsController < ApplicationController
     @inscription.destroy
 
     respond_to do |format|
-      format.html { redirect_to inscriptions_url, notice: "Inscription was successfully destroyed." }
+      format.html { redirect_to inscriptions_path, notice: "Inscription was successfully destroyed." }
       format.json { head :no_content }
     end
   end

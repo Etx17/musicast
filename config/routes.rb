@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+
+  mount StripeEvent::Engine, at: '/stripe-webhooks'
   resources :leads
   resources :performances
   resources :candidate_programs
