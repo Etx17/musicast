@@ -1,5 +1,5 @@
 class CandidateProgramsController < ApplicationController
-  before_action :set_candidate_program, only: %i[ show edit update destroy ]
+  before_action :set_candidate_program, only: %i[show edit update destroy]
 
   # GET /candidate_programs or /candidate_programs.json
   def index
@@ -25,7 +25,9 @@ class CandidateProgramsController < ApplicationController
 
     respond_to do |format|
       if @candidate_program.save
-        format.html { redirect_to candidate_program_url(@candidate_program), notice: "Candidate program was successfully created." }
+        format.html do
+          redirect_to candidate_program_url(@candidate_program), notice: "Candidate program was successfully created."
+        end
         format.json { render :show, status: :created, location: @candidate_program }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +40,9 @@ class CandidateProgramsController < ApplicationController
   def update
     respond_to do |format|
       if @candidate_program.update(candidate_program_params)
-        format.html { redirect_to candidate_program_url(@candidate_program), notice: "Candidate program was successfully updated." }
+        format.html do
+          redirect_to candidate_program_url(@candidate_program), notice: "Candidate program was successfully updated."
+        end
         format.json { render :show, status: :ok, location: @candidate_program }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -58,13 +62,14 @@ class CandidateProgramsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_candidate_program
-      @candidate_program = CandidateProgram.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def candidate_program_params
-      params.require(:candidate_program).permit(:inscription_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_candidate_program
+    @candidate_program = CandidateProgram.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def candidate_program_params
+    params.require(:candidate_program).permit(:inscription_id)
+  end
 end

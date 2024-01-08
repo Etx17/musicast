@@ -1,5 +1,5 @@
 class OrganismsController < ApplicationController
-  before_action :set_organism, only: %i[ show edit update destroy ]
+  before_action :set_organism, only: %i[show edit update destroy]
 
   # GET /organisms or /organisms.json
   def index
@@ -54,13 +54,14 @@ class OrganismsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_organism
-      @organism = Organism.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def organism_params
-      params.require(:organism).permit(:organisateur_id, :nom, :description, :photo, :address_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_organism
+    @organism = Organism.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def organism_params
+    params.require(:organism).permit(:organisateur_id, :nom, :description, :photo, :address_id)
+  end
 end

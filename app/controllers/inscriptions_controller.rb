@@ -1,5 +1,5 @@
 class InscriptionsController < ApplicationController
-  before_action :set_inscription, only: %i[ show edit update destroy ]
+  before_action :set_inscription, only: %i[show edit update destroy]
 
   def index
     if params[:category_id].present?
@@ -35,7 +35,7 @@ class InscriptionsController < ApplicationController
     @inscription.category = Category.friendly.find(inscription_params[:category_id])
 
     if @inscription.save
-      redirect_to root_path, notice: "Inscription was successfully created."
+      redirect_to new_inscription_order_path(inscription: @inscription), notice: "Inscription was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
@@ -63,11 +63,13 @@ class InscriptionsController < ApplicationController
   end
 
   private
-    def set_inscription
-      @inscription = Inscription.find(params[:id])
-    end
 
-    def inscription_params
-      params.require(:inscription).permit(:candidat_id, :category_id, :statut, inscription_item_requirements_attributes: [:id, :submitted_content, :document_id, :requirement_item_id, :_destroy])
-    end
+  def set_inscription
+    @inscription = Inscription.find(params[:id])
+  end
+
+  def inscription_params
+    params.require(:inscription).permit(:candidat_id, :category_id, :statut,
+                                        inscription_item_requirements_attributes: %i[id submitted_content document_id requirement_item_id _destroy])
+  end
 end

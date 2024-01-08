@@ -22,6 +22,7 @@
                 <div class="d-flex">
                   <span class="badge rounded-pill bg-info text-dark mx-auto"><%= category.discipline %> </span>
                   <span class="badge rounded-pill bg-dark text-light mx-auto"><%= category.min_age %> - <%= category.max_age %> ans </span>
+                  <span><%= humanized_money_with_symbol category.price %></span>
                 </div>
               </div>
               <div>

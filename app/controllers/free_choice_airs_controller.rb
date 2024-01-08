@@ -1,5 +1,5 @@
 class FreeChoiceAirsController < ApplicationController
-  before_action :set_free_choice_air, only: %i[ show edit update destroy ]
+  before_action :set_free_choice_air, only: %i[show edit update destroy]
 
   # GET /free_choice_airs or /free_choice_airs.json
   def index
@@ -25,7 +25,9 @@ class FreeChoiceAirsController < ApplicationController
 
     respond_to do |format|
       if @free_choice_air.save
-        format.html { redirect_to free_choice_air_url(@free_choice_air), notice: "Free choice air was successfully created." }
+        format.html do
+          redirect_to free_choice_air_url(@free_choice_air), notice: "Free choice air was successfully created."
+        end
         format.json { render :show, status: :created, location: @free_choice_air }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +40,9 @@ class FreeChoiceAirsController < ApplicationController
   def update
     respond_to do |format|
       if @free_choice_air.update(free_choice_air_params)
-        format.html { redirect_to free_choice_air_url(@free_choice_air), notice: "Free choice air was successfully updated." }
+        format.html do
+          redirect_to free_choice_air_url(@free_choice_air), notice: "Free choice air was successfully updated."
+        end
         format.json { render :show, status: :ok, location: @free_choice_air }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -58,13 +62,14 @@ class FreeChoiceAirsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_free_choice_air
-      @free_choice_air = FreeChoiceAir.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def free_choice_air_params
-      params.require(:free_choice_air).permit(:free_choice_id, :air_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_free_choice_air
+    @free_choice_air = FreeChoiceAir.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def free_choice_air_params
+    params.require(:free_choice_air).permit(:free_choice_id, :air_id)
+  end
 end

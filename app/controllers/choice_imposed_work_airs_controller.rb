@@ -1,5 +1,5 @@
 class ChoiceImposedWorkAirsController < ApplicationController
-  before_action :set_choice_imposed_work_air, only: %i[ show edit update destroy ]
+  before_action :set_choice_imposed_work_air, only: %i[show edit update destroy]
 
   # GET /choice_imposed_work_airs or /choice_imposed_work_airs.json
   def index
@@ -25,7 +25,10 @@ class ChoiceImposedWorkAirsController < ApplicationController
 
     respond_to do |format|
       if @choice_imposed_work_air.save
-        format.html { redirect_to choice_imposed_work_air_url(@choice_imposed_work_air), notice: "Choice imposed work air was successfully created." }
+        format.html do
+          redirect_to choice_imposed_work_air_url(@choice_imposed_work_air),
+                      notice: "Choice imposed work air was successfully created."
+        end
         format.json { render :show, status: :created, location: @choice_imposed_work_air }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +41,10 @@ class ChoiceImposedWorkAirsController < ApplicationController
   def update
     respond_to do |format|
       if @choice_imposed_work_air.update(choice_imposed_work_air_params)
-        format.html { redirect_to choice_imposed_work_air_url(@choice_imposed_work_air), notice: "Choice imposed work air was successfully updated." }
+        format.html do
+          redirect_to choice_imposed_work_air_url(@choice_imposed_work_air),
+                      notice: "Choice imposed work air was successfully updated."
+        end
         format.json { render :show, status: :ok, location: @choice_imposed_work_air }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,19 +58,22 @@ class ChoiceImposedWorkAirsController < ApplicationController
     @choice_imposed_work_air.destroy
 
     respond_to do |format|
-      format.html { redirect_to choice_imposed_work_airs_url, notice: "Choice imposed work air was successfully destroyed." }
+      format.html do
+        redirect_to choice_imposed_work_airs_url, notice: "Choice imposed work air was successfully destroyed."
+      end
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_choice_imposed_work_air
-      @choice_imposed_work_air = ChoiceImposedWorkAir.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def choice_imposed_work_air_params
-      params.require(:choice_imposed_work_air).permit(:choice_imposed_work_id, :air_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_choice_imposed_work_air
+    @choice_imposed_work_air = ChoiceImposedWorkAir.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def choice_imposed_work_air_params
+    params.require(:choice_imposed_work_air).permit(:choice_imposed_work_id, :air_id)
+  end
 end

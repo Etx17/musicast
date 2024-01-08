@@ -1,6 +1,6 @@
 class RequirementItemsController < ApplicationController
   before_action :set_competition, :set_edition_competition, :set_category
-  before_action :set_requirement_item, only: [:show, :edit, :update, :destroy]
+  before_action :set_requirement_item, only: %i[show edit update destroy]
 
   def index
     @requirement_items = @category.requirement_items
@@ -14,7 +14,8 @@ class RequirementItemsController < ApplicationController
     @requirement_item = @category.requirement_items.build(requirement_item_params)
 
     if @requirement_item.save
-      redirect_to competition_edition_competition_category_path(@competition, @edition_competition, @category), notice: 'Requirement item was successfully created.'
+      redirect_to competition_edition_competition_category_path(@competition, @edition_competition, @category),
+                  notice: 'Requirement item was successfully created.'
     else
       render :new
     end
@@ -28,7 +29,8 @@ class RequirementItemsController < ApplicationController
 
   def update
     if @requirement_item.update(requirement_item_params)
-      redirect_to competition_edition_competition_category_requirement_item_path(@competition, @edition_competition, @category, @requirement_item), notice: 'Requirement item was successfully updated.'
+      redirect_to competition_edition_competition_category_requirement_item_path(@competition, @edition_competition, @category, @requirement_item),
+                  notice: 'Requirement item was successfully updated.'
     else
       render :edit
     end
@@ -36,7 +38,8 @@ class RequirementItemsController < ApplicationController
 
   def destroy
     @requirement_item.destroy
-    redirect_to competition_edition_competition_category_requirement_items_path(@competition, @edition_competition, @category), notice: 'Requirement item was successfully destroyed.'
+    redirect_to competition_edition_competition_category_requirement_items_path(@competition, @edition_competition, @category),
+                notice: 'Requirement item was successfully destroyed.'
   end
 
   private

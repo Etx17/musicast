@@ -1,5 +1,5 @@
 class ImposedWorksController < ApplicationController
-  before_action :set_imposed_work, only: %i[ show edit update destroy ]
+  before_action :set_imposed_work, only: %i[show edit update destroy]
 
   # GET /imposed_works or /imposed_works.json
   def index
@@ -27,7 +27,8 @@ class ImposedWorksController < ApplicationController
     @imposed_work = @category.build_imposed_work(imposed_work_params)
 
     if @imposed_work.save
-      redirect_to organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category), notice: "Imposed work was successfully created."
+      redirect_to organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category),
+                  notice: "Imposed work was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
@@ -36,7 +37,8 @@ class ImposedWorksController < ApplicationController
   # PATCH/PUT /imposed_works/1 or /imposed_works/1.json
   def update
     if @imposed_work.update(imposed_work_params)
-      redirect_to organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category), notice: "Imposed work was successfully updated."
+      redirect_to organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category),
+                  notice: "Imposed work was successfully updated."
     else
       render :edit, status: :unprocessable_entity
     end
@@ -49,6 +51,7 @@ class ImposedWorksController < ApplicationController
   end
 
   private
+
   # Use callbacks to share common setup or constraints between actions.
   def set_imposed_work
     @imposed_work = ImposedWork.find(params[:id])
@@ -61,16 +64,16 @@ class ImposedWorksController < ApplicationController
       :title,
       :guidelines,
       :category_id,
-      airs_attributes: [
-        :id,
-        :title,
-        :composer,
-        :length_minutes,
-        :tonality,
-        :character,
-        :infos,
-        :oeuvre,
-        :_destroy
+      airs_attributes: %i[
+        id
+        title
+        composer
+        length_minutes
+        tonality
+        character
+        infos
+        oeuvre
+        _destroy
       ]
     )
   end

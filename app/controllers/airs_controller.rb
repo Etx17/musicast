@@ -1,5 +1,5 @@
 class AirsController < ApplicationController
-  before_action :set_air, only: %i[ show edit update destroy ]
+  before_action :set_air, only: %i[show edit update destroy]
 
   # GET /airs or /airs.json
   def index
@@ -55,13 +55,14 @@ class AirsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_air
-      @air = Air.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def air_params
-      params.require(:air).permit(:title, :length_minutes, :composer, :infos, :oeuvre, :character, :tonality)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_air
+    @air = Air.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def air_params
+    params.require(:air).permit(:title, :length_minutes, :composer, :infos, :oeuvre, :character, :tonality)
+  end
 end

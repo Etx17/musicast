@@ -1,5 +1,5 @@
 class ToursController < ApplicationController
-  before_action :set_tour, only: %i[ show edit update destroy ]
+  before_action :set_tour, only: %i[show edit update destroy]
 
   # GET /tours or /tours.json
   def index
@@ -30,7 +30,8 @@ class ToursController < ApplicationController
     @tour.category = @category
 
     if @tour.save
-      redirect_to organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category), notice: "Tour crée avec succès."
+      redirect_to organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category),
+                  notice: "Tour crée avec succès."
     else
       render :new
     end
@@ -44,7 +45,8 @@ class ToursController < ApplicationController
     @competition = @edition_competition.competition
     @tour = Tour.find(params[:id])
     if @tour.update(tour_params)
-      redirect_to organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category), notice: "Tour mis à jour avec succès."
+      redirect_to organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category),
+                  notice: "Tour mis à jour avec succès."
     else
       render :edit, status: :unprocessable_entity
     end
@@ -58,17 +60,20 @@ class ToursController < ApplicationController
     @competition = @edition_competition.competition
     @tour.destroy
 
-    redirect_to organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category), notice: "Tour supprimé."
+    redirect_to organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category),
+                notice: "Tour supprimé."
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_tour
-      @tour = Tour.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def tour_params
-      params.require(:tour).permit(:category_id, :start_date, :start_time, :end_date, :end_time, :is_online, :title, :description)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_tour
+    @tour = Tour.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def tour_params
+    params.require(:tour).permit(:category_id, :start_date, :start_time, :end_date, :end_time, :is_online, :title,
+                                 :description)
+  end
 end

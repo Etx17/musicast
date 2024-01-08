@@ -1,6 +1,6 @@
 class EditionCompetitionsController < ApplicationController
-  before_action :set_organism_and_competition, only: [:show, :new, :edit, :create, :update]
-  before_action :set_edition_competition, only: [:show, :edit, :update, :destroy]
+  before_action :set_organism_and_competition, only: %i[show new edit create update]
+  before_action :set_edition_competition, only: %i[show edit update destroy]
 
   def index
     @edition_competitions = EditionCompetition.all
@@ -45,7 +45,8 @@ class EditionCompetitionsController < ApplicationController
         puts message
       end
     end
-    redirect_to competitions_url(@edition_competition.competition), notice: "Edition competition was successfully destroyed."
+    redirect_to competitions_url(@edition_competition.competition),
+                notice: "Edition competition was successfully destroyed."
   end
 
   private
@@ -67,8 +68,8 @@ class EditionCompetitionsController < ApplicationController
       :start_date,
       :end_date,
       :end_of_registration,
-      address_attributes: [:line1, :line2, :zipcode, :city, :country],
-      documents_attributes: [:file, :file_url, :document_type]
+      address_attributes: %i[line1 line2 zipcode city country],
+      documents_attributes: %i[file file_url document_type]
     )
   end
 end

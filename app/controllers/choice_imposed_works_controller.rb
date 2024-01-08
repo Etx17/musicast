@@ -1,5 +1,5 @@
 class ChoiceImposedWorksController < ApplicationController
-  before_action :set_choice_imposed_work, only: %i[ show edit update destroy ]
+  before_action :set_choice_imposed_work, only: %i[show edit update destroy]
 
   # GET /choice_imposed_works or /choice_imposed_works.json
   # def index
@@ -47,7 +47,9 @@ class ChoiceImposedWorksController < ApplicationController
   def update
     respond_to do |format|
       if @choice_imposed_work.update(choice_imposed_work_params)
-        format.html { redirect_to category_path(@choice_imposed_work.category), notice: "Imposed work was successfully updated."}
+        format.html do
+          redirect_to category_path(@choice_imposed_work.category), notice: "Imposed work was successfully updated."
+        end
         format.json { render :show, status: :ok, location: @choice_imposed_work }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -60,37 +62,37 @@ class ChoiceImposedWorksController < ApplicationController
   def destroy
     @choice_imposed_work.destroy
 
-
     # redirect_back fallback_location: root_path, notice: "Imposed work was successfully destroyed."
     redirect_to(params[:redirect_path] || root_path, notice: "Choice imposed work was successfully destroyed.")
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_choice_imposed_work
-      @choice_imposed_work = ChoiceImposedWork.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def choice_imposed_work_params
-      params.require(:choice_imposed_work).permit(
-        :programme_requirement_id,
-        :title,
-        :guidelines,
-        :number_to_select,
-        :category_id,
-        :category,
-        :airs_attributes => [
-          :id,
-          :title,
-          :composer,
-          :infos,
-          :length_minutes,
-          :tonality,
-          :character,
-          :oeuvre,
-          :_destroy
-        ]
-      )
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_choice_imposed_work
+    @choice_imposed_work = ChoiceImposedWork.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def choice_imposed_work_params
+    params.require(:choice_imposed_work).permit(
+      :programme_requirement_id,
+      :title,
+      :guidelines,
+      :number_to_select,
+      :category_id,
+      :category,
+      airs_attributes: %i[
+        id
+        title
+        composer
+        infos
+        length_minutes
+        tonality
+        character
+        oeuvre
+        _destroy
+      ]
+    )
+  end
 end

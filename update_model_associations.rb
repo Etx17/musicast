@@ -11,8 +11,10 @@ model_associations = {
   'edition_competition' => ['has_many :categories'],
   'category' => ['has_many :tours', 'has_many :requirement_items', 'has_many :inscriptions'],
   'tour' => ['has_many :programme_requirements', 'has_many :performances'],
-  'programme_requirement' => ['has_many :imposed_works', 'has_many :choice_imposed_works', 'has_many :free_choices', 'has_many :semi_imposed_works'],
-  'air' => ['has_many :imposed_work_airs', 'has_many :choice_imposed_work_airs', 'has_many :free_choice_airs', 'has_many :semi_imposed_work_airs', 'has_many :candidate_program_airs'],
+  'programme_requirement' => ['has_many :imposed_works', 'has_many :choice_imposed_works', 'has_many :free_choices',
+                              'has_many :semi_imposed_works'],
+  'air' => ['has_many :imposed_work_airs', 'has_many :choice_imposed_work_airs', 'has_many :free_choice_airs',
+            'has_many :semi_imposed_work_airs', 'has_many :candidate_program_airs'],
   'imposed_work' => ['has_many :imposed_work_airs', 'has_many :airs, through: :imposed_work_airs'],
   'choice_imposed_work' => ['has_many :choice_imposed_work_airs', 'has_many :airs, through: :choice_imposed_work_airs'],
   'free_choice' => ['has_many :free_choice_airs', 'has_many :airs, through: :free_choice_airs'],
@@ -26,7 +28,6 @@ model_associations = {
   'semi_imposed_work_air' => [],
   'candidate_program_air' => []
 }
-
 
 model_associations.each do |model, associations|
   file_path = "app/models/#{model}.rb"

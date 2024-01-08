@@ -20,7 +20,4 @@ class DashboardController < ApplicationController
 
   def partner
   end
-
-  private
-
 end

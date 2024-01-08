@@ -18,7 +18,8 @@ class SemiImposedWorksController < ApplicationController
   def create
     @semi_imposed_work = @category.semi_imposed_works.build(semi_imposed_work_params)
     if @semi_imposed_work.save
-      redirect_to [@organism, @competition, @edition_competition, @category], notice: "Semi imposed work was successfully created."
+      redirect_to [@organism, @competition, @edition_competition, @category],
+                  notice: "Semi imposed work was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
@@ -26,7 +27,8 @@ class SemiImposedWorksController < ApplicationController
 
   def update
     if @semi_imposed_work.update(semi_imposed_work_params)
-      redirect_to [@semi_imposed_work.category.organism, @semi_imposed_work.category.competition, @semi_imposed_work.category.edition_competition, @semi_imposed_work.category], notice: "Semi imposed work was successfully updated."
+      redirect_to [@semi_imposed_work.category.organism, @semi_imposed_work.category.competition, @semi_imposed_work.category.edition_competition, @semi_imposed_work.category],
+                  notice: "Semi imposed work was successfully updated."
     else
       render :edit, status: :unprocessable_entity
     end
@@ -34,7 +36,8 @@ class SemiImposedWorksController < ApplicationController
 
   def destroy
     @semi_imposed_work.destroy
-    redirect_to [@organism, @competition, @edition_competition, @category], notice: "Semi imposed work was successfully destroyed."
+    redirect_to [@organism, @competition, @edition_competition, @category],
+                notice: "Semi imposed work was successfully destroyed."
   end
 
   private
@@ -55,6 +58,7 @@ class SemiImposedWorksController < ApplicationController
   end
 
   def semi_imposed_work_params
-    params.require(:semi_imposed_work).permit(:programme_requirement_id, :guidelines, :title, :number, :max_length_minutes)
+    params.require(:semi_imposed_work).permit(:programme_requirement_id, :guidelines, :title, :number,
+                                              :max_length_minutes)
   end
 end

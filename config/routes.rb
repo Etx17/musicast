@@ -43,7 +43,9 @@ Rails.application.routes.draw do
   # User dashboard
   get 'admin_dashboard', to: 'dashboard#admin'
   get 'organisateur_dashboard', to: 'dashboard#organiser'
-  get 'candidat_dashboard', to: 'dashboard#candidate' do
+
+  scope 'candidat_dashboard' do
+    get '/', to: 'dashboard#candidate', as: 'candidat_dashboard'
     resources :candidatures
   end
   get 'jury_dashboard', to: 'dashboard#jury'
@@ -54,5 +56,9 @@ Rails.application.routes.draw do
       resources :candidatures, only: [:new, :create]
     end
   end
-  
+
+  resources :inscription_orders, only: [:new, :show, :create] do
+    resources :payments, only: :new
+  end
+
 end

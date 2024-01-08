@@ -1,5 +1,5 @@
 class OrganisateursController < ApplicationController
-  before_action :set_organisateur, only: %i[ show edit update destroy ]
+  before_action :set_organisateur, only: %i[show edit update destroy]
 
   # GET /organisateurs or /organisateurs.json
   def index
@@ -58,13 +58,14 @@ class OrganisateursController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_organisateur
-      @organisateur = Organisateur.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def organisateur_params
-      params.require(:organisateur).permit(:user_id, :nom_organisme, :description_organisme)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_organisateur
+    @organisateur = Organisateur.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def organisateur_params
+    params.require(:organisateur).permit(:user_id, :nom_organisme, :description_organisme)
+  end
 end

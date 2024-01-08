@@ -1,5 +1,5 @@
 class CandidateProgramAirsController < ApplicationController
-  before_action :set_candidate_program_air, only: %i[ show edit update destroy ]
+  before_action :set_candidate_program_air, only: %i[show edit update destroy]
 
   # GET /candidate_program_airs or /candidate_program_airs.json
   def index
@@ -25,7 +25,10 @@ class CandidateProgramAirsController < ApplicationController
 
     respond_to do |format|
       if @candidate_program_air.save
-        format.html { redirect_to candidate_program_air_url(@candidate_program_air), notice: "Candidate program air was successfully created." }
+        format.html do
+          redirect_to candidate_program_air_url(@candidate_program_air),
+                      notice: "Candidate program air was successfully created."
+        end
         format.json { render :show, status: :created, location: @candidate_program_air }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +41,10 @@ class CandidateProgramAirsController < ApplicationController
   def update
     respond_to do |format|
       if @candidate_program_air.update(candidate_program_air_params)
-        format.html { redirect_to candidate_program_air_url(@candidate_program_air), notice: "Candidate program air was successfully updated." }
+        format.html do
+          redirect_to candidate_program_air_url(@candidate_program_air),
+                      notice: "Candidate program air was successfully updated."
+        end
         format.json { render :show, status: :ok, location: @candidate_program_air }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,19 +58,22 @@ class CandidateProgramAirsController < ApplicationController
     @candidate_program_air.destroy
 
     respond_to do |format|
-      format.html { redirect_to candidate_program_airs_url, notice: "Candidate program air was successfully destroyed." }
+      format.html do
+        redirect_to candidate_program_airs_url, notice: "Candidate program air was successfully destroyed."
+      end
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_candidate_program_air
-      @candidate_program_air = CandidateProgramAir.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def candidate_program_air_params
-      params.require(:candidate_program_air).permit(:candidate_program_id, :air_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_candidate_program_air
+    @candidate_program_air = CandidateProgramAir.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def candidate_program_air_params
+    params.require(:candidate_program_air).permit(:candidate_program_id, :air_id)
+  end
 end

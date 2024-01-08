@@ -1,5 +1,5 @@
 class FreeChoicesController < ApplicationController
-  before_action :set_free_choice, only: %i[ show edit update destroy ]
+  before_action :set_free_choice, only: %i[show edit update destroy]
 
   # GET /free_choices or /free_choices.json
   def index
@@ -58,13 +58,14 @@ class FreeChoicesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_free_choice
-      @free_choice = FreeChoice.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def free_choice_params
-      params.require(:free_choice).permit(:programme_requirement_id, :number, :max_length_minutes)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_free_choice
+    @free_choice = FreeChoice.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def free_choice_params
+    params.require(:free_choice).permit(:programme_requirement_id, :number, :max_length_minutes)
+  end
 end

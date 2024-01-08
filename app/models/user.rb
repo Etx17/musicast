@@ -8,10 +8,12 @@ class User < ApplicationRecord
   has_one :partner
   has_one :jury
   has_one :candidate
+  has_many :inscriptions_paiements
 
+  has_many :inscription_orders
   has_many :documents
 
-  def after_sign_in_path_for(resource)
+  def after_sign_in_path_for(_resource)
     if current_user.role == "admin"
       admin_dashboard_path
     elsif current_user.role == "organisateur"

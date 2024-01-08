@@ -1,5 +1,5 @@
 class JuresController < ApplicationController
-  before_action :set_jure, only: %i[ show edit update destroy ]
+  before_action :set_jure, only: %i[show edit update destroy]
 
   # GET /jures or /jures.json
   def index
@@ -58,13 +58,14 @@ class JuresController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_jure
-      @jure = Jure.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def jure_params
-      params.require(:jure).permit(:user_id, :autres_informations)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_jure
+    @jure = Jure.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def jure_params
+    params.require(:jure).permit(:user_id, :autres_informations)
+  end
 end

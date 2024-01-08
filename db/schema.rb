@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_05_160751) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_06_183552) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -110,6 +110,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_05_160751) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "slug"
+    t.integer "price_cents", default: 0, null: false
+    t.string "price_currency", default: "EUR", null: false
     t.index ["edition_competition_id"], name: "index_categories_on_edition_competition_id"
     t.index ["slug"], name: "index_categories_on_slug", unique: true
   end
@@ -208,12 +210,26 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_05_160751) do
     t.index ["requirement_item_id"], name: "index_inscription_item_requirements_on_requirement_item_id"
   end
 
+  create_table "inscription_orders", force: :cascade do |t|
+    t.integer "state", default: 0
+    t.string "checkout_session_id"
+    t.bigint "user_id", null: false
+    t.bigint "inscription_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "amount_cents", default: 0, null: false
+    t.string "amount_currency", default: "EUR", null: false
+    t.index ["inscription_id"], name: "index_inscription_orders_on_inscription_id"
+    t.index ["user_id"], name: "index_inscription_orders_on_user_id"
+  end
+
   create_table "inscriptions", force: :cascade do |t|
     t.bigint "candidat_id", null: false
     t.bigint "category_id", null: false
     t.string "statut"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "price_cents", default: 0, null: false
     t.index ["candidat_id"], name: "index_inscriptions_on_candidat_id"
     t.index ["category_id"], name: "index_inscriptions_on_category_id"
   end
@@ -348,6 +364,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_05_160751) do
   add_foreign_key "imposed_works", "categories"
   add_foreign_key "inscription_item_requirements", "inscriptions"
   add_foreign_key "inscription_item_requirements", "requirement_items"
+  add_foreign_key "inscription_orders", "inscriptions"
+  add_foreign_key "inscription_orders", "users"
   add_foreign_key "inscriptions", "candidats"
   add_foreign_key "inscriptions", "categories"
   add_foreign_key "jures", "users"

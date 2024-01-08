@@ -1,5 +1,5 @@
 class CandidatsController < ApplicationController
-  before_action :set_candidat, only: %i[ show edit update destroy ]
+  before_action :set_candidat, only: %i[show edit update destroy]
 
   # GET /candidats or /candidats.json
   def index
@@ -58,13 +58,14 @@ class CandidatsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_candidat
-      @candidat = Candidat.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def candidat_params
-      params.require(:candidat).permit(:user_id, :cv, :bio)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_candidat
+    @candidat = Candidat.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def candidat_params
+    params.require(:candidat).permit(:user_id, :cv, :bio)
+  end
 end

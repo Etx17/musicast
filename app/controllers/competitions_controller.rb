@@ -1,6 +1,6 @@
 class CompetitionsController < ApplicationController
-  before_action :set_competition, only: %i[ show edit update destroy ]
-  before_action :set_organism, only: %i[ show new edit create update ]
+  before_action :set_competition, only: %i[show edit update destroy]
+  before_action :set_organism, only: %i[show new edit create update]
 
   # GET /competitions or /competitions.json
   def index
@@ -12,7 +12,6 @@ class CompetitionsController < ApplicationController
     @edition_competition = EditionCompetition.new
     @categories = @competition.edition_competitions.map(&:categories).flatten
     @categories = @categories.sort_by(&:discipline)
-
   end
 
   # GET /competitions/new
@@ -39,7 +38,7 @@ class CompetitionsController < ApplicationController
   # PATCH/PUT /competitions/1 or /competitions/1.json
   def update
     if @competition.update(competition_params)
-      redirect_to organism_competition_path(@organism,@competition), notice: "Competition was successfully updated."
+      redirect_to organism_competition_path(@organism, @competition), notice: "Competition was successfully updated."
     else
       render :edit, status: :unprocessable_entity
     end
@@ -53,17 +52,17 @@ class CompetitionsController < ApplicationController
 
   private
 
-    # Use callbacks to share common setup or constraints between actions.
-    def set_competition
-      @competition = Competition.friendly.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_competition
+    @competition = Competition.friendly.find(params[:id])
+  end
 
-    def set_organism
-      @organism = Organism.friendly.find(params[:organism_id])
-    end
+  def set_organism
+    @organism = Organism.friendly.find(params[:organism_id])
+  end
 
-    # Only allow a list of trusted parameters through.
-    def competition_params
-      params.require(:competition).permit(:organism_id, :nom_concours, :description, :photo)
-    end
+  # Only allow a list of trusted parameters through.
+  def competition_params
+    params.require(:competition).permit(:organism_id, :nom_concours, :description, :photo)
+  end
 end

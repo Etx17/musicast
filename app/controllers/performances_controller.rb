@@ -1,5 +1,5 @@
 class PerformancesController < ApplicationController
-  before_action :set_performance, only: %i[ show edit update destroy ]
+  before_action :set_performance, only: %i[show edit update destroy]
 
   # GET /performances or /performances.json
   def index
@@ -58,13 +58,14 @@ class PerformancesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_performance
-      @performance = Performance.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def performance_params
-      params.require(:performance).permit(:inscription_id, :tour_id, :heure_performance, :resultat)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_performance
+    @performance = Performance.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def performance_params
+    params.require(:performance).permit(:inscription_id, :tour_id, :heure_performance, :resultat)
+  end
 end

@@ -1,5 +1,5 @@
 class LeadsController < ApplicationController
-  before_action :set_lead, only: %i[ show edit update destroy ]
+  before_action :set_lead, only: %i[show edit update destroy]
 
   # GET /leads or /leads.json
   def index
@@ -58,13 +58,14 @@ class LeadsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_lead
-      @lead = Lead.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def lead_params
-      params.require(:lead).permit(:email)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_lead
+    @lead = Lead.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def lead_params
+    params.require(:lead).permit(:email)
+  end
 end

@@ -1,5 +1,5 @@
 class ProgrammeRequirementsController < ApplicationController
-  before_action :set_programme_requirement, only: %i[ show edit update destroy ]
+  before_action :set_programme_requirement, only: %i[show edit update destroy]
 
   # GET /programme_requirements or /programme_requirements.json
   def index
@@ -25,7 +25,10 @@ class ProgrammeRequirementsController < ApplicationController
 
     respond_to do |format|
       if @programme_requirement.save
-        format.html { redirect_to programme_requirement_url(@programme_requirement), notice: "Programme requirement was successfully created." }
+        format.html do
+          redirect_to programme_requirement_url(@programme_requirement),
+                      notice: "Programme requirement was successfully created."
+        end
         format.json { render :show, status: :created, location: @programme_requirement }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +41,10 @@ class ProgrammeRequirementsController < ApplicationController
   def update
     respond_to do |format|
       if @programme_requirement.update(programme_requirement_params)
-        format.html { redirect_to programme_requirement_url(@programme_requirement), notice: "Programme requirement was successfully updated." }
+        format.html do
+          redirect_to programme_requirement_url(@programme_requirement),
+                      notice: "Programme requirement was successfully updated."
+        end
         format.json { render :show, status: :ok, location: @programme_requirement }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,19 +58,22 @@ class ProgrammeRequirementsController < ApplicationController
     @programme_requirement.destroy
 
     respond_to do |format|
-      format.html { redirect_to programme_requirements_url, notice: "Programme requirement was successfully destroyed." }
+      format.html do
+        redirect_to programme_requirements_url, notice: "Programme requirement was successfully destroyed."
+      end
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_programme_requirement
-      @programme_requirement = ProgrammeRequirement.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def programme_requirement_params
-      params.require(:programme_requirement).permit(:category_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_programme_requirement
+    @programme_requirement = ProgrammeRequirement.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def programme_requirement_params
+    params.require(:programme_requirement).permit(:category_id)
+  end
 end

@@ -1,5 +1,5 @@
 class PartnersController < ApplicationController
-  before_action :set_partner, only: %i[ show edit update destroy ]
+  before_action :set_partner, only: %i[show edit update destroy]
 
   # GET /partners or /partners.json
   def index
@@ -58,13 +58,14 @@ class PartnersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_partner
-      @partner = Partner.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def partner_params
-      params.require(:partner).permit(:user_id, :organism_id, :role_partenaire, :niveau_autorisation)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_partner
+    @partner = Partner.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def partner_params
+    params.require(:partner).permit(:user_id, :organism_id, :role_partenaire, :niveau_autorisation)
+  end
 end
