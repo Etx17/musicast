@@ -21,7 +21,10 @@
           <div class="card-body d-flex flex-column align-items-start">
             <h5>Paiement</h5>
             <p class="text-secondary">Vous n'avez pas encore payé votre inscription</p>
-            <%= link_to "Payer", new_inscription_order_path(inscription_id: inscription.id), class: "btn btn-primary" %>
+              <%= form_tag inscription_orders_path do %>
+                <%= hidden_field_tag :inscription_id, inscription.id %>
+                <%= submit_tag 'Payer', class: 'btn btn-dark' %>
+              <% end %>
           </div>
         </div>
       <% end %>

@@ -22,6 +22,10 @@ class InscriptionsController < ApplicationController
   end
 
   def new
+    # If candidat already created a inscription for the category, redirect to it
+    inscription = current_user.candidat.inscriptions.by_category(params[:category_id]).first
+    redirect_to inscription_path(inscription) if inscription.present?
+
     @inscription = Inscription.new
     category = Category.friendly.find(params[:category_id])
     category.requirement_items.each do |item|

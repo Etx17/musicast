@@ -4,7 +4,9 @@ Rails.application.routes.draw do
   resources :leads
   resources :performances
   resources :candidate_programs
-  resources :inscriptions
+  resources :inscriptions do
+    resources :inscription_orders, only: [:new, :create]
+  end
   resources :imposed_works
   resources :airs
   resources :programme_requirements

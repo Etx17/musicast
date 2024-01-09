@@ -6,7 +6,7 @@ class Competition < ApplicationRecord
 
   extend FriendlyId
   friendly_id :nom_concours, use: :slugged
-
+  
   def organisateur
     # returns the association organisateur of the competition
     organism.organisateur
