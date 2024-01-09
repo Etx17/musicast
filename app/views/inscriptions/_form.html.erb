@@ -14,12 +14,16 @@
         <%= f.simple_fields_for :inscription_item_requirements, item_requirement do |irf| %>
           <%= irf.hidden_field :requirement_item_id %>
           <% case item_requirement.requirement_item.type_item %>
-          <% when 'filePDF' %>
-           <div class="row">
+         <% when 'filePDF' %>
+            <div class="row">
               <div class="col">
-                <%= irf.input :submitted_file, as: :file, label: "Upload new PDF", required: true %>
+                <% if irf.object.submitted_file.attached? %>
+                  <embed src="<%= url_for(irf.object.submitted_file) %>" width="500" height="375" type="application/pdf">
+                   <%= irf.input :submitted_file, as: :file, label: "Choisissez un autre PDF si vous souhaitez remplacer le document ci dessus" %>
+                <% else %>
+                   <%= irf.input :submitted_file, as: :file, label: "Uploadez un PDF", required: true %>
+                <% end %>
               </div>
-
             </div>
           <% when 'lienvideo' %>
             <%= irf.input :submitted_content, as: :url, label: "YouTube URL", hint: "Assurez vous que la vidéo soit publique et qu'elle soit bien accessible.", required: true %>

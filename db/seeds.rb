@@ -39,10 +39,7 @@
   Candidat.create!(user_id: candidate_user2.id, cv: "Link to CV of candidate 2 - #{n}", bio: "Short bio of candidate 2 - #{n}")
 
   # RequirementItems for Category1
-  3.times do |i|
-    RequirementItem.create!(category_id: category1.id, type_item: 'filePDF', title: "Lettre de recommandation #{i + 1} - #{n}", description_item: "Une lettre de recommandation au format PDF - #{n}.")
-  end
-
+  RequirementItem.create!(category_id: category1.id, type_item: 'filePDF', title: "Lettre de recommandation - #{n}", description_item: "Une lettre de recommandation au format PDF - #{n}.")
   RequirementItem.create!(category_id: category1.id, type_item: 'filePDF', title: "Certificat d'autorisation parentale - #{n}", description_item: "Certificat d’autorisation parentale au format PDF - #{n}.")
   RequirementItem.create!(category_id: category1.id, type_item: 'lienvideo', title: "Enregistrement vidéo - Air d'opéra en français - #{n}", description_item: "Un enregistrement vidéo de bonne qualité, lien YouTube, ne dépassant pas 5 minutes - #{n}. L'air d'opéra doit être en français. Les mains du pianiste doivent être visibles en tout temps, sans coupure dans la vidéo.")
   RequirementItem.create!(category_id: category1.id, type_item: 'lienvideo', title: "Enregistrement vidéo - Lied en allemand - #{n}", description_item: "Un enregistrement vidéo de bonne qualité, lien YouTube, ne dépassant pas 5 minutes - #{n}. Le lied doit être en allemand. Les mains du pianiste doivent être visibles en tout temps, sans coupure dans la vidéo.")
@@ -92,4 +89,4 @@
 end
 
 User.create(email: "candidat@musicast.fr", password: "password", password_confirmation: "password")
-Candidat.create(user_id: User.last.id, cv: "Link to CV of candidate 1 - #{n}", bio: "Short bio of candidate 1 - #{n}")
+Candidat.create(user_id: User.last.id, cv: "Link to CV of candidate ", bio: "Short bio of candidate ")

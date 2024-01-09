@@ -1,6 +1,7 @@
 class InscriptionOrdersController < ApplicationController
   before_action :authenticate_user!
   def new
+    
   end
 
   def show
@@ -8,6 +9,7 @@ class InscriptionOrdersController < ApplicationController
   end
 
   def create
+    raise
     inscription = Inscription.find(params[:inscription_id])
     inscription_order = InscriptionOrder.create!(
       inscription: inscription,

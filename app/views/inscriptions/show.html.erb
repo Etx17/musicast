@@ -1,11 +1,11 @@
 <p style="color: green"><%= notice %></p>
+<div class="d-flex flex-column">
+<div class="d-flex justify-content-between align-items-center">
+  <%= link_to "Edit this inscription", edit_inscription_path(@inscription), class: "btn btn-primary" %> |
+  <%= link_to "Back to inscriptions", inscriptions_path, class: "btn btn-secondary" %>
 
+  <%= button_to "Destroy this inscription", @inscription, method: :delete, data: { turbo_confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+</div>
 <%= render @inscription %>
 <%# render le programme pas editable si c'est payé %>
-
-<div>
-  <%= link_to "Edit this inscription", edit_inscription_path(@inscription) %> |
-  <%= link_to "Back to inscriptions", inscriptions_path %>
-
-  <%= button_to "Destroy this inscription", @inscription, method: :delete %>
 </div>
