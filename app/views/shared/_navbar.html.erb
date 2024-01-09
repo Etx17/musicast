@@ -25,6 +25,14 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto">
         <% if user_signed_in? %>
+          <% if current_user.organisateur.present? %>
+            <% last_edition_competition = current_user&.organisateur&.competitions.last.edition_competitions.last %>
+            <% if last_edition_competition.present? %>
+              <li class="nav-item">
+                <%= link_to "#{last_edition_competition.competition.nom_concours} #{last_edition_competition.annee}", edition_competition_path(last_edition_competition), class: "nav-link" %>
+              </li>
+            <% end %>
+          <% end %>
           <li class="nav-item active">
             <%= link_to "Home", pages_home_path, class: "nav-link" %>
           </li>

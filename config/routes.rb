@@ -17,7 +17,11 @@ Rails.application.routes.draw do
         resources :categories do
           resources :tours
           resources :requirement_items
-          resources :inscriptions
+          resources :inscriptions do
+            member do
+              patch :update_status
+            end
+          end
           resources :choice_imposed_works
           resources :semi_imposed_works
         end

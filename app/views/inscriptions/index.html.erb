@@ -3,14 +3,33 @@
 
 <h1>Inscriptions</h1>
 
-<div id="inscriptions">
-  <% @inscriptions&.each do |inscription| %>
-    <%= render inscription %>
-    <p>
-      <%= link_to "Show this inscription", inscription %>
-    </p>
+<div id="inscriptions" class="row">
+  <% Inscription.statuses.keys.each do |status| %>
+    <div class="col bg-light shadow-sm" style="border-radius: 0.25rem;">
+      <h5 class="text-center text-capitalize"><%= status %></h5>
+      <% @inscriptions&.select { |inscription| inscription.status == status }.each do |inscription| %>
+        <div class="card p-3">
+          <%= link_to inscription_path(inscription) do %>
+            <div>
+              <h6 class="card-title"><%= inscription.candidat.user.email %></h6>
+              <p class="card-text">
+                <span class="badge rounded-pill bg-primary"><%= inscription.status %></span>
+              </p>
+            </div>
+          <% end %>
+          <div class="d-flex justify-content-around">
+          <%# Si status = draft, "voir" ou "contacter" %>
+          <%# si status = in_preview, "Voir", "Accepter", "rejeter" %>
+          <%# si status = accepted, "Rejeter", "Voir"%>
+          <%# si status = rejectted, "Accepter", "Voir"%>
+            <%= buttons_for_inscription(inscription).html_safe %>
+
+          </div>
+        </div>
+      <% end %>
+    </div>
   <% end %>
 </div>
 
-<%= link_to "New inscription", new_inscription_path %>
+
 </div>

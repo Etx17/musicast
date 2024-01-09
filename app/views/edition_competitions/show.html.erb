@@ -9,7 +9,7 @@
       <% @categories.each do |category| %>
         <%= link_to organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, category), data: { controller: "hover" } do %>
           <% if category.photo.attached? %>
-            <div class="card mt-3" style="width: 100%; height: 300px; background-image: url('<%= image_tag category&.photo'); background-size: cover;" data-action="mouseenter->hover#hover mouseleave->hover#unhover">
+            <div class="card mt-3" style="width: 100%; height: 300px; background-image: url('<%= rails_blob_path(category&.photo) %>'); background-size: cover;" data-action="mouseenter->hover#hover mouseleave->hover#unhover">
           <% else %>
             <div class="card mt-3" style="width: 100%; height: 300px; background-image: url('https://source.unsplash.com/random/?opera/300/200'); background-size: cover;" data-action="mouseenter->hover#hover mouseleave->hover#unhover">
           <% end %>

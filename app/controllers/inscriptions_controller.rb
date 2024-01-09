@@ -14,6 +14,7 @@ class InscriptionsController < ApplicationController
       @inscriptions = Inscription.all
     end
     render :candidate_index if current_user.candidat
+    render :index if current_user.organisateur
   end
 
   def show
@@ -69,6 +70,12 @@ class InscriptionsController < ApplicationController
       format.html { redirect_to inscriptions_path, notice: "Inscription was successfully destroyed." }
       format.json { head :no_content }
     end
+  end
+
+  def update_status
+    @inscription = Inscription.find(params[:id])
+    @inscription.update(status: params[:status])
+    redirect_to inscriptions_path(category_id: @inscription.category_id)
   end
 
   private
