@@ -15,15 +15,15 @@ class ToursController < ApplicationController
   end
 
   def new
-    @category = Category.find(params[:category_id])
+    @category = Category.friendly.find(params[:category_id])
     @edition_competition = @category.edition_competition
     @competition = @edition_competition.competition
     @tour = Tour.new
   end
 
   def create
-    @organism = Organism.find(params[:organism_id])
-    @category = Category.find(params[:category_id])
+    @organism = Organism.friendly.find(params[:organism_id])
+    @category = Category.friendly.find(params[:category_id])
     @edition_competition = @category.edition_competition
     @competition = @edition_competition.competition
     @tour = Tour.new(tour_params)
@@ -39,8 +39,8 @@ class ToursController < ApplicationController
 
   # PATCH/PUT /tours/1 or /tours/1.json
   def update
-    @organism = Organism.find(params[:organism_id])
-    @category = Category.find(params[:category_id])
+    @organism = Organism.friendly.find(params[:organism_id])
+    @category = Category.friendly.find(params[:category_id])
     @edition_competition = @category.edition_competition
     @competition = @edition_competition.competition
     @tour = Tour.find(params[:id])
@@ -54,8 +54,8 @@ class ToursController < ApplicationController
 
   # DELETE /tours/1 or /tours/1.json
   def destroy
-    @organism = Organism.find(params[:organism_id])
-    @category = Category.find(params[:category_id])
+    @organism = Organism.friendly.find(params[:organism_id])
+    @category = Category.friendly.find(params[:category_id])
     @edition_competition = @category.edition_competition
     @competition = @edition_competition.competition
     @tour.destroy

@@ -10,7 +10,6 @@ Rails.application.routes.draw do
   resources :imposed_works
   resources :airs
   resources :programme_requirements
-  resources :requirement_items
   resources :organisms do
     resources :competitions do
       resources :edition_competitions do

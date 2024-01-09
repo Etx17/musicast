@@ -14,7 +14,7 @@ class RequirementItemsController < ApplicationController
     @requirement_item = @category.requirement_items.build(requirement_item_params)
 
     if @requirement_item.save
-      redirect_to competition_edition_competition_category_path(@competition, @edition_competition, @category),
+      redirect_to organism_competition_edition_competition_category_path(@competition.organism, @competition, @edition_competition, @category),
                   notice: 'Requirement item was successfully created.'
     else
       render :new
@@ -45,7 +45,7 @@ class RequirementItemsController < ApplicationController
   private
 
   def set_competition
-    @competition = Competition.find(params[:competition_id])
+    @competition = Competition.friendly.find(params[:competition_id])
   end
 
   def set_edition_competition
@@ -53,7 +53,7 @@ class RequirementItemsController < ApplicationController
   end
 
   def set_category
-    @category = @edition_competition.categories.find(params[:category_id])
+    @category = Category.friendly.find(params[:category_id])
   end
 
   def set_requirement_item

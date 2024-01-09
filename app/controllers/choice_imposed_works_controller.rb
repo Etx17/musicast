@@ -30,7 +30,7 @@ class ChoiceImposedWorksController < ApplicationController
     respond_to do |format|
       if @choice_imposed_work.update(choice_imposed_work_params)
         format.html do
-          redirect_to organism_competition_edition_competition_category_path(@choice_imposed_work.category.organism, @choice_imposed_work.category.competition, @choice_imposed_work.category.edition_competition, @choice_imposed_work.category), notice: "Imposed work was successfully updated."
+          redirect_to organism_competition_edition_competition_category_path(@choice_imposed_work.category.edition_competition.organism, @choice_imposed_work.category.competition, @choice_imposed_work.category.edition_competition, @choice_imposed_work.category), notice: "Imposed work was successfully updated."
         end
         format.json { render :show, status: :ok, location: @choice_imposed_work }
       else
@@ -50,13 +50,6 @@ class ChoiceImposedWorksController < ApplicationController
   def set_choice_imposed_work
     @choice_imposed_work = ChoiceImposedWork.find(params[:id])
   end
-
-  # def set_parent_resources
-  #   @organism = Organism.friendly.find(params[:organism_id])
-  #   @competition = Competition.friendly.find(params[:competition_id])
-  #   @edition_competition = EditionCompetition.find(params[:edition_competition_id])
-  #   @category = Category.friendly.find(params[:category_id])
-  # end
 
   def set_parent_resources
     @category = Category.friendly.find(params[:category_id])

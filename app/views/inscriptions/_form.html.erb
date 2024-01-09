@@ -14,8 +14,12 @@
         <%= f.simple_fields_for :inscription_item_requirements, item_requirement do |irf| %>
           <%= irf.hidden_field :requirement_item_id %>
           <% case item_requirement.requirement_item.type_item %>
-         <% when 'filePDF' %>
-            <div class="row">
+          <% when 'Motivation Essay' %>
+            <%= irf.input :submitted_content, :as :text, label: 'Lettre de motivation', hint: "Ni trop long, ni trop court", required: true %>
+          <% when 'Youtube Link' %>
+            <%= irf.input :submitted_content, as: :url, label: "YouTube URL", hint: "Assurez vous que la vidéo soit publique et qu'elle soit bien accessible.", required: true %>
+          <% else %>
+             <div class="row">
               <div class="col">
                 <% if irf.object.submitted_file.attached? %>
                   <embed src="<%= url_for(irf.object.submitted_file) %>" width="500" height="375" type="application/pdf">
@@ -25,10 +29,6 @@
                 <% end %>
               </div>
             </div>
-          <% when 'lienvideo' %>
-            <%= irf.input :submitted_content, as: :url, label: "YouTube URL", hint: "Assurez vous que la vidéo soit publique et qu'elle soit bien accessible.", required: true %>
-          <% else %>
-            <%= irf.input :submitted_content %>
           <% end %>
         <% end %>
       </div>

@@ -18,12 +18,7 @@
             </div>
           <% end %>
           <div class="d-flex justify-content-around">
-          <%# Si status = draft, "voir" ou "contacter" %>
-          <%# si status = in_preview, "Voir", "Accepter", "rejeter" %>
-          <%# si status = accepted, "Rejeter", "Voir"%>
-          <%# si status = rejectted, "Accepter", "Voir"%>
             <%= buttons_for_inscription(inscription).html_safe %>
-
           </div>
         </div>
       <% end %>

@@ -5,7 +5,7 @@
   <% if imposed_work.present? %>
     <div class="container p-3">
       <div class="d-flex flex-column">
-        <p class="mb-3" style="font-style: italic; color: #CCCCCC;"><%= imposed_work.guidelines %></p>
+        <p class="mb-3 text-white" style="font-style: italic;"><%= imposed_work.guidelines %></p>
         <div class="w-100 d-flex justify-content-between mb-3">
           <%= link_to edit_imposed_work_path(imposed_work), class: 'btn btn-light btn-sm px-3', style: 'width: auto;' do %>
             <i class="fas fa-pencil"></i> Editer la liste
