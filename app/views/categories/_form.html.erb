@@ -10,8 +10,13 @@
             <%= f.input :name, required: true %>
           </div>
           <div class="col-md-6">
-            <%= f.input :discipline, required: true %>
+            <%= f.label :discipline, "Discipline", class: "form-label" %>
+            <%= f.select :discipline,
+                        Category.disciplines.keys.map { |discipline| [discipline.humanize, discipline] },
+                        {},
+                        { class: 'form-select', required: true } %>
           </div>
+
         </div>
         <div class="row">
           <div class="col-md-6">

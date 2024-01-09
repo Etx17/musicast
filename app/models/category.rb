@@ -16,7 +16,10 @@ class Category < ApplicationRecord
   has_many :choice_imposed_works, dependent: :destroy
 
   has_one_attached :photo
+  before_save :should_generate_new_friendly_id?, if: :name_changed?
 
+  delegate :competition, to: :edition_competition
+  
   # Dangereux, attention a la suppression des catégories et a l'ajout
   enum discipline: {
     alto: 1,
@@ -42,4 +45,8 @@ class Category < ApplicationRecord
     tuba: 21,
     violin: 22
   }
+
+  def should_generate_new_friendly_id?
+    self.slug = name.parameterize if name_changed?
+  end
 end

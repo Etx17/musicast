@@ -29,7 +29,7 @@
             <% last_edition_competition = current_user&.organisateur&.competitions.last.edition_competitions.last %>
             <% if last_edition_competition.present? %>
               <li class="nav-item">
-                <%= link_to "#{last_edition_competition.competition.nom_concours} #{last_edition_competition.annee}", edition_competition_path(last_edition_competition), class: "nav-link" %>
+                <%= link_to "#{last_edition_competition.competition.nom_concours} #{last_edition_competition.annee}", organism_competition_edition_competition_path(last_edition_competition.competition.organism_id, last_edition_competition.competition_id, last_edition_competition), class: "nav-link" %>
               </li>
             <% end %>
           <% end %>

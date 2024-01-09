@@ -6,7 +6,8 @@ class EditionCompetition < ApplicationRecord
   accepts_nested_attributes_for :address, allow_destroy: true
   has_many :documents, as: :parent
   accepts_nested_attributes_for :documents
-  
+  delegate :organism_id, to: :competition
+  delegate :organism, to: :competition
 
   def disciplines
     categories.pluck(:name).uniq

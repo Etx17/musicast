@@ -40,7 +40,7 @@ class CategoriesController < ApplicationController
   # PATCH/PUT /categories/1 or /categories/1.json
   def update
     if @category.update(category_params)
-      redirect_to category_url(@category), notice: "Category was successfully updated."
+      redirect_to organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category), notice: "Category was successfully updated."
     else
       render :edit, status: :unprocessable_entity
     end
