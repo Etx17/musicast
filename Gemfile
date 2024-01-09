@@ -22,6 +22,9 @@ gem "puma", "~> 5.0"
 gem 'stripe'
 gem 'stripe_event'
 
+# Storage with AWS S3
+gem "aws-sdk-s3"
+
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem "importmap-rails"
 

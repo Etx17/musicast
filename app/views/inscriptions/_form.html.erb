@@ -17,20 +17,12 @@
           <% when 'filePDF' %>
            <div class="row">
               <div class="col">
-                <%= irf.input :submitted_content, as: :file, label: "Upload new PDF", required: true %>
+                <%= irf.input :submitted_file, as: :file, label: "Upload new PDF", required: true %>
               </div>
-              <% if current_user.documents.any? %>
-              <div class="col">
-                <%= irf.collection_select :submitted_content, current_user.documents, :document_type, :file_url, { prompt: 'Select a document' }, { class: 'form-control' } %>
-              </div>
-              <% end %>
+
             </div>
           <% when 'lienvideo' %>
             <%= irf.input :submitted_content, as: :url, label: "YouTube URL", hint: "Assurez vous que la vidéo soit publique et qu'elle soit bien accessible.", required: true %>
-
-          <% when 'mp3' %>
-            <%= irf.input :submitted_content, as: :file, label: "Upload MP3", required: true  %>
-
           <% else %>
             <%= irf.input :submitted_content %>
           <% end %>

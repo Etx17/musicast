@@ -27,7 +27,7 @@
 
     <div class="col-md-6">
       <div class="form-inputs col-12 d-flex flex-column gap-1">
-        <div data-controller="image-preview" data-image-preview-url="<%= @category.photo.attached? ? cl_image_path(@category.photo.key, crop: :fill, width: 200, height: 200) : '' %>">
+        <div data-controller="image-preview" data-image-preview-url="<%= @category.photo.attached? ? url_for(@category.photo) : '' %>">
           <%= f.input :photo, as: :file, input_html: { data: { image_preview_target: "input" } }, label: "Ajouter une photo" %>
           <div class="w-100" style="height: 400px; background: #f8f9fa;">
             <div data-image-preview-target="preview" class="h-100 w-100" style="background-size: contain; display: none;"></div>

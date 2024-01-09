@@ -17,7 +17,7 @@ class InscriptionsController < ApplicationController
   end
 
   def show
-    
+
     render :candidate_show if current_user.candidat
   end
 
@@ -75,6 +75,6 @@ class InscriptionsController < ApplicationController
 
   def inscription_params
     params.require(:inscription).permit(:candidat_id, :category_id, :status,
-                                        inscription_item_requirements_attributes: %i[id submitted_content document_id requirement_item_id _destroy])
+                                        inscription_item_requirements_attributes: %i[id submitted_file submitted_content document_id requirement_item_id _destroy])
   end
 end

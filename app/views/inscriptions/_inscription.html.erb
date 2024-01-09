@@ -26,10 +26,19 @@
         <% inscription.inscription_item_requirements&.each do |item| %>
           <div class="card shadow-sm mb-3">
             <div class="card-body">
-            <%= raise %>
               <h5 class="card-title text-muted"><%= item.requirement_item&.title %></h5>
               <p><small class="text-muted"><%= item.requirement_item&.type_item %></small></p>
-              <p><%= item&.submitted_content %></p>
+              <% if item&.submitted_content.present? && item.submitted_content.to_s.start_with?('http') %>
+                <div class="embed-responsive embed-responsive-16by9">
+                  <iframe class="embed-responsive-item" src="<%= item.submitted_content %>?rel=0" allowfullscreen></iframe>
+                </div>
+              <% end %>
+              <% if item&.submitted_file.attached? %>
+                <div class="d-flex flex-column">
+                <embed src="<%= url_for(item.submitted_file) %>" width="500" height="375" type="application/pdf">
+                <%= link_to 'Voir', url_for(item.submitted_file), target: "_blank" %>
+                </div>
+              <% end %>
             </div>
           </div>
         <% end %>

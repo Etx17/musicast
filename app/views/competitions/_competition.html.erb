@@ -13,6 +13,6 @@
   <%# Photo  %>
   <div class="d-flex flex-column mt-3 w-100">
     <span class="text-dark">Photo de couverture:</span>
-     <%= cl_image_tag competition.photo.key, height: 300, crop: :fill, class:"w-100"   if competition.photo.attached? %>
+     <%= image_tag competition.photo, height: 300, crop: :fill, class:"w-100" if competition.photo.attached? %>
   </div>
 </div>
