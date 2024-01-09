@@ -1,0 +1,14 @@
+<div class="container">
+<p style="color: green"><%= notice %></p>
+<h1>Candidate show inscription</h1>
+<%= render @inscription %>
+<%# render le programme pas editable si c'est payé %>
+
+
+<div>
+  <%= link_to "Edit this inscription", edit_inscription_path(@inscription) %> |
+  <%= link_to "Back to inscriptions", inscriptions_path %>
+
+  <%= button_to "Destroy this inscription", @inscription, method: :delete %>
+</div>
+</div>

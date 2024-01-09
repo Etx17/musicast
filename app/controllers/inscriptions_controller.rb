@@ -17,6 +17,8 @@ class InscriptionsController < ApplicationController
   end
 
   def show
+    
+    render :candidate_show if current_user.candidat
   end
 
   def new
