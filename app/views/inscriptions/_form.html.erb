@@ -15,7 +15,7 @@
           <%= irf.hidden_field :requirement_item_id %>
           <% case item_requirement.requirement_item.type_item %>
           <% when 'Motivation Essay' %>
-            <%= irf.input :submitted_content, :as :text, label: 'Lettre de motivation', hint: "Ni trop long, ni trop court", required: true %>
+            <%= irf.input :submitted_content, as: :text, label: 'Lettre de motivation', hint: "Ni trop long, ni trop court", required: true %>
           <% when 'Youtube Link' %>
             <%= irf.input :submitted_content, as: :url, label: "YouTube URL", hint: "Assurez vous que la vidéo soit publique et qu'elle soit bien accessible.", required: true %>
           <% else %>
