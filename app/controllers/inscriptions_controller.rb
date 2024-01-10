@@ -95,17 +95,26 @@ class InscriptionsController < ApplicationController
   end
 
   def inscription_params
-    params.require(:inscription).permit(
-      :candidat_id,
-      :category_id,
-      :status,
-      :air,
-      inscription_item_requirements_attributes: %i[id submitted_file submitted_content document_id requirement_item_id _destroy],
-      choice_imposed_work_airs_attributes: [:id, :choice_imposed_work_id, :air_id],
-      semi_imposed_work_airs_attributes: [
-        :semi_imposed_work_id,
-        air_attributes: [:title, :length_minutes, :composer, :oeuvre, :character, :tonality]
-      ]
-    )
+    if action_name == 'create' || action_name == 'update'
+      params.require(:inscription).permit(
+        :candidat_id,
+        :category_id,
+        :status,
+        :air,
+        inscription_item_requirements_attributes: %i[id submitted_file submitted_content document_id requirement_item_id _destroy],
+        choice_imposed_work_airs_attributes: [:id, :choice_imposed_work_id, :air_id],
+        semi_imposed_work_airs_attributes: [:id, :semi_imposed_work_id, air_attributes: [:id, :title, :length_minutes, :composer]]
+      )
+    else
+      params.require(:inscription).permit(
+        :candidat_id,
+        :category_id,
+        :status,
+        :air,
+        inscription_item_requirements_attributes: %i[id submitted_file submitted_content document_id requirement_item_id _destroy],
+        choice_imposed_work_airs_attributes: [:id, :choice_imposed_work_id, :air_id],
+        semi_imposed_work_airs_attributes: [:id, :semi_imposed_work_id, air: [:id, :title, :length_minutes, :composer]]
+      )
+    end
   end
 end

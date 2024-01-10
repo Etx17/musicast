@@ -51,7 +51,7 @@
           <% semi_imposed_work_air = inscription.semi_imposed_work_airs.filter{|siwa| siwa.semi_imposed_work_id == semi_imposed_work.id}[i] || semi_imposed_work.semi_imposed_work_airs.build.build_air %>
           <%= f.simple_fields_for :semi_imposed_work_airs, semi_imposed_work_air do |semi_imposed_work_air_fields| %>
             <%= semi_imposed_work_air_fields.input :semi_imposed_work_id, as: :hidden, input_html: { value: semi_imposed_work.id } %>
-            <%= semi_imposed_work_air_fields.simple_fields_for :air_attributes do |air_fields| %>
+              <%= semi_imposed_work_air_fields.simple_fields_for (@inscription.new_record? ? :air_attributes : :air) do |air_fields| %>
                 <div class="card card-body shadow-sm">
                   <div class="row">
                 <div class="col-12 col-md">
