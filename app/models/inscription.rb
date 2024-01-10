@@ -7,9 +7,11 @@ class Inscription < ApplicationRecord
   has_one :inscription_order, dependent: :destroy
   has_many :inscription_item_requirements, dependent: :destroy
   has_many :choice_imposed_work_airs, dependent: :destroy
+  has_many :semi_imposed_work_airs, dependent: :destroy
 
   accepts_nested_attributes_for :inscription_item_requirements, allow_destroy: true
   accepts_nested_attributes_for :choice_imposed_work_airs
+  accepts_nested_attributes_for :semi_imposed_work_airs
 
   # scope :by_category, ->(category_id) { where(category_id: category_id) }
   scope :by_category, -> (category_id) { where(category_id: category_id).includes(candidat: :user) }
