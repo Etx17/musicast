@@ -42,12 +42,41 @@
           <% end %>
         </ul>
       <% end %>
-      
+
       <% inscription.category.semi_imposed_works&.each do |semi_imposed_work| %>
         <h3><%= semi_imposed_work.title %></h3>
         <small><%= semi_imposed_work.guidelines %></small>
         <%# <%= f.simple_fields_for  %>
-        <h1>TODO</h1>
+        <% semi_imposed_work.number.times do |i| %>
+          <% semi_imposed_work_air = inscription.semi_imposed_work_airs.filter{|siwa| siwa.semi_imposed_work_id == semi_imposed_work.id}[i] || semi_imposed_work.semi_imposed_work_airs.build.build_air %>
+          <%= f.simple_fields_for :semi_imposed_work_airs, semi_imposed_work_air do |semi_imposed_work_air_fields| %>
+            <%= semi_imposed_work_air_fields.input :semi_imposed_work_id, as: :hidden, input_html: { value: semi_imposed_work.id } %>
+            <%= semi_imposed_work_air_fields.simple_fields_for :air_attributes do |air_fields| %>
+                <div class="card card-body shadow-sm">
+                  <div class="row">
+                <div class="col-12 col-md">
+                  <%= air_fields.input :title, label: "Air Title #{i+1}", input_html: { class: 'form-control' } %>
+                </div>
+                <div class="col-12 col-md">
+                  <%= air_fields.input :length_minutes, label: "Minutage", input_html: { class: 'form-control' } %>
+                </div>
+                <div class="col-12 col-md">
+                  <%= air_fields.input :composer, label: "Composer", input_html: { class: 'form-control' } %>
+                </div>
+                <div class="col-12 col-md">
+                  <%= air_fields.input :oeuvre, label: "Oeuvre", input_html: { class: 'form-control' } %>
+                </div>
+                <div class="col-12 col-md">
+                  <%= air_fields.input :character, label: "Character", input_html: { class: 'form-control' } %>
+                </div>
+                <div class="col-12 col-md">
+                  <%= air_fields.input :tonality, label: "Tonality", input_html: { class: 'form-control' } %>
+                </div>
+                </div>
+              </div>
+            <% end %>
+          <% end %>
+        <% end %>
       <% end %>
 
       <% inscription.category.choice_imposed_works&.each do |choice_imposed_work| %>

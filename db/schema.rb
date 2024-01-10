@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_10_102231) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_10_141030) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -318,6 +318,17 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_10_102231) do
     t.index ["category_id"], name: "index_requirement_items_on_category_id"
   end
 
+  create_table "semi_imposed_work_airs", force: :cascade do |t|
+    t.bigint "semi_imposed_work_id", null: false
+    t.bigint "air_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "inscription_id", null: false
+    t.index ["air_id"], name: "index_semi_imposed_work_airs_on_air_id"
+    t.index ["inscription_id"], name: "index_semi_imposed_work_airs_on_inscription_id"
+    t.index ["semi_imposed_work_id"], name: "index_semi_imposed_work_airs_on_semi_imposed_work_id"
+  end
+
   create_table "semi_imposed_works", force: :cascade do |t|
     t.text "guidelines"
     t.integer "number"
@@ -391,6 +402,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_10_102231) do
   add_foreign_key "performances", "tours"
   add_foreign_key "programme_requirements", "categories"
   add_foreign_key "requirement_items", "categories"
+  add_foreign_key "semi_imposed_work_airs", "airs"
+  add_foreign_key "semi_imposed_work_airs", "inscriptions"
+  add_foreign_key "semi_imposed_work_airs", "semi_imposed_works"
   add_foreign_key "semi_imposed_works", "categories"
   add_foreign_key "tours", "categories"
 end

@@ -32,6 +32,19 @@
           </div>
         <% end %>
 
+        <% inscription.semi_imposed_work_airs&.includes(:semi_imposed_work).map(&:semi_imposed_work).uniq.each do |semi_imposed_work| %>
+          <div class="card shadow-sm mb-3 bg-light-grey">
+            <div class="card-body">
+              <h4 class="card-title"><%= semi_imposed_work.title %></h4>
+              <ul class="list-group list-group-flush">
+                <% inscription.semi_imposed_work_airs.where(semi_imposed_work: semi_imposed_work).each do |semi_imposed_work_air| %>
+                  <li class="list-group-item bg-light"><%= semi_imposed_work_air.air.title %></li>
+                <% end %>
+              </ul>
+            </div>
+          </div>
+        <% end %>
+
         <div class="card shadow-sm mb-3 bg-light-grey">
             <div class="card-body">
               <h4 class="card-title">Airs imposés</h4>

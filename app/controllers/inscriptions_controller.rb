@@ -38,6 +38,11 @@ class InscriptionsController < ApplicationController
       @inscription.choice_imposed_work_airs.build(choice_imposed_work: choice_imposed_work)
     end
 
+    category.semi_imposed_works.each do |semi_imposed_work|
+      semi_imposed_work_air = @inscription.semi_imposed_work_airs.build(semi_imposed_work: semi_imposed_work)
+      semi_imposed_work_air.build_air
+    end
+
     @inscription.category = category
   end
 
@@ -47,7 +52,6 @@ class InscriptionsController < ApplicationController
   def create
     @inscription = Inscription.new(inscription_params)
     @inscription.candidat = current_user.candidat
-    # raise
     # @inscription.category = Category.friendly.find(inscription_params[:category_id])
     raise "NoCandidatError" unless @inscription.candidat
     if @inscription.save
@@ -95,8 +99,13 @@ class InscriptionsController < ApplicationController
       :candidat_id,
       :category_id,
       :status,
+      :air,
       inscription_item_requirements_attributes: %i[id submitted_file submitted_content document_id requirement_item_id _destroy],
-      choice_imposed_work_airs_attributes: [:id, :choice_imposed_work_id, :air_id]
+      choice_imposed_work_airs_attributes: [:id, :choice_imposed_work_id, :air_id],
+      semi_imposed_work_airs_attributes: [
+        :semi_imposed_work_id,
+        air_attributes: [:title, :length_minutes, :composer, :oeuvre, :character, :tonality]
+      ]
     )
   end
 end
