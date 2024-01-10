@@ -1,44 +1,69 @@
 
 <div class="container">
-<%= simple_form_for(@inscription) do |f| %>
-  <%= f.error_notification %>
-  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+  <%= simple_form_for(@inscription) do |f| %>
+    <%= f.error_notification %>
+    <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
-  <div class="form-inputs">
-    <%= f.hidden_field :category_id, value: @inscription.category.id %>
+    <div class="form-inputs">
+      <%= f.hidden_field :category_id, value: @inscription.category.id %>
 
-    <% @inscription.inscription_item_requirements.each do |item_requirement| %>
-      <div>
-        <h3><%= item_requirement.requirement_item.title %></h3>
-        <p><%= item_requirement.requirement_item.description_item %></p>
-        <%= f.simple_fields_for :inscription_item_requirements, item_requirement do |irf| %>
-          <%= irf.hidden_field :requirement_item_id %>
-          <% case item_requirement.requirement_item.type_item %>
-          <% when 'Motivation Essay' %>
-            <%= irf.input :submitted_content, as: :text, label: 'Lettre de motivation', hint: "Ni trop long, ni trop court", required: true %>
-          <% when 'Youtube Link' %>
-            <%= irf.input :submitted_content, as: :url, label: "YouTube URL", hint: "Assurez vous que la vidéo soit publique et qu'elle soit bien accessible.", required: true %>
-          <% else %>
-             <div class="row">
-              <div class="col">
-                <% if irf.object.submitted_file.attached? %>
-                  <embed src="<%= url_for(irf.object.submitted_file) %>" width="500" height="375" type="application/pdf">
-                   <%= irf.input :submitted_file, as: :file, label: "Choisissez un autre PDF si vous souhaitez remplacer le document ci dessus" %>
-                <% else %>
-                   <%= irf.input :submitted_file, as: :file, label: "Uploadez un PDF", required: true %>
-                <% end %>
+      <% @inscription.inscription_item_requirements.each do |item_requirement| %>
+        <div>
+          <h3><%= item_requirement.requirement_item.title %></h3>
+          <p><%= item_requirement.requirement_item.description_item %></p>
+          <%= f.simple_fields_for :inscription_item_requirements, item_requirement do |irf| %>
+            <%= irf.hidden_field :requirement_item_id %>
+            <% case item_requirement.requirement_item.type_item %>
+            <% when 'Motivation Essay' %>
+              <%= irf.input :submitted_content, as: :text, label: 'Lettre de motivation', hint: "Ni trop long, ni trop court", required: true %>
+            <% when 'Youtube Link' %>
+              <%= irf.input :submitted_content, as: :url, label: "YouTube URL", hint: "Assurez vous que la vidéo soit publique et qu'elle soit bien accessible.", required: true %>
+            <% else %>
+              <div class="row">
+                <div class="col">
+                  <% if irf.object.submitted_file.attached? %>
+                    <embed src="<%= url_for(irf.object.submitted_file) %>" width="500" height="375" type="application/pdf">
+                    <%= irf.input :submitted_file, as: :file, label: "Choisissez un autre PDF si vous souhaitez remplacer le document ci dessus" %>
+                  <% else %>
+                    <%= irf.input :submitted_file, as: :file, label: "Uploadez un PDF", required: true %>
+                  <% end %>
+                </div>
               </div>
-            </div>
+            <% end %>
+          <% end %>
+        </div>
+      <% end %>
+
+      <% if inscription.category.imposed_work.airs.any? %>
+        <h3>Airs imposés</h3>
+        <ul>
+          <% inscription.category.imposed_work.airs.each do |air| %>
+            <li> <%= air.title %> - <%= air.composer %> - <%= air.oeuvre %> </li>
+          <% end %>
+        </ul>
+      <% end %>
+
+      <% inscription.category.semi_imposed_works&.each do |semi_imposed_work| %>
+        <h3><%= semi_imposed_work.title %></h3>
+        <small><%= semi_imposed_work.guidelines %></small>
+        <%# <%= f.simple_fields_for  %>
+        <h1>TODO</h1>
+      <% end %>
+
+      <% inscription.category.choice_imposed_works&.each do |choice_imposed_work| %>
+        <h3><%= choice_imposed_work.title %></h3>
+        <small><%= choice_imposed_work.guidelines %></small>
+          <% choice_imposed_work.number_to_select.times do |i| %>
+            <%= f.simple_fields_for :choice_imposed_work_airs, choice_imposed_work.choice_imposed_work_airs.build do |choice_imposed_work_air_fields| %>
+              <%= choice_imposed_work_air_fields.input :choice_imposed_work_id, as: :hidden, input_html: { value: choice_imposed_work.id } %>
+              <%= choice_imposed_work_air_fields.input :air_id, collection: choice_imposed_work.airs.map { |air| [air.title, air.id] }, as: :select, label: "Select Air #{i+1}" %>
+            <% end %>
           <% end %>
         <% end %>
-      </div>
-    <% end %>
+    </div>
 
-
-  </div>
-
-  <div class="form-actions">
-    <%= f.button :submit %>
-  </div>
-<% end %>
+    <div class="form-actions">
+      <%= f.button :submit %>
+    </div>
+  <% end %>
 </div>

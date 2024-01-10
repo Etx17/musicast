@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_08_143451) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_10_102231) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -114,6 +114,17 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_08_143451) do
     t.string "price_currency", default: "EUR", null: false
     t.index ["edition_competition_id"], name: "index_categories_on_edition_competition_id"
     t.index ["slug"], name: "index_categories_on_slug", unique: true
+  end
+
+  create_table "choice_imposed_work_airs", force: :cascade do |t|
+    t.bigint "choice_imposed_work_id", null: false
+    t.bigint "air_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "inscription_id", null: false
+    t.index ["air_id"], name: "index_choice_imposed_work_airs_on_air_id"
+    t.index ["choice_imposed_work_id"], name: "index_choice_imposed_work_airs_on_choice_imposed_work_id"
+    t.index ["inscription_id"], name: "index_choice_imposed_work_airs_on_inscription_id"
   end
 
   create_table "choice_imposed_works", force: :cascade do |t|
@@ -354,6 +365,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_08_143451) do
   add_foreign_key "candidate_programs", "inscriptions"
   add_foreign_key "candidats", "users"
   add_foreign_key "categories", "edition_competitions"
+  add_foreign_key "choice_imposed_work_airs", "airs"
+  add_foreign_key "choice_imposed_work_airs", "choice_imposed_works"
+  add_foreign_key "choice_imposed_work_airs", "inscriptions"
   add_foreign_key "choice_imposed_works", "categories"
   add_foreign_key "competitions", "organisms"
   add_foreign_key "documents", "users"

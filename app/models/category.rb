@@ -19,7 +19,7 @@ class Category < ApplicationRecord
   before_save :should_generate_new_friendly_id?, if: :name_changed?
 
   delegate :competition, to: :edition_competition
-  
+
   # Dangereux, attention a la suppression des catégories et a l'ajout
   enum discipline: {
     alto: 1,

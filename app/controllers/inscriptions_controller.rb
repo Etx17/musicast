@@ -29,9 +29,15 @@ class InscriptionsController < ApplicationController
 
     @inscription = Inscription.new
     category = Category.friendly.find(params[:category_id])
+
     category.requirement_items.each do |item|
       @inscription.inscription_item_requirements.build(requirement_item: item)
     end
+
+    category.choice_imposed_works.each do |choice_imposed_work|
+      @inscription.choice_imposed_work_airs.build(choice_imposed_work: choice_imposed_work)
+    end
+
     @inscription.category = category
   end
 
@@ -85,7 +91,12 @@ class InscriptionsController < ApplicationController
   end
 
   def inscription_params
-    params.require(:inscription).permit(:candidat_id, :category_id, :status,
-                                        inscription_item_requirements_attributes: %i[id submitted_file submitted_content document_id requirement_item_id _destroy])
+    params.require(:inscription).permit(
+      :candidat_id,
+      :category_id,
+      :status,
+      inscription_item_requirements_attributes: %i[id submitted_file submitted_content document_id requirement_item_id _destroy],
+      choice_imposed_work_airs_attributes: [:id, :choice_imposed_work_id, :air_id]
+    )
   end
 end
