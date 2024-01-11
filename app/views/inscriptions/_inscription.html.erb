@@ -103,22 +103,22 @@
       <div class="card p-3 shadow-sm bg-light">
         <h3>Programme tour par tour</h3>
         <% inscription.category.tours.each do |tour| %>
-          <div class="card card-body bg-grey d-flex flex-column">
-            <h4><%= tour.title %></h4>
-            <!-- Tour.tour_requirements -->
-            <% if tour.tour_requirement.present? %>
-              <%= tour.tour_requirement&.description %>
-              <%= tour.tour_requirement&.min_number_of_works %>
-              <%= tour.tour_requirement&.max_number_of_works %>
-              <%= tour.tour_requirement&.min_duration_minute %>
-              <%= tour.tour_requirement&.max_duration_minute %>
-            <% end %>
-            <!-- Et la mettre les airs de la performance -->
-            <ul>
-              <li>Air 1, Una furtiva lagrima, 3min</li>
-              <li>Air 1, Una furtiva lagrima, 8 min</li>
-              <li>Air 1, Una furtiva lagrima</li>
-            </ul>
+          <div class="card bg-light mb-3">
+            <div class="card-header"><%= tour.title %></div>
+            <div class="card-body">
+              <% if tour.tour_requirement.present? %>
+                <h5 class="card-title">Tour Requirements:</h5>
+                <p class="card-text"><strong>Description:</strong> <%= tour.tour_requirement&.description %></p>
+                <p class="card-text"><strong>Number of Works:</strong> <%= tour.tour_requirement&.min_number_of_works %> - <%= tour.tour_requirement&.max_number_of_works %></p>
+                <p class="card-text"><strong>Duration:</strong> <%= tour.tour_requirement&.min_duration_minute %> - <%= tour.tour_requirement&.max_duration_minute %> minutes</p>
+              <% end %>
+              <h5 class="card-title">Performance:</h5>
+              <ul>
+                <li>Air 1, Una furtiva lagrima, 3min</li>
+                <li>Air 1, Una furtiva lagrima, 8 min</li>
+                <li>Air 1, Una furtiva lagrima</li>
+              </ul>
+            </div>
           </div>
         <% end %>
       </div>
