@@ -21,15 +21,12 @@
   category2 = Category.create!(price: 50, edition_competition_id: edition.id, name: "Piano under 12 #{n}", description: "Category for children under 12 years #{n}", min_age: 6, max_age: 12, discipline: 2)
 
   # Tours for Category1
-  Tour.create!(category_id: category1.id, start_date: Date.today, start_time: Time.now, end_date: Date.today + 30, end_time: Time.now + 6.hours, is_online: false, title: "Preliminary Round #{n}", description: "First round of the competition #{n}")
-  Tour.create!(category_id: category1.id, start_date: Date.today + 60, start_time: Time.now, end_date: Date.today + 90, end_time: Time.now + 6.hours, is_online: true, title: "Online Round #{n}", description: "Second round, conducted online #{n}")
+  Tour.create!( category_id: category1.id, start_date: Date.today, start_time: Time.now, end_date: Date.today + 30, end_time: Time.now + 6.hours, is_online: false, title: "Preliminary Round #{n}", description: "First round of the competition #{n}", tour_requirement_attributes: { description: "Preliminary round requirements", min_number_of_works: 1, max_number_of_works: 3, min_duration_minute: 3, max_duration_minute: 9, organiser_creates_program: false } )
+  Tour.create!( category_id: category1.id, start_date: Date.today + 60, start_time: Time.now, end_date: Date.today + 90, end_time: Time.now + 6.hours, is_online: true, title: "Online Round #{n}", description: "Second round, conducted online #{n}", tour_requirement_attributes: { description: "Online round requirements", min_number_of_works: 2, max_number_of_works: 4, min_duration_minute: 4.5, max_duration_minute: 12, organiser_creates_program: true } )
 
   # Tours for Category2
-  Tour.create!(category_id: category2.id, start_date: Date.today, start_time: Time.now, end_date: Date.today + 20, end_time: Time.now + 5.hours, is_online: false, title: "First Round #{n}", description: "Opening round for category #{n}")
-  Tour.create!(category_id: category2.id, start_date: Date.today + 25, start_time: Time.now, end_date: Date.today + 45, end_time: Time.now + 5.hours, is_online: true, title: "Virtual Showcase #{n}", description: "Virtual performance round #{n}")
-  Tour.create!(category_id: category2.id, start_date: Date.today + 50, start_time: Time.now, end_date: Date.today + 70, end_time: Time.now + 5.hours, is_online: false, title: "Semi Finals #{n}", description: "Semi-final round of performances #{n}")
-  Tour.create!(category_id: category2.id, start_date: Date.today + 75, start_time: Time.now, end_date: Date.today + 95, end_time: Time.now + 5.hours, is_online: false, title: "Grand Finale #{n}", description: "Final round for the top performers #{n}")
-
+  Tour.create!( category_id: category2.id, start_date: Date.today, start_time: Time.now, end_date: Date.today + 20, end_time: Time.now + 5.hours, is_online: false, title: "First Round ", description: "Opening round for category ", tour_requirement_attributes: { description: "First round requirements", min_number_of_works: 1, max_number_of_works: 3, min_duration_minute: 3, max_duration_minute: 9, organiser_creates_program: false } )
+  Tour.create!( category_id: category2.id, start_date: Date.today + 25, start_time: Time.now, end_date: Date.today + 45, end_time: Time.now + 5.hours, is_online: true, title: "Virtual Showcase #{n}", description: "Virtual performance round #{n}", tour_requirement_attributes: { description: "Virtual showcase requirements", min_number_of_works: 2, max_number_of_works: 4, min_duration_minute: 4.5, max_duration_minute: 12, organiser_creates_program: true } )
   # Users for Candidats
   candidate_user1 = User.create!(email: "candidate1_#{n}@example.com", password: "password123", password_confirmation: "password123")
   candidate_user2 = User.create!(email: "candidate2_#{n}@example.com", password: "password123", password_confirmation: "password123")
