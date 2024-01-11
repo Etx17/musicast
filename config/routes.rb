@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   resources :candidate_programs
   resources :inscriptions do
     resources :inscription_orders, only: [:new, :create]
+    resources :performances, only: [:new, :create, :edit, :update]
   end
   resources :imposed_works
   resources :airs

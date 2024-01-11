@@ -43,4 +43,17 @@ class Inscription < ApplicationRecord
   def order_state
     inscription_order&.state || "Brouillon"
   end
+
+  def associated_airs
+    airs = []
+    airs += self.choice_imposed_work_airs&.map(&:air)
+    airs += self.semi_imposed_work_airs&.map(&:air)
+    airs.uniq!
+
+    # Exclude airs that have already been used in other performances
+    used_airs = self.performances.map(&:air_selection).flatten.map{ |air_id| Air.find(air_id) }
+    airs -= used_airs
+
+    airs
+  end
 end

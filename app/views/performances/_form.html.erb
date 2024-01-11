@@ -1,16 +1,38 @@
-
-<%= simple_form_for(@performance) do |f| %>
+<div class="container">
+<%= simple_form_for([@inscription, @performance]) do |f| %>
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
-
+  <%= f.hidden_field :tour_id, value: params[:tour_id] %>
   <div class="form-inputs">
-    <%= f.association :inscription %>
-    <%= f.association :tour %>
-    <%= f.input :heure_performance %>
-    <%= f.input :resultat %>
+
+  <% if @performance.tour.tour_requirement.present? %>
+    <div class="card bg-light mb-3">
+      <div class="card-header"><%= @performance.tour.title %></div>
+      <div class="card-body">
+        <h5 class="card-title">Tour Requirements:</h5>
+        <p class="card-text"><strong>Description:</strong> <%= @performance.tour.tour_requirement.description %></p>
+        <p class="card-text"><strong>Number of Works:</strong> <%= @performance.tour.tour_requirement.min_number_of_works %> - <%= @performance.tour.tour_requirement.max_number_of_works %></p>
+        <p class="card-text"><strong>Duration:</strong> <%= @performance.tour.tour_requirement.min_duration_minute %> - <%= @performance.tour.tour_requirement.max_duration_minute %> minutes</p>
+      </div>
+    </div>
+  <% end %>
+    <%= f.input :heure_performance  if current_user.organisateur%>
+
+    <div class="form-group">
+      <%= f.label :air_selection %>
+      <div class="d-flex flex-column">
+        <%= f.collection_check_boxes :air_selection, @performance.inscription.associated_airs, :id, :title, { checked: @performance.air_selection } do |b| %>
+          <div style="display: inline-block; margin-right: 10px;">
+            <%= b.check_box %>
+            <%= b.text %> (<%= b.object.length_minutes %> min)
+          </div>
+        <% end %>
+      </div>
+    </div>
   </div>
 
   <div class="form-actions">
     <%= f.button :submit %>
   </div>
 <% end %>
+</div>

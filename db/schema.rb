@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_11_102624) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_11_112439) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -297,6 +297,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_11_102624) do
     t.text "resultat"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "air_selection", default: [], array: true
     t.index ["inscription_id"], name: "index_performances_on_inscription_id"
     t.index ["tour_id"], name: "index_performances_on_tour_id"
   end
