@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_11_101231) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_11_102624) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -340,6 +340,19 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_11_101231) do
     t.index ["category_id"], name: "index_semi_imposed_works_on_category_id"
   end
 
+  create_table "tour_requirements", force: :cascade do |t|
+    t.text "description"
+    t.integer "min_number_of_works"
+    t.integer "max_number_of_works"
+    t.integer "min_duration_minute"
+    t.integer "max_duration_minute"
+    t.bigint "tour_id", null: false
+    t.boolean "organiser_creates_program"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["tour_id"], name: "index_tour_requirements_on_tour_id"
+  end
+
   create_table "tours", force: :cascade do |t|
     t.bigint "category_id", null: false
     t.datetime "start_date"
@@ -407,5 +420,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_11_101231) do
   add_foreign_key "semi_imposed_work_airs", "inscriptions"
   add_foreign_key "semi_imposed_work_airs", "semi_imposed_works"
   add_foreign_key "semi_imposed_works", "categories"
+  add_foreign_key "tour_requirements", "tours"
   add_foreign_key "tours", "categories"
 end

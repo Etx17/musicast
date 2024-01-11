@@ -105,14 +105,18 @@
         <% inscription.category.tours.each do |tour| %>
           <div class="card card-body bg-grey d-flex flex-column">
             <h4><%= tour.title %></h4>
-            <!-- Tour.PerformanceRUles
-            <%= tour.min_number_of_works %>
-            <%= tour.max_number_of_works %>
-            <%= tour.min_duration_minutes %>
-            <%= tour.max_duration_minutes %> -->
-            <p class="mb-0 lead"><%= tour.minutes_max_per_performance %> minutes max</p>
+            <!-- Tour.tour_requirements -->
+            <% if tour.tour_requirement.present? %>
+              <%= tour.tour_requirement&.description %>
+              <%= tour.tour_requirement&.min_number_of_works %>
+              <%= tour.tour_requirement&.max_number_of_works %>
+              <%= tour.tour_requirement&.min_duration_minute %>
+              <%= tour.tour_requirement&.max_duration_minute %>
+            <% end %>
             <!-- Et la mettre les airs de la performance -->
             <ul>
+              <li>Air 1, Una furtiva lagrima, 3min</li>
+              <li>Air 1, Una furtiva lagrima, 8 min</li>
               <li>Air 1, Una furtiva lagrima</li>
             </ul>
           </div>

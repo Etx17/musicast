@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  get 'tour_requirements/new'
+  get 'tour_requirements/create'
+  get 'tour_requirements/update'
+  get 'tour_requirements/edit'
+  get 'tour_requirements/show'
 
   mount StripeEvent::Engine, at: '/stripe-webhooks'
   resources :leads
