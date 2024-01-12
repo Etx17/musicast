@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_11_112439) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_12_153109) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -97,6 +97,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_11_112439) do
     t.text "bio"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "first_name"
     t.index ["user_id"], name: "index_candidats_on_user_id"
   end
 
@@ -293,11 +294,12 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_11_112439) do
   create_table "performances", force: :cascade do |t|
     t.bigint "inscription_id", null: false
     t.bigint "tour_id", null: false
-    t.datetime "heure_performance"
+    t.datetime "start_time"
     t.text "resultat"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "air_selection", default: [], array: true
+    t.integer "order"
     t.index ["inscription_id"], name: "index_performances_on_inscription_id"
     t.index ["tour_id"], name: "index_performances_on_tour_id"
   end

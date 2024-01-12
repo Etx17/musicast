@@ -6,7 +6,11 @@ class ToursController < ApplicationController
     @tours = Tour.all
   end
 
-  def show; end
+  def show;
+    @performances = @tour.performances
+    @tour.generate_initial_performance_order if @performances.any? { |p| p.order.nil? }
+    # Assigner un order aux performances qui n'en ont pas.
+  end
 
   def edit; end
 
@@ -42,6 +46,13 @@ class ToursController < ApplicationController
                 notice: "Tour supprimé."
   end
 
+  def update_order
+    @tour = Tour.find(params[:id])
+    @tour.update_performance_order(params[:performance_id], params[:new_order])
+
+    head :ok
+  end
+
   private
 
   def set_tour
@@ -54,6 +65,8 @@ class ToursController < ApplicationController
     @edition_competition = @category.edition_competition
     @competition = @edition_competition.competition
   end
+
+
 
   def tour_params
     params.require(:tour).permit(

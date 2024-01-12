@@ -56,4 +56,6 @@ class Inscription < ApplicationRecord
 
     airs
   end
+
+  
 end

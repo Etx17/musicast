@@ -1,5 +1,9 @@
 
 10.times do |n|
+
+  u = User.create(email: "candidat{n}@example.com", password: "password", password_confirmation: "password")
+  c = Candidat.create(user_id: u.id, cv: "Link to CV of candidate ", bio: "Short bio of candidate ")
+
   # User for Organisateur
   user = User.create!(email: "organizer#{n}@example.com", password: "password", password_confirmation: "password")
 
@@ -83,7 +87,15 @@
       air.update(semi_imposed_work_id: semi_imposed_work.id)
     end
   end
-end
 
-User.create(email: "candidat@musicast.fr", password: "password", password_confirmation: "password")
-Candidat.create(user_id: User.last.id, cv: "Link to CV of candidate ", bio: "Short bio of candidate ")
+  # Fetch the first Category
+  category = Category.first
+
+  # Fetch the first Tour of that Category
+  tour = category.tours.first
+
+  inscription = Inscription.create!(candidat_id: c.id, category_id: category.id)
+
+  # For each Inscription, create a Performance linked to the first Tour
+  Performance.create!(inscription: inscription, tour: tour, air_selection: ["1", "2", "3", "4"])
+end

@@ -20,7 +20,10 @@ Rails.application.routes.draw do
     resources :competitions do
       resources :edition_competitions do
         resources :categories do
-          resources :tours
+          resources :tours do
+            post 'update_order', on: :member
+            post 'create_schedule', on: :member
+          end
           resources :requirement_items
           resources :inscriptions do
             member do
