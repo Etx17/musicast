@@ -29,10 +29,18 @@ class Tour < ApplicationRecord
     end
   end
 
-  def generate_performance_schedule(start_time, max_end_of_day_time, new_day_start_time, lunch_start_time, lunch_duration, morning_pause_time = nil, afternoon_pause_time = nil, morning_pause_duration_minutes = 0, afternoon_pause_duration_minutes = 0)
-    # Consider doing this in a background job...
-
-    performances = Tour.performances.order(:order)
+  def generate_performance_schedule(params)
+    start_time = params[:start_time]
+    max_end_of_day_time = params[:max_end_of_day_time]
+    new_day_start_time = params[:new_day_start_time]
+    lunch_start_time = params[:lunch_start_time]
+    lunch_duration = params[:lunch_duration]
+    morning_pause_time = params[:morning_pause_time]
+    afternoon_pause_time = params[:afternoon_pause_time]
+    morning_pause_duration_minutes = params[:morning_pause_duration_minutes] || 0
+    afternoon_pause_duration_minutes = params[:afternoon_pause_duration_minutes] || 0
+      # Consider doing this in a background job...
+    performances = self.performances.order(:order)
     current_start_time = start_time
 
     performances.each do |performance|

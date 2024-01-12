@@ -32,6 +32,10 @@ class ToursController < ApplicationController
   end
 
   def update
+    if params[:tour][:creating_schedule] == "true"
+      @tour.generate_performance_schedule(params[:tour])
+      redirect_to organism_competition_edition_competition_category_tour_schedule_path(@organism, @competition, @edition_competition, @category, @tour), notice: "Tour schedule has been updated." and return
+    end
     if @tour.update(tour_params)
       redirect_to organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category),
                   notice: "Tour mis à jour avec succès."
@@ -49,10 +53,11 @@ class ToursController < ApplicationController
   def update_order
     @tour.update_performance_order(params[:performance_id], params[:new_order])
 
-    # head :ok
-    # # i need to redirect to my current page, so that it refreshes it
+    redirect_to request.referrer || root_path
+  end
 
-    redirect_to request.referrer
+  def schedule
+    @tour = Tour.find(params[:id])
   end
 
   private
@@ -77,6 +82,18 @@ class ToursController < ApplicationController
       :end_date, :end_time,
       :is_online,
       :title, :description,
+      :max_end_of_day_time,
+      :new_day_start_time,
+      :has_lunch_break,
+      :lunch_start_time,
+      :lunch_duration,
+      :has_morning_pause,
+      :morning_pause_time,
+      :has_afternoon_pause,
+      :afternoon_pause_time,
+      :morning_pause_duration_minutes,
+      :afternoon_pause_duration_minutes,
+      :creating_schedule,
       tour_requirement_attributes: [
         :id,
         :description,
@@ -85,7 +102,7 @@ class ToursController < ApplicationController
         :min_duration_minute,
         :max_duration_minute,
         :organiser_creates_program
-        ]
-      )
+      ]
+    )
   end
 end

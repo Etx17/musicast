@@ -22,7 +22,7 @@ Rails.application.routes.draw do
         resources :categories do
           resources :tours do
             post 'update_order', on: :member
-            post 'create_schedule', on: :member
+            get 'schedule', on: :member
           end
           resources :requirement_items
           resources :inscriptions do
