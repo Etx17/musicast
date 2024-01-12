@@ -4,9 +4,16 @@ class Performance < ApplicationRecord
 
   delegate :candidat, to: :inscription
   # air_selection is Array of air ids, text type
+  def airs
+    Air.where(id: air_selection)
+  end
 
   def airs_titles
-    airs = Air.where(id: air_selection)
     airs.map(&:title)
   end
+
+  def minutes
+    airs.sum(&:length_minutes)
+  end
+
 end

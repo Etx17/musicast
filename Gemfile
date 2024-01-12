@@ -72,6 +72,7 @@ group :development, :test do
   gem 'pry-rails'
   gem 'pry-byebug'
   gem 'annotate'
+  gem 'faker'
 end
 
 group :development do
