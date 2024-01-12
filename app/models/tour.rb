@@ -17,12 +17,12 @@ class Tour < ApplicationRecord
   def update_performance_order(performance_id, new_order)
     performance = performances.find(performance_id)
     current_order = performance.order
-
+    new_order = new_order.to_i
     Performance.transaction do
       if new_order < current_order
-        performances.where('order >= ? AND order < ?', new_order, current_order).update_all('order = order + 1')
+        performances.where('"order" >= ? AND "order" < ?', new_order, current_order).update_all('"order" = "order" + 1')
       elsif new_order > current_order
-        performances.where('order <= ? AND order > ?', new_order, current_order).update_all('order = order - 1')
+        performances.where('"order" <= ? AND "order" > ?', new_order, current_order).update_all('"order" = "order" - 1')
       end
 
       performance.update(order: new_order)

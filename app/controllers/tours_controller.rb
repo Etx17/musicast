@@ -1,6 +1,6 @@
 class ToursController < ApplicationController
-  before_action :set_tour, only: %i[show edit update destroy]
-  before_action :set_context, only: %i[new create edit update destroy]
+  before_action :set_tour, only: %i[show edit update destroy update_order]
+  before_action :set_context, only: %i[new create show edit update destroy update_order]
 
   def index
     @tours = Tour.all
@@ -47,10 +47,12 @@ class ToursController < ApplicationController
   end
 
   def update_order
-    @tour = Tour.find(params[:id])
     @tour.update_performance_order(params[:performance_id], params[:new_order])
 
-    head :ok
+    # head :ok
+    # # i need to redirect to my current page, so that it refreshes it
+
+    redirect_to request.referrer
   end
 
   private

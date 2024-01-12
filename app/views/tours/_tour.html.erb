@@ -27,7 +27,12 @@
                 <%# <td class="p-2 text-center bg-light text-secondary"  ><%= performance.start_time.present? ? performance.start_time&.strftime("%I:%M %p") : "Pas encore défini" %>
                 <td class="p-2 text-center bg-light text-secondary"  ><%= performance.airs_titles %></td>
                 <td class="p-2 text-center bg-light">
-                  <%= number_field_tag "order_#{performance.id}", performance.order, class: "form-control", min: 1, max: @tour.performances.count %>
+                  <%= form_with url: update_order_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour, performance_id: performance.id), method: :post do %>
+                    <div class="d-flex">
+                    <%= number_field_tag "new_order", performance.order, class: "form-control", min: 1, max: @tour.performances.count %>
+                    <%= button_tag "OK", type: "submit", class: "btn btn-dark" %>
+                    </div>
+                  <% end %>
                 </td>
               </tr>
             <% end %>
