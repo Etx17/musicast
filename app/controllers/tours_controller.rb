@@ -37,6 +37,15 @@ class ToursController < ApplicationController
 
     if @tour.update(tour_params)
       if creating_schedule == "true"
+
+
+        # Si jamais il y a déja un planning, càd des pauses sur un tour ou des performances avec un start_time, on doit supprimer toutes les pauses et start_time des performances avant de créer un nouveau planning
+        # En revanche je ne veux pas calculer que ca déclenche la méthode "remove_pause_from_planning", je veux juste directement supprimer les pauses et les start_time des performances
+        # if @tour.pauses.any? || @tour.performances.any? { |p| p.start_time.present? }
+        #   @tour.pauses.destroy_all
+        #   @tour.performances.update_all(start_time: nil)
+        # end
+
         @tour.generate_performance_schedule
         redirect_to organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour), notice: "Tour schedule has been updated." and return
       else
@@ -54,6 +63,11 @@ class ToursController < ApplicationController
   end
 
   def update_order
+    if @tour.pauses.any? || @tour.performances.any? { |p| p.start_time.present? }
+      @tour.pauses.destroy_all
+      @tour.performances.update_all(start_time: nil)
+    end
+
     @tour.update_performance_order(params[:performance_id], params[:new_order])
 
     redirect_to request.referrer || root_path

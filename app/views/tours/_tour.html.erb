@@ -43,24 +43,24 @@
         <thead>
           <tr>
             <th class="p-2 text-center bg-grey ">Candidat</th>
+            <th class="p-2 text-center bg-grey ">Ordre</th>
             <th class="p-2 text-center bg-grey ">Airs présentés (titre racourci)</th>
             <th class="p-2 text-center bg-grey ">Minutage</th>
-            <th class="p-2 text-center bg-grey ">Order</th>
           </tr>
         </thead>
         <tbody>
           <% @tour.performances.order(:order).each do |performance| %>
             <tr class="">
               <td class="p-2 bg-light"><%= link_to performance.candidat.first_name, candidat_path(performance.candidat), target: '_blank' %></td>
-              <td class="p-2 text-center bg-light text-secondary"  ><%= performance.airs_titles %></td>
-              <td class="p-2 text-center bg-light text-secondary"  ><%= performance.minutes %></td>
               <td class="p-2 text-center bg-light">
                 <%= form_with url: update_order_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour, performance_id: performance.id), method: :post do %>
                   <div class="d-flex">
                   <%= number_field_tag "new_order", performance.order, class: "form-control", min: 1, max: @tour.performances.count %>
-                  <%= button_tag "OK", type: "submit", class: "btn btn-dark" %>
+                  <%= button_tag "OK", type: "submit", class: "btn btn-dark", data: { turbo_confirm: "Changing an order will destroy the current planning. You will have to regenerate a planning when you finish setting orders. Are you sure you want to proceed?" } %>
                   </div>
                 <% end %>
+              <td class="p-2 text-center bg-light text-secondary"  ><%= performance.airs_titles %></td>
+              <td class="p-2 text-center bg-light text-secondary"  ><%= performance.minutes %></td>
               </td>
             </tr>
           <% end %>

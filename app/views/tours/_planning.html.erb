@@ -18,7 +18,7 @@
             </div>
             <div class="modal-body">
 
-              <p class="text-warning" >Vous ne pouvez qu'ajouter des pauses dans l'ordre chronologique. Commencez par celle du matin si vous en voulez une le matin</p>
+              <p class="text-warning" >Vous ne pouvez qu'ajouter des pauses dans l'ordre chronologique. Commencez par celle du matin si vous en voulez une le matin, puis pause déjeuner, et pause dans l'après midi</p>
 
               <%= simple_form_for [@organism, @competition, @edition_competition, @category, @tour, Pause.new] do |f| %>
                 <%= f.input :date, as: :hidden, input_html: { value: day } %>
@@ -37,7 +37,6 @@
           <tr>
             <th scope="col">Candidate</th>
             <th scope="col">Start Time</th>
-            <th scope="col">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -48,8 +47,7 @@
               <%= form_with(model: item, url: performance_path(item), method: :patch, local: true) do |f| %>
                 <tr>
                   <td><%= item.candidat.first_name  %></td>
-                  <td><%= f.time_field :start_time, value: item&.start_time.strftime('%H:%M'), id: "start_time_#{day}_#{index}" %></td>
-                  <td><%= f.submit 'Update', class: 'btn btn-light border' %></td>
+                  <td><%= f.time_field :start_time, value: item&.start_time.strftime('%H:%M'), id: "start_time_#{day}_#{index}", disabled: true %></td>
                 </tr>
               <% end %>
             <% elsif item.is_a?(Pause) && item.date == day %>
