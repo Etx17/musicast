@@ -88,14 +88,14 @@
     end
   end
 
-  # Fetch the first Category
-  category = Category.first
+  # # Fetch the first Category
+  # category = Category.first
 
-  # Fetch the first Tour of that Category
-  tour = category.tours.first
+  # # Fetch the first Tour of that Category
+  # tour = category.tours.first
 
-  inscription = Inscription.create!(candidat_id: c.id, category_id: category.id)
+  # inscription = Inscription.create!(candidat_id: c.id, category_id: category.id)
 
-  # For each Inscription, create a Performance linked to the first Tour
-  Performance.create!(inscription: inscription, tour: tour, air_selection: ["1", "2", "3", "4"])
+  # # For each Inscription, create a Performance linked to the first Tour
+  # Performance.create!(inscription: inscription, tour: tour, air_selection: ["1", "2", "3", "4"])
 end

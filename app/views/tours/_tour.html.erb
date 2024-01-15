@@ -2,7 +2,7 @@
   <main class="flex flex-col gap-2 p-2">
   <h2><%= @tour.title %></h2>
   <!--  Section planning s'il existe-->
-  <%= render "planning", tour: @tour %>
+  <%= render "planning", tour: @tour unless @tour.performances.any?{|p| p.start_time.nil?} %>
 
 
 

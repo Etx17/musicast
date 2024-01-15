@@ -54,4 +54,5 @@ class Tour < ApplicationRecord
   def days_of_performances
     performances.map(&:start_date).uniq || []
   end
+
 end
