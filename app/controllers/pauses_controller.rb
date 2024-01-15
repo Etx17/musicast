@@ -26,9 +26,12 @@ class PausesController < ApplicationController
     end
   end
 
-  def delete
-    # remove pause from schedule
-    # delete logic
+  def destroy
+    @pause = Pause.find(params[:id])
+    remove_pause_from_schedule(@pause)
+
+    @pause.destroy
+    redirect_to request.referrer || root_path
   end
 
   private
@@ -45,7 +48,17 @@ class PausesController < ApplicationController
     end
   end
 
-  def remove_pause_from_schedule
+  def remove_pause_from_schedule(pause)
+    # On ne peut delete que les pauses en partant de la fin. Si on delete une pause au milieu, on va devoir updater toutes les performances qui sont après la pause
+    # For all the performances that are after the pause, we need to remove the pause duration from their start_time
+    ActiveRecord::Base.transaction do
+      pause_start_time = pause.start_time.strftime("%H:%M")
+      performances_after_pause = pause.tour.performances.where("TO_CHAR(start_time, 'HH24:MI') > ? AND start_date = ?", pause_start_time, pause.date).order(:order)
+
+      performances_after_pause.each do |performance|
+        performance.update!(start_time: performance.start_time - pause.duration)
+      end
+    end
   end
 
   def set_tour

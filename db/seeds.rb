@@ -88,14 +88,13 @@
     end
   end
 
-  # # Fetch the first Category
-  # category = Category.first
+end
 
-  # # Fetch the first Tour of that Category
-  # tour = category.tours.first
+category = Category.first
+tour = category.tours.first
 
-  # inscription = Inscription.create!(candidat_id: c.id, category_id: category.id)
-
-  # # For each Inscription, create a Performance linked to the first Tour
-  # Performance.create!(inscription: inscription, tour: tour, air_selection: ["1", "2", "3", "4"])
+Candidat.all.each do |candidat|
+  candidat.update(first_name: Faker::Name.first_name)
+  inscription = Inscription.create!(candidat_id: candidat.id, category_id: category.id)
+  Performance.create!(inscription: inscription, tour: tour, air_selection: ["1", "2", "3", "4"])
 end

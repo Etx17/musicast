@@ -15,6 +15,9 @@ export default class extends Controller {
     console.log(pauseTimes, "pausetimes");
     var latestPauseTime = pauseTimes.sort().pop();
 
+    if(!latestPauseTime) {
+      latestPauseTime = '00:00';
+    }
     startTimes = startTimes.filter(time => time > latestPauseTime);
 
     document.querySelector('#pause_start_time').innerHTML = startTimes.map(time => `<option value="${time}">${time}</option>`).join("\n");

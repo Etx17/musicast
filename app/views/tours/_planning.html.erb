@@ -17,6 +17,9 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+
+              <p class="text-warning" >Vous ne pouvez qu'ajouter des pauses dans l'ordre chronologique. Commencez par celle du matin si vous en voulez une le matin</p>
+
               <%= simple_form_for [@organism, @competition, @edition_competition, @category, @tour, Pause.new] do |f| %>
                 <%= f.input :date, as: :hidden, input_html: { value: day } %>
                 <%= f.input :start_time, collection: @tour.performances.where(start_date: day).map { |p| p.start_time.strftime("%H:%M") }, label: 'Start time', input_html: { class: 'form-control' } %>
@@ -53,6 +56,10 @@
               <tr>
                 <td>Pause</td>
                   <td id="pause_time_<%= day %>_<%= index %>"><%= item.start_time.strftime('%H:%M') %> - <%= item.end_time.strftime('%H:%M') %></td>
+                <td>
+                  <% last_pause_of_the_day = items.reverse.find { |i| i.is_a?(Pause) && i.date == day } %>
+                  <%= button_to 'Delete', [@organism, @competition, @edition_competition, @category, @tour, item], method: :delete, data: { turbo_confirm: 'Are you sure?' }, class: "btn btn-danger", disabled: item != last_pause_of_the_day %>
+                </td>
               </tr>
             <% end %>
           <% end %>
