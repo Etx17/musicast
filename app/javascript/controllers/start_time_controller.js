@@ -1,9 +1,22 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
+  static targets = ["oldStartDate", "newStartDate"]
+
   connect() {
-    console.log("conected start_time controller");
+    console.log("connected start_time controller");
+    this.oldStartDateTarget.value = this.element.dataset.day;
+    this.newStartDateTarget.value = this.element.dataset.day;
   };
+
+  updateDateInput() {
+    const form = document.querySelector("#pauseModal form");
+    const dateInput = form.querySelector(".pause_day");
+    if (dateInput) {
+      dateInput.value = this.dayTarget.dataset.day;
+    }
+    console.log(dateInput.value, "dateinput value");
+  }
 
   fetchStartTimes(event) {
     console.log("fecthing start times");

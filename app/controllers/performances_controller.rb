@@ -31,9 +31,11 @@ class PerformancesController < ApplicationController
     end
   end
 
+  
+
   private
 
   def performance_params
-    params.require(:performance).permit(:heure_performance, :resultat, :tour_id, :inscription_id, air_selection: [])
+    params.require(:performance).permit(:old_start_date, :heure_performance, :resultat, :tour_id, :inscription_id, air_selection: [])
   end
 end

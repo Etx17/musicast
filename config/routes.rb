@@ -24,6 +24,7 @@ Rails.application.routes.draw do
             post 'update_order', on: :member
             get 'schedule', on: :member
             resources :pauses
+            put 'update_day_of_performance_and_subsequent_performances', on: :member
           end
           resources :requirement_items
           resources :inscriptions do

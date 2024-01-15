@@ -1,6 +1,6 @@
 class ToursController < ApplicationController
-  before_action :set_tour, only: %i[show edit update destroy update_order]
-  before_action :set_context, only: %i[new create show edit update destroy update_order]
+  before_action :set_tour, only: %i[show edit update destroy update_order update_day_of_performance_and_subsequent_performances]
+  before_action :set_context, only: %i[new create show edit update destroy update_order update_day_of_performance_and_subsequent_performances]
 
   def index
     @tours = Tour.all
@@ -56,6 +56,35 @@ class ToursController < ApplicationController
     else
       render :edit, status: :unprocessable_entity
     end
+  end
+
+  def update_day_of_performance_and_subsequent_performances
+    tour = Tour.find(params[:id])
+    old_start_date = params[:update_day][:old_start_date]
+    new_start_date = params[:update_day][:new_start_date]
+    # Find the first performance of the day
+    first_performance_of_day = tour.performances.where(start_date: old_start_date).order(:order).first
+
+    # Calculate the difference in days between the old and new start_date
+    days_difference = (Date.parse(new_start_date) - Date.parse(old_start_date)).to_i
+    raise 'The gap between the old and new start date is more than a year.' if days_difference.abs > 365
+
+    # Get all subsequent performances and pauses
+    subsequent_performances = tour.performances.where('"order" >= ?', first_performance_of_day.order)
+    subsequent_pauses = tour.pauses.where('date >= ?', Date.parse(old_start_date))
+
+    # Update in a transaction
+    ActiveRecord::Base.transaction do
+      subsequent_performances.each do |i|
+        i.update!(start_date: i.start_date + days_difference)
+      end
+      subsequent_pauses.each do |i|
+        i.update!(date: i.date + days_difference)
+      end
+    end
+
+    # Redirect to the tour page
+    redirect_to organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour), notice: 'Day of performance and subsequent performances updated successfully.'
   end
 
   def destroy
