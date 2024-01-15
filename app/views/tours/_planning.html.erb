@@ -52,11 +52,11 @@
             <% elsif item.is_a?(Pause) && item.date == day %>
               <tr>
                 <td>Pause</td>
-                <td><%= item.start_time.strftime('%H:%M') %> - <%= item.end_time.strftime('%H:%M') %></td>
+                  <td id="pause_time_<%= day %>_<%= index %>"><%= item.start_time.strftime('%H:%M') %> - <%= item.end_time.strftime('%H:%M') %></td>
               </tr>
             <% end %>
           <% end %>
-  </tbody>
+        </tbody>
       </table>
     </div>
 
