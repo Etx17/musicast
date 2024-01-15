@@ -1,6 +1,10 @@
 <div id="<%= dom_id tour %>">
   <main class="flex flex-col gap-2 p-2">
   <h2><%= @tour.title %></h2>
+  <!--  Section planning s'il existe-->
+  <%= render "planning", tour: @tour %>
+
+
 
   <div class="text-center">
     <button class="items-center justify-center  btn btn-dark"  data-bs-target="#tourConfirmationModal" data-bs-toggle="modal" data-bs-dismiss="modal" aria-label="Close" >
@@ -30,6 +34,8 @@
     </div>
   </div>
 
+
+  <!--  Section ordre passage s'il existe-->
   <div>
     <div class="overflow-auto p-5">
       <h2 class="text-center">Ordre de passage actuel </h2>

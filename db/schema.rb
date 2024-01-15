@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_12_165251) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_14_122309) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -291,6 +291,16 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_12_165251) do
     t.index ["user_id"], name: "index_partners_on_user_id"
   end
 
+  create_table "pauses", force: :cascade do |t|
+    t.time "start_time"
+    t.time "end_time"
+    t.date "date"
+    t.bigint "tour_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["tour_id"], name: "index_pauses_on_tour_id"
+  end
+
   create_table "performances", force: :cascade do |t|
     t.bigint "inscription_id", null: false
     t.bigint "tour_id", null: false
@@ -300,6 +310,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_12_165251) do
     t.datetime "updated_at", null: false
     t.text "air_selection", default: [], array: true
     t.integer "order"
+    t.date "start_date"
     t.index ["inscription_id"], name: "index_performances_on_inscription_id"
     t.index ["tour_id"], name: "index_performances_on_tour_id"
   end
@@ -426,6 +437,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_12_165251) do
   add_foreign_key "organisms", "organisateurs"
   add_foreign_key "partners", "organisms"
   add_foreign_key "partners", "users"
+  add_foreign_key "pauses", "tours"
   add_foreign_key "performances", "inscriptions"
   add_foreign_key "performances", "tours"
   add_foreign_key "programme_requirements", "categories"

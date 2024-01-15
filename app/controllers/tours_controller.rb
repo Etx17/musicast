@@ -17,6 +17,7 @@ class ToursController < ApplicationController
   def new
     @tour = Tour.new
     @tour.build_tour_requirement
+    @tour.build_pauses
   end
 
   def create
@@ -32,13 +33,15 @@ class ToursController < ApplicationController
   end
 
   def update
-    if params[:tour][:creating_schedule] == "true"
-      @tour.generate_performance_schedule(params[:tour])
-      redirect_to organism_competition_edition_competition_category_tour_schedule_path(@organism, @competition, @edition_competition, @category, @tour), notice: "Tour schedule has been updated." and return
-    end
+    creating_schedule = params[:tour].delete(:creating_schedule)
+
     if @tour.update(tour_params)
-      redirect_to organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category),
-                  notice: "Tour mis à jour avec succès."
+      if creating_schedule == "true"
+        @tour.generate_performance_schedule
+        redirect_to organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour), notice: "Tour schedule has been updated." and return
+      else
+        redirect_to organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category), notice: "Tour mis à jour avec succès."
+      end
     else
       render :edit, status: :unprocessable_entity
     end

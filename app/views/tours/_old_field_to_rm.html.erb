@@ -1,0 +1,64 @@
+<!--
+
+ <div class="card bg-grey shadow-sm">
+    <div class="p-1 bg-light">
+      <div class="form-check form-switch">
+        <%= f.check_box :has_lunch_break, class: "form-check-input", checked: true
+        <%= f.label :has_lunch_break, 'Pause déjeuner', class: "form-check-label"
+      </div>
+    </div>
+  </div>
+
+  <div class="card bg-grey shadow-sm">
+    <div class="p-1 bg-light">
+      <%= f.input :lunch_start_time, as: :time, hint: 'Indiquez l\'heure du début de la pause déjeuner.', input_html: { value: '12:00' }
+    </div>
+  </div>
+
+  <div class="card bg-grey shadow-sm">
+    <div class="p-1 bg-light">
+      <%= f.input :lunch_duration, as: :integer, hint: 'Indiquez la durée de la pause déjeuner en minutes.', input_html: { value: 60 }
+    </div>
+  </div>
+
+  <div class="card bg-grey shadow-sm">
+    <div class="p-1 bg-light">
+      <div class="form-check form-switch">
+        <%= f.check_box :has_morning_pause, checked: true, class: "form-check-input"
+        <%= f.label :has_morning_pause, 'Pause du matin', class: "form-check-label"
+      </div>
+    </div>
+  </div>
+
+  <div class="card bg-grey shadow-sm">
+    <div class="p-1 bg-light">
+      <%= f.input :morning_pause_time, as: :time, hint: 'Indiquez l\'heure de la pause du matin.', input_html: { value: '10:30' }
+    </div>
+  </div>
+
+  <div class="card bg-grey shadow-sm">
+    <div class="p-1 bg-light">
+      <div class="form-check form-switch">
+        <%= f.check_box :has_afternoon_pause, class: "form-check-input", checked: true
+        <%= f.label :has_afternoon_pause, 'Pause de l\'après-midi', class: "form-check-label"
+      </div>
+    </div>
+  </div>
+
+  <div class="card bg-grey shadow-sm">
+    <div class="p-1 bg-light">
+      <%= f.input :afternoon_pause_time, as: :time, hint: 'Indiquez l\'heure de la pause de l\'après-midi.', input_html: { value: '15:00' }
+    </div>
+  </div>
+
+  <div class="card bg-grey shadow-sm">
+    <div class="p-1 bg-light">
+      <%= f.input :morning_pause_duration_minutes, as: :integer, hint: 'Indiquez la durée de la pause du matin en minutes.', input_html: { value: 15 }
+    </div>
+  </div>
+
+  <div class="card bg-grey shadow-sm">
+    <div class="p-1 bg-light">
+      <%= f.input :afternoon_pause_duration_minutes, as: :integer, hint: 'Indiquez la durée de la pause de l\'après-midi en minutes.', input_html: { value: 15 }
+    </div>
+  </div>

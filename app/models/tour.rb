@@ -6,6 +6,7 @@ class Tour < ApplicationRecord
 
   accepts_nested_attributes_for :tour_requirement
   accepts_nested_attributes_for :address
+  has_many :pauses, dependent: :destroy
 
   def generate_initial_performance_order
     shuffled_performances = performances.shuffle
@@ -29,41 +30,28 @@ class Tour < ApplicationRecord
     end
   end
 
-  def generate_performance_schedule(params)
-    start_time = params[:start_time]
-    max_end_of_day_time = params[:max_end_of_day_time]
-    new_day_start_time = params[:new_day_start_time]
-    lunch_start_time = params[:lunch_start_time]
-    lunch_duration = params[:lunch_duration]
-    morning_pause_time = params[:morning_pause_time]
-    afternoon_pause_time = params[:afternoon_pause_time]
-    morning_pause_duration_minutes = params[:morning_pause_duration_minutes] || 0
-    afternoon_pause_duration_minutes = params[:afternoon_pause_duration_minutes] || 0
-      # Consider doing this in a background job...
+  def generate_performance_schedule
     performances = self.performances.order(:order)
     current_start_time = start_time
+    current_start_date = start_date
 
     performances.each do |performance|
-      # Check for morning pause
-      current_start_time += morning_pause_duration_minutes if morning_pause_time && current_start_time.strftime("%H:%M").to_time == morning_pause_time
-
-      # Check for lunch break
-      current_start_time += lunch_duration if current_start_time.strftime("%H:%M").to_time == lunch_start_time
-
-      # Check for afternoon pause
-      current_start_time += afternoon_pause_duration_minutes if afternoon_pause_time && current_start_time.strftime("%H:%M").to_time == afternoon_pause_time
+      next_performance_end_time = current_start_time + performance.minutes.minutes
 
       # Assign performance time and check end of day limit
-      next_performance_end_time = current_start_time + performance.duration.minutes
-      if next_performance_end_time <= max_end_of_day_time
-        performance.update(start_time: current_start_time)
+      if next_performance_end_time.strftime("%H:%M:%S") <= max_end_of_day_time.strftime("%H:%M:%S")
+        performance.update(start_time: current_start_time, start_date: current_start_date)
         current_start_time = next_performance_end_time
       else
         # Move to the next day
-        current_start_time = (current_start_time + 1.day).change(hour: new_day_start_time)
-        redo unless current_start_time >= max_end_of_day_time # Prevent infinite loop
+        current_start_time = new_day_start_time
+        current_start_date += 1.day
+        redo unless current_start_time.strftime("%H:%M").to_time >= max_end_of_day_time.strftime("%H:%M")
       end
     end
   end
 
+  def days_of_performances
+    performances.map(&:start_date).uniq || []
+  end
 end
