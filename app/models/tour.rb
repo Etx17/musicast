@@ -4,6 +4,8 @@ class Tour < ApplicationRecord
   has_one :address, as: :addressable, dependent: :destroy
   has_one :tour_requirement, dependent: :destroy
 
+  validate :new_day_start_time_before_max_end_of_day_time
+
   accepts_nested_attributes_for :tour_requirement
   accepts_nested_attributes_for :address
   has_many :pauses, dependent: :destroy
@@ -53,6 +55,14 @@ class Tour < ApplicationRecord
 
   def days_of_performances
     performances.map(&:start_date).uniq || []
+  end
+
+  private
+
+  def new_day_start_time_before_max_end_of_day_time
+    if new_day_start_time >= max_end_of_day_time
+      errors.add(:new_day_start_time, "must be before max end of day time")
+    end
   end
 
 end
