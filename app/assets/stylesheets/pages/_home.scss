@@ -155,3 +155,17 @@ body {
 .bg-info-secondary {
   background-color: #fffce9 !important;
 }
+
+.nav-pills .nav-link {
+  color: #888; /* Color for inactive tabs */
+}
+.nav-pills .nav-link:hover {
+  color: #333; /* Color on hover */
+  // background-color: gradient from top to bottom, bottom should be transparent
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  color: #333 !important; /* Color for active tab */
+  background-color: #ddd !important; /* Background color for active tab */
+  border: 1px solid #ddd !important; /* Border for active tab */
+}

@@ -1,6 +1,6 @@
 class PausesController < ApplicationController
   before_action :set_tour
-  before_action :set_context, only[:create, :destroy]
+  before_action :set_context, only: [:create, :destroy]
 
   def new
     @organism = Organism.find(params[:organism_id])
@@ -12,6 +12,7 @@ class PausesController < ApplicationController
   end
 
   def create
+    
     @pause = Pause.new(pause_params)
     @pause.tour = @tour
     if @pause.save
