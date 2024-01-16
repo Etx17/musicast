@@ -1,10 +1,33 @@
 <div class="row px-3" >
   <div class="d-flex justify-content-center mx-auto">
     <% if @tour.has_planning? %>
-      <button class="items-center justify-center btn btn-success py-3 rounded-16" style="font-size: 1.5em;"  data-bs-target="#tourConfirmationModal" data-bs-toggle="modal" data-bs-dismiss="modal" aria-label="Close" >
+      <button class="items-center mx-3 justify-center btn btn-outline-success py-3 rounded-16"  data-bs-target="#tourConfirmationModal" data-bs-toggle="modal" data-bs-dismiss="modal" aria-label="Close" >
         <i class="fas fa-sync-alt pe-3"></i>
-        Reconfigurer le planning
+        Reconfigurer le planning <br>
+        <small class="text-secondary">
+          Modifiez les contraintes horaires du tour, et regénérez un planning
+        </small>
+
       </button>
+
+
+      <button class="items-center  mx-3 justify-center btn btn-outline-success py-3 rounded-16"  >
+        <i class="fas fa-file-pdf  "></i>
+        Générer des versions du planning en  PDF <br>
+         <small class="text-secondary"> Différentes versions pour les candidats, le jury, l'organisation, etc...</small>
+      </button>
+
+      <%# Bouton qui ouvre mon application mail pour envoyer un message a tous les performances.candidat.user.email %>
+      <%# Generate the email list %>
+      <% email_list = @performances.map { |p| p.candidat.user.email }.join(',') %>
+
+      <%# Button that opens the default email client with a pre-filled email %>
+      <a href="mailto:<%= email_list %>?subject=Your%20Subject&body=Your%20Body" class="items-center mx-3 justify-center btn btn-outline-success py-3 rounded-16">
+        <i class="fas fa-envelope"></i>
+        Envoyer un mail à tous les candidats <br>
+        <small class="text-secondary">(<%= email_list.split(',').count %> destinataires) <br>Par exemple un planning PDF. Conservez votre signature</small>
+      </a>
+
     <% end %>
   </div>
 
