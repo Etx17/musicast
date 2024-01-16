@@ -10,9 +10,9 @@
         </div>
       <% end %>
       <!-- Button trigger modal -->
-      <button type="button" class="btn btn-dark-outline" data-controller="start-time" data-bs-toggle="modal" data-bs-target="#pauseModal" data-action="click->start-time#fetchStartTimes" data-day="<%= day %>">
-        Add Pause
-      </button>
+      <div class="btn btn-light mb-2 border rounded-8 " data-controller="start-time" data-bs-toggle="modal" data-bs-target="#pauseModal" data-action="click->start-time#fetchStartTimes" data-day="<%= day %>">
+         + Insérer une pause
+      </div>
 
       <!-- Modal -->
       <div class="modal fade" id="pauseModal" tabindex="-1" aria-labelledby="pauseModalLabel" aria-hidden="true">
@@ -41,8 +41,9 @@
       <table class="table ">
         <thead>
           <tr>
-            <th scope="col">Candidate</th>
-            <th scope="col">Start Time</th>
+            <th scope="col">Candidat</th>
+            <th scope="col">Heure de passage</th>
+            <th scope="col">Ordre</th>
           </tr>
         </thead>
         <tbody>
@@ -54,6 +55,7 @@
                 <tr>
                   <td><%= item.candidat.first_name  %></td>
                   <td><%= f.time_field :start_time, value: item&.start_time.strftime('%H:%M'), id: "start_time_#{day}_#{index}", disabled: true %></td>
+                  <td><%= item.order  %></td>
                 </tr>
               <% end %>
             <% elsif item.is_a?(Pause) && item.date == day %>
@@ -62,7 +64,7 @@
                   <td id="pause_time_<%= day %>_<%= index %>"><%= item.start_time.strftime('%H:%M') %> - <%= item.end_time.strftime('%H:%M') %></td>
                 <td>
                   <% last_pause_of_the_day = items.reverse.find { |i| i.is_a?(Pause) && i.date == day } %>
-                  <%= button_to 'Delete', [@organism, @competition, @edition_competition, @category, @tour, item], method: :delete, data: { turbo_confirm: 'Are you sure?' }, class: "btn btn-danger", disabled: item != last_pause_of_the_day %>
+                  <%= button_to 'X', [@organism, @competition, @edition_competition, @category, @tour, item], method: :delete, data: { turbo_confirm: 'Are you sure?' }, class: "btn btn-outline-danger m-0 px-2 py-0", disabled: item != last_pause_of_the_day %>
                 </td>
               </tr>
             <% end %>

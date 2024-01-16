@@ -82,6 +82,23 @@ body {
     transform: scale(1.05);
   }
 }
+
+.rounded-8 {
+  border-radius: 8px;
+}
+
+.rounded-12 {
+  border-radius: 12px;
+}
+
+.rounded-16 {
+  border-radius: 16px;
+}
+
+.rounded-20 {
+  border-radius: 20px;
+}
+
 .breadcrumbs a {
   display: inline-block;
   padding: 8px 16px;
