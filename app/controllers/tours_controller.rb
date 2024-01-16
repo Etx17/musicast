@@ -62,6 +62,14 @@ class ToursController < ApplicationController
     tour = Tour.find(params[:id])
     old_start_date = params[:update_day][:old_start_date]
     new_start_date = params[:update_day][:new_start_date]
+
+    begin
+      new_start_date.to_date
+    rescue ArgumentError
+      flash[:error] = "Invalid date"
+      redirect_to organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour), notice: 'Date invalide' and return
+    end
+
     # Find the first performance of the day
     first_performance_of_day = tour.performances.where(start_date: old_start_date).order(:order).first
 

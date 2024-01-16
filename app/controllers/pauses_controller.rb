@@ -1,9 +1,9 @@
 class PausesController < ApplicationController
   before_action :set_tour
-  before_action :set_context, only: [:create, :destroy]
+  before_action :set_context
 
   def new
-    @organism = Organism.find(params[:organism_id])
+    @organism = Organism.friendly.find(params[:organism_id])
     @competition = @organism.competitions.find(params[:competition_id])
     @edition_competition = @competition.edition_competitions.find(params[:edition_competition_id])
     @category = @edition_competition.categories.find(params[:category_id])
@@ -12,7 +12,6 @@ class PausesController < ApplicationController
   end
 
   def create
-    
     @pause = Pause.new(pause_params)
     @pause.tour = @tour
     if @pause.save
@@ -68,8 +67,8 @@ class PausesController < ApplicationController
   end
 
   def set_context
-    @organism = Organism.find(params[:organism_id])
-    @category = Category.find(params[:category_id])
+    @organism = Organism.friendly.find(params[:organism_id])
+    @category = Category.friendly.find(params[:category_id])
     @edition_competition = @category.edition_competition
     @competition = @edition_competition.competition
   end
