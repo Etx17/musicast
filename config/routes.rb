@@ -23,8 +23,9 @@ Rails.application.routes.draw do
           resources :tours do
             post 'update_order', on: :member
             get 'schedule', on: :member
-            resources :pauses
             put 'update_day_of_performance_and_subsequent_performances', on: :member
+            post :shuffle, on: :member
+            resources :pauses
           end
           resources :requirement_items
           resources :inscriptions do

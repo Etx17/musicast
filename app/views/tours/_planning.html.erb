@@ -1,18 +1,23 @@
 <div class="row p-5" >
+  <h2 class="text-center text-secondary">Pré-planning</h2>
   <% @tour.days_of_performances.sort.each do |day| %>
     <div class="col shadow-sm mx-2 bg-grey" data-controller="start-time" data-day="<%= day.strftime('%Y-%m-%d') %>">
-      <%= simple_form_for :update_day, url: update_day_of_performance_and_subsequent_performances_organism_competition_edition_competition_category_tour_path(organism_id: @organism.id, competition_id: @competition.id, edition_competition_id: @edition_competition.id, category_id: @category.id, tour_id: @tour.id), method: :put, html: { class: 'edit-day-form' } do |f| %>
-        <h2 class="text-center"><%= day.strftime('%a %d %B %Y') %></h2>
+      <h2 class="text-center"><%= day.strftime('%a %d %B %Y') %></h2>
+      <%= simple_form_for :update_day, url: update_day_of_performance_and_subsequent_performances_organism_competition_edition_competition_category_tour_path(organism_id: @organism.id, competition_id: @competition.id, edition_competition_id: @edition_competition.id, category_id: @category.id, tour_id: @tour.id), method: :put, html: { class: 'edit-day-form', data: { controller: "date", action: "submit->date#validateDateFormat" } } do |f| %>
         <%= f.input :old_start_date, as: :hidden, input_html: { data: { start_time_target: "oldStartDate" } } %>
-        <div class="d-flex">
-        <%= f.input :new_start_date, hint: "Changer la date décalera toutes les suivantes", label: false, input_html: { data: { start_time_target: "newStartDate" } } %>
-        <%= f.button :submit, 'Mettre a jour' %>
+        <div class="d-flex w-100 justify-content-between align-items-start">
+          <div class="d-flex" style="max-height: 40px;">
+            <%= f.input :new_start_date, label: false, input_html: { data: { start_time_target: "newStartDate", date_target: "newStartDate" } } %>
+            <%= button_tag(type: 'submit', class: "btn btn-outline-secondary h-100", data: { turbo_confirm: "Changer la date modifiera la dates des performance ultérieures de ce tour" }) do %>
+              <i class="fas fa-sync-alt"></i>
+            <% end %>
+          </div>
+          <div class="btn btn-secondary mb-2  " data-controller="start-time" data-bs-toggle="modal" data-bs-target="#pauseModal" data-action="click->start-time#fetchStartTimes" data-day="<%= day %>">
+            + Ajouter une pause
+          </div>
         </div>
       <% end %>
       <!-- Button trigger modal -->
-      <div class="btn btn-light mb-2 border rounded-8 " data-controller="start-time" data-bs-toggle="modal" data-bs-target="#pauseModal" data-action="click->start-time#fetchStartTimes" data-day="<%= day %>">
-         + Insérer une pause
-      </div>
 
       <!-- Modal -->
       <div class="modal fade" id="pauseModal" tabindex="-1" aria-labelledby="pauseModalLabel" aria-hidden="true">
@@ -28,7 +33,7 @@
 
               <%= simple_form_for [@organism, @competition, @edition_competition, @category, @tour, Pause.new] do |f| %>
                 <%= f.input :date, as: :hidden, input_html: { class: "pause_day" } %>
-                <%= f.input :start_time, collection: @tour.performances.where(start_date: day).map { |p| p.start_time.strftime("%H:%M") }, label: 'Start time', input_html: { class: 'form-control' } %>
+                <%= f.input :start_time, collection: @tour.performances.where(start_date: day).map { |p| p.start_time.strftime("%H:%M") }, label: 'Heure de début', input_html: { class: 'form-control' } %>
                 <%= f.input :end_time, as: :time, label: 'End time', input_html: { value: '12:00' } %>
                 <%= f.button :submit, 'Add Pause', class: 'btn btn-dark-outline' %>
               <% end %>

@@ -1,0 +1,63 @@
+  <!--  Section ordre passage s'il existe-->
+  <div>
+
+    <div class="overflow-auto p-3">
+      <div class="d-flex justify-content-center gap-3">
+      <h2 class="text-center">Ordre de passage actuel </h2>
+      <%= button_to shuffle_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour), method: :post, class: "btn btn-outline-dark rounded-8" do %>
+        <i class="fas fa-random pe-3"></i>
+        Mélanger aléatoirement
+      <% end %>
+      </div>
+      <p class="text-center text-secondary">Changez manuellement l'ordre en entrant un numéro pour un candidat et cliquant sur  <i class="fas fa-check"></i> ou mélangez aléatoirement <i class="fas fa-random"></i></p>
+
+
+
+      <table class="table table-bordered caption-top">
+        <thead>
+          <tr>
+            <th class="p-2 text-center bg-grey ">Candidat</th>
+            <th class="p-2 text-center bg-grey ">Ordre</th>
+            <th class="p-2 text-center bg-grey ">Airs présentés (titre raccourci)</th>
+            <th class="p-2 text-center bg-grey ">Minutage</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @tour.performances.order(:order).each do |performance| %>
+            <tr class="">
+              <td class="p-2 bg-light"><%= link_to performance.candidat.first_name, candidat_path(performance.candidat), target: '_blank' %></td>
+              <td class="p-2 text-center bg-light" style="min-width: 110px;">
+                <%= form_with url: update_order_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour, performance_id: performance.id), method: :post do %>
+                  <div class="d-flex">
+                  <%= number_field_tag "new_order", performance.order, class: "form-control", min: 1, max: @tour.performances.count %>
+                  <%= button_tag(type: 'submit', class: "btn btn-outline-dark", data: { turbo_confirm: "Changing an order will destroy the current planning. You will have to regenerate a planning when you finish setting orders. Are you sure you want to proceed?" }) do %>
+                    <i class="fas fa-check"></i> <!-- for check -->
+                  <% end %>
+                  </div>
+                <% end %>
+              <td class="p-2 text-center bg-light text-secondary w-75">
+                <small class="d-flex flex-column">
+                  <% performance.airs.each do |air| %>
+                    <li class="d-none d-sm-block">
+                      <%= air.title %> -
+                      <%= air.composer %> -
+                      <%= air.length_minutes %> -
+                      <%= air.oeuvre %> -
+                      <%= air.character + '-' if air.character.present? %> -
+                      <%= air.tonality %>
+                      <%= '-' + air.infos if air.infos.present? %>
+                    </li>
+                    <li class="d-block d-sm-none">
+                      <%= truncate(air.title, length: 15) %>
+                    </li>
+                  <% end %>
+                </small>
+              </td>
+              <td class="p-2 text-center bg-light text-secondary"  ><%= performance.minutes %></td>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>

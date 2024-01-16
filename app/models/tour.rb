@@ -6,6 +6,7 @@ class Tour < ApplicationRecord
 
   validate :new_day_start_time_before_max_end_of_day_time
 
+
   accepts_nested_attributes_for :tour_requirement
   accepts_nested_attributes_for :address
   has_many :pauses, dependent: :destroy
@@ -55,6 +56,10 @@ class Tour < ApplicationRecord
 
   def days_of_performances
     performances.map(&:start_date).uniq || []
+  end
+
+  def has_planning?
+    performances.any?{|p| p.start_time.present?}
   end
 
   private

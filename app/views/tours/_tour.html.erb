@@ -1,17 +1,23 @@
 <div id="<%= dom_id tour %>">
   <main class="flex flex-col gap-2 p-2">
-  <h2><%= @tour.title %></h2>
+  <h1 class="border-bottom text-center"><%= @tour.title.upcase %></h1>
   <!--  Section planning s'il existe-->
-  <%= render "planning", tour: @tour unless @tour.performances.any?{|p| p.start_time.nil?} %>
 
 
 
   <div class="text-center">
-    <button class="items-center justify-center  btn btn-dark"  data-bs-target="#tourConfirmationModal" data-bs-toggle="modal" data-bs-dismiss="modal" aria-label="Close" >
-      Confirmer l'ordre de passage et générer le planning
+    <!-- Si jamais il y a déja un planning (càd qu'une des performances a déja une start_date assignée), alors displa 'Modifier le planning' -->
+    <!-- Sinon Générer le planning  -->
+    <% if @tour.has_planning? %>
+    <button class="items-center justify-center btn btn-success py-3 mt-5 rounded-16" style="font-size: 1.5em;"  data-bs-target="#tourConfirmationModal" data-bs-toggle="modal" data-bs-dismiss="modal" aria-label="Close" >
+      <i class="fas fa-sync-alt pe-3"></i>
+      Reconfigurer le planning
     </button>
-    <small>Faisable après clôture ferme des inscriptions. </small>
-    <p class="text-secondary">Génère ou re-génère un planning (emmene sur new ou edit, dans lequel il y a u nform de planning pour le tour en question)</p>
+    <% else %>
+    <button class="items-center justify-center btn btn-dark py-3 mt-5 rounded-16" style="font-size: 1.8em;"  data-bs-target="#tourConfirmationModal" data-bs-toggle="modal" data-bs-dismiss="modal" aria-label="Close" >
+      Confirmer l'ordre de passage et <br> générer le planning
+    </button>
+    <% end %>
 
     <div class="modal fade" id="tourConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="tourConfirmationModalLabel" aria-hidden="true">
       <div class="modal-dialog">
@@ -33,40 +39,14 @@
       </div>
     </div>
   </div>
+  
+  <!--pré planning -->
+  <%= render "planning", tour: @tour unless @tour.performances.any?{|p| p.start_time.nil?} %>
 
 
-  <!--  Section ordre passage s'il existe-->
-  <div>
-    <div class="overflow-auto p-5">
-      <h2 class="text-center">Ordre de passage actuel </h2>
-      <table class="table table-bordered caption-top">
-        <thead>
-          <tr>
-            <th class="p-2 text-center bg-grey ">Candidat</th>
-            <th class="p-2 text-center bg-grey ">Ordre</th>
-            <th class="p-2 text-center bg-grey ">Airs présentés (titre racourci)</th>
-            <th class="p-2 text-center bg-grey ">Minutage</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @tour.performances.order(:order).each do |performance| %>
-            <tr class="">
-              <td class="p-2 bg-light"><%= link_to performance.candidat.first_name, candidat_path(performance.candidat), target: '_blank' %></td>
-              <td class="p-2 text-center bg-light">
-                <%= form_with url: update_order_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour, performance_id: performance.id), method: :post do %>
-                  <div class="d-flex">
-                  <%= number_field_tag "new_order", performance.order, class: "form-control", min: 1, max: @tour.performances.count %>
-                  <%= button_tag "OK", type: "submit", class: "btn btn-dark", data: { turbo_confirm: "Changing an order will destroy the current planning. You will have to regenerate a planning when you finish setting orders. Are you sure you want to proceed?" } %>
-                  </div>
-                <% end %>
-              <td class="p-2 text-center bg-light text-secondary"  ><%= performance.airs_titles %></td>
-              <td class="p-2 text-center bg-light text-secondary"  ><%= performance.minutes %></td>
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
-  </div>
+  <!-- section ordre de passage -->
+  <%= render 'order_of_performances' %>
+
+
 </main>
 </div>

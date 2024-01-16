@@ -1,5 +1,6 @@
 class PausesController < ApplicationController
   before_action :set_tour
+  before_action :set_context, only[:create, :destroy]
 
   def new
     @organism = Organism.find(params[:organism_id])
@@ -18,11 +19,11 @@ class PausesController < ApplicationController
       # handle a successful save
       # Si la pause est crée, on doit updater toutes les performances.start_time dont la date est la même que celle de la pause, pour += @pause.duree a chacune de ces performances
 
-      redirect_to request.referrer || root_path
+      redirect_to [@organism, @competition, @edition_competition, @category, @tour], notice: "Pause créée avec succès"
 
     else
       # handle an unsuccessful save
-      redirect_to request.referrer || root_path
+      redirect_to [@organism, @competition, @edition_competition, @category, @tour], alert: "Erreur lors de la création de la pause"
     end
   end
 
@@ -31,7 +32,7 @@ class PausesController < ApplicationController
     remove_pause_from_schedule(@pause)
 
     @pause.destroy
-    redirect_to request.referrer || root_path
+    redirect_to [@organism, @competition, @edition_competition, @category, @tour], notice: "Pause supprimée avec succès"
   end
 
   private
@@ -63,6 +64,13 @@ class PausesController < ApplicationController
 
   def set_tour
     @tour = Tour.find(params[:tour_id])
+  end
+
+  def set_context
+    @organism = Organism.find(params[:organism_id])
+    @category = Category.find(params[:category_id])
+    @edition_competition = @category.edition_competition
+    @competition = @edition_competition.competition
   end
 
   def pause_params

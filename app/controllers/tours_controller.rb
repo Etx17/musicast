@@ -1,6 +1,6 @@
 class ToursController < ApplicationController
-  before_action :set_tour, only: %i[show edit update destroy update_order update_day_of_performance_and_subsequent_performances]
-  before_action :set_context, only: %i[new create show edit update destroy update_order update_day_of_performance_and_subsequent_performances]
+  before_action :set_tour, only: %i[shuffle show edit update destroy update_order update_day_of_performance_and_subsequent_performances]
+  before_action :set_context, only: %i[shuffle new create show edit update destroy update_order update_day_of_performance_and_subsequent_performances]
 
   def index
     @tours = Tour.all
@@ -84,7 +84,7 @@ class ToursController < ApplicationController
     end
 
     # Redirect to the tour page
-    redirect_to organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour), notice: 'Day of performance and subsequent performances updated successfully.'
+    redirect_to organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour), notice: 'Le jour de la performance et des performances suivantes ont été mis à jour.'
   end
 
   def destroy
@@ -104,8 +104,19 @@ class ToursController < ApplicationController
     redirect_to request.referrer || root_path
   end
 
+  # For a view i didn't created yet, but that will display the final schedule of the tour nicely formatted for the jury, and for the team
   def schedule
     @tour = Tour.find(params[:id])
+  end
+
+  def shuffle
+    if @tour.pauses.any? || @tour.performances.any? { |p| p.start_time.present? }
+      @tour.pauses.destroy_all
+      @tour.performances.update_all(start_time: nil)
+    end
+
+    @tour.generate_initial_performance_order
+    redirect_to [@organism, @competition, @edition_competition, @category, @tour], notice: "Ordre de passage mélangé avec succès."
   end
 
   private
