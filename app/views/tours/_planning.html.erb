@@ -30,7 +30,7 @@
 
     <% end %>
   </div>
-
+  <h2 class=" border border-1 mt-5 rounded-8 bg-grey text-center my-3">Planning du tour</h3>
   <div class="text-center text-secondary py-4 ">Ajoutez des pauses, décalez un jour, ou bien regénerez un planning avec des caractéristiques différentes si celui là ne convient pas</div>
   <% @tour.days_of_performances.sort.each do |day| %>
     <div class="col shadow-sm mx-2 bg-grey" data-controller="start-time" data-day="<%= day.strftime('%Y-%m-%d') %>">
