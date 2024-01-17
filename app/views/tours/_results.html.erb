@@ -18,8 +18,15 @@
     <div class="d-flex flex-column align-items-center">
       <h3>Tour terminé. </h3>
       <p>Une notification a été envoyée a chacun des candidats pour les informer de leur résultat.</p>
-      <%# Actions %>
-      <%= link_to "Envoyer les qualifiés dans le tour suivant", move_to_next_tour_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour), class: "btn btn-success" %>
+      <%# Envoyer les qualifiés dans le tour suivant  si c'est pas déja fait%>
+      <% if @tour.next_tour.performances.any? %>
+        <div class="d-flex flex-column align-items-center">
+          <p>Les qualifiés ont été envoyés dans le tour suivant.</p>
+          <%= link_to "Tour suivant", organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour.next_tour), class: "btn btn-dark" %>
+        </div>
+      <% else %>
+        <%= link_to "Envoyer les qualifiés dans le tour suivant", move_to_next_tour_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour), class: "btn btn-success" %>
+      <% end %>
     </div>
   <% end %>
 

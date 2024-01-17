@@ -12,7 +12,7 @@ class Tour < ApplicationRecord
   has_many :pauses, dependent: :destroy
 
   def move_qualified_candidates_to_next_tour
-    next_tour = determine_next_tour
+    next_tour = next_tour
     return unless next_tour.present?
 
     performances.each_with_index do |performance, index|
@@ -29,8 +29,8 @@ class Tour < ApplicationRecord
     end
   end
 
-  def determine_next_tour
-    category.tours.find_by(is_finished: false)
+  def next_tour
+    category.tours.where(is_finished: false).order(:tour_number).first
   end
 
   def generate_initial_performance_order
@@ -87,7 +87,7 @@ class Tour < ApplicationRecord
   private
 
   def new_day_start_time_before_max_end_of_day_time
-    if new_day_start_time >= max_end_of_day_time
+    if new_day_start_time && new_day_start_time >= max_end_of_day_time
       errors.add(:new_day_start_time, "must be before max end of day time")
     end
   end

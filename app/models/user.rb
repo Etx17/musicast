@@ -12,7 +12,7 @@ class User < ApplicationRecord
 
   has_many :inscription_orders
   has_many :documents
-
+  
   def after_sign_in_path_for(_resource)
     if current_user.role == "admin"
       admin_dashboard_path

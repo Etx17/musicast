@@ -1,6 +1,7 @@
 <div id="<%= dom_id tour %>" class="bg-light">
   <main class="flex flex-col gap-2 px-2">
   <h1 class=" text-center py-3"><%= @tour.title.upcase %></h1>
+  <%= link_to "<-  Retour à la catégorie", :back, class: "btn btn-light border mb-3 mt-0" %>
   <!--  Section planning s'il existe-->
 
 
