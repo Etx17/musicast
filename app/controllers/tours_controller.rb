@@ -1,6 +1,6 @@
 class ToursController < ApplicationController
-  before_action :set_tour, only: %i[qualify_performance shuffle show edit update destroy update_order update_day_of_performance_and_subsequent_performances]
-  before_action :set_context, only: %i[qualify_performance shuffle new create show edit update destroy update_order update_day_of_performance_and_subsequent_performances]
+  before_action :set_tour, only: %i[ move_to_next_tour qualify_performance shuffle show edit update destroy update_order update_day_of_performance_and_subsequent_performances]
+  before_action :set_context, only: %i[ move_to_next_tour qualify_performance shuffle new create show edit update destroy update_order update_day_of_performance_and_subsequent_performances]
 
   def index
     @tours = Tour.all
@@ -33,23 +33,19 @@ class ToursController < ApplicationController
   end
 
   def update
-    creating_schedule = params[:tour].delete(:creating_schedule)
-
+    # Voir que ca fait bien marcher a la fois l'update de tour a is_finished, et aussi la creation de schedule pour un tour (apres configuration)
+    creating_schedule = params.fetch(:tour, {}).delete(:creating_schedule) { false }
     if @tour.update(tour_params)
       if creating_schedule == "true"
-
-
-        # Si jamais il y a déja un planning, càd des pauses sur un tour ou des performances avec un start_time, on doit supprimer toutes les pauses et start_time des performances avant de créer un nouveau planning
-        # En revanche je ne veux pas calculer que ca déclenche la méthode "remove_pause_from_planning", je veux juste directement supprimer les pauses et les start_time des performances
-
         if @tour.pauses.any? || @tour.performances.any? { |p| p.start_time.present? }
           @tour.pauses.destroy_all
           @tour.performances.update_all(start_time: nil)
         end
 
-
         @tour.generate_performance_schedule
         redirect_to organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour), notice: "Tour schedule has been updated." and return
+      elsif params[:tour][:is_finished] == "true"
+        redirect_to organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour), notice: "Tour terminé."
       else
         redirect_to organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category), notice: "Tour mis à jour avec succès."
       end
@@ -133,6 +129,11 @@ class ToursController < ApplicationController
     redirect_to [@organism, @competition, @edition_competition, @category, @tour], notice: "Performance qualifiée avec succès."
   end
 
+  def move_to_next_tour
+    @tour.move_qualified_candidates_to_next_tour
+    redirect_to [@organism, @competition, @edition_competition, @category, @tour], notice: "Les candidats qualifiés ont été envoyés vers le tour suivant."
+  end
+
   private
 
   def set_tour
@@ -151,6 +152,7 @@ class ToursController < ApplicationController
   def tour_params
     params.require(:tour).permit(
       :category_id,
+      :is_finished,
       :start_date, :start_time,
       :end_date, :end_time,
       :is_online,

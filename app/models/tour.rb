@@ -11,6 +11,28 @@ class Tour < ApplicationRecord
   accepts_nested_attributes_for :address
   has_many :pauses, dependent: :destroy
 
+  def move_qualified_candidates_to_next_tour
+    next_tour = determine_next_tour
+    return unless next_tour.present?
+
+    performances.each_with_index do |performance, index|
+      if performance.is_qualified
+        Performance.transaction do
+          Performance.create(
+            inscription: performance.inscription,
+            tour: next_tour,
+            order: index,
+            # air selection: airs_imposed_ids_for_tour
+          )
+        end
+      end
+    end
+  end
+
+  def determine_next_tour
+    category.tours.find_by(is_finished: false)
+  end
+
   def generate_initial_performance_order
     shuffled_performances = performances.shuffle
     shuffled_performances.each_with_index do |performance, index|

@@ -27,7 +27,7 @@ Rails.application.routes.draw do
             post :shuffle, on: :member
             resources :pauses
             put :qualify_performance, on: :member
-
+            get 'move_to_next_tour', on: :member
           end
           resources :requirement_items
           resources :inscriptions do

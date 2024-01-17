@@ -1,29 +1,37 @@
 <div class="row p-3 gap-3">
   <div class="d-flex justify-content-center mx-auto">
-     <button class="items-center  mx-3 justify-center btn btn-outline-success py-3 rounded-16"  >
-        <i class="fas fa-file-pdf  "></i>
-        Notifier les candidats des résultats<br>
-         <small class="text-secondary"> Différentes versions pour les candidats, le jury, l'organisation, etc...</small>
-      </button>
+    <% unless @tour.is_finished %>
 
-      <button class="items-center  mx-3 justify-center btn btn-outline-success py-3 rounded-16"  >
-        <i class="fas fa-file-pdf  "></i>
-        Envoyer un mail au candidats non selectionnés <br>
-         <small class="text-secondary"> Différentes versions pour les candidats, le jury, l'organisation, etc...</small>
-      </button>
-
-
-       <button class="items-center  mx-3 justify-center btn btn-outline-success py-3 rounded-16"  >
-        <i class="fas fa-file-pdf  "></i>
-        Envoyer un mail au candidats selectionnés <br>
-         <small class="text-secondary"> Différentes versions pour les candidats, le jury, l'organisation, etc...</small>
-      </button>
+        <%= simple_form_for [@organism, @competition, @edition_competition, @category, @tour], method: :put do |f| %>
+          <%= f.input :is_finished, as: :hidden, input_html: { value: true } %>
+          <div class="d-flex flex-column justify-content-center align-items-center gap-2">
+            <%= f.button :submit, 'Enregistrer les résultats et terminer le tour.', class: 'btn btn-success mx-3 rounded-16', data: { turbo_confirm: 'Cette action est irréversible, êtes vous sur de vouloir enregistrer ces résultats ?'} %>
+            <small>Les candidats recevront une notification de leur passage ou non par mail.</small>
+          </div>
+        <% end %>
+      <% end %>
 
 
   </div>
 
+  <% if @tour.is_finished %>
+    <div class="d-flex flex-column align-items-center">
+      <h3>Tour terminé. </h3>
+      <p>Une notification a été envoyée a chacun des candidats pour les informer de leur résultat.</p>
+      <%# Actions %>
+      <%= link_to "Envoyer les qualifiés dans le tour suivant", move_to_next_tour_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour), class: "btn btn-success" %>
+    </div>
+  <% end %>
+
   <div class="col bg-grey ">
-    <h2 class="text-center py-2">Candidats</h2>
+    <div class="d-flex flex-column align-items-center">
+      <h2 class="text-center py-2">Candidats</h2>
+
+      <%= mail_to @tour.performances.where(is_qualified: false).map { |performance| performance.inscription.candidat.user.email }.join(','), class: 'btn btn-outline-success mb-3 text-dark shadow-sm rounded-8' do %>
+        <i class="fas fa-envelope text-secondary  "></i> Envoyer un mail aux candidats non qualifiés
+      <% end %>
+    </div>
+
     <% @tour.performances.where(is_qualified: false).order(:order).each do |performance| %>
       <div class="d-flex justify-content-between align-items-center p-1 bg-light-grey w-100 mt-1 ">
         <div class="d-flex align-items-center">
@@ -33,9 +41,15 @@
             <p class="mb-0">Ordre: <%= performance.order %></p>
           </div>
         </div>
-        <%= button_to 'Qualifier', qualify_performance_organism_competition_edition_competition_category_tour_path(
-          @organism, @competition, @edition_competition, @category, @tour, performance_id: performance.id
-        ), method: :put, class: 'btn btn-outline-success ml-auto rounded-4' %>
+          <% if @tour.is_finished %>
+            <%= mail_to performance.candidat.user.email, class: 'btn btn-light text-dark shadow-sm' do %>
+              <i class="fas fa-envelope text-secondary"></i> Mail personnalisé
+            <% end %>
+          <% else %>
+            <%= button_to 'Qualifier', qualify_performance_organism_competition_edition_competition_category_tour_path(
+              @organism, @competition, @edition_competition, @category, @tour, performance_id: performance.id
+            ), method: :put, class: 'btn btn-outline-success ml-auto rounded-4' %>
+          <% end %>
       </div>
     <% end %>
   </div>
@@ -43,7 +57,13 @@
 
 
   <div class="col bg-grey">
+    <div class="d-flex flex-column align-items-center">
     <h2 class="text-center py-2">Qualifiés ( <%= @tour.performances.where(is_qualified: true).count %> )</h2>
+
+      <%= mail_to @tour.performances.where(is_qualified: true).map { |performance| performance.inscription.candidat.user.email }.join(','), class: 'btn btn-outline-success mb-3 text-dark shadow-sm rounded-8' do %>
+        <i class="fas fa-envelope text-secondary  "></i> Envoyer un mail aux qualifiés
+      <% end %>
+    </div>
     <% @tour.performances.where(is_qualified: true).each do |performance| %>
       <div class="d-flex justify-content-between align-items-center p-1 bg-light-grey w-100 mt-2">
         <div class="d-flex align-items-center">
@@ -53,9 +73,15 @@
             <p class="mb-0">Ordre: <%= performance.order %></p>
           </div>
         </div>
-        <%= button_to 'Annuler la qualification', qualify_performance_organism_competition_edition_competition_category_tour_path(
-          @organism, @competition, @edition_competition, @category, @tour, performance_id: performance.id
-        ), method: :put, class: 'btn btn-outline-warning ml-auto rounded-4' %>
+        <% if @tour.is_finished %>
+          <%= mail_to performance.candidat.user.email, class: 'btn btn-light text-dark shadow-sm' do %>
+            <i class="fas fa-envelope text-secondary"></i> Envoyer un mail personnalisé
+          <% end %>
+        <% else %>
+          <%= button_to 'Annuler la qualification', qualify_performance_organism_competition_edition_competition_category_tour_path(
+            @organism, @competition, @edition_competition, @category, @tour, performance_id: performance.id
+          ), method: :put, class: 'btn btn-outline-warning ml-auto rounded-4'  unless @tour.is_finished %>
+        <% end %>
       </div>
     <% end %>
 

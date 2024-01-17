@@ -40,12 +40,12 @@
                   <div class="accordion-item">
                     <h2 class="accordion-header" id="headingOne">
                       <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                        <%= truncate(performance.airs.first.title, length: 50) %> <% if performance.airs.count > 1 %> et (<%= performance.airs.count - 1 %>) autres <% end %> - Voir plus
+                        <%= truncate(performance&.airs&.first&.title, length: 50) %> <% if performance.airs.count > 1 %> et (<%= performance.airs.count - 1 %>) autres <% end %> - Voir plus
                       </button>
                     </h2>
                     <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                       <div class="accordion-body">
-                        <% performance.airs.each do |air| %>
+                        <% performance&.airs&.each do |air| %>
                           <div class="border border-secondary p-1">
                           <%= air.title %> -
                           <%= air.composer %> -

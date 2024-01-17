@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_17_101728) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_17_105428) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -382,15 +382,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_17_101728) do
     t.integer "minutes_max_per_performance"
     t.datetime "max_end_of_day_time"
     t.datetime "new_day_start_time"
-    t.boolean "has_lunch_break"
-    t.datetime "lunch_start_time"
-    t.integer "lunch_duration"
-    t.boolean "has_morning_pause"
-    t.datetime "morning_pause_time"
-    t.boolean "has_afternoon_pause"
-    t.datetime "afternoon_pause_time"
-    t.integer "morning_pause_duration_minutes"
-    t.integer "afternoon_pause_duration_minutes"
+    t.boolean "is_finished", default: false
     t.index ["category_id"], name: "index_tours_on_category_id"
   end
 
