@@ -36,22 +36,30 @@
                   </div>
                 <% end %>
               <td class="p-2 text-center bg-light text-secondary w-75">
-                <small class="d-flex flex-column">
-                  <% performance.airs.each do |air| %>
-                    <li class="d-none d-sm-block">
-                      <%= air.title %> -
-                      <%= air.composer %> -
-                      <%= air.length_minutes %> -
-                      <%= air.oeuvre %> -
-                      <%= air.character + '-' if air.character.present? %> -
-                      <%= air.tonality %>
-                      <%= '-' + air.infos if air.infos.present? %>
-                    </li>
-                    <li class="d-block d-sm-none">
-                      <%= truncate(air.title, length: 15) %>
-                    </li>
-                  <% end %>
-                </small>
+                <div class="accordion" id="accordionExample">
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                        <%= truncate(performance.airs.first.title, length: 50) %> <% if performance.airs.count > 1 %> et (<%= performance.airs.count - 1 %>) autres <% end %> - Voir plus
+                      </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                      <div class="accordion-body">
+                        <% performance.airs.each do |air| %>
+                          <div class="border border-secondary p-1">
+                          <%= air.title %> -
+                          <%= air.composer %> -
+                          <%= air.length_minutes %> -
+                          <%= air.oeuvre %> -
+                          <%= air.character + '-' if air.character.present? %> -
+                          <%= air.tonality %>
+                          <%= '-' + air.infos if air.infos.present? %>
+                          </div>
+                        <% end %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </td>
               <td class="p-2 text-center bg-light text-secondary"  ><%= performance.minutes %></td>
               </td>

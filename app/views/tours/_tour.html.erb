@@ -6,7 +6,6 @@
 
 
   <div class="text-center">
-    <!-- Si jamais il y a déja un planning (càd qu'une des performances a déja une start_date assignée), alors displa 'Modifier le planning' -->
     <!-- Modale ouverte par les tabs dans le bouton générer le planning ou régénérer-->
     <div class="modal fade" id="tourConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="tourConfirmationModalLabel" aria-hidden="true">
       <div class="modal-dialog">
@@ -29,6 +28,7 @@
     </div>
   </div>
 
+  <!-- tabs -->
   <ul class="nav nav-pills mb-3 justify-content-center border" id="myTab" role="tablist">
     <li class="nav-item w-25 text-center" role="presentation">
       <a class="h-100 nav-link <%= 'active' unless @tour.has_planning? %>" id="order-tab" data-bs-toggle="tab" href="#order" role="tab" aria-controls="order" aria-selected="<%= !@tour.has_planning? %>" style="font-size: 1.1em;"><i class="fas fa-list pe-2"></i>Ordre de passage</a>
@@ -36,29 +36,32 @@
     <li class="nav-item w-25 text-center" role="presentation">
       <a class=" h-100 nav-link <%= 'active' if @tour.has_planning?  %>" id="planning-tab" data-bs-toggle="tab" href="#planning" role="tab" aria-controls="planning" aria-selected="<%= @tour.has_planning? %>" style="font-size: 1.1em;"><i class="fas fa-calendar-alt pe-2"></i>Planning</a>
     </li>
+    <li class="nav-item w-25 text-center" role="presentation">
+      <a class=" h-100 nav-link " id="results-tab" data-bs-toggle="tab" href="#results" role="tab" aria-controls="results" aria-selected="" style="font-size: 1.1em;"><i class="fas fa-trophy pe-2"></i>Résultats</a>
+    </li>
   </ul>
 
-<div class="tab-content" id="myTabContent">
-  <div class="tab-pane fade <%= 'show active' unless @tour.has_planning? %>" id="order" role="tabpanel" aria-labelledby="order-tab">
-    <%= render 'order_of_performances' %>
-  </div>
-  <div class="tab-pane fade <%= 'show active' if @tour.has_planning? %>" id="planning" role="tabpanel" aria-labelledby="planning-tab">
-    <% if !@tour.has_planning? %>
-      <div class="d-flex justify-content-center">
-        <div class="d-flex flex-column justif-content-center align-items-center">
-          <i class="fas fa-calendar-alt fa-10x text-light-grey"></i>
+  <div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade <%= 'show active' unless @tour.has_planning? %>" id="order" role="tabpanel" aria-labelledby="order-tab">
+      <%= render 'order_of_performances' %>
+    </div>
+    <div class="tab-pane fade <%= 'show active' if @tour.has_planning? %>" id="planning" role="tabpanel" aria-labelledby="planning-tab">
+      <% if !@tour.has_planning? %>
+        <div class="d-flex justify-content-center">
+          <div class="d-flex flex-column justif-content-center align-items-center">
+            <i class="fas fa-calendar-alt fa-10x text-light-grey"></i>
 
-          <p class="small">Vous n'avez pas de planning pour l'instant. <br>Vous pouvez en générer un en cliquant sur le bouton ci-dessous. <br>Vous générerez un planning avec l'ordre de passage actuel.</p>
-          <button class="items-center justify-center btn btn-success py-2 mb-5 rounded-16 text-center" style="font-size: 1.4em;"  data-bs-target="#tourConfirmationModal" data-bs-toggle="modal" data-bs-dismiss="modal" aria-label="Close" >
-            Générer le planning
-          </button>
+            <p class="small">Vous n'avez pas de planning pour l'instant. <br>Vous pouvez en générer un en cliquant sur le bouton ci-dessous. <br>Vous générerez un planning avec l'ordre de passage actuel.</p>
+            <button class="items-center justify-center btn btn-success py-2 mb-5 rounded-16 text-center" style="font-size: 1.4em;"  data-bs-target="#tourConfirmationModal" data-bs-toggle="modal" data-bs-dismiss="modal" aria-label="Close" >
+              Générer le planning
+            </button>
+          </div>
         </div>
-      </div>
-    <% else %>
-        <%= render "planning", tour: @tour %>
-     <% end %>
+      <% else %>
+          <%= render "planning", tour: @tour %>
+      <% end %>
+    </div>
   </div>
-</div>
 
 
 </main>
