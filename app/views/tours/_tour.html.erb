@@ -34,18 +34,21 @@
       <a class="h-100 nav-link <%= 'active' unless @tour.has_planning? %>" id="order-tab" data-bs-toggle="tab" href="#order" role="tab" aria-controls="order" aria-selected="<%= !@tour.has_planning? %>" style="font-size: 1.1em;"><i class="fas fa-list pe-2"></i>Ordre de passage</a>
     </li>
     <li class="nav-item w-25 text-center" role="presentation">
-      <a class=" h-100 nav-link <%= 'active' if @tour.has_planning?  %>" id="planning-tab" data-bs-toggle="tab" href="#planning" role="tab" aria-controls="planning" aria-selected="<%= @tour.has_planning? %>" style="font-size: 1.1em;"><i class="fas fa-calendar-alt pe-2"></i>Planning</a>
+      <a class=" h-100 nav-link <%= 'active' if @tour.has_planning? && @tour.performances.none?{|p| p.is_qualified } %>" id="planning-tab" data-bs-toggle="tab" href="#planning" role="tab" aria-controls="planning" aria-selected="<%= @tour.has_planning? %>" style="font-size: 1.1em;"><i class="fas fa-calendar-alt pe-2"></i>Planning</a>
     </li>
     <li class="nav-item w-25 text-center" role="presentation">
-      <a class=" h-100 nav-link " id="results-tab" data-bs-toggle="tab" href="#results" role="tab" aria-controls="results" aria-selected="" style="font-size: 1.1em;"><i class="fas fa-trophy pe-2"></i>Résultats</a>
+      <a class=" h-100 nav-link <%= 'active' if @tour.performances.any?{|p| p.is_qualified }  %>" id="results-tab" data-bs-toggle="tab" href="#results" role="tab" aria-controls="results" aria-selected="" style="font-size: 1.1em;"><i class="fas fa-trophy pe-2"></i>Résultats</a>
     </li>
   </ul>
 
   <div class="tab-content" id="myTabContent">
+    <!-- tab ordre -->
     <div class="tab-pane fade <%= 'show active' unless @tour.has_planning? %>" id="order" role="tabpanel" aria-labelledby="order-tab">
       <%= render 'order_of_performances' %>
     </div>
-    <div class="tab-pane fade <%= 'show active' if @tour.has_planning? %>" id="planning" role="tabpanel" aria-labelledby="planning-tab">
+
+    <!-- tab planning -->
+    <div class="tab-pane fade <%= 'show active' if @tour.has_planning? && @tour.performances.none?{|p| p.is_qualified } %>" id="planning" role="tabpanel" aria-labelledby="planning-tab">
       <% if !@tour.has_planning? %>
         <div class="d-flex justify-content-center">
           <div class="d-flex flex-column justif-content-center align-items-center">
@@ -60,6 +63,11 @@
       <% else %>
           <%= render "planning", tour: @tour %>
       <% end %>
+    </div>
+
+    <!-- tab resultats -->
+    <div class="tab-pane fade <%= 'show active' if @tour.performances.any?{|p| p.is_qualified } %>" id="results" role="tabpanel" aria-labelledby="order-tab">
+      <%= render 'results' %>
     </div>
   </div>
 

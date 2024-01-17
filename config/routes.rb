@@ -26,6 +26,8 @@ Rails.application.routes.draw do
             put 'update_day_of_performance_and_subsequent_performances', on: :member
             post :shuffle, on: :member
             resources :pauses
+            put :qualify_performance, on: :member
+
           end
           resources :requirement_items
           resources :inscriptions do

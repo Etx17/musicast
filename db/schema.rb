@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_14_122309) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_17_101728) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -311,6 +311,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_14_122309) do
     t.text "air_selection", default: [], array: true
     t.integer "order"
     t.date "start_date"
+    t.boolean "is_qualified", default: false
     t.index ["inscription_id"], name: "index_performances_on_inscription_id"
     t.index ["tour_id"], name: "index_performances_on_tour_id"
   end

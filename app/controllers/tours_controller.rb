@@ -1,6 +1,6 @@
 class ToursController < ApplicationController
-  before_action :set_tour, only: %i[shuffle show edit update destroy update_order update_day_of_performance_and_subsequent_performances]
-  before_action :set_context, only: %i[shuffle new create show edit update destroy update_order update_day_of_performance_and_subsequent_performances]
+  before_action :set_tour, only: %i[qualify_performance shuffle show edit update destroy update_order update_day_of_performance_and_subsequent_performances]
+  before_action :set_context, only: %i[qualify_performance shuffle new create show edit update destroy update_order update_day_of_performance_and_subsequent_performances]
 
   def index
     @tours = Tour.all
@@ -125,6 +125,12 @@ class ToursController < ApplicationController
 
     @tour.generate_initial_performance_order
     redirect_to [@organism, @competition, @edition_competition, @category, @tour], notice: "Ordre de passage mélangé avec succès."
+  end
+
+  def qualify_performance
+    performance = Performance.find(params[:performance_id])
+    performance.update(is_qualified: !performance.is_qualified)
+    redirect_to [@organism, @competition, @edition_competition, @category, @tour], notice: "Performance qualifiée avec succès."
   end
 
   private

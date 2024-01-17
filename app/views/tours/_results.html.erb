@@ -1,0 +1,65 @@
+<div class="row p-3 gap-3">
+  <div class="d-flex justify-content-center mx-auto">
+     <button class="items-center  mx-3 justify-center btn btn-outline-success py-3 rounded-16"  >
+        <i class="fas fa-file-pdf  "></i>
+        Notifier les candidats des résultats<br>
+         <small class="text-secondary"> Différentes versions pour les candidats, le jury, l'organisation, etc...</small>
+      </button>
+
+      <button class="items-center  mx-3 justify-center btn btn-outline-success py-3 rounded-16"  >
+        <i class="fas fa-file-pdf  "></i>
+        Envoyer un mail au candidats non selectionnés <br>
+         <small class="text-secondary"> Différentes versions pour les candidats, le jury, l'organisation, etc...</small>
+      </button>
+
+
+       <button class="items-center  mx-3 justify-center btn btn-outline-success py-3 rounded-16"  >
+        <i class="fas fa-file-pdf  "></i>
+        Envoyer un mail au candidats selectionnés <br>
+         <small class="text-secondary"> Différentes versions pour les candidats, le jury, l'organisation, etc...</small>
+      </button>
+
+
+  </div>
+
+  <div class="col bg-grey ">
+    <h2 class="text-center py-2">Candidats</h2>
+    <% @tour.performances.where(is_qualified: false).order(:order).each do |performance| %>
+      <div class="d-flex justify-content-between align-items-center p-1 bg-light-grey w-100 mt-1 ">
+        <div class="d-flex align-items-center">
+        <%= image_tag "https://source.unsplash.com/random/?#{performance.candidat.first_name}/300/200", alt: "Photo of candidate", class: "rounded-circle", style: "object-fit: cover; aspect-ratio: 1 / 1; overflow: hidden;", loading: 'lazy', width: 50, height: 50 %>
+          <div class="d-flex flex-column align-items-start ps-3">
+            <p class="mb-0"><%= performance.candidat.first_name %></p>
+            <p class="mb-0">Ordre: <%= performance.order %></p>
+          </div>
+        </div>
+        <%= button_to 'Qualifier', qualify_performance_organism_competition_edition_competition_category_tour_path(
+          @organism, @competition, @edition_competition, @category, @tour, performance_id: performance.id
+        ), method: :put, class: 'btn btn-outline-success ml-auto rounded-4' %>
+      </div>
+    <% end %>
+  </div>
+
+
+
+  <div class="col bg-grey">
+    <h2 class="text-center py-2">Qualifiés ( <%= @tour.performances.where(is_qualified: true).count %> )</h2>
+    <% @tour.performances.where(is_qualified: true).each do |performance| %>
+      <div class="d-flex justify-content-between align-items-center p-1 bg-light-grey w-100 mt-2">
+        <div class="d-flex align-items-center">
+        <%= image_tag "https://source.unsplash.com/random/?#{performance.candidat.first_name}/300/200", alt: "Photo of candidate", class: "rounded-circle", style: "object-fit: cover; aspect-ratio: 1 / 1; overflow: hidden;", loading: 'lazy', width: 50, height: 50 %>
+          <div class="d-flex flex-column align-items-start ps-3">
+            <p class="mb-0"><%= performance.candidat.first_name %></p>
+            <p class="mb-0">Ordre: <%= performance.order %></p>
+          </div>
+        </div>
+        <%= button_to 'Annuler la qualification', qualify_performance_organism_competition_edition_competition_category_tour_path(
+          @organism, @competition, @edition_competition, @category, @tour, performance_id: performance.id
+        ), method: :put, class: 'btn btn-outline-warning ml-auto rounded-4' %>
+      </div>
+    <% end %>
+
+
+  </div>
+
+</div>
