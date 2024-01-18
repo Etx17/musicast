@@ -12,7 +12,7 @@ class User < ApplicationRecord
 
   has_many :inscription_orders
   has_many :documents
-  
+
   def after_sign_in_path_for(_resource)
     if current_user.role == "admin"
       admin_dashboard_path
@@ -27,11 +27,16 @@ class User < ApplicationRecord
     end
   end
 
+
   def organisateur
     Organisateur.find_by(user: self)
   end
 
   def candidat
     Candidat.find_by(user: self)
+  end
+
+  def jury
+    Jure.find_by(user: self)
   end
 end

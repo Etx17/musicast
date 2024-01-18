@@ -1,63 +1,42 @@
-  <% if controller_name == "pages" && action_name == "home" %>
-    <div class="navbar navbar-expand-sm navbar-lewagon fixed-top shadow-sm" style="background: linear-gradient(to bottom, #1f0930, rgba(0, 0, 0, 1));">
-  <% else %>
-    <div class="navbar navbar-expand-sm navbar-lewagon fixed-top shadow-sm" style="background: #EEEEEE;">
-  <% end %>
+<div class="navbar navbar-expand-sm navbar-lewagon fixed-top shadow-sm" style="background: #EEEEEE;">
   <div class="container-fluid">
-      <%= link_to root_path, class: "navbar-brand" do %>
-        <% if controller_name == "pages" && action_name == "home" %>
-        <div class="text-white px-3" style="font-size: 1.5em">Musi<span class="text-gradient">cast</span></div>
-        <% else %>
-        <div class="text-dark px-3" style="font-size: 1.5em">Musi<span class="text-secondary">cast</span></div>
-        <% end %>
-      <% end %>
+    <%= link_to root_path, class: "navbar-brand" do %>
+      <div class="text-dark px-3" style="font-size: 1.5em">Musi<span class="text-secondary">cast</span></div>
+    <% end %>
 
-        <!-- Breadcrumbs -->
+    <!-- Breadcrumbs -->
     <div class="d-none d-md-block breadcrumbs">
       <%= render_breadcrumbs separator: '/ ' if current_user&.organisateur&.present?%>
     </div>
 
-
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto">
-        <% if user_signed_in? %>
-          <% if current_user.organisateur.present? %>
-            <% last_edition_competition = current_user&.organisateur&.competitions.last.edition_competitions.last %>
-            <% if last_edition_competition.present? %>
-              <li class="nav-item">
-                <%= link_to "#{last_edition_competition.competition.nom_concours} #{last_edition_competition.annee}", organism_competition_edition_competition_path(last_edition_competition.competition.organism_id, last_edition_competition.competition_id, last_edition_competition), class: "nav-link" %>
-              </li>
-            <% end %>
-          <% end %>
-          <li class="nav-item active">
-            <%= link_to "Home", pages_home_path, class: "nav-link" %>
-          </li>
-          <li class="nav-item">
-            <%= link_to "Messages", "#", class: "nav-link" %>
-          </li>
-          <li class="nav-item dropdown">
-          <a href="#" class="avatar" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <%= image_tag "https://kitt.lewagon.com/placeholder/users/ssaunier", class: "avatar", alt: "dropdown menu" %>
-          </a>
-            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-              <%= link_to "Action", "#", class: "dropdown-item" %>
-              <%= link_to "Another action", "#", class: "dropdown-item" %>
-              <%= link_to "Log out", destroy_user_session_path, data: {turbo_method: :delete}, class: "dropdown-item" %>
-            </div>
-          </li>
-        <% else %>
-          <li class="nav-item">
-            <%= link_to "Sign up", new_user_registration_path, class: "text-white nav-link" %>
-          </li>
-          <li class="nav-item">
-            <%= link_to "Login", new_user_session_path, class: " btn btn-outline-light mx-5 px-5" %>
+    <div class="d-flex">
+      <ul class="navbar-nav me-auto text-decoration-none d-flex flex-row"  style="list-style: none;">
+        <% navbar_links.each do |link| %>
+          <li class="nav-item text-decoration-none me-4 d-flex">
+            <%= link_to link[:label], link[:url], class: "nav-link" %>
           </li>
         <% end %>
       </ul>
+
+      <% if user_signed_in? %>
+        <div class="ml-auto">
+          <li class="nav-item dropdown text-decoration-none" style="list-style: none;">
+            <a href="#" class="avatar" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <%= image_tag "https://kitt.lewagon.com/placeholder/users/ssaunier", class: "avatar", alt: "dropdown menu" %>
+            </a>
+            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+              <% sidebar_links.each do |link| %>
+                <%= link_to link[:label], link[:url], { class: "dropdown-item py-2" }.merge(link[:method] ? { method: link[:method] } : {})%>
+              <% end %>
+              <% navbar_links_for_profile_pic.each do |link| %>
+                <%= link_to link[:label], link[:url], { class: "dropdown-item py-2" }.merge(link[:method] ? { method: link[:method] } : {}) unless link[:method] == :delete  %>
+                <%= button_to link[:label], link[:url], method: link[:method], class: "dropdown-item py-2" if link[:method] == :delete %>
+
+              <% end %>
+            </div>
+          </li>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>

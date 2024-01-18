@@ -1,13 +1,7 @@
+<!-- Sous navbar pour choisir : competitions, offres pro, masterclass, stages -->
+<!-- Inputs instrument et pays-->
+<%= render "dropdown_inputs" %>
 
-<div class="d-flex container justify-content-center mt-4 gap-3">
-  <%= form_tag(request.path, method: :get) do %>
-    <div class="d-flex container justify-content-center mt-4 gap-3">
-      <%= select_tag :discipline, options_for_select( @disciplines.map { |id, name| [name, id] } ), class: "form-control rounded-md border-gray-300", prompt: "Discipline" %>
-      <%= country_select :country, :country, { prompt: "Country" }, { class: "form-control rounded-md border-gray-300" } %>
-      <%= submit_tag "Search", class: "btn btn-primary" %>
-    </div>
-  <% end %>
-</div>
 <main class="container mt-4">
   <h2 class="text-center fw-bold mb-4">
     Competitions

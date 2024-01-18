@@ -16,16 +16,38 @@
   </head>
 
   <body>
-    <!-- Navbar -->
-    <%= render "shared/navbar"%>
+  <!-- Navbar -->
+  <%= render "shared/navbar"%>
 
-    <div class="d-flex flex-wrap d-md-none p-2 breadcrumbs-xs">
-      <%= render_breadcrumbs separator: '/' if current_user&.organisateur.present? %>
+  <div class="px-2">
+    <div class="row">
+
+      <% if current_user&.organisateur %>
+        <div class="col-md-2 p-0 d-none d-md-block">
+          <!-- Sidebar -->
+          <%= render "shared/sidebar" %>
+        </div>
+      <% end %>
+      <div class="col-md-10">
+        <div class="d-flex flex-wrap d-md-none p-2 breadcrumbs-xs">
+          <%= render_breadcrumbs separator: '/' if current_user&.organisateur.present? %>
+        </div>
+
+        <!-- Flash messages -->
+        <%= render "shared/flashes" %>
+
+        <!-- Main content -->
+        <%= yield %>
+      </div>
+
+      <% if !current_user&.organisateur %>
+      <div class="col-md-2 p-0">
+        <!-- Sidebar -->
+        <%= render "shared/sidebar" %>
+      </div>
+      <% end %>
+
     </div>
-
-    <!-- Flash messages -->
-    <%= render "shared/flashes" %>
-
-    <%= yield %>
-  </body>
+  </div>
+</body>
 </html>

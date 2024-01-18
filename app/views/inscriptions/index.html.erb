@@ -1,7 +1,7 @@
 <div class="container">
 <p style="color: green"><%= notice %></p>
 
-<h1>Inscriptions</h1>
+<h1>Candidatures</h1>
 
 <div id="inscriptions" class="row">
   <% Inscription.statuses.keys.each do |status| %>
@@ -12,9 +12,11 @@
           <%= link_to inscription_path(inscription) do %>
             <div>
               <h6 class="card-title"><%= inscription.candidat.user.email %></h6>
-              <p class="card-text">
-                <span class="badge rounded-pill bg-primary"><%= inscription.status %></span>
+              <span class="badge rounded-pill bg-secondary"><%= inscription.category.name %></span>
+              <p class="card-text mb-0">
+                <span class="badge rounded-pill bg-secondary"><%= inscription.status %></span>
               </p>
+
             </div>
           <% end %>
           <div class="d-flex justify-content-around">
