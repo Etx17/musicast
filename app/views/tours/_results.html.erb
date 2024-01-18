@@ -5,7 +5,7 @@
         <%= simple_form_for [@organism, @competition, @edition_competition, @category, @tour], method: :put do |f| %>
           <%= f.input :is_finished, as: :hidden, input_html: { value: true } %>
           <div class="d-flex flex-column justify-content-center align-items-center gap-2">
-            <%= f.button :submit, 'Enregistrer les résultats et terminer le tour.', class: 'btn btn-success mx-3 rounded-16', data: { turbo_confirm: 'Cette action est irréversible, êtes vous sur de vouloir enregistrer ces résultats ?'} %>
+            <%= f.button :submit, 'Enregistrer les résultats et terminer le tour.', class: 'btn btn-success mx-3 rounded-16', disabled: !@tour.has_planning?, data: { turbo_confirm: 'Cette action est irréversible, êtes vous sur de vouloir enregistrer ces résultats ?'} %>
             <small>Les candidats recevront une notification de leur passage ou non par mail.</small>
           </div>
         <% end %>

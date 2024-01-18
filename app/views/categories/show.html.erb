@@ -112,7 +112,11 @@
     </div>
     <div class="container">
       <div class="row">
-        <%= render 'imposed_works_section', category: @category %>
+        <% if current_user.organisateur %>
+          <%= render 'imposed_works_section', category: @category %>
+        <% else %>
+          <%= render 'imposed_works_section', category: @category if @category.imposed_work.any? %>
+        <% end %>
         <%= render 'choice_imposed_works_section', category: @category, competition: @competition, edition_competition: @edition_competition %>
         <%= render 'semi_imposed_works_section', category: @category, competition: @competition, edition_competition: @edition_competition %>
       </div>

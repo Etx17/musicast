@@ -2,7 +2,7 @@
   <div class="col-lg-4 border-start border-secondary pe-3 d-flex flex-column align-items-center">
     <h3 style="font-size: 3em; color: rgb(247, 233, 167);" class="px-3 rounded-pill">Oeuvres contraintes</h3>
     <% if @category.semi_imposed_works.none? %>
-      <p class="text-muted p-2 padding border rounded"> <i class="fas fa-circle-info pe-2 "></i>Renseignez ici le programme à choix guidé du candidat. Chaque ligne ajoutée doit comporter un nombre d'oeuvres, et la consigne attenante. Par exemple: <br/> <br/>"Cinq mélodies en langue française (dont deux au moins composées après 1900), à l’exclusion de
+      <p class="text-white p-2 padding border rounded"> <i class="fas fa-circle-info pe-2 "></i>Renseignez ici le programme à choix guidé du candidat. Chaque ligne ajoutée doit comporter un nombre d'oeuvres, et la consigne attenante. Par exemple: <br/> <br/>"Cinq mélodies en langue française (dont deux au moins composées après 1900), à l’exclusion de
       Gabriel Fauré et d’Édouard Lalo..." </p>
     <% end %>
     <% @category.semi_imposed_works.each do |semi_imposed_work| %>

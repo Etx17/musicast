@@ -43,7 +43,7 @@
     <h2>Configurations</h2>
      <%= f.simple_fields_for :tour_requirement do |tr| %>
       <%= tr.label :description, "Description", class: "form-label" %>
-      <%= tr.text_area :description, class: "form-control" %>
+      <%= tr.text_area :description, class: "form-control", placeholder: "Pour ce tour, décrivez les spécifications de programme du candidat; Doit il inclure un des airs imposés au choix ?" %>
 
       <%= tr.label :min_number_of_works, "Min Number of Works", class: "form-label" %>
       <%= tr.number_field :min_number_of_works, class: "form-control" %>
@@ -57,8 +57,8 @@
       <%= tr.label :max_duration_minute, "Max Duration Minute", class: "form-label" %>
       <%= tr.number_field :max_duration_minute, class: "form-control" %>
 
-      <%= tr.label :organiser_creates_program, "Organiser Creates Program", class: "form-label" %>
-      <%= tr.check_box :organiser_creates_program, class: "form-check-input" %>
+      <p>TODO Souhaitez vous imposer une ou plusieurs oeuvres spécifique pour CE tour ?</p>
+      
     <% end %>
 
 

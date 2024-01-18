@@ -49,7 +49,6 @@ class Inscription < ApplicationRecord
     airs += self.choice_imposed_work_airs&.map(&:air)
     airs += self.semi_imposed_work_airs&.map(&:air)
     airs.uniq!
-
     # Exclude airs that have already been used in other performances
     used_airs = self.performances.map(&:air_selection).flatten.map{ |air_id| Air.find(air_id) }
     airs -= used_airs
@@ -57,5 +56,5 @@ class Inscription < ApplicationRecord
     airs
   end
 
-  
+
 end

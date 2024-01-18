@@ -16,13 +16,12 @@
       </div>
     </div>
   <% end %>
-    <%= f.input :heure_performance  if current_user.organisateur%>
 
     <div class="form-group">
       <%= f.label :air_selection %>
       <div class="d-flex flex-column">
         <%= f.collection_check_boxes :air_selection, @performance.inscription.associated_airs, :id, :title, { checked: @performance.air_selection } do |b| %>
-          <div style="display: inline-block; margin-right: 10px;">
+          <div style="">
             <%= b.check_box %>
             <%= b.text %> (<%= b.object.length_minutes %> min)
           </div>
