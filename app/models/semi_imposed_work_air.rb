@@ -4,4 +4,5 @@ class SemiImposedWorkAir < ApplicationRecord
   belongs_to :air
 
   accepts_nested_attributes_for :air
+
 end

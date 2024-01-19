@@ -1,7 +1,7 @@
 
 10.times do |n|
 
-  u = User.create(email: "candidat{n}@example.com", password: "password", password_confirmation: "password")
+  u = User.create(email: "candidat#{n}@example.com", password: "password", password_confirmation: "password")
   c = Candidat.create(user_id: u.id, cv: "Link to CV of candidate ", bio: "Short bio of candidate ")
 
   # User for Organisateur

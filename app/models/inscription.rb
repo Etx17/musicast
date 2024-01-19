@@ -50,11 +50,14 @@ class Inscription < ApplicationRecord
     airs += self.semi_imposed_work_airs&.map(&:air)
     airs.uniq!
     # Exclude airs that have already been used in other performances
-    used_airs = self.performances.map(&:air_selection).flatten.map{ |air_id| Air.find(air_id) }
-    airs -= used_airs
+    # But for the current tour, i need to still see the ones that are selected
+    self.performances.map(&:air_selection).flatten.reject { |air_id| air_id.blank? }.map{ |air_id| Air.find(air_id) }
+    airs
 
     airs
   end
 
-
+  def used_airs
+    self.performances.map(&:air_selection).flatten.reject { |air_id| air_id.blank? }.map{ |air_id| Air.find(air_id) }
+  end
 end

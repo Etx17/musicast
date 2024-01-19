@@ -1,5 +1,6 @@
-<div class="sidebar bg-light-grey border w-100 h-100 p-3">
+
+<div class="sidebar bg-light  w-100 px-4" style="position: sticky; top: 90px; height: 90vh;">
   <% sidebar_links.each do |link| %>
-    <%= link_to link[:label], link[:url], class: "nav-link my-3 " %>
+    <%= link_to link[:label], link[:url], class: "nav-link mb-3 pt-3 " %>
   <% end %>
 </div>

@@ -11,6 +11,10 @@ class Tour < ApplicationRecord
   accepts_nested_attributes_for :address
   has_many :pauses, dependent: :destroy
 
+  def candidates_performances_that_passed_selections
+    performances.filter{|p| p.inscription.accepted?}
+  end
+
   def move_qualified_candidates_to_next_tour
     next_tour = next_tour
     return unless next_tour.present?

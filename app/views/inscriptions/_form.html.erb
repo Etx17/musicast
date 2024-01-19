@@ -6,7 +6,6 @@
 
     <div class="form-inputs">
       <%= f.hidden_field :category_id, value: @inscription.category.id %>
-
       <% @inscription.inscription_item_requirements.each do |item_requirement| %>
         <div>
           <h3><%= item_requirement.requirement_item.title %></h3>
@@ -34,10 +33,10 @@
         </div>
       <% end %>
 
-      <% if inscription.category.imposed_work.airs.any? %>
+      <% if inscription.category.imposed_work&.airs&.any? %>
         <h3>Airs imposés</h3>
         <ul>
-          <% inscription.category.imposed_work.airs.each do |air| %>
+          <% inscription.category&.imposed_work&.airs&.each do |air| %>
             <li> <%= air.title %> - <%= air.composer %> - <%= air.oeuvre %> </li>
           <% end %>
         </ul>

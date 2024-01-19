@@ -28,7 +28,7 @@
           <%= render "shared/sidebar" %>
         </div>
       <% end %>
-      <div class="col-md-10">
+      <div class="col-md-<%= current_user.present? ? '10' : '12'%>">
         <div class="d-flex flex-wrap d-md-none p-2 breadcrumbs-xs">
           <%= render_breadcrumbs separator: '/' if current_user&.organisateur.present? %>
         </div>
@@ -40,8 +40,8 @@
         <%= yield %>
       </div>
 
-      <% if !current_user&.organisateur %>
-      <div class="col-md-2 p-0">
+      <% if current_user&.candidat %>
+      <div class="col-md-2 p-0 d-none d-md-block">
         <!-- Sidebar -->
         <%= render "shared/sidebar" %>
       </div>

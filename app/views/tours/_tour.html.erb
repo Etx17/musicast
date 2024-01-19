@@ -5,7 +5,6 @@
   <!--  Section planning s'il existe-->
 
 
-
   <div class="text-center">
     <!-- Modale ouverte par les tabs dans le bouton générer le planning ou régénérer-->
     <div class="modal fade" id="tourConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="tourConfirmationModalLabel" aria-hidden="true">
@@ -56,7 +55,7 @@
             <i class="fas fa-calendar-alt fa-10x text-light-grey"></i>
 
             <p class="small">Vous n'avez pas de planning pour l'instant. <br>Vous pouvez en générer un en cliquant sur le bouton ci-dessous. <br>Vous générerez un planning avec l'ordre de passage actuel.</p>
-            <button class="items-center justify-center btn btn-success py-2 mb-5 rounded-16 text-center" style="font-size: 1.4em;"  data-bs-target="#tourConfirmationModal" data-bs-toggle="modal" data-bs-dismiss="modal" aria-label="Close" disabled="<%= @tour.performances.none?%>" >
+            <button class="items-center justify-center btn btn-success py-2 mb-5 rounded-16 text-center" style="font-size: 1.4em;"  data-bs-target="#tourConfirmationModal" data-bs-toggle="modal" data-bs-dismiss="modal" aria-label="Close" <%= "disabled" if @tour.performances.none? %> >
               Générer le planning
             </button>
           </div>

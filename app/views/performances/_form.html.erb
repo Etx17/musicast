@@ -5,7 +5,7 @@
   <%= f.hidden_field :tour_id, value: params[:tour_id] %>
   <div class="form-inputs">
 
-  <% if @performance.tour.tour_requirement.present? %>
+  <% if @performance.tour&.tour_requirement.present? %>
     <div class="card bg-light mb-3">
       <div class="card-header"><%= @performance.tour.title %></div>
       <div class="card-body">
@@ -18,10 +18,11 @@
   <% end %>
 
     <div class="form-group">
-      <%= f.label :air_selection %>
+      <%= f.label "Oeuvres disponibles pour ce tour"%>
       <div class="d-flex flex-column">
         <%= f.collection_check_boxes :air_selection, @performance.inscription.associated_airs, :id, :title, { checked: @performance.air_selection } do |b| %>
-          <div style="">
+          <div>
+
             <%= b.check_box %>
             <%= b.text %> (<%= b.object.length_minutes %> min)
           </div>
