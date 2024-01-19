@@ -6,6 +6,8 @@ class Performance < ApplicationRecord
 
   delegate :candidat, to: :inscription
 
+  before_update :remove_empty_strings_from_air_selection
+
   enum status: {
     draft: 0,
     in_review: 1,
@@ -23,6 +25,12 @@ class Performance < ApplicationRecord
 
   def minutes
     airs.sum(&:length_minutes)
+  end
+
+  private
+
+  def remove_empty_strings_from_air_selection
+    self.air_selection = self.air_selection.reject(&:empty?)
   end
 
 end

@@ -65,7 +65,6 @@ class InscriptionsController < ApplicationController
     if @inscription.update(inscription_params)
       redirect_to inscription_url(@inscription), notice: "Inscription was successfully updated."
     else
-      raise
       render :edit, status: :unprocessable_entity
     end
   end
@@ -82,6 +81,21 @@ class InscriptionsController < ApplicationController
   def update_status
     @inscription = Inscription.find(params[:id])
     @inscription.update(status: params[:status])
+
+    if @inscription.rejected?
+      # Supprimer l'order si jamais il y en avait un
+      @inscription.performances.update_all(order: nil)
+    end
+
+    if @inscription.accepted?
+      # Si jamais on update l'inscription en accepted, on doit find or create la performance du next tour.
+      category_first_tour = @inscription.category.tours.order(:tour_number).first
+      performance = Performance.find_or_create_by(tour: category_first_tour, inscription: @inscription)
+
+      # Update the order of the performance
+      performance.update(order: category_first_tour.performances.where.not(order: nil).count + 1)
+    end
+
     redirect_to inscriptions_path(category_id: @inscription.category_id)
   end
 

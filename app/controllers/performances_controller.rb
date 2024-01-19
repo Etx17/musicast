@@ -24,10 +24,9 @@ class PerformancesController < ApplicationController
 
   def update
     @performance = Performance.find(params[:id])
-    performance_params[:air_selection] = performance_params[:air_selection].reject(&:empty?)
+
     if @performance.update(performance_params)
       redirect_to inscription_path(@performance.inscription)
-
     else
       render :edit
     end
