@@ -25,12 +25,13 @@
   category2 = Category.create!(price: 50, edition_competition_id: edition.id, name: "Piano under 12 #{n}", description: "Category for children under 12 years #{n}", min_age: 6, max_age: 12, discipline: 2)
 
   # Tours for Category1
-  Tour.create!( category_id: category1.id, start_date: Date.today, start_time: Time.now, end_date: Date.today + 30, end_time: Time.now + 6.hours, is_online: false, title: "Preliminary Round #{n}", description: "First round of the competition #{n}", tour_requirement_attributes: { description: "Preliminary round requirements", min_number_of_works: 1, max_number_of_works: 3, min_duration_minute: 3, max_duration_minute: 9, organiser_creates_program: false } )
-  Tour.create!( category_id: category1.id, start_date: Date.today + 60, start_time: Time.now, end_date: Date.today + 90, end_time: Time.now + 6.hours, is_online: true, title: "Online Round #{n}", description: "Second round, conducted online #{n}", tour_requirement_attributes: { description: "Online round requirements", min_number_of_works: 2, max_number_of_works: 4, min_duration_minute: 4.5, max_duration_minute: 12, organiser_creates_program: true } )
-
+  Tour.create!( tour_number: 1, category_id: category1.id, start_date: Date.today, start_time: Time.now, end_date: Date.today + 30, end_time: Time.now + 6.hours, is_online: false, title: "Tour éliminatoire", description: "First round of the competition #{n}", tour_requirement_attributes: { description: "Preliminary round requirements", min_number_of_works: 1, max_number_of_works: 3, min_duration_minute: 3, max_duration_minute: 9, organiser_creates_program: false } )
+  Tour.create!( tour_number: 2, category_id: category1.id, start_date: Date.today + 60, start_time: Time.now, end_date: Date.today + 90, end_time: Time.now + 6.hours, is_online: true, title: "Demi finale", description: "Second round, conducted online #{n}", tour_requirement_attributes: { description: "Online round requirements", min_number_of_works: 2, max_number_of_works: 4, min_duration_minute: 4.5, max_duration_minute: 12, organiser_creates_program: true } )
+  Tour.create!( tour_number: 3, category_id: category1.id, start_date: Date.today + 120, start_time: Time.now, end_date: Date.today + 150, end_time: Time.now + 6.hours, is_online: false, title: "Finale", description: "Final round of the competition #{n}", tour_requirement_attributes: { description: "Final round requirements. Candidat must be wearing black suit or dress. NO partition allowed.", min_number_of_works: 2, max_number_of_works: 4, min_duration_minute: 4.5, max_duration_minute: 12, organiser_creates_program: false } )
   # Tours for Category2
-  Tour.create!( category_id: category2.id, start_date: Date.today, start_time: Time.now, end_date: Date.today + 20, end_time: Time.now + 5.hours, is_online: false, title: "First Round ", description: "Opening round for category ", tour_requirement_attributes: { description: "First round requirements", min_number_of_works: 1, max_number_of_works: 3, min_duration_minute: 3, max_duration_minute: 9, organiser_creates_program: false } )
-  Tour.create!( category_id: category2.id, start_date: Date.today + 25, start_time: Time.now, end_date: Date.today + 45, end_time: Time.now + 5.hours, is_online: true, title: "Virtual Showcase #{n}", description: "Virtual performance round #{n}", tour_requirement_attributes: { description: "Virtual showcase requirements", min_number_of_works: 2, max_number_of_works: 4, min_duration_minute: 4.5, max_duration_minute: 12, organiser_creates_program: true } )
+  Tour.create!( tour_number: 1, category_id: category2.id, start_date: Date.today, start_time: Time.now, end_date: Date.today + 30, end_time: Time.now + 6.hours, is_online: false, title: "Tour éliminatoire", description: "First round of the competition #{n}", tour_requirement_attributes: { description: "Preliminary round requirements", min_number_of_works: 1, max_number_of_works: 3, min_duration_minute: 3, max_duration_minute: 9, organiser_creates_program: false } )
+  Tour.create!( tour_number: 2, category_id: category2.id, start_date: Date.today + 60, start_time: Time.now, end_date: Date.today + 90, end_time: Time.now + 6.hours, is_online: true, title: "Demi finale", description: "Second round, conducted online #{n}", tour_requirement_attributes: { description: "Online round requirements", min_number_of_works: 2, max_number_of_works: 4, min_duration_minute: 4.5, max_duration_minute: 12, organiser_creates_program: true } )
+  Tour.create!( tour_number: 3, category_id: category2.id, start_date: Date.today + 120, start_time: Time.now, end_date: Date.today + 150, end_time: Time.now + 6.hours, is_online: false, title: "Finale", description: "Final round of the competition #{n}", tour_requirement_attributes: { description: "Final round requirements. Candidat must be wearing black suit or dress. NO partition allowed.", min_number_of_works: 2, max_number_of_works: 4, min_duration_minute: 4.5, max_duration_minute: 12, organiser_creates_program: false } )
   # Users for Candidats
   candidate_user1 = User.create!(email: "candidate1_#{n}@example.com", password: "password123", password_confirmation: "password123")
   candidate_user2 = User.create!(email: "candidate2_#{n}@example.com", password: "password123", password_confirmation: "password123")
@@ -48,14 +49,14 @@
   # Create ImposedWork, ChoiceImposedWork, and SemiImposedWork
   imposed_work = ImposedWork.create!(
   category_id: category1.id,
-  title: "Oeuvre imposées - Baroque #{n}",
+  title: "Oeuvre imposées - Baroque",
   guidelines: "All pieces must be performed from memory without sheet music."
   )
 
   choice_imposed_work = ChoiceImposedWork.create!(
     category_id: category1.id,
-    title: "Baroque Selections #{n}",
-    guidelines: "Choose any two Baroque era compositions.",
+    title: "Operatic Selections",
+    guidelines: "Choose any two Opera pieces",
     number_to_select: 2
   )
 
@@ -70,7 +71,7 @@
   # Create and associate Airs with each work
   7.times do |m|
     air = Air.create!(
-      title: "Air #{m} - #{n}",
+      title: "Air du chevalier n° #{m}#{n}",
       length_minutes: m+3,
       composer: "Composer #{m}",
       oeuvre: "Oeuvre #{m}",
@@ -95,6 +96,6 @@ tour = category.tours.first
 
 Candidat.all.each do |candidat|
   candidat.update(first_name: Faker::Name.first_name)
-  inscription = Inscription.create!(candidat_id: candidat.id, category_id: category.id)
-  Performance.create!(inscription: inscription, tour: tour, air_selection: ["1", "2", "3", "4"])
+  inscription = Inscription.create!(candidat_id: candidat.id, category_id: category.id, status: 'in_review')
+  # Performance.create!(inscription: inscription, tour: tour, air_selection: ["1", "2", "3", "4"])
 end

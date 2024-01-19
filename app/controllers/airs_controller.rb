@@ -22,7 +22,6 @@ class AirsController < ApplicationController
   # POST /airs or /airs.json
   def create
     @air = Air.new(air_params)
-
     respond_to do |format|
       if @air.save
         format.html { redirect_to air_url(@air), notice: "Air was successfully created." }

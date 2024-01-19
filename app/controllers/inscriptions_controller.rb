@@ -62,14 +62,11 @@ class InscriptionsController < ApplicationController
   end
 
   def update
-    respond_to do |format|
-      if @inscription.update(inscription_params)
-        format.html { redirect_to inscription_url(@inscription), notice: "Inscription was successfully updated." }
-        format.json { render :show, status: :ok, location: @inscription }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @inscription.errors, status: :unprocessable_entity }
-      end
+    if @inscription.update(inscription_params)
+      redirect_to inscription_url(@inscription), notice: "Inscription was successfully updated."
+    else
+      raise
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -103,7 +100,7 @@ class InscriptionsController < ApplicationController
         :air,
         inscription_item_requirements_attributes: %i[id submitted_file submitted_content document_id requirement_item_id _destroy],
         choice_imposed_work_airs_attributes: [:id, :choice_imposed_work_id, :air_id],
-        semi_imposed_work_airs_attributes: [:id, :semi_imposed_work_id, air_attributes: [:id, :title, :length_minutes, :composer]]
+        semi_imposed_work_airs_attributes: [:id, :semi_imposed_work_id, air_attributes: [:id, :title, :length_minutes, :composer, :oeuvre, :character, :tonality]]
       )
     else
       params.require(:inscription).permit(
@@ -113,7 +110,7 @@ class InscriptionsController < ApplicationController
         :air,
         inscription_item_requirements_attributes: %i[id submitted_file submitted_content document_id requirement_item_id _destroy],
         choice_imposed_work_airs_attributes: [:id, :choice_imposed_work_id, :air_id],
-        semi_imposed_work_airs_attributes: [:id, :semi_imposed_work_id, air: [:id, :title, :length_minutes, :composer]]
+        semi_imposed_work_airs_attributes: [:id, :semi_imposed_work_id, air: [:id, :title, :length_minutes, :composer, :oeuvre, :character, :tonality]]
       )
     end
   end
