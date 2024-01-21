@@ -44,7 +44,18 @@
   <div class="tab-content" id="myTabContent">
     <!-- tab ordre -->
     <div class="tab-pane fade <%= 'show active' unless @tour.has_planning? %>" id="order" role="tabpanel" aria-labelledby="order-tab">
+      <% if tour.is_finished? %>
+           <div class="d-flex justify-content-center">
+            <div class="d-flex flex-column justif-content-center align-items-center">
+              <i class="fas fa-calendar-alt fa-10x text-light-grey"></i>
+
+              <p class="small my-3">Le tour est terminé. <br></p>
+
+            </div>
+          </div>
+      <% else %>
       <%= render 'order_of_performances' %>
+      <% end %>
     </div>
 
     <!-- tab planning -->
@@ -61,7 +72,18 @@
           </div>
         </div>
       <% else %>
-          <%= render "planning", tour: @tour %>
+
+        <%= render "planning", tour: @tour unless @tour.is_finished? %>
+        <% if tour.is_finished? %>
+          <div class="d-flex justify-content-center">
+            <div class="d-flex flex-column justif-content-center align-items-center">
+              <i class="fas fa-calendar-alt fa-10x text-light-grey"></i>
+
+              <p class="small my-3">Le tour est terminé. <br></p>
+
+            </div>
+          </div>
+          <% end %>
       <% end %>
     </div>
 

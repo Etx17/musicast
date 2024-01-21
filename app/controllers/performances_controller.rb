@@ -37,6 +37,15 @@ class PerformancesController < ApplicationController
   private
 
   def performance_params
-    params.require(:performance).permit(:is_qualified, :old_start_date, :heure_performance, :resultat, :tour_id, :inscription_id, air_selection: [])
+    params.require(:performance).permit(
+      :is_qualified,
+      :old_start_date,
+      :heure_performance,
+      :resultat,
+      :tour_id,
+      :inscription_id,
+      air_selection: []).tap do |whitelisted|
+        whitelisted[:air_selection] = whitelisted[:air_selection].reject(&:blank?)
+      end
   end
 end

@@ -169,6 +169,7 @@ class ToursController < ApplicationController
       :morning_pause_duration_minutes,
       :afternoon_pause_duration_minutes,
       :creating_schedule,
+      :final_performance_submission_deadline,
       tour_requirement_attributes: [
         :id,
         :description,
@@ -177,7 +178,10 @@ class ToursController < ApplicationController
         :min_duration_minute,
         :max_duration_minute,
         :organiser_creates_program
-      ]
-    )
+      ],
+      :imposed_air_selection => [],
+    ).tap do |whitelisted|
+      whitelisted[:imposed_air_selection] = whitelisted[:imposed_air_selection].reject(&:blank?)
+    end
   end
 end
