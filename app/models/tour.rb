@@ -32,7 +32,6 @@ class Tour < ApplicationRecord
   end
 
   def next_tour
-
     category.tours.where(is_finished: false).order(:tour_number).first
   end
 
@@ -88,6 +87,10 @@ class Tour < ApplicationRecord
 
   def has_planning?
     performances.any?{|p| p.start_time.present?}
+  end
+
+  def remaining_days
+    (final_performance_submission_deadline.to_date - Date.today).to_i
   end
 
   private

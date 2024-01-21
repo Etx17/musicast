@@ -25,15 +25,11 @@
       <%= f.datetime_select :end_time %>
     </div>
 
-    <%= f.label :end_time, "Heure de fin", class: "form-label" %>
+    <%= f.label "Date limite de soumission du programme du candidat pour ce tour" %>
     <div class="d-flex">
-      <%= f.datetime_select :end_time %>
+      <%= f.datetime_select :final_performance_submission_deadline %>
     </div>
 
-    <div class="form-check">
-      <%= f.check_box :is_online, class: "form-check-input" %>
-      <%= f.label :is_online, "Est en ligne", class: "form-check-label" %>
-    </div>
 
     <% if Date.today <= @category.edition_competition.end_of_registration %>
       <%= f.label :tour_number, "Numéro du tour (1er, 2e, 3e, etc...)", class: "form-label" %>
@@ -58,7 +54,7 @@
       <%= tr.number_field :max_duration_minute, class: "form-control" %>
 
       <p>TODO Souhaitez vous imposer une ou plusieurs oeuvres spécifique pour CE tour ?</p>
-      
+
     <% end %>
 
 

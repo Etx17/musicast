@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_19_100941) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_21_105712) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -385,6 +385,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_19_100941) do
     t.datetime "new_day_start_time"
     t.boolean "is_finished", default: false
     t.integer "tour_number", default: 1
+    t.datetime "final_performance_submission_deadline"
     t.index ["category_id"], name: "index_tours_on_category_id"
   end
 

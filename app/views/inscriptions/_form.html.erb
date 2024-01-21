@@ -54,7 +54,7 @@
                 <%# Attention, si on est sur edit alors il fau:air_attributes, mais s ijamais on a déja imposed_work airs il faut simple field for air %>
 
 
-              <%# <%= semi_imposed_work_air_fields.simple_fields_for (inscription.semi_imposed_work_airs.none? ? :air_attributes : :air) do |air_fields| %> %>
+              <%# <%= semi_imposed_work_air_fields.simple_fields_for (inscription.semi_imposed_work_airs.none? ? :air_attributes : :air) do |air_fields| %>
               <%= semi_imposed_work_air_fields.simple_fields_for (inscription.semi_imposed_work_airs.none?{|p| p.persisted?} ? :air_attributes : :air) do |air_fields| %>
               <%# <%= semi_imposed_work_air_fields.simple_fields_for (@inscription.semi_imposed_work_airs.none?{|p| p.persisted?} ? :air_attributes : :air) do |air_fields| %>
                 <div class="card card-body shadow-sm">
