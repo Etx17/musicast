@@ -5,6 +5,7 @@ class Tour < ApplicationRecord
   has_one :tour_requirement, dependent: :destroy
 
   validate :new_day_start_time_before_max_end_of_day_time
+  attr_accessor :creating_schedule
 
 
   accepts_nested_attributes_for :tour_requirement
@@ -16,24 +17,22 @@ class Tour < ApplicationRecord
   end
 
   def move_qualified_candidates_to_next_tour
-    next_tour = next_tour
-    return unless next_tour.present?
+    self.next_tour
+    return unless self.next_tour.present?
 
     performances.each_with_index do |performance, index|
       if performance.is_qualified
         Performance.transaction do
-          Performance.create(
-            inscription: performance.inscription,
-            tour: next_tour,
-            order: index,
-            # air selection: airs_imposed_ids_for_tour
-          )
+          # Ajouter la liste d'airs imposés ici later.
+          next_tour_perf = Performance.find_or_create_by(tour: next_tour, inscription: performance.inscription)
+          next_tour_perf.update(order: index)
         end
       end
     end
   end
 
   def next_tour
+
     category.tours.where(is_finished: false).order(:tour_number).first
   end
 
@@ -64,7 +63,10 @@ class Tour < ApplicationRecord
     current_start_time = start_time
     current_start_date = start_date
 
+    raise "empty durations"if performances.any?{|p| p.air_selection.any?{|air| air.blank?}}
+
     performances.each do |performance|
+      # Si la performance actuelle n'a pas renseignée sa durée, lui assigner le temps max du tour.
       next_performance_end_time = current_start_time + performance.minutes.minutes
 
       # Assign performance time and check end of day limit

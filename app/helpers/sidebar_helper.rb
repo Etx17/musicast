@@ -17,7 +17,7 @@ module SidebarHelper
         end
         links << { label: "Dashboard", url: organisateur_dashboard_path }
         links << { label: "Candidatures", url: inscriptions_path }
-      elsif current_user.jury?
+      elsif current_user.jury
         # links << { label: "Jury Dashboard", url: jury_dashboard_path }
         # links << { label: "Jury Decisions", url: jury_decisions_path }
         # links << { label: "Jury Messages", url: jury_messages_path }

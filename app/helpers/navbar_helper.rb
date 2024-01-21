@@ -15,7 +15,7 @@ module NavbarHelper
         # links << { label: "Profile", url: organisateur_path(current_user.organisateur), dropdown: true }
         # links << { label: "Tableau de bord", url: organisateur_dashboard_path, dropdown: true }
         # Add more links for the organizer here
-      elsif current_user.jury?
+      elsif current_user.jury
         # Add links for jury
         links << { label: "Jury", url: jury_path(current_user.jury), dropdown: false }
         links << { label: "Accueil", url: jury_dashboard_path, dropdown: false }
