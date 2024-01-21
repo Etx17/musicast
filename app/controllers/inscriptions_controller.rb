@@ -2,16 +2,17 @@ class InscriptionsController < ApplicationController
   before_action :set_inscription, only: %i[show edit update destroy]
 
   def index
-    if params[:category_id].present?
-      @category = Category.friendly.find(params[:category_id])
-      if @category
-        @inscriptions = Inscription.by_category(@category.id)
-      else
-        flash[:alert] = "Category not found"
+    if current_user.candidat
+      @inscriptions = Inscription.by_candidat(current_user.candidat.id)
+    elsif current_user.organisateur
+      if params[:category_id].present?
+        @category = Category.friendly.find(params[:category_id])
+        if @category
+          @inscriptions = Inscription.by_category(@category.id)
+        else
+          flash[:alert] = "Category not found"
+        end
       end
-    else
-      # if user is organisateur show the scope for him, if he is candidat show his scope
-      @inscriptions = Inscription.all
     end
     render :candidate_index if current_user.candidat
     render :index if current_user.organisateur
@@ -91,9 +92,9 @@ class InscriptionsController < ApplicationController
       # Si jamais on update l'inscription en accepted, on doit find or create la performance du next tour.
       category_first_tour = @inscription.category.tours.order(:tour_number).first
       performance = Performance.find_or_create_by(tour: category_first_tour, inscription: @inscription)
+      total_air_selection = performance.air_selection + category_first_tour.imposed_air_selection
 
-      # Update the order of the performance
-      performance.update(order: category_first_tour.performances.where.not(order: nil).count + 1)
+      performance.update(air_selection: total_air_selection, order: category_first_tour.performances.where.not(order: nil).count + 1)
     end
 
     redirect_to inscriptions_path(category_id: @inscription.category_id)

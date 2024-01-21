@@ -23,12 +23,12 @@
     <div class="row">
 
       <% if current_user&.organisateur %>
-        <div class="col-md-2 p-0 d-none d-md-block">
+        <div class="col-md-2 p-0 d-none d-md-block bg-light border-end">
           <!-- Sidebar -->
           <%= render "shared/sidebar" %>
         </div>
       <% end %>
-      <div class="col-md-<%= current_user.present? ? '10' : '12'%>">
+      <div class="bg-light col-md-<%= current_user.present? ? '10' : '12'%>">
         <div class="d-flex flex-wrap d-md-none p-2 breadcrumbs-xs">
           <%= render_breadcrumbs separator: '/' if current_user&.organisateur.present? %>
         </div>

@@ -23,9 +23,10 @@ class Tour < ApplicationRecord
     performances.each_with_index do |performance, index|
       if performance.is_qualified
         Performance.transaction do
-          # Ajouter la liste d'airs imposés ici later.
           next_tour_perf = Performance.find_or_create_by(tour: next_tour, inscription: performance.inscription)
-          next_tour_perf.update(order: index)
+          total_air_selection = performance.air_selection + next_tour.imposed_air_selection
+
+          next_tour_perf.update(air_selection: total_air_selection, order: index)
         end
       end
     end
