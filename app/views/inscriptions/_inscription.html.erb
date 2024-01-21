@@ -133,7 +133,7 @@
                 <p class="card-text"><strong>Number of Works:</strong> <%= tour.tour_requirement&.min_number_of_works %> - <%= tour.tour_requirement&.max_number_of_works %></p>
                 <p class="card-text"><strong>Duration:</strong> <%= tour.tour_requirement&.min_duration_minute %> - <%= tour.tour_requirement&.max_duration_minute %> minutes</p>
               <% end %>
-              <h5 class="card-title">Performance:</h5>
+              <h5 class="card-title">Programme:</h5>
               <% performance = inscription.performances.find_by(tour: tour) %>
               <% if performance.present? %>
                 <ul>
@@ -142,7 +142,8 @@
                     <li><%= air.title %>, <%= air.length_minutes %> min</li>
                   <% end %>
                 </ul>
-                <%= link_to 'Edit', edit_inscription_performance_path(inscription, performance, tour_id: tour.id), class: 'btn btn-primary' %>
+                  <%= link_to 'Modifier le programme', edit_inscription_performance_path(inscription, performance, tour_id: tour.id), class: 'btn btn-primary ' %>
+                  <span class="badge rounded-pill text-warning border-warning border"><%= tour.remaining_days %> jours restants</span>
               <% else %>
                 <div class="d-flex flex-column card shadow-sm rounded-4 p-2 gap-2">
                   <small class="bg-grey p-2 rounded-4 text-secondary">
