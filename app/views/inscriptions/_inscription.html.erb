@@ -143,16 +143,22 @@
               <h5 class="card-title">Programme:</h5>
               <% performance = inscription.performances.find_by(tour: tour) %>
               <% if performance.present? %>
-                <ul>
-                  <% performance.air_selection&.each do |air_id| %>
-                    <% air = Air.find(air_id) %>
-                    <li><%= air.title %>, <%= air.length_minutes %> min</li>
+                  <%= simple_form_for(performance, url: performance_path(performance), method: :patch, data: { controller: "reorder" }) do |f| %>
+                    <ul data-reorder-target="list">
+                      <% performance.ordered_air_selection&.each do |air_id| %>
+                        <% air = Air.find(air_id) %>
+                        <% imposed = performance.tour.imposed_air_selection.include?(air_id.to_s) %>
+                        <li data-id="<%= air_id %>"
+                            data-action="dragstart->reorder#dragStart dragover->reorder#dragOver drop->reorder#drop dragend->reorder#dragEnd"
+                            draggable="true">
+                          <%= air.title %>, <%= air.length_minutes %> min<%= ' (imposé)' if imposed %>
+                        </li>
+                      <% end %>
+                    </ul>
+                    <%= f.hidden_field :ordered_air_selection, data: { reorder_target: "orderedSelection" } %>
+
+                    <%= f.button :submit, "Enregistrer l'ordre", data: { action: "reorder#submit", reorder_target: "submit" }, disabled: true, class: "btn btn-primary" %>
                   <% end %>
-                  <% tour.imposed_air_selection&.each do |air_id| %>
-                    <% air = Air.find(air_id) %>
-                    <li><%= air.title %>, <%= air.length_minutes %> min (imposé)</li>
-                  <% end %>
-                </ul>
                   <%= link_to 'Modifier le programme', edit_inscription_performance_path(inscription, performance, tour_id: tour.id), class: 'btn btn-primary ' %>
                   <span class="badge rounded-pill text-warning border-warning border"><%= tour.remaining_days %> jours restants</span>
               <% else %>

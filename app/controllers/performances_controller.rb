@@ -1,4 +1,7 @@
 class PerformancesController < ApplicationController
+
+
+
   def new
     @inscription = Inscription.find(params[:inscription_id])
     @tour = Tour.find(params[:tour_id])
@@ -24,8 +27,15 @@ class PerformancesController < ApplicationController
 
   def update
     @performance = Performance.find(params[:id])
+      # Pre-process the ordered_air_selection if it's present
+    if params[:performance][:ordered_air_selection].present?
+      params[:performance][:ordered_air_selection] = JSON.parse(params[:performance][:ordered_air_selection])
+    end
 
-    if @performance.update(performance_params)
+    updated_params = performance_params
+    updated_params = updated_params.merge(air_selection: @performance.air_selection) if params[:performance][:air_selection].blank?
+
+    if @performance.update(updated_params)
       redirect_to inscription_path(@performance.inscription)
     else
       render :edit
@@ -44,8 +54,9 @@ class PerformancesController < ApplicationController
       :resultat,
       :tour_id,
       :inscription_id,
+      ordered_air_selection: [],
       air_selection: []).tap do |whitelisted|
-        whitelisted[:air_selection] = whitelisted[:air_selection].reject(&:blank?)
+        whitelisted[:air_selection] = whitelisted[:air_selection]&.reject(&:blank?)
       end
   end
 end
