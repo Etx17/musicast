@@ -144,14 +144,16 @@
               <% performance = inscription.performances.find_by(tour: tour) %>
               <% if performance.present? %>
                   <%= simple_form_for(performance, url: performance_path(performance), method: :patch, data: { controller: "reorder" }) do |f| %>
-                    <ul data-reorder-target="list">
-                      <% performance.ordered_air_selection&.each do |air_id| %>
+                    <ul data-reorder-target="list" class="list-unstyled" >
+                      <% performance.ordered_air_selection&.each_with_index do |air_id, index| %>
                         <% air = Air.find(air_id) %>
                         <% imposed = performance.tour.imposed_air_selection.include?(air_id.to_s) %>
                         <li data-id="<%= air_id %>"
                             data-action="dragstart->reorder#dragStart dragover->reorder#dragOver drop->reorder#drop dragend->reorder#dragEnd"
-                            draggable="true">
-                          <%= air.title %>, <%= air.length_minutes %> min<%= ' (imposé)' if imposed %>
+                            draggable="true"
+                            style="cursor: move; border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;"
+                            >
+                          <%= index + 1 %> - <%= air.title %>, <%= air.length_minutes %> min<%= ' (imposé)' if imposed %>
                         </li>
                       <% end %>
                     </ul>
