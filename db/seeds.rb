@@ -81,7 +81,7 @@
 
     # Associate Airs with the corresponding work based on a condition
     if m < 2
-      air.update(imposed_work_id: imposed_work.id)
+      air.update(imposed_work_id: imposed_work.id, title: "Air imposé Chopin n° #{m}#{n}")
     elsif m < 4
       air.update(choice_imposed_work_id: choice_imposed_work.id)
     else

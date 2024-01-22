@@ -15,7 +15,10 @@ class Performance < ApplicationRecord
   }
 
   def airs
-    Air.where(id: air_selection)
+    airs = Air.where(id: air_selection)
+    
+    airs += tour.imposed_air_selection if tour.imposed_air_selection.present?
+    airs
   end
 
   def airs_titles

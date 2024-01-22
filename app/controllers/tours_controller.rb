@@ -181,7 +181,7 @@ class ToursController < ApplicationController
       ],
       :imposed_air_selection => [],
     ).tap do |whitelisted|
-      whitelisted[:imposed_air_selection] = whitelisted[:imposed_air_selection].reject(&:blank?)
+      whitelisted[:imposed_air_selection] = whitelisted[:imposed_air_selection]&.reject(&:blank?)
     end
   end
 end

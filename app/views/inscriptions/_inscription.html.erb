@@ -148,6 +148,10 @@
                     <% air = Air.find(air_id) %>
                     <li><%= air.title %>, <%= air.length_minutes %> min</li>
                   <% end %>
+                  <% tour.imposed_air_selection&.each do |air_id| %>
+                    <% air = Air.find(air_id) %>
+                    <li><%= air.title %>, <%= air.length_minutes %> min (imposé)</li>
+                  <% end %>
                 </ul>
                   <%= link_to 'Modifier le programme', edit_inscription_performance_path(inscription, performance, tour_id: tour.id), class: 'btn btn-primary ' %>
                   <span class="badge rounded-pill text-warning border-warning border"><%= tour.remaining_days %> jours restants</span>
