@@ -181,3 +181,17 @@ body {
 .bg-info-light {
   background-color: #d1ecf1 !important;
 }
+
+.draggable-item {
+  cursor: move;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: #f8f9fa; // light gray
+    transform: scale(1.02);
+    box-shadow: 0 0 10px rgba(0,0,0,0.15);
+  }
+}
