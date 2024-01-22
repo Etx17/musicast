@@ -9,6 +9,7 @@ class Inscription < ApplicationRecord
   has_many :choice_imposed_work_airs, dependent: :destroy
   has_many :semi_imposed_work_airs, dependent: :destroy
 
+
   accepts_nested_attributes_for :inscription_item_requirements, allow_destroy: true
   accepts_nested_attributes_for :choice_imposed_work_airs
   accepts_nested_attributes_for :semi_imposed_work_airs
@@ -39,6 +40,8 @@ class Inscription < ApplicationRecord
       by_candidat(user.candidat.id)
     end
   end
+
+
 
   def order_state
     inscription_order&.state || "Brouillon"

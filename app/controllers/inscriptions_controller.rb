@@ -19,7 +19,6 @@ class InscriptionsController < ApplicationController
   end
 
   def show
-
     render :candidate_show if current_user.candidat
   end
 
@@ -64,6 +63,7 @@ class InscriptionsController < ApplicationController
 
   def update
     if @inscription.update(inscription_params)
+      # Si on a modifié des airs d'un choice_imposed_work ou d'un semi_imposed_work, on doit supprimer les performances des tours actuels et suivants.
       redirect_to inscription_url(@inscription), notice: "Inscription was successfully updated."
     else
       render :edit, status: :unprocessable_entity
