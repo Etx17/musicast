@@ -37,6 +37,7 @@ Rails.application.routes.draw do
           end
           resources :choice_imposed_works
           resources :semi_imposed_works
+          resources :imposed_works
         end
       end
     end
