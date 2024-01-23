@@ -1,5 +1,12 @@
 <div id="<%= dom_id organism %>">
 
+  <%# Logo displayed as circle  %>
+  <% if organism.logo.attached? %>
+  <div class="d-flex justify-content-center">
+    <%= image_tag organism.logo, class:"shadow rounded-circle align-items-center p-0 m-0 mb-4", style: "width: 140px; height: 140px; object-fit: cover;" %>
+  </div>
+  <% end %>
+
   <p>
     <strong>Nom:</strong>
     <%= organism.nom %>

@@ -7,4 +7,6 @@ class Organism < ApplicationRecord
   has_many :edition_competitions, through: :competitions
   extend FriendlyId
   friendly_id :nom, use: :slugged
+
+  has_one_attached :logo
 end
