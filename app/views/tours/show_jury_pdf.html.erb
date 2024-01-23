@@ -1,10 +1,63 @@
-<p>coucou</p>
- <%= @detailed_program %>
-  <%= @simple_air %>
-  <%= @notes_space %>
-  <%= @profile_photo %>
-  <%= @artistic_photo %>
-  <%= @short_bio %>
-  <%= @medium_bio %>
-  <%= @long_bio %>
-  <%= @order_of_passage %>
+<h3 class="text-center"><%= @tour.category.edition_competition.competition.nom_concours %></h3>
+<h1 class="text-center" style="font-size: 7em"><%= @tour.category.name %></h1>
+<h1 class="text-center" style="font-size: 5em; color: #333333; margin-bottom: 30px;"><%= @tour.title %></h1>
+
+<% @tour.performances.order(:order).each do |performance| %>
+  <div style="position: relative; margin-bottom: 30px; page-break-inside: avoid;">
+    <table style="width: 100%;">
+      <tr>
+        <td style="width: 30%; background: #F7F7F7;" class="text-center">
+
+          <% if @profile_photo || @artistic_photo %>
+             <div style="width: 100%; height: 0; padding-bottom: 100%; position: relative;">
+              <%= image_tag "https://source.unsplash.com/random/?/300/200", alt: "Photo d'item requis", style: "position: absolute; width: 100%; height: 100%; object-fit: cover;" %>
+            </div>
+          <% end %>
+
+
+
+        </td>
+        <td style="width: 70%; background: #F7F7F7; padding: 0px 30px;" class="text-center" >
+          <h3 class="p-1">
+            <%= performance.order + 1 %> - <%= performance.candidat.first_name %> - Amerique - 29 ans
+          </h3>
+          <% if @short_bio %>
+            <%= "Short bio..." %>
+          <% elsif @medium_bio %>
+            <%= "Medium bio..." %>
+          <% elsif @long_bio %>
+          <small ">
+            " 1000max allez mille  Julien Moreau, né en 1988 à Marseille, est un ingénieur et entrepreneur français, pionnier dans le domaine de la technologie durable. Diplômé de l'École Polytechnique, Julien s'est rapidement distingué par son approche novatrice dans l'utilisation des énergies renouvelables. Julien Moreau, né en 1988 à Marseille, est un ingénieur et entrepreneur français, pionnier dans le domaine de la technologie durable. Diplômé de l'École Polytechnique, Julien s'est rapidement distingué par son approche novatrice dans l'utilisation des énergies renouvelables. Diplômé de l'École Polytechnique, Julien s'est rapidement distingué par son approche novatrice dans l'utilisation des énergies renouvelables.  son approche novatrice dans l'utilisation des énergies renouvelables.  son approche novatrice dans l'utilisation des énergies renouvelables.  son approche novatrice dans l'utilisation des énergies renouvelables.  son approche novatrice dans l'utilisation des énergies renouvelables."
+          </small>
+          <% end %>
+        </td>
+      </tr>
+    </table>
+    <table style="width: 100%;">
+      <tr>
+        <td style="padding: 10px; width: 50%; background: #F7F7F7;">
+          <% if @detailed_program %>
+            <ul style="list-item-type: none;">
+              <% performance.airs.each do |air| %>
+                <li style="list-item-type: none;">- <%= [air.title, air.composer, air.oeuvre, air.tonality, air.character].join(", ") %></li>
+              <% end %>
+            </ul>
+          <% elsif @simple_air %>
+            <ul>
+              <% performance.airs.each do |air| %>
+                <li><%= air.title %> - <%= air.composer %></li>
+                <li><%= air.title %> - <%= air.composer %></li>
+                <li><%= air.title %> - <%= air.composer %></li>
+              <% end %>
+            </ul>
+          <% end %>
+        </td>
+        <td style="width: 50%;" class="text-center">
+          <h1 style="color: #FCFCFC; font-size: 6em;">NOTES </h1>
+        </td>
+      </tr>
+    </table>
+
+
+  </div>
+<% end %>

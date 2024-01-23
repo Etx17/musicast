@@ -30,15 +30,38 @@
     <% end %>
   </div>
 
-  <h2 class=" border border-1 mt-5 rounded-8 bg-grey text-center my-3">Planning du tour</h3>
+
   <%# bouton télécharger, imprimer %>
-  <%= link_to "Download PDF", show_pdf_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour), class: "btn btn-primary", target: '_blank' %>
+  <div class="d-flex gap-3 justify-content-between">
+    <%= link_to "Télécharger ce planning PDF", show_pdf_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour), class: "btn btn-primary", target: '_blank' %>
 
-  <%= render "planning_jury_form" %>
-  <%= link_to "Downloacd jury PDF with configuration", show_jury_pdf_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour), class: "btn btn-primary", target: '_blank' %>
+  <!-- Button to open the modal -->
+      <div class="d-flex gap-3">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#planningJuryFormModal">
+          Configurer le dossier jury
+        </button>
+
+        <%= link_to "Télécharger le dossier du jury PDF", show_jury_pdf_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour), class: "btn btn-primary", target: '_blank' %>
+      </div>
+    </div>
+  <!-- The modal -->
+  <div class="modal fade" id="planningJuryFormModal" tabindex="-1" aria-labelledby="planningJuryFormModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="planningJuryFormModalLabel">Jury Planning Configuration</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <%= render "planning_jury_form" %>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
 
+<h2 class=" border border-1 mt-5 rounded-8 bg-grey text-center my-3">Planning du tour</h3>
 
 
 

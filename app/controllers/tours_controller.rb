@@ -167,7 +167,8 @@ class ToursController < ApplicationController
         render pdf: "Dossier jury - #{@tour.title}",
         template: "tours/show_jury_pdf",
         layout: 'pdf',
-        formats: [:html]
+        formats: [:html],
+        footer: { right: '[page] / [topage]' }
       end
     end
   end
