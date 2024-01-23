@@ -1,5 +1,5 @@
 class RequirementItemsController < ApplicationController
-  before_action :set_competition, :set_edition_competition, :set_category
+  before_action :set_competition, :set_edition_competition, :set_category, :set_organism
   before_action :set_requirement_item, only: %i[show edit update destroy]
 
   def index
@@ -38,11 +38,15 @@ class RequirementItemsController < ApplicationController
 
   def destroy
     @requirement_item.destroy
-    redirect_to competition_edition_competition_category_requirement_items_path(@competition, @edition_competition, @category),
-                notice: 'Requirement item was successfully destroyed.'
+    redirect_to organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category),
+                notice: 'La pièce requise a été supprimée.'
   end
 
   private
+
+  def set_organism
+    @organism = Organism.friendly.find(params[:organism_id])
+  end
 
   def set_competition
     @competition = Competition.friendly.find(params[:competition_id])

@@ -165,7 +165,9 @@
             </div>
             <h5 class="card-title"><%= item.title %></h5>
             <p class="card-text text-light"><%= item.description_item %></p>
-
+            <%= button_to organism_competition_edition_competition_category_requirement_item_path(@organism, @competition, @edition_competition, @category, item), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-outline-light btn-sm' do %>
+              <i class="fas fa-times"></i>
+            <% end %>
             <span class="badge bg-warning text-dark rounded-pill border border-success"><%= item.type_item %></span>
           </div>
         </div>
