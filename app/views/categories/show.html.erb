@@ -141,17 +141,17 @@
             <h5 class="modal-title" id="exampleModalLabel1">Ajouter un élément requis</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <div class="modal-body">
+         <div class="modal-body" data-controller="requirement" data-action="click->requirement#changeIdOfInput">
             <%= simple_form_for([@organism, @competition, @edition_competition, @category, RequirementItem.new]) do |f| %>
-              <%= f.input :title, input_html: { id: "requirement-#{@category.name}-#{Time.now.to_i}" } %>
+              <%= f.input :title, input_html: { id: "requirement-#{@category.name}-#{Time.now.to_i}" }, data: { requirement_target: "title" } %>
               <%= f.input :type_item, collection: RequirementItem.item_types_list, prompt: 'Select a type' %>
               <%= f.input :description_item %>
+              <div class="modal-footer">
+                <%= f.button :submit, class: 'btn btn-primary' %>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              </div>
+            <% end %>
           </div>
-          <div class="modal-footer">
-            <%= f.button :submit, class: 'btn btn-primary' %>
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          </div>
-          <% end %>
         </div>
       </div>
     </div>
