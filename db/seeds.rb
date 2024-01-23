@@ -25,13 +25,25 @@
   category2 = Category.create!(price: 50, edition_competition_id: edition.id, name: "Piano under 12 #{n}", description: "Category for children under 12 years #{n}", min_age: 6, max_age: 12, discipline: 2)
 
   # Tours for Category1
-  Tour.create!( tour_number: 1, category_id: category1.id, start_date: Date.today, start_time: Time.now, end_date: Date.today + 30, end_time: Time.now + 6.hours, is_online: false, title: "Tour éliminatoire", description: "First round of the competition #{n}", tour_requirement_attributes: { description: "Preliminary round requirements", min_number_of_works: 1, max_number_of_works: 3, min_duration_minute: 3, max_duration_minute: 9, organiser_creates_program: false } )
-  Tour.create!( tour_number: 2, category_id: category1.id, start_date: Date.today + 60, start_time: Time.now, end_date: Date.today + 90, end_time: Time.now + 6.hours, is_online: true, title: "Demi finale", description: "Second round, conducted online #{n}", tour_requirement_attributes: { description: "Online round requirements", min_number_of_works: 2, max_number_of_works: 4, min_duration_minute: 4.5, max_duration_minute: 12, organiser_creates_program: true } )
-  Tour.create!( tour_number: 3, category_id: category1.id, start_date: Date.today + 120, start_time: Time.now, end_date: Date.today + 150, end_time: Time.now + 6.hours, is_online: false, title: "Finale", description: "Final round of the competition #{n}", tour_requirement_attributes: { description: "Final round requirements. Candidat must be wearing black suit or dress. NO partition allowed.", min_number_of_works: 2, max_number_of_works: 4, min_duration_minute: 4.5, max_duration_minute: 12, organiser_creates_program: false } )
+  Tour.create!(
+    imposed_air_selection: ["1", "2"],
+    final_performance_submission_deadline: Date.today + 30, tour_number: 1, category_id: category1.id, start_date: Date.today, start_time: Time.now, end_date: Date.today + 30, end_time: Time.now + 6.hours, is_online: false, title: "Tour éliminatoire", description: "First round of the competition #{n}", tour_requirement_attributes: { description: "Preliminary round requirements", min_number_of_works: 1, max_number_of_works: 3, min_duration_minute: 3, max_duration_minute: 9, organiser_creates_program: false } )
+  Tour.create!(
+    imposed_air_selection: ["1", "2"],
+    final_performance_submission_deadline: Date.today + 60, tour_number: 2, category_id: category1.id, start_date: Date.today + 60, start_time: Time.now, end_date: Date.today + 90, end_time: Time.now + 6.hours, is_online: true, title: "Demi finale", description: "Second round, conducted online #{n}", tour_requirement_attributes: { description: "Online round requirements", min_number_of_works: 2, max_number_of_works: 4, min_duration_minute: 4.5, max_duration_minute: 12, organiser_creates_program: true } )
+  Tour.create!(
+    imposed_air_selection: ["1", "2"],
+    final_performance_submission_deadline: Date.today + 90, tour_number: 3, category_id: category1.id, start_date: Date.today + 120, start_time: Time.now, end_date: Date.today + 150, end_time: Time.now + 6.hours, is_online: false, title: "Finale", description: "Final round of the competition #{n}", tour_requirement_attributes: { description: "Final round requirements. Candidat must be wearing black suit or dress. NO partition allowed.", min_number_of_works: 2, max_number_of_works: 4, min_duration_minute: 4.5, max_duration_minute: 12, organiser_creates_program: false } )
   # Tours for Category2
-  Tour.create!( tour_number: 1, category_id: category2.id, start_date: Date.today, start_time: Time.now, end_date: Date.today + 30, end_time: Time.now + 6.hours, is_online: false, title: "Tour éliminatoire", description: "First round of the competition #{n}", tour_requirement_attributes: { description: "Preliminary round requirements", min_number_of_works: 1, max_number_of_works: 3, min_duration_minute: 3, max_duration_minute: 9, organiser_creates_program: false } )
-  Tour.create!( tour_number: 2, category_id: category2.id, start_date: Date.today + 60, start_time: Time.now, end_date: Date.today + 90, end_time: Time.now + 6.hours, is_online: true, title: "Demi finale", description: "Second round, conducted online #{n}", tour_requirement_attributes: { description: "Online round requirements", min_number_of_works: 2, max_number_of_works: 4, min_duration_minute: 4.5, max_duration_minute: 12, organiser_creates_program: true } )
-  Tour.create!( tour_number: 3, category_id: category2.id, start_date: Date.today + 120, start_time: Time.now, end_date: Date.today + 150, end_time: Time.now + 6.hours, is_online: false, title: "Finale", description: "Final round of the competition #{n}", tour_requirement_attributes: { description: "Final round requirements. Candidat must be wearing black suit or dress. NO partition allowed.", min_number_of_works: 2, max_number_of_works: 4, min_duration_minute: 4.5, max_duration_minute: 12, organiser_creates_program: false } )
+  Tour.create!(
+    imposed_air_selection: ["1", "2"],
+    final_performance_submission_deadline: Date.today + 30, tour_number: 1, category_id: category2.id, start_date: Date.today, start_time: Time.now, end_date: Date.today + 30, end_time: Time.now + 6.hours, is_online: false, title: "Tour éliminatoire", description: "First round of the competition #{n}", tour_requirement_attributes: { description: "Preliminary round requirements", min_number_of_works: 1, max_number_of_works: 3, min_duration_minute: 3, max_duration_minute: 9, organiser_creates_program: false } )
+  Tour.create!(
+    imposed_air_selection: ["1", "2"],
+    final_performance_submission_deadline: Date.today + 60, tour_number: 2, category_id: category2.id, start_date: Date.today + 60, start_time: Time.now, end_date: Date.today + 90, end_time: Time.now + 6.hours, is_online: true, title: "Demi finale", description: "Second round, conducted online #{n}", tour_requirement_attributes: { description: "Online round requirements", min_number_of_works: 2, max_number_of_works: 4, min_duration_minute: 4.5, max_duration_minute: 12, organiser_creates_program: true } )
+  Tour.create!(
+    imposed_air_selection: ["1", "2"],
+    final_performance_submission_deadline: Date.today + 90, tour_number: 3, category_id: category2.id, start_date: Date.today + 120, start_time: Time.now, end_date: Date.today + 150, end_time: Time.now + 6.hours, is_online: false, title: "Finale", description: "Final round of the competition #{n}", tour_requirement_attributes: { description: "Final round requirements. Candidat must be wearing black suit or dress. NO partition allowed.", min_number_of_works: 2, max_number_of_works: 4, min_duration_minute: 4.5, max_duration_minute: 12, organiser_creates_program: false } )
   # Users for Candidats
   candidate_user1 = User.create!(email: "candidate1_#{n}@example.com", password: "password123", password_confirmation: "password123")
   candidate_user2 = User.create!(email: "candidate2_#{n}@example.com", password: "password123", password_confirmation: "password123")
@@ -70,12 +82,14 @@
 
   # Create and associate Airs with each work
   7.times do |m|
+    methods = [:rossini, :verdi, :donizetti, :bellini, :mozart]
+
     air = Air.create!(
-      title: "Air du chevalier n° #{m}#{n}",
+      title: Faker::Music::Opera.send(methods.sample),
       length_minutes: m+3,
-      composer: "Composer #{m}",
-      oeuvre: "Oeuvre #{m}",
-      character: "Character #{m}",
+      composer: methods.sample.to_s,
+      oeuvre: "Oeuvre complête II",
+      character: "Fidelo",
       tonality: "#{['C', 'D', 'E', 'F', 'G', 'A', 'B'][m]} Major"
     )
 

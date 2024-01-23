@@ -21,10 +21,13 @@ class Performance < ApplicationRecord
 
   def airs
     airs = Air.where(id: air_selection)
+    imposed_air_selection&.each do |air_id|
+      airs = airs.or(Air.where(id: air_id))
+    end
 
-    airs += imposed_air_selection if imposed_air_selection.present?
     airs
   end
+
 
   def airs_titles
     airs.map(&:title)
