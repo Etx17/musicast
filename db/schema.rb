@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_22_105044) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_23_090257) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -113,6 +113,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_22_105044) do
     t.string "slug"
     t.integer "price_cents", default: 0, null: false
     t.string "price_currency", default: "EUR", null: false
+    t.integer "status", default: 0
     t.index ["edition_competition_id"], name: "index_categories_on_edition_competition_id"
     t.index ["slug"], name: "index_categories_on_slug", unique: true
   end

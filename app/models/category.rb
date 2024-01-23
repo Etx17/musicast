@@ -20,6 +20,12 @@ class Category < ApplicationRecord
 
   delegate :competition, to: :edition_competition
 
+  enum status: {
+    draft: 0,
+    published: 1,
+    archived: 2
+  }
+
   # Dangereux, attention a la suppression des catégories et a l'ajout
   enum discipline: {
     alto: 1,
