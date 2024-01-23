@@ -1,0 +1,40 @@
+  <% @tour.days_of_performances.sort.each do |day| %>
+    <div class="col shadow-sm mx-2 bg-grey" data-controller="start-time" data-day="<%= day.strftime('%Y-%m-%d') %>">
+      <h2 class="text-center"><%= day.strftime('%a %d %B %Y') %></h2>
+
+      <!-- planning -->
+      <table class="table ">
+        <thead>
+          <tr>
+            <th scope="col">Candidat</th>
+            <th scope="col">Heure de passage</th>
+            <th scope="col">Ordre</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% items = (@tour.performances.to_a + @tour.pauses.to_a).sort_by { |item| item.start_time.strftime('%H:%M') } %>
+
+          <% items.each_with_index do |item, index| %>
+            <% if item.is_a?(Performance) && item.start_date == day %>
+              <%= form_with(model: item, url: performance_path(item), method: :patch, local: true) do |f| %>
+                <tr>
+                  <td><%= item.candidat.first_name  %></td>
+                  <td><%= f.time_field :start_time, value: item&.start_time.strftime('%H:%M'), id: "start_time_#{day}_#{index}", disabled: true %></td>
+                  <td><%= item.order + 1  %></td>
+                </tr>
+              <% end %>
+            <% elsif item.is_a?(Pause) && item.date == day %>
+              <tr>
+                <td>Pause</td>
+                  <td id="pause_time_<%= day %>_<%= index %>"><%= item.start_time.strftime('%H:%M') %> - <%= item.end_time.strftime('%H:%M') %></td>
+                <td>
+                  <% last_pause_of_the_day = items.reverse.find { |i| i.is_a?(Pause) && i.date == day } %>
+                </td>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+  <% end %>

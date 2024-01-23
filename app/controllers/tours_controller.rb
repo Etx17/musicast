@@ -134,6 +134,19 @@ class ToursController < ApplicationController
     redirect_to [@organism, @competition, @edition_competition, @category, @tour], notice: "Les candidats qualifiés ont été envoyés vers le tour suivant."
   end
 
+  def show_pdf
+    @tour = Tour.find(params[:id])
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render pdf: "file_name",
+              template: "tours/show_pdf",
+              layout: 'pdf',
+              formats: [:html]
+      end
+    end
+  end
+
   private
 
   def set_tour

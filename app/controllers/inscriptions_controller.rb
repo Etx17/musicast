@@ -13,6 +13,7 @@ class InscriptionsController < ApplicationController
           flash[:alert] = "Category not found"
         end
       end
+
     end
     render :candidate_index if current_user.candidat
     render :index if current_user.organisateur

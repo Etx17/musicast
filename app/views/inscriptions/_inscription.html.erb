@@ -150,7 +150,7 @@
                     <ul data-reorder-target="list" class="list-unstyled" >
                       <% performance.ordered_air_selection&.each_with_index do |air_id, index| %>
                         <% air = Air.find(air_id) %>
-                        <% imposed = performance.tour.imposed_air_selection.include?(air_id.to_s) %>
+                        <% imposed = performance.tour.imposed_air_selection&.include?(air_id.to_s) %>
                         <li data-id="<%= air_id %>"
                             data-action="dragstart->reorder#dragStart dragover->reorder#dragOver drop->reorder#drop dragend->reorder#dragEnd"
                             draggable="true"

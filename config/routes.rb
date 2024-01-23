@@ -28,6 +28,7 @@ Rails.application.routes.draw do
             resources :pauses
             put :qualify_performance, on: :member
             get 'move_to_next_tour', on: :member
+            get 'show_pdf', on: :member, defaults: { format: 'pdf' }
           end
           resources :requirement_items
           resources :inscriptions do

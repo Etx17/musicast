@@ -17,6 +17,9 @@ gem "country_select"
 # Use postgresql as the database for Active Record
 gem "pg", "~> 1.1"
 
+gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary'
+
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", "~> 5.0"
 gem 'stripe'
@@ -51,6 +54,8 @@ gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
+
+
 
 # Use Sass to process CSS
 # gem "sassc-rails"
