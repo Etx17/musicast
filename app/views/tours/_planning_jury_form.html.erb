@@ -1,0 +1,42 @@
+
+<%= form_with(url: store_form_data_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour), method: "post", local: true) do |f| %>
+    <div class="form-check">
+      <%= f.check_box :detailed_program, class: "form-check-input" %>
+      <%= f.label :detailed_program, "Airs détaillés du programme", class: "form-check-label" %>
+    </div>
+    <div class="form-check">
+      <%= f.check_box :simple_air, class: "form-check-input" %>
+      <%= f.label :simple_air, "Air simple", class: "form-check-label" %>
+    </div>
+    <div class="form-check">
+      <%= f.check_box :notes_space, class: "form-check-input" %>
+      <%= f.label :notes_space, "Espace notes", class: "form-check-label" %>
+    </div>
+    <div class="form-check">
+      <%= f.check_box :profile_photo, class: "form-check-input" %>
+      <%= f.label :profile_photo, "Candidat photo profil", class: "form-check-label" %>
+    </div>
+    <div class="form-check">
+      <%= f.check_box :artistic_photo, class: "form-check-input" %>
+      <%= f.label :artistic_photo, "Candidat photo artistique", class: "form-check-label" %>
+    </div>
+    <div class="form-check">
+      <%= f.check_box :short_bio, class: "form-check-input" %>
+      <%= f.label :short_bio, "Short bio", class: "form-check-label" %>
+    </div>
+    <div class="form-check">
+      <%= f.check_box :medium_bio, class: "form-check-input" %>
+      <%= f.label :medium_bio, "Medium bio", class: "form-check-label" %>
+    </div>
+    <div class="form-check">
+      <%= f.check_box :long_bio, class: "form-check-input" %>
+      <%= f.label :long_bio, "Long bio", class: "form-check-label" %>
+    </div>
+    <div class="form-check">
+      <%= f.check_box :order_of_passage, class: "form-check-input" %>
+      <%= f.label :order_of_passage, "Ordre de passage", class: "form-check-label" %>
+    </div>
+    <div class="modal-footer">
+      <%= f.submit "Enregistrer la configuration", class: "btn btn-primary"  %>
+    </div>
+  <% end %>

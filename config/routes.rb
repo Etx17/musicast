@@ -29,6 +29,8 @@ Rails.application.routes.draw do
             put :qualify_performance, on: :member
             get 'move_to_next_tour', on: :member
             get 'show_pdf', on: :member, defaults: { format: 'pdf' }
+            get 'show_jury_pdf', on: :member, defaults: { format: 'pdf' }
+            post 'store_form_data', on: :member
           end
           resources :requirement_items
           resources :inscriptions do

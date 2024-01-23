@@ -1,6 +1,6 @@
 class ToursController < ApplicationController
-  before_action :set_tour, only: %i[ move_to_next_tour qualify_performance shuffle show edit update destroy update_order update_day_of_performance_and_subsequent_performances]
-  before_action :set_context, only: %i[ move_to_next_tour qualify_performance shuffle new create show edit update destroy update_order update_day_of_performance_and_subsequent_performances]
+  before_action :set_tour, only: %i[ store_form_data move_to_next_tour qualify_performance shuffle show edit update destroy update_order update_day_of_performance_and_subsequent_performances]
+  before_action :set_context, only: %i[ store_form_data move_to_next_tour qualify_performance shuffle new create show edit update destroy update_order update_day_of_performance_and_subsequent_performances]
 
   def index
     @tours = Tour.all
@@ -139,12 +139,50 @@ class ToursController < ApplicationController
     respond_to do |format|
       format.html
       format.pdf do
-        render pdf: "file_name",
+        render pdf: "Planning fonctionnel - #{@tour.title}",
               template: "tours/show_pdf",
               layout: 'pdf',
               formats: [:html]
       end
     end
+  end
+
+  def show_jury_pdf
+    @form_data = session[:form_data]
+    @tour = Tour.find(params[:id])
+
+    @detailed_program = session[:detailed_program]
+    @simple_air = session[:simple_air]
+    @notes_space = session[:notes_space]
+    @profile_photo = session[:profile_photo]
+    @artistic_photo = session[:artistic_photo]
+    @short_bio = session[:short_bio]
+    @medium_bio = session[:medium_bio]
+    @long_bio = session[:long_bio]
+    @order_of_passage = session[:order_of_passage]
+
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render pdf: "Dossier jury - #{@tour.title}",
+        template: "tours/show_jury_pdf",
+        layout: 'pdf',
+        formats: [:html]
+      end
+    end
+  end
+
+  def store_form_data
+    session[:detailed_program] = params[:detailed_program] == "1"
+    session[:simple_air] = params[:simple_air] == "1"
+    session[:notes_space] = params[:notes_space] == "1"
+    session[:profile_photo] = params[:profile_photo] == "1"
+    session[:artistic_photo] = params[:artistic_photo] == "1"
+    session[:short_bio] = params[:short_bio] == "1"
+    session[:medium_bio] = params[:medium_bio] == "1"
+    session[:long_bio] = params[:long_bio] == "1"
+    session[:order_of_passage] = params[:order_of_passage] == "1"
+    redirect_to [@organism, @competition, @edition_competition, @category, @tour], notice: "Données du planning jury sauvegardées."
   end
 
   private
