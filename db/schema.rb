@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_23_101745) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_24_100529) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -98,6 +98,12 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_23_101745) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "first_name"
+    t.string "last_name"
+    t.string "nationality"
+    t.date "birthdate"
+    t.text "short_bio"
+    t.text "medium_bio"
+    t.text "long_bio"
     t.index ["user_id"], name: "index_candidats_on_user_id"
   end
 
@@ -173,6 +179,17 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_23_101745) do
     t.date "end_date"
     t.string "reglement_url"
     t.index ["competition_id"], name: "index_edition_competitions_on_competition_id"
+  end
+
+  create_table "experiences", force: :cascade do |t|
+    t.string "title"
+    t.date "start_date"
+    t.date "end_date"
+    t.text "description"
+    t.bigint "candidat_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["candidat_id"], name: "index_experiences_on_candidat_id"
   end
 
   create_table "free_choice_airs", force: :cascade do |t|
@@ -392,6 +409,17 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_23_101745) do
     t.index ["category_id"], name: "index_tours_on_category_id"
   end
 
+  create_table "trainings", force: :cascade do |t|
+    t.string "title"
+    t.date "start_date"
+    t.date "end_date"
+    t.text "description"
+    t.bigint "candidat_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["candidat_id"], name: "index_trainings_on_candidat_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -421,6 +449,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_23_101745) do
   add_foreign_key "competitions", "organisms"
   add_foreign_key "documents", "users"
   add_foreign_key "edition_competitions", "competitions"
+  add_foreign_key "experiences", "candidats"
   add_foreign_key "free_choice_airs", "airs"
   add_foreign_key "free_choice_airs", "free_choices"
   add_foreign_key "free_choices", "categories"
@@ -447,4 +476,5 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_23_101745) do
   add_foreign_key "semi_imposed_works", "categories"
   add_foreign_key "tour_requirements", "tours"
   add_foreign_key "tours", "categories"
+  add_foreign_key "trainings", "candidats"
 end
