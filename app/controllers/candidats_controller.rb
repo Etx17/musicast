@@ -8,6 +8,9 @@ class CandidatsController < ApplicationController
 
   # GET /candidats/1 or /candidats/1.json
   def show
+    @candidat = Candidat.find(params[:id])
+    @experiences = @candidat.experiences.build
+    @educations = @candidat.educations.build
   end
 
   # GET /candidats/new
