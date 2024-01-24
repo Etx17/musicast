@@ -5,13 +5,16 @@
   <div class="p-3 border d-flex">
     <div class="d-flex flex-column w-100 pe-3">
       <div class="d-flex justify-content-between gap-3 align-items-center">
-        <h1 class="mb-0">Etienne de Dianous</h1>
+        <div class="d-flex align-items-center gap-3">
+        <h1 class="mb-0"><%= @candidat.first_name %> <%= @candidat.last_name %> |</h1>
+        <%= raise %>
+        <p class="m-0"><%= @candidat.nationality %></p>
+        </div>
         <%= link_to edit_candidat_path, class:"btn btn-light rounded-circle p-0" do %>
           <i class="fas fa-pencil rounded-circle shadow text-secondary p-3" ></i>
         <% end %>
       </div>
       <p class="text-dark">Musicien. Ténor lyrique spécialisé dans le répertoire Rossinien.</p>
-      <!--Bootstrap tabs for short bio, medium bio, long_bio as buttons active -->
       <ul class="nav nav-pills text-center" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
           <button class="nav-link " id="short-bio-tab" data-bs-toggle="tab" data-bs-target="#short-bio" type="button" role="tab" aria-controls="short-bio" aria-selected="true">Short bio</button>

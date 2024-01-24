@@ -9,8 +9,6 @@ class CandidatsController < ApplicationController
   # GET /candidats/1 or /candidats/1.json
   def show
     @candidat = Candidat.find(params[:id])
-    @experiences = @candidat.experiences.build
-    @educations = @candidat.educations.build
   end
 
   # GET /candidats/new
@@ -70,10 +68,10 @@ class CandidatsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def candidat_params
-    params.require(:candidat).permit(:user_id,
+    params.require(:candidat).permit(:user_id, :nationality,
     :first_name, :last_name, :birthdate, :bio, :short_bio, :medium_bio, :long_bio, :repertoire, :banner, :portrait,
     experiences_attributes: [:id, :title, :company, :location, :start_date, :end_date, :description, :_destroy],
-    training_attributes: [:id, :title, :organism, :location, :start_date, :end_date, :description, :_destroy],
+    educations_attributes: [:id, :title, :organism, :location, :start_date, :end_date, :description, :_destroy],
     )
   end
 end

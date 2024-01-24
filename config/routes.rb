@@ -48,7 +48,10 @@ Rails.application.routes.draw do
   resources :partners
 
   resources :jures
-  resources :candidats
+  resources :candidats do
+    resources :experiences, only: [:new, :create, :destroy]
+    resources :educations, only: [:new, :create, :destroy]
+  end
   resources :organisateurs
 
   devise_for :users, controllers: {
