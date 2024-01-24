@@ -19,8 +19,8 @@
   <!-- Navbar -->
   <%= render "shared/navbar"%>
 
-  <div class="px-2">
-    <div class="row">
+  <%# <div class="px-2"> %>
+    <div class="row px-2">
 
       <% if current_user&.organisateur %>
         <div class="col-md-2 p-0 d-none d-md-block bg-light border-end">
@@ -29,7 +29,7 @@
         </div>
       <% end %>
       <div class="bg-light col-md-<%= current_user.present? ? '10' : '12'%>">
-        <div class="d-flex flex-wrap d-md-none p-2 breadcrumbs-xs">
+        <div class="d-flex flex-wrap d-md-none px-2 breadcrumbs-xs">
           <%= render_breadcrumbs separator: '/' if current_user&.organisateur.present? %>
         </div>
 
@@ -48,6 +48,6 @@
       <% end %>
 
     </div>
-  </div>
+  <%# </div> %>
 </body>
 </html>

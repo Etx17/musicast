@@ -4,12 +4,19 @@
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
-    <%= f.association :user %>
-    <%= f.input :cv %>
-    <%= f.input :bio %>
+    <div class="d-flex flex-column flex-sm-row gap-3">
+    <%= f.input :first_name, label: 'Prénom' %>
+    <%= f.input :last_name, label: 'Nom' %>
+    <%= f.input :birthdate, label: 'Date de naissance' %>
+
+    </div>
+    <%= f.input :bio, hint: "La phrase d'accroche sous votre photo" %>
+    <%= f.input :short_bio, hint: "Une version très courte de votre parcours, à destination des jurys de concours" %>
+    <%= f.input :medium_bio, hint: "Une version résumée de votre parcours, à destination des jurys de concours" %>
+    <%= f.input :long_bio, hint: "Une version détaillée de votre parcours, à destination des jurys de concours" %>
   </div>
 
   <div class="form-actions">
-    <%= f.button :submit %>
+    <%= f.button :submit, "Enregistrer", class:"btn btn-primary" %>
   </div>
 <% end %>

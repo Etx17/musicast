@@ -17,6 +17,7 @@ class CandidatsController < ApplicationController
 
   # GET /candidats/1/edit
   def edit
+
   end
 
   # POST /candidats or /candidats.json
@@ -66,6 +67,10 @@ class CandidatsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def candidat_params
-    params.require(:candidat).permit(:user_id, :cv, :bio)
+    params.require(:candidat).permit(:user_id,
+    :first_name, :last_name, :birthdate, :bio, :short_bio, :medium_bio, :long_bio, :repertoire, :banner, :portrait,
+    experiences_attributes: [:id, :title, :company, :location, :start_date, :end_date, :description, :_destroy],
+    training_attributes: [:id, :title, :organism, :location, :start_date, :end_date, :description, :_destroy],
+    )
   end
 end
