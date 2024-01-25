@@ -114,6 +114,7 @@ class InscriptionsController < ApplicationController
         :category_id,
         :status,
         :air,
+        :candidate_brings_pianist_accompagnateur,
         inscription_item_requirements_attributes: %i[id submitted_file submitted_content document_id requirement_item_id _destroy],
         choice_imposed_work_airs_attributes: [:id, :choice_imposed_work_id, :air_id],
         semi_imposed_work_airs_attributes: [:id, :semi_imposed_work_id, air_attributes: [:id, :title, :length_minutes, :composer, :oeuvre, :character, :tonality]]
@@ -124,6 +125,7 @@ class InscriptionsController < ApplicationController
         :category_id,
         :status,
         :air,
+        :candidate_brings_pianist_accompagnateur,
         inscription_item_requirements_attributes: %i[id submitted_file submitted_content document_id requirement_item_id _destroy],
         choice_imposed_work_airs_attributes: [:id, :choice_imposed_work_id, :air_id],
         semi_imposed_work_airs_attributes: [:id, :semi_imposed_work_id, air: [:id, :title, :length_minutes, :composer, :oeuvre, :character, :tonality]]

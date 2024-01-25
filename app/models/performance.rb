@@ -1,7 +1,7 @@
 class Performance < ApplicationRecord
   belongs_to :inscription
   belongs_to :tour
-
+  belongs_to :pianist_accompagnateur, class_name: 'User', optional: true
   has_one :tour_requirement, through: :tour
 
   delegate :candidat, to: :inscription

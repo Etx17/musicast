@@ -1,2 +1,0 @@
-class PianisteAccompagnateur < ApplicationRecord
-end

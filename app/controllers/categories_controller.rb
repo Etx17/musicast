@@ -68,7 +68,7 @@ class CategoriesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def category_params
-    params.require(:category).permit(:photo, :edition_competition_id, :name, :description, :min_age, :max_age,
+    params.require(:category).permit(:allow_own_pianist_accompagnateur, :photo, :edition_competition_id, :name, :description, :min_age, :max_age,
                                      :discipline)
   end
 end

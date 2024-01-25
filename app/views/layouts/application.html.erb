@@ -19,8 +19,8 @@
   <!-- Navbar -->
   <%= render "shared/navbar"%>
 
-  <%# <div class="px-2"> %>
-    <div class="row px-2">
+  <div class="px-2">
+    <div class="row">
 
       <% if current_user&.organisateur %>
         <div class="col-md-2 p-0 d-none d-md-block bg-light border-end">
@@ -39,15 +39,15 @@
         <!-- Main content -->
         <%= yield %>
       </div>
-
       <% if current_user&.candidat %>
-      <div class="col-md-2 p-0 d-none d-md-block bg-light border-start">
-        <!-- Sidebar -->
-        <%= render "shared/sidebar" %>
-      </div>
+        <div class="col-md-2 p-0 d-none d-md-block bg-light border-start">
+          <!-- Sidebar -->
+          <%= render "shared/sidebar" %>
+        </div>
       <% end %>
 
+
     </div>
-  <%# </div> %>
+  </div>
 </body>
 </html>

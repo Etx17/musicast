@@ -17,7 +17,9 @@
           <p><%= inscription.category.edition_competition.competition.nom_concours %> - <small><%= inscription.category.name %></small></p>
           <p>Du: <%= inscription.category.edition_competition.start_date %> au <%= inscription.category.edition_competition.end_date %></p>
           <p><%= inscription.category.edition_competition.address.line1 %> - <%= inscription.category.edition_competition.address.city %></p>
-
+          <% if inscription.candidate_brings_pianist_accompagnateur %>
+          <p>Ce candidat indique venir avec son propre pianiste accompagnateur</p>
+          <% end %>
           <span class=" mx-auto badge rounded-pill <%= inscription.draft? ? 'text-secondary border border-secondary bg-grey' : inscription.in_review? ? 'text-info border border-info bg-info-secondary' : inscription.accepted? ? 'text-success border-success bg-success-secondary' : 'text-danger border-danger bg-danger-secondary' %>">
             <i class="fas fa-circle small"></i> <%= inscription.status&.capitalize %>
           </span>

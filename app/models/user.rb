@@ -1,6 +1,8 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  after_create :create_associated_candidat
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
@@ -27,6 +29,9 @@ class User < ApplicationRecord
     end
   end
 
+  def create_associated_candidat
+    Candidat.create(user: self)
+  end
 
   def organisateur
     Organisateur.find_by(user: self)

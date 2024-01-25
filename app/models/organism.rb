@@ -3,6 +3,7 @@ class Organism < ApplicationRecord
   has_many :partners
   belongs_to :organisateur
   has_one :address, as: :addressable, dependent: :destroy
+  has_many :pianist_accompagnateurs
 
   has_many :edition_competitions, through: :competitions
   extend FriendlyId

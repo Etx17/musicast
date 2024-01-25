@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_25_120616) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_25_125132) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -358,6 +358,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_25_120616) do
     t.string "full_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "organism_id", null: false
+    t.index ["organism_id"], name: "index_pianist_accompagnateurs_on_organism_id"
   end
 
   create_table "programme_requirements", force: :cascade do |t|
@@ -430,6 +432,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_25_120616) do
     t.integer "tour_number", default: 1
     t.datetime "final_performance_submission_deadline"
     t.text "imposed_air_selection", default: [], array: true
+    t.boolean "no_pianist_accompagnateur"
     t.index ["category_id"], name: "index_tours_on_category_id"
   end
 
@@ -483,6 +486,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_25_120616) do
   add_foreign_key "performances", "inscriptions"
   add_foreign_key "performances", "pianist_accompagnateurs"
   add_foreign_key "performances", "tours"
+  add_foreign_key "pianist_accompagnateurs", "organisms"
   add_foreign_key "programme_requirements", "categories"
   add_foreign_key "requirement_items", "categories"
   add_foreign_key "semi_imposed_work_airs", "airs"
