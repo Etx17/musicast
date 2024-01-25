@@ -1,0 +1,2 @@
+class PianisteAccompagnateur < ApplicationRecord
+end

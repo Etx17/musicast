@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_25_111203) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_25_120616) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -121,6 +121,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_25_111203) do
     t.integer "price_cents", default: 0, null: false
     t.string "price_currency", default: "EUR", null: false
     t.integer "status", default: 0
+    t.boolean "allow_own_pianist_accompagnateur"
     t.index ["edition_competition_id"], name: "index_categories_on_edition_competition_id"
     t.index ["slug"], name: "index_categories_on_slug", unique: true
   end
@@ -272,6 +273,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_25_111203) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "price_cents", default: 0, null: false
+    t.boolean "candidate_brings_pianist_accompagnateur"
     t.index ["candidat_id"], name: "index_inscriptions_on_candidat_id"
     t.index ["category_id"], name: "index_inscriptions_on_category_id"
   end
@@ -344,8 +346,18 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_25_111203) do
     t.boolean "is_qualified", default: false
     t.integer "status", default: 0
     t.text "ordered_air_selection", default: [], array: true
+    t.bigint "pianist_accompagnateur_id"
     t.index ["inscription_id"], name: "index_performances_on_inscription_id"
+    t.index ["pianist_accompagnateur_id"], name: "index_performances_on_pianist_accompagnateur_id"
     t.index ["tour_id"], name: "index_performances_on_tour_id"
+  end
+
+  create_table "pianist_accompagnateurs", force: :cascade do |t|
+    t.string "email"
+    t.string "phone_number"
+    t.string "full_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "programme_requirements", force: :cascade do |t|
@@ -469,6 +481,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_25_111203) do
   add_foreign_key "partners", "users"
   add_foreign_key "pauses", "tours"
   add_foreign_key "performances", "inscriptions"
+  add_foreign_key "performances", "pianist_accompagnateurs"
   add_foreign_key "performances", "tours"
   add_foreign_key "programme_requirements", "categories"
   add_foreign_key "requirement_items", "categories"
