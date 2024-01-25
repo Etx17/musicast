@@ -351,6 +351,7 @@ DEPENDENCIES
   breadcrumbs_on_rails
   capybara
   cloudinary
+  countries
   country_select
   debug
   devise
