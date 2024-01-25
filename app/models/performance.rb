@@ -42,7 +42,6 @@ class Performance < ApplicationRecord
     # Si jamais pas d'ordrered air selection, ca l'initialise avec air_selection + imposed_air_selection
     if ordered_air_selection.empty?
       self.ordered_air_selection = (air_selection + (imposed_air_selection || [])).uniq
-      self.ordered_air_selection = air_selection | imposed_air_selection
       return self.ordered_air_selection
     end
 

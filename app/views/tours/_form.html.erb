@@ -45,39 +45,41 @@
       <small class="form-text text-muted">Maintenez la touche Ctrl (ou Cmd sur Mac) enfoncée pour sélectionner plusieurs airs. Sur mobile, appuyez sur les airs que vous souhaitez sélectionner.</small>
     <% end %>
 
+    <%= f.input :no_pianist_accompagnateur, as: :boolean, label: "Souhaitez vous qu'il n'y ait aucun pianiste accompagnateur sur ce tour (par exemple dans le cas d'un accompagnement par orchestre)" %>
+
     <h2>Configurations</h2>
-<%= f.simple_fields_for :tour_requirement do |tr| %>
-  <div class="row">
-    <div class="col-md-12">
-      <%= tr.label :description, "Description", class: "form-label" %>
-      <%= tr.text_area :description, class: "form-control", placeholder: "Pour ce tour, décrivez les spécifications de programme du candidat; Doit il inclure un des airs imposés au choix ?" %>
-    </div>
-  </div>
+    <%= f.simple_fields_for :tour_requirement do |tr| %>
+      <div class="row">
+        <div class="col-md-12">
+          <%= tr.label :description, "Description", class: "form-label" %>
+          <%= tr.text_area :description, class: "form-control", placeholder: "Pour ce tour, décrivez les spécifications de programme du candidat; Doit il inclure un des airs imposés au choix ?" %>
+        </div>
+      </div>
 
-  <div class="row">
-    <div class="col-md-6">
-      <%= tr.label :min_number_of_works, "Nombre minimum d'œuvres", class: "form-label" %>
-      <%= tr.number_field :min_number_of_works, class: "form-control" %>
-    </div>
+      <div class="row">
+        <div class="col-md-6">
+          <%= tr.label :min_number_of_works, "Nombre minimum d'œuvres", class: "form-label" %>
+          <%= tr.number_field :min_number_of_works, class: "form-control" %>
+        </div>
 
-    <div class="col-md-6">
-      <%= tr.label :max_number_of_works, "Nombre maximum d'œuvres", class: "form-label" %>
-      <%= tr.number_field :max_number_of_works, class: "form-control" %>
-    </div>
-  </div>
+        <div class="col-md-6">
+          <%= tr.label :max_number_of_works, "Nombre maximum d'œuvres", class: "form-label" %>
+          <%= tr.number_field :max_number_of_works, class: "form-control" %>
+        </div>
+      </div>
 
-  <div class="row">
-    <div class="col-md-6">
-      <%= tr.label :min_duration_minute, "Durée minimum en minutes", class: "form-label" %>
-      <%= tr.number_field :min_duration_minute, class: "form-control" %>
-    </div>
+      <div class="row">
+        <div class="col-md-6">
+          <%= tr.label :min_duration_minute, "Durée minimum en minutes", class: "form-label" %>
+          <%= tr.number_field :min_duration_minute, class: "form-control" %>
+        </div>
 
-    <div class="col-md-6">
-      <%= tr.label :max_duration_minute, "Durée maximum en minutes", class: "form-label" %>
-      <%= tr.number_field :max_duration_minute, class: "form-control" %>
-    </div>
-  </div>
-<% end %>
+        <div class="col-md-6">
+          <%= tr.label :max_duration_minute, "Durée maximum en minutes", class: "form-label" %>
+          <%= tr.number_field :max_duration_minute, class: "form-control" %>
+        </div>
+      </div>
+    <% end %>
 
   </div>
 

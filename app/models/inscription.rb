@@ -1,5 +1,5 @@
 class Inscription < ApplicationRecord
-  has_many :performances
+  has_many :performances, dependent: :destroy
   has_one :candidate_program
   belongs_to :candidat
   belongs_to :category

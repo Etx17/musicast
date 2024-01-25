@@ -83,7 +83,8 @@ class Tour < ApplicationRecord
   end
 
   def days_of_performances
-    performances.map(&:start_date).uniq || []
+    days = performances.map(&:start_date).uniq || []
+    days.reject(&:blank?).sort
   end
 
   def has_planning?

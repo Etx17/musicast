@@ -66,7 +66,7 @@
 
 
   <div class="text-center text-secondary py-4 ">Ajoutez des pauses, décalez un jour, ou bien regénerez un planning avec des caractéristiques différentes si celui là ne convient pas</div>
-  <% @tour.days_of_performances.sort.each do |day| %>
+  <% @tour.days_of_performances.each do |day| %>
     <div class="col shadow-sm mx-2 bg-grey" data-controller="start-time" data-day="<%= day.strftime('%Y-%m-%d') %>">
       <h2 class="text-center"><%= day.strftime('%a %d %B %Y') %></h2>
       <%= simple_form_for :update_day, url: update_day_of_performance_and_subsequent_performances_organism_competition_edition_competition_category_tour_path(organism_id: @organism.id, competition_id: @competition.id, edition_competition_id: @edition_competition.id, category_id: @category.id, tour_id: @tour.id), method: :put, html: { class: 'edit-day-form', data: { controller: "date", action: "submit->date#validateDateFormat" } } do |f| %>
