@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   get 'tour_requirements/new'
   get 'tour_requirements/create'
   get 'tour_requirements/update'
@@ -17,6 +18,7 @@ Rails.application.routes.draw do
   resources :airs
   resources :programme_requirements
   resources :organisms do
+    resources :pianist_accompagnateurs
     resources :competitions do
       resources :edition_competitions do
         resources :categories do

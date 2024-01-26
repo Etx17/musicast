@@ -28,6 +28,23 @@
           <%= turbo_frame_tag 'organism_frame', src: organism_path(@organism) %>
         </div>
       </div>
+
+      <div class="card border-0 shadow-sm rounded mb-4" style="background: #EEEEEE;">
+        <div class="card-body">
+          <h2 class="mb-4">Partenaires</h2>
+          <h5>Pianistes Accompagnateurs</h5>
+          <%= link_to 'Add New Pianist', new_pianist_accompagnateur_path, class: 'btn btn-primary' %>
+          <ul>
+            <% @organism.pianist_accompagnateurs.each do |pianist| %>
+              <li>
+                <%= pianist.full_name %>
+                <%= link_to 'Edit', edit_organism_pianist_accompagnateur_path(@organism, pianist), class: 'btn btn-primary' %>
+                <%= link_to 'Delete', organism_pianist_accompagnateur_path(@organism, pianist), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 </div>
