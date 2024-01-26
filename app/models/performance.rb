@@ -62,6 +62,10 @@ class Performance < ApplicationRecord
 
   end
 
+  def assign_pianist_accompagnateur(pianist_accompagnateur_id)
+    self.update(pianist_accompagnateur_id: pianist_accompagnateur_id)
+  end
+
   private
 
 

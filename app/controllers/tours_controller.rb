@@ -1,6 +1,6 @@
 class ToursController < ApplicationController
-  before_action :set_tour, only: %i[assign_pianist store_form_data move_to_next_tour qualify_performance shuffle show edit update destroy update_order update_day_of_performance_and_subsequent_performances]
-  before_action :set_context, only: %i[assign_pianist store_form_data move_to_next_tour qualify_performance shuffle new create show edit update destroy update_order update_day_of_performance_and_subsequent_performances]
+  before_action :set_tour, only: %i[assign_pianist_to_performance_manually assign_pianist store_form_data move_to_next_tour qualify_performance shuffle show edit update destroy update_order update_day_of_performance_and_subsequent_performances]
+  before_action :set_context, only: %i[assign_pianist_to_performance_manually assign_pianist store_form_data move_to_next_tour qualify_performance shuffle new create show edit update destroy update_order update_day_of_performance_and_subsequent_performances]
 
   def index
     @tours = Tour.all
@@ -9,7 +9,6 @@ class ToursController < ApplicationController
   def show;
     @performances = @tour.performances
     @tour.generate_initial_performance_order if @performances.any? { |p| p.order.nil? }
-    # Assigner un order aux performances qui n'en ont pas.
   end
 
   def edit; end
@@ -127,7 +126,7 @@ class ToursController < ApplicationController
     @tour = Tour.find(params[:id])
     pianists = params[:pianist_accompagnateur_ids].reject(&:blank?).map { |id| PianistAccompagnateur.find(id) }
     if pianists.count > 1
-    max_consecutive_performances_per_pianist = params[:max_consecutive_performances_per_pianist].presence&.to_i || 3
+    max_consecutive_performances_per_pianist = params[:max_consecutive_performances_per_pianist].presence&.to_i || 2
     else
       max_consecutive_performances_per_pianist = params[:max_consecutive_performances_per_pianist].presence&.to_i || 255
     end
@@ -136,10 +135,18 @@ class ToursController < ApplicationController
     redirect_to [@organism, @competition, @edition_competition, @category, @tour], notice: "Pianistes assignés avec succès."
   end
 
+  def assign_pianist_to_performance_manually
+    @performance = Performance.find(params[:performance])
+
+    @performance.assign_pianist_accompagnateur(params[:pianist_accompagnateur_id])
+    redirect_to [@organism, @competition, @edition_competition, @category, @tour], notice: 'Pianist was successfully updated.'
+  end
+
   def qualify_performance
     performance = Performance.find(params[:performance_id])
-    performance.update(is_qualified: !performance.is_qualified)
-    redirect_to [@organism, @competition, @edition_competition, @category, @tour], notice: "Performance qualifiée avec succès."
+    if performance.update(is_qualified: !performance.is_qualified)
+      redirect_to [@organism, @competition, @edition_competition, @category, @tour], notice: "Performance qualifiée avec succès."
+    end
   end
 
   def move_to_next_tour

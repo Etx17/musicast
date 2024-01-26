@@ -54,6 +54,8 @@ class PerformancesController < ApplicationController
       :resultat,
       :tour_id,
       :inscription_id,
+      :pianist_accompagnateur_id,
+      :id, 
       ordered_air_selection: [],
       air_selection: []).tap do |whitelisted|
         whitelisted[:air_selection] = whitelisted[:air_selection]&.reject(&:blank?)

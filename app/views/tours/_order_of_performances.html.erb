@@ -5,13 +5,17 @@
       <div class="d-flex justify-content-center gap-3">
         <h2 class="text-center">Ordre de passage actuel </h2>
         <%= button_to shuffle_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour), method: :post, class: "btn btn-outline-dark rounded-8", data: { turbo_confirm: "Si vous mélangez l'ordre de passage, vous devrez recréer le planning." }, disabled: @tour.performances.none?  do %>
-          <i class="fas fa-random pe-3"></i>
+          <i class="fas fa-random pe-1"></i>
           Mélanger aléatoirement
         <% end %>
 
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#assignPianistModal">
-          Assign Pianist
-        </button>
+        <%# <button type="button" class="btn btn-outline-dark rounded-8" data-bs-toggle="modal" data-bs-target="#assignPianistModal">
+          <small>Assigner les pianistes accompagnateurs</small>
+        </button> %>
+        <%= button_tag type: 'button', class: "btn btn-outline-dark rounded-8", style: "height: 38px;", data: { bs_toggle: "modal", bs_target: "#assignPianistModal" }, disabled: @tour.performances.none?  do %>
+          <i class="fas fa-user pe-1"></i>
+          Assigner les pianistes accompagnateurs
+        <% end %>
 
         <div class="modal fade" id="assignPianistModal" tabindex="-1" aria-labelledby="assignPianistModalLabel" aria-hidden="true">
           <div class="modal-dialog">
@@ -25,7 +29,7 @@
                   <!-- Add your form fields here -->
                   <div class="mb-3">
                     <%= form.label :pianist_accompagnateur_id, "Pianistes pour ce tour (Pour sélectionner plusieurs :maintenez la touche MAJ ou CMD enfoncée et cliquez)" %>
-                    <%= form.collection_select :pianist_accompagnateur_ids, @organism.pianist_accompagnateurs, :id, :full_name, {prompt: "Selectionnez un ou plusieurs pianistes "}, {class: "form-control", multiple: true} %>
+                    <%= form.collection_select :pianist_accompagnateur_ids, @organism.pianist_accompagnateurs, :id, :full_name, {prompt: "Selectionnez un ou plusieurs pianistes "}, {class: "form-control", multiple: true, id: "pianist-select", onchange: "document.getElementById('submit-button').disabled = (this.value == '');"} %>
                   </div>
 
                   <div class="mb-3">
@@ -37,7 +41,7 @@
 
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <%= form.submit "Assign", class: "btn btn-primary" %>
+                    <%= form.submit "Assign",id: "submit-button", class: "btn btn-primary", disabled: true %>
                   </div>
                 <% end %>
               </div>
@@ -114,7 +118,15 @@
                 </td>
                 <% if @category.is_accompagnated_by_pianist? %>
                   <td class="p-2 text-center bg-light text-secondary"  >
-                    <%= performance.pianist_accompagnateur&.full_name || "il faut set le pianiste" %>
+                    <% if !performance.inscription.candidate_brings_pianist_accompagnateur %>
+                      <%= form_with url: assign_pianist_to_performance_manually_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour, performance: performance), method: :post do |form| %>
+                        <%= form.hidden_field :id, value: performance.id %>
+                        <%= form.select :pianist_accompagnateur_id, @organism.pianist_accompagnateurs.map { |p| [p.full_name, p.id] }, selected: performance.pianist_accompagnateur_id, prompt: "Select a pianist" %>
+                        <%= form.submit "Update", class: "btn btn-primary mt-2" %>
+                      <% end %>
+                    <% else %>
+                      <p>Vient avec son pianiste</p>
+                    <% end %>
                   </td>
                 <% end %>
                 <td class="p-2 text-center bg-light text-secondary"  ><%= performance.minutes %></td>

@@ -28,6 +28,7 @@ Rails.application.routes.draw do
             post :assign_pianist, on: :member
             resources :pauses
             put :qualify_performance, on: :member
+            post :assign_pianist_to_performance_manually, on: :member
             get 'move_to_next_tour', on: :member
             get 'show_pdf', on: :member, defaults: { format: 'pdf' }
             get 'show_jury_pdf', on: :member, defaults: { format: 'pdf' }

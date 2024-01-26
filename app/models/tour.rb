@@ -58,6 +58,10 @@ class Tour < ApplicationRecord
     end
   end
 
+  def assign_pianist_manually_to_performance(performance, pianist_accompagnateur_id)
+    performance.update!(pianist_accompagnateur_id: pianist_accompagnateur_id)
+  end
+
   def generate_performance_schedule
     performances = self.performances.order(:order)
     current_start_time = start_time
@@ -89,6 +93,7 @@ class Tour < ApplicationRecord
 
   def assign_pianist_to_each_performance(pianists, max_consecutive_performances_per_pianist = 255)
     performances.where.not(order: nil).order(:order).each_with_index do |performance, index|
+      next if performance.inscription.candidate_brings_pianist_accompagnateur == true
       group_number = (index / max_consecutive_performances_per_pianist.to_f).floor
       pianist = pianists[group_number % pianists.size]
       performance.update(pianist_accompagnateur: pianist)
