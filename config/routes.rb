@@ -25,6 +25,7 @@ Rails.application.routes.draw do
             get 'schedule', on: :member
             put 'update_day_of_performance_and_subsequent_performances', on: :member
             post :shuffle, on: :member
+            post :assign_pianist, on: :member
             resources :pauses
             put :qualify_performance, on: :member
             get 'move_to_next_tour', on: :member

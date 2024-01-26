@@ -87,6 +87,14 @@ class Tour < ApplicationRecord
     days.reject(&:blank?).sort
   end
 
+  def assign_pianist_to_each_performance(pianists, max_consecutive_performances_per_pianist = nil)
+    performances.where.not(order: nil).order(:order).each_with_index do |performance, index|
+      group_number = (index / max_consecutive_performances_per_pianist.to_f).floor
+      pianist = pianists[group_number % pianists.size]
+      performance.update(pianist_accompagnateur: pianist)
+    end
+  end
+
   def has_planning?
     performances.any?{|p| p.start_time.present?}
   end

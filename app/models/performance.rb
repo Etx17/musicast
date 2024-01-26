@@ -1,7 +1,7 @@
 class Performance < ApplicationRecord
   belongs_to :inscription
   belongs_to :tour
-  belongs_to :pianist_accompagnateur, class_name: 'User', optional: true
+  belongs_to :pianist_accompagnateur, optional: true
   has_one :tour_requirement, through: :tour
 
   delegate :candidat, to: :inscription
@@ -36,6 +36,7 @@ class Performance < ApplicationRecord
   def minutes
     airs.sum(&:length_minutes)
   end
+
 
 
   def update_ordered_air_selection

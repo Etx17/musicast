@@ -24,6 +24,21 @@
   category1 = Category.create!(price: 100, edition_competition_id: edition.id, name: "Piano under 18 #{n}", description: "Category for participants under 18 years #{n}", min_age: 10, max_age: 18, discipline: 1)
   category2 = Category.create!(price: 50, edition_competition_id: edition.id, name: "Piano under 12 #{n}", description: "Category for children under 12 years #{n}", min_age: 6, max_age: 12, discipline: 2)
 
+  # Pianistes accompagnateurs de l'organisme
+  PianistAccompagnateur.create!(
+    email: "pianist_accompagnateur1_#{n}@example,com",
+    full_name: Faker::Name.name,
+    phone_number: Faker::PhoneNumber.phone_number,
+    organism: organism,
+  )
+
+  PianistAccompagnateur.create!(
+    email: "pianist_accompagnateur2_#{n}@example,com",
+    full_name: Faker::Name.name,
+    phone_number: Faker::PhoneNumber.phone_number,
+    organism: organism,
+  )
+
   # Tours for Category1
   Tour.create!(
     imposed_air_selection: ["1", "2"],

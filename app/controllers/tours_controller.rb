@@ -1,6 +1,6 @@
 class ToursController < ApplicationController
-  before_action :set_tour, only: %i[ store_form_data move_to_next_tour qualify_performance shuffle show edit update destroy update_order update_day_of_performance_and_subsequent_performances]
-  before_action :set_context, only: %i[ store_form_data move_to_next_tour qualify_performance shuffle new create show edit update destroy update_order update_day_of_performance_and_subsequent_performances]
+  before_action :set_tour, only: %i[assign_pianist store_form_data move_to_next_tour qualify_performance shuffle show edit update destroy update_order update_day_of_performance_and_subsequent_performances]
+  before_action :set_context, only: %i[assign_pianist store_form_data move_to_next_tour qualify_performance shuffle new create show edit update destroy update_order update_day_of_performance_and_subsequent_performances]
 
   def index
     @tours = Tour.all
@@ -121,6 +121,14 @@ class ToursController < ApplicationController
 
     @tour.generate_initial_performance_order
     redirect_to [@organism, @competition, @edition_competition, @category, @tour], notice: "Ordre de passage mélangé avec succès."
+  end
+
+  def assign_pianist
+    @tour = Tour.find(params[:id])
+    pianists = params[:pianist_accompagnateur_ids].reject(&:blank?).map { |id| PianistAccompagnateur.find(id) }
+    max_performances_per_pianist = params[:max_consecutive_performances_per_pianist]&.to_i || 3
+    @tour.assign_pianist_to_each_performance(pianists, max_performances_per_pianist)
+    redirect_to [@organism, @competition, @edition_competition, @category, @tour], notice: "Pianistes assignés avec succès."
   end
 
   def qualify_performance
