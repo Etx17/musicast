@@ -1,2 +1,3 @@
-<h1>PianistAccompagnateurs#edit</h1>
-<p>Find me in app/views/pianist_accompagnateurs/edit.html.erb</p>
+<%= turbo_frame_tag "edit_pianist_frame_#{@pianist.id}" do %>
+  <%= render 'form', pianist_accompagnateur: @pianist %>
+<% end %>

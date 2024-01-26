@@ -1,0 +1,17 @@
+<%= simple_form_for [@organism, @pianist] do |f| %>
+  <% if @pianist.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@pianist.errors.count, "error") %> prohibited this pianist from being saved:</h2>
+
+      <ul>
+        <% @pianist.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <%= f.input :full_name, label: "Nom complet", input_html: { style: "border: none;"} %>
+  <%= f.input :email, input_html: { style: "border: none;"} %>
+  <%= f.input :phone_number, label: "Numéro de téléphone", input_html: { style: "border: none;"}  %>
+  <%= f.submit "Enregistrer", class: "btn btn-dark mb-3" %>
+<% end %>

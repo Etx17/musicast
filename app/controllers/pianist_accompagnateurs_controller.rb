@@ -2,6 +2,7 @@ class PianistAccompagnateursController < ApplicationController
   before_action :set_pianist, only: [:edit, :update, :destroy]
 
   def new
+    @organism = Organism.friendly.find(params[:organism_id])
     @pianist = PianistAccompagnateur.new
   end
 
@@ -15,6 +16,7 @@ class PianistAccompagnateursController < ApplicationController
   end
 
   def edit
+    @organism = Organism.friendly.find(params[:organism_id])
   end
 
   def update
