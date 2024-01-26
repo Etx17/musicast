@@ -55,4 +55,9 @@ class Category < ApplicationRecord
   def should_generate_new_friendly_id?
     self.slug = name.parameterize if name_changed?
   end
+
+  def is_accompagnated_by_pianist?
+    false
+    true if discipline == 'lyrical_singing'
+  end
 end

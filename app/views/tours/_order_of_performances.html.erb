@@ -19,6 +19,9 @@
             <th class="p-2 text-center bg-grey ">Candidat</th>
             <th class="p-2 text-center bg-grey ">Ordre</th>
             <th class="p-2 text-center bg-grey ">Airs présentés (titre raccourci)</th>
+            <% if @category.is_accompagnated_by_pianist? %>
+              <th class="p-2 text-center bg-grey ">Pianiste accompagnateur</th>
+            <% end %>
             <th class="p-2 text-center bg-grey ">Minutage</th>
           </tr>
         </thead>
@@ -70,6 +73,11 @@
                     </div>
                   </div>
                 </td>
+                <% if @category.is_accompagnated_by_pianist? %>
+                  <td class="p-2 text-center bg-light text-secondary"  >
+                    <%= performance.pianist_accompagnateur&.full_name || "il faut set le pianiste" %>
+                  </td>
+                <% end %>
                 <td class="p-2 text-center bg-light text-secondary"  ><%= performance.minutes %></td>
                 </td>
               </tr>
