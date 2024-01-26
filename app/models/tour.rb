@@ -87,7 +87,7 @@ class Tour < ApplicationRecord
     days.reject(&:blank?).sort
   end
 
-  def assign_pianist_to_each_performance(pianists, max_consecutive_performances_per_pianist = nil)
+  def assign_pianist_to_each_performance(pianists, max_consecutive_performances_per_pianist = 255)
     performances.where.not(order: nil).order(:order).each_with_index do |performance, index|
       group_number = (index / max_consecutive_performances_per_pianist.to_f).floor
       pianist = pianists[group_number % pianists.size]
