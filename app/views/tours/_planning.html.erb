@@ -1,5 +1,5 @@
 <div class="row px-3" >
-  <div class="d-flex justify-content-center mx-auto">
+  <div class="d-flex justify-content-center mx-auto mb-3">
     <% if @tour.has_planning? %>
       <button class="items-center mx-3 justify-center btn btn-outline-success py-3 rounded-16"  data-bs-target="#tourConfirmationModal" data-bs-toggle="modal" data-bs-dismiss="modal" aria-label="Close" >
         <i class="fas fa-sync-alt pe-3"></i>
@@ -7,14 +7,8 @@
         <small class="text-secondary">
           Modifiez les contraintes horaires du tour, et regénérez un planning
         </small>
+      </button>
 
-      </button>
--
-      <button class="items-center  mx-3 justify-center btn btn-outline-success py-3 rounded-16"  >
-        <i class="fas fa-file-pdf  "></i>
-        Générer des versions du planning <br>
-         <small class="text-secondary"> Différentes versions pour les candidats, le jury, l'organisation, etc...</small>
-      </button>
 
       <%# Bouton qui ouvre mon application mail pour envoyer un message a tous les performances.candidat.user.email %>
       <%# Generate the email list %>
@@ -40,8 +34,9 @@
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#planningJuryFormModal">
           Configurer le dossier jury
         </button>
-
-        <%= link_to "Télécharger le dossier du jury PDF", show_jury_pdf_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour), class: "btn btn-primary", target: '_blank' %>
+        <% if !session[:detailed_program].nil? %>
+          <%= link_to "Télécharger le dossier du jury PDF", show_jury_pdf_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour), class: "btn btn-primary", target: '_blank', disabled: session[:detailed_program].nil? %>
+        <% end %>
       </div>
     </div>
   <!-- The modal -->
@@ -78,7 +73,7 @@
               <i class="fas fa-sync-alt"></i>
             <% end %>
           </div>
-          <div class="btn btn-outline-secondary mb-2  " data-controller="start-time" data-bs-toggle="modal" data-bs-target="#pauseModal" data-action="click->start-time#fetchStartTimes" data-day="<%= day %>">
+          <div class="btn btn-primary mb-2  " data-controller="start-time" data-bs-toggle="modal" data-bs-target="#pauseModal" data-action="click->start-time#fetchStartTimes" data-day="<%= day %>">
             + Ajouter une pause
           </div>
         </div>
@@ -135,6 +130,14 @@
                   <td id="pause_time_<%= day %>_<%= index %>"><%= item.start_time.strftime('%H:%M') %> - <%= item.end_time.strftime('%H:%M') %></td>
                 <td>
                   <% last_pause_of_the_day = items.reverse.find { |i| i.is_a?(Pause) && i.date == day } %>
+
+                  <% if last_pause_of_the_day == item %>
+                    <%= button_to 'Supprimer', organism_competition_edition_competition_category_tour_pause_path(@organism, @competition, @edition_competition, @category, @tour, item), method: :delete, data: { turbo_confirm: "Supprimer cette pause modifiera l'ordre de passage des performances ultérieures de ce tour" }, class: 'btn btn-outline-danger' %>
+                  <% else %>
+                    <div class="btn btn-outline-danger disabled">
+                      Supprimer
+                    </div>
+                  <% end %>
                 </td>
               </tr>
             <% end %>
