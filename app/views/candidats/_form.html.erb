@@ -66,6 +66,39 @@
     </div>
   </div>
 
+
+
+
+  <div class="p-3 bg-white rounded-4 d-flex flex-column border mt-3">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h2>Diplômes et Certifications</h2>
+    </div>
+
+    <% if @candidat.diplomas.attached? %>
+      <div class="d-flex flex-wrap gap-3 mb-3">
+        <% @candidat.diplomas.each do |diploma| %>
+          <div class="d-flex flex-column">
+            <embed src="<%= url_for(diploma) %>" width="200" height="200" type="application/pdf">
+            <div class="d-flex gap-3 justify-content-between ">
+
+              <%= link_to 'Voir', url_for(diploma), target: "_blank", class: "btn btn-outline-dark border-0 shadow-sm" %>
+              <%= button_to 'Delete', delete_diploma_candidat_path(diploma_id: diploma.id), method: :delete, data: { turbo_confirm: 'Are you sure?' }, class: "btn btn-outline-dark border-0 shadow-sm" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="text-muted">Vous n'avez pas encore ajouté de diplôme.</p>
+    <% end %>
+
+    <%= form_with(model: @candidat, url: add_diploma_candidat_path(@candidat), local: true,  method: :post) do |form| %>
+      <%= form.label :new_diploma, "Ajouter un diplôme" %>
+      <%= form.file_field :new_diploma, multiple: true %>
+      <%= form.submit "Ajouter" %>
+    <% end %>
+  </div>
+
+
   <div class="form-actions">
     <%= f.button :submit, "Enregistrer", class:"btn btn-primary" %>
   </div>

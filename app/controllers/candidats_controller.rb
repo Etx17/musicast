@@ -59,6 +59,19 @@ class CandidatsController < ApplicationController
     end
   end
 
+  def add_diploma
+    @candidat = Candidat.find(params[:id])
+    @candidat.diplomas.attach(params[:candidat][:new_diploma])
+    redirect_to @candidat
+  end
+
+  def delete_diploma
+    @candidat = Candidat.find(params[:id])
+    diploma = @candidat.diplomas.find(params[:diploma_id])
+    diploma.purge
+    redirect_to candidat_path(@candidat), notice: "Diplôme supprimé"
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -72,6 +85,7 @@ class CandidatsController < ApplicationController
     :first_name, :last_name, :birthdate, :bio, :short_bio, :medium_bio, :long_bio, :repertoire, :banner, :portrait,
     experiences_attributes: [:id, :title, :company, :location, :start_date, :end_date, :description, :_destroy],
     educations_attributes: [:id, :title, :organism, :location, :start_date, :end_date, :description, :_destroy],
+    diplomas: []
     )
   end
 end

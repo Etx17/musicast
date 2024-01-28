@@ -7,7 +7,7 @@
       <div class="d-flex justify-content-between gap-3 align-items-center">
         <div class="d-flex align-items-center gap-3">
         <h1 class="mb-0"><%= @candidat.first_name %> <%= @candidat.last_name %></h1>
-        <p class="m-0"><%= ISO3166::Country[@candidat.nationality].translation %></p>
+        <p class="m-0"><%= ISO3166::Country[@candidat&.nationality]&.translation %></p>
         </div>
         <%= link_to edit_candidat_path, class:"btn btn-light rounded-circle p-0" do %>
           <i class="fas fa-pencil rounded-circle shadow text-secondary p-3" ></i>

@@ -1,0 +1,26 @@
+<div class="p-3 bg-white rounded-4 d-flex flex-column border mt-3">
+  <div class="d-flex justify-content-start align-items-start gap-3 mb-3">
+    <h2>Diplômes & Certifications</h2>
+    <%= link_to edit_candidat_path, class:"btn btn-light rounded-circle p-0" do %>
+      <i class="fas fa-pencil rounded-circle shadow text-secondary p-2" ></i>
+    <% end %>
+  </div>
+
+  <% if @candidat.diplomas.attached? %>
+    <div class="d-flex flex-wrap gap-3 mb-3">
+      <% @candidat.diplomas.each do |diploma| %>
+        <div class="d-flex flex-column">
+          <embed src="<%= url_for(diploma) %>" width="200" height="200" type="application/pdf">
+          <div class="d-flex gap-3 justify-content-between ">
+
+            <%= link_to 'Voir', url_for(diploma), target: "_blank", class: "btn btn-outline-dark border-0 shadow-sm" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <p class="text-muted">Vous n'avez pas encore ajouté de diplôme.</p>
+  <% end %>
+
+
+</div>

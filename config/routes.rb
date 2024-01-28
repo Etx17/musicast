@@ -55,6 +55,10 @@ Rails.application.routes.draw do
   resources :candidats do
     resources :experiences, only: [:new, :create, :destroy]
     resources :educations, only: [:new, :create, :destroy]
+    member do
+      post :add_diploma
+      delete :delete_diploma
+    end
   end
   resources :organisateurs
 
