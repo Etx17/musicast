@@ -8,8 +8,18 @@ class PianistAccompagnateursController < ApplicationController
 
   def create
     @pianist = PianistAccompagnateur.new(pianist_params)
+    @organism = Organism.friendly.find(params[:organism_id])
+    @pianist.organism = @organism
     if @pianist.save
-      redirect_to @pianist, notice: 'Pianist was successfully created.'
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: [
+            turbo_stream.append('organism_pianists', partial: 'pianist', locals: { pianist: @pianist }),
+            turbo_stream.replace('new_pianist_frame', partial: 'add_pianist', locals: { organism: @organism })
+          ]
+        end
+        format.html { redirect_to organisateur_dashboard_path, notice: 'Pianist was successfully created.' }
+      end
     else
       render :new
     end
@@ -20,8 +30,15 @@ class PianistAccompagnateursController < ApplicationController
   end
 
   def update
+    @pianist = PianistAccompagnateur.find(params[:id])
+    @organism = @pianist.organism
     if @pianist.update(pianist_params)
-      redirect_to @pianist, notice: 'Pianist was successfully updated.'
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace("edit_pianist_frame_#{@pianist.id}", partial: 'pianist', locals: { pianist: @pianist })
+        end
+        format.html { redirect_to organisateur_dashboard_path, notice: 'Pianist was successfully created.' }
+      end
     else
       render :edit
     end
@@ -29,7 +46,11 @@ class PianistAccompagnateursController < ApplicationController
 
   def destroy
     @pianist.destroy
-    redirect_to organisateur_dashboard_path, notice: 'Pianist was successfully destroyed.'
+
+    respond_to do |format|
+      format.turbo_stream { render turbo_stream: turbo_stream.remove("edit_pianist_frame_#{@pianist.id}") }
+      format.html { redirect_to organisateur_dashboard_path, notice: 'Pianist was successfully destroyed.' }
+    end
   end
 
   private
@@ -39,6 +60,6 @@ class PianistAccompagnateursController < ApplicationController
   end
 
   def pianist_params
-    params.require(:pianist_accompagnateur).permit(:full_name)
+    params.require(:pianist_accompagnateur).permit(:full_name, :email, :phone_number, :organism_id)
   end
 end

@@ -34,19 +34,15 @@
           <h2 class="mb-4">Partenaires</h2>
           <h5>Pianistes Accompagnateurs</h5>
           <%= turbo_frame_tag 'new_pianist_frame' do %>
-            <%= link_to 'Add New Pianist', new_organism_pianist_accompagnateur_path(@organism), class: 'btn btn-primary', data: { turbo_frame: 'new_pianist_frame' } %>
+            <%= link_to '+ Ajouter un pianiste accompagnateur', new_organism_pianist_accompagnateur_path(@organism), class: 'btn btn-outline-dark mb-3', data: { turbo_frame: 'new_pianist_frame' } %>
           <% end %>
-          <ul>
-            <% @organism.pianist_accompagnateurs.each do |pianist| %>
-              <li>
-                <%= turbo_frame_tag "edit_pianist_frame_#{pianist.id}" do %>
-                  <%= pianist.full_name %>
-                  <%= link_to 'Edit', edit_organism_pianist_accompagnateur_path(@organism, pianist), class: 'btn btn-primary', data: { turbo_frame: "edit_pianist_frame_#{pianist.id}" } %>
-                  <%= link_to 'Delete', organism_pianist_accompagnateur_path(@organism, pianist), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+            <ul>
+              <%= turbo_frame_tag 'organism_pianists' do %>
+                <% @organism.pianist_accompagnateurs.each do |pianist| %>
+                  <%= render "pianist_accompagnateurs/pianist", pianist: pianist %>
                 <% end %>
-              </li>
-            <% end %>
-          </ul>
+              <% end %>
+            </ul>
         </div>
       </div>
     </div>

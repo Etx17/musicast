@@ -1,0 +1,4 @@
+<!-- app/views/pianist_accompagnateurs/create.js.erb -->
+<%= turbo_stream.append 'organism_pianists' do %>
+  <%= render 'pianist', pianist: @pianist %>
+<% end %>

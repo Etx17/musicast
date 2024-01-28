@@ -1,0 +1,18 @@
+<!-- app/views/pianist_accompagnateurs/_pianist.html.erb -->
+<%= turbo_frame_tag "edit_pianist_frame_#{pianist.id}" do %>
+<li>
+  <div class="d-flex justify-content-between gap-2">
+    <%= pianist.full_name %>
+    <div class="d-flex">
+      <%= link_to edit_organism_pianist_accompagnateur_path(@organism, pianist), data: { turbo_frame: "edit_pianist_frame_#{pianist.id}" }, class: 'p-0 mx-1' do %>
+        <i class="fas fa-edit"></i>
+      <% end %>
+      <% unless pianist.is_assigned_to_future_performance?%>
+        <%= button_to organism_pianist_accompagnateur_path(@organism, pianist), method: :delete, data: { turbo_confirm: 'Are you sure?' }, class: 'bg-transparent border border-0 p-0 mx-1' do %>
+          <i class="fas fa-trash"></i>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</li>
+<% end %>
