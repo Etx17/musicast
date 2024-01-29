@@ -144,7 +144,7 @@
          <div class="modal-body" data-controller="requirement" data-action="click->requirement#changeIdOfInput">
             <%= simple_form_for([@organism, @competition, @edition_competition, @category, RequirementItem.new]) do |f| %>
               <%= f.input :title, input_html: { id: "requirement-#{@category.name}-#{Time.now.to_i}" }, data: { requirement_target: "title" } %>
-              <%= f.input :type_item, collection: RequirementItem.item_types_list, prompt: 'Select a type' %>
+              <%= f.input :type_item, collection: RequirementItem.type_items.keys, prompt: 'Select a type' %>
               <%= f.input :description_item %>
               <div class="modal-footer">
                 <%= f.button :submit, class: 'btn btn-primary' %>
