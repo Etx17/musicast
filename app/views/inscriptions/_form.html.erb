@@ -65,9 +65,9 @@
                 <div class="col-12 col-md">
                   <%= air_fields.input :length_minutes, label: "Minutage", input_html: { class: 'form-control' } %>
                 </div>
-                <div class="col-12 col-md">
-                  <%= air_fields.input :composer, label: "Composer", input_html: { class: 'form-control' } %>
-                </div>
+                <%# <div class="col-12 col-md"> %>
+                  <%# <%= air_fields.input :composer, label: "Composer", input_html: { class: 'form-control' } %>
+                <%# </div> %>
                 <div class="col-12 col-md">
                   <%= air_fields.input :oeuvre, label: "Oeuvre", input_html: { class: 'form-control' } %>
                 </div>
@@ -77,6 +77,9 @@
                 <div class="col-12 col-md">
                   <%= air_fields.input :tonality, label: "Tonality", input_html: { class: 'form-control' } %>
                 </div>
+
+                <%= render 'shared/components/music_search_component', f: air_fields %>
+
                 </div>
               </div>
             <% end %>
@@ -98,7 +101,7 @@
     </div>
 
     <%= f.input :candidate_brings_pianist_accompagnateur, as: :boolean, label: "Souhaitez vous emmener votre propre pianiste accompagnateur? (cochez pour OUI)" if inscription.category.allow_own_pianist_accompagnateur %>
-    
+
     <div class="form-actions">
       <%= f.button :submit %>
     </div>
