@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_28_125707) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_29_155118) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -362,6 +362,16 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_28_125707) do
     t.index ["organism_id"], name: "index_pianist_accompagnateurs_on_organism_id"
   end
 
+  create_table "prizes", force: :cascade do |t|
+    t.string "title"
+    t.integer "amount"
+    t.text "description"
+    t.bigint "category_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_prizes_on_category_id"
+  end
+
   create_table "programme_requirements", force: :cascade do |t|
     t.bigint "category_id", null: false
     t.datetime "created_at", null: false
@@ -488,6 +498,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_28_125707) do
   add_foreign_key "performances", "pianist_accompagnateurs"
   add_foreign_key "performances", "tours"
   add_foreign_key "pianist_accompagnateurs", "organisms"
+  add_foreign_key "prizes", "categories"
   add_foreign_key "programme_requirements", "categories"
   add_foreign_key "requirement_items", "categories"
   add_foreign_key "semi_imposed_work_airs", "airs"

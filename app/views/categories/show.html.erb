@@ -175,5 +175,30 @@
     </div>
   </div>
 
+<!-- Prize section -->
+
+    <h2 class="text-dark" style="font-size: 4em;">Prix</h2>
+
+  <div class="row">
+    <% @category.prizes.each do |prize| %>
+      <div class="col-md-4">
+        <div class="card mb-4">
+          <div class="card-body">
+            <h5 class="card-title"><%= prize.title %> <%= button_to "Supprimer", organism_competition_edition_competition_category_prize_path(@organism, @competition, @edition_competition, @category, prize), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-outline-dark btn-sm ms-2 border-0' %></h5>
+            <h6 class="card-subtitle mb-2 text-muted"><%= prize.amount %>€</h6>
+            <p class="card-text"><%= prize.description %></p>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+
+
+  <%# Ajouter prix %>
+  <%= link_to new_organism_competition_edition_competition_category_prize_path(@organism, @competition, @edition_competition, @category), class: "btn btn-dark my-3" do %>
+    Ajouter un prix
+  <% end %>
+
 
 </div>

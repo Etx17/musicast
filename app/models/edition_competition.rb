@@ -30,4 +30,8 @@ class EditionCompetition < ApplicationRecord
   def organism
     competition.organism
   end
+
+  def max_prize_amount
+    categories.map(&:prizes).flatten.map(&:amount).max
+  end
 end

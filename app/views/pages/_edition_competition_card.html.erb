@@ -13,6 +13,9 @@
           <% edition_competition.categories.each do |category| %>
             <span class="badge border bg-secondary text-light rounded-pill p-1"><%= category.name %></span>
           <% end %>
+          <% if edition_competition.max_prize_amount.present? %>
+          <span class="badge border bg-secondary text-light rounded-pill p-1">1st prize:<%= edition_competition.max_prize_amount %>€</span>
+          <% end %>
         </div>
       </div>
     <% end %>

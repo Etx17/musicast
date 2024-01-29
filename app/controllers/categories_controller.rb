@@ -14,6 +14,7 @@ class CategoriesController < ApplicationController
     @semi_imposed_work = SemiImposedWork.new
     @tour = Tour.new
     @tour.build_tour_requirement
+
   end
 
   # GET /categories/new
