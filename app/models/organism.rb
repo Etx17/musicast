@@ -13,6 +13,8 @@ class Organism < ApplicationRecord
   before_update :should_generate_new_friendly_id?
   has_one_attached :logo
 
+  validates :nom, presence: true
+
   def should_generate_new_friendly_id?
     self.slug = nom.parameterize if nom_changed?
   end

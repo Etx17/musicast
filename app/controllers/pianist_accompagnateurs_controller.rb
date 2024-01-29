@@ -15,7 +15,6 @@ class PianistAccompagnateursController < ApplicationController
         format.turbo_stream do
           render turbo_stream: [
             turbo_stream.append('organism_pianists', partial: 'pianist', locals: { pianist: @pianist }),
-            turbo_stream.replace('new_pianist_frame', partial: 'add_pianist', locals: { organism: @organism })
           ]
         end
         format.html { redirect_to organisateur_dashboard_path, notice: 'Pianist was successfully created.' }

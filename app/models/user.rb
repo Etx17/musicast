@@ -19,7 +19,6 @@ class User < ApplicationRecord
   validates :inscription_role, presence: true
 
   def after_sign_in_path_for(_resource)
-    raise
     if current_user.role == "admin"
       admin_dashboard_path
     elsif current_user.role == "organisateur"

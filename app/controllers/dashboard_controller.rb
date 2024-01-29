@@ -7,6 +7,8 @@ class DashboardController < ApplicationController
   def organiser
     @organism = current_user.organisateur&.organism
     @competitions = @organism&.competitions
+
+    redirect_to new_organism_path if @organism.nil?
   end
 
   def candidate

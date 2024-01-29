@@ -13,6 +13,7 @@ class OrganismsController < ApplicationController
   # GET /organisms/new
   def new
     @organism = Organism.new
+    @organisateur = current_user.organisateur
   end
 
   # GET /organisms/1/edit
@@ -22,15 +23,12 @@ class OrganismsController < ApplicationController
   # POST /organisms or /organisms.json
   def create
     @organism = Organism.new(organism_params)
+    @organism.organisateur = current_user.organisateur
 
-    respond_to do |format|
-      if @organism.save
-        format.html { redirect_to organism_url(@organism), notice: "Organism was successfully created." }
-        format.json { render :show, status: :created, location: @organism }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @organism.errors, status: :unprocessable_entity }
-      end
+    if @organism.save
+      redirect_to organisateur_dashboard_path, notice: "Votre organisme a été crée avec succès."
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 

@@ -38,7 +38,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def after_sign_up_path_for(resource)
     if Organisateur.exists?(user: resource)
       # organisateur_configuration_path
-      organisateur_dashboard_path
+      new_organism_path
+      # organisateur_dashboard_path
       # TODO
     elsif Candidat.exists?(user: resource)
       candidat_dashboard_path
