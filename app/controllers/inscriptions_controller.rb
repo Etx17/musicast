@@ -25,6 +25,7 @@ class InscriptionsController < ApplicationController
 
   def new
     # If candidat already created a inscription for the category, redirect to it
+    redirect_to edit_candidat_path(current_user.candidat), notice: "Vous devez avoir complêté vos informations (photos, bios, expériences, répertoire, etc...) pour pouvoir vous inscrire" unless current_user.candidat.has_minimum_informations_for_inscription?
     inscription = current_user.candidat.inscriptions.by_category(params[:category_id]).first
     redirect_to inscription_path(inscription) if inscription.present?
 

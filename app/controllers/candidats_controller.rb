@@ -62,7 +62,7 @@ class CandidatsController < ApplicationController
   def add_diploma
     @candidat = Candidat.find(params[:id])
     @candidat.diplomas.attach(params[:candidat][:new_diploma])
-    redirect_to @candidat
+    redirect_to edit_candidat_path(@candidat)
   end
 
   def delete_diploma
