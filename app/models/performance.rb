@@ -49,7 +49,7 @@ class Performance < ApplicationRecord
     # Si air_selection a changé, je dois soit ajouter soit supprimer, bref mettre à jour ordered_air_selection
     if air_selection_changed?
       # Combine current air_selection and imposed_air_selection
-      combined_selection = air_selection + imposed_air_selection
+      combined_selection = air_selection + (imposed_air_selection || [])
 
       # Remove any IDs from ordered_air_selection that are not in the combined_selection
       self.ordered_air_selection.select! { |id| combined_selection.include?(id) }

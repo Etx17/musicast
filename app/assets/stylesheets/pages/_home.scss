@@ -199,7 +199,7 @@ body {
   position: relative;
 }
 
-.image-placeholder {
+.image-placeholder-4-6 {
   width: 240px; /* 4 inches at 60dpi */
   height: 360px; /* 6 inches at 60dpi */
   border: 2px dashed #ccc;
@@ -209,7 +209,17 @@ body {
   margin-bottom: 1em;
 }
 
-.image-placeholder p {
+.image-placeholder-6-4 {
+  height: 360px; /* 4 inches at 60dpi */
+  width: 540px; /* 6 inches at 60dpi */
+  border: 2px dashed #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1em;
+}
+
+.image-placeholder-p {
   font-size: 2em;
   color: #ccc;
 }

@@ -38,6 +38,18 @@ class CandidatsController < ApplicationController
 
   # PATCH/PUT /candidats/1 or /candidats/1.json
   def update
+    # if @candidat.portrait.attached?
+    #   processed_image = @candidat.portrait.variant(resize_to_fill: [360, 540]).processed
+
+    #   Tempfile.open do |tempfile|
+    #     tempfile.binmode
+    #     tempfile.write processed_image.download
+    #     tempfile.rewind
+
+    #     @candidat.portrait.attach(io: tempfile, filename: @candidat.portrait.filename, content_type: @candidat.portrait.content_type)
+    #   end
+    # end
+
     respond_to do |format|
       if @candidat.update(candidat_params)
         format.html { redirect_to candidat_url(@candidat), notice: "Candidat was successfully updated." }
