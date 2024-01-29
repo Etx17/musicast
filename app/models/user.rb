@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  after_create :create_associated_candidat
+  after_create :create_associated_role
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
@@ -15,7 +15,11 @@ class User < ApplicationRecord
   has_many :inscription_orders
   has_many :documents
 
+  enum inscription_role: { candidate: 0, organiser: 1 }
+  validates :inscription_role, presence: true
+
   def after_sign_in_path_for(_resource)
+    raise
     if current_user.role == "admin"
       admin_dashboard_path
     elsif current_user.role == "organisateur"
@@ -29,8 +33,9 @@ class User < ApplicationRecord
     end
   end
 
-  def create_associated_candidat
-    Candidat.create(user: self)
+  def create_associated_role
+    Candidat.create(user: self) if inscription_role == "candidate"
+    Organisateur.create(user: self) if inscription_role == "organiser"
   end
 
   def organisateur

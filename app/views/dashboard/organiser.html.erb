@@ -1,12 +1,12 @@
 <div class="container mt-5">
   <div class="row">
-  <h1 class="text-center" style='font-size: 5em;'>Tableau de Bord</h1>
+    <h1 class="text-center" style='font-size: 5em;'>Tableau de Bord</h1>
     <div class="col-12 col-md-6">
       <div class="card border-0 shadow-sm rounded" style="background: #EEEEEE;">
         <div class="card-body">
           <h1 class="mb-4">Vos concours</h1>
           <div class="list-group">
-            <% @competitions.each do |competition| %>
+            <% @competitions&.each do |competition| %>
               <%= link_to organism_competition_path(@organism, competition) do %>
                 <div class="card" data-controller="hover" data-action="mouseenter->hover#hover mouseleave->hover#unhover" style="width: 100%; height: 300px; background-image: url('https://source.unsplash.com/random/?applications/300/200'); background-size: cover;">
                   <div class="card-img-overlay d-flex justify-content-center align-items-center" style="background-color: rgba(0, 0, 0, 0.7);" >
@@ -14,22 +14,29 @@
                   </div>
                 </div>
               <% end %>
-
             <% end %>
           </div>
           <%= link_to 'Créer un concours', new_organism_competition_path(@organism), class: 'btn btn-outline-dark mt-3' %>
         </div>
       </div>
     </div>
+
     <div class="col-12 col-md-6">
       <div class="card border-0 shadow-sm rounded mb-4" style="background: #EEEEEE;">
-        <div class="card-body">
+        <div class="card-body d-flex flex-column">
           <h2 class="mb-4">Informations de l'organisme</h2>
-          <%= turbo_frame_tag 'organism_frame', src: organism_path(@organism) %>
+          <div class="d-flex flex-column">
+            <div class="text-center">
+              <%= image_tag(@organism.logo.attached? ? url_for(@organism.logo) : "https://source.unsplash.com/random", class: "", height: 100, width: 100) %>
+            </div>
+            <p><%= @organism.nom %></p>
+            <p><%= @organism.description %></p>
+          </div>
+          <%= link_to "Modifier", edit_organism_path(@organism), class: "btn btn-outline-dark mx-auto mt-3" %>
         </div>
       </div>
 
-     <div class="card border-0 shadow-sm rounded mb-4" style="background: #EEEEEE;">
+      <div class="card border-0 shadow-sm rounded mb-4" style="background: #EEEEEE;">
         <div class="card-body">
           <h2 class="mb-4">Partenaires</h2>
           <h5>Pianistes Accompagnateurs</h5>

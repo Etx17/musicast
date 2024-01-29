@@ -10,11 +10,13 @@ module SidebarHelper
         # links << { label: "Candidat Messages", url: candidat_messages_path(current_user.candidat) }
       elsif current_user.organisateur.present?
         links << { label: "Tableau de bord", url: organisateur_dashboard_path }
-        last_edition_competition = current_user.organisateur.competitions.last.edition_competitions.last
-        categories = last_edition_competition.categories
-        links << { label: "#{last_edition_competition.competition.nom_concours} #{last_edition_competition.annee}", url: organism_competition_edition_competition_path(last_edition_competition.competition.organism_id, last_edition_competition.competition_id, last_edition_competition) }
-        categories.each do |category|
-          links << { label: category.name, url: organism_competition_edition_competition_category_path(last_edition_competition.competition.organism_id, last_edition_competition.competition_id, last_edition_competition, category) }
+        last_edition_competition = current_user.organisateur&.competitions&.last&.edition_competitions&.last
+        categories = last_edition_competition&.categories
+        links << { label: "#{last_edition_competition.competition.nom_concours} #{last_edition_competition.annee}", url: organism_competition_edition_competition_path(last_edition_competition.competition.organism_id, last_edition_competition.competition_id, last_edition_competition) } if last_edition_competition.present?
+        if categories.present?
+          categories.each do |category|
+            links << { label: category.name, url: organism_competition_edition_competition_category_path(last_edition_competition.competition.organism_id, last_edition_competition.competition_id, last_edition_competition, category) }
+          end
         end
         # links << { label: "Candidatures", url: inscriptions_path }
       elsif current_user.jury

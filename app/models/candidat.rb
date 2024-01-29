@@ -5,6 +5,7 @@ class Candidat < ApplicationRecord
   has_many :educations, dependent: :destroy
 
   has_one_attached :portrait
+  has_one_attached :artistic_photo
   has_one_attached :banner
 
   has_many_attached :diplomas
@@ -13,6 +14,10 @@ class Candidat < ApplicationRecord
   accepts_nested_attributes_for :educations
 
   validate :correct_document_mime_type
+
+  def has_minimum_informations_for_inscription?
+    self.first_name.present? && self.last_name.present? && self.bio.present? && self.short_bio.present? && self.medium_bio.present? && self.long_bio.present? && self.repertoire.present? && self.portrait.attached? && self.birthdate && self.artistic_photo.attached?
+  end
 
   private
 

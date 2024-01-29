@@ -1,5 +1,2 @@
-<%= turbo_frame_tag 'organism_frame' do %>
   <%= render "form", organism: @organism %>
-  <%= link_to "Retour", organism_path(@organism), method: :get, data: { turbo_action: 'replace', turbo_frame: 'organism_frame' }, class: 'btn btn-outline-dark mt-2' %>
-<% end %>
-<br>
+  <%= link_to "Retour", organisateur_dashboard_path, method: :get, data: { turbo_action: 'replace', turbo_frame: 'organism_frame' }, class: 'btn btn-outline-dark mt-2' %>

@@ -2,31 +2,35 @@
   <div class="row">
     <div class="col-md-6">
       <h1 class="text-center mb-5" style="font-size: 5em;">Editions</h1>
-      <% @competition.edition_competitions.each_with_index do |edition_competition, index| %>
-        <%= link_to organism_competition_edition_competition_path(@organism, @competition, edition_competition), data: { controller: "hover" } do %>
-          <div class="card mb-3 shadow-sm" style="width: 100%; height: 300px; background-image: url('https://source.unsplash.com/random/?opera/300/200'); background-size: cover;" data-action="mouseenter->hover#hover mouseleave->hover#unhover">
-            <div class="card-img-overlay d-flex justify-content-center align-items-center" style="background-color: rgba(0, 0, 0, 0.5);">
-              <h2 class="card-title text-white" style="font-size: 3em;" data-hover-target="text"><%= edition_competition.annee %></h2>
-            </div>
-            <div class="card-img-overlay d-flex flex-wrap justify-content-start align-items-end gap-2">
-              <% edition_competition.categories.each do |category| %>
-                <span class="badge rounded-pill bg-transparent text-white border border-white mb-1 mr-1"><%= category.name %></span>
-              <% end %>
-            </div>
-          </div>
-        <% end %>
-      <% end %>
-       <% if current_user.organisateur == @competition.organisateur %>
+
+
         <div class="card border-0 shadow-sm rounded mb-4 mt-4 bg-grey">
           <div class="card-body">
-            <h2 class="mb-4">Générer une édition du concours</h2>
-            <%= link_to new_organism_competition_edition_competition_path(@organism, @competition), data: { turbo_action: 'replace', turbo_frame: "new_edition_competition" }, class: 'btn btn-outline-dark w-100' do %>
-              <i class="fas fa-plus"></i> Ajouter une édition
+            <% @competition.edition_competitions.each_with_index do |edition_competition, index| %>
+              <%= link_to organism_competition_edition_competition_path(@organism, @competition, edition_competition), data: { controller: "hover" } do %>
+                <div class="card mb-3 shadow-sm" style="width: 100%; height: 300px; background-image: url('https://source.unsplash.com/random/?opera/300/200'); background-size: cover;" data-action="mouseenter->hover#hover mouseleave->hover#unhover">
+                  <div class="card-img-overlay d-flex justify-content-center align-items-center" style="background-color: rgba(0, 0, 0, 0.5);">
+                    <h2 class="card-title text-white" style="font-size: 3em;" data-hover-target="text"><%= edition_competition.annee %></h2>
+                  </div>
+                  <div class="card-img-overlay d-flex flex-wrap justify-content-start align-items-end gap-2">
+                    <% edition_competition.categories.each do |category| %>
+                      <span class="badge rounded-pill bg-transparent text-white border border-white mb-1 mr-1"><%= category.name %></span>
+                    <% end %>
+                  </div>
+                </div>
+              <% end %>
             <% end %>
-            <%= turbo_frame_tag "new_edition_competition" %>
+
+
+           <% if current_user.organisateur == @competition.organisateur %>
+              <h2 class="mb-4">Générer une édition du concours</h2>
+              <%= link_to new_organism_competition_edition_competition_path(@organism, @competition), class: 'btn btn-outline-dark w-100' do %>
+                <i class="fas fa-plus"></i> Ajouter une édition
+              <% end %>
+            <% end %>
+
           </div>
         </div>
-      <% end %>
     </div>
 
     <div class="col-md-6">

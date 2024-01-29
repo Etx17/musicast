@@ -1,4 +1,5 @@
 <% edition_competition ||= @edition_competition  %>
+<h1 class="text-center mt-3"><%= action_name == "new" ? "Créer une édition" : "Modifier l'édition"  %></h1>
 <%= simple_form_for([@organism, @competition, edition_competition]) do |f| %>
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>

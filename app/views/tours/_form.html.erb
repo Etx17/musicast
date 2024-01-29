@@ -16,8 +16,6 @@
     </div>
 
 
-    <%# <%= f.label :end_date, "Date de fin estimée", class: "form-label" %>
-      <%# <%= f.datetime_select :end_time %>
 
     <%= f.label "Date limite de soumission du programme du candidat pour ce tour" %>
     <div class="d-flex">
@@ -25,10 +23,10 @@
     </div>
 
 
-    <% if Date.today <= @category.edition_competition.end_of_registration %>
+    <%# <% if Date.today <= @category.edition_competition.end_of_registration %>
       <%= f.label :tour_number, "Numéro du tour (1er, 2e, 3e, etc...)", class: "form-label" %>
       <%= f.number_field :tour_number, class: "form-control" , required: true %>
-    <% end %>
+    <%# <% end %>
 
     <% if false && @category.imposed_work.present? %>
       <%= f.label :imposed_air_selection, "Cochez les airs que vous souhaitez imposer pour ce tour (optionel)", class: 'form-label' %>

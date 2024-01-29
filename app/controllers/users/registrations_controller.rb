@@ -37,7 +37,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def after_sign_up_path_for(resource)
     if Organisateur.exists?(user: resource)
+      # organisateur_configuration_path
       organisateur_dashboard_path
+      # TODO
     elsif Candidat.exists?(user: resource)
       candidat_dashboard_path
     elsif Jure.exists?(user: resource)
@@ -60,7 +62,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # protected
 
-  # If you have extra params to permit, append them to the sanitizer.
+  # # If you have extra params to permit, append them to the sanitizer.
   # def configure_sign_up_params
   #   devise_parameter_sanitizer.permit(:sign_up, keys: [:attribute])
   # end

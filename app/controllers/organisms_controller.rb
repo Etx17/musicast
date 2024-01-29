@@ -37,7 +37,7 @@ class OrganismsController < ApplicationController
   # PATCH/PUT /organisms/1 or /organisms/1.json
   def update
     if @organism.update(organism_params)
-      redirect_to @organism, status: :see_other
+       redirect_to @organism, notice: "Organism was successfully updated."
     else
       render :edit
     end

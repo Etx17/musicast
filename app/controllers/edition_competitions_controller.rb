@@ -1,5 +1,5 @@
 class EditionCompetitionsController < ApplicationController
-  before_action :set_organism_and_competition, only: %i[show new edit create update]
+  before_action :set_organism_and_competition, only: %i[show new edit create update destroy]
   before_action :set_edition_competition, only: %i[show edit update destroy]
 
   def index
@@ -16,8 +16,9 @@ class EditionCompetitionsController < ApplicationController
   end
 
   def new
-    @edition_competition = EditionCompetition.new
+    @edition_competition = @competition.edition_competitions.build
     @edition_competition.build_address
+
   end
 
   def edit; end
@@ -33,7 +34,7 @@ class EditionCompetitionsController < ApplicationController
 
   def update
     if @edition_competition.update(edition_competition_params)
-      redirect_to edition_competition_url(@edition_competition), notice: "Edition competition was successfully updated."
+      redirect_to organism_competition_url(@organism, @competition), notice: "Edition competition was successfully updated."
     else
       render :edit, status: :unprocessable_entity
     end
@@ -45,7 +46,7 @@ class EditionCompetitionsController < ApplicationController
         puts message
       end
     end
-    redirect_to competitions_url(@edition_competition.competition),
+    redirect_to organism_competition_url(@organism, @edition_competition.competition),
                 notice: "Edition competition was successfully destroyed."
   end
 

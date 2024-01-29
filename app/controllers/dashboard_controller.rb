@@ -5,8 +5,8 @@ class DashboardController < ApplicationController
   end
 
   def organiser
-    @competitions = current_user.organisateur.organism.competitions
-    @organism = current_user.organisateur.organism
+    @organism = current_user.organisateur&.organism
+    @competitions = @organism&.competitions
   end
 
   def candidate

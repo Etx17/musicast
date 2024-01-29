@@ -29,7 +29,7 @@ class CompetitionsController < ApplicationController
     @competition.organism = @organism
 
     if @competition.save
-      redirect_to organism_competition_path(@organism, @competition), notice: "Competition was successfully created."
+      redirect_to organism_competition_path(@organism, @competition), notice: "Votre concours a bien été créé. Vous pouvez maintenant ajouter des éditions."
     else
       render :new, status: :unprocessable_entity
     end
@@ -38,7 +38,7 @@ class CompetitionsController < ApplicationController
   # PATCH/PUT /competitions/1 or /competitions/1.json
   def update
     if @competition.update(competition_params)
-      redirect_to organism_competition_path(@organism, @competition), notice: "Competition was successfully updated."
+      redirect_to organism_competition_path(@organism, @competition), notice: "Votre concours a bien été mis à jour"
     else
       render :edit, status: :unprocessable_entity
     end
