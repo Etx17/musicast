@@ -65,7 +65,7 @@ gem "bootsnap", require: false
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 gem "image_processing", "~> 1.2"
 gem 'pdf-reader'
-gem 'openai'
+gem "ruby-openai"
 
 gem "bootstrap", "~> 5.2"
 gem "devise"
