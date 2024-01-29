@@ -1,10 +1,6 @@
 class PrizesController < ApplicationController
-  before_action :set_context, only: %i[ new show create edit update destroy ]
-  before_action :set_prize  , only: %i[ show edit update destroy ]
-
-  # GET /prizes/1 or /prizes/1.json
-  def show
-  end
+  before_action :set_context, only: %i[ new create edit update destroy ]
+  before_action :set_prize  , only: %i[ edit update destroy ]
 
   # GET /prizes/new
   def new
