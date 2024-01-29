@@ -12,4 +12,8 @@ class RequirementItem < ApplicationRecord
   def self.pdf_items
     %w[recommendation_letter_pdf parental_authorization_pdf]
   end
+
+  def is_pdf?
+    RequirementItem.pdf_items.include?(self.type_item)
+  end
 end

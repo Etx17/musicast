@@ -16,7 +16,7 @@
     <div class="col-md-6" data-controller="hover">
       <h2 class="text-center text-dark mb-5" style="font-size: 4em;">Categories</h2>
 
-      <%= link_to 'Ajouter une catégorie', new_organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition), class: 'btn btn-outline-dark w-100 mt-4' %>
+      <%= link_to '+ Ajouter une catégorie', new_organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition), class: 'btn btn-outline-dark w-100 mt-4' %>
 
       <% @categories.each do |category| %>
         <%= link_to organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, category), data: { controller: "hover" } do %>

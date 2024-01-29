@@ -130,7 +130,7 @@
   <div class="container">
     <!-- Button trigger modal -->
     <button type="button" class="btn btn-dark my-3" data-bs-toggle="modal" data-bs-target="#exampleModal1">
-      Ajouter un élément requis
+     + Ajouter un élément requis
     </button>
 
     <!-- Modal -->
@@ -143,9 +143,9 @@
           </div>
          <div class="modal-body" data-controller="requirement" data-action="click->requirement#changeIdOfInput">
             <%= simple_form_for([@organism, @competition, @edition_competition, @category, RequirementItem.new]) do |f| %>
-              <%= f.input :title, input_html: { id: "requirement-#{@category.name}-#{Time.now.to_i}" }, data: { requirement_target: "title" } %>
-              <%= f.input :type_item, collection: RequirementItem.type_items.keys, prompt: 'Select a type' %>
-              <%= f.input :description_item %>
+              <%= f.input :title, label: "Donnez un titre à cet item", input_html: { id: "requirement-#{@category.name}-#{Time.now.to_i}" }, data: { requirement_target: "title" } %>
+              <%= f.input :type_item, label: "Type de pièce", collection: RequirementItem.type_items.keys, prompt: 'Select a type' %>
+              <%= f.input :description_item, label: "Détails", placeholder: "Renseignez ici les spécifications, par exemple de longueur pour une lettre de motivation, de durée pour une vidéo sur youtube, ou autre..." %>
               <div class="modal-footer">
                 <%= f.button :submit, class: 'btn btn-primary' %>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -197,7 +197,7 @@
 
   <%# Ajouter prix %>
   <%= link_to new_organism_competition_edition_competition_category_prize_path(@organism, @competition, @edition_competition, @category), class: "btn btn-dark my-3" do %>
-    Ajouter un prix
+    + Ajouter un prix
   <% end %>
 
 
