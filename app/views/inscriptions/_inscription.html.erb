@@ -4,7 +4,7 @@
     <h2 class='text-start mt-5' style="font-size: 3em;">DOSSIER DE CANDIDATURE</h2>
     <%# Placeholder unsplash avatar picture %>
     <div class="d-flex align-items-center bg-white p-2 mb-3">
-      <%= image_tag "https://source.unsplash.com/random/?portrait/200x200", class: "shadow rounded-circle align-items-center p-0 m-0", style: "width: 200px; height: 200px; object-fit: cover;" %>
+      <%= image_tag inscription.candidat.portrait.attached? ? inscription.candidat.portrait : "https://source.unsplash.com/random/?portrait/200x200", class: "shadow rounded-circle align-items-center p-0 m-0", style: "width: 200px; height: 200px; object-fit: cover;" %>
       <div class=" h3 mx-5">
         <%= inscription.candidat.first_name %>
       </div>
@@ -66,9 +66,14 @@
               <p><small class="text-muted"><%= item.requirement_item&.type_item %></small></p>
               <% if item&.submitted_content.present?  %>
                 <% if item.submitted_content.to_s.start_with?('http') %>
-                  <div class="embed-responsive embed-responsive-16by9">
-                    <iframe class="embed-responsive-item" src="<%= item.submitted_content %>?rel=0" allowfullscreen></iframe>
-                  </div>
+                  <% youtube_id = item.youtube_id %>
+                  <% if youtube_id.present? %>
+                    <div class="embed-responsive embed-responsive-16by9">
+                      <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/<%= youtube_id %>?rel=0" allowfullscreen></iframe>
+                    </div>
+                  <% else %>
+                    <p>Vidéo non disponible. Assurez vous d'avoir bien entré une URL youtube valide.</p>
+                  <% end %>
                 <% else %>
                 <p><%= simple_format(item.submitted_content) %></p>
                 <% end %>
@@ -76,7 +81,7 @@
               <% if item&.submitted_file.attached? %>
                 <div class="d-flex flex-column">
                 <embed src="<%= url_for(item.submitted_file) %>" width="500" height="375" type="application/pdf">
-                <%= link_to 'Voir', url_for(item.submitted_file), target: "_blank" %>
+                <%= link_to 'Voir', url_for(item.submitted_file), target: "_blank", rel: "noopener"  %>
                 </div>
               <% end %>
             </div>

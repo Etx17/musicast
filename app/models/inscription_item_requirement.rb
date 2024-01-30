@@ -4,6 +4,39 @@ class InscriptionItemRequirement < ApplicationRecord
 
   has_one_attached :submitted_file
 
+  # for youtube_url
+  # item.submitted_content is a URL that starts with 'http', it's embedded in an iframe. This could potentially be used for phishing attacks if a user can control the value of item.submitted_content. You should validate that URLs are safe and belong to trusted domains.
+  validate :submitted_content_is_youtube_url, if: :requirement_item_is_youtube_url?
+
+  def requirement_item_is_youtube_url?
+    requirement_item.youtube_link?
+  end
+
+  def submitted_content_is_youtube_url
+    # if submitted_content.present?
+    #   uri = URI.parse(submitted_content)
+    #   if uri.host.nil? || uri.host.include?("youtube.com") || uri.host.include?("youtu.be")
+    #     true
+    #   else
+    #     errors.add(:submitted_content, "n'est pas une URL youtube valide")
+    #   end
+    # end
+  end
+
+  def youtube_id
+    uri = URI.parse(submitted_content)
+
+    if uri.host.include?("youtube.com")
+      params = CGI.parse(uri.query) if uri.query
+      params['v'].first if params
+    elsif uri.host.include?("youtu.be")
+      uri.path.split('/').last
+    else
+      nil
+    end
+  end
+
+
   enum verification_status: { not_checked_yet: 0, checked_valid: 1, checked_invalid: 2, ai_failed: 3, not_sure: 4, no_need_to_check: 5 }
 
   def status_text
