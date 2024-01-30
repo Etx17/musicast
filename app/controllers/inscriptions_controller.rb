@@ -25,9 +25,21 @@ class InscriptionsController < ApplicationController
 
   def new
     # If candidat already created a inscription for the category, redirect to it
-    redirect_to edit_candidat_path(current_user.candidat), notice: "Vous devez avoir complêté vos informations (photos, bios, expériences, répertoire, etc...) pour pouvoir vous inscrire" and return unless current_user.candidat.has_minimum_informations_for_inscription?
+    unless current_user.candidat.has_minimum_informations_for_inscription?
+      redirect_to edit_candidat_path(current_user.candidat), notice: "Vous devez avoir complêté vos informations (photos, bios, expériences, répertoire, etc...) pour pouvoir vous inscrire"
+      return
+    end
+
     inscription = current_user.candidat.inscriptions.by_category(params[:category_id]).first
-    redirect_to inscription_path(inscription) if inscription.present?
+    if inscription.present?
+      category = Category.friendly.find(params[:category_id])
+      if category.requirement_items.any? && inscription.inscription_item_requirements.none?
+        category.requirement_items.each do |item|
+          inscription.inscription_item_requirements.build(requirement_item: item)
+        end
+      end
+      redirect_to inscription_path(inscription) if inscription.present?
+    end
 
     @inscription = Inscription.new
     category = Category.friendly.find(params[:category_id])
@@ -49,6 +61,13 @@ class InscriptionsController < ApplicationController
   end
 
   def edit
+    @inscription = Inscription.find(params[:id])
+    category = @inscription.category
+    if category.requirement_items.any? && @inscription.inscription_item_requirements.none?
+      category.requirement_items.each do |item|
+        @inscription.inscription_item_requirements.build(requirement_item: item)
+      end
+    end
   end
 
   def create
@@ -64,8 +83,26 @@ class InscriptionsController < ApplicationController
   end
 
   def update
-    if @inscription.update(inscription_params)
+    @inscription.assign_attributes(inscription_params)
+    if @inscription.valid?
+      # If there is a updated submitted_file, we need to send it to openai
+      params[:inscription][:inscription_item_requirements_attributes].each do |_key, requirement_attributes|
+        if requirement_attributes[:submitted_file].present?
+          # 1. Check that it is a pdf
+          next unless requirement_attributes[:submitted_file].content_type == "application/pdf"
+          # 2. Extract the text
+          content = requirement_attributes[:submitted_file].tempfile.read
+          inscription_requirement_item = InscriptionItemRequirement.find(requirement_attributes[:id])
+          requirement_item = RequirementItem.find(requirement_attributes[:requirement_item_id])
+          reader = PDF::Reader.new(StringIO.new(content))
+          text = reader.pages.map(&:text).join(" ").gsub(/\s+/, ' ')[0..500]
+          # 3. send it to open AI
+          send_to_openai(text, requirement_item, inscription_requirement_item)
+          # 4. Update the verification_status
+        end
+      end
       # Si on a modifié des airs d'un choice_imposed_work ou d'un semi_imposed_work, on doit supprimer les performances des tours actuels et suivants.
+      @inscription.save
       redirect_to inscription_url(@inscription), notice: "Inscription was successfully updated."
     else
       render :edit, status: :unprocessable_entity
@@ -102,6 +139,39 @@ class InscriptionsController < ApplicationController
   end
 
   private
+
+  def extract_pdf_content
+    content = submitted_file.download
+    reader = PDF::Reader.new(StringIO.new(content))
+    text = reader.pages.map(&:text).join(" ").gsub(/\s+/, ' ')
+    text[0..500]
+  end
+
+  def send_to_openai(text, requirement_item, inscription_requirement_item)
+
+    api_key = Rails.application.credentials.dig(:open_ai, :test_key)
+    client = OpenAI::Client.new
+    response = client.chat(parameters: {
+      model: "gpt-4",
+      messages: [{
+        role: "user",
+        content:"Tu ne répond que par '0'( = non), '1' (= oui), ou '2' (= je sais pas).Voici le début d'un document.Répond simplement '1' si le document te semble être un #{requirement_item.type_item} , '0' si ca n'est pas le cas, '2' si tu ne sais pas. Tu ne réponds pas par une phrase, seulement un numéro.Voici l'extrait: " + text
+        }]
+    })
+
+    if response["choices"][0]["message"]["content"] == "1"
+      # Do something if file correspond to what's expected, like maybe update it to checked ai to checked.
+      inscription_requirement_item.checked_valid!
+    elsif response["choices"][0]["message"]["content"] == "0"
+      # Update to not checked
+      inscription_requirement_item.checked_invalid!
+    elsif response["choices"][0]["message"]["content"] == "2"
+      # update to "not sure"
+      inscription_requirement_item.not_sure!
+    else
+      inscription_requirement_item.ai_failed!
+    end
+  end
 
   def set_inscription
     @inscription = Inscription.find(params[:id])

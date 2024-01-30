@@ -58,12 +58,20 @@
         <% inscription.inscription_item_requirements&.each do |item| %>
           <div class="p-3 shadow bg-light mb-3">
             <div class="card-body border-0">
+              <div class="d-flex justify-content-between align-items-center mb-2">
               <h5 class="card-title text-muted"><%= item.requirement_item&.title %></h5>
+              <span class="badge border border-<%= item.status_color%> rounded-pill text-<%= item.status_color%>"><%= item.status_text %></span>
+              </div>
+
               <p><small class="text-muted"><%= item.requirement_item&.type_item %></small></p>
-              <% if item&.submitted_content.present? && item.submitted_content.to_s.start_with?('http') %>
-                <div class="embed-responsive embed-responsive-16by9">
-                  <iframe class="embed-responsive-item" src="<%= item.submitted_content %>?rel=0" allowfullscreen></iframe>
-                </div>
+              <% if item&.submitted_content.present?  %>
+                <% if item.submitted_content.to_s.start_with?('http') %>
+                  <div class="embed-responsive embed-responsive-16by9">
+                    <iframe class="embed-responsive-item" src="<%= item.submitted_content %>?rel=0" allowfullscreen></iframe>
+                  </div>
+                <% else %>
+                <p><%= simple_format(item.submitted_content) %></p>
+                <% end %>
               <% end %>
               <% if item&.submitted_file.attached? %>
                 <div class="d-flex flex-column">
