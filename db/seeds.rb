@@ -26,7 +26,7 @@
 
   # Pianistes accompagnateurs de l'organisme
   PianistAccompagnateur.create!(
-    email: "pianist_accompagnateur1_#{n}@example,com",
+    email: "pianist_accompagnateur1_#{n}@example.com",
     full_name: Faker::Name.name,
     phone_number: Faker::PhoneNumber.phone_number,
     organism: organism,

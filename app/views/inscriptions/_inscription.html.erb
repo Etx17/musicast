@@ -20,6 +20,7 @@
           <% if inscription.candidate_brings_pianist_accompagnateur %>
           <p>Ce candidat indique venir avec son propre pianiste accompagnateur</p>
           <% end %>
+
           <span class=" mx-auto badge rounded-pill <%= inscription.draft? ? 'text-secondary border border-secondary bg-grey' : inscription.in_review? ? 'text-info border border-info bg-info-secondary' : inscription.accepted? ? 'text-success border-success bg-success-secondary' : 'text-danger border-danger bg-danger-secondary' %>">
             <i class="fas fa-circle small"></i> <%= inscription.status&.capitalize %>
           </span>
@@ -155,32 +156,36 @@
                 <p class="card-text"><strong>Number of Works:</strong> <%= tour.tour_requirement&.min_number_of_works %> - <%= tour.tour_requirement&.max_number_of_works %></p>
                 <p class="card-text"><strong>Duration:</strong> <%= tour.tour_requirement&.min_duration_minute %> - <%= tour.tour_requirement&.max_duration_minute %> minutes</p>
               <% end %>
+              <% performance = inscription.performances.find_by(tour: tour) %>
+                <% if performance&.pianist_accompagnateur.present? %>
+                <p>Pianiste accompagnateur: <a href="mailto:<%= performance.pianist_accompagnateur.email %>" class=""> <i class="fas fa-envelope"></i> </a><%= performance.pianist_accompagnateur.full_name %> - <%= performance.pianist_accompagnateur.email %> <%= '- '+ performance.pianist_accompagnateur.phone_number %></p>
+
+                <% end %>
               <div class="d-flex justify-content-start align-items-center gap-2 mb-2 ">
               <h5 class="card-title mb-0">Programme: </h5>
               <span class="badge rounded-pill text-warning border-warning border"><%= tour.remaining_days %> jours restants</span>
               </div>
-              <% performance = inscription.performances.find_by(tour: tour) %>
               <% if performance.present? %>
-                  <%= simple_form_for(performance, url: performance_path(performance), method: :patch, data: { controller: "reorder" }) do |f| %>
-                    <ul data-reorder-target="list" class="list-unstyled" >
-                      <% performance.ordered_air_selection&.each_with_index do |air_id, index| %>
-                        <% air = Air.find(air_id) %>
-                        <% imposed = performance.tour.imposed_air_selection&.include?(air_id.to_s) %>
-                        <li data-id="<%= air_id %>"
-                            data-action="dragstart->reorder#dragStart dragover->reorder#dragOver drop->reorder#drop dragend->reorder#dragEnd"
-                            draggable="true"
-                            class="draggable-item"
-                            style="cursor: move; border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;"
-                            >
-                          <%= index + 1 %> - <%= air.title %>, <%= air.length_minutes %> min<%= ' (imposé)' if imposed %>
-                        </li>
-                      <% end %>
-                    </ul>
-                    <%= f.hidden_field :ordered_air_selection, data: { reorder_target: "orderedSelection" } %>
+                <%= simple_form_for(performance, url: performance_path(performance), method: :patch, data: { controller: "reorder" }) do |f| %>
+                  <ul data-reorder-target="list" class="list-unstyled" >
+                    <% performance.ordered_air_selection&.each_with_index do |air_id, index| %>
+                      <% air = Air.find(air_id) %>
+                      <% imposed = performance.tour.imposed_air_selection&.include?(air_id.to_s) %>
+                      <li data-id="<%= air_id %>"
+                          data-action="dragstart->reorder#dragStart dragover->reorder#dragOver drop->reorder#drop dragend->reorder#dragEnd"
+                          draggable="true"
+                          class="draggable-item"
+                          style="cursor: move; border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;"
+                          >
+                        <%= index + 1 %> - <%= air.title %>, <%= air.length_minutes %> min<%= ' (imposé)' if imposed %>
+                      </li>
+                    <% end %>
+                  </ul>
+                  <%= f.hidden_field :ordered_air_selection, data: { reorder_target: "orderedSelection" } %>
 
-                    <%= f.button :submit, "Mettre à jour l'ordre", data: { action: "reorder#submit", reorder_target: "submit" }, disabled: true, class: "btn btn-primary" %>
+                  <%= f.button :submit, "Mettre à jour l'ordre", data: { action: "reorder#submit", reorder_target: "submit" }, disabled: true, class: "btn btn-primary" %>
                   <%= link_to 'Modifier le programme', edit_inscription_performance_path(inscription, performance, tour_id: tour.id), class: 'btn btn-primary ' %>
-                  <% end %>
+                <% end %>
               <% else %>
                 <div class="d-flex flex-column  shadow rounded-4">
                   <small class="bg-grey p-2 text-secondary">
