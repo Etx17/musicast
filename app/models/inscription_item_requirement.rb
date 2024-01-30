@@ -30,7 +30,7 @@ class InscriptionItemRequirement < ApplicationRecord
     when "checked_valid"
       "success"
     when "checked_invalid"
-      "red"
+      "danger"
     when "ai_failed"
       "warning"
     when "not_sure"
