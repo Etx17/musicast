@@ -151,18 +151,41 @@
             </div>
             <div class="card-body">
               <% if tour.tour_requirement.present? %>
-                <h5 class="card-title">Tour Requirements:</h5>
-                <p class="card-text"><strong>Description:</strong> <%= tour.tour_requirement&.description %></p>
-                <p class="card-text"><strong>Number of Works:</strong> <%= tour.tour_requirement&.min_number_of_works %> - <%= tour.tour_requirement&.max_number_of_works %></p>
-                <p class="card-text"><strong>Duration:</strong> <%= tour.tour_requirement&.min_duration_minute %> - <%= tour.tour_requirement&.max_duration_minute %> minutes</p>
-              <% end %>
-              <% performance = inscription.performances.find_by(tour: tour) %>
-                <% if performance&.pianist_accompagnateur.present? %>
-                <p>Pianiste accompagnateur: <a href="mailto:<%= performance.pianist_accompagnateur.email %>" class=""> <i class="fas fa-envelope"></i> </a><%= performance.pianist_accompagnateur.full_name %> - <%= performance.pianist_accompagnateur.email %> <%= '- '+ performance.pianist_accompagnateur.phone_number %></p>
+                <h5 class="card-title">Règles et conditions du tour:</h5>
+                <p class="card-text text-secondary"><%= tour.tour_requirement&.description %></p>
+                <div class="d-flex justify-content-around">
+                  <p class="card-text"><strong><%= image_tag 'icons/book.png', alt: 'Oeuvres', width: 40 %></strong>
+                    <% if tour.tour_requirement&.min_number_of_works == tour.tour_requirement&.max_number_of_works %>
+                      <%= tour_requirement&.min_number_of_works %> oeuvres
+                    <% else %>
+                      <%= tour.tour_requirement&.min_number_of_works %> - <%= tour.tour_requirement&.max_number_of_works %> oeuvres</p>
+                    <% end %>
 
-                <% end %>
-              <div class="d-flex justify-content-start align-items-center gap-2 mb-2 ">
-              <h5 class="card-title mb-0">Programme: </h5>
+                  <p class="card-text"><strong><%= image_tag 'icons/hourglass.png', alt: 'Piano', width: 40 %></strong> <%= tour.tour_requirement&.min_duration_minute %> à <%= tour.tour_requirement&.max_duration_minute %> minutes</p>
+                </div>
+              <% end %>
+
+              <% performance = inscription.performances.find_by(tour: tour) %>
+              <% if performance&.pianist_accompagnateur.present? %>
+                <div class="d-flex flex-column align-items-center border-top py-3">
+                  <%= image_tag 'icons/piano.png', alt: 'Piano', width: 40 %>
+                  <p>pianiste accompagnateur</p>
+                  <div class="d-flex justify-content-start gap-3 align-items-center">
+                    <div class="d-flex align-items-center gap-1 border p-1 rounded-4">
+                      <i class="fas fa-envelope"></i>
+                      <small><a href="mailto:<%= performance.pianist_accompagnateur.email %>" class="text-decoration-none text-secondary"><%= performance.pianist_accompagnateur.email %></a></small>
+                    </div>
+                    <div class="d-flex align-items-center gap-1 border p-1 rounded-4">
+                      <i class="fas fa-phone"></i>
+                      <small><%= performance.pianist_accompagnateur.phone_number %></small>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+
+
+              <div class="d-flex justify-content-start align-items-center gap-2 mb-2 border-top pt-3">
+              <h5 class="card-title mb-0 ">Programme: </h5>
               <span class="badge rounded-pill text-warning border-warning border"><%= tour.remaining_days %> jours restants</span>
               </div>
               <% if performance.present? %>
@@ -174,8 +197,8 @@
                       <li data-id="<%= air_id %>"
                           data-action="dragstart->reorder#dragStart dragover->reorder#dragOver drop->reorder#drop dragend->reorder#dragEnd"
                           draggable="true"
-                          class="draggable-item"
-                          style="cursor: move; border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;"
+                          class="draggable-item shadow-sm"
+                          style="cursor: move; border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; border-radius: 8px;"
                           >
                         <%= index + 1 %> - <%= air.title %>, <%= air.length_minutes %> min<%= ' (imposé)' if imposed %>
                       </li>
@@ -196,6 +219,22 @@
                   <%= link_to  new_inscription_performance_path(inscription, tour_id: tour.id), class: 'btn btn-dark' do %>
                     <span><i class="fas fa-plus me-2"></i> Créer mon programme</span>
                   <% end %>
+                </div>
+              <% end %>
+              <% if performance&.pianist_accompagnateur.present? %>
+                <div class="d-flex flex-column align-items-center mt-3 border-top pt-3">
+                  <%= image_tag 'icons/piano.png', alt: 'Piano', width: 40 %>
+                  <p>pianiste accompagnateur</p>
+                  <div class="d-flex justify-content-start gap-3 align-items-center">
+                    <div class="d-flex align-items-center gap-1 border p-1 rounded-4">
+                      <i class="fas fa-envelope"></i>
+                      <small><a href="mailto:<%= performance.pianist_accompagnateur.email %>" class="text-decoration-none text-secondary"><%= performance.pianist_accompagnateur.email %></a></small>
+                    </div>
+                    <div class="d-flex align-items-center gap-1 border p-1 rounded-4">
+                      <i class="fas fa-phone"></i>
+                      <small><%= performance.pianist_accompagnateur.phone_number %></small>
+                    </div>
+                  </div>
                 </div>
               <% end %>
             </div>
