@@ -15,11 +15,12 @@ class InscriptionsController < ApplicationController
       end
 
     end
-    render :candidate_index if current_user.candidat
     render :index if current_user.organisateur
+    render :candidate_index if current_user.candidat
   end
 
   def show
+    authorize @inscription
     render :candidate_show if current_user.candidat
   end
 
@@ -62,6 +63,8 @@ class InscriptionsController < ApplicationController
 
   def edit
     @inscription = Inscription.find(params[:id])
+    authorize @inscription
+
     category = @inscription.category
     if category.requirement_items.any? && @inscription.inscription_item_requirements.none?
       category.requirement_items.each do |item|
@@ -83,6 +86,8 @@ class InscriptionsController < ApplicationController
   end
 
   def update
+
+    authorize @inscription
     @inscription.assign_attributes(inscription_params)
     if @inscription.valid?
       # If there is a updated submitted_file, we need to send it to openai
@@ -96,9 +101,8 @@ class InscriptionsController < ApplicationController
           requirement_item = RequirementItem.find(requirement_attributes[:requirement_item_id])
           reader = PDF::Reader.new(StringIO.new(content))
           text = reader.pages.map(&:text).join(" ").gsub(/\s+/, ' ')[0..500]
-          # 3. send it to open AI
+          # 3. send it to open AI and update status
           send_to_openai(text, requirement_item, inscription_requirement_item)
-          # 4. Update the verification_status
         end
       end
       # Si on a modifié des airs d'un choice_imposed_work ou d'un semi_imposed_work, on doit supprimer les performances des tours actuels et suivants.
@@ -110,6 +114,8 @@ class InscriptionsController < ApplicationController
   end
 
   def destroy
+    authorize @inscription
+
     @inscription.destroy
 
     respond_to do |format|

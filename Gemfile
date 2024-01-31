@@ -66,7 +66,7 @@ gem "bootsnap", require: false
 gem "image_processing", "~> 1.2"
 gem 'pdf-reader'
 gem "ruby-openai"
-
+gem "pundit"
 gem "bootstrap", "~> 5.2"
 gem "devise"
 gem "autoprefixer-rails"

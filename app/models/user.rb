@@ -9,7 +9,7 @@ class User < ApplicationRecord
   has_one :organiser
   has_one :partner
   has_one :jury
-  has_one :candidate
+  has_one :candidat
   has_many :inscriptions_paiements
 
   has_many :inscription_orders

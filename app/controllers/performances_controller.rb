@@ -1,7 +1,5 @@
 class PerformancesController < ApplicationController
 
-
-
   def new
     @inscription = Inscription.find(params[:inscription_id])
     @tour = Tour.find(params[:tour_id])
@@ -23,11 +21,13 @@ class PerformancesController < ApplicationController
 
   def edit
     @performance = Performance.find(params[:id])
+    authorize @performance
   end
 
   def update
     @performance = Performance.find(params[:id])
-      # Pre-process the ordered_air_selection if it's present
+    authorize @performance
+    
     if params[:performance][:ordered_air_selection].present?
       params[:performance][:ordered_air_selection] = JSON.parse(params[:performance][:ordered_air_selection])
     end
@@ -46,6 +46,7 @@ class PerformancesController < ApplicationController
 
   private
 
+
   def performance_params
     params.require(:performance).permit(
       :is_qualified,
@@ -55,7 +56,7 @@ class PerformancesController < ApplicationController
       :tour_id,
       :inscription_id,
       :pianist_accompagnateur_id,
-      :id, 
+      :id,
       ordered_air_selection: [],
       air_selection: []).tap do |whitelisted|
         whitelisted[:air_selection] = whitelisted[:air_selection]&.reject(&:blank?)

@@ -113,33 +113,35 @@
           </tr>
         </thead>
         <tbody>
-          <% items = (@tour.performances.to_a + @tour.pauses.to_a).sort_by { |item| item.start_time.strftime('%H:%M') } %>
+          <% unless @tour.performances.any?{|p| p.start_time.nil?} %>
+            <% items = (@tour.performances.to_a + @tour.pauses.to_a).sort_by { |item| item.start_time.strftime('%H:%M') } %>
 
-          <% items.each_with_index do |item, index| %>
-            <% if item.is_a?(Performance) && item.start_date == day %>
-              <%= form_with(model: item, url: performance_path(item), method: :patch, local: true) do |f| %>
+            <% items.each_with_index do |item, index| %>
+              <% if item.is_a?(Performance) && item.start_date == day %>
+                <%= form_with(model: item, url: performance_path(item), method: :patch, local: true) do |f| %>
+                  <tr>
+                    <td><%= link_to item.candidat.first_name, item.inscription  %></td>
+                    <td><%= f.time_field :start_time, value: item&.start_time.strftime('%H:%M'), id: "start_time_#{day}_#{index}", disabled: true %></td>
+                    <td><%= item.order  %></td>
+                  </tr>
+                <% end %>
+              <% elsif item.is_a?(Pause) && item.date == day %>
                 <tr>
-                  <td><%= link_to item.candidat.first_name, item.inscription  %></td>
-                  <td><%= f.time_field :start_time, value: item&.start_time.strftime('%H:%M'), id: "start_time_#{day}_#{index}", disabled: true %></td>
-                  <td><%= item.order  %></td>
+                  <td>Pause</td>
+                    <td id="pause_time_<%= day %>_<%= index %>"><%= item.start_time.strftime('%H:%M') %> - <%= item.end_time.strftime('%H:%M') %></td>
+                  <td>
+                    <% last_pause_of_the_day = items.reverse.find { |i| i.is_a?(Pause) && i.date == day } %>
+
+                    <% if last_pause_of_the_day == item %>
+                      <%= button_to 'Supprimer', organism_competition_edition_competition_category_tour_pause_path(@organism, @competition, @edition_competition, @category, @tour, item), method: :delete, data: { turbo_confirm: "Supprimer cette pause modifiera l'ordre de passage des performances ultérieures de ce tour" }, class: 'btn btn-outline-danger' %>
+                    <% else %>
+                      <div class="btn btn-outline-danger disabled">
+                        Supprimer
+                      </div>
+                    <% end %>
+                  </td>
                 </tr>
               <% end %>
-            <% elsif item.is_a?(Pause) && item.date == day %>
-              <tr>
-                <td>Pause</td>
-                  <td id="pause_time_<%= day %>_<%= index %>"><%= item.start_time.strftime('%H:%M') %> - <%= item.end_time.strftime('%H:%M') %></td>
-                <td>
-                  <% last_pause_of_the_day = items.reverse.find { |i| i.is_a?(Pause) && i.date == day } %>
-
-                  <% if last_pause_of_the_day == item %>
-                    <%= button_to 'Supprimer', organism_competition_edition_competition_category_tour_pause_path(@organism, @competition, @edition_competition, @category, @tour, item), method: :delete, data: { turbo_confirm: "Supprimer cette pause modifiera l'ordre de passage des performances ultérieures de ce tour" }, class: 'btn btn-outline-danger' %>
-                  <% else %>
-                    <div class="btn btn-outline-danger disabled">
-                      Supprimer
-                    </div>
-                  <% end %>
-                </td>
-              </tr>
             <% end %>
           <% end %>
         </tbody>

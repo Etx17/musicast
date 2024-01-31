@@ -42,6 +42,13 @@ class Inscription < ApplicationRecord
   end
 
 
+  def has_same_organisateur_as?(organisateur_id)
+    Organisateur.joins(organisms: {competitions: { edition_competitions: { categories: :inscriptions }} })
+                .where(inscriptions: { id: id })
+                .where(id: organisateur_id)
+                .exists?
+  end
+
 
   def order_state
     inscription_order&.state || "Brouillon"

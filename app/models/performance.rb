@@ -26,6 +26,11 @@ class Performance < ApplicationRecord
     end
 
     airs
+
+    # POur eviter n+1
+    # air_ids = air_selection
+    # air_ids += imposed_air_selection if imposed_air_selection
+    # Air.where(id: air_ids)
   end
 
 
@@ -64,6 +69,15 @@ class Performance < ApplicationRecord
 
   def assign_pianist_accompagnateur(pianist_accompagnateur_id)
     self.update(pianist_accompagnateur_id: pianist_accompagnateur_id)
+  end
+
+
+  # Used in policy
+  def has_same_organisateur_as?(organisateur_id)
+    Organism.joins({competitions: { edition_competitions: { categories: { inscriptions: :performances } } }})
+            .where(performances: { id: id })
+            .where(organisateur_id: organisateur_id)
+            .exists?
   end
 
   private

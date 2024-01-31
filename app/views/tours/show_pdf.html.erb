@@ -19,13 +19,13 @@
           </tr>
         </thead>
         <tbody>
-          <% items = (@tour.performances.to_a + @tour.pauses.to_a).sort_by { |item| item.start_time.strftime('%H:%M') } %>
+          <% items = (@tour.performances.to_a + @tour.pauses.to_a).sort_by { |item| item.start_time&.strftime('%H:%M') } %>
 
           <% items.each_with_index do |item, index| %>
             <% if item.is_a?(Performance) && item.start_date == day %>
               <%= form_with(model: item, url: performance_path(item), method: :patch, local: true) do |f| %>
                 <tr>
-                  <td><%= item.candidat.first_name  %></td>
+                  <td><%= item.candidat.first_name  %> <%= item.candidat.last_name  %></td>
                   <td class="text-center"><%= item&.start_time.strftime('%H:%M') %></td>
                   <td class="text-center"><%= item.order + 1  %></td>
                 </tr>

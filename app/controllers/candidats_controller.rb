@@ -1,5 +1,6 @@
 class CandidatsController < ApplicationController
   before_action :set_candidat, only: %i[show edit update destroy]
+  before_action :authorize_candidat, only: [:show, :edit, :update, :destroy]
 
   # GET /candidats or /candidats.json
   def index
@@ -18,7 +19,6 @@ class CandidatsController < ApplicationController
 
   # GET /candidats/1/edit
   def edit
-
   end
 
   # POST /candidats or /candidats.json
@@ -36,7 +36,6 @@ class CandidatsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /candidats/1 or /candidats/1.json
   def update
     # if @candidat.portrait.attached?
     #   processed_image = @candidat.portrait.variant(resize_to_fill: [360, 540]).processed
@@ -89,6 +88,10 @@ class CandidatsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_candidat
     @candidat = Candidat.find(params[:id])
+  end
+
+  def authorize_candidat
+    authorize @candidat
   end
 
   # Only allow a list of trusted parameters through.
