@@ -168,7 +168,7 @@
               <% performance = inscription.performances.find_by(tour: tour) %>
               <% if performance&.pianist_accompagnateur.present? %>
                 <div class="d-flex align-items-center border-top py-3">
-              <small>Pianiste accompagnateur</small>
+                  <small>Pianiste accompagnateur</small>
                   <div class="d-flex align-items-center">
                     <%= image_tag 'icons/piano.png', alt: 'Piano', width: 40 %>
                     Pianiste
@@ -185,11 +185,9 @@
                   </div>
                 </div>
               <% end %>
-
-
               <div class="d-flex justify-content-start align-items-center gap-2 mb-2 border-top pt-3">
-              <h5 class="card-title mb-0 ">Programme: </h5>
-              <span class="badge rounded-pill text-warning border-warning border"><%= tour.remaining_days %> jours restants</span>
+                <h5 class="card-title mb-0 ">Programme: </h5>
+                <span class="badge rounded-pill text-warning border-warning border"><%= tour.remaining_days %> jours restants</span>
               </div>
               <% if performance.present? %>
                 <%= simple_form_for(performance, url: performance_path(performance), method: :patch, data: { controller: "reorder" }) do |f| %>
@@ -212,6 +210,12 @@
                   <%= f.button :submit, "Mettre à jour l'ordre", data: { action: "reorder#submit", reorder_target: "submit" }, disabled: true, class: "btn btn-primary" %>
                   <%= link_to 'Modifier le programme', edit_inscription_performance_path(inscription, performance, tour_id: tour.id), class: 'btn btn-primary ' %>
                 <% end %>
+
+                <!-- horaire part-->
+                <%# <% if performance.start_time.present? %>
+                  <%# <p>Jour de passage: <%= performance.start_date %>
+                  <%# <p>Heure de passage: <%= performance.start_time.strftime('%Hh%M') %>
+                <%# <% end %>
               <% else %>
                 <div class="d-flex flex-column  shadow rounded-4">
                   <small class="bg-grey p-2 text-secondary">
@@ -224,6 +228,7 @@
                   <% end %>
                 </div>
               <% end %>
+
             </div>
           </div>
         <% end %>
