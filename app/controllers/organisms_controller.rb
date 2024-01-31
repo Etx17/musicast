@@ -8,7 +8,9 @@ class OrganismsController < ApplicationController
 
   # GET /organisms/1 or /organisms/1.json
   def show
+    authorize @organism
   end
+
 
   # GET /organisms/new
   def new
@@ -18,6 +20,7 @@ class OrganismsController < ApplicationController
 
   # GET /organisms/1/edit
   def edit
+    authorize @organism
   end
 
   # POST /organisms or /organisms.json
@@ -25,6 +28,7 @@ class OrganismsController < ApplicationController
     @organism = Organism.new(organism_params)
     @organism.organisateur = current_user.organisateur
 
+    authorize @organism
     if @organism.save
       redirect_to organisateur_dashboard_path, notice: "Votre organisme a été crée avec succès."
     else
@@ -34,8 +38,9 @@ class OrganismsController < ApplicationController
 
   # PATCH/PUT /organisms/1 or /organisms/1.json
   def update
+    authorize @organism
     if @organism.update(organism_params)
-       redirect_to @organism, notice: "Organism was successfully updated."
+      redirect_to organisateur_dashboard_path, notice: "Votre organisme a été modifié avec succès."
     else
       render :edit
     end
@@ -43,6 +48,7 @@ class OrganismsController < ApplicationController
 
   # DELETE /organisms/1 or /organisms/1.json
   def destroy
+    authorize @organism
     @organism.destroy
 
     respond_to do |format|

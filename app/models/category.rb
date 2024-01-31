@@ -15,7 +15,7 @@ class Category < ApplicationRecord
   has_many :semi_imposed_works, dependent: :destroy
   has_many :choice_imposed_works, dependent: :destroy
   has_many :prizes, dependent: :destroy
-  
+
   has_one_attached :photo
   before_save :should_generate_new_friendly_id?, if: :name_changed?
 
@@ -59,7 +59,14 @@ class Category < ApplicationRecord
   end
 
   def is_accompagnated_by_pianist?
-    false
-    true if discipline == 'lyrical_singing'
+    discipline == 'lyrical_singing'
   end
+
+  def has_same_organisateur_as?(organisateur_id)
+    Organisateur.joins(organisms: { competitions: { edition_competitions: :categories } })
+                .where(categories: { id: id })
+                .where(id: organisateur_id)
+                .exists?
+  end
+
 end

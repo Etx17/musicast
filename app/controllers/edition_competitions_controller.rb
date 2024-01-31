@@ -7,7 +7,9 @@ class EditionCompetitionsController < ApplicationController
   end
 
   def show
+    authorize @edition_competition
     @categories = @edition_competition.categories.order(created_at: :desc)
+
     if current_user&.organisateur
       render :show
     else
@@ -21,7 +23,9 @@ class EditionCompetitionsController < ApplicationController
 
   end
 
-  def edit; end
+  def edit;
+    authorize @edition_competition
+  end
 
   def create
     @edition_competition = @competition.edition_competitions.build(edition_competition_params)
@@ -33,6 +37,7 @@ class EditionCompetitionsController < ApplicationController
   end
 
   def update
+    authorize @edition_competition
     if @edition_competition.update(edition_competition_params)
       redirect_to organism_competition_url(@organism, @competition), notice: "Edition competition was successfully updated."
     else
@@ -41,6 +46,7 @@ class EditionCompetitionsController < ApplicationController
   end
 
   def destroy
+    authorize @edition_competition
     unless @edition_competition.destroy
       @edition_competition.errors.full_messages.each do |message|
         puts message

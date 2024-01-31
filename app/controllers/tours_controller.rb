@@ -7,11 +7,14 @@ class ToursController < ApplicationController
   end
 
   def show;
+    authorize @tour
     @performances = @tour.performances
     @tour.generate_initial_performance_order if @performances.any? { |p| p.order.nil? }
   end
 
-  def edit; end
+  def edit;
+    authorize @tour
+  end
 
   def new
     @tour = Tour.new
@@ -33,6 +36,7 @@ class ToursController < ApplicationController
 
   def update
     # Voir que ca fait bien marcher a la fois l'update de tour a is_finished, et aussi la creation de schedule pour un tour (apres configuration)
+    authorize @tour
     creating_schedule = params.fetch(:tour, {}).delete(:creating_schedule) { false }
     if @tour.update(tour_params)
       if creating_schedule == "true"

@@ -11,6 +11,7 @@ class CategoriesController < ApplicationController
 
   # GET /categories/1 or /categories/1.json
   def show
+    authorize @category
     @semi_imposed_work = SemiImposedWork.new
     @tour = Tour.new
     @tour.build_tour_requirement
@@ -20,17 +21,19 @@ class CategoriesController < ApplicationController
   # GET /categories/new
   def new
     @category = Category.new
+    authorize @category
   end
 
   # GET /categories/1/edit
   def edit
+    authorize @category
   end
 
   # POST /categories or /categories.json
   def create
     @category = Category.new(category_params)
     @category.edition_competition = @edition_competition
-
+    authorize @category
     if @category.save
       redirect_to organism_competition_edition_competition_path(@organism, @competition, @edition_competition),
                   notice: "Category was successfully created."
@@ -41,6 +44,7 @@ class CategoriesController < ApplicationController
 
   # PATCH/PUT /categories/1 or /categories/1.json
   def update
+    authorize @category
     if @category.update(category_params)
       redirect_to organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category), notice: "Category was successfully updated."
     else
@@ -50,6 +54,7 @@ class CategoriesController < ApplicationController
 
   # DELETE /categories/1 or /categories/1.json
   def destroy
+    authorize @category
     @category.destroy
     # redirect_to categories_url, notice: "Category was successfully destroyed."
   end

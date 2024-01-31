@@ -34,4 +34,11 @@ class EditionCompetition < ApplicationRecord
   def max_prize_amount
     categories.map(&:prizes).flatten.map(&:amount).max
   end
+
+  def has_same_organisateur_as?(organisateur_id)
+    Organisateur.joins(organisms: { competitions:  :edition_competitions })
+                .where(edition_competitions: { id: id })
+                .where(id: organisateur_id)
+                .exists?
+  end
 end

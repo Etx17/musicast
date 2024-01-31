@@ -7,5 +7,5 @@ class Air < ApplicationRecord
   belongs_to :choice_imposed_work, optional: true
   belongs_to :semi_imposed_work, optional: true
 
-  
+
 end

@@ -108,6 +108,14 @@ class Tour < ApplicationRecord
     (final_performance_submission_deadline.to_date - Date.today).to_i
   end
 
+  def has_same_organisateur_as?(organisateur_id)
+    Organisateur.joins(organisms: {competitions: { edition_competitions: { categories: { tours: :performances } } }})
+      .where(tours: { id: id })
+      .where(id: organisateur_id)
+      .exists?
+  end
+
+
   private
 
   def new_day_start_time_before_max_end_of_day_time
