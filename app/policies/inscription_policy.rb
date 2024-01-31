@@ -32,7 +32,7 @@ class InscriptionPolicy < ApplicationPolicy
     if user.organisateur
       record.has_same_organisateur_as?(user.organisateur.id)
     elsif user.candidat
-      user.candidat == record.inscription.candidat
+      user.candidat == record.candidat
     else
       false
     end
