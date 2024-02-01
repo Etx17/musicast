@@ -1,9 +1,5 @@
 
 <%= simple_form_for(@candidat) do |f| %>
-
-
-
-
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
@@ -40,20 +36,41 @@
     </div>
 
 
-    <div class="d-flex flex-column flex-sm-row gap-3 ">
+    <div class="d-flex flex-column flex-sm-row gap-3 mt-3">
       <%= f.input :first_name, label: 'Prénom' , input_html: {class:"border border-0  mb-0"} %>
       <%= f.input :last_name, label: 'Nom', input_html: {class:"border border-0  mb-0 "}  %>
       <%= f.input :birthdate, label: 'Date de naissance', input_html: {class:"border border-0  mb-0"} , hint: "Votre identité sera validée le jour du concours, attention a rentrer votre date de naissance exacte!" %>
     </div>
     <div class="d-flex align-items-center gap-2">
       <p class="mb-0">Nationalité: </p>
-      <%= f.country_select :nationality, {}, { class: "my-3 p-2 bg-light border rounded" }  %>
+      <%= f.country_select :nationality, {}, { class: "mb-3 p-2 bg-light border rounded" }  %>
     </div>
-    <%= f.input :bio, label: false, placeholder: "Bio: la courte phrase d'accorche qui apparaîtra sous votre photo", input_html: {class:"border border-0 "}  %>
-    <%= f.input :short_bio, placeholder: "Une version très courte de votre parcours, à destination des jurys de concours" , input_html: {class:"border border-0 "} %>
-    <%= f.input :medium_bio, placeholder: "Une version résumée de votre parcours, à destination des jurys de concours", input_html: {class:"border border-0 "}  %>
-    <%= f.input :long_bio,  placeholder: "Une version détaillée de votre parcours, à destination des jurys de concours", input_html: {class:"border border-0 "}  %>
-    <%= f.input :repertoire,  placeholder: "Décrivez votre répertoire", input_html: {class:"border border-0 "} %>
+    <%# <%= f.input :bio, label: false, placeholder: "Bio: la courte phrase d'accorche qui apparaîtra sous votre photo", input_html: {class:"border border-0 "}  %>
+    <%# <%= f.input :short_bio, placeholder: "Une version très courte de votre parcours, à destination des jurys de concours" , input_html: {class:"border border-0 "} %>
+    <div class="form-group" data-controller="character-counter">
+      <div class="d-flex gap-3 align-items-center">
+      <%= f.label "Courte biographie*" %>
+      <small class="text-secondary"><span data-character-counter-target="counter">0</span>/300 </small>
+      </div>
+      <%= f.input :short_bio, label: false, placeholder: "Une version très courte de votre parcours, à destination des jurys de concour", input_html: { class:"border border-0", data: { action: "input->character-counter#update", character_counter_target: "input", class:"border border-0 "} } %>
+    </div>
+
+    <div class="form-group" data-controller="character-counter">
+      <div class="d-flex gap-3 align-items-center">
+      <%= f.label "Biographie moyenne*" %>
+      <small class="text-secondary"><span data-character-counter-target="counter">0</span>/1000 </small>
+      </div>
+      <%= f.input :medium_bio, label: false, placeholder: "Une version résumée de votre parcours, à destination des jurys de concours", input_html: { class:"border border-0", style: 'height: 100px;', data: { action: "input->character-counter#update", character_counter_target: "input", class:"border border-0 "} } %>
+    </div>
+
+     <div class="form-group" data-controller="character-counter">
+      <div class="d-flex gap-3 align-items-center">
+      <%= f.label "Biographie détaillée*" %>
+      <small class="text-secondary"><span data-character-counter-target="counter">0</span>/3000 </small>
+      </div>
+      <%= f.input :long_bio, label: false, placeholder: "Une version détaillée de votre parcours, à destination des jurys de concours", input_html: { class:"border border-0", style: 'height: 200px;', data: { action: "input->character-counter#update", character_counter_target: "input", class:"border border-0 "} } %>
+    </div>
+
   </div>
 
   <div class="form-inputs bg-white p-3 rounded-4 shadow-sm mt-3">
@@ -72,7 +89,7 @@
       </div>
 
       <div class="d-flex gap-3 justify-content-center">
-        <%= link_to '#', data: { action: 'experiences#addExperience' }, class: ' rounded-pill btn btn-outline-secondary m-0' do %>
+        <%= link_to "#", data: { action: 'experiences#addExperience' }, class: ' rounded-pill btn btn-outline-secondary m-0' do %>
           <i class="fas fa-plus fa-2x m-0 "></i>
         <% end %>
       </div>

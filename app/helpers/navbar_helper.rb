@@ -37,8 +37,8 @@ module NavbarHelper
 
   def navbar_links_for_profile_pic
     [
-      { label: 'Mon compte', url: "#" },
-      { label: 'Moyens de paiement', url: "#" },
+      # { label: 'Mon compte', url: edit_user_registration_path },
+      # { label: 'Moyens de paiement', url: "#" },
       { label: 'Se déconnecter', url: destroy_user_session_path, method: :delete },
       { label: "Changer mon mot de passe", url: edit_user_registration_path }
     ]
