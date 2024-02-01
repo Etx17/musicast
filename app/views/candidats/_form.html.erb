@@ -12,7 +12,7 @@
     <%= f.label "Portrait (photo HD de votre visage)" %>
     <%= f.file_field :portrait, class: 'form-control' %>
     <% if @candidat.portrait.attached? %>
-      <small class="text-info"> <%= @candidat.portrait.filename %></small>
+      <small class="text-success"> <%= @candidat.portrait.filename %></small>
     <% end %>
     <% if @candidat.errors[:portrait].any? %>
       <small class="error-message text-danger ">
@@ -25,7 +25,7 @@
     <%= f.label "Photo artistique (HD)" %>
     <%= f.file_field :artistic_photo, class: 'form-control' %>
      <% if @candidat.artistic_photo.attached? %>
-      <small class="text-info"> <%= @candidat.artistic_photo.filename %></small>
+      <small class="text-success"> <%= @candidat.artistic_photo.filename %></small>
     <% end %>
     <% if @candidat.errors[:artistic_photo].any? %>
       <small class="error-message text-danger ">

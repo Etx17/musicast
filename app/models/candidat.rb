@@ -14,6 +14,8 @@ class Candidat < ApplicationRecord
   accepts_nested_attributes_for :educations
 
   validate :correct_document_mime_type
+  validate :correct_portrait_mime_type
+  validate :correct_artistic_photo_mime_type
 
   # Validations
   validates :first_name, :last_name, :birthdate, :short_bio, :medium_bio, :long_bio, :repertoire, presence: true
@@ -40,6 +42,20 @@ class Candidat < ApplicationRecord
   end
 
   private
+
+  def correct_artistic_photo_mime_type
+    if artistic_photo.attached? && !artistic_photo.content_type.in?(%w(image/jpeg image/png))
+      artistic_photo.purge
+      errors.add(:artistic_photo, 'Must be a JPEG or PNG')
+    end
+  end
+
+  def correct_portrait_mime_type
+    if portrait.attached? && !portrait.content_type.in?(%w(image/jpeg image/png))
+      portrait.purge
+      errors.add(:portrait, 'Must be a JPEG or PNG')
+    end
+  end
 
   def correct_document_mime_type
     diplomas.each do |diploma|
