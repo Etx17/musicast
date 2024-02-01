@@ -33,8 +33,13 @@ class User < ApplicationRecord
   end
 
   def create_associated_role
-    Candidat.create(user: self) if inscription_role == "candidate"
-    Organisateur.create(user: self) if inscription_role == "organiser"
+    if inscription_role == "candidate"
+      candidate = Candidat.new(user: self)
+      candidate.save(validate: false)
+    elsif inscription_role == "organiser"
+      organiser = Organisateur.new(user: self)
+      organiser.save(validate: false)
+    end
   end
 
   def organisateur

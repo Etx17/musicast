@@ -15,10 +15,21 @@ class Candidat < ApplicationRecord
 
   validate :correct_document_mime_type
 
+  # Validations
+  validates :first_name, :last_name, :birthdate, :short_bio, :medium_bio, :long_bio, :repertoire, presence: true
+  validate :portrait_attached, :artistic_photo_attached
+
+  def portrait_attached
+    errors.add(:portrait, "Portrait must be attached") unless portrait.attached?
+  end
+
+  def artistic_photo_attached
+    errors.add(:artistic_photo, "Artistic photo must be attached") unless artistic_photo.attached?
+  end
+
   def has_minimum_informations_for_inscription?
     self.first_name.present? &&
     self.last_name.present? &&
-    self.bio.present? &&
     self.short_bio.present? &&
     self.medium_bio.present? &&
     self.long_bio.present? &&

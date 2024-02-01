@@ -9,14 +9,30 @@
 
   <div class="form-inputs bg-white p-3 rounded-4 shadow-sm">
    <div class="form-group">
-      <%= f.label "Portrait (photo HD de votre visage)" %>
-      <%= f.file_field :portrait, class: 'form-control' %>
-    </div>
+    <%= f.label "Portrait (photo HD de votre visage)" %>
+    <%= f.file_field :portrait, class: 'form-control' %>
+    <% if @candidat.portrait.attached? %>
+      <small class="text-info"> <%= @candidat.portrait.filename %></small>
+    <% end %>
+    <% if @candidat.errors[:portrait].any? %>
+      <small class="error-message text-danger ">
+        <%= @candidat.errors[:portrait].to_sentence %>
+      </small>
+    <% end %>
+  </div>
 
-    <div class="form-group">
-      <%= f.label "Photo artistique (HD)" %>
-      <%= f.file_field :artistic_photo, class: 'form-control' %>
-    </div>
+  <div class="form-group">
+    <%= f.label "Photo artistique (HD)" %>
+    <%= f.file_field :artistic_photo, class: 'form-control' %>
+     <% if @candidat.artistic_photo.attached? %>
+      <small class="text-info"> <%= @candidat.artistic_photo.filename %></small>
+    <% end %>
+    <% if @candidat.errors[:artistic_photo].any? %>
+      <small class="error-message text-danger ">
+        <%= @candidat.errors[:artistic_photo].to_sentence %>
+      </small>
+    <% end %>
+  </div>
 
     <div class="form-group">
       <%= f.label "Bannière (facultatif)" %>
