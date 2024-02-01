@@ -74,7 +74,8 @@ class CategoriesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def category_params
-    params.require(:category).permit(:allow_own_pianist_accompagnateur, :photo, :edition_competition_id, :name, :description, :min_age, :max_age,
-                                     :discipline)
+    params.require(:category).permit(:name, :description, :min_age, :max_age, :discipline, :price_cents, :allow_own_pianist_accompagnateur).tap do |whitelisted|
+      whitelisted[:price_cents] = (whitelisted[:price_cents].to_f * 100).to_i if whitelisted[:price_cents]
+    end
   end
 end

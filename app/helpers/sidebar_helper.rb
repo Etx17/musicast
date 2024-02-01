@@ -12,8 +12,13 @@ module SidebarHelper
         links << { label: "Tableau de bord", url: organisateur_dashboard_path }
         last_edition_competition = current_user.organisateur&.competitions&.last&.edition_competitions&.last
         categories = last_edition_competition&.categories
-        links << { label: "#{last_edition_competition.competition.nom_concours} #{last_edition_competition.annee}", url: organism_competition_edition_competition_path(last_edition_competition.competition.organism_id, last_edition_competition.competition_id, last_edition_competition) } if last_edition_competition.present?
-        if categories.present?
+        if last_edition_competition.present?
+        links << {  label: "#{last_edition_competition.competition.nom_concours} #{last_edition_competition.annee}",
+                    url: organism_competition_edition_competition_path(last_edition_competition.competition.organism_id, last_edition_competition.competition_id, last_edition_competition),
+                    status: last_edition_competition.status
+          }
+        end
+                    if categories.present?
           categories.each do |category|
             links << { label: category.name, url: organism_competition_edition_competition_category_path(last_edition_competition.competition.organism_id, last_edition_competition.competition_id, last_edition_competition, category) }
           end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_30_091318) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_31_161036) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -180,6 +180,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_30_091318) do
     t.date "start_date"
     t.date "end_date"
     t.string "reglement_url"
+    t.integer "status", default: 0
     t.index ["competition_id"], name: "index_edition_competitions_on_competition_id"
   end
 

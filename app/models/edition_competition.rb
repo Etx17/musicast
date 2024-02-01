@@ -9,6 +9,8 @@ class EditionCompetition < ApplicationRecord
   delegate :organism_id, to: :competition
   delegate :organism, to: :competition
 
+  enum status: { draft: 0, published: 1, archived: 2 }
+
   def disciplines
     categories.pluck(:name).uniq
   end

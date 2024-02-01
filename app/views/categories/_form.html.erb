@@ -28,6 +28,7 @@
         </div>
         <%= f.input :description, required: true %>
         <%= f.input :allow_own_pianist_accompagnateur, as: :boolean, label: "Est-il permis au candidat d'apporter son pianiste accompagnateur personnel? (cochez pour OUI)"%>
+        <%= f.input :price_cents, label: "Frais d'inscription (#{@category.price_currency})", class: "form-control",input_html: { value: @category.price_cents / 100, step: 1, min: 0, class: "form-control", id: "price_euros", placeholder: "Enter price in Euros" }  %>
       </div>
     </div>
 

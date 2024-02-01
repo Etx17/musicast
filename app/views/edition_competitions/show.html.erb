@@ -11,6 +11,41 @@
           </div>
         </div>
       </div>
+
+      <%# Ready to publish button  %>
+      <div class="mt-3 d-flex justify-content-between">
+          <button type="button" class="btn btn-success btn-lg" data-bs-toggle="modal" data-bs-target="#publishModal">
+            Prêt à publier
+          </button>
+        </div>
+
+        <div class="modal fade" id="publishModal" tabindex="-1" aria-labelledby="publishModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="publishModalLabel">Confirmation de publication</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                Êtes-vous sûr de vouloir publier maintenant ? Une fois publiée, vous ne pourrez plus la modifier. Assurez vous que vous avez bien rempli comme vous le souhait
+                
+              </div>
+              <div class="modal-footer">
+                <%= simple_form_for [@organism, @competition, @edition_competition] do |f| %>
+                  <div class="d-flex gap-2 pb-2">
+                    <%= check_box_tag 'confirm_publish', '1', false, class: "form-check-input", required: true %>
+                    <label class="form-check-label" for="confirm_publish">
+                      J'ai revu ma compétition et je confirme les informations ci dessus. Je comprends que je ne pourrais plus modifier les catégories (leurs règles, programme demandé, etc...) une fois publiées.
+                    </label>
+                  </div>
+                  <%= f.hidden_field :status, value: 1 %>
+                  <%= f.submit "Publier", class: "btn btn-success", data: {turbo_confirm: "Confirmer ?"} %>
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Pas tout de suite</button>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
     </div>
 
     <div class="col-md-6" data-controller="hover">
