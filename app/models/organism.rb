@@ -13,7 +13,9 @@ class Organism < ApplicationRecord
   before_update :should_generate_new_friendly_id?
   has_one_attached :logo
 
-  validates :nom, presence: true
+  validates :nom, :description, presence: true
+  validates :nom, length: { minimum: 2, maximum: 50 }
+  validates :description, length: { minimum: 2, maximum: 300 }
 
   def should_generate_new_friendly_id?
     self.slug = nom.parameterize if nom_changed?

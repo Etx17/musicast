@@ -42,7 +42,7 @@ class OrganismsController < ApplicationController
     if @organism.update(organism_params)
       redirect_to organisateur_dashboard_path, notice: "Votre organisme a été modifié avec succès."
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 

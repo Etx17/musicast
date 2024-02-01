@@ -20,7 +20,7 @@ class PianistAccompagnateursController < ApplicationController
         format.html { redirect_to organisateur_dashboard_path, notice: 'Pianist was successfully created.' }
       end
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -39,7 +39,7 @@ class PianistAccompagnateursController < ApplicationController
         format.html { redirect_to organisateur_dashboard_path, notice: 'Pianist was successfully created.' }
       end
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 
