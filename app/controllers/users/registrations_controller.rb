@@ -37,12 +37,14 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def after_sign_up_path_for(resource)
     if Organisateur.exists?(user: resource)
-      # organisateur_configuration_path
       new_organism_path
-      # organisateur_dashboard_path
-      # TODO
     elsif Candidat.exists?(user: resource)
+      if session[:category_id]
+        category_id = session.delete(:category_id)
+        new_inscription_path(category_id: category_id, candidate_id: resource.id)
+      else
       candidat_dashboard_path
+      end
     elsif Jure.exists?(user: resource)
       jury_dashboard_path
     elsif Partner.exists?(user: resource)

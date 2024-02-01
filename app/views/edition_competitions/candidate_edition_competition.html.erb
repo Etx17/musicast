@@ -116,7 +116,12 @@
                 <% end %>
               </div>
               <div class="modal-footer">
+                <% if current_user %>
                 <%= link_to "Continuer", new_inscription_path(category_id: category.id, candidate_id: current_user.id), class: "btn btn-primary" %>
+                <% else %>
+                  <% session[:category_id] = category.id %>
+                  <%= link_to "Continuer", new_user_registration_path, class: "btn btn-primary" %>
+                <% end %>
               </div>
             </div>
           </div>

@@ -1,10 +1,9 @@
 <!-- Sous navbar pour choisir : competitions, offres pro, masterclass, stages -->
 <!-- Inputs instrument et pays-->
 <%= render "dropdown_inputs" %>
-
 <main class="container mt-4">
   <h2 class="text-center fw-bold mb-4">
-    Competitions
+    Competitions ( <%= @edition_competitions.count %>)
   </h2>
   <div class="row g-4">
     <% @edition_competitions.each do |edition_competition| %>
