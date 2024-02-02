@@ -18,8 +18,6 @@ class Category < ApplicationRecord
 
   has_one_attached :photo
   before_save :should_generate_new_friendly_id?, if: :name_changed?
-
-
   delegate :competition, to: :edition_competition
 
   enum status: {
@@ -53,6 +51,13 @@ class Category < ApplicationRecord
     tuba: 21,
     violin: 22
   }
+
+  # Validations
+  validates :max_age, comparison: { greater_than_or_equal_to: :min_age }
+  validates :name, :discipline, :min_age, :max_age, :description, :price_cents, presence: true
+
+  validates :name, length: {minimum: 3, maximum: 50}
+  validates :description, length: { maximum: 1000 }
 
   def should_generate_new_friendly_id?
     self.slug = name.parameterize if name_changed?
