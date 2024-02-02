@@ -7,7 +7,7 @@ class Tour < ApplicationRecord
   validate :new_day_start_time_before_max_end_of_day_time
   attr_accessor :creating_schedule
 
-
+  
   accepts_nested_attributes_for :tour_requirement
   accepts_nested_attributes_for :address
   has_many :pauses, dependent: :destroy

@@ -3,14 +3,14 @@
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
-    <%= f.label :title, "Titre", class: "form-label" %>
-    <%= f.text_field :title, class: "form-control" %>
+    <%= f.label :title, "Titre:", class: "form-label" %>
+    <%= f.text_field :title, placeholder: "ex: Tour éliminatoire", class: "form-control bg-white" %>
 
-    <%= f.label :description, "Description (Figurera sur le planning PDF à desination des candidats en note de bas)", class: "form-label" %>
-    <%= f.text_area :description, class: "form-control"  %>
+    <%= f.label :description, "Informations:", class: "form-label pt-2" %>
+    <%= f.text_area :description, class: "form-control bg-white"  %>
 
 
-    <%= f.label :start_date, "Date de début", class: "form-label" %>
+    <%= f.label :start_date, "Date de début:", class: "form-label" %>
     <div class="d-flex">
       <%= f.datetime_select :start_date %>
     </div>
@@ -24,8 +24,8 @@
 
 
     <%# <% if Date.today <= @category.edition_competition.end_of_registration %>
-      <%= f.label :tour_number, "Numéro du tour (1er, 2e, 3e, etc...)", class: "form-label" %>
-      <%= f.number_field :tour_number, class: "form-control" , required: true %>
+      <%= f.label :tour_number, "Numéro du tour (1er, 2e, 3e, etc...)", class: " form-label" %>
+      <%= f.number_field :tour_number, class: "form-control bg-white" , required: true %>
     <%# <% end %>
 
     <% if false && @category.imposed_work.present? %>
@@ -38,7 +38,7 @@
       <% end %>
     <% end %>
     <% if @category.imposed_work.present? %>
-      <%= f.label :imposed_air_selection, "Sélectionnez les airs que vous souhaitez imposer pour ce tour (optionel)", class: 'form-label' %>
+      <%= f.label :imposed_air_selection, "Sélectionnez les airs que vous souhaitez imposer pour ce tour (optionel)", class: 'form-label ' %>
       <%= f.select :imposed_air_selection, @category.imposed_work.airs.map { |air| [air.title, air.id] }, { include_blank: 'Aucun' }, { multiple: true, class: 'form-control' } %>
       <small class="form-text text-muted">Maintenez la touche Ctrl (ou Cmd sur Mac) enfoncée pour sélectionner plusieurs airs. Sur mobile, appuyez sur les airs que vous souhaitez sélectionner.</small>
     <% end %>
@@ -50,31 +50,31 @@
       <div class="row">
         <div class="col-md-12">
           <%= tr.label :description, "Description", class: "form-label" %>
-          <%= tr.text_area :description, class: "form-control", placeholder: "Pour ce tour, décrivez les spécifications de programme du candidat; Doit il inclure un des airs imposés au choix ?" %>
+          <%= tr.text_area :description, class: "form-control  bg-white", placeholder: "Pour ce tour, décrivez les spécifications de programme du candidat; Doit il inclure un des airs imposés au choix ?" %>
         </div>
       </div>
 
       <div class="row">
         <div class="col-md-6">
           <%= tr.label :min_number_of_works, "Nombre minimum d'œuvres", class: "form-label" %>
-          <%= tr.number_field :min_number_of_works, class: "form-control" %>
+          <%= tr.number_field :min_number_of_works, class: "form-control  bg-white" %>
         </div>
 
         <div class="col-md-6">
           <%= tr.label :max_number_of_works, "Nombre maximum d'œuvres", class: "form-label" %>
-          <%= tr.number_field :max_number_of_works, class: "form-control" %>
+          <%= tr.number_field :max_number_of_works, class: "form-control  bg-white" %>
         </div>
       </div>
 
       <div class="row">
         <div class="col-md-6">
           <%= tr.label :min_duration_minute, "Durée minimum en minutes", class: "form-label" %>
-          <%= tr.number_field :min_duration_minute, class: "form-control" %>
+          <%= tr.number_field :min_duration_minute, class: "form-control  bg-white" %>
         </div>
 
         <div class="col-md-6">
           <%= tr.label :max_duration_minute, "Durée maximum en minutes", class: "form-label" %>
-          <%= tr.number_field :max_duration_minute, class: "form-control" %>
+          <%= tr.number_field :max_duration_minute, class: "form-control  bg-white" %>
         </div>
       </div>
     <% end %>
