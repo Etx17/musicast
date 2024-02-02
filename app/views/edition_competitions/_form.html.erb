@@ -30,6 +30,11 @@
             <% end %>
           </div>
         <% end %>
+        <% if edition_competition.rule_document.attached? %>
+          <div class="d-flex flex-column">
+            <embed src="<%= url_for(edition_competition.rule_document) %>"  height="375" type="application/pdf">
+          </div>
+        <% end %>
       </div>
     </div>
   </div>

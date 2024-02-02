@@ -21,6 +21,7 @@ Rails.application.routes.draw do
     resources :pianist_accompagnateurs
     resources :competitions do
       resources :edition_competitions do
+        delete :remove_document, on: :member
         resources :categories do
           resources :prizes
           resources :tours do
@@ -51,7 +52,6 @@ Rails.application.routes.draw do
     end
   end
   resources :partners
-
   resources :jures
   resources :candidats do
     resources :experiences, only: [:new, :create, :destroy]

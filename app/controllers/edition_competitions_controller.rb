@@ -1,6 +1,6 @@
 class EditionCompetitionsController < ApplicationController
-  before_action :set_organism_and_competition, only: %i[show new edit create update destroy]
-  before_action :set_edition_competition, only: %i[show edit update destroy]
+  before_action :set_organism_and_competition, only: %i[remove_document show new edit create update destroy]
+  before_action :set_edition_competition, only: %i[remove_document show edit update destroy]
 
   def index
     @edition_competitions = EditionCompetition.all
@@ -39,7 +39,7 @@ class EditionCompetitionsController < ApplicationController
   def update
     authorize @edition_competition
     if @edition_competition.update(edition_competition_params)
-      redirect_to organism_competition_url(@organism, @competition), notice: "Edition competition was successfully updated."
+      redirect_to organism_competition_edition_competition_url(@organism, @competition, @edition_competition), notice: "Edition competition was successfully updated."
     else
       render :edit, status: :unprocessable_entity
     end
@@ -54,6 +54,11 @@ class EditionCompetitionsController < ApplicationController
     end
     redirect_to organism_competition_url(@organism, @edition_competition.competition),
                 notice: "Edition competition was successfully destroyed."
+  end
+
+  def remove_document
+    @edition_competition.rule_document.purge
+    redirect_to [@organism, @competition, @edition_competition], notice: 'Document was successfully removed.'
   end
 
   private
