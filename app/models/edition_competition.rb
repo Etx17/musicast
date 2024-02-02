@@ -8,8 +8,27 @@ class EditionCompetition < ApplicationRecord
   accepts_nested_attributes_for :documents
   delegate :organism_id, to: :competition
   delegate :organism, to: :competition
+  has_one_attached :rule_document, dependent: :destroy
 
   enum status: { draft: 0, published: 1, archived: 2 }
+
+  # Validations
+  validates :annee, presence: true
+  validates :end_of_registration, presence: true
+  validates :start_date, presence: true
+  validates :end_date, presence: true
+  validates :start_date, comparison: { greater_than_or_equal_to: Date.today }
+  validates :end_date, comparison: { greater_than_or_equal_to: :start_date }
+  validates :end_of_registration, comparison: { less_than_or_equal_to: :start_date }
+
+  validate :correct_mime_type_of_rule_document
+
+  def correct_mime_type_of_rule_document
+    if rule_document.attached? && !rule_document.content_type.in?(%w(application/pdf))
+      errors.add(:rule_document, 'Doit être un fichier PDF')
+    end
+  end
+
 
   def disciplines
     categories.pluck(:name).uniq

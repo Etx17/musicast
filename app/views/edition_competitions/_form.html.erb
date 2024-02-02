@@ -4,21 +4,37 @@
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
-  <div class="form-inputs">
-    <%= f.input :annee, input_html: { value: Date.today.year }, label: "Année" %>
-    <%= f.input :details_specifiques %>
-    <%= f.input :end_of_registration, as: :date, label: "Cloturation des inscriptions", input_html: { value: Date.today }, hint: "Date jusqu'à laquelle vous acceptez de recevoir des candidatures" %>
-    <%= f.input :start_date, as: :date, input_html: { value: Date.today }, label: "Date de début de l'évènement" %>
-    <%= f.input :end_date, as: :date, input_html: { value: Date.today },  label: "Date de fin de l'évènement" %>
-    <%= f.simple_fields_for :address do |address_fields| %>
-      <%= address_fields.input :line1, label: "Numéro et rue" %>
-      <%= address_fields.input :zipcode, label: "Code postal" %>
-      <%= address_fields.input :city, label: "Ville" %>
-      <%= address_fields.country_select :country, {}, { class: "my-3 p-2 bg-light border rounded" } %>
-     <% end %>
+  <div class="form-inputs row">
+    <div class="col-md-6">
+      <%= f.input :annee, input_html: { style:"border: none;", value: Date.today.year }, label: "Année"  %>
+      <%= f.input :end_of_registration, as: :date,label: "Cloturation des inscriptions", input_html: { value: Date.today }, hint: "Date jusqu'à laquelle vous acceptez de recevoir des candidatures" %>
+      <%= f.input :start_date, as: :date, input_html: { value: Date.today }, label: "Date de début de l'évènement" %>
+      <%= f.input :end_date, as: :date, input_html: { value: Date.today },  label: "Date de fin de l'évènement" %>
+       <%= f.simple_fields_for :address do |address_fields| %>
+        <%= address_fields.input :line1, label: "Numéro et rue", placeholder:" 3 rue Claude Debussy" %>
+        <%= address_fields.input :zipcode, label: "Code postal" %>
+        <%= address_fields.input :city, label: "Ville" %>
+        <%= f.label "Pays*:", class:"pb-0" %>
+        <%= address_fields.country_select :country, {}, { class: " select w-100 valid mt-1 mb-3 p-2 bg-light-grey border rounded" } %>
+      <% end %>
+    </div>
+    <div class="col-md-6">
+      <%= f.input :details_specifiques, input_html: {style:"border: none;"}%>
+      <div class="gap-2 d-flex flex-column">
+        <%= f.label "Règlement (PDF)" %>
+        <%= f.file_field :rule_document %>
+        <% if f.object.errors[:rule_document].any? %>
+          <div class="error-messages">
+            <% f.object.errors[:rule_document].each do |error| %>
+              <small class="text-danger"><%= error %></small>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
   </div>
 
   <div class="form-actions">
-    <%= f.button :submit, 'Enregistrer', class: "btn btn-dark w-100 py-3" %>
+    <%= f.button :submit, 'Enregistrer', class: "btn btn-dark mx-auto w-100 py-2 mb-2" %>
   </div>
 <% end %>

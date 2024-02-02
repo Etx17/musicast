@@ -76,6 +76,7 @@ class EditionCompetitionsController < ApplicationController
       :end_date,
       :status,
       :end_of_registration,
+      :rule_document,
       address_attributes: %i[line1 line2 zipcode city country],
       documents_attributes: %i[file file_url document_type]
     )
