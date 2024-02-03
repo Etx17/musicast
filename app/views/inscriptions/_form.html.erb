@@ -11,12 +11,13 @@
           <h3><%= item_requirement.requirement_item.title %></h3>
           <p><%= item_requirement.requirement_item.description_item %></p>
           <%= f.simple_fields_for :inscription_item_requirements, item_requirement do |irf| %>
+
             <%= irf.hidden_field :requirement_item_id %>
             <% case item_requirement.requirement_item.type_item %>
             <% when 'motivation_essay' %>
               <%= irf.input :submitted_content, as: :text, label: 'Lettre de motivation', hint: "Ni trop long, ni trop court", required: true %>
             <% when 'youtube_link' %>
-              <%= irf.input :submitted_content, as: :url, label: "YouTube URL", hint: "Assurez vous que la vidéo soit publique et qu'elle soit bien accessible.", required: true %>
+              <%= irf.input :submitted_content, as: :url, label: "YouTube URL", hint: "Assurez vous que la vidéo soit publique et qu'elle soit bien accessible. Assurez vous que l'url contienne youtube.com ou youtu.be ", required: true %>
             <% else %>
               <div class="row">
                 <div class="col">
@@ -50,13 +51,18 @@
           <% semi_imposed_work_air = inscription.semi_imposed_work_airs.filter{|siwa| siwa.semi_imposed_work_id == semi_imposed_work.id}[i] || semi_imposed_work.semi_imposed_work_airs.build.build_air %>
           <%= f.simple_fields_for :semi_imposed_work_airs, semi_imposed_work_air do |semi_imposed_work_air_fields| %>
             <%= semi_imposed_work_air_fields.input :semi_imposed_work_id, as: :hidden, input_html: { value: semi_imposed_work.id } %>
-
-                <%# Attention, si on est sur edit alors il fau:air_attributes, mais s ijamais on a déja imposed_work airs il faut simple field for air %>
-
-
+              <%# Attention, si on est sur edit alors il fau:air_attributes, mais s ijamais on a déja imposed_work airs il faut simple field for air %>
               <%# <%= semi_imposed_work_air_fields.simple_fields_for (inscription.semi_imposed_work_airs.none? ? :air_attributes : :air) do |air_fields| %>
               <%= semi_imposed_work_air_fields.simple_fields_for (inscription.semi_imposed_work_airs.none?{|p| p.persisted?} ? :air_attributes : :air) do |air_fields| %>
               <%# <%= semi_imposed_work_air_fields.simple_fields_for (@inscription.semi_imposed_work_airs.none?{|p| p.persisted?} ? :air_attributes : :air) do |air_fields| %>
+                <% if air_fields&.object&.errors&.any? %>
+                  <div class="error_notification">
+                    <ul>
+                      <% air_fields.object.errors.full_messages.each do |message| %>
+                      <% end %>
+                    </ul>
+                  </div>
+                <% end %>
                 <div class="card card-body shadow-sm">
                   <div class="row">
                 <div class="col-12 col-md">

@@ -13,14 +13,14 @@ class InscriptionItemRequirement < ApplicationRecord
   end
 
   def submitted_content_is_youtube_url
-    # if submitted_content.present?
-    #   uri = URI.parse(submitted_content)
-    #   if uri.host.nil? || uri.host.include?("youtube.com") || uri.host.include?("youtu.be")
-    #     true
-    #   else
-    #     errors.add(:submitted_content, "n'est pas une URL youtube valide")
-    #   end
-    # end
+    if submitted_content.present?
+      uri = URI.parse(submitted_content)
+      if uri.host.nil? || uri.host.include?("youtube.com") || uri.host.include?("youtu.be")
+        true
+      else
+        errors.add(:submitted_content, "n'est pas une URL youtube valide")
+      end
+    end
   end
 
   def youtube_id

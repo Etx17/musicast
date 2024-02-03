@@ -31,18 +31,19 @@ class InscriptionsController < ApplicationController
       return
     end
 
-    inscription = current_user.candidat.inscriptions.by_category(params[:category_id]).first
-    if inscription.present?
-      category = Category.friendly.find(params[:category_id])
-      if category.requirement_items.any? && inscription.inscription_item_requirements.none?
-        category.requirement_items.each do |item|
-          inscription.inscription_item_requirements.build(requirement_item: item)
-        end
-      end
-      redirect_to inscription_path(inscription) if inscription.present?
-    end
+    # Comprend pas ce code fait quoi.
+    # inscription = current_user.candidat.inscriptions.by_category(params[:category_id]).first
+    # if inscription.present?
+    #   category = Category.friendly.find(params[:category_id])
+    #   if category.requirement_items.any? && inscription.inscription_item_requirements.none?
+    #     category.requirement_items.each do |item|
+    #       inscription.inscription_item_requirements.build(requirement_item: item)
+    #     end
+    #   end
+    #   redirect_to inscription_path(inscription) if inscription.present?
+    # end
 
-    @inscription = Inscription.new
+    @inscription = current_user.candidat.inscriptions.by_category(params[:category_id]).first_or_initialize
     category = Category.friendly.find(params[:category_id])
 
     category.requirement_items.each do |item|
