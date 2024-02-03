@@ -143,7 +143,7 @@
           </div>
          <div class="modal-body" data-controller="requirement" data-action="click->requirement#changeIdOfInput">
             <%= simple_form_for([@organism, @competition, @edition_competition, @category, RequirementItem.new]) do |f| %>
-              <%= f.input :title, label: "Donnez un titre à cet item", input_html: { id: "requirement-#{@category.name}-#{Time.now.to_i}" }, data: { requirement_target: "title" } %>
+              <%= f.input :title, placeholder:"ex: Lettre de recommendation de votre professeur", label: "Donnez un titre à cet item", input_html: { id: "requirement-#{@category.name}-#{Time.now.to_i}" }, data: { requirement_target: "title" } %>
               <%= f.input :type_item, label: "Type de pièce", collection: RequirementItem.type_items.keys, prompt: 'Select a type' %>
               <%= f.input :description_item, label: "Détails", placeholder: "Renseignez ici les spécifications, par exemple de longueur pour une lettre de motivation, de durée pour une vidéo sur youtube, ou autre..." %>
               <div class="modal-footer">
