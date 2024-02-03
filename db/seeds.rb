@@ -21,7 +21,7 @@
   # Add Address to EditionCompetition
   edition.address = Address.create!(addressable_id: edition.id, addressable_type: "EditionCompetition", line1: "Rue de la Paix #{n}", city: "Paris", country: "France", zipcode: "75000")
   # Categories
-  category1 = Category.create!(price: 100, edition_competition_id: edition.id, name: "Piano under 18 #{n}", description: "Category for participants under 18 years #{n}", min_age: 10, max_age: 18, discipline: 1)
+  category1 = Category.create!( price: 100, edition_competition_id: edition.id, name: "Opera under 18 #{n}", description: "Category for participants under 18 years #{n}", min_age: 10, max_age: 18, discipline: "Lyrical Singing")
   category2 = Category.create!(price: 50, edition_competition_id: edition.id, name: "Piano under 12 #{n}", description: "Category for children under 12 years #{n}", min_age: 6, max_age: 12, discipline: 2)
 
   # Pianistes accompagnateurs de l'organisme
@@ -41,7 +41,6 @@
 
   # Tours for Category1
   Tour.create!(
-    # imposed_air_selection: ["1", "2"],
     final_performance_submission_deadline: Date.today + 29, tour_number: 1, category_id: category1.id, start_date: Date.today, start_time: Time.now, end_date: Date.today + 30, end_time: Time.now + 6.hours, is_online: false, title: "Tour éliminatoire", description: "First round of the competition #{n}", tour_requirement_attributes: { description: "Preliminary round requirements", min_number_of_works: 1, max_number_of_works: 3, min_duration_minute: 3, max_duration_minute: 9, organiser_creates_program: false } )
   Tour.create!(
     imposed_air_selection: ["1", "2"],

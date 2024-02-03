@@ -81,7 +81,7 @@
             <% @tour.performances.order(:order).each do |performance| %>
               <tr>
                 <td class="p-2 bg-light ">
-                  <%= link_to performance.candidat.first_name, inscription_path(performance), target: '_blank', class: performance.minutes == 0 ? "text-danger" : ''%>
+                  <%= link_to performance.candidat.first_name, inscription_path(performance.inscription), target: '_blank', class: performance.minutes == 0 ? "text-danger" : ''%>
                   <% if performance.minutes == 0 %>
                     <i class="text-danger fas fa-circle-exclamation"></i>
                   <% end %>
