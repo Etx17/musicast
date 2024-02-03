@@ -7,7 +7,16 @@ class Tour < ApplicationRecord
   validate :new_day_start_time_before_max_end_of_day_time
   attr_accessor :creating_schedule
 
-  
+  validates :title, :description, :start_date, :final_performance_submission_deadline, presence: true
+  validates :title, uniqueness: { scope: :category_id, message: "should be unique per category" }
+  validates :max_end_of_day_time, :new_day_start_time, presence: true, if: :creating_schedule
+  validates :title, length: { maximum: 50 }
+  validates :description, length: { maximum: 500 }
+  validates :final_performance_submission_deadline, comparison: { less_than: :start_date, message: "must be before the start date" }
+  # validates :tour_number, uniqueness: { scope: :category_id, message: "should be unique per category" }
+  validates :tour_number, numericality: { only_integer: true }
+
+
   accepts_nested_attributes_for :tour_requirement
   accepts_nested_attributes_for :address
   has_many :pauses, dependent: :destroy
@@ -109,7 +118,7 @@ class Tour < ApplicationRecord
   end
 
   def has_same_organisateur_as?(organisateur_id)
-    Organisateur.joins(organisms: {competitions: { edition_competitions: { categories: { tours: :performances } } }})
+    Organisateur.joins(organisms: {competitions: { edition_competitions: { categories: :tours } }})
       .where(tours: { id: id })
       .where(id: organisateur_id)
       .exists?

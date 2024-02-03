@@ -20,17 +20,16 @@ class Performance < ApplicationRecord
   end
 
   def airs
-    airs = Air.where(id: air_selection)
-    imposed_air_selection&.each do |air_id|
-      airs = airs.or(Air.where(id: air_id))
+    # TOFIX
+    air_ids = air_selection
+    if air_ids.empty?
+      air_ids = ordered_air_selection
     end
+    air_ids += imposed_air_selection if imposed_air_selection
 
-    airs
+    air_ids += ordered_air_selection if ordered_air_selection&.count > ((air_selection&.count || 0 ) + ( imposed_air_selection.present? ? imposed_air_selection.count : 0))
 
-    # POur eviter n+1
-    # air_ids = air_selection
-    # air_ids += imposed_air_selection if imposed_air_selection
-    # Air.where(id: air_ids)
+    Air.where(id: air_ids.uniq)
   end
 
 
@@ -58,7 +57,6 @@ class Performance < ApplicationRecord
 
       # Remove any IDs from ordered_air_selection that are not in the combined_selection
       self.ordered_air_selection.select! { |id| combined_selection.include?(id) }
-
       # Add any new IDs from air_selection to ordered_air_selection
       new_ids = air_selection - ordered_air_selection
       self.ordered_air_selection.concat(new_ids)

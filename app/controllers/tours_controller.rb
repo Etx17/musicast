@@ -19,7 +19,7 @@ class ToursController < ApplicationController
   def new
     @tour = Tour.new
     @tour.build_tour_requirement
-    @tour.build_pauses
+    @tour.pauses.build
   end
 
   def create
@@ -30,7 +30,7 @@ class ToursController < ApplicationController
       redirect_to organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category),
                   notice: "Tour crée avec succès."
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 

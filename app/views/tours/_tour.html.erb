@@ -48,9 +48,7 @@
            <div class="d-flex justify-content-center">
             <div class="d-flex flex-column justif-content-center align-items-center">
               <i class="fas fa-calendar-alt fa-10x text-light-grey"></i>
-
               <p class="small my-3">Le tour est terminé. <br></p>
-
             </div>
           </div>
       <% else %>
@@ -65,7 +63,8 @@
           <div class="d-flex flex-column justif-content-center align-items-center">
             <i class="fas fa-calendar-alt fa-10x text-light-grey"></i>
 
-            <p class="small">Vous n'avez pas de planning pour l'instant. <br>Vous pouvez en générer un en cliquant sur le bouton ci-dessous. <br>Vous générerez un planning avec l'ordre de passage actuel.</p>
+            <p class="small text-center">Vous n'avez pas de planning pour l'instant. <br>Vous pouvez en générer un en cliquant sur le bouton ci-dessous. <br>Vous générerez un planning avec l'ordre de passage actuel.</p>
+            <p class="text-danger text-center">Certains candidats n'ont pas rempli leur performances. Veuillez consulter l'ordre de passage pour mettre à jour les performances des candidats qui ne l'ont pas remplie</p>
             <button class="items-center justify-center btn btn-success py-2 mb-5 rounded-16 text-center" style="font-size: 1.4em;"  data-bs-target="#tourConfirmationModal" data-bs-toggle="modal" data-bs-dismiss="modal" aria-label="Close" <%= "disabled" if @tour.performances.none? %> >
               Générer le planning
             </button>

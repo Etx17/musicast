@@ -79,8 +79,13 @@
             </tfoot>
           <% else %>
             <% @tour.performances.order(:order).each do |performance| %>
-              <tr class="">
-                <td class="p-2 bg-light"><%= link_to performance.candidat.first_name, inscription_path(performance), target: '_blank' %></td>
+              <tr>
+                <td class="p-2 bg-light ">
+                  <%= link_to performance.candidat.first_name, inscription_path(performance), target: '_blank', class: performance.minutes == 0 ? "text-danger" : ''%>
+                  <% if performance.minutes == 0 %>
+                    <i class="text-danger fas fa-circle-exclamation"></i>
+                  <% end %>
+                </td>
                 <td class="p-2 text-center bg-light" style="min-width: 110px;">
                   <%= form_with url: update_order_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour, performance_id: performance.id), method: :post do %>
                     <div class="d-flex">
@@ -129,7 +134,11 @@
                     <% end %>
                   </td>
                 <% end %>
-                <td class="p-2 text-center bg-light text-secondary"  ><%= performance.minutes %></td>
+                <td class="p-2 text-center bg-light <%= performance.minutes == 0 ? 'text-danger' : 'text-secondary' %>">
+
+                <%= performance.minutes %>
+
+                </td>
                 </td>
               </tr>
             <% end %>
