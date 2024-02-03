@@ -13,7 +13,6 @@ class Tour < ApplicationRecord
   validates :title, length: { maximum: 50 }
   validates :description, length: { maximum: 500 }
   validates :final_performance_submission_deadline, comparison: { less_than: :start_date, message: "must be before the start date" }
-  # validates :tour_number, uniqueness: { scope: :category_id, message: "should be unique per category" }
   validates :tour_number, numericality: { only_integer: true }
 
 

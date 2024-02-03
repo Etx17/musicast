@@ -19,7 +19,7 @@
   # EditionCompetition
   edition = EditionCompetition.create!(competition_id: competition.id, annee: 2024 + n, details_specifiques: "Special edition focusing on classical music #{n}", end_of_registration: Date.today + 30, start_date: Date.today + 60, end_date: Date.today + 90)
   # Add Address to EditionCompetition
-  edition.address = Address.create!(addressable_id: edition.id, addressable_type: "EditionCompetition", line1: "Rue de la Paix #{n}", city: "Paris #{n}", country: "France", zipcode: "75000 #{n}")
+  edition.address = Address.create!(addressable_id: edition.id, addressable_type: "EditionCompetition", line1: "Rue de la Paix #{n}", city: "Paris", country: "France", zipcode: "75000")
   # Categories
   category1 = Category.create!(price: 100, edition_competition_id: edition.id, name: "Piano under 18 #{n}", description: "Category for participants under 18 years #{n}", min_age: 10, max_age: 18, discipline: 1)
   category2 = Category.create!(price: 50, edition_competition_id: edition.id, name: "Piano under 12 #{n}", description: "Category for children under 12 years #{n}", min_age: 6, max_age: 12, discipline: 2)
@@ -28,37 +28,37 @@
   PianistAccompagnateur.create!(
     email: "pianist_accompagnateur1_#{n}@example.com",
     full_name: Faker::Name.name,
-    phone_number: Faker::PhoneNumber.phone_number,
+    phone_number: "0147837465",
     organism: organism,
   )
 
   PianistAccompagnateur.create!(
-    email: "pianist_accompagnateur2_#{n}@example,com",
+    email: "pianist_accompagnateur2_#{n}@example.com",
     full_name: Faker::Name.name,
-    phone_number: Faker::PhoneNumber.phone_number,
+    phone_number: "0147837465",
     organism: organism,
   )
 
   # Tours for Category1
   Tour.create!(
-    imposed_air_selection: ["1", "2"],
-    final_performance_submission_deadline: Date.today + 30, tour_number: 1, category_id: category1.id, start_date: Date.today, start_time: Time.now, end_date: Date.today + 30, end_time: Time.now + 6.hours, is_online: false, title: "Tour éliminatoire", description: "First round of the competition #{n}", tour_requirement_attributes: { description: "Preliminary round requirements", min_number_of_works: 1, max_number_of_works: 3, min_duration_minute: 3, max_duration_minute: 9, organiser_creates_program: false } )
+    # imposed_air_selection: ["1", "2"],
+    final_performance_submission_deadline: Date.today + 29, tour_number: 1, category_id: category1.id, start_date: Date.today, start_time: Time.now, end_date: Date.today + 30, end_time: Time.now + 6.hours, is_online: false, title: "Tour éliminatoire", description: "First round of the competition #{n}", tour_requirement_attributes: { description: "Preliminary round requirements", min_number_of_works: 1, max_number_of_works: 3, min_duration_minute: 3, max_duration_minute: 9, organiser_creates_program: false } )
   Tour.create!(
     imposed_air_selection: ["1", "2"],
-    final_performance_submission_deadline: Date.today + 60, tour_number: 2, category_id: category1.id, start_date: Date.today + 60, start_time: Time.now, end_date: Date.today + 90, end_time: Time.now + 6.hours, is_online: true, title: "Demi finale", description: "Second round, conducted online #{n}", tour_requirement_attributes: { description: "Online round requirements", min_number_of_works: 2, max_number_of_works: 4, min_duration_minute: 4.5, max_duration_minute: 12, organiser_creates_program: true } )
+    final_performance_submission_deadline: Date.today + 55, tour_number: 2, category_id: category1.id, start_date: Date.today + 60, start_time: Time.now, end_date: Date.today + 90, end_time: Time.now + 6.hours, is_online: true, title: "Demi finale", description: "Second round, conducted online #{n}", tour_requirement_attributes: { description: "Online round requirements", min_number_of_works: 2, max_number_of_works: 4, min_duration_minute: 4.5, max_duration_minute: 12, organiser_creates_program: true } )
   Tour.create!(
     imposed_air_selection: ["1", "2"],
-    final_performance_submission_deadline: Date.today + 90, tour_number: 3, category_id: category1.id, start_date: Date.today + 120, start_time: Time.now, end_date: Date.today + 150, end_time: Time.now + 6.hours, is_online: false, title: "Finale", description: "Final round of the competition #{n}", tour_requirement_attributes: { description: "Final round requirements. Candidat must be wearing black suit or dress. NO partition allowed.", min_number_of_works: 2, max_number_of_works: 4, min_duration_minute: 4.5, max_duration_minute: 12, organiser_creates_program: false } )
+    final_performance_submission_deadline: Date.today + 89, tour_number: 3, category_id: category1.id, start_date: Date.today + 120, start_time: Time.now, end_date: Date.today + 150, end_time: Time.now + 6.hours, is_online: false, title: "Finale", description: "Final round of the competition #{n}", tour_requirement_attributes: { description: "Final round requirements. Candidat must be wearing black suit or dress. NO partition allowed.", min_number_of_works: 2, max_number_of_works: 4, min_duration_minute: 4.5, max_duration_minute: 12, organiser_creates_program: false } )
   # Tours for Category2
   Tour.create!(
     imposed_air_selection: ["1", "2"],
-    final_performance_submission_deadline: Date.today + 30, tour_number: 1, category_id: category2.id, start_date: Date.today, start_time: Time.now, end_date: Date.today + 30, end_time: Time.now + 6.hours, is_online: false, title: "Tour éliminatoire", description: "First round of the competition #{n}", tour_requirement_attributes: { description: "Preliminary round requirements", min_number_of_works: 1, max_number_of_works: 3, min_duration_minute: 3, max_duration_minute: 9, organiser_creates_program: false } )
+    final_performance_submission_deadline: Date.today + 29, tour_number: 1, category_id: category2.id, start_date: Date.today, start_time: Time.now, end_date: Date.today + 30, end_time: Time.now + 6.hours, is_online: false, title: "Tour éliminatoire", description: "First round of the competition #{n}", tour_requirement_attributes: { description: "Preliminary round requirements", min_number_of_works: 1, max_number_of_works: 3, min_duration_minute: 3, max_duration_minute: 9, organiser_creates_program: false } )
   Tour.create!(
     imposed_air_selection: ["1", "2"],
-    final_performance_submission_deadline: Date.today + 60, tour_number: 2, category_id: category2.id, start_date: Date.today + 60, start_time: Time.now, end_date: Date.today + 90, end_time: Time.now + 6.hours, is_online: true, title: "Demi finale", description: "Second round, conducted online #{n}", tour_requirement_attributes: { description: "Online round requirements", min_number_of_works: 2, max_number_of_works: 4, min_duration_minute: 4.5, max_duration_minute: 12, organiser_creates_program: true } )
+    final_performance_submission_deadline: Date.today + 59, tour_number: 2, category_id: category2.id, start_date: Date.today + 60, start_time: Time.now, end_date: Date.today + 90, end_time: Time.now + 6.hours, is_online: true, title: "Demi finale", description: "Second round, conducted online #{n}", tour_requirement_attributes: { description: "Online round requirements", min_number_of_works: 2, max_number_of_works: 4, min_duration_minute: 4.5, max_duration_minute: 12, organiser_creates_program: true } )
   Tour.create!(
     imposed_air_selection: ["1", "2"],
-    final_performance_submission_deadline: Date.today + 90, tour_number: 3, category_id: category2.id, start_date: Date.today + 120, start_time: Time.now, end_date: Date.today + 150, end_time: Time.now + 6.hours, is_online: false, title: "Finale", description: "Final round of the competition #{n}", tour_requirement_attributes: { description: "Final round requirements. Candidat must be wearing black suit or dress. NO partition allowed.", min_number_of_works: 2, max_number_of_works: 4, min_duration_minute: 4.5, max_duration_minute: 12, organiser_creates_program: false } )
+    final_performance_submission_deadline: Date.today + 89, tour_number: 3, category_id: category2.id, start_date: Date.today + 120, start_time: Time.now, end_date: Date.today + 150, end_time: Time.now + 6.hours, is_online: false, title: "Finale", description: "Final round of the competition #{n}", tour_requirement_attributes: { description: "Final round requirements. Candidat must be wearing black suit or dress. NO partition allowed.", min_number_of_works: 2, max_number_of_works: 4, min_duration_minute: 4.5, max_duration_minute: 12, organiser_creates_program: false } )
   # Users for Candidats
   candidate_user1 = User.create!(email: "candidate1_#{n}@example.com", password: "password123", password_confirmation: "password123")
   candidate_user2 = User.create!(email: "candidate2_#{n}@example.com", password: "password123", password_confirmation: "password123")
@@ -68,11 +68,11 @@
   Candidat.create!(short_bio: "Coucou, je suis un chanteur lyrique", medium_bio: "Après avoir passé 2 ans a l'école de Bruxelles en chant lyrique, je me suis spécialisé dans le répertoire baroque. blablablablababla", long_bio: "In this code, check_image_ratio is a custom validation method that checks if the uploaded image has the correct aspect ratio. If the image does not have the correct ratio, it is deleted and an error is added to the image attribute. Please note that this code requires the active_storage gem and assumes that you have set up Active Storage and attached an image to the Candidat model. Also, you should replace 4.0 / 3.0 with the aspect ratio you want to enforce",user_id: candidate_user2.id, cv: "Link to CV of candidate 2 - #{n}", bio: "Short bio of candidate 2 - #{n}")
 
   # RequirementItems for Category1
-  RequirementItem.create!(category_id: category1.id, type_item: 'Recommendation Letter PDF', title: "Lettre de recommandation - #{n}", description_item: "Une lettre de recommandation au format PDF - #{n}.")
-  RequirementItem.create!(category_id: category1.id, type_item: 'Parental authorization PDF', title: "Certificat d'autorisation parentale - #{n}", description_item: "Certificat d’autorisation parentale au format PDF - #{n}.")
-  RequirementItem.create!(category_id: category1.id, type_item: 'Motivation Essay', title: "Lettre de motivation n°#{n}", description_item: "Lettre de motivation du candidat présentant sa volonté de participer")
-  RequirementItem.create!(category_id: category1.id, type_item: 'YouTube Link', title: "Enregistrement vidéo - Lied en allemand - #{n}", description_item: "Un enregistrement vidéo de bonne qualité, lien YouTube, ne dépassant pas 5 minutes - #{n}. Le lied doit être en allemand. Les mains du pianiste doivent être visibles en tout temps, sans coupure dans la vidéo.")
-
+  RequirementItem.create!(category_id: category1.id, type_item: 'recommendation_letter', title: "Lettre de recommandation - #{n}", description_item: "Une lettre de recommandation au format PDF - #{n}.")
+  RequirementItem.create!(category_id: category1.id, type_item: 'parental_authorization', title: "Certificat d'autorisation parentale - #{n}", description_item: "Certificat d’autorisation parentale au format PDF - #{n}.")
+  RequirementItem.create!(category_id: category1.id, type_item: 'motivation_essay', title: "Lettre de motivation n°#{n}", description_item: "Lettre de motivation du candidat présentant sa volonté de participer")
+  RequirementItem.create!(category_id: category1.id, type_item: 'youtube_link', title: "Enregistrement vidéo - Lied en allemand - #{n}", description_item: "Un enregistrement vidéo de bonne qualité, lien YouTube, ne dépassant pas 5 minutes - #{n}. Le lied doit être en allemand. Les mains du pianiste doivent être visibles en tout temps, sans coupure dans la vidéo.")
+  # { youtube_link: 0, recommendation_letter: 1, parental_authorization: 2, motivation_essay: 3 }
   # Create ImposedWork, ChoiceImposedWork, and SemiImposedWork
   imposed_work = ImposedWork.create!(
   category_id: category1.id,
