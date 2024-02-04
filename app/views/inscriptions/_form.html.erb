@@ -47,38 +47,48 @@
         <h3><%= semi_imposed_work.title %></h3>
         <small><%= semi_imposed_work.guidelines %></small>
         <%# <%= f.simple_fields_for  %>
+        <% if f.object.errors.any? %>
+              <div class="d-flex flex-column">
+                  <% f.object.errors.details.each do |attribute, errors| %>
+                    <% if attribute.to_s.start_with?("semi_imposed_work_airs.air") %>
+                      <small class="text-danger">
+                        La validation d'un air a échoué:
+                        <%= attribute.to_s.split('.').last %>
+                        <%= f.object.errors[attribute].uniq.join(", ") %>
+                      </small>
+                    <% end %>
+                  <% end %>
+              </div>
+        <% end %>
         <% semi_imposed_work.number.times do |i| %>
           <% semi_imposed_work_air = inscription.semi_imposed_work_airs.filter{|siwa| siwa.semi_imposed_work_id == semi_imposed_work.id}[i] || semi_imposed_work.semi_imposed_work_airs.build.build_air %>
+
           <%= f.simple_fields_for :semi_imposed_work_airs, semi_imposed_work_air do |semi_imposed_work_air_fields| %>
             <%= semi_imposed_work_air_fields.input :semi_imposed_work_id, as: :hidden, input_html: { value: semi_imposed_work.id } %>
               <%# Attention, si on est sur edit alors il fau:air_attributes, mais s ijamais on a déja imposed_work airs il faut simple field for air %>
               <%# <%= semi_imposed_work_air_fields.simple_fields_for (inscription.semi_imposed_work_airs.none? ? :air_attributes : :air) do |air_fields| %>
+
+
               <%= semi_imposed_work_air_fields.simple_fields_for (inscription.semi_imposed_work_airs.none?{|p| p.persisted?} ? :air_attributes : :air) do |air_fields| %>
-              <%# <%= semi_imposed_work_air_fields.simple_fields_for (@inscription.semi_imposed_work_airs.none?{|p| p.persisted?} ? :air_attributes : :air) do |air_fields| %>
-                <% if air_fields&.object&.errors&.any? %>
-                  <div class="error_notification">
-                    <ul>
-                      <% air_fields.object.errors.full_messages.each do |message| %>
-                      <% end %>
-                    </ul>
-                  </div>
-                <% end %>
+                <%# <%= semi_imposed_work_air_fields.simple_fields_for (@inscription.semi_imposed_work_airs.none?{|p| p.persisted?} ? :air_attributes : :air) do |air_fields| %>
+                <%# <%= raise %>
+
                 <div class="card card-body shadow-sm">
                   <div class="row">
                 <div class="col-12 col-md">
-                  <%= air_fields.input :title, label: "Air Title #{i+1}", input_html: { class: 'form-control' } %>
+                  <%= air_fields.input :title, label: "Air Title #{i+1}", input_html: { class: 'form-control bg-white' } %>
                 </div>
                 <div class="col-12 col-md">
-                  <%= air_fields.input :length_minutes, label: "Minutage", input_html: { class: 'form-control' } %>
+                  <%= air_fields.input :length_minutes, placeholder: "Nombre entier", hint: 'Arrondissez au dessus', label: "Minutage", input_html: { class: 'form-control bg-white' } %>
                 </div>
                 <%# <div class="col-12 col-md"> %>
                   <%# <%= air_fields.input :composer, label: "Composer", input_html: { class: 'form-control' } %>
                 <%# </div> %>
                 <div class="col-12 col-md">
-                  <%= air_fields.input :oeuvre, label: "Oeuvre", input_html: { class: 'form-control' } %>
+                  <%= air_fields.input :oeuvre, label: "Oeuvre", input_html: { class: 'form-control bg-white' } %>
                 </div>
                 <div class="col-12 col-md">
-                  <%= air_fields.input :character, label: "Character", input_html: { class: 'form-control' } %>
+                  <%= air_fields.input :character, label: "Character", input_html: { class: 'form-control bg-white' } %>
                 </div>
                 <div class="col-12 col-md">
                   <%# <%= air_fields.input :tonality, label: "Tonality", input_html: { class: 'form-control' } %>
@@ -86,6 +96,7 @@
                 </div>
 
                 <%= render 'shared/components/music_search_component', f: air_fields %>
+
 
                 </div>
               </div>
@@ -110,7 +121,7 @@
     <%= f.input :candidate_brings_pianist_accompagnateur, as: :boolean, label: "Souhaitez vous emmener votre propre pianiste accompagnateur? (cochez pour OUI)" if inscription.category.allow_own_pianist_accompagnateur %>
 
     <div class="form-actions">
-      <%= f.button :submit %>
+      <%= f.button :submit, "Enregistrer", class: "btn btn-dark" %>
     </div>
   <% end %>
 </div>

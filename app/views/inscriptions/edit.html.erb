@@ -1,5 +1,6 @@
-<h1>Editing inscription</h1>
-
+<h1 class="text-center">Modifier votre dossier d'inscription</h1>
+<h2 class="text-center text-danger">Vous pouvez modifier votre dossier jusqu'au <%= @inscription.category.edition_competition.end_of_registration.strftime("%d %B %Y à %H:%M") %></h2>
+<h3 class="text-center text-danger">Votre dossier sera soumis a cette date si vous avez reglé votre inscription.</h3>
 <%= render "form", inscription: @inscription %>
 
 <br>

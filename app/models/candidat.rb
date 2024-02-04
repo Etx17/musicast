@@ -14,18 +14,18 @@ class Candidat < ApplicationRecord
   accepts_nested_attributes_for :educations
 
 
-  # Validations to uncomment for seed
-  validate :correct_document_mime_type
-  validate :correct_portrait_mime_type
-  validate :correct_artistic_photo_mime_type
-  validate :portrait_attached, :artistic_photo_attached
+  # Validations to comment for seed
+  # validate :correct_document_mime_type
+  # validate :correct_portrait_mime_type
+  # validate :correct_artistic_photo_mime_type
+  # validate :portrait_attached, :artistic_photo_attached
 
 
-  validates :first_name, :last_name, :birthdate, :short_bio, :medium_bio, :long_bio, :repertoire, presence: true
-  validates_length_of :first_name, :last_name, minimum: 2, maximum: 30
-  validates_length_of :short_bio, maximum: 300
-  validates_length_of :medium_bio, maximum: 1000
-  validates_length_of :long_bio, maximum: 3000
+  # validates :first_name, :last_name, :birthdate, :short_bio, :medium_bio, :long_bio, :repertoire, presence: true
+  # validates_length_of :first_name, :last_name, minimum: 2, maximum: 30
+  # validates_length_of :short_bio, maximum: 300
+  # validates_length_of :medium_bio, maximum: 1000
+  # validates_length_of :long_bio, maximum: 3000
 
 
 

@@ -1,4 +1,8 @@
 <h1>NOUVELLE INSCRIPTION</h1>
+<h2 class="text-center text-danger">Vous pourrez modifier votre dossier jusqu'au <%= @inscription.category.edition_competition.end_of_registration.strftime("%d %B %Y à %H:%M") %></h2>
+<h3 class="text-center text-danger">Votre dossier sera soumis a cette date si vous avez reglé votre inscription.</h3>
+<h3 class="text-center text-danger">Vous n'êtes pas obligés de fournir les documents demandés maintenant, mais veillez à le faire avant la date de soumission.</h3>
+<h3 class="text-center text-danger">Remplissez néanmoins les oeuvres à choisir, quitte a les modifier plus tard.</h3>
 
 <%= render "form", inscription: @inscription %>
 

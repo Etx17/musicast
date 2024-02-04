@@ -7,12 +7,12 @@ class Air < ApplicationRecord
   belongs_to :choice_imposed_work, optional: true
   belongs_to :semi_imposed_work, optional: true
 
-  validates :title, :length_minutes, :composer, :oeuvre, presence: true
+  # validates :title, :length_minutes, :composer, :oeuvre, presence: true
   validates :length_minutes, numericality: { only_integer: true, greater_than: 0 }
-  validates :title, length: { minimum: 3, maximum: 70 }
-  validates :infos, length: { maximum: 200 }
-  validates :composer, length: { maximum: 50 }
-  validates :oeuvre, length: { maximum: 50 }
+  # validates :title, length: { maximum: 70 }
+  # validates :infos, length: { maximum: 200 }
+  # validates :composer, length: { maximum: 50 }
+  # validates :oeuvre, length: { maximum: 50 }
 
   def self.tonalities_selection
     [ 'Aucune',

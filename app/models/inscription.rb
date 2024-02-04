@@ -14,7 +14,6 @@ class Inscription < ApplicationRecord
   accepts_nested_attributes_for :choice_imposed_work_airs
   accepts_nested_attributes_for :semi_imposed_work_airs
 
-  # scope :by_category, ->(category_id) { where(category_id: category_id) }
   scope :by_category, -> (category_id) { where(category_id: category_id).includes(candidat: :user) }
   scope :by_candidat, ->(candidat_id) { where(candidat_id: candidat_id) }
 

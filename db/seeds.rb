@@ -21,7 +21,7 @@
   # Add Address to EditionCompetition
   edition.address = Address.create!(addressable_id: edition.id, addressable_type: "EditionCompetition", line1: "Rue de la Paix #{n}", city: "Paris", country: "France", zipcode: "75000")
   # Categories
-  category1 = Category.create!( price: 100, edition_competition_id: edition.id, name: "Opera under 18 #{n}", description: "Category for participants under 18 years #{n}", min_age: 10, max_age: 18, discipline: "Lyrical Singing")
+  category1 = Category.create!( price: 100, edition_competition_id: edition.id, name: "Opera under 18 #{n}", description: "Category for participants under 18 years #{n}", min_age: 10, max_age: 18, discipline: "lyrical_singing")
   category2 = Category.create!(price: 50, edition_competition_id: edition.id, name: "Piano under 12 #{n}", description: "Category for children under 12 years #{n}", min_age: 6, max_age: 12, discipline: 2)
 
   # Pianistes accompagnateurs de l'organisme

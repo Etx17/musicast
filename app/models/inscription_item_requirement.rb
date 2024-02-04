@@ -7,6 +7,23 @@ class InscriptionItemRequirement < ApplicationRecord
   # for youtube_url
   # item.submitted_content is a URL that starts with 'http', it's embedded in an iframe. This could potentially be used for phishing attacks if a user can control the value of item.submitted_content. You should validate that URLs are safe and belong to trusted domains.
   validate :submitted_content_is_youtube_url, if: :requirement_item_is_youtube_url?
+  validate :submitted_file_is_correct_mime_type, if: :requirement_item_is_pdf?
+
+  def requirement_item_is_pdf?
+    requirement_item.is_pdf?
+  end
+
+  def submitted_file_is_correct_mime_type
+  if submitted_file.attached?
+    if !submitted_file.content_type.in?(%w(application/pdf image/jpeg image/png))
+      submitted_file.purge
+      errors.add(:submitted_file, 'doit être un fichier PDF, JPEG ou PNG')
+    elsif submitted_file.blob.byte_size > 5.megabytes
+      submitted_file.purge
+      errors.add(:submitted_file, 'trop volumineux. Doit être inférieur à 5 Mo')
+    end
+  end
+end
 
   def requirement_item_is_youtube_url?
     requirement_item.youtube_link?
