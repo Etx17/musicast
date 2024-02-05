@@ -1,0 +1,54 @@
+  <% air_counter = 0 %>
+<% inscription.category.semi_imposed_works&.each do |semi_imposed_work| %>
+  <h3><%= semi_imposed_work.title %></h3>
+  <small><%= semi_imposed_work.guidelines %></small>
+  <% if f.object.errors.any? %>
+    <div class="d-flex flex-column">
+      <% f.object.errors.details.each do |attribute, errors| %>
+        <% if attribute.to_s.start_with?("semi_imposed_work_airs.air") %>
+          <small class="text-danger">
+            La validation d'un air a échoué:
+            <%= attribute.to_s.split('.').last %>
+            <%= f.object.errors[attribute].uniq.join(", ") %>
+          </small>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+
+  <% semi_imposed_work.number.times do |i| %>
+    <% semi_imposed_work_air = inscription.semi_imposed_work_airs[air_counter] || inscription.semi_imposed_work_airs.build(semi_imposed_work_id: semi_imposed_work.id) %>
+    <% air_counter += 1 %>
+    <%# <%=  raise if semi_imposed_work_air.id.nil? %>
+    <%= f.simple_fields_for :semi_imposed_work_airs, semi_imposed_work_air do |semi_imposed_work_air_fields| %>
+      <%= semi_imposed_work_air_fields.input :semi_imposed_work_id, as: :hidden, input_html: { value: semi_imposed_work.id } %>
+        <%= semi_imposed_work_air_fields.simple_fields_for (semi_imposed_work_air.persisted? ? :air : :air_attributes) do |air_fields| %>
+          <div class="card card-body shadow-sm">
+            <div class="row">
+              <div class="col-12 col-md">
+                <%= air_fields.input :title, label: "Titre de la pièce #{i+1}", input_html: { class: 'form-control bg-white' }, placeholder: "ex: La Donna è Mobile" %>
+              </div>
+              <div class="col-12 col-md">
+                <%= air_fields.input :length_minutes, placeholder: "ex: 2", hint: "Arrondissez a l'unité", label: "Minutage", input_html: { class: 'form-control bg-white' } %>
+              </div>
+              <div class="col-12 col-md">
+                <%= air_fields.input :oeuvre, label: "Oeuvre", placeholder: "ex: Rigoletto", input_html: { class: 'form-control bg-white' } %>
+              </div>
+              <%  if @inscription.category.lyrical_singing? %>
+              <div class="col-12 col-md">
+                <%= air_fields.input :character, placeholder: "ex: Le duc de Mantoue", label: "Character", input_html: { class: 'form-control bg-white' } %>
+              </div>
+              <% end %>
+              <div class="col-12 col-md">
+                <%# <%= air_fields.input :tonality, label: "Tonality", input_html: { class: 'form-control' } %>
+                <%= air_fields.input :tonality, collection: Air.tonalities_selection, selected: 'Do majeur' %>
+              </div>
+
+              <%= render 'shared/components/music_search_component', f: air_fields %>
+
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>
