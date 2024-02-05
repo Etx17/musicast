@@ -65,9 +65,17 @@
 
             <p class="small text-center">Vous n'avez pas de planning pour l'instant. <br>Vous pouvez en générer un en cliquant sur le bouton ci-dessous. <br>Vous générerez un planning avec l'ordre de passage actuel.</p>
             <%# <p class="text-danger text-center">Certains candidats n'ont pas rempli leur performances. Veuillez consulter l'ordre de passage pour mettre à jour les performances des candidats qui ne l'ont pas remplie</p> %>
+            <% if tour.is_ready_for_planning_generation? || current_user.admin? %>
             <button class="items-center justify-center btn btn-success py-2 mb-5 rounded-16 text-center" style="font-size: 1.4em;"  data-bs-target="#tourConfirmationModal" data-bs-toggle="modal" data-bs-dismiss="modal" aria-label="Close" <%= "disabled" if @tour.performances.none? %> >
               Générer le planning
             </button>
+            <% else %>
+              <p>Vous ne pouvez générer le planning qu'une fois la date limite de soumission de performance pour le tour passée, le :</p>
+              <p class="lead p-3 border border-warning border-2 rounded-8"><%= tour.final_performance_submission_deadline.strftime("%d/%m/%Y à %H:%M") %></p>
+              <button class="items-center justify-center btn btn-success py-2 mb-5 rounded-16 text-center" style="font-size: 1.4em;"  data-bs-target="#tourConfirmationModal" data-bs-toggle="modal" data-bs-dismiss="modal" aria-label="Close" <%= "disabled" %> >
+                Générer le planning
+              </button>
+            <% end %>
           </div>
         </div>
       <% else %>

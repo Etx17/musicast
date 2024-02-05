@@ -73,6 +73,10 @@ class Tour < ApplicationRecord
     performance.update!(pianist_accompagnateur_id: pianist_accompagnateur_id)
   end
 
+  def is_ready_for_planning_generation?
+    final_performance_submission_deadline < Date.today
+  end
+
   def generate_performance_schedule
     performances = self.performances.order(:order)
     current_start_time = start_time
