@@ -1,7 +1,7 @@
 <div id="<%= dom_id inscription %>">
 
   <div class="row">
-    <h2 class='text-start mt-5' style="font-size: 3em;">DOSSIER DE CANDIDATURE</h2>
+    <h2 class='text-start mt-5' style="font-size: 3em;">DOSSIER DE CANDIDATURE - <span><%= inscription.category.name %></span></h2>
     <%# Placeholder unsplash avatar picture %>
     <div class="d-flex align-items-center bg-white p-2 mb-3">
       <%= image_tag inscription.candidat.portrait.attached? ? inscription.candidat.portrait : "https://source.unsplash.com/random/?portrait/200x200", class: "shadow rounded-circle align-items-center p-0 m-0", style: "width: 200px; height: 200px; object-fit: cover;" %>

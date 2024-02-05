@@ -7,15 +7,19 @@ module SidebarHelper
         links << { label: "Accueil", url: candidat_dashboard_path }
         links << { label: "Profil", url: candidat_path(current_user.candidat) }
         links << { label: "Candidatures", url: inscriptions_path }
-        # links << { label: "Candidat Messages", url: candidat_messages_path(current_user.candidat) }
+        # Toutes les inscriptions du candidat  dont le edition_competition.end_of_registration est pas encore passé
+        current_user.candidat&.inscriptions&.each do |inscription|
+          links << { label: inscription.category.name, url: inscription_path(inscription), status: inscription.status }
+        end
       elsif current_user.organisateur.present?
         links << { label: "Tableau de bord", url: organisateur_dashboard_path }
         last_edition_competition = current_user.organisateur&.competitions&.last&.edition_competitions&.last
         categories = last_edition_competition&.categories
         if last_edition_competition.present?
-        links << {  label: "#{last_edition_competition.competition.nom_concours} #{last_edition_competition.annee}",
-                    url: organism_competition_edition_competition_path(last_edition_competition.competition.organism_id, last_edition_competition.competition_id, last_edition_competition),
-                    status: last_edition_competition.status
+          links << {
+            label: "#{last_edition_competition.competition.nom_concours} #{last_edition_competition.annee}",
+            url: organism_competition_edition_competition_path(last_edition_competition.competition.organism_id, last_edition_competition.competition_id, last_edition_competition),
+            status: last_edition_competition.status
           }
         end
                     if categories.present?

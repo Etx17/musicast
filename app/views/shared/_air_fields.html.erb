@@ -29,7 +29,7 @@
   </div>
 
   <div class="col-6 col-md-4">
-    <%= f.input :tonality, label: false, required: true, input_html: { class: 'p-2 border rounded-pill', placeholder: 'Tonality *' } %>
+    <%= f.input :tonality, label: false, placeholder: "tonalité", collection: Air.tonalities_selection, selected: 'Do majeur' %>
   </div>
 
   <div class="col-6 col-md-4">
