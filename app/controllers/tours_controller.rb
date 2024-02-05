@@ -140,8 +140,7 @@ class ToursController < ApplicationController
   end
 
   def assign_pianist_to_performance_manually
-    @performance = Performance.find(params[:performance])
-
+    @performance = Performance.find(params[:performance_id])
     @performance.assign_pianist_accompagnateur(params[:pianist_accompagnateur_id])
     redirect_to [@organism, @competition, @edition_competition, @category, @tour], notice: 'Pianist was successfully updated.'
   end

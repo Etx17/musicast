@@ -124,11 +124,11 @@
                 <% if @category.is_accompagnated_by_pianist? %>
                   <td class="p-2 text-center bg-light text-secondary"  >
                     <% if !performance.inscription.candidate_brings_pianist_accompagnateur %>
-                      <%= form_with url: assign_pianist_to_performance_manually_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour, performance: performance), method: :post, html: { id: "pianist-form" } do |form| %>
-                  <%= form.hidden_field :id, value: performance.id %>
-                  <%= form.select :pianist_accompagnateur_id, @organism.pianist_accompagnateurs.map { |p| [p.full_name, p.id] }, { selected: performance.pianist_accompagnateur_id, prompt: "Select a pianist" }, { onchange: "document.getElementById('pianist-form').submit();" } %>
-                  <%= form.submit "Update", class: "btn btn-primary mt-2" %>
-                <% end %>
+                      <%= form_with url: assign_pianist_to_performance_manually_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour, performance_id: performance.id), method: :post, html: { id: "pianist-form-#{performance.id}" } do |form| %>
+                        <%= form.hidden_field :performance_id, value: performance.id %>
+                        <%= form.select :pianist_accompagnateur_id, @organism.pianist_accompagnateurs.map { |p| [p.full_name, p.id] }, { selected: performance.pianist_accompagnateur_id, prompt: "Select a pianist" }, { onchange: "document.getElementById('pianist-form-#{performance.id}').submit();" } %>
+                        <%# <%= form.submit "Update", class: "btn btn-primary mt-2" %>
+                      <% end %>
                     <% else %>
                       <p>Vient avec son pianiste</p>
                     <% end %>
