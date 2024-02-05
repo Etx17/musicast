@@ -4,6 +4,8 @@ class Performance < ApplicationRecord
   belongs_to :pianist_accompagnateur, optional: true
   has_one :tour_requirement, through: :tour
 
+  # validate :performance_has_correct_duration
+
   delegate :candidat, to: :inscription
 
 
@@ -14,6 +16,7 @@ class Performance < ApplicationRecord
     rejected: 3
   }
   before_save :update_ordered_air_selection
+
 
   def imposed_air_selection
     tour&.imposed_air_selection
@@ -79,8 +82,15 @@ class Performance < ApplicationRecord
             .exists?
   end
 
-  private
-
-
+  def has_incorrect_duration?
+    false
+    if minutes > tour.tour_requirement.max_duration_minute
+      # errors.add(:minutes, "La durée de votre prestation dépasse le maximum autorisé pour ce tour.")
+      return true
+    end
+    if minutes < tour.tour_requirement.min_duration_minute
+      return true
+    end
+  end
 
 end

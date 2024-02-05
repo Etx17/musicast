@@ -190,6 +190,15 @@
                 <span class="badge rounded-pill text-warning border-warning border"><%= tour.remaining_days %> jours restants</span>
               </div>
               <% if performance.present? %>
+                <% if performance.has_incorrect_duration? %>
+                  <small class="text-danger">
+                    <i class="fas fa-exclamation-triangle"></i> Durée totale du programme invalide.
+                  </small>
+                <% else %>
+                  <small class="text-success">
+                    <i class="fas fa-check-circle"></i> Durée totale du programme valide
+                  </small>
+                <% end %>
                 <%= simple_form_for(performance, url: performance_path(performance), method: :patch, data: { controller: "reorder" }) do |f| %>
                   <ul data-reorder-target="list" class="list-unstyled" >
                     <% performance.ordered_air_selection&.each_with_index do |air_id, index| %>
