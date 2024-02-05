@@ -210,12 +210,6 @@
                   <%= f.button :submit, "Mettre à jour l'ordre", data: { action: "reorder#submit", reorder_target: "submit" }, disabled: true, class: "btn btn-primary" %>
                   <%= link_to 'Modifier le programme', edit_inscription_performance_path(inscription, performance, tour_id: tour.id), class: 'btn btn-primary ' %>
                 <% end %>
-
-                <!-- horaire part-->
-                <%# <% if performance.start_time.present? %>
-                  <%# <p>Jour de passage: <%= performance.start_date %>
-                  <%# <p>Heure de passage: <%= performance.start_time.strftime('%Hh%M') %>
-                <%# <% end %>
               <% else %>
                 <div class="d-flex flex-column  shadow rounded-4">
                   <small class="bg-grey p-2 text-secondary">

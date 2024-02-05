@@ -97,7 +97,6 @@
 
                 <%= render 'shared/components/music_search_component', f: air_fields %>
 
-
                 </div>
               </div>
             <% end %>
@@ -105,9 +104,17 @@
         <% end %>
       <% end %>
 
+
       <% inscription.category.choice_imposed_works&.each do |choice_imposed_work| %>
         <h3><%= choice_imposed_work.title %></h3>
         <small><%= choice_imposed_work.guidelines %></small>
+        <% if f.object.errors[:choice_imposed_work_airs_attributes].any? %>
+        <div class="d-flex flex-column">
+          <small class="text-danger">
+            <%= f.object.errors[:choice_imposed_work_airs_attributes].first %>
+          </small>
+        </div>
+      <% end %>
         <% choice_imposed_work.number_to_select.times do |i| %>
           <% choice_imposed_work_air = inscription.choice_imposed_work_airs.filter{|ciwa| ciwa.choice_imposed_work_id == choice_imposed_work.id}[i] || choice_imposed_work.choice_imposed_work_airs.build %>
           <%= f.simple_fields_for :choice_imposed_work_airs, choice_imposed_work_air do |choice_imposed_work_air_fields| %>

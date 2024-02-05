@@ -3,6 +3,7 @@ class ChoiceImposedWorkAir < ApplicationRecord
   belongs_to :inscription
   belongs_to :air
 
+  # Voir si ca contraint bien l'utilisateur a pas pouvoir choisir plusieurs fois le même air dans un choice imposed work.
   after_commit :check_for_changes
 
   def check_for_changes

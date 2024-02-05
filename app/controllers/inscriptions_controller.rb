@@ -77,8 +77,12 @@ class InscriptionsController < ApplicationController
   def create
     @inscription = Inscription.new(inscription_params)
     @inscription.candidat = current_user.candidat
-    # @inscription.category = Category.friendly.find(inscription_params[:category_id])
-    raise "NoCandidatError" unless @inscription.candidat
+    air_ids = params[:inscription][:choice_imposed_work_airs_attributes].values.map{|c| c["air_id"]}
+    if air_ids.uniq.length != air_ids.length
+      @inscription.validate
+      @inscription.errors.add(:choice_imposed_work_airs_attributes, "Vous ne pouvez pas choisir le même air plus d'une fois.")
+      render :new, status: :unprocessable_entity and return
+    end
     if @inscription.save
       redirect_to new_inscription_order_path(inscription: @inscription), notice: "Inscription was successfully created."
     else
