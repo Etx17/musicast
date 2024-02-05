@@ -48,10 +48,37 @@ class Tour < ApplicationRecord
   end
 
   def generate_initial_performance_order
-    shuffled_performances = performances.shuffle
-    shuffled_performances.each_with_index do |performance, index|
+    # Group performances by air names
+    performances_by_air = performances.group_by { |performance| performance.airs.map(&:title) }
+
+    # Create an empty list to hold the final order of performances
+    final_order = []
+
+    # While there are still groups left
+    while performances_by_air.values.flatten.any?
+      # Randomly select a group that doesn't contain the same air as the last performance in the final order list
+      possible_groups = performances_by_air.keys - [final_order.last&.airs&.map(&:title)]
+      possible_groups = performances_by_air.keys if possible_groups.empty? # fallback to all groups if no possible group found
+      selected_group = possible_groups.sample
+
+      # Remove a performance from this group and add it to the final order list
+      performance = performances_by_air[selected_group].shift
+      final_order << performance
+
+      # If the group is now empty, remove it
+      performances_by_air.delete(selected_group) if performances_by_air[selected_group].empty?
+    end
+
+    # Update the order of each performance
+    final_order.each_with_index do |performance, index|
       performance.update(order: index)
     end
+
+    # Previous implementation
+    # shuffled_performances = performances.shuffle
+    # shuffled_performances.each_with_index do |performance, index|
+    #   performance.update(order: index)
+    # end
   end
 
   def update_performance_order(performance_id, new_order)
