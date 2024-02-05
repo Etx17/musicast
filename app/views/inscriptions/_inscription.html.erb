@@ -158,9 +158,13 @@
         <% inscription.category.tours.order(:tour_number).each do |tour| %>
           <div class="card bg-light mb-3 border-0 rounded-8 shadow">
             <div class="card-header d-flex justify-content-between border-0">
-              <%= tour.title %>
+              <%= tour.title %> - tour n°<%= tour.tour_number %>
+               <% if tour.imposed_air_selection.any? %>
+              <small class="text-warning"><%= tour.imposed_air_selection.count %> airs imposés sur ce tour </small>
+              <% end %>
             </div>
             <div class="card-body">
+
               <% if tour.tour_requirement.present? %>
                 <h5 class="card-title">Règles et conditions du tour:</h5>
                 <p class="card-text text-secondary"><%= tour.tour_requirement&.description %></p>
@@ -205,11 +209,11 @@
               <% if performance.present? %>
                 <% if performance.has_incorrect_duration? %>
                   <small class="text-danger">
-                    <i class="fas fa-exclamation-triangle"></i> Durée totale du programme invalide.
+                    <i class="fas fa-exclamation-triangle"></i> Durée totale du programme invalide. (<%= performance.minutes %> min)
                   </small>
                 <% else %>
                   <small class="text-success">
-                    <i class="fas fa-check-circle"></i> Durée totale du programme valide
+                    <i class="fas fa-check-circle"></i> Durée totale du programme valide (<%= performance.minutes %> min)
                   </small>
                 <% end %>
                 <%= simple_form_for(performance, url: performance_path(performance), method: :patch, data: { controller: "reorder" }) do |f| %>
