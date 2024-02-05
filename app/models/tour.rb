@@ -48,8 +48,11 @@ class Tour < ApplicationRecord
   end
 
   def generate_initial_performance_order
+    # Separate performances with no airs
+    performances_with_airs, performances_without_airs = performances.partition { |performance| performance.airs.any? }
+
     # Group performances by air names
-    performances_by_air = performances.group_by { |performance| performance.airs.map(&:title) }
+    performances_by_air = performances_with_airs.group_by { |performance| performance.airs.map(&:title) }
 
     # Create an empty list to hold the final order of performances
     final_order = []
@@ -68,6 +71,9 @@ class Tour < ApplicationRecord
       # If the group is now empty, remove it
       performances_by_air.delete(selected_group) if performances_by_air[selected_group].empty?
     end
+
+    # Add performances without airs to the end of the final order
+    final_order.concat(performances_without_airs)
 
     # Update the order of each performance
     final_order.each_with_index do |performance, index|
