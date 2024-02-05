@@ -69,4 +69,9 @@ class Inscription < ApplicationRecord
   def used_airs
     self.performances.map(&:air_selection).flatten.reject { |air_id| air_id.blank? }.map{ |air_id| Air.find(air_id) }
   end
+
+  def remaining_days_before_end_of_registration
+    end_date = self.category.edition_competition.end_of_registration
+    (end_date.to_date - Date.today).to_i
+  end
 end

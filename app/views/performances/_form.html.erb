@@ -22,17 +22,19 @@
       <div class="d-flex flex-column">
         <%= f.collection_check_boxes :air_selection, @performance.inscription.associated_airs, :id, :title, { checked: @performance.air_selection } do |b| %>
           <div>
-
             <%= b.check_box %>
             <%= b.text %> (<%= b.object.length_minutes %> min)
           </div>
         <% end %>
       </div>
     </div>
+    <% if @performance.tour.final_performance_submission_deadline < Date.today %>
+      <%= link_to "Changer d'airs (rechoisir les airs de votre inscription)", edit_inscription_path(performance.inscription) %>
+    <% end %>
   </div>
 
   <div class="form-actions">
-    <%= f.button :submit %>
+    <%= f.button :submit, "Enregistrer", class:"btn btn-dark" %>
   </div>
 <% end %>
 </div>

@@ -45,14 +45,19 @@
       <div class="p-3 shadow bg-white rounded-8">
         <div class="d-flex justify-content-between align-items-center mb-2">
           <h3 class="mb-0">Dossier</h3>
-          <%= link_to  edit_inscription_path(inscription), class: 'btn btn-outline-dark w-50'  do %>
-            <div class="d-flex align-items-center justify-content-center">
-              <i class="fas fa-edit me-2"></i>
-              <span>Modifier</span>
-            </div>
+          <% if current_user.candidat && inscription.category.edition_competition.end_of_registration > Date.today %>
+            <%= link_to  edit_inscription_path(inscription), class: 'btn btn-outline-dark w-50'  do %>
+              <div class="d-flex align-items-center justify-content-center">
+                <i class="fas fa-edit me-2"></i>
+                <span>Modifier</span>
+              </div>
+            <% end %>
           <% end %>
         </div>
-        <% if inscription.inscription_item_requirements.none? %>
+        <% if inscription.remaining_days_before_end_of_registration > 0 %>
+          <span class="text-success"><%= inscription.remaining_days_before_end_of_registration %> jours restants pour modifier</span>
+        <% end %>
+      <% if inscription.inscription_item_requirements.none? %>
           <p class="text-secondary"> Il n'y a rien ici pour l'instant</p>
         <% end %>
         <%# items requirements %>
@@ -91,15 +96,21 @@
       </div>
 
       <div class="p-3 card-body shadow my-3 bg-white rounded-8">
+
         <div class="d-flex justify-content-between align-items-center mb-2">
           <h3>Liste d'airs</h3>
-          <%= link_to  edit_inscription_path(inscription), class: 'btn btn-outline-dark w-50'  do %>
-            <div class="d-flex align-items-center justify-content-center">
-              <i class="fas fa-edit me-2"></i>
-              <span>Modifier</span>
-            </div>
+          <% if current_user.candidat && inscription.category.edition_competition.end_of_registration > Date.today %>
+            <%= link_to  edit_inscription_path(inscription), class: 'btn btn-outline-dark w-50'  do %>
+              <div class="d-flex align-items-center justify-content-center">
+                <i class="fas fa-edit me-2"></i>
+                <span>Modifier</span>
+              </div>
+            <% end %>
           <% end %>
         </div>
+        <% if inscription.remaining_days_before_end_of_registration > 0 %>
+          <span class="text-success"><%= inscription.remaining_days_before_end_of_registration %> jours restants pour modifier</span>
+        <% end %>
         <% inscription.choice_imposed_work_airs.includes(:choice_imposed_work).map(&:choice_imposed_work).uniq.each do |choice_imposed_work| %>
           <div class="p-3 rounded-4 shadow-sm mb-3 bg-light-grey">
             <div class="card-body">
@@ -187,7 +198,9 @@
               <% end %>
               <div class="d-flex justify-content-start align-items-center gap-2 mb-2 border-top pt-3">
                 <h5 class="card-title mb-0 ">Programme: </h5>
-                <span class="badge rounded-pill text-warning border-warning border"><%= tour.remaining_days %> jours restants</span>
+                <% if tour.remaining_days > 0 %>
+                  <span class="badge rounded-pill text-warning border-warning border"><%= tour.remaining_days %> jours restants pour modifier</span>
+                <% end %>
               </div>
               <% if performance.present? %>
                 <% if performance.has_incorrect_duration? %>
@@ -215,9 +228,11 @@
                     <% end %>
                   </ul>
                   <%= f.hidden_field :ordered_air_selection, data: { reorder_target: "orderedSelection" } %>
-
-                  <%= f.button :submit, "Mettre à jour l'ordre", data: { action: "reorder#submit", reorder_target: "submit" }, disabled: true, class: "btn btn-primary" %>
-                  <%= link_to 'Modifier le programme', edit_inscription_performance_path(inscription, performance, tour_id: tour.id), class: 'btn btn-primary ' %>
+                  <%# Ces boutons apparaissent si l'utilisateur est l'organisateur %>
+                  <% if Date.today < tour.final_performance_submission_deadline || current_user.organisateur.present? %>
+                    <%= f.button :submit, "Mettre à jour l'ordre", data: { action: "reorder#submit", reorder_target: "submit" }, disabled: true, class: "btn btn-primary" %>
+                    <%= link_to 'Modifier le programme', edit_inscription_performance_path(inscription, performance, tour_id: tour.id), class: 'btn btn-primary ' %>
+                  <% end %>
                 <% end %>
               <% else %>
                 <div class="d-flex flex-column  shadow rounded-4">
