@@ -91,7 +91,6 @@ class InscriptionsController < ApplicationController
   end
 
   def update
-
     authorize @inscription
     @inscription.assign_attributes(inscription_params)
     if @inscription.valid?

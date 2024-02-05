@@ -5,6 +5,8 @@ class ChoiceImposedWorkAir < ApplicationRecord
 
   # Voir si ca contraint bien l'utilisateur a pas pouvoir choisir plusieurs fois le même air dans un choice imposed work.
   after_commit :check_for_changes
+  validates :air_id, presence: true
+  validates :air_id, uniqueness: { scope: :inscription_id, message: ": Vous ne pouvez pas choisir le même air plus d'une fois." }, on: :update
 
   def check_for_changes
     if saved_change_to_air_id?
