@@ -166,24 +166,28 @@ class InscriptionsController < ApplicationController
 
     api_key = Rails.application.credentials.dig(:open_ai, :test_key)
     client = OpenAI::Client.new
-    response = client.chat(parameters: {
-      model: "gpt-4",
-      messages: [{
-        role: "user",
-        content:"Tu ne répond que par '0'( = non), '1' (= oui), ou '2' (= je sais pas).Voici le début d'un document.Répond simplement '1' si le document te semble être un #{requirement_item.type_item} , '0' si ca n'est pas le cas, '2' si tu ne sais pas. Tu ne réponds pas par une phrase, seulement un numéro.Voici l'extrait: " + text
-        }]
-    })
+    begin
+      response = client.chat(parameters: {
+        model: "gpt-4",
+        messages: [{
+          role: "user",
+          content:"Tu ne répond que par '0'( = non), '1' (= oui), ou '2' (= je sais pas).Voici le début d'un document.Répond simplement '1' si le document te semble être un #{requirement_item.type_item} , '0' si ca n'est pas le cas, '2' si tu ne sais pas. Tu ne réponds pas par une phrase, seulement un numéro.Voici l'extrait: " + text
+          }]
+      })
 
-    if response["choices"][0]["message"]["content"] == "1"
-      # Do something if file correspond to what's expected, like maybe update it to checked ai to checked.
-      inscription_requirement_item.checked_valid!
-    elsif response["choices"][0]["message"]["content"] == "0"
-      # Update to not checked
-      inscription_requirement_item.checked_invalid!
-    elsif response["choices"][0]["message"]["content"] == "2"
-      # update to "not sure"
-      inscription_requirement_item.not_sure!
-    else
+      if response["choices"][0]["message"]["content"] == "1"
+        # Do something if file correspond to what's expected, like maybe update it to checked ai to checked.
+        inscription_requirement_item.checked_valid!
+      elsif response["choices"][0]["message"]["content"] == "0"
+        # Update to not checked
+        inscription_requirement_item.checked_invalid!
+      elsif response["choices"][0]["message"]["content"] == "2"
+        # update to "not sure"
+        inscription_requirement_item.not_sure!
+      else
+        inscription_requirement_item.ai_failed!
+      end
+    rescue
       inscription_requirement_item.ai_failed!
     end
   end

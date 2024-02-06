@@ -18,4 +18,8 @@ class RequirementItem < ApplicationRecord
   def is_pdf?
     RequirementItem.pdf_items.include?(self.type_item)
   end
+
+  def is_text?
+    RequirementItem.text_items.include?(self.type_item)
+  end
 end

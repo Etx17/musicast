@@ -74,4 +74,17 @@ class Inscription < ApplicationRecord
     end_date = self.category.edition_competition.end_of_registration
     (end_date.to_date - Date.today).to_i
   end
+
+  def is_payed?
+    inscription_order.present? && inscription_order&.paid?
+  end
+
+  def has_complete_requirement_items?
+    return false if inscription_item_requirements.any?{|i| i.has_submitted_content? == false }
+    true
+  end
+
+  def has_complete_airs?
+    category.semi_imposed_works.any? && category.semi_imposed_works.sum(:number) == semi_imposed_work_airs&.count && category.choice_imposed_works.any? && category.choice_imposed_works&.sum(:number_to_select) == choice_imposed_work_airs.count
+  end
 end

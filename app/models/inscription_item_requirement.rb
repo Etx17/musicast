@@ -13,6 +13,10 @@ class InscriptionItemRequirement < ApplicationRecord
     requirement_item.is_pdf?
   end
 
+  def item_type
+    requirement_item.item_type
+  end
+
   def submitted_file_is_correct_mime_type
   if submitted_file.attached?
     if !submitted_file.content_type.in?(%w(application/pdf image/jpeg image/png))
@@ -51,6 +55,12 @@ end
     else
       nil
     end
+  end
+
+  def has_submitted_content?
+    return true if requirement_item.is_pdf? && submitted_file.attached?
+    return true if requirement_item.is_text? && submitted_content.present?
+    return false
   end
 
 
