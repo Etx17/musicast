@@ -8,6 +8,7 @@ class ChoiceImposedWorkAir < ApplicationRecord
   validates :air_id, presence: true
   validates :air_id, uniqueness: { scope: :inscription_id, message: ": Vous ne pouvez pas choisir le même air plus d'une fois." }, on: :update
 
+
   def check_for_changes
     if saved_change_to_air_id?
       # update each inscription.performance's ordered_air_selection to remove the air that was just removed
