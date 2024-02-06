@@ -137,7 +137,8 @@
           </div>
         <% end %>
 
-        <div class="p-3 rounded-4 shadow-sm mb-3 bg-light-grey">
+        <% if inscription.category.imposed_work.present? %>
+          <div class="p-3 rounded-4 shadow-sm mb-3 bg-light-grey">
             <div class="card-body">
               <h4 class="card-title">Airs imposés</h4>
               <ul class="list-group list-group-flush">
@@ -147,6 +148,7 @@
               </ul>
             </div>
           </div>
+        <% end %>
 
       </div>
 
@@ -159,7 +161,7 @@
           <div class="card bg-light mb-3 border-0 rounded-8 shadow">
             <div class="card-header d-flex justify-content-between border-0">
               <%= tour.title %> - tour n°<%= tour.tour_number %>
-               <% if tour.imposed_air_selection.any? %>
+               <% if tour.imposed_air_selection.present? %>
               <small class="text-warning"><%= tour.imposed_air_selection.count %> airs imposés sur ce tour </small>
               <% end %>
             </div>
