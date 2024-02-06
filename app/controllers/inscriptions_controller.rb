@@ -7,6 +7,11 @@ class InscriptionsController < ApplicationController
     elsif current_user.organisateur
       if params[:category_id].present?
         @category = Category.friendly.find(params[:category_id])
+        @tour = @category.tours.order(:tour_number).first
+        @edition_competition = @category.edition_competition
+        @competition = @edition_competition.competition
+        @organism = @competition.organism
+
         if @category
           @inscriptions = Inscription.by_category(@category.id)
         else
