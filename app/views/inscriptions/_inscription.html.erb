@@ -50,14 +50,23 @@
       <div class="p-3 shadow bg-white rounded-8">
         <div class="d-flex justify-content-between align-items-center mb-2">
           <h3 class="mb-0">Dossier</h3>
-          <%# <% if current_user.candidat && inscription.category.edition_competition.end_of_registration > Date.today %>
-            <%= link_to  edit_inscription_path(inscription), class: "btn btn-outline-dark w-50 #{current_user.candidat && inscription.category.edition_competition.end_of_registration > Date.today ? '' : 'disabled'}"  do %>
+
+          <% if current_user.organisateur %>
+            <%= link_to  edit_inscription_path(inscription), class: "btn btn-outline-dark w-50"  do %>
               <div class="d-flex align-items-center justify-content-center">
                 <i class="fas fa-edit me-2"></i>
                 <span>Modifier</span>
               </div>
             <% end %>
-          <%# <% end %>
+          <% end %>
+          <% if current_user.candidat && inscription.category.edition_competition.end_of_registration > Date.today %>
+            <%= link_to  edit_inscription_path(inscription), class: "btn btn-outline-dark w-50"  do %>
+              <div class="d-flex align-items-center justify-content-center">
+                <i class="fas fa-edit me-2"></i>
+                <span>Modifier</span>
+              </div>
+            <% end %>
+          <% end %>
         </div>
         <% if inscription.remaining_days_before_end_of_registration > 0 %>
           <span class="text-success"><%= inscription.remaining_days_before_end_of_registration %> jours restants pour modifier</span>

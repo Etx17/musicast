@@ -4,35 +4,13 @@
     <%= f.error_notification %>
     <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
+  <%# Ne pas montrer les champs de pieces si la end_of_registration est passée (sauf si user est organisateur) %>
     <div class="form-inputs">
       <%= f.hidden_field :category_id, value: @inscription.category.id %>
-      <% @inscription.inscription_item_requirements.each do |item_requirement| %>
-        <div>
-          <h3><%= item_requirement.requirement_item.title %></h3>
-          <p><%= item_requirement.requirement_item.description_item %></p>
-          <%= f.simple_fields_for :inscription_item_requirements, item_requirement do |irf| %>
 
-            <%= irf.hidden_field :requirement_item_id %>
-            <% case item_requirement.requirement_item.type_item %>
-            <% when 'motivation_essay' %>
-              <%= irf.input :submitted_content, as: :text, label: 'Lettre de motivation', hint: "Ni trop long, ni trop court", required: true %>
-            <% when 'youtube_link' %>
-              <%= irf.input :submitted_content, as: :url, label: "YouTube URL", hint: "Assurez vous que la vidéo soit publique et qu'elle soit bien accessible. Assurez vous que l'url contienne youtube.com ou youtu.be ", required: true %>
-            <% else %>
-              <div class="row">
-                <div class="col">
-                  <% if irf.object.submitted_file.attached? %>
-                    <embed src="<%= url_for(irf.object.submitted_file) %>" width="500" height="375" type="application/pdf">
-                    <%= irf.input :submitted_file, as: :file, label: "Choisissez un autre PDF si vous souhaitez remplacer le document ci dessus" %>
-                  <% else %>
-                    <%= irf.input :submitted_file, as: :file, label: "Uploadez un PDF", required: true %>
-                  <% end %>
-                </div>
-              </div>
-            <% end %>
-          <% end %>
-        </div>
-      <% end %>
+      <!-- BASE FIELDS -->
+      <%= render "items_form_section", inscription: @inscription, f: f %>
+      <!-- AIR FIELDS -->
 
       <% if inscription.category.imposed_work&.airs&.any? %>
         <h3>Airs imposés</h3>
@@ -43,10 +21,9 @@
         </ul>
       <% end %>
 
-
       <%= render "semi_imposed_work_section", inscription: inscription, f: f %>
 
-
+      
       <% inscription.category.choice_imposed_works&.each do |choice_imposed_work| %>
         <h3><%= choice_imposed_work.title %></h3>
         <small><%= choice_imposed_work.guidelines %></small>
