@@ -2,8 +2,10 @@
 10.times do |n|
 
   u = User.create(email: "candidat#{n}@example.com", password: "password", password_confirmation: "password")
-  c = Candidat.create!(short_bio: "Coucou, je suis un chanteur lyrique", medium_bio: "Après avoir passé 2 ans a l'école de Bruxelles en chant lyrique, je me suis spécialisé dans le répertoire baroque. blablablablababla", long_bio: "In this code, check_image_ratio is a custom validation method that checks if the uploaded image has the correct aspect ratio. If the image does not have the correct ratio, it is deleted and an error is added to the image attribute. Please note that this code requires the active_storage gem and assumes that you have set up Active Storage and attached an image to the Candidat model. Also, you should replace 4.0 / 3.0 with the aspect ratio you want to enforce", user_id: u.id, cv: "Link to CV of candidate ", bio: "Short bio of candidate ")
 
+  unless n == 0
+    c = Candidat.create!(short_bio: "Coucou, je suis un chanteur lyrique", medium_bio: "Après avoir passé 2 ans a l'école de Bruxelles en chant lyrique, je me suis spécialisé dans le répertoire baroque. blablablablababla", long_bio: "In this code, check_image_ratio is a custom validation method that checks if the uploaded image has the correct aspect ratio. If the image does not have the correct ratio, it is deleted and an error is added to the image attribute. Please note that this code requires the active_storage gem and assumes that you have set up Active Storage and attached an image to the Candidat model. Also, you should replace 4.0 / 3.0 with the aspect ratio you want to enforce", user_id: u.id, cv: "Link to CV of candidate ", bio: "Short bio of candidate ")
+  end
   # User for Organisateur
   user = User.create!(email: "organizer#{n}@example.com", password: "password", password_confirmation: "password")
 
@@ -41,6 +43,7 @@
 
   # Tours for Category1
   Tour.create!(
+    imposed_air_selection: [],
     final_performance_submission_deadline: Date.today + 29, tour_number: 1, category_id: category1.id, start_date: Date.today, start_time: Time.now, end_date: Date.today + 30, end_time: Time.now + 6.hours, is_online: false, title: "Tour éliminatoire", description: "First round of the competition #{n}", tour_requirement_attributes: { description: "Preliminary round requirements", min_number_of_works: 1, max_number_of_works: 3, min_duration_minute: 3, max_duration_minute: 9, organiser_creates_program: false } )
   Tour.create!(
     imposed_air_selection: ["1", "2"],

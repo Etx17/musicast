@@ -6,7 +6,7 @@
 <div id="inscriptions" class="row">
 <% Inscription.statuses.keys.reject { |status| status == 'draft' }.each do |status| %>
     <div class="col bg-light shadow-sm" style="border-radius: 0.25rem;">
-      <h5 class="text-center text-capitalize"><%= status %></h5>
+      <h5 class="text-center text-capitalize"><%= status %> - <%= @inscriptions&.select { |inscription| inscription.status == status }.count %></h5>
       <% @inscriptions&.select { |inscription| inscription.status == status }.each do |inscription| %>
         <div class="card p-3">
           <%= link_to inscription_path(inscription) do %>

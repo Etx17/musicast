@@ -28,19 +28,21 @@ class Tour < ApplicationRecord
   end
 
   def move_qualified_candidates_to_next_tour
-    self.next_tour
-    return unless self.next_tour.present?
+
+    tour_next= self.next_tour
+    return if tour_next == self || tour_next.nil?
 
     performances.each_with_index do |performance, index|
       if performance.is_qualified
-        Performance.transaction do
-          next_tour_perf = Performance.find_or_create_by(tour: next_tour, inscription: performance.inscription)
+        # Lanelle je lui ai pas crée de performance, et du coup ca l'a pas trouvée
+          next_tour_perf = Performance.find_or_create_by(tour: tour_next, inscription: performance.inscription)
           total_air_selection = performance.air_selection + next_tour.imposed_air_selection
 
-          next_tour_perf.update(air_selection: total_air_selection, order: index)
-        end
+          next_tour_perf.update(air_selection: total_air_selection, order: index + 1)
       end
     end
+    # Il devrait y avoir le même nombre de performances dans le tour suivant que de qualifiées dans le tour actuel.
+    raise "Not the same number of performances in the next tour than in the current tour" if tour_next.performances.count != performances.select(&:is_qualified).count
   end
 
   def next_tour
