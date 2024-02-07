@@ -1,5 +1,13 @@
 <div class="col p-3 d-flex flex-column align-items-center bg-white">
   <h4 style="font-size: 2em;" class="px-3 rounded-pill ">Listes à choix</h3>
+    <a href="#" class="text-primary" data-bs-toggle="collapse" data-bs-target="#info2Collapse" aria-expanded="false" aria-controls="infoCollapse">
+    <i class="fas fa-info-circle"></i> Qu'est-ce que c'est?
+  </a>
+  <div class="collapse" id="info2Collapse">
+    <p class="text-secondary">
+      Une liste à choix est une liste d'oeuvres que le candidat doit choisir pour son programme. Vous pouvez préciser le nombre d'oeuvres à choisir dans cette liste, et ajouter des consignes pour chaque liste. Vous pouvez créer autant de liste que vous le souhaitez.
+    </p>
+  </div>
   <% if @category.choice_imposed_works.none? %>
     <p class="text-secondary">Créez ici une ou plusieurs liste d'oeuvre et précisez le nombre d'airs ou de morceaux que le candidat doit sélectionner dans chaque liste. Vous pouvez aussi ajouter des consignes et un titre à cette liste si vous le souhaitez. </p>
   <% end %>
