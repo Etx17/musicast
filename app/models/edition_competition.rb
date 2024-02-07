@@ -14,12 +14,14 @@ class EditionCompetition < ApplicationRecord
 
   # Validations
   validates :annee, presence: true
+  validates :annee, comparison: { greater_than_or_equal_to: Date.today.year }
   validates :end_of_registration, presence: true
   validates :start_date, presence: true
   validates :end_date, presence: true
   validates :start_date, comparison: { greater_than_or_equal_to: Date.today }
   validates :end_date, comparison: { greater_than_or_equal_to: :start_date }
   validates :end_of_registration, comparison: { less_than_or_equal_to: :start_date }
+
 
   validate :correct_mime_type_of_rule_document
 

@@ -14,8 +14,11 @@
         <%= address_fields.input :line1, label: "Numéro et rue", placeholder:" 3 rue Claude Debussy" %>
         <%= address_fields.input :zipcode, label: "Code postal" %>
         <%= address_fields.input :city, label: "Ville" %>
-        <%= f.label "Pays*:", class:"pb-0" %>
-        <%= address_fields.country_select :country, {}, { class: " select w-100 valid mt-1 mb-3 p-2 bg-light-grey border rounded" } %>
+        <%# <%= address_fields.country_select :country, only: ["AM", "AT", "BY", "BE", "BA", "BG", "CH", "CZ", "DE", "DK", "EE", "ES", "FI", "FR", "GB", "GE", "GI", "GR", "HU", "IE", "IS", "IT", "LT", "LU", "LV", "NO", "NL", "PO", "PL", "PT", "RO", "SE", "SI", "SK", "TR", "UA"], class: "select w-100 valid mt-1 mb-3 p-2 bg-light-grey border rounded", prompt: 'Select your country', selected: "FR" %>
+        <%# <div class="select w-100 valid mt-1 mb-3 p-2 bg-light-grey border rounded"> %>
+          <p class="py-1 my-1"> Pays <span class="text-danger">*</span></p>
+          <%= address_fields.country_select :country, only: ["AM", "AT", "BY", "BE", "BA", "BG", "CH", "CZ", "DE", "DK", "EE", "ES", "FI", "FR", "GB", "GE", "GI", "GR", "HU", "IE", "IS", "IT", "LT", "LU", "LV", "NO", "NL", "PO", "PL", "PT", "RO", "SE", "SI", "SK", "TR", "UA"], selected: "FR" %>
+        <%# </div> %>
       <% end %>
     </div>
     <div class="col-md-6">
@@ -43,3 +46,9 @@
     <%= f.button :submit, 'Enregistrer', class: "btn btn-dark mx-auto w-100 py-2 mb-2" %>
   </div>
 <% end %>
+<script>
+  document.addEventListener('DOMContentLoaded', (event) => {
+    const selectElement = document.querySelector('#edition_competition_address_attributes_country');
+    selectElement.classList.add("select", "w-100", "valid", "mt-1", "mb-3", "p-2", "bg-light-grey", "border", "rounded");
+  });
+</script>
