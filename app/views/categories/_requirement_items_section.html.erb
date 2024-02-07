@@ -1,0 +1,64 @@
+ <div class="card shadow mb-5 pb-3">
+  <div class="bg-light-grey card-header d-flex justify-content-between align-items-center">
+    <div>
+      <div class="d-flex gap-3 align-items-center">
+        <h2 style="font-size: 3em;">Pièces nécessaires</h2>
+        <button type="button" class="btn btn-success my-3" data-bs-toggle="modal" data-bs-target="#exampleModal1">
+          + Ajouter un élément requis
+        </button>
+      </div>
+      <span class="text-secondary">Créez et modifier les pièces que le candidat doit fournir pour son inscription (optionnel)</span>
+
+    </div>
+
+   </div>
+   <div class="container">
+    <!-- Button trigger modal -->
+    <div class=" p-3 bg-info-secondary my-3 text-start  m-1 shadow-sm rounded-8" >
+        <i class="fas fa-circle-info pe-1 text-secondary"></i>
+        Le profil du candidat comprend déja un portrait et une photo artistique/de presse de haute qualité (300dpi), des biographies de différentes longueurs, un répertoire, et un CV à jour accessibles directement. Pour votre concours, indiquez si vous avez besoin de documents spécifiques, tels qu'une lettre de recommandation ou des vidéos.
+        <br><br>Musicast s'engage à respecter la confidentialité et la sécurité des données de ses utilisateurs, conformément au RGPD. Pour cette raison, nous ne collectons pas de pièces d'identité. Cette mesure préventive vise à minimiser les risques liés à la gestion de données sensibles et à protéger nos utilisateurs contre les potentielles conséquences d'une violation de données, telles que la fraude ou le vol d'identité. Nous encourageons des alternatives sécurisées pour la vérification d'identité, garantissant ainsi la protection et la sécurité des informations personnelles.
+      </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel1">Ajouter un élément requis</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+         <div class="modal-body" data-controller="requirement" data-action="click->requirement#changeIdOfInput">
+            <%= simple_form_for([@organism, @competition, @edition_competition, @category, RequirementItem.new]) do |f| %>
+              <%= f.input :title, placeholder:"ex: Lettre de recommendation de votre professeur", label: "Donnez un titre à cet item", input_html: { id: "requirement-#{@category.name}-#{Time.now.to_i}" }, data: { requirement_target: "title" } %>
+              <%= f.input :type_item, label: "Type de pièce", collection: RequirementItem.type_items.keys, prompt: 'Select a type' %>
+              <%= f.input :description_item, label: "Détails", placeholder: "Renseignez ici les spécifications, par exemple de longueur pour une lettre de motivation, de durée pour une vidéo sur youtube, ou autre..." %>
+              <div class="modal-footer">
+                <%= f.button :submit, class: 'btn btn-primary' %>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class=" d-flex gap-3 flex-wrap">
+      <% @category.requirement_items.each do |item| %>
+        <div class="card bg-dark text-white rounded" style="width: 18rem;">
+          <div class="card-body">
+            <div class="icon-placeholder mx-auto" style="width: 100px; height: 100px;">
+              <%= image_tag "https://source.unsplash.com/random/?#{item.type_item}/300/200", alt: "Photo d'item requis", class: "img-fluid w-100 d-block rounded-circle", style: "object-fit: cover; aspect-ratio: 1 / 1; overflow: hidden; ", loading: 'lazy' %>
+            </div>
+            <h5 class="card-title"><%= item.title %></h5>
+            <p class="card-text text-light"><%= item.description_item %></p>
+            <%= button_to organism_competition_edition_competition_category_requirement_item_path(@organism, @competition, @edition_competition, @category, item), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-outline-light btn-sm' do %>
+              <i class="fas fa-times"></i>
+            <% end %>
+            <span class="badge bg-warning text-dark rounded-pill border border-success"><%= item.type_item %></span>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
