@@ -1,14 +1,14 @@
-<div class="col-lg-4 border-start border-secondary p-3 shadow d-flex flex-column align-items-center">
-  <h3 style="font-size: 3em;" class="px-3 rounded-pill text-white ">Oeuvres au choix</h3>
+<div class="col p-3 d-flex flex-column align-items-center bg-white">
+  <h4 style="font-size: 2em;" class="px-3 rounded-pill ">Listes à choix</h3>
   <% if @category.choice_imposed_works.none? %>
-    <p>Créez ici une liste d'oeuvres et précisez le nombre que le candidat doit sélectionner. Vous pouvez aussi ajouter des consignes et un titre à cette liste si vous le souhaitez. </p>
+    <p class="text-secondary">Créez ici une ou plusieurs liste d'oeuvre et précisez le nombre d'airs ou de morceaux que le candidat doit sélectionner dans chaque liste. Vous pouvez aussi ajouter des consignes et un titre à cette liste si vous le souhaitez. </p>
   <% end %>
-  <% @category.choice_imposed_works.each do |choice_imposed_work| %>
-    <div class="container p-3 mt-3 " style="border-radius: 9px; background: #222222">
+  <% @category.choice_imposed_works.each_with_index do |choice_imposed_work, index| %>
+    <div class="card w-100 mb-3 rounded-4 bg-light-grey">
       <div class="d-flex justify-content-between align-items-start">
         <div class="d-flex flex-column align-items-start pe-2 w-100">
-          <div class="d-flex justify-content-between w-100">
-            <h2 class="text-light" style="font-weight: bold; font-size: <%= choice_imposed_work.title.length > 20 ? '2.5em' : '3em' %>;"><%= choice_imposed_work.title %></h2>
+          <div class="card-header d-flex justify-content-between w-100">
+            <h5 class="" style="font-weight: bold;"><%= index + 1 %>. <%= choice_imposed_work.title %></h2>
             <div class="d-flex justify-content-start align-items-center">
               <%= link_to edit_organism_competition_edition_competition_category_choice_imposed_work_path(@organism, @competition, @edition_competition, @category, choice_imposed_work), class: 'btn btn-outline-light btn-sm border-0 mb-2' do %>
                 <i class="fas fa-edit"></i>
@@ -19,21 +19,21 @@
             </div>
           </div>
           <span class="px-2 bg-info text-dark rounded-pill">
-            Choisir <%= choice_imposed_work.number_to_select %> oeuvres
+            Le candidat doit choisir <%= choice_imposed_work.number_to_select %> oeuvres dans cette liste.
           </span>
-         <p class="text-start  mt-1  " style="font-style: italic; color: #CCCCCC"><%= choice_imposed_work.guidelines %></p>
+         <p class="text-start  mt-1  " style="font-style: italic;"><%= choice_imposed_work.guidelines %></p>
         </div>
       </div>
 
       <div class="d-flex flex-column gap-3">
        <% choice_imposed_work.airs.each do |work| %>
-        <div class="text-white mb-3 w-100 border-top border-secondary">
+        <div class="text mb-3 w-100 border-top border-secondary">
           <div class="d-flex justify-content-between align-items-start">
             <div class="d-flex flex-column align-items-start pe-2 w-100">
-              <h3 class="mb-0 border-top border-4 border-info text-start text-white" style="font-weight: bold; font-size: <%= work.title.length > 20 ? '1.7em' : '2em' %>;"><%= work.title %></h3>
-              <span class="text-start mb-0" style="font-size: 1.3em; color: #EEEEEE;"><%= work.composer %></span>
-              <p class="text-start mb-0" style="font-size: 0.9em; color: #CCCCCC;"><%= work.oeuvre %></p>
-              <p class="text-start mb-0" style="font-size: 0.8em; color: #CCCCCC;"><%= work.infos %></p>
+              <h3 class="mb-0 border-top border-4 border-info text-start" style="font-weight: bold; font-size: <%= work.title.length > 20 ? '1.7em' : '2em' %>;"><%= work.title %></h3>
+              <span class="text-start mb-0" style="font-size: 1.3em;"><%= work.composer %></span>
+              <p class="text-start mb-0" style="font-size: 0.9em;"><%= work.oeuvre %></p>
+              <p class="text-start mb-0" style="font-size: 0.8em;"><%= work.infos %></p>
             </div>
             <div class="d-flex flex-column align-items-end pe-2">
               <div class="d-flex">
@@ -44,8 +44,7 @@
                   <i class="fas fa-trash"></i>
                 <% end %>
               </div>
-              <span class="text-start mb-0 badge border rounded-pill mt-2" style="font-size: 0.8em; color: #CCCCCC;"><i class="fas fa-key me-2"></i><%= work.tonality %></span>
-              <span class="text-start mb-0 badge border rounded-pill mt-3" style="font-size: 0.8em; color: #CCCCCC;"><i class="fas fa-clock me-2"></i><%= work.length_minutes %> min</span>
+              <span class="text-start mb-0 badge border rounded-pill mt-2" style="font-size: 0.8em;"><i class="fas fa-key me-2"></i><%= work.tonality %></span>
             </div>
           </div>
         </div>
@@ -55,7 +54,7 @@
     </div>
   <% end %>
 
-    <%= link_to new_organism_competition_edition_competition_category_choice_imposed_work_path(@organism, @competition, @edition_competition, @category), class: 'btn btn-outline-light btn-sm border-1 w-100 mt-3' do %>
+    <%= link_to new_organism_competition_edition_competition_category_choice_imposed_work_path(@organism, @competition, @edition_competition, @category), class: 'btn btn-success btn-sm border-1 w-100 mt-3' do %>
       <i class="fas fa-plus"></i> Ajouter une nouvelle liste à choix
     <% end %>
 </div>

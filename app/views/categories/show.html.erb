@@ -13,8 +13,10 @@
     </div>
   </div>
 
+  <%= render "program_container_section", category: @category %>
   <%= render "tours_section", category: @category %>
   <!-- candidature section -->
+
   <%= link_to "Voir les candidatures", organism_competition_edition_competition_category_inscriptions_path(@organism, @competition, @edition_competition, @category), class: "btn btn-success" %>
   <%= link_to organism_competition_edition_competition_category_inscriptions_path(@organism, @competition, @edition_competition, @category), data: { controller: "hover" } do %>
     <div class="card" style="width: 100%; height: 300px; background-image: url('https://source.unsplash.com/random/?applications/300/200'); background-size: cover;" data-action="mouseenter->hover#hover mouseleave->hover#unhover">
@@ -25,24 +27,6 @@
   <% end %>
 
 
-
-  <!-- Section Programme Demandé-->
-  <div class="bg-black text-center py-5 ">
-    <div class="d-flex bg-black border border-secondary justify-content-center align-items-center">
-      <h2 class="text-white py-5" style="font-size: 4em;">Programme demandé</h2>
-    </div>
-    <div class="container">
-      <div class="row">
-        <% if current_user.organisateur %>
-          <%= render 'imposed_works_section', category: @category %>
-        <% else %>
-          <%= render 'imposed_works_section', category: @category if @category.imposed_work.any? %>
-        <% end %>
-        <%= render 'choice_imposed_works_section', category: @category, competition: @competition, edition_competition: @edition_competition %>
-        <%= render 'semi_imposed_works_section', category: @category, competition: @competition, edition_competition: @edition_competition %>
-      </div>
-    </div>
-  </div>
 
   <!-- Requirement items section-->
   <div class="bg-dark text-center py-5 mb-5" style="height: 200px;">
