@@ -1,11 +1,14 @@
 <!-- Section Oeuvres obligatoires: table "imposed_works" -->
-<div class="col p-3 shadow d-flex flex-column align-items-center text-white">
-  <h3 style="font-size: 3em;" class=" px-3 rounded-pill">Oeuvres imposées</h3>
+<div class="col p-3 border-top border-5 d-flex flex-column align-items-center bg-white">
+  <h3 style="font-size: 3em;" class=" px-3 rounded-pill">Oeuvres obligatoires</h3>
     <% imposed_work = @category.imposed_work %>
     <% if imposed_work&.persisted? %>
       <div class="container p-3">
         <div class="d-flex flex-column">
-          <p class="mb-3 text-white" style="font-style: italic;"><%= imposed_work.guidelines %></p>
+          <div class=" p-3 bg-info-secondary mb-3 text-start  m-1 shadow-sm rounded-8" style="font-style: italic;">
+            <i class="fas fa-circle-info pe-1 text-secondary"></i>
+            <%= imposed_work.guidelines %>
+          </div>
           <div class="w-100 d-flex justify-content-between mb-3">
             <%= link_to edit_organism_competition_edition_competition_category_imposed_work_path(@organism, @competition, @edition_competition, @category, imposed_work), class: 'btn btn-light btn-sm px-3', style: 'width: auto;' do %>
               <i class="fas fa-pencil"></i> Editer la liste
@@ -16,28 +19,31 @@
             <% end %>
           </div>
         </div>
-        <% imposed_work.airs.each do |work| %>
-          <div class="text-white mb-3 w-100 border-top border-secondary">
+
+        <% imposed_work.airs&.each_with_index do |work, index| %>
+          <div class=" w-100">
             <div class="d-flex justify-content-between align-items-start">
-              <div class="d-flex flex-column align-items-start pe-2 w-100">
-                <h3 class="mb-0 border-top border-4 border-info text-start text-white" style="font-weight: bold; font-size: <%= work.title.length > 20 ? '1.7em' : '2em' %>;"><%= work.title %></h3>
-                <span class="text-start mb-0" style="font-size: 1.3em; color: #EEEEEE;"><%= work.composer %></span>
-                <p class="text-start mb-0" style="font-size: 0.9em; color: #CCCCCC;"><%= work.oeuvre %></p>
-                <p class="text-start mb-0" style="font-size: 0.8em; color: #CCCCCC;"><%= work.infos %></p>
+              <div class="d-flex flex-column align-items-start w-100">
+                <p class="pb-1 mb-0 text-secondary"> <%= index + 1 %> - <span class="text-dark" style="font-weight: bold"><%= work.title %></span>, <%= work.oeuvre %>, <%= work.composer %>, <%= work.tonality %> - <%= work.infos %></p>
               </div>
-              <div class="d-flex flex-column align-items-center pe-2">
-                <%= button_to air_path(work, redirect_path: organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category)), method: :delete, data: { confirm: 'Are you sure?', turbo_confirm: "Are you sure?" }, class: 'btn btn-outline-light btn-sm border-0' do %>
-                  <i class="fas fa-trash"></i>
-                <% end %>
-                <span class="text-start mb-0 badge border rounded-pill mt-2" style="font-size: 0.8em; color: #CCCCCC;"><i class="fas fa-key me-2"></i><%= work.tonality %></span>
-                <span class="text-start mb-0 badge border rounded-pill mt-3" style="font-size: 0.8em; color: #CCCCCC;"><i class="fas fa-clock me-2"></i><%= work.length_minutes %> min</span>
+              <div class="d-flex flex-column align-items-end">
+                <div class="d-flex">
+                  <%= link_to edit_air_path(work, redirect_path: organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category)), class: 'btn btn-outline-dark btn-sm border-0' do %>
+                    <i class="fas fa-pencil"></i>
+                  <% end %>
+                  <%= button_to air_path(work, redirect_path: organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category)), method: :delete, data: { confirm: 'Are you sure?', turbo_confirm: "Are you sure?" }, class: 'btn btn-outline-dark btn-sm border-0' do %>
+                    <i class="fas fa-trash"></i>
+                  <% end %>
+                </div>
+                <%# <span class="text-start mb-0 badge border rounded-pill mt-2" style="font-size: 0.8em;"><i class="fas fa-key me-2"></i></span> %>
               </div>
             </div>
           </div>
+
         <% end %>
       </div>
     <% else %>
-      <%= link_to "Créer une liste d'oeuvre obligatoires", new_organism_competition_edition_competition_category_imposed_work_path(@organism, @competition, @edition_competition, @category, category_id: @category.id) %>
+      <%= link_to "Créer une liste d'oeuvre obligatoires", new_organism_competition_edition_competition_category_imposed_work_path(@organism, @competition, @edition_competition, @category, category_id: @category.id), class: "btn btn-success" %>
     <% end %>
 
 </div>

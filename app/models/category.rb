@@ -74,4 +74,20 @@ class Category < ApplicationRecord
                 .exists?
   end
 
+  def has_a_program?
+    imposed_work.present? || choice_imposed_works.present? || semi_imposed_works.present?
+  end
+
+  def has_a_tour?
+    tours.present? && tours.count > 0
+  end
+
+  def has_a_requirement_item?
+    requirement_items.present? && requirement_items.count > 0
+  end
+
+  def has_a_prize?
+    prizes.present? && prizes.count > 0
+  end
+
 end
