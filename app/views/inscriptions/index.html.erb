@@ -1,8 +1,9 @@
 <div class="container">
 <p style="color: green"><%= notice %></p>
-
+<%= link_to "Retour", :back %>
 <h1>Candidatures</h1>
-<%= link_to "Consulter l'ordre de passage du premier tour", organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour), class:"btn btn-success" %>
+
+<%= link_to "Consulter l'ordre de passage du premier tour", organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour), class:"btn btn-success" if @tour %>
 <div id="inscriptions" class="row">
 <% Inscription.statuses.keys.reject { |status| status == 'draft' }.each do |status| %>
     <div class="col bg-light shadow-sm" style="border-radius: 0.25rem;">

@@ -15,8 +15,11 @@ class Tour < ApplicationRecord
   validates :new_day_start_time, :comparison => { :less_than => :max_end_of_day_time, message: "Doit commencer avant la fin " }, if: :creating_schedule
   validates :title, length: { maximum: 50 }
   validates :description, length: { maximum: 500 }
-  # validates :final_performance_submission_deadline, comparison: { less_than: :start_date, message: "must be before the start date" }
+  validates :final_performance_submission_deadline, comparison: { less_than: :start_date, message: "must be before the start date" }
   validates :tour_number, numericality: { only_integer: true }
+
+  validates :start_date, :comparison => { greater_than_or_equal_to: Date.today, message: "Ne peux pas être dans le passé!" }
+  validates :final_performance_submission_deadline, :comparison => { greater_than_or_equal_to: Date.today, message: "Ne peux pas être dans le passé!" }
 
 
   accepts_nested_attributes_for :tour_requirement
