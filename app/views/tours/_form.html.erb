@@ -4,7 +4,7 @@
   <div class="form-inputs">
     <div class="d-flex gap-3">
       <%= f.input :title, placeholder: "ex: Tour éliminatoire", class: "form-control bg-white" %>
-      <%= f.input :tour_number, class: "form-control bg-white" , required: true %>
+      <%= f.input :tour_number, class: "form-control bg-white" , required: true, input_html: {value: @category.tours&.count + 1}%>
     </div>
     <%= f.input :description, as: :text, placeholder: "Détails et informations sur ce tour", class: "bg-white"  %>
     <%= f.input :start_date %>
