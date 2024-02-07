@@ -6,6 +6,8 @@
   <%= f.error_notification %>
 
   <div class="form-inputs">
+    <%= f.input :inscription_role, label: "Role", collection: User.inscription_roles.keys.map { |role| [role.humanize, role] } %>
+
     <%= f.input :email,
                 required: true,
                 autofocus: true,
@@ -19,8 +21,7 @@
                 label: 'Confirmation du mot de passe',
                 required: true,
                 input_html: { autocomplete: "new-password" } %>
-    <%= f.label "Vous êtes: *", class: 'form-label' %>
-    <%= f.select :inscription_role, User.inscription_roles.keys.map { |role| [role.humanize, role] }, {}, { class: 'form-select', required: true } %>
+
   </div>
 
   <div class="form-actions d-flex flex-column justify-content-center align-items-center my-3">
