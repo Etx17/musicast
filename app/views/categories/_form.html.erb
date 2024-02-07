@@ -33,8 +33,11 @@
           </div>
           <%= f.input :description, label: false, placeholder: "", input_html: { class:"border border-0", data: { action: "input->character-counter#update", character_counter_target: "input", class:"border border-0 "} } %>
         </div>
-        <%= f.input :allow_own_pianist_accompagnateur, as: :boolean, label: "Est-il permis au candidat d'apporter son pianiste accompagnateur personnel? (cochez pour OUI)"%>
-        <%= f.input :price_cents, label: "Frais d'inscription (#{@category.price_currency})", class: "form-control",input_html: { value: @category.price_cents / 100, step: 1, min: 0, class: "form-control", id: "price_euros", placeholder: "Enter price in Euros" }  %>
+        <div class="d-flex p-2 bg-light-grey rounded-8 align-items-center">
+          <%= f.input :allow_own_pianist_accompagnateur, as: :boolean, label: false, input_html: {style:"background-color: #28CF75;"} %>
+          <%= f.label "Le candidat peut venir avec son pianiste accompagnateur personnel." %>
+        </div>
+           <%= f.input :price_cents, label: "Frais d'inscription (#{@category.price_currency})", class: "form-control",input_html: { value: @category.price_cents / 100, step: 1, min: 0, class: "form-control", id: "price_euros", placeholder: "Enter price in Euros" }  %>
       </div>
     </div>
 

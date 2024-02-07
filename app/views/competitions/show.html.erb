@@ -8,6 +8,7 @@
           <div class="card-body">
             <% @competition.edition_competitions.each_with_index do |edition_competition, index| %>
               <%= link_to organism_competition_edition_competition_path(@organism, @competition, edition_competition), data: { controller: "hover" } do %>
+                <div class="btn btn-success">Configurer les catégories</div>
                 <div class="card mb-3 shadow-sm" style="width: 100%; height: 300px; background-image: url('https://source.unsplash.com/random/?opera/300/200'); background-size: cover;" data-action="mouseenter->hover#hover mouseleave->hover#unhover">
                   <div class="card-img-overlay d-flex justify-content-center align-items-center" style="background-color: rgba(0, 0, 0, 0.5);">
                     <h2 class="card-title text-white" style="font-size: 3em;" data-hover-target="text"><%= edition_competition.annee %></h2>

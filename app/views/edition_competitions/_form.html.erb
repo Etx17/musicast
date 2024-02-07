@@ -24,7 +24,7 @@
     <div class="col-md-6">
       <%= f.input :details_specifiques, input_html: {style:"border: none;"}%>
       <div class="gap-2 d-flex flex-column">
-        <%= f.label "Règlement (PDF)" %>
+        <%= f.label "Règlement du concours (PDF, PNG, JPG)" %>
         <%= f.file_field :rule_document %>
         <% if f.object.errors[:rule_document].any? %>
           <div class="error-messages">
