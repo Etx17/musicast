@@ -58,13 +58,12 @@
     <div class="col-md-6" data-controller="hover">
       <h2 class="text-center text-dark mb-5" style="font-size: 4em;">Categories</h2>
 
-      <%# S'il n'y a aucune catégorie, mettre en text success %>
-      <%# Sinon mettre en dark outline %>
-      <%= link_to '+ Ajouter une catégorie', new_organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition), class: "btn btn-#{@edition_competition.categories.any? ? 'outline-dark' : 'success'} w-100 mt-4" %>
 
+      <%= link_to '+ Ajouter une catégorie', new_organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition), class: "btn btn-#{@edition_competition.categories.any? ? 'outline-dark' : 'success'} w-100 my-4" %>
       <% @categories.each do |category| %>
+        <%= link_to "Voir les candidatures", organism_competition_edition_competition_category_inscriptions_path(@organism, @competition, @edition_competition, category), class: "btn btn-outline-dark" %>
         <%= link_to organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, category), data: { controller: "hover" } do %>
-            <div class="btn btn-success mt-3">Configurer la catégorie</div>
+            <div class="btn btn-success">Configurer la catégorie</div>
           <% if category.photo.attached? %>
             <div class="card mb-3" style="width: 100%; height: 300px; background-image: url('<%= rails_blob_path(category&.photo) %>'); background-size: cover;" data-action="mouseenter->hover#hover mouseleave->hover#unhover">
           <% else %>

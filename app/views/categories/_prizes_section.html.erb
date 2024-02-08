@@ -1,0 +1,37 @@
+<div class="row">
+  <% category.prizes.each do |prize| %>
+    <div class="col-md-4">
+      <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h5 class="card-title mb-0"><%= prize.title %></h5>
+          <%= button_to organism_competition_edition_competition_category_prize_path(@organism, @competition, @edition_competition, @category, prize), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-outline-dark btn-sm ms-2 border-0' do %>
+            <i class="fas fa-times"></i>
+          <% end %>
+        </div>
+        <div class="card-body ">
+          <div class="d-flex flex-column justify-content-between align-items-center gap-2">
+            <div class="d-flex">
+          <%= image_tag 'icons/trophy.png', width: 70, height: 70 if prize.amount.present? %>
+          <%= image_tag 'icons/palais-garnier.png', width: 70, height: 70 if prize.other_reward.present?%>
+
+            </div>
+          <%= image_tag 'icons/laurel-wreath.png', width: 70, height: 70 unless prize.other_reward.present? || prize.amount.present?%>
+
+          <% if prize.amount.present? %>
+            <h6 class="card-subtitle mb-2 text-muted">- <%= prize.amount %>€</h6>
+          <% end %>
+          <% if prize.other_reward.present? %>
+            <h6 class="card-subtitle mb-2 text-muted">- <%= prize.other_reward %></h6>
+          <% end %>
+
+          <p class="card-text"><%= prize.description %></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+  <%# Ajouter prix %>
+  <%= link_to new_organism_competition_edition_competition_category_prize_path(@organism, @competition, @edition_competition, category), class: "btn btn-dark my-3" do %>
+    + Ajouter un prix
+  <% end %>

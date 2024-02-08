@@ -1,15 +1,20 @@
-
+<div class="container mt-2">
+  <h1>Créer un prix</h1>
 <%= simple_form_for([@organism, @competition, @edition_competition, @category, @prize]) do |f| %>
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
-    <%= f.input :title %>
-    <%= f.input :amount %>
-    <%= f.input :description %>
+    <div class="col-sm-6">
+    <%= f.input :title, label: "Titre", placeholder: "ex: Premier prix Société Générale" %>
+    <%= f.input :amount, label: "Montant:", hint: "Laissez vide si jamais le prix ne comprend pas d'argent", placeholder: "ex: 1000" %>
+    <%= f.input :other_reward, label: "Prix en nature:", placeholder:"ex: Rôle offert pour La Traviata a Bastille", hint: "Laissez vide si le prix est uniquement en argent." %>
+    <%= f.input :description, placeholder: "Prix offert par la fondation Musicale de Charente, sous la direction de Mr.Dupont, etc..." %>
+    </div>
   </div>
 
   <div class="form-actions">
-    <%= f.button :submit %>
+    <%= f.button :submit, "Enregistrer", class: "btn btn-success" %>
   </div>
 <% end %>
+</div>
