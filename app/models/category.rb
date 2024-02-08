@@ -1,12 +1,12 @@
 class Category < ApplicationRecord
   extend FriendlyId
-  belongs_to :edition_competition, class_name: 'EditionCompetition', dependent: :destroy
+  belongs_to :edition_competition, class_name: 'EditionCompetition'
   friendly_id :name, use: :slugged
   monetize :price_cents
 
   has_many :tours, dependent: :destroy
-  has_many :requirement_items, dependent: :destroy
   has_many :inscriptions, dependent: :destroy
+  has_many :requirement_items, dependent: :destroy
   has_one :programme_requirement, dependent: :destroy
   has_many :documents, as: :parent, dependent: :destroy
 

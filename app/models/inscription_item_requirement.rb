@@ -1,11 +1,9 @@
 class InscriptionItemRequirement < ApplicationRecord
-  belongs_to :inscription
-  belongs_to :requirement_item
+  belongs_to :requirement_item, optional: true
+  belongs_to :inscription, optional: true
 
   has_one_attached :submitted_file
 
-  # for youtube_url
-  # item.submitted_content is a URL that starts with 'http', it's embedded in an iframe. This could potentially be used for phishing attacks if a user can control the value of item.submitted_content. You should validate that URLs are safe and belong to trusted domains.
   validate :submitted_content_is_youtube_url, if: :requirement_item_is_youtube_url?
   validate :submitted_file_is_correct_mime_type, if: :requirement_item_is_pdf?
 

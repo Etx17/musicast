@@ -1,11 +1,11 @@
 class Inscription < ApplicationRecord
+  has_many :inscription_item_requirements, dependent: :destroy
   has_many :performances, dependent: :destroy
   has_one :candidate_program
   belongs_to :candidat
   belongs_to :category
 
   has_one :inscription_order, dependent: :destroy
-  has_many :inscription_item_requirements, dependent: :destroy
   has_many :choice_imposed_work_airs, dependent: :destroy
   has_many :semi_imposed_work_airs, dependent: :destroy
 

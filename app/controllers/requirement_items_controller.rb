@@ -37,9 +37,13 @@ class RequirementItemsController < ApplicationController
   end
 
   def destroy
-    @requirement_item.destroy
-    redirect_to organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category),
+    if @requirement_item.delete
+      redirect_to organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category),
                 notice: 'La pièce requise a été supprimée.'
+    else
+      redirect_to organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category),
+                alert: 'La pièce requise n\'a pas été supprimée.'
+    end
   end
 
   private

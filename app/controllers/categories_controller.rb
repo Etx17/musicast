@@ -55,9 +55,12 @@ class CategoriesController < ApplicationController
   # DELETE /categories/1 or /categories/1.json
   def destroy
     authorize @category
-    # raise
-    @category.destroy
-    # redirect_to categories_url, notice: "Category was successfully destroyed."
+
+    if @category.destroy
+      redirect_to organism_competition_edition_competition_path(@organism, @competition, @edition_competition), notice: "Category was successfully destroyed."
+    else
+      redirect_to organism_competition_edition_competition_path(@organism, @competition, @edition_competition), alert: "Category could not be destroyed."
+    end
   end
 
   private

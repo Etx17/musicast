@@ -1,5 +1,6 @@
 class Prize < ApplicationRecord
   belongs_to :category
+
   validates :title, :description, presence: true
   validates :amount, numericality: { greater_than: 0, less_than: 1000000}, allow_blank: true
   validates :other_reward, length: { maximum: 200 }, allow_blank: true

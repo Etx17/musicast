@@ -1,7 +1,7 @@
 class RequirementItem < ApplicationRecord
   belongs_to :category
 
-  has_many :inscription_item_requirements, dependent: :destroy
+  has_many :inscription_item_requirements
 
   enum type_item: { youtube_link: 0, recommendation_letter: 1, parental_authorization: 2, motivation_essay: 3 }
   validates :title, :type_item, :description_item, presence: true
