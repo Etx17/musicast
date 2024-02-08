@@ -2,7 +2,7 @@
   <div class="bg-light-grey card-header d-flex justify-content-between align-items-center">
     <div>
       <div class="d-flex gap-3 align-items-center">
-        <h2 style="font-size: 3em;">Pièces nécessaires</h2>
+        <h2 style="font-size: 3em;">Pièces nécessaires (<%= @category.requirement_items.count %>)</h2>
         <button type="button" class="btn btn-success my-3" data-bs-toggle="modal" data-bs-target="#exampleModal1">
           + Ajouter un élément requis
         </button>
@@ -44,18 +44,22 @@
     </div>
 
     <div class=" d-flex gap-3 flex-wrap">
-      <% @category.requirement_items.each do |item| %>
-        <div class="card bg-dark text-white rounded" style="width: 18rem;">
-          <div class="card-body">
-            <div class="icon-placeholder mx-auto" style="width: 100px; height: 100px;">
-              <%= image_tag "https://source.unsplash.com/random/?#{item.type_item}/300/200", alt: "Photo d'item requis", class: "img-fluid w-100 d-block rounded-circle", style: "object-fit: cover; aspect-ratio: 1 / 1; overflow: hidden; ", loading: 'lazy' %>
-            </div>
+      <% @category.requirement_items.each_with_index do |item, index| %>
+        <div class="card bg-white " style="width: 18rem; border-top-left-radius: 8px; border-top-right-radius: 8px;">
+          <div class="card-header d-flex justify-content-between align-items-start gap-2">
             <h5 class="card-title"><%= item.title %></h5>
-            <p class="card-text text-light"><%= item.description_item %></p>
-            <%= button_to organism_competition_edition_competition_category_requirement_item_path(@organism, @competition, @edition_competition, @category, item), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-outline-light btn-sm' do %>
+            <%= button_to organism_competition_edition_competition_category_requirement_item_path(@organism, @competition, @edition_competition, @category, item), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-light border border-0' do %>
               <i class="fas fa-times"></i>
             <% end %>
-            <span class="badge bg-warning text-dark rounded-pill border border-success"><%= item.type_item %></span>
+          </div>
+           <div class="card-body d-flex flex-column justify-content-between">
+
+            <div class="icon-placeholder mx-auto mb-3" style="width: 100px; height: 100px;">
+              <%= image_tag icon_for(item.type_item), alt: item.type_item, class: "img-fluid w-100 d-block ", style: "object-fit: cover; aspect-ratio: 1 / 1; overflow: hidden; ", loading: 'lazy' %>
+            </div>
+            <p class="card-text text-secondary"><%= item.description_item %></p>
+
+            <span class="badge bg-secondary-secondary text-secondary rounded-pill border border-secondary"><%= item.type_item %></span>
           </div>
         </div>
       <% end %>
