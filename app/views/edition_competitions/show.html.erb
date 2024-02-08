@@ -6,10 +6,14 @@
       <div class="card border-0 shadow-sm rounded bg-grey">
         <div class="card-body">
           <div class="d-flex flex-column mb-1">
+            <% if @edition_competition.published? %>
+             <span class=" mx-auto badge rounded-pill text-success bg-success-secondary border border-success">Publié</span>
+            <% else %>
             <button type="button" class="btn btn-success btn-lg" data-bs-toggle="modal" data-bs-target="#publishModal" <%= (@edition_competition.categories.none? || @edition_competition.categories.any? { |c| c.tours.none? }) ? 'disabled' : '' %>>
               Prêt à publier
             </button>
             <small class="text-secondary">Vous pouvez publier après avoir configuré au moins un tour sur chaque catégorie</small>
+            <% end %>
           </div>
           <%= render @edition_competition %>
           <div class="mt-3 d-flex justify-content-between">
@@ -28,7 +32,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                Êtes-vous sûr de vouloir publier maintenant ? Une fois publiée, vous ne pourrez plus la modifier. Assurez vous que vous avez bien rempli comme vous le souhait
+                Êtes-vous sûr de vouloir publier maintenant votre édition? Assurez vous que vous avez bien rempli comme vous le souhaitez l'ensemble des informations de votre édition et de vos catégories. Vous ne pourrez plus modifier les catégories une fois publiées.
                 <ul>
                 <% @edition_competition.categories&.each do |category| %>
                   <%= link_to organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, category), target: "_blank", rel: "noopener noreferrer" do %>

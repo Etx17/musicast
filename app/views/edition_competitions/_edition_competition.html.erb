@@ -1,8 +1,8 @@
 <div id="<%= dom_id edition_competition %>">
   <dl class="row">
-    <div class="d-flex justify-content-between">
-      <%= button_to "Modifier", edit_organism_competition_edition_competition_path(@organism, @competition, edition_competition), method: :get, class: 'btn btn-outline-dark btn-sm' %>
-      <%= button_to "Supprimer cette édition", organism_competition_edition_competition_path(@organism, @competition, edition_competition), method: :delete, class: 'btn btn-outline-dark btn-sm', data: { confirm: "Supprimer l'édition?" } %>
+    <div class="d-flex justify-content-between mb-2">
+      <%= button_to "Modifier", edit_organism_competition_edition_competition_path(@organism, @competition, edition_competition), method: :get, class: 'btn btn-outline-dark btn-sm', disabled: edition_competition.published? %>
+      <%= button_to "Supprimer cette édition", organism_competition_edition_competition_path(@organism, @competition, edition_competition), method: :delete, class: 'btn btn-outline-dark btn-sm', data: { confirm: "Supprimer l'édition?" }, disabled: edition_competition.published? %>
     </div>
 
     <dt class="col-sm-4">Annee:</dt>
