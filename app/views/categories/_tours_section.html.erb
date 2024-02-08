@@ -31,31 +31,35 @@
           <% end %>
         </div>
       <% end %>
+
         <% category.tours.order(:tour_number).each do |tour| %>
           <div class="col-md-4">
             <%= link_to organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, category, tour), class: "text-decoration-none" do %>
-              <div class="card shadow-sm h-100">
+              <div class="card h-100">
                 <div class="card-header bg-light-grey d-flex justify-content-between align-items-start">
                   <h4 class=" text-dark font-weight-bold m-0">
-                    <%= tour.title %>
+                    <%= tour.tour_number %> - <%= tour.title %>
                   </h4>
-
                   <div class="d-flex">
-                    <%= link_to edit_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, category, tour), class: 'btn btn-outline-dark btn-sm border-0' do %>
-                      <i class="fas fa-edit"></i>
-                    <% end %>
                     <%= button_to organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, category, tour), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-outline-dark btn-sm ms-2 border-0' do %>
                       <i class="fas fa-times"></i>
                     <% end %>
                   </div>
                 </div>
-                <div class="card-body">
-                  <p class="card-text text-secondary"><i class="fas fa-info-circle"></i> <%= tour.description %></p>
+                <div class="card-body bg-light-grey">
+                  <div class="d-flex justify-content-start gap-3 mb-2 w-100">
+                    <%= link_to "Voir le planning", organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, category, tour), class:"btn btn-primary btn-sm" %>
+                    <%= link_to  "Modifier", edit_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, category, tour), class: 'btn btn-outline-primary btn-sm border border-primary' %>
+                  </div>
                   <p class="card-text">
                     <small class="text-muted">
-                      <i class="fas fa-calendar-alt"></i> Début: <%= tour.start_date&.strftime("%d/%m/%Y") %>
+                      <i class="fas fa-calendar-alt"></i> Commence le: <%= tour.start_date&.strftime("%d/%m/%Y") %>
                     </small>
                   </p>
+                  <p class="card-text">
+                    <small class="text-muted">
+                      <i class="fas fa-calendar-alt"></i> Date limite de modification des programmes <%= tour.final_performance_submission_deadline&.strftime("%d/%m/%Y") %>
+                    </small>
                 </div>
               </div>
             <% end %>
