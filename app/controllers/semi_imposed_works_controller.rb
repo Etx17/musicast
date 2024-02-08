@@ -21,7 +21,8 @@ class SemiImposedWorksController < ApplicationController
       redirect_to [@organism, @competition, @edition_competition, @category],
                   notice: "Semi imposed work was successfully created."
     else
-      render :new, status: :unprocessable_entity
+      redirect_to [@organism, @competition, @edition_competition, @category],
+                  alert: "Erreur lors de la création de l'oeuvre imposée. Veuillez réessayer et veiller a bien remplir le formulaire"
     end
   end
 

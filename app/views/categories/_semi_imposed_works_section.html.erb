@@ -45,7 +45,7 @@
   </div>
 
   <button type="button" class="align-self-end btn btn-success mx-auto border-1  mt-3" data-bs-toggle="modal" data-bs-target="#semiImposedWorkModal">
-    <i class="fas fa-plus"></i> Ajouter une nouvelle oeuvre contrainte
+    <i class="fas fa-plus"></i> Ajouter une nouvelle liste d'oeuvre contraintes par consigne
   </button>
 </div>
 
@@ -57,7 +57,7 @@
         <h5 class="modal-title" id="semiImposedWorkModalLabel">Ajouter un semi-imposed work</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body bg-white">
           <%= render "semi_imposed_works/form", semi_imposed_work: @semi_imposed_work %>
       </div>
       <div class="modal-footer">

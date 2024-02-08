@@ -7,6 +7,10 @@ class SemiImposedWork < ApplicationRecord
   has_many :airs, through: :semi_imposed_work_airs
   accepts_nested_attributes_for :semi_imposed_work_airs, allow_destroy: true
 
+  validates :title, :guidelines, :number, :max_length_minutes, presence: true
+  validates :number, :max_length_minutes, numericality: { only_integer: true, greater_than: 0 }
+  validates :title, length: { minimum: 2, maximum: 100 }
+  validates :guidelines, length: { minimum: 2, maximum: 500 }
 
 
 end
