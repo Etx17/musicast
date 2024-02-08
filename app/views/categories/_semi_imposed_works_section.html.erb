@@ -18,10 +18,7 @@
         <div class="card-header align-items-center d-flex justify-content-between w-100">
           <h5 class="" style="font-weight: bold;"> <%= semi_imposed_work.title %></h5>
           <div class="d-flex justify-content-start align-items-center">
-            <%= link_to '#', class: 'btn btn-outline-dark btn-sm border-0 mb-2', data: { bs_toggle: "modal", bs_target: "#semiImposedWorkModal#{semi_imposed_work.id}" } do %>
-              <i class="fas fa-edit"></i>
-            <% end %>
-            <%= button_to '#', method: :delete, data: { confirm: 'Are you sure?', turbo_confirm: "Are you sure?" }, class: 'btn btn-outline-dark btn-sm border-0 mb-2' do %>
+            <%= button_to organism_competition_edition_competition_category_semi_imposed_work_path(@organism, @competition, @edition_competition, @category, semi_imposed_work), method: :delete, data: { confirm: 'Are you sure?', turbo_confirm: "Are you sure?" }, class: 'btn btn-outline-dark btn-sm border-0 mb-2' do %>
               <i class="fas fa-trash"></i>
             <% end %>
           </div>
