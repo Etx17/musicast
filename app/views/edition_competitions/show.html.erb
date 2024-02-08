@@ -62,7 +62,7 @@
     <div class="col-md-6" data-controller="hover">
       <h2 class="text-center text-dark mb-5" style="font-size: 4em;">Categories</h2>
 
-      <%= link_to '+ Ajouter une catégorie', new_organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition), class: "btn btn-#{@edition_competition.categories.any? ? 'outline-dark' : 'success'} w-100 my-4" %>
+      <%= link_to '+ Ajouter une catégorie', new_organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition), class: "btn btn-#{@edition_competition.categories.any? ? 'outline-dark' : 'success'} w-100 mb-4" %>
       <% @categories.each do |category| %>
        <div class="mb-3">
           <!-- image link-->
@@ -77,10 +77,17 @@
               </div>
 
               <!-- links -->
-              <div class="d-flex justify-content-between mb-1 position-absolute top-0 start-0 p-3 w-100">
-                <%= link_to 'Configurer la catégorie', organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, category), class: "btn btn-success" %>
+              <div class="d-flex justify-content-end gap-3  mb-1 position-absolute top-0 start-0 p-3 w-100">
+                <%= link_to 'Configurer la catégorie', organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, category), class: "btn btn-success" unless @edition_competition.published? %>
                 <%= link_to "Candidatures (#{category.inscriptions.where(status: 'in_review').count})", organism_competition_edition_competition_category_inscriptions_path(@organism, @competition, @edition_competition, category), class: "btn btn-light" %>
                 <%= button_to "Supprimer", organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, category), class: "btn", style: "background-color: #FFCCCC;", data: {turbo_confirm: "Êtes-vous sûr de vouloir supprimer cette catégorie ?"}, method: :delete %>
+              </div>
+
+              <!-- links -->
+              <div class="d-flex justify-content-start gap-3 mb-1 position-absolute bottom-0 start-0 p-3 w-100">
+                <% category.tours.each do |tour| %>
+                  <%= link_to tour.title, organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, category, tour), class: "btn btn-success" %>
+                <% end %>
               </div>
             </div>
           <% end %>
