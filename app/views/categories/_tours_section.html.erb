@@ -14,7 +14,7 @@
 
   </div>
 
-  <div class="container bg-white card-body">
+  <div class="container bg-light card-body">
     <div class="row g-4 pb-3">
       <% if category.tours.none? %>
         <div class="row g-4">
@@ -46,7 +46,7 @@
                     <% end %>
                   </div>
                 </div>
-                <div class="card-body bg-light-grey">
+                <div class="card-body bg-white">
                   <div class="d-flex justify-content-start gap-3 mb-2 w-100">
                     <%= link_to "Voir le planning", organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, category, tour), class:"btn btn-primary btn-sm" %>
                     <%= link_to  "Modifier", edit_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, category, tour), class: 'btn btn-outline-primary btn-sm border border-primary' %>

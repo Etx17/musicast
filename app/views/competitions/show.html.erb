@@ -17,6 +17,12 @@
                     <% edition_competition.categories.each do |category| %>
                       <span class="badge rounded-pill bg-transparent text-white border border-white mb-1 mr-1"><%= category.name %></span>
                     <% end %>
+                     <% if edition_competition.published? %>
+                      <span class="badge rounded-pill bg-transparent text-success border border-success mb-1 mr-1">Publiée</span>
+                    <% elsif edition_competition.draft? %>
+                      <span class="badge rounded-pill bg-transparent text-warning border border-warning mb-1 mr-1">Non publié</span>
+                    <% end %>
+
                   </div>
                 </div>
               <% end %>

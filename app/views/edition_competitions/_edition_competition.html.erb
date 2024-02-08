@@ -1,5 +1,10 @@
 <div id="<%= dom_id edition_competition %>">
   <dl class="row">
+    <div class="d-flex justify-content-between">
+      <%= button_to "Modifier", edit_organism_competition_edition_competition_path(@organism, @competition, edition_competition), method: :get, class: 'btn btn-outline-dark btn-sm' %>
+      <%= button_to "Supprimer cette édition", organism_competition_edition_competition_path(@organism, @competition, edition_competition), method: :delete, class: 'btn btn-outline-dark btn-sm', data: { confirm: "Supprimer l'édition?" } %>
+    </div>
+
     <dt class="col-sm-4">Annee:</dt>
     <dd class="col-sm-8"><%= edition_competition.annee %></dd>
 
@@ -35,8 +40,5 @@
 
 
   </dl>
-  <div class="d-flex justify-content-between">
-    <%= button_to "Modifier", edit_organism_competition_edition_competition_path(@organism, @competition, edition_competition), method: :get, class: 'btn btn-outline-dark' %>
-    <%= button_to "Supprimer cette édition", organism_competition_edition_competition_path(@organism, @competition, edition_competition), method: :delete, class: 'btn btn-outline-dark', data: { confirm: "Supprimer l'édition?" } %>
-  </div>
+
 </div>

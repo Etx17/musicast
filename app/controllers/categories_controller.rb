@@ -55,6 +55,7 @@ class CategoriesController < ApplicationController
   # DELETE /categories/1 or /categories/1.json
   def destroy
     authorize @category
+    # raise
     @category.destroy
     # redirect_to categories_url, notice: "Category was successfully destroyed."
   end
