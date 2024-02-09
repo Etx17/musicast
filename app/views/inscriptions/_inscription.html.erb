@@ -14,11 +14,16 @@
         <%= render 'airs_pill', inscription: inscription %>
       </div>
     </div>
-      <h3 class='text-center '><%=  link_to "Voir le CV de #{inscription.candidat.first_name} dans un nouvel onglet", candidat_path(inscription.candidat), target: "_blank", class: "btn mb-2 rounded-8 btn-primary " %></h3>
+      <h3 class='text-center '><%=  link_to "Voir le CV dans un nouvel onglet", candidat_path(inscription.candidat), target: "_blank", class: "btn mb-2 rounded-8 btn-dark " %></h3>
     <div class="col p-0">
-      <div class=" shadow mb-3 bg-white p-3 rounded-8">
+      <div class=" card shadow mb-3 bg-white rounded-8">
+          <div class="card-header d-flex justify-content-between align-items-center w-100">
+            <h5 class=mb-1>Détails de l'inscription</h5>
+             <span class=" badge rounded-pill <%= inscription.draft? ? 'text-secondary border border-secondary bg-grey' : inscription.in_review? ? 'text-info border border-info bg-info-secondary' : inscription.accepted? ? 'text-success border-success bg-success-secondary' : 'text-danger border-danger bg-danger-secondary' %>">
+              <i class="fas fa-circle small"></i> <%= inscription.status&.capitalize %>
+            </span>
+          </div>
         <div class="card-body d-flex flex-column align-items-start">
-          <h5>Détails de l'inscription</h5>
           <p><%= inscription.category.edition_competition.competition.nom_concours %> - <small><%= inscription.category.name %></small></p>
           <p>Du: <%= inscription.category.edition_competition.start_date %> au <%= inscription.category.edition_competition.end_date %></p>
           <p><%= inscription.category.edition_competition.address.line1 %> - <%= inscription.category.edition_competition.address.city %></p>
@@ -26,9 +31,7 @@
           <p>Ce candidat indique venir avec son propre pianiste accompagnateur</p>
           <% end %>
 
-          <span class=" mx-auto badge rounded-pill <%= inscription.draft? ? 'text-secondary border border-secondary bg-grey' : inscription.in_review? ? 'text-info border border-info bg-info-secondary' : inscription.accepted? ? 'text-success border-success bg-success-secondary' : 'text-danger border-danger bg-danger-secondary' %>">
-            <i class="fas fa-circle small"></i> <%= inscription.status&.capitalize %>
-          </span>
+
           <!-- Rediriger vers le paiement si ca n'est pas encore fait -->
           <% unless current_user.organisateur %>
             <% if inscription.draft? %>

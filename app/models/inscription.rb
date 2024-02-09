@@ -9,7 +9,6 @@ class Inscription < ApplicationRecord
   has_many :choice_imposed_work_airs, dependent: :destroy
   has_many :semi_imposed_work_airs, dependent: :destroy
 
-
   accepts_nested_attributes_for :inscription_item_requirements, allow_destroy: true
   accepts_nested_attributes_for :choice_imposed_work_airs
   accepts_nested_attributes_for :semi_imposed_work_airs
@@ -29,9 +28,6 @@ class Inscription < ApplicationRecord
   delegate :organism, to: :competition
 
 
-  # Scope of inscriptions by user role. if organiser, all the inscriptions (we'ill see it later)
-  # if candidat, only the inscriptions of the candidat
-
   scope :by_user_role, ->(user) do
     if user.organisateur?
       by_category(user.organisateur.category.id)
@@ -39,6 +35,8 @@ class Inscription < ApplicationRecord
       by_candidat(user.candidat.id)
     end
   end
+
+  validates :candidat, uniqueness: { scope: :category, message: "Vous avez déjà une inscription pour cette catégorie" }
 
 
   def has_same_organisateur_as?(organisateur_id)
