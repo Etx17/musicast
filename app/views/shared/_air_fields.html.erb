@@ -22,7 +22,7 @@
     <%= f.input :oeuvre, label: false, required: true, input_html: { class: 'p-2 border rounded-pill', placeholder: 'Oeuvre *' } %>
   </div>
   <div class="col-6 col-md-4">
-    <%= f.input :character, label: false, input_html: { class: 'p-2 border rounded-pill', placeholder: 'Character' } if true %>
+    <%= f.input :character, label: false, hint:"Si air d'opéra seulement", input_html: { class: 'p-2 border rounded-pill', placeholder: 'Character' } if true %>
   </div>
   <div class="col-6 col-md-4">
     <%= f.input :length_minutes, label: false, required: true, input_html: { class: 'p-2 border rounded-pill', placeholder: 'Minutes *' } %>
