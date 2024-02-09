@@ -18,11 +18,14 @@ module SidebarHelper
         # For each competition of the organiser, show the last edition_competition
         current_user.organisateur.competitions.each do |competition|
           last_edition_competition = competition.edition_competitions.last
-          links << {
-            label: "#{competition.nom_concours} #{last_edition_competition.annee}",
-            url: organism_competition_edition_competition_path(competition.organism_id, competition.id, last_edition_competition),
-            status: last_edition_competition.status
-          }
+
+          if competition.edition_competitions.present?
+            links << {
+              label: "#{competition.nom_concours} #{last_edition_competition.annee}",
+              url: organism_competition_edition_competition_path(competition.organism_id, competition.id, last_edition_competition),
+              status: last_edition_competition.status
+            }
+          end
         end
 
         last_edition_competition = current_user.organisateur&.competitions&.last&.edition_competitions&.last

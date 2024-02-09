@@ -5,12 +5,13 @@
       <div class="card border-0 shadow-sm rounded" style="background: #EEEEEE;">
         <div class="card-body">
           <h1 class="mb-4">Vos concours</h1>
-          <div class="list-group">
+          <div class="list-group ">
             <% @competitions&.each do |competition| %>
               <%= link_to organism_competition_path(@organism, competition) do %>
-                <div class="card" data-controller="hover" data-action="mouseenter->hover#hover mouseleave->hover#unhover" style="width: 100%; height: 300px; background-image: url('https://source.unsplash.com/random/?applications/300/200'); background-size: cover;">
+                <div class="card mb-3" data-controller="hover" data-action="mouseenter->hover#hover mouseleave->hover#unhover" style="width: 100%; height: 300px; background-image: url('https://source.unsplash.com/random/?applications/300/200'); background-size: cover; position: relative;">
+                  <div class="btn btn-<%=  competition.edition_competitions.blank? ? 'success' : 'secondary'%>" style="position: absolute; top: 10px; left: 10px; z-index: 1;"><%=  competition.edition_competitions.blank? ? 'Créer une édition du concours' : 'Voir' %></div>
                   <div class="card-img-overlay d-flex justify-content-center align-items-center" style="background-color: rgba(0, 0, 0, 0.7);" >
-                    <h2 class="card-title text-white text-center" style="font-size: 3em;" data-hover-target="text"><%= competition.nom_concours %></h1>
+                    <h2 class="card-title text-white text-center" style="font-size: 3em;" data-hover-target="text"><%= competition.nom_concours %></h2>
                   </div>
                 </div>
               <% end %>
