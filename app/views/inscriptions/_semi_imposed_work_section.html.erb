@@ -40,10 +40,8 @@
               </div>
               <% end %>
               <div class="col-12 col-md">
-                <%# <%= air_fields.input :tonality, label: "Tonality", input_html: { class: 'form-control' } %>
-                <%= air_fields.input :tonality, collection: Air.tonalities_selection, selected: 'Do majeur' %>
+                <%= air_fields.input :tonality, collection: Air.tonalities_selection, selected: 'Do majeur', input_html: { class:'bg-white' } %>
               </div>
-
               <%= render 'shared/components/music_search_component', f: air_fields %>
 
           </div>
