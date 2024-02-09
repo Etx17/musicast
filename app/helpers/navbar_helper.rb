@@ -27,6 +27,7 @@ module NavbarHelper
         # Add more links for the user here
       end
     else
+      links << { label: "Offre", url: pages_pricing_path, dropdown: false }
       links << { label: "Connexion", url: new_user_session_path, dropdown: false }
       links << { label: "Créer mon compte", url: new_user_registration_path, dropdown: false }
     end

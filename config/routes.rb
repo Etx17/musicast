@@ -70,6 +70,9 @@ Rails.application.routes.draw do
   }
   root to: "pages#landing"
   get "pages/home", to: 'pages#home'
+  get 'pages/pricing', to: 'pages#pricing'
+  get 'pages/terms_of_use', to: 'pages#terms_of_use'
+  get 'pages/privacy_policy', to: 'pages#privacy_policy'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")

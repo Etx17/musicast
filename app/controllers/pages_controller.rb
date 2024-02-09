@@ -4,6 +4,17 @@ class PagesController < ApplicationController
   def landing
   end
 
+  def pricing
+  end
+
+  def privacy_policy
+  end
+
+  def terms_of_use
+  end
+
+
+
   def home
     session[:discipline] = params[:discipline] if params[:discipline].present?
     session[:country] = params[:country][:country] if params[:country].present? && params[:country][:country].present?
