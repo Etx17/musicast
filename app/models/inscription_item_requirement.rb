@@ -7,25 +7,31 @@ class InscriptionItemRequirement < ApplicationRecord
   validate :submitted_content_is_youtube_url, if: :requirement_item_is_youtube_url?
   validate :submitted_file_is_correct_mime_type, if: :requirement_item_is_pdf?
 
+  validates :submitted_content, length: { maximum: 1000 }, if: :requirement_item_is_motivational_letter?
+
+  def requirement_item_is_motivational_letter?
+    item_type == "motivation_essay"
+  end
+
   def requirement_item_is_pdf?
     requirement_item.is_pdf?
   end
 
   def item_type
-    requirement_item.item_type
+    requirement_item.type_item
   end
 
   def submitted_file_is_correct_mime_type
-  if submitted_file.attached?
-    if !submitted_file.content_type.in?(%w(application/pdf image/jpeg image/png))
-      submitted_file.purge
-      errors.add(:submitted_file, 'doit être un fichier PDF, JPEG ou PNG')
-    elsif submitted_file.blob.byte_size > 5.megabytes
-      submitted_file.purge
-      errors.add(:submitted_file, 'trop volumineux. Doit être inférieur à 5 Mo')
+    if submitted_file.attached?
+      if !submitted_file.content_type.in?(%w(application/pdf image/jpeg image/png))
+        submitted_file.purge
+        errors.add(:submitted_file, 'doit être un fichier PDF, JPEG ou PNG')
+      elsif submitted_file.blob.byte_size > 5.megabytes
+        submitted_file.purge
+        errors.add(:submitted_file, 'trop volumineux. Doit être inférieur à 5 Mo')
+      end
     end
   end
-end
 
   def requirement_item_is_youtube_url?
     requirement_item.youtube_link?

@@ -1,27 +1,40 @@
-<% inscription.inscription_item_requirements.each do |item_requirement| %>
-          <div>
-            <h3><%= item_requirement.requirement_item.title %></h3>
-            <p><%= item_requirement.requirement_item.description_item %></p>
-            <%= f.simple_fields_for :inscription_item_requirements, item_requirement do |irf| %>
+<div class="d-flex flex-wrap gap-2">
+  <% inscription.inscription_item_requirements.each do | item_requirement| %>
+    <div class="card m-2" style="width: calc(50% - 24px); max-height: 500px; overflow-y: auto;">
+      <div class="card-body bg-white">
+        <div class="d-flex align-items-center gap-3 p-2">
+          <%= image_tag icon_for(item_requirement.item_type), class: 'item-icon', width: 50, height: 50 %>
+          <h3><%= item_requirement.requirement_item.title %></h3>
+        </div>
+        <p><%= item_requirement.requirement_item.description_item %></p>
+        <%= f.simple_fields_for :inscription_item_requirements, item_requirement do |irf| %>
+          <%= irf.hidden_field :requirement_item_id %>
+          <% case item_requirement.requirement_item.type_item %>
+          <% when 'motivation_essay' %>
 
-              <%= irf.hidden_field :requirement_item_id %>
-              <% case item_requirement.requirement_item.type_item %>
-              <% when 'motivation_essay' %>
-                <%= irf.input :submitted_content, as: :text, label: 'Lettre de motivation', hint: "Ni trop long, ni trop court", required: true %>
-              <% when 'youtube_link' %>
-                <%= irf.input :submitted_content, as: :url, label: "YouTube URL", hint: "Assurez vous que la vidéo soit publique et qu'elle soit bien accessible. Assurez vous que l'url contienne youtube.com ou youtu.be ", required: true %>
-              <% else %>
-                <div class="row">
-                  <div class="col">
-                    <% if irf.object.submitted_file.attached? %>
-                      <embed src="<%= url_for(irf.object.submitted_file) %>" width="500" height="375" type="application/pdf">
-                      <%= irf.input :submitted_file, as: :file, label: "Choisissez un autre PDF si vous souhaitez remplacer le document ci dessus" %>
-                    <% else %>
-                      <%= irf.input :submitted_file, as: :file, label: "Uploadez un PDF", required: true %>
-                    <% end %>
-                  </div>
-                </div>
-              <% end %>
-            <% end %>
-          </div>
+            <div class="form-group" data-controller="character-counter">
+              <div class="d-flex gap-3 align-items-center">
+              <%= f.label 'Lettre de motivation', required: true %>
+              <small class="text-secondary"><span data-character-counter-target="counter">0</span>/1000 </small>
+              </div>
+              <%= irf.input :submitted_content, label: false, as: :text, input_html: { style: 'height: 300px;',  data: { action: "input->character-counter#update", character_counter_target: "input", class:"border border-0 "} }, required: true %>
+            </div>
+          <% when 'youtube_link' %>
+            <%= irf.input :submitted_content, as: :url, label: "YouTube URL", hint: "Assurez vous que la vidéo soit publique et qu'elle soit bien accessible. Assurez vous que l'url contienne youtube.com ou youtu.be ", required: true %>
+          <% else %>
+            <div class="row">
+              <div class="col">
+                <% if irf.object.submitted_file.attached? %>
+                  <embed src="<%= url_for(irf.object.submitted_file) %>" width="500" height="375" type="application/pdf">
+                  <%= irf.input :submitted_file, as: :file, label: "Choisissez un autre PDF si vous souhaitez remplacer le document ci dessus" %>
+                <% else %>
+                  <%= irf.input :submitted_file, as: :file, label: "Uploadez un PDF", required: true %>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
         <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>
