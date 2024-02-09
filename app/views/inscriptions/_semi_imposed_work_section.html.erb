@@ -36,11 +36,11 @@
               </div>
               <%  if @inscription.category.lyrical_singing? %>
               <div class="col-12 col-md">
-                <%= air_fields.input :character, placeholder: "ex: Le duc de Mantoue", label: "Character", input_html: { class: 'form-control bg-white' } %>
+                <%= air_fields.input :character, placeholder: "ex: Le duc de Mantoue", hint:"Si air d'opéra seulement", label: "Character", input_html: { class: 'form-control bg-white' } %>
               </div>
               <% end %>
               <div class="col-12 col-md">
-                <%= air_fields.input :tonality, collection: Air.tonalities_selection, selected: 'Do majeur', input_html: { class:'bg-white' } %>
+                <%= air_fields.input :tonality, hint: "Tonalité de base", collection: Air.tonalities_selection, selected: 'Do majeur', input_html: { class:'bg-white' } %>
               </div>
               <%= render 'shared/components/music_search_component', f: air_fields %>
 
