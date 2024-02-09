@@ -7,127 +7,50 @@
 
 
   <div class="container mt-5">
-    <div class="row">
       <h2 class="text-center pb-5" style="font-size: 3rem;">Choisissez une catégorie</h2>
+    <div class="row">
       <!-- Modal -->
-
       <% @categories.each do |category| %>
         <div class="col-md-6 mb-4">
-          <div class="card h-100 shadow-lg position-relative card-hover bg-light-grey">
-            <div class="card-header text-white" style="background-color: #333; font-size: 2.5rem; text-transform: uppercase;"><%= category.name %></div>
-            <div class="card-body d-flex justify-content-between align-items-center">
-              <i class="fa-solid fa-trophy fa-4x text-gradient pe-2"></i>
-              <div class="d-flex flex-column">
-                <p class="card-text p-4" style="font-size: 1.2rem;"> <%= category.description %> </p>
-                <div class="d-flex">
-                  <span class="badge rounded-pill bg-info text-dark mx-auto"><%= category.discipline %> </span>
-                  <span class="badge rounded-pill bg-dark text-light mx-auto"><%= category.min_age %> - <%= category.max_age %> ans </span>
-                  <span><%= humanized_money_with_symbol category.price %></span>
+          <% if category.photo.attached? %>
+            <div class="card position-relative" style="width: 100%; height: 300px; background-image: url('<%= rails_blob_path(category&.photo) %>'); background-size: cover;">
+            <% else %>
+            <div class="card position-relative" style="width: 100%; height: 300px; background-image: url('https://source.unsplash.com/random/?opera/300/200'); background-size: cover;">
+            <% end %>
+              <div class="card-img-overlay d-flex flex-column justify-content-between align-items-center" style="background-color: rgba(0, 0, 0, 0.5);">
+                <h2 class="card-title text-white" style="font-size: 3em;"><%= category.name %></h2>
+                <%= link_to "Voir les détails", "#categoryModal#{category.id}", class: "border  rounded btn btn-light", "data-bs-toggle" => "modal" %>
+
+                 <div class="d-flex w-100 justify-content-between">
+                  <% if category.prize_pool_total_amount.present? && category.prize_pool_total_amount > 0  %>
+                   <div class="d-flex flex-column">
+                    <small class=text-white>Prize Pool:</small>
+                    <span class="rounded-pill border border-secondary gradient-button mx-auto px-3"><%= humanized_money_with_symbol category.prize_pool_total_amount %></span>
+                  </div>
+
+                  <% end %>
+                  <% if category.biggest_prize_amount.present? && category.biggest_prize_amount > 0  %>
+                  <div class="d-flex flex-column">
+                    <small class=text-white>Premier Prix:</small>
+                    <span class="rounded-pill border border-secondary gradient-button mx-auto px-3"><%= humanized_money_with_symbol category.biggest_prize_amount %></span>
+                  </div>
+                  <% end %>
+
                 </div>
-              </div>
-              <div>
-                <%= link_to "Voir", "#categoryModal#{category.id}", class: "border border-3 rounded btn btn-light", "data-bs-toggle" => "modal" %>
-              </div>
 
+                <div class="d-flex w-100 justify-content-between">
+                  <span class="badge rounded-pill border border-secondary bg-dark text-light mx-auto"><%= category.discipline %> </span>
+                  <span class="badge rounded-pill border border-secondary bg-dark text-light mx-auto"><%= category.min_age %> - <%= category.max_age %> ans </span>
+                  <span class="badge rounded-pill border border-secondary bg-dark text-light mx-auto">Frais de dossier: <%= humanized_money_with_symbol category.price %></span>
+                </div>
 
-            </div>
-          </div>
-        </div>
-
-        <div class="modal fade" id="categoryModal<%= category.id %>" tabindex="-1" aria-labelledby="categoryModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="categoryModalLabel"><%= category.name %></h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body p-3 bg-light-gradient">
-                <p class="lead mb-0"><%= category.description %></p>
-                <%= link_to "Voir le règlement du concours", category.edition_competition&.reglement_url, target: 'blank', class: "badge text-decoration-none rounded-pill my-3 p-2 btn btn-primary text-light" %>
-                <% category.semi_imposed_works&.each do |semi_imposed_work| %>
-                  <div class="card mb-3">
-                    <div class="card-header">
-                      Présenter<span class="h4 pe-2"> <%= semi_imposed_work.number %></span>oeuvres
-                    </div>
-                    <div class="card-body">
-                      <ul class="list-group list-group-flush">
-                        <li class="list-group-item d-flex flex-column">
-                        <span><%= semi_imposed_work.title %></span>
-                        <small class="text-secondary"><%= semi_imposed_work.guidelines %></small>
-                          <span><i class="fas fa-clock text-secondary pe-2"></i><small><%= semi_imposed_work.max_length_minutes %>min max au total.</small></span>
-
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                <% end %>
-
-                <% if category.imposed_work.present? %>
-                  <div class="card mb-3">
-                    <div class="card-header">  Oeuvres imposées: <span class="h4 ps-2"> <%= category.imposed_work.airs.count %></span></div>
-                    <div class="card-body">
-                      <ul class="list-group list-group-flush">
-                      <div><%= category.imposed_work.title %></div>
-                      <small class="text-secondary"><%= category.imposed_work.guidelines %></small>
-                        <li class="list-group-item d-flex flex-column">
-                          <% category.imposed_work.airs.each do |air| %>
-                            <span> <i class="fas fa-feather text-secondary pe-2 small"></i><%= air.title %> - <%= air.composer %> - <%= air.oeuvre %> - <%= air.tonality %></span>
-                            <small class="text-secondary"> <%= air.infos %> </small>
-                          <% end %>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                <% end %>
-
-                <% category.choice_imposed_works&.each do |choice_imposed_work|  %>
-                  <div class="card mb-3">
-                    <div class="card-header">
-                      Choisir<span class="h4 pe-2"> <%= choice_imposed_work.number_to_select %></span>oeuvres parmis:
-                    </div>
-                    <div class="card-body">
-                      <span><%= choice_imposed_work.title %></span>
-                      <small class="text-secondary"><%= choice_imposed_work.guidelines %></small>
-                      <ul class="list-group list-group-flush">
-                        <li class="list-group-item d-flex flex-column">
-                          <% choice_imposed_work.airs.each do |air| %>
-                            <span><i class="fas fa-feather text-secondary pe-2 small"></i> <%= air.title %> - <%= air.composer %> - <%= air.oeuvre %> - <%= air.tonality %></span>
-                            <small class="text-secondary"> <%= air.infos %> </small>
-                          <% end %>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                <% end %>
-
-                <% if category.requirement_items.any? %>
-                  <div class="card mb-3">
-                    <div class="card-header">Eléments requis:</div>
-                    <ul class="list-group list-group-flush">
-                      <% category.requirement_items.each do |item| %>
-                        <li class="list-group-item p-2 d-flex flex-column ">
-                          <p class="lead mb-1"><span class="badge rounded-pill border text-dark bg-light-gradient shadow-sm "><%= item.type_item %></span> <%= item.title %></p>
-
-                          <small class="text-secondary bg-white p-2"><%= item.description_item %></small>
-                        </li>
-                      <% end %>
-                    </ul>
-                  </div>
-                <% end %>
-              </div>
-              <div class="modal-footer">
-                <% if current_user %>
-                <%= link_to "Continuer", new_inscription_path(category_id: category.id, candidate_id: current_user.id), class: "btn btn-primary" %>
-                <% else %>
-                  <% session[:category_id] = category.id %>
-                  <%= link_to "Continuer", new_user_registration_path, class: "btn btn-primary" %>
-                <% end %>
               </div>
             </div>
-          </div>
+
         </div>
+
+       <%= render 'category_modal_infos', category: category %>
       <% end %>
-
     </div>
   </div>
 </div>

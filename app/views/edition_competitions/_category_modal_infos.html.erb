@@ -1,0 +1,93 @@
+<div class="modal fade" id="categoryModal<%= category.id %>" tabindex="-1" aria-labelledby="categoryModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="categoryModalLabel"><%= category.name %></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body p-3 bg-light-gradient">
+        <p class="lead mb-0"><%= category.description %></p>
+
+        <%= link_to "Voir le règlement du concours", category.edition_competition&.reglement_url, target: 'blank', class: "badge text-decoration-none rounded-pill my-3 p-2 btn btn-primary text-light" %>
+        <% category.semi_imposed_works&.each do |semi_imposed_work| %>
+          <div class="card mb-3">
+            <div class="card-header">
+              Présenter<span class="h4 pe-2"> <%= semi_imposed_work.number %></span>oeuvres
+            </div>
+            <div class="card-body">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item d-flex flex-column">
+                <span><%= semi_imposed_work.title %></span>
+                <small class="text-secondary"><%= semi_imposed_work.guidelines %></small>
+                  <span><i class="fas fa-clock text-secondary pe-2"></i><small><%= semi_imposed_work.max_length_minutes %>min max au total.</small></span>
+
+                </li>
+              </ul>
+            </div>
+          </div>
+        <% end %>
+
+        <% if category.imposed_work.present? %>
+          <div class="card mb-3">
+            <div class="card-header">  Oeuvres imposées: <span class="h4 ps-2"> <%= category.imposed_work.airs.count %></span></div>
+            <div class="card-body">
+              <ul class="list-group list-group-flush">
+              <div><%= category.imposed_work.title %></div>
+              <small class="text-secondary"><%= category.imposed_work.guidelines %></small>
+                <li class="list-group-item d-flex flex-column">
+                  <% category.imposed_work.airs.each do |air| %>
+                    <span> <i class="fas fa-feather text-secondary pe-2 small"></i><%= air.title %> - <%= air.composer %> - <%= air.oeuvre %> - <%= air.tonality %></span>
+                    <small class="text-secondary"> <%= air.infos %> </small>
+                  <% end %>
+                </li>
+              </ul>
+            </div>
+          </div>
+        <% end %>
+
+        <% category.choice_imposed_works&.each do |choice_imposed_work|  %>
+          <div class="card mb-3">
+            <div class="card-header">
+              Choisir<span class="h4 pe-2"> <%= choice_imposed_work.number_to_select %></span>oeuvres parmis:
+            </div>
+            <div class="card-body">
+              <span><%= choice_imposed_work.title %></span>
+              <small class="text-secondary"><%= choice_imposed_work.guidelines %></small>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item d-flex flex-column">
+                  <% choice_imposed_work.airs.each do |air| %>
+                    <span><i class="fas fa-feather text-secondary pe-2 small"></i> <%= air.title %> - <%= air.composer %> - <%= air.oeuvre %> - <%= air.tonality %></span>
+                    <small class="text-secondary"> <%= air.infos %> </small>
+                  <% end %>
+                </li>
+              </ul>
+            </div>
+          </div>
+        <% end %>
+
+        <% if category.requirement_items.any? %>
+          <div class="card mb-3">
+            <div class="card-header">Eléments requis:</div>
+            <ul class="list-group list-group-flush">
+              <% category.requirement_items.each do |item| %>
+                <li class="list-group-item p-2 d-flex flex-column ">
+                  <p class="lead mb-1"><span class="badge rounded-pill border text-dark bg-light-gradient shadow-sm "><%= item.type_item %></span> <%= item.title %></p>
+
+                  <small class="text-secondary bg-white p-2"><%= item.description_item %></small>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+      </div>
+      <div class="modal-footer">
+        <% if current_user %>
+        <%= link_to "Continuer", new_inscription_path(category_id: category.id, candidate_id: current_user.id), class: "btn btn-primary" %>
+        <% else %>
+          <% session[:category_id] = category.id %>
+          <%= link_to "Continuer", new_user_registration_path, class: "btn btn-primary" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

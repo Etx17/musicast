@@ -21,6 +21,12 @@
                 hint: "we need your current password to confirm your changes",
                 required: true,
                 input_html: { autocomplete: "current-password" } %>
+  <div class="d-flex align-items-start gap-2">
+      <%= f.check_box :accepts_newsletter, class: "mt-1" %>
+      <%= f.label :accepts_newsletter, class:"text-secondary"  do %>
+        <span>*</span> J'accepte de recevoir des mails (pas de spam, que des informations utiles) de la part de Musicast.
+      <% end %>
+    </div>
   </div>
 
   <div class="form-actions">

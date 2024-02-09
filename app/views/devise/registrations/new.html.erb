@@ -21,6 +21,21 @@
                 label: 'Confirmation du mot de passe',
                 required: true,
                 input_html: { autocomplete: "new-password" } %>
+    <div class="d-flex align-items-start gap-2">
+      <%= f.check_box :accepted_terms, required: true, class: "mt-1" %>
+      <%= f.label :accepted_terms, required: true, class:"text-secondary"  do %>
+        <span class="text-danger">*</span> En cochant cette case, je reconnais avoir pris connaissance et accepter les <%= link_to 'Conditions Générales d’Utilisation', pages_terms_of_use_path %>
+        et la <%= link_to "Politique de Confidentialité", pages_privacy_policy_path %> de la plateforme Musicast.
+      <% end %>
+    </div>
+
+    <div class="d-flex align-items-start gap-2">
+      <%= f.check_box :accepts_newsletter, class: "mt-1" %>
+      <%= f.label :accepts_newsletter, class:"text-secondary"  do %>
+        <span>*</span> J'accepte de recevoir des mails (pas de spam, que des informations utiles) de la part de Musicast.
+
+      <% end %>
+    </div>
 
   </div>
 

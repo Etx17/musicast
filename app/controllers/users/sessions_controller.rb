@@ -10,6 +10,14 @@ class Users::SessionsController < Devise::SessionsController
 
   # POST /resource/sign_in
 
+  # def create
+  #   if @user.needs_to_accept_terms?
+  #     redirect_to new_terms_path
+  #   else
+  #     super
+  #   end
+  # end
+  
   # DELETE /resource/sign_out
   # def destroy
   #   super

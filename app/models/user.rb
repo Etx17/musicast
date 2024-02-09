@@ -1,10 +1,12 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  devise :database_authenticatable, :registerable,
+  :recoverable, :rememberable, :validatable
+
   after_create :create_associated_role
 
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+  TERMS_VERSION = 1
 
   has_one :organiser
   has_one :partner
@@ -17,6 +19,8 @@ class User < ApplicationRecord
 
   enum inscription_role: { candidate: 0, organiser: 1 }
   validates :inscription_role, presence: true
+  validates :accepted_terms, acceptance: { accept: true }
+
 
   def after_sign_in_path_for(_resource)
     if current_user.role == "admin"
@@ -52,5 +56,9 @@ class User < ApplicationRecord
 
   def jury
     Jure.find_by(user: self)
+  end
+
+  def needs_to_accept_terms?
+    self.terms_version < TERMS_VERSION
   end
 end

@@ -94,4 +94,12 @@ class Category < ApplicationRecord
     has_a_program? && has_a_tour? && has_a_requirement_item? && has_a_prize?
   end
 
+  def prize_pool_total_amount
+    prizes&.sum(&:amount)
+  end
+
+  def biggest_prize_amount
+    prizes&.maximum(:amount)
+  end
+
 end
