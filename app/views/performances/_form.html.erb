@@ -18,10 +18,14 @@
   <% end %>
 
     <div class="form-group">
+      <ul>
+      <% @performance.inscription.used_airs.each do |air|  %>
+        <li class="text-secondary"><%= air.title %> - Déja utilisé</li>
+      <% end %>
+      </ul>
       <%= f.label "Oeuvres disponibles pour ce tour"%>
       <div class="d-flex flex-column">
-        <%= f.collection_check_boxes :air_selection, @performance.inscription.associated_airs, :id, :title, { checked: @performance.air_selection } do |b| %>
-          <div>
+<%= f.collection_check_boxes :air_selection, (@performance.inscription.associated_airs - @performance.inscription.used_airs), :id, :title, { checked: @performance.air_selection } do |b| %>          <div>
             <%= b.check_box %>
             <%= b.text %> (<%= b.object.length_minutes %> min)
           </div>

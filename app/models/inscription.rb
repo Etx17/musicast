@@ -65,7 +65,10 @@ class Inscription < ApplicationRecord
   end
 
   def used_airs
-    self.performances.map(&:air_selection).flatten.reject { |air_id| air_id.blank? }.map{ |air_id| Air.find(air_id) }
+    # self.performances.map(&:air_selection).flatten.reject { |air_id| air_id.blank? }.map{ |air_id| Air.find(air_id) }
+    air_ids = self.performances.pluck(:air_selection).flatten.reject(&:blank?)
+    return [] if air_ids.empty?
+    Air.where(id: air_ids)
   end
 
   def remaining_days_before_end_of_registration

@@ -29,7 +29,7 @@
                 <%= air_fields.input :title, label: "Titre de la pièce #{i+1}", input_html: { class: 'form-control bg-white' }, placeholder: "ex: La Donna è Mobile" %>
               </div>
               <div class="col-12 col-md">
-                <%= air_fields.input :length_minutes, placeholder: "ex: 2", hint: "Arrondissez a l'unité", label: "Minutage", input_html: { class: 'form-control bg-white' } %>
+                <%= air_fields.input :length_minutes, as: :integer, placeholder: "ex: 2", hint: "Arrondissez a l'unité", label: "Minutage", input_html: { class: 'form-control bg-white' } %>
               </div>
               <div class="col-12 col-md">
                 <%= air_fields.input :oeuvre, label: "Oeuvre", placeholder: "ex: Rigoletto", input_html: { class: 'form-control bg-white' } %>
