@@ -1,20 +1,28 @@
 <div id="<%= dom_id inscription %>">
-
   <div class="row">
-    <h2 class='text-start mt-5' style="font-size: 3em;">DOSSIER DE CANDIDATURE - <span><%= inscription.category.name %></span></h2>
     <%# Placeholder unsplash avatar picture %>
     <div class="d-flex align-items-center bg-white p-2 mb-3">
+      <div class="d-flex flex-column align-items-start justify-content-start">
+      <%= link_to 'Retour', :back, class: "btn btn-dark mx-auto mb-5", style: "width: 100px;" %>
       <%= image_tag inscription.candidat.portrait.attached? ? inscription.candidat.portrait : "https://source.unsplash.com/random/?portrait/200x200", class: "shadow rounded-circle align-items-center p-0 m-0", style: "width: 200px; height: 200px; object-fit: cover;" %>
-      <div class=" h3 mx-5">
-        <%= inscription.candidat.first_name %>
       </div>
-      <div class="p-3 d-flex align-items-start gap-3">
+      <div class="mx-5">
+        <div class="d-flex align-items-center justify-content-center py-5 gap-3 w-100 bg-white">
+          <%= image_tag "icons/folder.png", width: 50 %>
+          <h1 class="text-center text-primary pt-3" style="font-size: 3.4em"> Mon dossier d'inscription</h1>
+          <%= image_tag "icons/folder.png", width: 50 %>
+        </div>
+        <h5 class="text-center text-secondary mb-5">Concours: <%= @inscription.category.competition.nom_concours %> | Catégorie: <%= @inscription.category.name %></h5>
+        <h3 class="text-center"><%= inscription.candidat.first_name %> <%= inscription.candidat.last_name %></h3>
+        <h3 class='text-center '><%=  link_to "Voir le CV dans un nouvel onglet", candidat_path(inscription.candidat), target: "_blank", class: "btn mb-2 rounded-8 btn-dark " %></h3>
+      </div>
+
+    </div>
+ <div class="p-3 d-flex align-items-start gap-3">
         <%= render 'payed_pill', inscription: inscription %>
         <%= render 'items_pill', inscription: inscription %>
         <%= render 'airs_pill', inscription: inscription %>
       </div>
-    </div>
-      <h3 class='text-center '><%=  link_to "Voir le CV dans un nouvel onglet", candidat_path(inscription.candidat), target: "_blank", class: "btn mb-2 rounded-8 btn-dark " %></h3>
     <div class="col p-0">
       <div class=" card shadow mb-3 bg-white rounded-8">
           <div class="card-header d-flex justify-content-between align-items-center w-100">

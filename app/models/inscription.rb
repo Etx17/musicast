@@ -78,6 +78,7 @@ class Inscription < ApplicationRecord
   end
 
   def has_complete_requirement_items?
+    # TOFIX
     return false if inscription_item_requirements.any?{|i| i.has_submitted_content? == false }
     true
   end
