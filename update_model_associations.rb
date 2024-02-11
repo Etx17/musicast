@@ -4,7 +4,7 @@ require 'active_support/core_ext/string'
 model_associations = {
   'organisateur' => ['has_many :organisms'],
   'candidat' => [],
-  'jure' => [],
+  'jury' => [],
   'partner' => [],
   'organism' => ['has_many :competitions', 'has_many :partners'],
   'competition' => ['has_many :edition_competitions'],

@@ -44,15 +44,76 @@
           <%= turbo_frame_tag 'new_pianist_frame' do %>
             <%= link_to '+ Ajouter un pianiste accompagnateur', new_organism_pianist_accompagnateur_path(@organism), class: 'btn btn-outline-dark mb-3', data: { turbo_frame: 'new_pianist_frame' } %>
           <% end %>
-            <ul>
-              <%= turbo_frame_tag 'organism_pianists' do %>
-                <% @organism.pianist_accompagnateurs.each do |pianist| %>
-                  <%= render "pianist_accompagnateurs/pianist", pianist: pianist %>
-                <% end %>
+          <ul>
+            <%= turbo_frame_tag 'organism_pianists' do %>
+              <% @organism.pianist_accompagnateurs.each do |pianist| %>
+                <%= render "pianist_accompagnateurs/pianist", pianist: pianist %>
               <% end %>
-            </ul>
+            <% end %>
+          </ul>
+
+          <h5>Membres jury associés</h5>
+
+          <p>Ce sont tous les jurys que vous pourrez assigner ultérieurement lors de la création de catégories</p>
+
+
+          <h6>Associer un jury a votre organisme</h6>
+          <small class="text-danger">Vérifiez si le jury que vous souhaitez ajouter a déja un compte</small>
+          <%= simple_form_for([@organism, OrganismJury.new]) do |f| %>
+            <%= f.hidden_field :organism_id, as: :hidden, input_html: { value: @organism.id } %>
+            <%= f.collection_select :jury_id, Jury.all, :id, :name_and_email, prompt: "Cherchez parmi les jurés existants" %>
+            <%= f.button :submit, "Associer Jury", class:"btn btn-dark" %>
+          <% end %>
+
+        <small class="text-danger">Sinon invitez le à se créer un compte</small>
+        <%= simple_form_for(User.new, url: user_invitation_path, method: :post) do |f| %>
+          <%= f.input :email, required: true, autofocus: true %>
+          <%= f.input :inscription_role, as: :hidden, input_html: { value: "jury" } %>
+
+          <% f.object.build_jury %>
+          <%= f.simple_fields_for :jury do |jury| %>
+            <%= jury.input :first_name, hint: "L'invité(e) pourra modifier ou rectifier ces informations", required: true %>
+            <%= jury.input :last_name, hint: "L'invité(e) pourra modifier ou rectifier ces informations", required: true%>
+          <% end %>
+
+          <%= f.button :submit, "Invite User", class:"btn btn-dark" %>
+        <% end %>
+          <%# <small class="text-danger">Si le jury que vous souhaitez ajouter a déja un compte, vous pouvez l'associer a votre organisme</small>
+          (fonction qui va créer un Jury a cet User, et l'associer a notre organism) %>
+          <small class="text-danger">Si la personne que vous vouliez inviter a déja un compte mais n'a pas de compte "Jury", vous pouvez lui attribuer ce role. Entrez son email, et cette personne sera jury + associée a votre organisme.</small>
+          <%# Formulaire pour créer un Jury en entrant l'email de la personne %>
+          <%= form_with url: assign_jury_path, method: :post do |f| %>
+            <div class="form-group">
+              <%= f.label :email, 'Email' %>
+              <%= f.email_field :email, class: 'form-control', placeholder: 'Enter email' %>
+            </div>
+            <%= f.submit 'Assign Jury Role', class: 'btn btn-primary' %>
+          <% end %>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+          <% if @organism.juries.any? %>
+          <h3>Vos jurés partenaires</h3>
+          <div class=" my-3 d-flex flex-column gap-1 p-3 border rounded-8 bg-white">
+
+            <% @organism.juries&.each do |jury| %>
+              <div><%= jury.first_name %> <%= jury.last_name %> - <%= jury.email %></div>
+            <% end %>
+          </div>
+          <% end %>
         </div>
       </div>
+
+
     </div>
   </div>
 </div>

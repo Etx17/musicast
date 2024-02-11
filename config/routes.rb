@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   resources :airs
   resources :programme_requirements
   resources :organisms do
+    resources :organism_juries, only: [:new, :create, :destroy]
     resources :pianist_accompagnateurs
     resources :competitions do
       resources :edition_competitions do
@@ -52,7 +53,7 @@ Rails.application.routes.draw do
     end
   end
   resources :partners
-  resources :jures
+  resources :juries
   resources :candidats do
     resources :experiences, only: [:new, :create, :destroy]
     resources :educations, only: [:new, :create, :destroy]

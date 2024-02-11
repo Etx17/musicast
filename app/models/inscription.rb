@@ -4,6 +4,7 @@ class Inscription < ApplicationRecord
   has_one :candidate_program
   belongs_to :candidat
   belongs_to :category
+  has_many :notes, dependent: :destroy
 
   has_one :inscription_order, dependent: :destroy
   has_many :choice_imposed_work_airs, dependent: :destroy

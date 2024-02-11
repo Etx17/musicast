@@ -17,7 +17,7 @@ class Users::SessionsController < Devise::SessionsController
   #     super
   #   end
   # end
-  
+
   # DELETE /resource/sign_out
   # def destroy
   #   super
@@ -34,7 +34,7 @@ class Users::SessionsController < Devise::SessionsController
       organisateur_dashboard_path
     elsif Candidat.exists?(user: resource)
       candidat_dashboard_path
-    elsif Jure.exists?(user: resource)
+    elsif Jury.exists?(user: resource)
       jury_dashboard_path
     elsif Partner.exists?(user: resource)
       partner_dashboard_path

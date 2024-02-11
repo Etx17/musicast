@@ -45,7 +45,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       else
       candidat_dashboard_path
       end
-    elsif Jure.exists?(user: resource)
+    elsif Jury.exists?(user: resource)
       jury_dashboard_path
     elsif Partner.exists?(user: resource)
       partner_dashboard_path

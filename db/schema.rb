@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_11_134449) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_11_152056) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -124,6 +124,15 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_11_134449) do
     t.boolean "allow_own_pianist_accompagnateur"
     t.index ["edition_competition_id"], name: "index_categories_on_edition_competition_id"
     t.index ["slug"], name: "index_categories_on_slug", unique: true
+  end
+
+  create_table "categories_juries", force: :cascade do |t|
+    t.bigint "category_id", null: false
+    t.bigint "jury_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_categories_juries_on_category_id"
+    t.index ["jury_id"], name: "index_categories_juries_on_jury_id"
   end
 
   create_table "choice_imposed_work_airs", force: :cascade do |t|
@@ -280,16 +289,28 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_11_134449) do
     t.index ["category_id"], name: "index_inscriptions_on_category_id"
   end
 
-  create_table "jures", force: :cascade do |t|
+  create_table "juries", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.text "autres_informations"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_jures_on_user_id"
+    t.string "first_name"
+    t.string "last_name"
+    t.string "email"
+    t.text "short_bio"
+    t.index ["user_id"], name: "index_juries_on_user_id"
   end
 
   create_table "leads", force: :cascade do |t|
     t.string "email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "notes", force: :cascade do |t|
+    t.integer "jury_id"
+    t.integer "inscription_id"
+    t.integer "note_value"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -301,6 +322,15 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_11_134449) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_organisateurs_on_user_id"
+  end
+
+  create_table "organism_juries", force: :cascade do |t|
+    t.bigint "organism_id", null: false
+    t.bigint "jury_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["jury_id"], name: "index_organism_juries_on_jury_id"
+    t.index ["organism_id"], name: "index_organism_juries_on_organism_id"
   end
 
   create_table "organisms", force: :cascade do |t|
@@ -487,6 +517,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_11_134449) do
   add_foreign_key "candidate_programs", "inscriptions"
   add_foreign_key "candidats", "users"
   add_foreign_key "categories", "edition_competitions"
+  add_foreign_key "categories_juries", "categories"
+  add_foreign_key "categories_juries", "juries"
   add_foreign_key "choice_imposed_work_airs", "airs"
   add_foreign_key "choice_imposed_work_airs", "choice_imposed_works"
   add_foreign_key "choice_imposed_work_airs", "inscriptions"
@@ -506,8 +538,10 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_11_134449) do
   add_foreign_key "inscription_orders", "users"
   add_foreign_key "inscriptions", "candidats"
   add_foreign_key "inscriptions", "categories"
-  add_foreign_key "jures", "users"
+  add_foreign_key "juries", "users"
   add_foreign_key "organisateurs", "users"
+  add_foreign_key "organism_juries", "juries"
+  add_foreign_key "organism_juries", "organisms"
   add_foreign_key "organisms", "organisateurs"
   add_foreign_key "partners", "organisms"
   add_foreign_key "partners", "users"

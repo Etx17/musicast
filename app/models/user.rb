@@ -21,6 +21,8 @@ class User < ApplicationRecord
   validates :inscription_role, presence: true
   validates :accepted_terms, acceptance: { accept: true }
 
+  accepts_nested_attributes_for :jury 
+
 
   def after_sign_in_path_for(_resource)
     if current_user.role == "admin"
@@ -53,10 +55,6 @@ class User < ApplicationRecord
 
   def candidat
     Candidat.find_by(user: self)
-  end
-
-  def jury
-    Jure.find_by(user: self)
   end
 
   def needs_to_accept_terms?

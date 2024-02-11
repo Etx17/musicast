@@ -4,8 +4,10 @@ class Organism < ApplicationRecord
   belongs_to :organisateur
   has_one :address, as: :addressable, dependent: :destroy
   has_many :pianist_accompagnateurs
-
   has_many :edition_competitions, through: :competitions
+  has_many :organism_juries
+  has_many :juries, through: :organism_juries
+
   extend FriendlyId
   friendly_id :nom, use: :slugged
 

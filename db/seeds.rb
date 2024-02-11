@@ -130,3 +130,9 @@ Candidat.all.each do |candidat|
   inscription = Inscription.create!(candidat_id: candidat.id, category_id: category.id, status: 'in_review')
   # Performance.create!(inscription: inscription, tour: tour, air_selection: ["1", "2", "3", "4"])
 end
+
+#Create new Jury for each Organism existing
+Organism.all.each do |organism|
+  user = User.create!(email: Faker::Internet.email, password: "password123", password_confirmation: "password123", inscription_role: "jury")
+  Jury.create(user: user, email: user.email, first_name: Faker::Name.first_name, last_name: Faker::Name.last_name)
+end
