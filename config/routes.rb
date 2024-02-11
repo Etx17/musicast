@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  mount StripeEvent::Engine, at: '/stripe-webhooks'
 
   get 'tour_requirements/new'
   get 'tour_requirements/create'
@@ -6,7 +7,6 @@ Rails.application.routes.draw do
   get 'tour_requirements/edit'
   get 'tour_requirements/show'
 
-  mount StripeEvent::Engine, at: '/stripe-webhooks'
   resources :leads
   resources :performances
   resources :candidate_programs
@@ -66,6 +66,7 @@ Rails.application.routes.draw do
   devise_for :users, controllers: {
     registrations: 'users/registrations',
     sessions: 'users/sessions',
+    invitations: 'users/invitations'
     # omniauth_callbacks: 'users/omniauth_callbacks'
   }
   root to: "pages#landing"

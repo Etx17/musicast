@@ -1,8 +1,8 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :registerable,
-  :recoverable, :rememberable, :validatable
+  devise  :database_authenticatable, :registerable,
+  :recoverable, :rememberable, :validatable, :invitable
 
   after_create :create_associated_role
 
@@ -17,7 +17,7 @@ class User < ApplicationRecord
   has_many :inscription_orders
   has_many :documents
 
-  enum inscription_role: { candidate: 0, organiser: 1 }
+  enum inscription_role: { candidate: 0, organiser: 1, jury: 2, partner: 3 }
   validates :inscription_role, presence: true
   validates :accepted_terms, acceptance: { accept: true }
 
@@ -37,6 +37,7 @@ class User < ApplicationRecord
   end
 
   def create_associated_role
+    return unless inscription_role.present?
     if inscription_role == "candidate"
       candidate = Candidat.new(user: self)
       candidate.save(validate: false)

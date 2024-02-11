@@ -6,7 +6,7 @@
   <%= f.error_notification %>
 
   <div class="form-inputs">
-    <%= f.input :inscription_role, label: "Role", collection: User.inscription_roles.keys.map { |role| [role.humanize, role] } %>
+    <%= f.input :inscription_role, label: "Role", collection: User.inscription_roles.keys.reject { |role| %w[jury partner].include? role }.map { |role| [role.humanize, role] } %>
 
     <%= f.input :email,
                 required: true,

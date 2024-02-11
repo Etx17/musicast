@@ -27,6 +27,8 @@ class ApplicationController < ActionController::Base
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [:inscription_role, :accepted_terms, :accepts_newsletter])
     devise_parameter_sanitizer.permit(:account_update, keys: [:accepted_terms, :accepts_newsletter])
+    devise_parameter_sanitizer.permit(:accept_invitation, keys: [:first_name, :last_name, :email, :inscription_role, :accepted_terms, :accepts_newsletter])
+
   end
 
   private

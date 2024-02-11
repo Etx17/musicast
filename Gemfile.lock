@@ -141,6 +141,9 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
+    devise_invitable (2.0.9)
+      actionmailer (>= 5.0)
+      devise (>= 4.6)
     domain_name (0.6.20231109)
     dotenv (2.8.1)
     dotenv-rails (2.8.1)
@@ -186,6 +189,10 @@ GEM
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
     jmespath (1.6.2)
+    launchy (2.5.2)
+      addressable (~> 2.8)
+    letter_opener (1.8.1)
+      launchy (>= 2.2, < 3)
     loofah (2.22.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
@@ -382,6 +389,7 @@ DEPENDENCIES
   country_select
   debug
   devise
+  devise_invitable (~> 2.0.0)
   dotenv-rails
   faker
   faraday
@@ -390,6 +398,7 @@ DEPENDENCIES
   image_processing (~> 1.2)
   importmap-rails
   jbuilder
+  letter_opener
   money-rails (~> 1.12)
   nokogiri
   pdf-reader
