@@ -18,6 +18,9 @@ Rails.application.routes.draw do
   resources :airs
   resources :programme_requirements
   resources :organisms do
+    member do
+      post 'build_and_assign_jury', to: 'juries#build_and_assign_jury'
+    end
     resources :organism_juries, only: [:new, :create, :destroy]
     resources :pianist_accompagnateurs
     resources :competitions do

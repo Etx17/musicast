@@ -34,6 +34,20 @@ class JuriesController < ApplicationController
     redirect_to jurys_url, notice: "jury was successfully destroyed."
   end
 
+  def build_and_assign_jury
+    @user = User.find_by(email: params[:email])
+    if @user
+      jury = Jury.new(user: @user, email: params[:email], first_name: @user.first_name, last_name: @user.last_name)
+      if jury.save
+        OrganismJury.create(organism: current_user.organisateur.organism, jury: @user.jury)
+        redirect_to organisateur_dashboard_path, notice: "L'utilisateur a été associé à votre organisme en tant que Jury avec succès."
+      end
+    else
+      redirect_to organisateur_dashboard_path, notice: "Aucun utilisateur ne correspond à #{params[:email]}. Invitez-le ci dessus."
+      # Handle case when user is not found
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

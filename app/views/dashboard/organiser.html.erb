@@ -82,7 +82,7 @@
           (fonction qui va créer un Jury a cet User, et l'associer a notre organism) %>
           <small class="text-danger">Si la personne que vous vouliez inviter a déja un compte mais n'a pas de compte "Jury", vous pouvez lui attribuer ce role. Entrez son email, et cette personne sera jury + associée a votre organisme.</small>
           <%# Formulaire pour créer un Jury en entrant l'email de la personne %>
-          <%= form_with url: assign_jury_path, method: :post do |f| %>
+          <%= form_with url: build_and_assign_jury_organism_path(@organism), method: :post do |f| %>
             <div class="form-group">
               <%= f.label :email, 'Email' %>
               <%= f.email_field :email, class: 'form-control', placeholder: 'Enter email' %>

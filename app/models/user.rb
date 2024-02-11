@@ -21,7 +21,7 @@ class User < ApplicationRecord
   validates :inscription_role, presence: true
   validates :accepted_terms, acceptance: { accept: true }
 
-  accepts_nested_attributes_for :jury 
+  accepts_nested_attributes_for :jury
 
 
   def after_sign_in_path_for(_resource)
@@ -59,5 +59,35 @@ class User < ApplicationRecord
 
   def needs_to_accept_terms?
     self.terms_version < TERMS_VERSION
+  end
+
+  def first_name
+    case inscription_role
+    when "organiser"
+      organisateur&.first_name || "Utilisateur (prénom à modifier)"
+    when "candidate"
+      candidat&.first_name || "Utilisateur (prénom à modifier)"
+    when "jury"
+      jury&.first_name || "Utilisateur (prénom à modifier)"
+    when "partner"
+      partner&.first_name || "Utilisateur (prénom à modifier)"
+    end
+  end
+
+  def last_name
+    case inscription_role
+    when "organisateur"
+      organisateur&.last_name || "Utilisateur (nom à modifier)"
+    when "candidat"
+      candidat&.last_name || "Utilisateur (nom à modifier)"
+    when "jury"
+      jury&.last_name || "Utilisateur (nom à modifier)"
+    when "partner"
+      partner&.last_name || "Utilisateur (nom à modifier)"
+    end
+  end
+
+  def name_and_email
+    "#{first_name} #{last_name} - #{email}"
   end
 end
