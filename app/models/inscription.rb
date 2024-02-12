@@ -91,4 +91,8 @@ class Inscription < ApplicationRecord
   def has_complete_airs?
     category.semi_imposed_works.any? && category.semi_imposed_works.sum(:number) == semi_imposed_work_airs&.count && category.choice_imposed_works.any? && category.choice_imposed_works&.sum(:number_to_select) == choice_imposed_work_airs.count
   end
+
+  def motivation_essay
+    inscription_item_requirements.filter{|i| i.item_type == "motivation_essay"}.first
+  end
 end

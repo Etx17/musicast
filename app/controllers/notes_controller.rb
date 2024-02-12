@@ -19,6 +19,9 @@ class NotesController < ApplicationController
 
   # GET /notes/1/edit
   def edit
+    @jury = Jury.find(params[:jury_id])
+    @inscription = Inscription.find(params[:inscription_id])
+    @note = Note.find(params[:id])
   end
 
   # POST /notes
@@ -32,16 +35,19 @@ class NotesController < ApplicationController
     if @note.save
       redirect_to jury_jury_inscriptions_path( @jury, category_id: @inscription.category.id), notice: 'Note enregistrée.'
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /notes/1
   def update
+    @jury = Jury.find(params[:jury_id])
+    @inscription =Inscription.find(params[:inscription_id])
+    @note = Note.find(params[:id])
     if @note.update(note_params)
-      redirect_to @note, notice: 'Note was successfully updated.'
+      redirect_to jury_jury_inscriptions_path( @jury, category_id: @inscription.category.id), notice: 'Note enregistrée.'
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -59,6 +65,6 @@ class NotesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def note_params
-      params.require(:note).permit(:jury_id, :inscription_id, :note_value)
+      params.require(:note).permit(:jury_id, :inscription_id, :note_value, :details)
     end
 end

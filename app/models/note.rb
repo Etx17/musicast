@@ -4,4 +4,5 @@ class Note < ApplicationRecord
 
   validates :note_value, presence: true
   validates :note_value, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 100 }
+  validates :details, length: { maximum: 500 }
 end

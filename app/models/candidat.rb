@@ -27,6 +27,9 @@ class Candidat < ApplicationRecord
   # validates_length_of :medium_bio, maximum: 1000
   # validates_length_of :long_bio, maximum: 3000
 
+  def full_name
+    "#{first_name} #{last_name}"
+  end
 
 
   def portrait_attached
