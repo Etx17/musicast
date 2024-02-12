@@ -5,6 +5,7 @@
 
   <div id="inscriptions" class="row">
     <% @inscriptions.where(status: "in_review").each do |inscription| %>
+      <%# <%= render "note_card", inscription: inscription TO IMPLEMENT %>
       <div class="col bg-light shadow-sm" style="border-radius: 0.25rem;">
         <div class="card p-3">
 
@@ -12,13 +13,13 @@
 
             <% inscription.inscription_item_requirements.filter{|i| i.item_type == "youtube_link"}.each_with_index do |item, index| %>
 
-              <!-- Rendre une carte sur laquelle je clique, qui me mene vers dossier avec vidéos et input vote -->
-              <!-- Cette carte doit être un bg light green si j'ai voté déja. et afficher la note. Sinon elle est en grey et pas encore voté.-->
-
+                <!-- Rendre une carte sur laquelle je clique, qui me mene vers dossier avec vidéos et input vote -->
+                <!-- Cette carte doit être un bg light green si j'ai voté déja. et afficher la note. Sinon elle est en grey et pas encore voté.-->
               <div class="d-flex flex-column gap-1">
                 <h5 class="card-title"><%= inscription.candidat.first_name %></h5>
                 <%= link_to "Consulter le CV", candidat_path(inscription.candidat), class: "btn btn-dark", target: "_blank", rel: "noopener" %>
-                <%= link_to "Voter", new_jury_inscription_note_path( inscription_id: inscription.id) %>
+                <%= link_to "Voter", new_jury_inscription_note_path( inscription_id: inscription.id) unless inscription.notes.where(jury_id: current_user.jury.id) %>
+                <p><%= inscription.notes.filter{|note| note.jury_id == current_user.jury.id}.first.note_value %>/100</p>
               </div>
 
               <% youtube_id = item.youtube_id %>
