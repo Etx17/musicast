@@ -40,18 +40,24 @@
 
         <div class="my-3 d-flex flex-column gap-3">
           <hr>
-          <h3>Jury de sélection en ligne des candidatures (optionnel)</h3>
-          <% @category&.juries.each do |jury| %>
-            <small><%=  jury.name_and_email %></small>
-          <% end %>
-          <%= f.simple_fields_for(:category_juries) do |cf| %>
-            <%= cf.label "Assignez un ou plusieurs jurés à cette catégorie si vous souhaitez qu'ils votent sur les dossier des candidats lors de la reception des candidatures", required: false, class:"text-secondary" %>
-            <p>Vous n'avez pas encore de jury associés ?<%= link_to " Rendez vous ici", organisateur_dashboard_path, class:"text-decoration-none text-primary" %>  pour éditer la liste (section jury du dashboard).</p>
-            <%= cf.hidden_field :category_id, value: @category.id %>
-            <%# <%= cf.input :jury_id, label: false, collection: @organism.juries.map { |jury| [jury.name_and_email, jury.id] }, prompt: "Choisissez un ou plusieurs jurés", input_html: {class:"p-3", multiple: true}, required: false %> %>
-            <%= cf.input :jury_id, label: false, collection: Jury.all.map { |jury| [jury.name_and_email, jury.id] }, prompt: "Choisissez un ou plusieurs jurés", input_html: {class:"p-3", multiple: true}, required: false %>
 
+          <%# Afficher les categories_juries de la category %>
+          <%= f.simple_fields_for :categories_juries do |cf| %>
+            <div class="shadow p-3 mb-5" style="border-radius: 10px;">
+              <%= cf.input :jury_id, label: false, collection: Jury.all.map { |jury| [jury.name_and_email, jury.id] }, prompt: "Choisissez un juré", input_html: {class:"p-3"}, required: false %>
+              <%# <%= cf.link_to_remove "Remove this jury" %>
+            </div>
+
+             <%# <%= f.link_to_add "Add a jury", :categories_juries %>
+
+            <%= f.submit 'Save' %>
           <% end %>
+            <%# <%= cf.label "Assignez un ou plusieurs jurés à cette catégorie si vous souhaitez qu'ils votent sur les dossier des candidats lors de la reception des candidatures", required: false, class:"text-secondary" %>
+            <%# <p>Vous n'avez pas encore de jury associés ?<%= link_to " Rendez vous ici", organisateur_dashboard_path, class:"text-decoration-none text-primary" %>
+            <%# <%= cf.hidden_field :category_id, value: @category.id %>
+            <%# <%= cf.input :jury_id, label: false, collection: @organism.juries.map { |jury| [jury.name_and_email, jury.id] }, prompt: "Choisissez un ou plusieurs jurés", input_html: {class:"p-3", multiple: true}, required: false %>
+            <%# <%= cf.input :jury_id, label: false, collection: Jury.all.map { |jury| [jury.name_and_email, jury.id] }, prompt: "Choisissez un ou plusieurs jurés", input_html: {class:"p-3", multiple: true}, required: false %>
+
         </div>
       </div>
     </div>

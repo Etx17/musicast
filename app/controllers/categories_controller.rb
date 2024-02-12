@@ -22,8 +22,6 @@ class CategoriesController < ApplicationController
   # GET /categories/new
   def new
     @category = Category.new
-    @category.categories_juries.build
-
     authorize @category
   end
 
@@ -47,7 +45,6 @@ class CategoriesController < ApplicationController
 
   # PATCH/PUT /categories/1 or /categories/1.json
   def update
-    raise
     authorize @category
     if @category.update(category_params)
       redirect_to organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category), notice: "Category was successfully updated."
@@ -66,6 +63,8 @@ class CategoriesController < ApplicationController
       redirect_to organism_competition_edition_competition_path(@organism, @competition, @edition_competition), alert: "Category could not be destroyed."
     end
   end
+
+
 
   private
 
@@ -89,8 +88,6 @@ class CategoriesController < ApplicationController
       :price_cents,
       :allow_own_pianist_accompagnateur,
       :photo,
-      categories_juries: [:id, :jury_id, :category_id, :_destroy],
-      categories_juries_attributes: [:id, :jury_id, :category_id, :_destroy]
       ).tap do |whitelisted|
       whitelisted[:price_cents] = (whitelisted[:price_cents].to_f * 100).to_i if whitelisted[:price_cents]
     end

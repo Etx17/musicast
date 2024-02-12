@@ -1,0 +1,39 @@
+
+<%= simple_form_for([@organism, @competition, @edition_competition, @category, @categories_jury]) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+  <%= f.hidden_field :category, value: @categories_jury.category, disabled: true %>
+  <%= f.hidden_field :category_id, value: @category.id, disabled: true %>
+
+  <div class="form-inputs p-3">
+    <div class="shadow p-3 mb-5" style="border-radius: 10px;">
+      <%= cf.input :jury_id, label: false, collection: Jury.all.map { |jury| [jury.name_and_email, jury.id] }, prompt: "Choisissez un ou plusieurs jurés", input_html: {class:"p-3", multiple: true}, required: false %>
+    </div>
+    <h3 class="text-center mb-5" style="font-size: 3em;"> Liste d'airs</h3>
+
+    <div data-controller="airs">
+      <div data-airs-target="container">
+        <%= f.simple_fields_for :airs do |air| %>
+          <%= render 'shared/air_fields', f: air %>
+        <% end %>
+      </div>
+
+      <div data-airs-target="template" style="display: none">
+        <%= f.simple_fields_for :airs, Air.new, child_index: 'NEW_RECORD' do |air| %>
+          <%= render 'shared/air_fields', f: air %>
+        <% end %>
+      </div>
+
+      <div class="d-flex gap-3 justify-content-center">
+        <%= link_to '#', data: { action: 'airs#addAir' }, class: 'p-3 rounded-pill btn btn-outline-primary mb-5' do %>
+          <i class="fas fa-plus"></i> Ajouter un morceau
+        <% end %>
+
+        <%= button_tag(type: 'submit', class: 'p-3 rounded-pill btn btn-primary mb-5') do %>
+          <i class="fa-solid fa-floppy-disk"></i> Enregistrer les modifications
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+<% end %>

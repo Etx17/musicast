@@ -48,6 +48,7 @@ Rails.application.routes.draw do
               patch :update_status
             end
           end
+          resources :categories_juries
           resources :choice_imposed_works
           resources :semi_imposed_works
           resources :imposed_works
