@@ -22,4 +22,5 @@ class Organism < ApplicationRecord
   def should_generate_new_friendly_id?
     self.slug = nom.parameterize if nom_changed?
   end
+
 end

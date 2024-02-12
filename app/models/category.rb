@@ -15,10 +15,14 @@ class Category < ApplicationRecord
   has_many :semi_imposed_works, dependent: :destroy
   has_many :choice_imposed_works, dependent: :destroy
   has_many :prizes, dependent: :destroy
+  has_many :categories_juries, dependent: :destroy
+  has_many :juries, through: :categories_juries
 
   has_one_attached :photo
   before_save :should_generate_new_friendly_id?, if: :name_changed?
   delegate :competition, to: :edition_competition
+
+  accepts_nested_attributes_for :categories_juries, allow_destroy: true
 
   enum status: {
     draft: 0,
