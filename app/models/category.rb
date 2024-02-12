@@ -94,6 +94,10 @@ class Category < ApplicationRecord
     prizes.present? && prizes.count > 0
   end
 
+  def has_a_voting_jury?
+    juries.present? && juries.count > 0
+  end
+
   def ready_to_publish?
     has_a_program? && has_a_tour? && has_a_requirement_item? && has_a_prize?
   end
