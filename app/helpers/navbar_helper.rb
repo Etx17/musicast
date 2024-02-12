@@ -17,7 +17,7 @@ module NavbarHelper
         # Add more links for the organizer here
       elsif current_user.jury
         # Add links for jury
-        links << { label: "Jury", url: jury_path(current_user.jury), dropdown: false }
+        links << { label: "Profil", url: edit_jury_path(current_user.jury), dropdown: false }
         links << { label: "Accueil", url: jury_dashboard_path, dropdown: false }
         # Add more links for the jury here
       else

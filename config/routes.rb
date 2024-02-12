@@ -56,7 +56,15 @@ Rails.application.routes.draw do
     end
   end
   resources :partners
-  resources :juries
+  resources :juries do
+    resources :inscriptions do
+      get 'jury_index', on: :collection, as: :jury
+      resources :notes, only: [:new, :create, :edit, :update]
+
+    end
+  end
+
+
   resources :candidats do
     resources :experiences, only: [:new, :create, :destroy]
     resources :educations, only: [:new, :create, :destroy]

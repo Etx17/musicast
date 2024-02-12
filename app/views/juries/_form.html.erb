@@ -1,14 +1,18 @@
+<div class="row">
+  <div class="col-6">
+    <%= simple_form_for(@jury) do |f| %>
+      <%= f.error_notification %>
+      <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
-<%= simple_form_for(@jury) do |f| %>
-  <%= f.error_notification %>
-  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+      <div class="form-inputs">
+        <%= f.input :first_name %>
+        <%= f.input :last_name %>
+        <%= f.input :short_bio %>
+      </div>
 
-  <div class="form-inputs">
-    <%= f.association :user %>
-    <%= f.input :autres_informations %>
+      <div class="form-actions">
+        <%= f.button :submit, "Mettre à jour", class:"btn btn-dark" %>
+      </div>
+    <% end %>
   </div>
-
-  <div class="form-actions">
-    <%= f.button :submit %>
-  </div>
-<% end %>
+</div>

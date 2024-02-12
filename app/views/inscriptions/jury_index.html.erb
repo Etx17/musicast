@@ -1,0 +1,45 @@
+<div class="container">
+  <p style="color: green"><%= notice %></p>
+  <%= link_to "Retour", :back %>
+  <h1>Candidatures a noter</h1>
+
+  <div id="inscriptions" class="row">
+    <% @inscriptions.where(status: "in_review").each do |inscription| %>
+      <div class="col bg-light shadow-sm" style="border-radius: 0.25rem;">
+        <div class="card p-3">
+
+           <div class="d-flex justify-content-between">
+
+            <% inscription.inscription_item_requirements.filter{|i| i.item_type == "youtube_link"}.each_with_index do |item, index| %>
+
+              <!-- Rendre une carte sur laquelle je clique, qui me mene vers dossier avec vidéos et input vote -->
+              <!-- Cette carte doit être un bg light green si j'ai voté déja. et afficher la note. Sinon elle est en grey et pas encore voté.-->
+
+              <div class="d-flex flex-column gap-1">
+                <h5 class="card-title"><%= inscription.candidat.first_name %></h5>
+                <%= link_to "Consulter le CV", candidat_path(inscription.candidat), class: "btn btn-dark", target: "_blank", rel: "noopener" %>
+                <%= link_to "Voter", new_jury_inscription_note_path( inscription_id: inscription.id) %>
+              </div>
+
+              <% youtube_id = item.youtube_id %>
+              <% if youtube_id.present? %>
+                <div class="embed-responsive embed-responsive-16by9 d-none d-sm-block">
+                  <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/<%= youtube_id %>?rel=0" allowfullscreen></iframe>
+                </div>
+                <div class="d-block d-sm-none">
+                  <%= link_to "Voir la vidéo #{index + 1}", item.submitted_content, class: "btn btn-dark", target: "_blank", rel: "noopener" %>
+                </div>
+              <% else %>
+                <p>Le candidat n'a pas transmi de vidéo disponible</p>
+              <% end %>
+            <% end %>
+
+          </div>
+
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+
+</div>

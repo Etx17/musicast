@@ -22,7 +22,7 @@
   <div class="px-2">
     <div class="row">
 
-      <% if current_user&.organisateur %>
+      <% if current_user&.organisateur || current_user&.jury %>
         <div class="col-md-2 p-0 d-none d-md-block bg-light border-end">
           <!-- Sidebar -->
           <%= render "shared/sidebar" %>

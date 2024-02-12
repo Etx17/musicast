@@ -1,5 +1,11 @@
 class InscriptionPolicy < ApplicationPolicy
+
+  def jury_index?
+    record&.first&.category_id.in?(user.jury.categories_juries.pluck(:category_id)) if user.jury.present?
+  end
+
   def show?
+    return true if user.jury.present? && record.category_id.in?(user.jury.categories_juries.pluck(:category_id))
     allowed_to_edit?
   end
 

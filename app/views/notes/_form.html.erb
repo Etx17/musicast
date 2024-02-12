@@ -1,0 +1,8 @@
+<%= simple_form_for([@jury, @inscription, @note]) do |f| %>
+
+  <%= f.input :note_value, label: 'Note Value', required: true, input_html: { min: 1, max: 10 } %>
+
+  <div class="actions">
+    <%= f.button :submit , class:"btn btn-dark"%>
+  </div>
+<% end %>

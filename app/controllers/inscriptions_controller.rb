@@ -18,10 +18,16 @@ class InscriptionsController < ApplicationController
           flash[:alert] = "Category not found"
         end
       end
-
     end
+
     render :index if current_user.organisateur
     render :candidate_index if current_user.candidat
+  end
+
+  def jury_index
+    @category = Category.friendly.find(params[:category_id])
+    @inscriptions = Inscription.by_category(@category.id)
+    authorize @inscriptions
   end
 
   def show

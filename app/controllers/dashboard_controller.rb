@@ -16,7 +16,6 @@ class DashboardController < ApplicationController
 
   def jury
     @jury = current_user.jury
-    @next_tour = @jury.tours.where('start_date >= ?', Date.today).order(:start_date).first
   end
 
   def partner

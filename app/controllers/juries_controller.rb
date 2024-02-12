@@ -13,7 +13,7 @@ class JuriesController < ApplicationController
   def create
     @jury = Jury.new(jury_params)
     if @jury.save
-      redirect_to jury_url(@jury), notice: "jury was successfully created."
+      redirect_to jury_dashboard_path, notice: "jury was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
@@ -22,7 +22,7 @@ class JuriesController < ApplicationController
   # PATCH/PUT /jurys/1 or /jurys/1.json
   def update
     if @jury.update(jury_params)
-      redirect_to jury_url(@jury), notice: "jury was successfully updated."
+      redirect_to jury_dashboard_path, notice: "jury was successfully updated."
     else
       render :edit, status: :unprocessable_entity
     end
@@ -52,7 +52,7 @@ class JuriesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_jury
-    @jury = jury.find(params[:id])
+    @jury = Jury.find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.

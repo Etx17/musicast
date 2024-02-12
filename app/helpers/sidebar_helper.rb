@@ -38,9 +38,9 @@ module SidebarHelper
         end
 
       elsif current_user.jury
-        # links << { label: "Jury Dashboard", url: jury_dashboard_path }
-        # links << { label: "Jury Decisions", url: jury_decisions_path }
-        # links << { label: "Jury Messages", url: jury_messages_path }
+        links << { label: "Profil", url: edit_jury_path(current_user.jury), dropdown: false }
+        links << { label: "Accueil", url: jury_dashboard_path, dropdown: false }
+        # links << { label: "Candidatures", url: inscriptions_path }
       else
         # links << { label: "General Link 1", url: general_link1_path }
         # links << { label: "General Link 2", url: general_link2_path }
