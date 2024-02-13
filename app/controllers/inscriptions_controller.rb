@@ -88,14 +88,14 @@ class InscriptionsController < ApplicationController
   def create
     @inscription = Inscription.new(inscription_params)
     @inscription.candidat = current_user.candidat
-    air_ids = params[:inscription][:choice_imposed_work_airs_attributes].values.map{|c| c["air_id"]}
+    air_ids = params[:inscription][:choice_imposed_work_airs_attributes]&.values&.map{|c| c["air_id"]} || []
     if air_ids.uniq.length != air_ids.length
       @inscription.validate
       @inscription.errors.add(:choice_imposed_work_airs_attributes, "Vous ne pouvez pas choisir le même air plus d'une fois.")
       render :new, status: :unprocessable_entity and return
     end
     if @inscription.save
-      redirect_to new_inscription_order_path(inscription: @inscription), notice: "Inscription was successfully created."
+      create_inscription_order(@inscription)
     else
       render :new, status: :unprocessable_entity
     end
@@ -209,6 +209,7 @@ class InscriptionsController < ApplicationController
         :category_id,
         :status,
         :air,
+        :terms_accepted,
         :candidate_brings_pianist_accompagnateur,
         inscription_item_requirements_attributes: %i[id submitted_file submitted_content document_id requirement_item_id _destroy],
         choice_imposed_work_airs_attributes: [:id, :choice_imposed_work_id, :air_id],
@@ -219,6 +220,7 @@ class InscriptionsController < ApplicationController
         :candidat_id,
         :category_id,
         :status,
+        :terms_accepted,
         :air,
         :candidate_brings_pianist_accompagnateur,
         inscription_item_requirements_attributes: %i[id submitted_file submitted_content document_id requirement_item_id _destroy],
@@ -226,5 +228,48 @@ class InscriptionsController < ApplicationController
         semi_imposed_work_airs_attributes: [:id, :semi_imposed_work_id, air: [:id, :title, :length_minutes, :composer, :oeuvre, :character, :tonality]]
       )
     end
+  end
+
+  def create_inscription_order(inscription)
+    inscription_order = InscriptionOrder.create!(
+      inscription: inscription,
+      amount: inscription.category.price,
+      state: 'pending',
+      user: current_user
+    )
+    session = Stripe::Checkout::Session.create(
+      payment_method_types: ['card'],
+      customer_email: current_user.email,
+      line_items: [
+        {
+          price_data: {
+            currency: 'eur',
+            product_data: {
+              name: 'Inscription',
+            },
+            unit_amount: inscription_order.amount_cents,
+          },
+          quantity: 1
+        },
+        {
+          price_data: {
+            currency: 'eur',
+            product_data: {
+              name: 'Commission Musicast',
+            },
+            unit_amount: 250, # 2.50 EUR in cents
+          },
+          quantity: 1
+        }
+      ],
+      mode: 'payment',
+      # To replace candidat_dashboard_candidatures_path,
+      success_url: inscription_order_url(inscription_order),
+      cancel_url: inscription_orders_url(inscription_order)
+    )
+
+    inscription_order.update(checkout_session_id: session.id)
+    redirect_to inscription_url(@inscription), notice: "L'inscription a été mise à jour avec succès."
+
   end
 end

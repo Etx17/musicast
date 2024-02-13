@@ -48,8 +48,7 @@
                   </tr>
                   <tr>
                     <td>Total</td>
-                    <td><%= humanized_money_with_symbol(number_of_inscriptions * category.price).gsub('.', '') %></td>
-                  </tr>
+                    <td><%= humanized_money_with_symbol(number_of_inscriptions * (category.price - Money.new(500, 'EUR'))).gsub('.', '') %></td>                  </tr>
                 </tbody>
               </table>
             <% end %>

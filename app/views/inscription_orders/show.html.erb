@@ -1,18 +1,23 @@
 <div class="container">
   <div class="row py-4">
     <div class="col">
-      <h1>Inscription Order #<%= @inscription_order.id %> <small><span class="badge badge-primary"><%= @inscription_order.state %></span></small></h1>
-      <ul class="list-unstyled">
-        <li><strong>ISSUED ON</strong> <%= @inscription_order.created_at.to_date %></li>
-        <li><strong>USER</strong> <%= @inscription_order.user.email %></li>
-        <li><strong>INSCRIPTION</strong> <%= @inscription_order.inscription.category.name %></li>
-        <li><strong>TOTAL</strong> <%= humanized_money_with_symbol @inscription_order.amount %><(hors comission)/li>
-      </ul>
+      <h1 class="text-success">Félicitations, votre inscription a bien été enregistrée</h1>
+      <h2>Inscription Order #<%= @inscription_order.id %> </h1>
+      <table class="table table-striped table-bordered">
+        <tbody>
+          <tr><th>ISSUED ON</th><td><%= @inscription_order.created_at.to_date %></td></tr>
+          <tr><th>UTILISATEUR</th><td><%= @inscription_order.user.email %></td></tr>
+          <tr><th>INSCRIPTION</th><td><%= @inscription_order.inscription.category.name %></td></tr>
+          <tr><th>TOTAL</th><td><%= humanized_money_with_symbol(@inscription_order.amount + Money.new(250, 'EUR')) %></td></tr>
+        </tbody>
+      </table>
     </div>
   </div>
   <div class="row">
-    <div class="col">
-      <%= link_to 'Voir mes candidatures', inscriptions_path, class: 'btn btn-dark mx-auto '  %>
+
+      <p class="px-3 py-2 bg-success-secondary text-success border border-success rounded-8"> <i class="fas fa-info-circle text-success pe-1 "></i>Rappel: Finissez de constituer votre dossier s'il n'est pas terminé. Les dossiers incomplets sont automatiquement rejetés et ne sont pas remboursables. </p>
+       <div class="text-center">
+      <%= link_to 'Voir ma candidature', inscription_path(@inscription_order.inscription), class: 'btn btn-dark mx-auto px-5'  %>
     </div>
   </div>
 </div>

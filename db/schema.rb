@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_13_094105) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_13_161506) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -287,6 +287,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_13_094105) do
     t.integer "price_cents", default: 0, null: false
     t.boolean "candidate_brings_pianist_accompagnateur"
     t.float "average_score"
+    t.boolean "terms_accepted", default: false
     t.index ["candidat_id"], name: "index_inscriptions_on_candidat_id"
     t.index ["category_id"], name: "index_inscriptions_on_category_id"
   end

@@ -25,6 +25,12 @@
 
     <%= f.input :candidate_brings_pianist_accompagnateur, as: :boolean, label: "Souhaitez vous emmener votre propre pianiste accompagnateur? (cochez pour OUI)" if inscription.category.allow_own_pianist_accompagnateur %>
 
+    <div class="d-flex align-items-start gap-2">
+      <%= f.check_box :terms_accepted, required: true, class: "mt-1" %>
+      <%= f.label :terms_accepted, required: true, class:"text-secondary"  do %>
+        <span class="text-danger">*</span> Je confirme par la présente accepter les conditions d'inscription et je suis conscient que toute inscription payée mais incomplète après la date limite de soumission des candidatures n'est pas remboursable. Pour toute demande de remboursement, veuillez contacter directement l'organisme concerné. Veuillez noter que la commission de Musicast n'est pas remboursable.
+      <% end %>
+    </div>
     <div class="form-actions">
       <%= f.button :submit, "Enregistrer", class: "btn btn-dark" %>
     </div>

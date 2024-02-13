@@ -5,15 +5,16 @@ class Inscription < ApplicationRecord
   belongs_to :candidat
   belongs_to :category
   has_many :notes, dependent: :destroy
-
   has_one :inscription_order, dependent: :destroy
   has_many :choice_imposed_work_airs, dependent: :destroy
   has_many :semi_imposed_work_airs, dependent: :destroy
 
+  validates :terms_accepted, acceptance: { accept: true }
   accepts_nested_attributes_for :inscription_item_requirements, allow_destroy: true
   accepts_nested_attributes_for :choice_imposed_work_airs
   accepts_nested_attributes_for :semi_imposed_work_airs
   accepts_nested_attributes_for :notes
+
 
   scope :by_category, -> (category_id) { where(category_id: category_id).includes(candidat: :user) }
   scope :by_candidat, ->(candidat_id) { where(candidat_id: candidat_id) }
@@ -93,6 +94,7 @@ class Inscription < ApplicationRecord
   def has_complete_requirement_items?
     # TOFIX
     return false if inscription_item_requirements.any?{|i| i.has_submitted_content? == false }
+    return false if inscription_item_requirements.any?{|i| i.verification_status == "checked_invalid" }
     true
   end
 
