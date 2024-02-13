@@ -23,6 +23,7 @@ Rails.application.configure do
 
   # Enable server timing
   config.server_timing = true
+  # config.i18n.default_locale = :fr
 
   # Delivery method :letter_opener in development
 

@@ -64,7 +64,7 @@ class Category < ApplicationRecord
   # Validations
   validates :max_age, comparison: { greater_than_or_equal_to: :min_age }
   validates :name, :discipline, :min_age, :max_age, :description, :price_cents, presence: true
-
+  validates :preselection_vote_type, presence: true
   validates :name, length: {minimum: 3, maximum: 50}
   validates :description, length: { maximum: 1000 }
 

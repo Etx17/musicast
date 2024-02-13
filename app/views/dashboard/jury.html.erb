@@ -4,7 +4,8 @@
       <h2>Vos dossiers à évaluer (groupées par catégories)</h2>
     <div class="row">
       <%# Il faut montrer les categories jusqu'au moment du début de la compétition (edition_competition.start_date.start_date ou un truc comme ca) %>
-        <% @jury.categories_juries.select { |cj| cj.category.edition_competition.start_date > Date.today }.each do |category_jury| %>        <div class="col-12 col-sm-6 col-md-4 p-3 ">
+        <% @jury.categories_juries.select { |cj| cj.category.edition_competition.start_date > Date.today }.each do |category_jury| %>
+        <div class="col-12 col-sm-6 col-md-4 p-3 ">
           <%= link_to jury_jury_inscriptions_path(@jury, category_id: category_jury.category.id), class:"text-decoration-none " do %>
             <div class="card border-0 shadow rounded-8 card-hover border">
               <div class="card-header">

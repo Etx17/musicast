@@ -37,7 +37,16 @@
           <%= f.label "Le candidat peut venir avec son pianiste accompagnateur personnel." %>
         </div>
         <%= f.input :price_cents, label: "Frais d'inscription (#{@category.price_currency})", class: "form-control",input_html: { value: @category.price_cents / 100, step: 1, min: 0, class: "form-control", id: "price_euros", placeholder: "Enter price in Euros" }  %>
-        <%= f.collection_radio_buttons :preselection_vote_type, Category.preselection_vote_types.keys.map { |key| [key.humanize, key] }, :second, :first %>
+        <div class="form-group w-100">
+          <%= f.input :preselection_vote_type,
+            collection: Category.preselection_vote_types.keys.map { |key| [key.humanize, key] },
+            as: :radio_buttons,
+            label: "Type de vote pour la présélection",
+            required: true,
+            hint: "Souhaitez vous qu'un vote pour la préselection ait lieu ?",
+            item_wrapper_class: 'd-flex mb-2 mx-3 border border-light gap-3'
+          %>
+        </div>
       </div>
     </div>
 

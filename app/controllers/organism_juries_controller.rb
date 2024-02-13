@@ -19,7 +19,7 @@ class OrganismJuriesController < ApplicationController
   def destroy
     @organism_jury = OrganismJury.find(params[:id])
     @organism_jury.destroy
-    redirect_to @organism, notice: 'Jury was successfully disassociated.'
+    redirect_to organisateur_dashboard_path, notice: 'Ce membre a bien été retiré de votre organisme'
   end
 
   private

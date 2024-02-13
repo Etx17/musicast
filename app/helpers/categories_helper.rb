@@ -29,8 +29,8 @@ module CategoriesHelper
     # trombone: 19,
     # trumpet: 20,
     # tuba: 21,
-    image_tag("disciplines/#{category.discipline}.png", class: 'img-fluid', style: 'object-fit: cover;')
+    image_tag("disciplines/#{category.discipline}.png", class: 'img-fluid', style: 'object-fit: cover; ')
   rescue
-    image_tag('disciplines/violin.png', class: 'img-fluid', style: 'object-fit: cover; width: 200px; height: 200px;')
+    image_tag('disciplines/violin.jpg', class: 'img-fluid', style: 'object-fit: cover; ')
   end
 end

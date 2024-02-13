@@ -83,6 +83,7 @@ class CategoriesController < ApplicationController
   def category_params
     params.require(:category).permit(
       :name,
+      :preselection_vote_type,
       :description,
       :min_age, :max_age, :discipline,
       :price_cents,

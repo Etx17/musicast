@@ -1,7 +1,7 @@
 <div class="container">
 <p style="color: green"><%= notice %></p>
 <%= link_to "Retour", :back, class:"btn btn-outline-dark" %>
-<h1>Candidatures <span class="badge rounded-pill bg-secondary"><%= @category.name %></span></h1>
+<h1>Candidatures <span class="badge rounded-pill bg-secondary"><%= link_to @category.name, organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category), class:"text-decoration-none text-white"%></span></h1>
 
 
 <%= link_to "Consulter l'ordre de passage du premier tour", organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour), class:"btn btn-success my-3" if @tour %>

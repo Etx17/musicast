@@ -7,8 +7,13 @@
 
       <div class=" my-3 d-flex flex-column gap-1 p-3 border rounded-8 bg-white">
 
-        <% organism.juries&.each do |jury| %>
-          <div><%= jury.first_name %> <%= jury.last_name %> - <%= jury.email %></div>
+        <% organism.organism_juries&.each do |organism_jury| %>
+           <div>
+            <%= organism_jury.jury.first_name %> <%= organism_jury.jury.last_name %> - <%= organism_jury.jury.email %>
+            <% unless organism_jury.jury.categories_juries.any? %>
+              <%= button_to 'Dissocier ce juré de votre organisme', organism_organism_jury_path(organism, organism_jury.id), method: :delete, data: { confirm: 'Are you sure?' } %>
+            <% end %>
+        </div>
         <% end %>
       </div>
     <% end %>
