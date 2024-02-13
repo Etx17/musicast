@@ -29,6 +29,7 @@ Rails.application.routes.draw do
         resources :categories do
           resources :prizes
           resources :tours do
+            patch :reorder_tours, on: :collection
             post 'update_order', on: :member
             get 'schedule', on: :member
             put 'update_day_of_performance_and_subsequent_performances', on: :member

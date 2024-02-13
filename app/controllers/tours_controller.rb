@@ -209,6 +209,14 @@ class ToursController < ApplicationController
     redirect_to [@organism, @competition, @edition_competition, @category, @tour], notice: "Données du planning jury sauvegardées."
   end
 
+  def reorder_tours
+    category = Category.friendly.find(params[:category_id])
+    new_order = JSON.parse(params[:new_order])
+    new_order.each_with_index do |id, index|
+      category.tours.find(id).update(tour_number: index + 1)
+    end
+  end
+
   private
 
   def set_tour

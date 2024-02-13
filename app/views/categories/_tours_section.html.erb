@@ -1,5 +1,5 @@
- <!--Tours section -->
- <div class="card shadow mb-5">
+  <!--Tours section -->
+  <div class="card shadow mb-5">
   <div class="bg-light-grey card-header d-flex justify-content-between align-items-center">
     <div>
       <h2 style="font-size: 3em;">Tours</h2>
@@ -32,38 +32,38 @@
         </div>
       <% end %>
 
-        <% category.tours.order(:tour_number).each do |tour| %>
-          <div class="col-md-4">
-              <div class="card h-100">
-                <div class="card-header bg-light-grey d-flex justify-content-between align-items-start">
-                  <h4 class=" text-dark font-weight-bold m-0">
-                    <%= tour.tour_number %> - <%= tour.title %>
-                  </h4>
-                  <div class="d-flex">
-                    <%= button_to "Supprimer", organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, category, tour), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-outline-dark btn-sm ms-2 border-0' %>
+      <% category.tours.order(:tour_number).each do |tour| %>
+        <div class="col-md-4">
+            <div class="card h-100">
+              <div class="card-header bg-light-grey d-flex justify-content-between align-items-start">
+                <h4 class=" text-dark font-weight-bold m-0">
+                  <%= tour.tour_number %> - <%= tour.title %>
+                </h4>
+                <div class="d-flex">
+                  <%= button_to "Supprimer", organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, category, tour), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-outline-dark btn-sm ms-2 border-0' %>
 
-                  </div>
-                </div>
-                <div class="card-body bg-white">
-                  <div class="d-flex justify-content-start gap-3 mb-2 w-100">
-                    <%= link_to "Voir le planning", organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, category, tour), class:"btn btn-primary btn-sm" %>
-                    <%= link_to  "Modifier", edit_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, category, tour), class: 'btn btn-outline-primary btn-sm border border-primary' %>
-                  </div>
-                  <p class="card-text">
-                    <small class="text-muted">
-                      <i class="fas fa-calendar-alt"></i> Commence le: <%= tour.start_date&.strftime("%d/%m/%Y") %>
-                    </small>
-                  </p>
-                  <p class="card-text">
-                    <small class="text-muted">
-                      <i class="fas fa-calendar-alt"></i> Date limite de modification des programmes <%= tour.final_performance_submission_deadline&.strftime("%d/%m/%Y") %>
-                    </small>
                 </div>
               </div>
-          </div>
-        <% end %>
-      </div>
+              <div class="card-body bg-white">
+                <div class="d-flex justify-content-start gap-3 mb-2 w-100">
+                  <%= link_to "Voir le planning", organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, category, tour), class:"btn btn-primary btn-sm" %>
+                  <%= link_to  "Modifier", edit_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, category, tour), class: 'btn btn-outline-primary btn-sm border border-primary' %>
+                </div>
+                <p class="card-text">
+                  <small class="text-muted">
+                    <i class="fas fa-calendar-alt"></i> Commence le: <%= tour.start_date&.strftime("%d/%m/%Y") %>
+                  </small>
+                </p>
+                <p class="card-text">
+                  <small class="text-muted">
+                    <i class="fas fa-calendar-alt"></i> Date limite de modification des programmes <%= tour.final_performance_submission_deadline&.strftime("%d/%m/%Y") %>
+                  </small>
+              </div>
+            </div>
+        </div>
+      <% end %>
     </div>
+  </div>
 
 
 
