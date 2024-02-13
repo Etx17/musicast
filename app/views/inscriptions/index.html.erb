@@ -1,26 +1,30 @@
 <div class="container">
 <p style="color: green"><%= notice %></p>
-<%= link_to "Retour", :back %>
-<h1>Candidatures</h1>
+<%= link_to "Retour", :back, class:"btn btn-outline-dark" %>
+<h1>Candidatures <span class="badge rounded-pill bg-secondary"><%= @category.name %></span></h1>
 
-<%= link_to "Consulter l'ordre de passage du premier tour", organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour), class:"btn btn-success" if @tour %>
+
+<%= link_to "Consulter l'ordre de passage du premier tour", organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour), class:"btn btn-success my-3" if @tour %>
 <div id="inscriptions" class="row">
-<% Inscription.statuses.keys.reject { |status| status == 'draft' }.each do |status| %>
-    <div class="col bg-light shadow-sm" style="border-radius: 0.25rem;">
-      <h5 class="text-center text-capitalize"><%= status %> - <%= @inscriptions&.select { |inscription| inscription.status == status }&.count %></h5>
-      <% @inscriptions&.select { |inscription| inscription.status == status }&.each do |inscription| %>
-        <div class="card p-3">
-          <%= link_to inscription_path(inscription) do %>
-            <div>
-              <h6 class="card-title"><%= inscription.candidat.first_name %></h6>
-              <span class="badge rounded-pill bg-secondary"><%= inscription.category.name %></span>
-              <p class="card-text mb-0">
-                <span class="badge rounded-pill bg-secondary"><%= inscription.status %></span>
-              </p>
+<% @category ||= inscriptions.first.category%>
 
+<% Inscription.statuses.keys.reject { |status| status == 'draft' }.each do |status| %>
+    <div class="col bg-light shadow-sm mb-1" style="border-radius: 0.25rem;">
+      <h5 class="text-center text-capitalize"><%= status %> (<%= @inscriptions&.select { |inscription| inscription.status == status }&.count %>)</h5>
+      <% @inscriptions&.select { |inscription| inscription.status == status }&.each do |inscription| %>
+        <div class="card p-3 mb-2 ">
+
+            <div class="d-flex justify-content-between align-items-start">
+              <h6 class="card-title"><%= inscription_status_icon(inscription) %> <%= inscription.candidat.first_name %></h6>
+              <% if @category.hundred_points? %>
+                <span><%= inscription.average_score %>/100</span>
+              <% end %>
+
+              <p class="card-text mb-0">
+              </p>
             </div>
-          <% end %>
-          <div class="d-flex justify-content-around">
+
+          <div class="d-flex justify-content-between">
             <%= buttons_for_inscription(inscription).html_safe %>
           </div>
         </div>

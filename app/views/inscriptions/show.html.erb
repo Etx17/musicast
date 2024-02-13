@@ -1,8 +1,9 @@
 <div class="container bg-light">
-  <p style="color: green"><%= notice %></p>
+  <% if notice.present? %>
+  <p class="border p-3 border-success bg-success-secondary mt-3" style="color: green"><%= notice %></p>
+  <% end %>
   <div class="d-flex flex-column">
 
     <%= render @inscription %>
-    <%# render le programme pas editable si c'est payé %>
   </div>
 </div>

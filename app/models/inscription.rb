@@ -48,6 +48,14 @@ class Inscription < ApplicationRecord
                 .exists?
   end
 
+  def update_average_score
+    transaction do
+      lock!
+      self.average_score = notes.average(:note_value) || 0
+      save
+    end
+  end
+
 
   def order_state
     inscription_order&.state || "Brouillon"

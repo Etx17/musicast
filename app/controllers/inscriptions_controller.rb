@@ -122,7 +122,7 @@ class InscriptionsController < ApplicationController
       end
       # Si on a modifié des airs d'un choice_imposed_work ou d'un semi_imposed_work, on doit supprimer les performances des tours actuels et suivants.
       @inscription.save
-      redirect_to inscription_url(@inscription), notice: "Inscription was successfully updated."
+      redirect_to inscription_url(@inscription), notice: "L'inscription a été mise à jour avec succès."
     else
       render :edit, status: :unprocessable_entity
     end

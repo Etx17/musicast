@@ -6,7 +6,7 @@
         <%= link_to inscription.candidat.first_name, candidat_path(inscription.candidat), class: "btn btn-outline-success text-decoration-none btn-sm", target: "_blank" %>
       </h5>
       <span><i class="fas fa-check-circle text-success pe-1"></i><%= note.note_value %>/100</span>
-      <%= link_to "Consulter video & vote", edit_jury_inscription_note_path(jury_id: current_user.jury.id, inscription_id: inscription.id, id: note.id), class: "btn btn-outline-success btn-sm", target: "_blank" %>
+      <%= link_to "Consulter video & vote", edit_jury_inscription_note_path(jury_id: current_user.jury.id, inscription_id: inscription.id, id: note.id), class: "btn btn-outline-success btn-sm" %>
     </div>
   </div>
 <% else %>
@@ -16,7 +16,7 @@
         <%= link_to inscription.candidat.first_name, candidat_path(inscription.candidat), class: "btn btn-secondary text-decoration-none btn-sm", target: "_blank" %>
       </h5>
       <span class="text-secondary"><i class="fas fa-spinner text-secondary pe-1"></i>À évaluer</span>
-      <%= link_to "Consulter video & vote", new_jury_inscription_note_path(jury_id: current_user.jury.id, inscription_id: inscription.id, inscription: inscription), class: "btn btn-secondary btn-sm", target: "_blank" %>
+      <%= link_to "Consulter video & vote", new_jury_inscription_note_path(jury_id: current_user.jury.id, inscription_id: inscription.id, inscription: inscription), class: "btn btn-secondary btn-sm" %>
     </div>
   </div>
 <% end %>

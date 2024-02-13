@@ -3,7 +3,7 @@
    <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
   <div class="form-inputs">
-    <%= f.input :note_value, label: 'Note Value', hint: "Donnez une note entre 0 et 100 à ce candidat", required: true %>
+    <%= f.input :note_value, label: 'Note Value', hint: "Donnez une note entre 1 et 100 à ce candidat", required: true, autofocus: true  %>
     <%= f.input :details, label: 'Détails', hint: "Donnez un feedback ici. Ce feedback est anonyme." %>
   </div>
   <div class="actions">

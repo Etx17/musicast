@@ -12,7 +12,7 @@ class OrganismJuriesController < ApplicationController
     if @organism_jury.save
       redirect_to organisateur_dashboard_path, notice: 'Jury was successfully associated.'
     else
-      render :new
+      redirect_to organisateur_dashboard_path, notice: "Erreur lors de l'association du jury. Vérifiez qu'il n'est pas déjà associé à cet organisme."
     end
   end
 

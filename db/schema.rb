@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_12_122149) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_13_094105) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -122,6 +122,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_12_122149) do
     t.string "price_currency", default: "EUR", null: false
     t.integer "status", default: 0
     t.boolean "allow_own_pianist_accompagnateur"
+    t.integer "preselection_vote_type", default: 0
     t.index ["edition_competition_id"], name: "index_categories_on_edition_competition_id"
     t.index ["slug"], name: "index_categories_on_slug", unique: true
   end
@@ -285,6 +286,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_12_122149) do
     t.datetime "updated_at", null: false
     t.integer "price_cents", default: 0, null: false
     t.boolean "candidate_brings_pianist_accompagnateur"
+    t.float "average_score"
     t.index ["candidat_id"], name: "index_inscriptions_on_candidat_id"
     t.index ["category_id"], name: "index_inscriptions_on_category_id"
   end

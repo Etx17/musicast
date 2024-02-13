@@ -37,7 +37,7 @@
           <%= f.label "Le candidat peut venir avec son pianiste accompagnateur personnel." %>
         </div>
         <%= f.input :price_cents, label: "Frais d'inscription (#{@category.price_currency})", class: "form-control",input_html: { value: @category.price_cents / 100, step: 1, min: 0, class: "form-control", id: "price_euros", placeholder: "Enter price in Euros" }  %>
-
+        <%= f.collection_radio_buttons :preselection_vote_type, Category.preselection_vote_types.keys.map { |key| [key.humanize, key] }, :second, :first %>
       </div>
     </div>
 

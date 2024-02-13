@@ -1,31 +1,34 @@
 <!-- Jury Dashboard-->
 <div class="container">
-  <div class="row">
 
-    <!-- Lien vers les catégories ou le jury doit voter -->
-    <div class="col-md-6 p-3">
-      <h2>Organismes dont vous êtes partenaires</h2>
-        <% @jury.organism_juries.each do |organism| %>
-          <div class="card border-0 shadow rounded-8">
-            <div class="card-body">
-              <h5 class="card-title"><%= organism.organism.nom %></h5>
+      <h2>Vos dossiers à évaluer (groupées par catégories)</h2>
+    <div class="row">
+      <%# Il faut montrer les categories jusqu'au moment du début de la compétition (edition_competition.start_date.start_date ou un truc comme ca) %>
+        <% @jury.categories_juries.select { |cj| cj.category.edition_competition.start_date > Date.today }.each do |category_jury| %>        <div class="col-12 col-sm-6 col-md-4 p-3 ">
+          <%= link_to jury_jury_inscriptions_path(@jury, category_id: category_jury.category.id), class:"text-decoration-none " do %>
+            <div class="card border-0 shadow rounded-8 card-hover border">
+              <div class="card-header">
+                <p><%= category_jury.category.edition_competition.organism.nom %></p>
+                <h3><%= category_jury.category.name %></h3>
+              </div>
+              <div class="p-0 card-body d-flex flex-column justify-content-center align-items-center">
+                <div style="position: relative; display: inline-block;">
+                  <%= category_discipline_image(category_jury.category) %>
+                  <span class="badge rounded-pill border border-success bg-success-secondary text-success" style="position: absolute; bottom: 10px; right: 10px;">
+                    <%= category_jury.category.discipline %>
+                  </span>
+                 <span class="btn border-bottom" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; font-size: 20px; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">
+                    Voir <%= category_jury.category.inscriptions.where(status: "in_review").count %> inscriptions
+                  </span>
+                </div>
+
+
+              </div>
             </div>
-          </div>
-        <% end %>
+          <% end %>
+        </div>
+
+      <% end %>
     </div>
 
-    <div class="col-md-6 p-3">
-      <h2>Performances à évaluer (groupées par catégories)</h2>
-        <% @jury.categories_juries.each do |category_jury| %>
-          <div class="card border-0 shadow rounded-8">
-            <div class="card-body">
-              <!-- Envoyer le jury vers un index d'inscriptions qu'il puisse consulter et voter (le même que pour organisateur)-->
-                <%= link_to category_jury.category.name, jury_jury_inscriptions_path(@jury, category_id: category_jury.category.id) %>
-            </div>
-          </div>
-        <% end %>
-
-    </div>
-
-  </div>
 </div>

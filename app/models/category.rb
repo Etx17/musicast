@@ -30,6 +30,11 @@ class Category < ApplicationRecord
     archived: 2
   }
 
+  enum preselection_vote_type: {
+    no_vote: 0,
+    hundred_points: 1,
+  }
+
   # Dangereux, attention a la suppression des catégories et a l'ajout
   enum discipline: {
     alto: 1,
@@ -109,5 +114,7 @@ class Category < ApplicationRecord
   def biggest_prize_amount
     prizes&.maximum(:amount)
   end
+
+
 
 end
