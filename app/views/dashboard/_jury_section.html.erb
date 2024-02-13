@@ -18,39 +18,70 @@
       </div>
     <% end %>
 
+  <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    + Associer un membre a mon organisme
+  </button>
 
-    <h4>Associer un jury a votre organisme</h4>
-    <small class="text-secondary">3 cas de figures <br></small>
-    <small class="text-danger">Vérifiez si le jury que vous souhaitez ajouter a déja un compte</small>
-    <%= simple_form_for([organism, OrganismJury.new]) do |f| %>
-      <%= f.hidden_field :organism_id, as: :hidden, input_html: { value: organism.id } %>
-      <%= f.collection_select :jury_id, Jury.all, :id, :name_and_email, prompt: "Cherchez parmi les jurés existants" %>
-      <%= f.button :submit, "Associer Jury", class:"btn btn-dark" %>
-    <% end %>
-    <hr>
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Associer un jury a votre organisme</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body bg-white">
 
-  <small class="text-danger">Sinon invitez le à se créer un compte</small>
-  <%= simple_form_for(User.new, url: user_invitation_path, method: :post) do |f| %>
-    <%= f.input :email, required: true, placeholder: "Entrez un email", autofocus: true %>
-    <%= f.input :inscription_role, as: :hidden, input_html: { value: "jury" } %>
+          <div class="d-flex justify-content-center">
+            <p style="font-size: 4em; width: 100px; height: 100px; line-height: 100px; text-align: center;" class="text-center border rounded-circle border-3 border-dark">1</p>
+          </div>
+          <p class="text-success">Vérifiez si le jury que vous souhaitez ajouter a déja un compte</p>
+          <%= simple_form_for([organism, OrganismJury.new]) do |f| %>
+            <%= f.hidden_field :organism_id, as: :hidden, input_html: { value: organism.id } %>
+            <%= f.collection_select :jury_id, Jury.all, :id, :name_and_email, prompt: "Cherchez parmi les jurés existants" %>
+            <%= f.button :submit, "Associer Jury", class:"btn btn-dark" %>
+          <% end %>
+          <hr>
 
-    <% f.object.build_jury %>
-    <%= f.simple_fields_for :jury do |jury| %>
-      <%= jury.input :first_name, hint: "L'invité(e) pourra modifier ou rectifier ces informations", required: true %>
-      <%= jury.input :last_name, hint: "L'invité(e) pourra modifier ou rectifier ces informations", required: true%>
-    <% end %>
+          <div class="d-flex justify-content-center">
+            <p style="font-size: 4em; width: 100px; height: 100px; line-height: 100px; text-align: center;" class="text-center border rounded-circle border-3 border-dark">2</p>
+          </div>
+          <p class="text-warning">Sinon invitez le à se créer un compte</p>
+          <%= simple_form_for(User.new, url: user_invitation_path, method: :post) do |f| %>
+            <%= f.input :email, required: true, placeholder: "Entrez un email", autofocus: true %>
+            <%= f.input :inscription_role, as: :hidden, input_html: { value: "jury" } %>
 
-    <%= f.button :submit, "Invite User", class:"btn btn-dark" %>
-  <% end %>
-  <hr>
-    <small class="text-danger">Si la personne que vous vouliez inviter a déja un compte mais n'a pas de compte "Jury", vous pouvez lui attribuer ce role. Entrez son email puis associez le à votre organisme.</small>
-    <%= form_with url: build_and_assign_jury_organism_path(organism), method: :post do |f| %>
-      <div class="form-group">
-        <%= f.label :email, 'Email' %>
-        <%= f.email_field :email, class: 'form-control', placeholder: 'Entrez un email' %>
+            <% f.object.build_jury %>
+            <%= f.simple_fields_for :jury do |jury| %>
+              <%= jury.input :first_name, hint: "L'invité(e) pourra modifier ou rectifier ces informations", required: true %>
+              <%= jury.input :last_name, hint: "L'invité(e) pourra modifier ou rectifier ces informations", required: true%>
+            <% end %>
+
+            <%= f.button :submit, "Invite User", class:"btn btn-dark" %>
+          <% end %>
+          <hr>
+          <div class="d-flex justify-content-center">
+            <p style="font-size: 4em; width: 100px; height: 100px; line-height: 100px; text-align: center;" class="text-center border rounded-circle border-3 border-dark">3</p>
+          </div>
+          <p class="text-danger">Si la personne que vous vouliez inviter a déja un compte mais n'a pas de compte "Jury", vous pouvez lui attribuer ce role. Entrez son email puis associez le à votre organisme.</p>
+          <%= form_with url: build_and_assign_jury_organism_path(organism), method: :post do |f| %>
+            <div class="form-group">
+              <%= f.label :email, 'Email' %>
+              <%= f.email_field :email, class: 'form-control', placeholder: 'Entrez un email' %>
+            </div>
+            <%= f.submit 'Assign Jury Role', class: 'btn btn-dark' %>
+          <% end %>
+
+
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
       </div>
-      <%= f.submit 'Assign Jury Role', class: 'btn btn-dark' %>
-    <% end %>
+    </div>
+  </div>
+
 
 
 
