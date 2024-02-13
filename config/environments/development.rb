@@ -8,7 +8,7 @@ Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Allow ngrok for testing webhooks
-  config.hosts << "b342-217-111-150-34.ngrok-free.app"
+  config.hosts << "c2a4-217-111-150-34.ngrok-free.app"
 
   # In the development environment your application's code is reloaded any time
   # it changes. This slows down response time but is perfect for development
