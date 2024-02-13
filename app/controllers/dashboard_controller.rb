@@ -10,6 +10,7 @@ class DashboardController < ApplicationController
     redirect_to new_organism_path if @organism.nil?
   end
 
+
   def candidate
     redirect_to pages_home_path
   end

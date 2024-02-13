@@ -14,8 +14,6 @@ module SidebarHelper
       elsif current_user.organisateur.present?
         links << { label: "Tableau de bord", url: organisateur_dashboard_path }
 
-        # links << { label: "Candidatures", url: inscriptions_path }
-        # For each competition of the organiser, show the last edition_competition
         current_user.organisateur.competitions.each do |competition|
           last_edition_competition = competition.edition_competitions.last
 

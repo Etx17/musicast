@@ -13,6 +13,7 @@ class CompetitionsController < ApplicationController
     @edition_competition = EditionCompetition.new
     @categories = @competition.edition_competitions.map(&:categories).flatten
     @categories = @categories.sort_by(&:discipline)
+    # Cache the sum of the inscription of each category of the edition_competition
   end
 
   # GET /competitions/new
