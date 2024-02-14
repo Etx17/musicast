@@ -79,5 +79,7 @@ class EditionCompetition < ApplicationRecord
       standalone: true,
       use_path: true
     )
+
+
   end
 end
