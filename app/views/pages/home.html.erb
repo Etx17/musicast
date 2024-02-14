@@ -1,9 +1,10 @@
 <!-- Sous navbar pour choisir : competitions, offres pro, masterclass, stages -->
 <!-- Inputs instrument et pays-->
 <%= render "dropdown_inputs" %>
+
 <main class="container mt-4">
   <h2 class="text-center fw-bold mb-4">
-    Competitions ( <%= @edition_competitions.count %>)
+    Competitions (<%= @edition_competitions.count %>) <%= flag_emoji(session["country"]) if session["country"]%>
   </h2>
   <div class="row g-4">
     <% @edition_competitions.each do |edition_competition| %>
