@@ -38,25 +38,23 @@
             <% @edition_competition.categories.each do |category| %>
               <% number_of_inscriptions = category.inscriptions.where(status: "in_review").count %>
               <% if number_of_inscriptions > 0 %>
-              <table class="table table-bordered w-100">
-                <thead>
-                  <tr>
-                    <th><%= category.name %></th>
-                    <th>Montant</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Nombre d'inscriptions payées</td>
-                    <td><%= number_of_inscriptions %></td>
-                  </tr>
-                  <tr>
-                    <td>Total</td>
-                    <td><%= humanized_money_with_symbol(number_of_inscriptions * (category.price - Money.new(500, 'EUR'))).gsub('.', '') %></td>                  </tr>
-                </tbody>
-              </table>
-              <% else %>
-              <p>Vous n'avez pas encore reçu d'inscriptions pour l'instant</p>
+                <table class="table table-bordered w-100">
+                  <thead>
+                    <tr>
+                      <th><%= category.name %></th>
+                      <th>Montant</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Nombre d'inscriptions payées</td>
+                      <td><%= number_of_inscriptions %></td>
+                    </tr>
+                    <tr>
+                      <td>Total</td>
+                      <td><%= humanized_money_with_symbol(number_of_inscriptions * (category.price - Money.new(500, 'EUR'))).gsub('.', '') %></td>                  </tr>
+                  </tbody>
+                </table>
               <% end %>
             <% end %>
 
