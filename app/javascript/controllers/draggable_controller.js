@@ -15,7 +15,8 @@ export default class extends Controller {
   }
 
   dragOver(event) {
-    event.preventDefault()  // Necessary to allow dropping
+    event.preventDefault()
+    event.dataTransfer.dropEffect = "move"
   }
 
   drop(event) {
@@ -23,7 +24,7 @@ export default class extends Controller {
 
     const targetId = event.dataTransfer.getData("text/plain")
     const target = this.listTarget.querySelector(`[data-id='${targetId}']`)
-    const dropTarget = event.target.closest('div')
+    const dropTarget = event.target.closest('[data-id]')
 
     if (dropTarget && target !== dropTarget) {
       if (this.isBefore(target, dropTarget)) {
@@ -32,8 +33,11 @@ export default class extends Controller {
         this.listTarget.insertBefore(target, dropTarget.nextSibling)
       }
 
+      // Retrieve the category ID from the drop target
+      this.categoryId = dropTarget.dataset.id
+
       if (this.getOrder() != this.originalOrder) {
-        this.submitTarget.disabled = false
+        this.submit()
       }
     }
   }
@@ -43,20 +47,25 @@ export default class extends Controller {
     this.draggedItem = null
   }
 
-  submit(event) {
-    event.preventDefault()
+  submit() {
     let data = new FormData()
+    const newOrder = Array.from(this.listTarget.children).map(child => child.dataset.id)
+
     data.append("new_order", JSON.stringify(this.getOrder()))
 
-    fetch(`/tours/reorder_tours`, {
-      method: "PATCH",
-      body: data,
+    fetch(`/organisms/1/competitions/1/edition_competitions/1/categories/${this.categoryId}/tours/reorder_tours`, {
+      method: 'PATCH',
       headers: {
-        'X-CSRF-Token': getMetaValue('csrf-token'),
+        'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        'X-CSRF-Token': getMetaValue('csrf-token')
       },
-    })
+      body: JSON.stringify({
+        new_order: newOrder,
+        category: this.categoryId
+      })
+    }).then(response => location.reload())
+
   }
 
   getOrder() {

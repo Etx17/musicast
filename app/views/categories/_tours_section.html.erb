@@ -1,9 +1,9 @@
   <!--Tours section -->
   <div class="card shadow mb-5">
   <div class="bg-light-grey card-header d-flex justify-content-between align-items-center">
-    <div>
+    <div class=mb-2>
       <h2 style="font-size: 3em;">Tours</h2>
-      <span class="text-secondary">Créez et modifier les tours et leurs informations</span>
+      <small class="text-secondary bg-secondary-secondary p-2 rounded-8 border "><i class="fas fa-info-circle text-secondary pe-2"></i>Glissez déposez les tours pour changer leur ordre</small>
     </div>
 
     <div class="text-center ">
@@ -31,17 +31,14 @@
           <% end %>
         </div>
       <% end %>
-
-      <% category.tours.order(:tour_number).each do |tour| %>
-        <div class="col-md-4">
+      <div class="d-flex flex-wrap" data-controller="draggable" data-action="dragover->draggable#dragOver drop->draggable#drop" data-draggable-target="list">
+        <% category.tours.order(:tour_number).each do |tour| %>
+          <div class="col-md-4 p-2" data-id="<%= tour.id %>" draggable="true" data-action="dragstart->draggable#dragStart dragend->draggable#dragEnd">
             <div class="card h-100">
               <div class="card-header bg-light-grey d-flex justify-content-between align-items-start">
-                <h4 class=" text-dark font-weight-bold m-0">
-                  <%= tour.tour_number %> - <%= tour.title %>
-                </h4>
+                <h4 class=" text-dark font-weight-bold m-0"> <%= tour.tour_number %> - <%= tour.title %> </h4>
                 <div class="d-flex">
-                  <%= button_to "Supprimer", organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, category, tour), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-outline-dark btn-sm ms-2 border-0' %>
-
+                  <%= button_to "Supprimer", organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, category, tour), method: :delete, data: { turbo_confirm: 'Are you sure?' }, class: 'btn btn-outline-dark btn-sm ms-2 border-0' %>
                 </div>
               </div>
               <div class="card-body bg-white">
@@ -60,8 +57,9 @@
                   </small>
               </div>
             </div>
-        </div>
-      <% end %>
+          </div>
+        <% end %>
+      </div>
     </div>
   </div>
 

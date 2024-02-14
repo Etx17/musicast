@@ -89,6 +89,7 @@ class CategoriesController < ApplicationController
       :price_cents,
       :allow_own_pianist_accompagnateur,
       :photo,
+      tours_attributes: %i[id tour_number _destroy],
       ).tap do |whitelisted|
       whitelisted[:price_cents] = (whitelisted[:price_cents].to_f * 100).to_i if whitelisted[:price_cents]
     end

@@ -1,6 +1,6 @@
 class ToursController < ApplicationController
   before_action :set_tour, only: %i[assign_pianist_to_performance_manually assign_pianist store_form_data move_to_next_tour qualify_performance shuffle show edit update destroy update_order update_day_of_performance_and_subsequent_performances]
-  before_action :set_context, only: %i[assign_pianist_to_performance_manually assign_pianist store_form_data move_to_next_tour qualify_performance shuffle new create show edit update destroy update_order update_day_of_performance_and_subsequent_performances]
+  before_action :set_context, only: %i[reorder_tours assign_pianist_to_performance_manually assign_pianist store_form_data move_to_next_tour qualify_performance shuffle new create show edit update destroy update_order update_day_of_performance_and_subsequent_performances]
 
   def index
     @tours = Tour.all
@@ -26,6 +26,7 @@ class ToursController < ApplicationController
     @tour = Tour.new(tour_params)
     @tour.tour_requirement = TourRequirement.new(tour_params[:tour_requirement_attributes])
     @tour.category = @category
+    @tour.tour_number = @category.tours.count + 1
     if @tour.save
       redirect_to organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category),
                   notice: "Tour crée avec succès."
@@ -210,11 +211,13 @@ class ToursController < ApplicationController
   end
 
   def reorder_tours
-    category = Category.friendly.find(params[:category_id])
-    new_order = JSON.parse(params[:new_order])
-    new_order.each_with_index do |id, index|
-      category.tours.find(id).update(tour_number: index + 1)
+    new_order = params[:new_order]
+
+    # Update the tour_number of each tour
+    new_order.each_with_index do |tour_id, index|
+      Tour.find(tour_id).update(tour_number: index + 1)
     end
+    # redirect_to [@organism, @competition, @edition_competition, @category], notice: "Ordre des tours mis à jour"
   end
 
   private
