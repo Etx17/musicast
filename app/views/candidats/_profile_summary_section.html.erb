@@ -1,5 +1,5 @@
 <div class="rounded-4 shadow bg-white my-3">
-<div class="position-relative" style="border-top-left-radius: 12px; border-top-right-radius: 12px; width: 100%; height: 300px; background-image: url('<%= @candidat.banner.attached? ? url_for(@candidat.banner) : 'https://source.unsplash.com/random/?applications/300/200' %>'); background-size: cover; loading: lazy;">
+<div class="position-relative" style="border-top-left-radius: 12px; border-top-right-radius: 12px; width: 100%; height: 300px; background-color: <%= @candidat.banner_color.present? ? @candidat.banner_color : "#" + "%06x" % (rand * 0xffffff) %>; background-size: cover; loading: lazy;">
     <%= image_tag(@candidat.portrait.attached? ? @candidat.portrait : "https://source.unsplash.com/random/?portrait/200x200", class: "position-absolute shadow rounded-circle align-items-center p-0 m-0 border border-3 shadow border-light", style: "width: 200px; height: 200px; bottom: 10px; left: 20px;", loading: "lazy") %>
   </div>
   <div class="p-3 border d-flex">
