@@ -16,11 +16,15 @@
             <%= link_to "Continuer", new_user_registration_path, class: "btn btn-primary" %>
           <% end %>
         </div>
-        <% if current_user.candidat.has_minimum_informations_for_inscription? %>
+        <% if current_user&.candidat&.has_minimum_informations_for_inscription? %>
           <small class="text-success"><i class="fas fa-check-circle text-success"></i>Vous pourrez remplir votre dossier a l'étape suivante</small>
-        <% else %>
+        <% elsif current_user %>
           <div class="p-1 my-2 border rounded-8 bg-info-secondary border-info">
             <small class="text-info"><i class="fas fa-info-circle text-info pe-2 "></i>Vous devez avoir complêté votre <%= link_to "profil", edit_candidat_path(current_user.candidat) %> pour pouvoir constituer un dossier d'inscription. En cliquant sur "continuer" vous serez redirigé dessus pour éditer vos informations</small>
+          </div>
+        <% else %>
+          <div class="p-1 my-2 border rounded-8 bg-info-secondary border-info">
+            <small class="text-info"><i class="fas fa-info-circle text-info pe-2 "></i>Vous devez vous créer un compte pour pouvoir vous inscrire à une compétition. Suivez ce <%= link_to "lien", new_user_registration_path %></small>
           </div>
         <% end %>
         <p class="text-secondary mb-0"><%= category.description %></p>

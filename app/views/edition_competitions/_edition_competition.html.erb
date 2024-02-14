@@ -35,9 +35,15 @@
       <div class="d-flex flex-column">
         <embed src="<%= url_for(edition_competition.rule_document) %>"  height="375" type="application/pdf">
       </div>
-
     <% end %>
 
+    <%# Links to copy past to share the competition %>
+    <dt class="col-sm-4">Lien de partage:</dt>
+    <dd class="col-sm-8"><span class="text-primary"><%= edition_competition.sharable_link %></span></dd>
+
+    <%# qr code %>
+    <dt class="col-sm-4">qr code:</dt>
+    <dd class="col-sm-8"><%= raw edition_competition.qr_code %></dd>
 
   </dl>
 

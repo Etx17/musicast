@@ -17,7 +17,7 @@ gem "sprockets-rails"
 gem "country_select"
 # Use postgresql as the database for Active Record
 gem "pg", "~> 1.1"
-
+gem 'rqrcode'
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
 

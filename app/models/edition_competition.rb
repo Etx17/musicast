@@ -64,4 +64,20 @@ class EditionCompetition < ApplicationRecord
                 .where(id: organisateur_id)
                 .exists?
   end
+
+  def sharable_link
+    Rails.application.routes.default_url_options[:host] = Rails.env.development? ? 'localhost:3000' : 'your_production_domain.com'
+    Rails.application.routes.url_helpers.organism_competition_edition_competition_url(competition.organism, competition, self)
+  end
+
+  def qr_code
+    qrcode = RQRCode::QRCode.new(sharable_link)
+    svg = qrcode.as_svg(
+      color: "000",
+      shape_rendering: "crispEdges",
+      module_size: 4,
+      standalone: true,
+      use_path: true
+    )
+  end
 end
