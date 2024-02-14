@@ -10,9 +10,9 @@
       <%= f.input :last_name, label: 'Nom', input_html: {class:"border border-0  mb-0 "}  %>
       <%= f.input :birthdate, label: 'Date de naissance', input_html: {class:"border border-0  mb-0"} , hint: "Votre identité sera validée le jour du concours, attention a rentrer votre date de naissance exacte!" %>
     </div>
-    <div class="d-flex align-items-center gap-2">
+    <div class="d-flex align-items-start gap-2">
       <p class="mb-0">Nationalité: </p>
-      <%= f.country_select :nationality, {}, { class: "mb-3 p-2 bg-light border rounded" }  %>
+      <%= f.country_select :nationality, {only: ["AM", "AT", "BY", "BE", "BA", "BG", "CH", "CZ", "DE", "DK", "EE", "ES", "FI", "FR", "GB", "GE", "GI", "GR", "HU", "IE", "IS", "IT", "LT", "LU", "LV", "NO", "NL", "PO", "PL", "PT", "RO", "SE", "SI", "SK", "TR", "UA"], selected: "FR"}, { class: "mb-3 p-2 bg-light border rounded" }  %>
     </div>
     <hr>
 

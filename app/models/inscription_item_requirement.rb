@@ -75,7 +75,7 @@ class InscriptionItemRequirement < ApplicationRecord
     when "not_checked_yet"
       "Pas encore vérifié"
     when "checked_valid"
-      "✅ Validé"
+      "✅ Ok"
     when "checked_invalid"
       "Invalide"
     when "ai_failed"
