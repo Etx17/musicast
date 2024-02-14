@@ -54,6 +54,7 @@ class ToursController < ApplicationController
         redirect_to organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category), notice: "Tour mis à jour avec succès."
       end
     else
+      redirect_to organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour), notice: "Erreur. Veuillez réessayer." and return if creating_schedule == "true"
       render :edit, status: :unprocessable_entity
     end
   end
@@ -183,6 +184,9 @@ class ToursController < ApplicationController
     @short_bio = session[:short_bio]
     @medium_bio = session[:medium_bio]
     @long_bio = session[:long_bio]
+    @short_bio_en = session[:short_bio_en]
+    @medium_bio_en = session[:medium_bio_en]
+    @long_bio_en = session[:long_bio_en]
     @order_of_passage = session[:order_of_passage]
 
     respond_to do |format|
@@ -206,6 +210,9 @@ class ToursController < ApplicationController
     session[:short_bio] = params[:short_bio] == "1"
     session[:medium_bio] = params[:medium_bio] == "1"
     session[:long_bio] = params[:long_bio] == "1"
+    session[:short_bio_en] = params[:short_bio_en] == "1"
+    session[:medium_bio_en] = params[:medium_bio_en] == "1"
+    session[:long_bio_en] = params[:long_bio_en] == "1"
     session[:order_of_passage] = params[:order_of_passage] == "1"
     redirect_to [@organism, @competition, @edition_competition, @category, @tour], notice: "Données du planning jury sauvegardées."
   end

@@ -3,19 +3,19 @@
   <div class="d-flex flex-column gap-3">
   <div class="card bg-grey shadow-sm">
     <div class="p-1 bg-light">
-      <%= f.input :start_time, as: :time, hint: 'Indiquez l\'heure de début de la visite.', input_html: { value: '09:00' } %>
+      <%= f.input :start_time, label: 'Heure de début', as: :time, hint: 'Indiquez l\'heure de début du tour.' %>
     </div>
   </div>
 
   <div class="card bg-grey shadow-sm">
     <div class="p-1 bg-light">
-      <%= f.input :max_end_of_day_time, as: :time, hint: 'Indiquez l\'heure de fin maximale de la journée.', input_html: { value: '17:00' } %>
+      <%= f.input :max_end_of_day_time, as: :time, label: 'Heure de fin de journée maximale',  hint: 'Indiquez l\'heure de fin maximale de la journée.' %>
     </div>
   </div>
 
   <div class="card bg-grey shadow-sm">
     <div class="p-1 bg-light">
-      <%= f.input :new_day_start_time, as: :time, hint: 'Si la visite s\'étend à un autre jour, vous pouvez indiquer une heure de début différente pour ce nouveau jour.', input_html: { value: '09:00' } %>
+      <%= f.input :new_day_start_time, as: :time, label: 'Heure de début du nouveau jour', hint: 'Si le tour s\'étend à un autre jour en raison du nombre de candidats, vous pouvez indiquer une heure de début différente pour ce nouveau jour.' %>
     </div>
   </div>
 

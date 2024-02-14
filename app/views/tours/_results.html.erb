@@ -47,7 +47,7 @@
         <div class="d-flex align-items-center">
         <%= image_tag "https://source.unsplash.com/random/?#{performance.candidat.first_name}/300/200", alt: "Photo of candidate", class: "rounded-circle", style: "object-fit: cover; aspect-ratio: 1 / 1; overflow: hidden;", loading: 'lazy', width: 50, height: 50 %>
           <div class="d-flex flex-column align-items-start ps-3">
-            <p class="mb-0"><%= performance.candidat.first_name %> <%= link_to performance.candidat.first_name, inscription_path(performance.inscription) %></p>
+            <p class="mb-0"> <%= link_to performance.candidat.first_name, inscription_path(performance.inscription) %></p>
             <p class="mb-0">Ordre: <%= performance.order %></p>
           </div>
         </div>

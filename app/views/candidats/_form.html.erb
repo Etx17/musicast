@@ -4,6 +4,18 @@
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs bg-white p-3 rounded-4 shadow-sm">
+
+    <div class="d-flex flex-column flex-sm-row gap-3 mt-3">
+      <%= f.input :first_name, label: 'Prénom' , input_html: {class:"border border-0  mb-0"} %>
+      <%= f.input :last_name, label: 'Nom', input_html: {class:"border border-0  mb-0 "}  %>
+      <%= f.input :birthdate, label: 'Date de naissance', input_html: {class:"border border-0  mb-0"} , hint: "Votre identité sera validée le jour du concours, attention a rentrer votre date de naissance exacte!" %>
+    </div>
+    <div class="d-flex align-items-center gap-2">
+      <p class="mb-0">Nationalité: </p>
+      <%= f.country_select :nationality, {}, { class: "mb-3 p-2 bg-light border rounded" }  %>
+    </div>
+    <hr>
+
    <div class="form-group">
     <%= f.label "Portrait (photo HD de votre visage)" %>
     <%= f.file_field :portrait, class: 'form-control' %>
@@ -30,45 +42,90 @@
     <% end %>
   </div>
 
+   <div class="form-group">
+    <%= f.label "CV (anglais)" %>
+    <%= f.file_field :cv_english, class: 'form-control' %>
+     <% if @candidat.cv_english.attached? %>
+      <small class="text-success"> <%= @candidat.cv_english.filename %></small>
+    <% end %>
+    <% if @candidat.errors[:cv_english].any? %>
+      <small class="error-message text-danger ">
+        <%= @candidat.errors[:cv_english].to_sentence %>
+      </small>
+    <% end %>
+  </div>
+
     <div class="form-group">
       <%= f.label "Bannière (facultatif)" %>
       <%= f.file_field :banner, class: 'form-control' %>
     </div>
+     <hr>
 
 
-    <div class="d-flex flex-column flex-sm-row gap-3 mt-3">
-      <%= f.input :first_name, label: 'Prénom' , input_html: {class:"border border-0  mb-0"} %>
-      <%= f.input :last_name, label: 'Nom', input_html: {class:"border border-0  mb-0 "}  %>
-      <%= f.input :birthdate, label: 'Date de naissance', input_html: {class:"border border-0  mb-0"} , hint: "Votre identité sera validée le jour du concours, attention a rentrer votre date de naissance exacte!" %>
-    </div>
-    <div class="d-flex align-items-center gap-2">
-      <p class="mb-0">Nationalité: </p>
-      <%= f.country_select :nationality, {}, { class: "mb-3 p-2 bg-light border rounded" }  %>
-    </div>
-    <%# <%= f.input :bio, label: false, placeholder: "Bio: la courte phrase d'accorche qui apparaîtra sous votre photo", input_html: {class:"border border-0 "}  %>
-    <%# <%= f.input :short_bio, placeholder: "Une version très courte de votre parcours, à destination des jurys de concours" , input_html: {class:"border border-0 "} %>
-    <div class="form-group" data-controller="character-counter">
-      <div class="d-flex gap-3 align-items-center">
-      <%= f.label "Courte biographie*" %>
-      <small class="text-secondary"><span data-character-counter-target="counter">0</span>/300 </small>
+    <div class="row">
+      <div class="col">
+        <div class="form-group" data-controller="character-counter">
+          <div class="d-flex gap-3 align-items-center">
+          <%= f.label "Courte biographie*" %>
+          <small class="text-secondary"><span data-character-counter-target="counter">0</span>/300 </small>
+          </div>
+          <%= f.input :short_bio, label: false, placeholder: "Une version très courte de votre parcours, à destination des jurys de concours", input_html: { class:"border border-0", data: { action: "input->character-counter#update", character_counter_target: "input", class:"border border-0 "} } %>
+        </div>
       </div>
-      <%= f.input :short_bio, label: false, placeholder: "Une version très courte de votre parcours, à destination des jurys de concour", input_html: { class:"border border-0", data: { action: "input->character-counter#update", character_counter_target: "input", class:"border border-0 "} } %>
+      <div class="col">
+        <div class="form-group" data-controller="character-counter">
+          <div class="d-flex gap-3 align-items-center">
+            <%= f.label "Short biography (english)*" %>
+            <small class="text-secondary"><span data-character-counter-target="counter">0</span>/300 </small>
+          </div>
+          <%= f.input :short_bio_en, label: false, placeholder: "Une version très courte de votre parcours, à destination des jurys de concours", input_html: { class:"border border-0", data: { action: "input->character-counter#update", character_counter_target: "input", class:"border border-0 "} } %>
+        </div>
+      </div>
     </div>
 
-    <div class="form-group" data-controller="character-counter">
-      <div class="d-flex gap-3 align-items-center">
-      <%= f.label "Biographie moyenne*" %>
-      <small class="text-secondary"><span data-character-counter-target="counter">0</span>/1000 </small>
+    <div class="row">
+      <div class="col">
+        <div class="form-group" data-controller="character-counter">
+          <div class="d-flex gap-3 align-items-center">
+          <%= f.label "Biographie moyenne*" %>
+          <small class="text-secondary"><span data-character-counter-target="counter">0</span>/1000 </small>
+          </div>
+          <%= f.input :medium_bio, label: false, placeholder: "Une version résumée de votre parcours, à destination des jurys de concours", input_html: { class:"border border-0", style: 'height: 100px;', data: { action: "input->character-counter#update", character_counter_target: "input", class:"border border-0 "} } %>
+        </div>
       </div>
-      <%= f.input :medium_bio, label: false, placeholder: "Une version résumée de votre parcours, à destination des jurys de concours", input_html: { class:"border border-0", style: 'height: 100px;', data: { action: "input->character-counter#update", character_counter_target: "input", class:"border border-0 "} } %>
+
+
+      <div class="col">
+        <div class="form-group" data-controller="character-counter">
+          <div class="d-flex gap-3 align-items-center">
+          <%= f.label "Medium biography (english)*" %>
+          <small class="text-secondary"><span data-character-counter-target="counter">0</span>/1000 </small>
+          </div>
+          <%= f.input :medium_bio_en, label: false, placeholder: "Une version résumée de votre parcours, à destination des jurys de concours", input_html: { class:"border border-0", style: 'height: 100px;', data: { action: "input->character-counter#update", character_counter_target: "input", class:"border border-0 "} } %>
+        </div>
+      </div>
     </div>
 
-     <div class="form-group" data-controller="character-counter">
-      <div class="d-flex gap-3 align-items-center">
-      <%= f.label "Biographie détaillée*" %>
-      <small class="text-secondary"><span data-character-counter-target="counter">0</span>/3000 </small>
+    <div class="row">
+      <div class="col">
+        <div class="form-group" data-controller="character-counter">
+          <div class="d-flex gap-3 align-items-center">
+          <%= f.label "Biographie détaillée*" %>
+          <small class="text-secondary"><span data-character-counter-target="counter">0</span>/3000 </small>
+          </div>
+          <%= f.input :long_bio, label: false, placeholder: "Une version détaillée de votre parcours, à destination des jurys de concours", input_html: { class:"border border-0", style: 'height: 200px;', data: { action: "input->character-counter#update", character_counter_target: "input", class:"border border-0 "} } %>
+        </div>
       </div>
-      <%= f.input :long_bio, label: false, placeholder: "Une version détaillée de votre parcours, à destination des jurys de concours", input_html: { class:"border border-0", style: 'height: 200px;', data: { action: "input->character-counter#update", character_counter_target: "input", class:"border border-0 "} } %>
+
+       <div class="col">
+        <div class="form-group" data-controller="character-counter">
+          <div class="d-flex gap-3 align-items-center">
+          <%= f.label "Biographie détaillée (english)*" %>
+          <small class="text-secondary"><span data-character-counter-target="counter">0</span>/3000 </small>
+          </div>
+          <%= f.input :long_bio_en, label: false, placeholder: "Une version détaillée de votre parcours, à destination des jurys de concours", input_html: { class:"border border-0", style: 'height: 200px;', data: { action: "input->character-counter#update", character_counter_target: "input", class:"border border-0 "} } %>
+        </div>
+      </div>
     </div>
 
 

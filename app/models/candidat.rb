@@ -7,6 +7,7 @@ class Candidat < ApplicationRecord
   has_one_attached :portrait
   has_one_attached :artistic_photo
   has_one_attached :banner
+  has_one_attached :cv_english
 
   has_many_attached :diplomas
 
@@ -50,6 +51,12 @@ class Candidat < ApplicationRecord
     self.portrait.attached? &&
     self.birthdate &&
     self.artistic_photo.attached?
+  end
+
+  def age
+    return unless birthdate.present?
+    now = Time.now.utc.to_date
+    now.year - birthdate.year - (birthdate.to_date.change(year: now.year) > now ? 1 : 0)
   end
 
   private

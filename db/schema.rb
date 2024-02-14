@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_13_161506) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_14_091328) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -93,8 +93,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_13_161506) do
 
   create_table "candidats", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.text "cv"
-    t.text "bio"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "first_name"
@@ -105,6 +103,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_13_161506) do
     t.text "medium_bio"
     t.text "long_bio"
     t.text "repertoire"
+    t.text "short_bio_en"
+    t.text "medium_bio_en"
+    t.text "long_bio_en"
     t.index ["user_id"], name: "index_candidats_on_user_id"
   end
 

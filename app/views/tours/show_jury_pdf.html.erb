@@ -15,21 +15,17 @@
           <% end %>
 
 
-
         </td>
         <td style="width: 70%; background: #F7F7F7; padding: 0px 30px;" class="text-center" >
           <h3 class="p-1">
-            <%= performance.order + 1 %> - <%= performance.candidat.first_name %> - Amerique - 29 ans
+            <%= performance.order %> - <%= performance.candidat.first_name %> - <%= ISO3166::Country[performance.candidat.nationality].iso_short_name %> - <%= performance.candidat.age %>yo
           </h3>
-          <% if @short_bio %>
-            <%= "Short bio..." %>
-          <% elsif @medium_bio %>
-            <%= "Medium bio..." %>
-          <% elsif @long_bio %>
-          <small ">
-            " 1000max allez mille  Julien Moreau, né en 1988 à Marseille, est un ingénieur et entrepreneur français, pionnier dans le domaine de la technologie durable. Diplômé de l'École Polytechnique, Julien s'est rapidement distingué par son approche novatrice dans l'utilisation des énergies renouvelables. Julien Moreau, né en 1988 à Marseille, est un ingénieur et entrepreneur français, pionnier dans le domaine de la technologie durable. Diplômé de l'École Polytechnique, Julien s'est rapidement distingué par son approche novatrice dans l'utilisation des énergies renouvelables. Diplômé de l'École Polytechnique, Julien s'est rapidement distingué par son approche novatrice dans l'utilisation des énergies renouvelables.  son approche novatrice dans l'utilisation des énergies renouvelables.  son approche novatrice dans l'utilisation des énergies renouvelables.  son approche novatrice dans l'utilisation des énergies renouvelables.  son approche novatrice dans l'utilisation des énergies renouvelables."
-          </small>
-          <% end %>
+            <p><%= performance.candidat.short_bio if @short_bio %></p>
+            <p><%= performance.candidat.short_bio_en if @short_bio_en %></p>
+            <p><%= performance.candidat.medium_bio if @medium_bio %></p>
+            <p><%= performance.candidat.medium_bio_en if @medium_bio_en %></p>
+            <p><small><%= performance.candidat.long_bio if @long_bio %></small></p>
+            <p><small><%= performance.candidat.long_bio_en if @long_bio_en %></small></p>
         </td>
       </tr>
     </table>
@@ -38,16 +34,14 @@
         <td style="padding: 10px; width: 50%; background: #F7F7F7;">
           <% if @detailed_program %>
             <ul style="list-item-type: none;">
-              <% performance.airs.each do |air| %>
-                <li style="list-item-type: none;">- <%= [air.title, air.composer, air.oeuvre, air.tonality, air.character].join(", ") %></li>
+             <% performance.airs.sort_by { |air| performance.ordered_air_selection.index(air.id.to_s) }.each_with_index do |air, index| %>
+                <li style="list-item-type: none;"><%= index + 1 %>. <%= [air.title, air.composer, air.oeuvre, air.tonality, air.character].join(", ") %></li>
               <% end %>
             </ul>
           <% elsif @simple_air %>
             <ul>
-              <% performance.airs.each do |air| %>
-                <li><%= air.title %> - <%= air.composer %></li>
-                <li><%= air.title %> - <%= air.composer %></li>
-                <li><%= air.title %> - <%= air.composer %></li>
+              <% performance.airs.sort_by { |air| performance.ordered_air_selection.index(air.id.to_s) }.each_with_index do |air, index| %>
+                <li><%= index + 1 %>. <%= air.title %> - <%= air.composer %></li>
               <% end %>
             </ul>
           <% end %>

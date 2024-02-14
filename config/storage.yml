@@ -16,6 +16,8 @@ amazon:
   secret_access_key: <%= Rails.application.credentials.dig(:aws, :secret_access_key) %>
   region: eu-west-3
   bucket: musicast
+  upload:
+    cache_control: 'max-age=31536000, public'
 
 # Use bin/rails credentials:edit to set the AWS secrets (as aws:access_key_id|secret_access_key)
 # amazon:

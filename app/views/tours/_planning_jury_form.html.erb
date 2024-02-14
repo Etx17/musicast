@@ -41,6 +41,21 @@
 </div>
 
 <div>
+  <%= f.label :short_bio_en, "Biographie courte (english)" %>
+  <%= f.check_box :short_bio_en, checked: session[:short_bio_en] %>
+</div>
+
+<div>
+  <%= f.label :medium_bio_en, "Biographie moyenne (english)" %>
+  <%= f.check_box :medium_bio_en, checked: session[:medium_bio_en] %>
+</div>
+
+<div>
+  <%= f.label :long_bio_en, "Biographie longue (english)" %>
+  <%= f.check_box :long_bio_en, checked: session[:long_bio_en] %>
+</div>
+
+<div>
   <%= f.label :order_of_passage, "Ordre de passage" %>
   <%= f.check_box :order_of_passage, checked: session[:order_of_passage] %>
 </div>

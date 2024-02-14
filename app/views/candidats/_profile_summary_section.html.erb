@@ -13,7 +13,6 @@
           <i class="fas fa-pencil rounded-circle shadow text-secondary p-3" ></i>
         <% end %>
       </div>
-        <p class=""><%=@candidat.bio %></p>
 
       <ul class="nav nav-pills text-center" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
@@ -24,6 +23,15 @@
         </li>
         <li class="nav-item" role="presentation">
           <button class="nav-link" id="long-bio-tab" data-bs-toggle="tab" data-bs-target="#long-bio" type="button" role="tab" aria-controls="long-bio" aria-selected="false">Long bio</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link " id="short-bio-en-tab" data-bs-toggle="tab" data-bs-target="#short-bio-en" type="button" role="tab" aria-controls="short-bio-en" aria-selected="true">Short bio(english)</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="medium-bio-en-tab" data-bs-toggle="tab" data-bs-target="#medium-bio-en" type="button" role="tab" aria-controls="medium-bio-en" aria-selected="false">Medium bio (english)</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="long-bio-en-tab" data-bs-toggle="tab" data-bs-target="#long-bio-en" type="button" role="tab" aria-controls="long-bio-en" aria-selected="false">Long bio (english)</button>
         </li>
 
       </ul>
@@ -41,6 +49,18 @@
 
         <div class="tab-pane fade p-3" id="long-bio" role="tabpanel" aria-labelledby="long-bio-tab">
           <p class="text-dark"><%= @candidat.long_bio || "Biographie complête pas encore renseignée..." %></p>
+        </div>
+
+        <div class="tab-pane fade p-3" id="short-bio-en" role="tabpanel" aria-labelledby="short-bio-en-tab">
+          <p class="text-dark"><%= @candidat.short_bio_en || "Pas encore renseignée..." %></p>
+        </div>
+
+        <div class="tab-pane fade show p-3" id="medium-bio-en" role="tabpanel" aria-labelledby="medium-bio-en-tab">
+          <p class="text-dark"><%= @candidat.medium_bio_en || "Biographie de taille moyenne pas encore renseignée..." %></p>
+        </div>
+
+        <div class="tab-pane fade p-3" id="long-bio-en" role="tabpanel" aria-labelledby="long-bio-en-tab">
+          <p class="text-dark"><%= @candidat.long_bio_en || "Biographie complête pas encore renseignée..." %></p>
         </div>
       </div>
 
