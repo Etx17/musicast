@@ -1,7 +1,8 @@
 <div class="rounded-4 shadow bg-white my-3">
-<div class="position-relative" style="border-top-left-radius: 12px; border-top-right-radius: 12px; width: 100%; height: 300px; background-color: <%= @candidat.banner_color.present? ? @candidat.banner_color : "#" + "%06x" % (rand * 0xffffff) %>; background-size: cover; loading: lazy;">
+  <div class="position-relative" style="border-top-left-radius: 12px; border-top-right-radius: 12px; width: 100%; height: 300px; background-color: <%= @candidat.banner_color.present? ? @candidat.banner_color : "#" + "%06x" % (rand * 0xffffff) %>; background-size: cover; loading: lazy;">
     <%= image_tag(@candidat.portrait.attached? ? @candidat.portrait : "https://source.unsplash.com/random/?portrait/200x200", class: "position-absolute shadow rounded-circle align-items-center p-0 m-0 border border-3 shadow border-light", style: "width: 200px; height: 200px; bottom: 10px; left: 20px;", loading: "lazy") %>
   </div>
+
   <div class="p-3 border d-flex">
     <div class="d-flex flex-column w-100 pe-3">
       <div class="d-flex justify-content-between gap-3 align-items-center">
@@ -16,67 +17,65 @@
           <i class="fas fa-pencil rounded-circle shadow text-secondary p-3" ></i>
         <% end %>
       </div>
-      <% if @candidat.cv_english.attached? %>
-
-        <a href="<%= url_for(@candidat.cv_english) %>" class="btn btn-dark rounded my-3  align-self-start" target="_blank">Voir CV (english)</a>
-      <% end %>
-      <ul class="nav nav-pills text-center" id="myTab" role="tablist">
-        <li class="nav-item" role="presentation">
-          <button class="nav-link " id="short-bio-tab" data-bs-toggle="tab" data-bs-target="#short-bio" type="button" role="tab" aria-controls="short-bio" aria-selected="true">Short bio</button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button class="nav-link active" id="medium-bio-tab" data-bs-toggle="tab" data-bs-target="#medium-bio" type="button" role="tab" aria-controls="medium-bio" aria-selected="false">Medium bio</button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button class="nav-link" id="long-bio-tab" data-bs-toggle="tab" data-bs-target="#long-bio" type="button" role="tab" aria-controls="long-bio" aria-selected="false">Long bio</button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button class="nav-link " id="short-bio-en-tab" data-bs-toggle="tab" data-bs-target="#short-bio-en" type="button" role="tab" aria-controls="short-bio-en" aria-selected="true">Short bio(english)</button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button class="nav-link" id="medium-bio-en-tab" data-bs-toggle="tab" data-bs-target="#medium-bio-en" type="button" role="tab" aria-controls="medium-bio-en" aria-selected="false">Medium bio (english)</button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button class="nav-link" id="long-bio-en-tab" data-bs-toggle="tab" data-bs-target="#long-bio-en" type="button" role="tab" aria-controls="long-bio-en" aria-selected="false">Long bio (english)</button>
-        </li>
-
-      </ul>
-
-
-      <div class="tab-content" id="myTabContent">
-
-        <div class="tab-pane fade p-3" id="short-bio" role="tabpanel" aria-labelledby="short-bio-tab">
-          <p class="text-dark"><%= @candidat.short_bio || "Pas encore renseignée..." %></p>
-        </div>
-
-        <div class="tab-pane fade show active p-3" id="medium-bio" role="tabpanel" aria-labelledby="medium-bio-tab">
-          <p class="text-dark"><%= @candidat.medium_bio || "Biographie de taille moyenne pas encore renseignée..." %></p>
-        </div>
-
-        <div class="tab-pane fade p-3" id="long-bio" role="tabpanel" aria-labelledby="long-bio-tab">
-          <p class="text-dark"><%= @candidat.long_bio || "Biographie complête pas encore renseignée..." %></p>
-        </div>
-
-        <div class="tab-pane fade p-3" id="short-bio-en" role="tabpanel" aria-labelledby="short-bio-en-tab">
-          <p class="text-dark"><%= @candidat.short_bio_en || "Pas encore renseignée..." %></p>
-        </div>
-
-        <div class="tab-pane fade show p-3" id="medium-bio-en" role="tabpanel" aria-labelledby="medium-bio-en-tab">
-          <p class="text-dark"><%= @candidat.medium_bio_en || "Biographie de taille moyenne pas encore renseignée..." %></p>
-        </div>
-
-        <div class="tab-pane fade p-3" id="long-bio-en" role="tabpanel" aria-labelledby="long-bio-en-tab">
-          <p class="text-dark"><%= @candidat.long_bio_en || "Biographie complête pas encore renseignée..." %></p>
-        </div>
-      </div>
-
-      <h3>Répertoire</h3>
-      <p class="text-dark"><%= @candidat.repertoire %></p>
-    </div>
-    <div class="d-flex flex-col">
-      <div class="position-relative d-flex justify-content-end" style="width: 100%; height: 100%; overflow: auto;">
-        <%= image_tag(@candidat.artistic_photo.attached? ? @candidat.artistic_photo : "https://source.unsplash.com/random/?applications/300/200", alt: "Candidate's artistic image", style: "max-height: 300px;", loading: "lazy") %>
+      <div class="d-flex gap-3">
+        <% if @candidat.cv_english.attached? %>
+          <a href="<%= url_for(@candidat.cv_english) %>" class="btn btn-dark rounded my-3 btn-sm align-self-start" target="_blank">Voir CV (english)</a>
+        <% end %>
+        <%= link_to "Voir photo artistique", url_for(@candidat.artistic_photo) , class: "btn btn-dark btn-sm rounded my-3  align-self-start", target: "_blank", rel: "noopener" if @candidat.artistic_photo.attached?%>
       </div>
     </div>
+  </div>
+  <ul class="nav nav-pills text-center" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link " id="short-bio-tab" data-bs-toggle="tab" data-bs-target="#short-bio" type="button" role="tab" aria-controls="short-bio" aria-selected="true">Short bio</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="medium-bio-tab" data-bs-toggle="tab" data-bs-target="#medium-bio" type="button" role="tab" aria-controls="medium-bio" aria-selected="false">Medium bio</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="long-bio-tab" data-bs-toggle="tab" data-bs-target="#long-bio" type="button" role="tab" aria-controls="long-bio" aria-selected="false">Long bio</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link " id="short-bio-en-tab" data-bs-toggle="tab" data-bs-target="#short-bio-en" type="button" role="tab" aria-controls="short-bio-en" aria-selected="true">Short bio(english)</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="medium-bio-en-tab" data-bs-toggle="tab" data-bs-target="#medium-bio-en" type="button" role="tab" aria-controls="medium-bio-en" aria-selected="false">Medium bio (english)</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="long-bio-en-tab" data-bs-toggle="tab" data-bs-target="#long-bio-en" type="button" role="tab" aria-controls="long-bio-en" aria-selected="false">Long bio (english)</button>
+    </li>
+
+  </ul>
+
+  <div class="tab-content" id="myTabContent">
+
+    <div class="tab-pane fade p-3" id="short-bio" role="tabpanel" aria-labelledby="short-bio-tab">
+      <p class="text-dark"><%= @candidat.short_bio || "Pas encore renseignée..." %></p>
+    </div>
+
+    <div class="tab-pane fade show active p-3" id="medium-bio" role="tabpanel" aria-labelledby="medium-bio-tab">
+      <p class="text-dark"><%= @candidat.medium_bio || "Biographie de taille moyenne pas encore renseignée..." %></p>
+    </div>
+
+    <div class="tab-pane fade p-3" id="long-bio" role="tabpanel" aria-labelledby="long-bio-tab">
+      <p class="text-dark"><%= @candidat.long_bio || "Biographie complête pas encore renseignée..." %></p>
+    </div>
+
+    <div class="tab-pane fade p-3" id="short-bio-en" role="tabpanel" aria-labelledby="short-bio-en-tab">
+      <p class="text-dark"><%= @candidat.short_bio_en || "Pas encore renseignée..." %></p>
+    </div>
+
+    <div class="tab-pane fade show p-3" id="medium-bio-en" role="tabpanel" aria-labelledby="medium-bio-en-tab">
+      <p class="text-dark"><%= @candidat.medium_bio_en || "Biographie de taille moyenne pas encore renseignée..." %></p>
+    </div>
+
+    <div class="tab-pane fade p-3" id="long-bio-en" role="tabpanel" aria-labelledby="long-bio-en-tab">
+      <p class="text-dark"><%= @candidat.long_bio_en || "Biographie complête pas encore renseignée..." %></p>
+    </div>
+  </div>
+
+  <div class="p-3">
+    <h3>Répertoire</h3>
+    <p class="text-dark"><%= @candidat.repertoire %></p>
   </div>
 </div>
