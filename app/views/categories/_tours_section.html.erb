@@ -42,10 +42,14 @@
                 </div>
               </div>
               <div class="card-body bg-white">
-                <div class="d-flex justify-content-start gap-3 mb-2 w-100">
-                  <%= link_to "Voir le planning", organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, category, tour), class:"btn btn-primary btn-sm" %>
-                  <%= link_to  "Modifier", edit_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, category, tour), class: 'btn btn-outline-primary btn-sm border border-primary' %>
+                <div class="d-flex justify-content-between align-items-end py-2">
+                    <%= link_to "Planning", organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, category, tour), class:"btn btn-primary " %>
+
+                <%= image_tag 'icons/winner.png', width: 70, height: 70, class:"" %>
+                  <%= link_to  "Modifier", edit_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, category, tour), class: 'btn btn-outline-primary  border border-primary' %>
+
                 </div>
+
                 <p class="card-text">
                   <small class="text-muted">
                     <i class="fas fa-calendar-alt"></i> Commence le: <%= tour.start_date&.strftime("%d/%m/%Y") %>

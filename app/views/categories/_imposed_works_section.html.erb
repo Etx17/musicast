@@ -43,6 +43,7 @@
         <% end %>
       </div>
     <% else %>
+     <p class="text-muted"><i class="fas fa-info-circle text-secondary pe-1"></i> Créez une liste d'airs obligatoires si nécessaire. Si vous souhaitez que le candidat inteprête l'un deux sur un tour en particulier, vous pourrez configurer cela dans "Modifer" sur un tour.</p>
       <%= link_to "Créer une liste d'oeuvre obligatoires", new_organism_competition_edition_competition_category_imposed_work_path(@organism, @competition, @edition_competition, @category, category_id: @category.id), class: "btn btn-success" %>
     <% end %>
 

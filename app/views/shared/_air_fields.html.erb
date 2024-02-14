@@ -1,9 +1,9 @@
-<div class="nested-fields row border shadow my-3 px-3 pt-2" data-new-record="<%= f.object.new_record? %>">
+<div class="nested-fields row border my-3 px-3 pt-2 bg-info-secondary" data-new-record="<%= f.object.new_record? %>">
   <div class="col-12">
     <div class="d-flex justify-content-between align-items-center">
-      <h2><i class="fas fa-music text-gradient"></i> #<%= f.index.is_a?(Integer) ? f.index + 1 : 'NEW' %></h2>
+      <h3 style="font-size: 1.3em;" class="text-dark" > #<%= f.index.is_a?(Integer) ? f.index + 1 : 'NEW' %></h3>
       <% if f.object.new_record? %>
-        <%= link_to '#', data: { action: 'removeAir' }, class: 'btn btn-primary' do %>
+        <%= link_to '#', data: { action: 'removeAir' }, class: 'btn btn-outline-secondary' do %>
           <i class="fas fa-trash pe-2"></i>Supprimer
         <% end %>
       <% end %>
@@ -13,27 +13,27 @@
 
 
   <div class="col-6 col-md-6">
-    <%= f.input :title, label: false, required: true, input_html: { class: 'p-2 border rounded-pill', placeholder: 'Title *' } %>
+    <%= f.input :title, required: true, input_html: { class: 'p-2 border rounded-8', placeholder: 'ex: La Donna è Mobile' } %>
   </div>
   <div class="col-6 col-md-6">
-    <%= f.input :composer, label: false, required: true, input_html: { class: 'p-2 border rounded-pill', placeholder: 'Composer *' } %>
+    <%= f.input :composer, required: true, input_html: { class: 'p-2 border rounded-8', placeholder: 'ex: G.Verdi' } %>
   </div>
   <div class="col-6">
-    <%= f.input :oeuvre, label: false, required: true, input_html: { class: 'p-2 border rounded-pill', placeholder: 'Oeuvre *' } %>
+    <%= f.input :oeuvre, required: true, input_html: { class: 'p-2 border rounded-8', placeholder: 'ex: Rigoletto' } %>
   </div>
   <div class="col-6 col-md-4">
-    <%= f.input :character, label: false, hint:"Si air d'opéra seulement", input_html: { class: 'p-2 border rounded-pill', placeholder: 'Character' } if true %>
+    <%= f.input :character, hint:"Si air d'opéra seulement", input_html: { class: 'p-2 border rounded-8', placeholder: '(optionnel) ex: Duc de Mantoue' } if true %>
   </div>
   <div class="col-6 col-md-4">
-    <%= f.input :length_minutes, label: false, required: true, input_html: { class: 'p-2 border rounded-pill', placeholder: 'Minutes *' } %>
-  </div>
-
-  <div class="col-6 col-md-4">
-    <%= f.input :tonality, label: false, placeholder: "tonalité", collection: Air.tonalities_selection, selected: 'Do majeur' %>
+    <%= f.input :length_minutes, label: "Durée", required: true, hint: "Arrondissez à la minute du dessus", input_html: { class: 'p-2 border rounded-8', placeholder: 'Minutes *' } %>
   </div>
 
   <div class="col-6 col-md-4">
-    <%= f.input :infos, label: false, required: true, input_html: { class: 'p-2 border rounded-pill', placeholder: 'Informations additionelles *' } %>
+    <%= f.input :tonality,  required: true, hint: "Tonalité originale sauf lied", collection: Air.tonalities_selection, selected: 'Do majeur' %>
+  </div>
+
+  <div class="col-12 col-md-4">
+    <%= f.input :infos, label: "Informations additionnelles", input_html: { class: 'p-2 border', placeholder: "ex: Inclure le récitatif à partir de 'Pur mai non sentesi' " } %>
   </div>
 
   <div class="col-6">

@@ -22,6 +22,10 @@
       <%= f.label :imposed_air_selection, "Sélectionnez les airs que vous souhaitez imposer pour ce tour (optionel)", class: 'form-label ' %>
       <%= f.select :imposed_air_selection, @category.imposed_work.airs.map { |air| [air.title, air.id] }, { include_blank: 'Aucun' }, { multiple: true, class: 'form-control' } %>
       <small class="form-text text-muted">Maintenez la touche Ctrl (ou Cmd sur Mac) enfoncée pour sélectionner plusieurs airs. Sur mobile, appuyez sur les airs que vous souhaitez sélectionner.</small>
+    <% else %>
+    <div class="p-3 pb-1 my-3 border">
+      <p class="text-muted"><i class="fas fa-info-circle text-secondary pe-1"></i> Créez d'abord un programme d'oeuvres obligatoires pour ensuite pouvoir ensuite sélectionner celles que vous souhaitez que le candidat interprêtent sur ce tour</p>
+    </div>
     <% end %>
 
     <%= f.input :no_pianist_accompagnateur, as: :boolean, input_html: {class:"bg-success border border-2"}, label: "(Cochez) Souhaitez vous qu'il n'y ait aucun pianiste accompagnateur sur ce tour (par exemple dans le cas d'un accompagnement par orchestre)" %>
