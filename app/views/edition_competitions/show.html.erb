@@ -31,9 +31,13 @@
           <div class="mt-3 d-flex justify-content-between">
             <p class='text-secondary'>Somme des montants des inscriptions qui vous seront versées lors de la clôture de la réception des inscriptions.</p>
           </div>
-
+            <%# Si il n'y a pas de category %>
+            <% if @edition_competition.categories.none? %>
+              <p class="text-secondary">Vous n'avez pas encore d'inscriptions pour l'instant</p>
+            <% end %>
             <% @edition_competition.categories.each do |category| %>
               <% number_of_inscriptions = category.inscriptions.where(status: "in_review").count %>
+              <% if number_of_inscriptions > 0 %>
               <table class="table table-bordered w-100">
                 <thead>
                   <tr>
@@ -51,6 +55,9 @@
                     <td><%= humanized_money_with_symbol(number_of_inscriptions * (category.price - Money.new(500, 'EUR'))).gsub('.', '') %></td>                  </tr>
                 </tbody>
               </table>
+              <% else %>
+              <p>Vous n'avez pas encore reçu d'inscriptions pour l'instant</p>
+              <% end %>
             <% end %>
 
         </div>
@@ -93,7 +100,13 @@
 
     <div class="col-md-6" data-controller="hover">
       <h2 class="text-center text-dark mb-5" style="font-size: 4em;">Categories</h2>
-
+      <% if @categories.none? %>
+        <p class="text-center text-secondary ">Commencez par ajouter une catégorie</p>
+        <%# fleche vers le bas %>
+        <div class="d-flex justify-content-center mb-2">
+          <i class="fas fa-arrow-down text-secondary" style="font-size: 3em;"></i>
+        </div>
+      <% end %>
       <%= link_to '+ Ajouter une catégorie', new_organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition), class: "btn btn-#{@edition_competition.categories.any? ? 'outline-dark' : 'success'} w-100 mb-4" %>
       <% @categories.each do |category| %>
        <div class="mb-3">

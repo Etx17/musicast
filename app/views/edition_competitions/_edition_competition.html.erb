@@ -38,12 +38,14 @@
     <% end %>
 
     <%# Links to copy past to share the competition %>
-    <dt class="col-sm-4">Lien de partage:</dt>
-    <dd class="col-sm-8"><span class="text-primary"><%= edition_competition.sharable_link %></span></dd>
+    <% if edition_competition.published? %>
+      <dt class="col-sm-4">Lien de partage:</dt>
+      <dd class="col-sm-8"><span class="text-primary"><%= edition_competition.sharable_link %></span></dd>
 
-    <%# qr code %>
-    <dt class="col-sm-4">QR code:</dt>
-    <dd class="col-sm-8"><%= raw edition_competition.qr_code %></dd>
+      <%# qr code %>
+      <dt class="col-sm-4">QR code:</dt>
+      <dd class="col-sm-8"><%= raw edition_competition.qr_code %></dd>
+    <% end %>
   </dl>
 
 </div>
