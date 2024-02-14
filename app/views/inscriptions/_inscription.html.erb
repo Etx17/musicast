@@ -1,11 +1,12 @@
 <div id="<%= dom_id inscription %>">
   <div class="row">
     <%# Placeholder unsplash avatar picture %>
-    <div class="d-flex align-items-center bg-white p-2 mb-3">
+    <div class="d-flex flex-column flex-lg-row align-items-center bg-white p-2 mb-3">
       <div class="d-flex flex-column align-items-start justify-content-start">
         <%= link_to 'Retour', :back, class: "btn btn-dark mx-auto mb-5", style: "width: 100px;" %>
         <%= image_tag inscription.candidat.portrait.attached? ? inscription.candidat.portrait : "https://source.unsplash.com/random/?portrait/200x200", class: "shadow rounded-circle align-items-center p-0 m-0", style: "width: 200px; height: 200px; object-fit: cover;" %>
       </div>
+
       <div class="mx-5">
         <div class="d-flex align-items-center justify-content-center py-5 gap-3 w-100 bg-white">
           <%= image_tag "icons/folder.png", width: 50 %>
