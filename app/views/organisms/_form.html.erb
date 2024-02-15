@@ -10,8 +10,13 @@
   </div>
 
   <%# Logo file field input  %>
-  <div class="form-group">
-    <%= f.label :logo, "Logo" %>
+  <div class="form-group mb-3">
+    <%= f.label :logo, "Logo: " %>
+    <% if @organism.logo.attached? %>
+      <div class="d-flex justify-content-start">
+        <%= image_tag @organism.logo, class:" align-items-start p-0 m-0 mb-4", style: "width: 200px; object-fit: cover;" %>
+      </div>
+    <% end %>
     <%= f.file_field :logo, class: "form-control" %>
   </div>
 
