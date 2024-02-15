@@ -40,6 +40,10 @@ class CategoriesJuriesController < ApplicationController
 
   def destroy
     @categories_jury.destroy
+    @organism = Organism.friendly.find(params[:organism_id])
+    @competition = Competition.friendly.find(params[:competition_id])
+    @edition_competition = EditionCompetition.find(params[:edition_competition_id])
+    @category = Category.friendly.find(params[:category_id])
     redirect_to organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category) + "#jury", notice: 'Le membre du jury a bien été retiré de cette catégorie.'
   end
 

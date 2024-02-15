@@ -4,7 +4,7 @@
   u = User.create(email: "candidat#{n}@example.com", password: "password", password_confirmation: "password")
 
   unless n == 0
-    c = Candidat.create!(short_bio: "Coucou, je suis un chanteur lyrique", medium_bio: "Après avoir passé 2 ans a l'école de Bruxelles en chant lyrique, je me suis spécialisé dans le répertoire baroque. blablablablababla", long_bio: "In this code, check_image_ratio is a custom validation method that checks if the uploaded image has the correct aspect ratio. If the image does not have the correct ratio, it is deleted and an error is added to the image attribute. Please note that this code requires the active_storage gem and assumes that you have set up Active Storage and attached an image to the Candidat model. Also, you should replace 4.0 / 3.0 with the aspect ratio you want to enforce", user_id: u.id, cv: "Link to CV of candidate ", bio: "Short bio of candidate ")
+    c = Candidat.create!(short_bio: "Coucou, je suis un chanteur lyrique", medium_bio: "Après avoir passé 2 ans a l'école de Bruxelles en chant lyrique, je me suis spécialisé dans le répertoire baroque. blablablablababla", long_bio: "In this code, check_image_ratio is a custom validation method that checks if the uploaded image has the correct aspect ratio. If the image does not have the correct ratio, it is deleted and an error is added to the image attribute. Please note that this code requires the active_storage gem and assumes that you have set up Active Storage and attached an image to the Candidat model. Also, you should replace 4.0 / 3.0 with the aspect ratio you want to enforce", user_id: u.id)
   end
   # User for Organisateur
   user = User.create!(email: "organizer#{n}@example.com", password: "password", password_confirmation: "password")
@@ -66,8 +66,8 @@
   candidate_user2 = User.create!(email: "candidate2_#{n}@example.com", password: "password123", password_confirmation: "password123")
 
   # Candidats
-  Candidat.create!(short_bio: "Coucou, je suis un chanteur lyrique", medium_bio: "Après avoir passé 2 ans a l'école de Bruxelles en chant lyrique, je me suis spécialisé dans le répertoire baroque. blablablablababla", long_bio: "In this code, check_image_ratio is a custom validation method that checks if the uploaded image has the correct aspect ratio. If the image does not have the correct ratio, it is deleted and an error is added to the image attribute. Please note that this code requires the active_storage gem and assumes that you have set up Active Storage and attached an image to the Candidat model. Also, you should replace 4.0 / 3.0 with the aspect ratio you want to enforce",user_id: candidate_user1.id, cv: "Link to CV of candidate 1 - #{n}", bio: "Short bio of candidate 1 - #{n}")
-  Candidat.create!(short_bio: "Coucou, je suis un chanteur lyrique", medium_bio: "Après avoir passé 2 ans a l'école de Bruxelles en chant lyrique, je me suis spécialisé dans le répertoire baroque. blablablablababla", long_bio: "In this code, check_image_ratio is a custom validation method that checks if the uploaded image has the correct aspect ratio. If the image does not have the correct ratio, it is deleted and an error is added to the image attribute. Please note that this code requires the active_storage gem and assumes that you have set up Active Storage and attached an image to the Candidat model. Also, you should replace 4.0 / 3.0 with the aspect ratio you want to enforce",user_id: candidate_user2.id, cv: "Link to CV of candidate 2 - #{n}", bio: "Short bio of candidate 2 - #{n}")
+  Candidat.create!(short_bio: "Coucou, je suis un chanteur lyrique", medium_bio: "Après avoir passé 2 ans a l'école de Bruxelles en chant lyrique, je me suis spécialisé dans le répertoire baroque. blablablablababla", long_bio: "In this code, check_image_ratio is a custom validation method that checks if the uploaded image has the correct aspect ratio. If the image does not have the correct ratio, it is deleted and an error is added to the image attribute. Please note that this code requires the active_storage gem and assumes that you have set up Active Storage and attached an image to the Candidat model. Also, you should replace 4.0 / 3.0 with the aspect ratio you want to enforce",user_id: candidate_user1.id)
+  Candidat.create!(short_bio: "Coucou, je suis un chanteur lyrique", medium_bio: "Après avoir passé 2 ans a l'école de Bruxelles en chant lyrique, je me suis spécialisé dans le répertoire baroque. blablablablababla", long_bio: "In this code, check_image_ratio is a custom validation method that checks if the uploaded image has the correct aspect ratio. If the image does not have the correct ratio, it is deleted and an error is added to the image attribute. Please note that this code requires the active_storage gem and assumes that you have set up Active Storage and attached an image to the Candidat model. Also, you should replace 4.0 / 3.0 with the aspect ratio you want to enforce",user_id: candidate_user2.id)
 
   # RequirementItems for Category1
   RequirementItem.create!(category_id: category1.id, type_item: 'recommendation_letter', title: "Lettre de recommandation - #{n}", description_item: "Une lettre de recommandation au format PDF - #{n}.")
@@ -127,7 +127,7 @@ tour = category.tours.first
 
 Candidat.all.each do |candidat|
   candidat.update(first_name: Faker::Name.first_name)
-  inscription = Inscription.create!(candidat_id: candidat.id, category_id: category.id, status: 'in_review')
+  inscription = Inscription.create!(candidat_id: candidat.id, category_id: category.id, status: 'in_review', terms_accepted: true)
   # Performance.create!(inscription: inscription, tour: tour, air_selection: ["1", "2", "3", "4"])
 end
 
