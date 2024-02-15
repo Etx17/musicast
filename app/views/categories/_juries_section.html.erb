@@ -11,7 +11,7 @@
         <div class="shadow p-3 mb-5" style="border-radius: 10px;">
         <h3>Ajouter un membre</h3>
           <%= f.hidden_field :category_id, value: @category.id %>
-          <%= f.input :jury_id, label: false, collection: Jury.all.map { |jury| [jury.name_and_email, jury.id] }, prompt: "Choisissez un membre de votre organisme", input_html: {class:"p-3"}, required: true %>
+          <%= f.input :jury_id, label: false, collection: @organism.juries.map { |jury| [jury.name_and_email, jury.id] }, prompt: "Choisissez un membre de votre organisme", input_html: {class:"p-3"}, required: true %>
           <p>Vous n'avez pas de membres associés à votre organisme ?<%= link_to " Rendez vous ici", organisateur_dashboard_path, class:"text-decoration-none text-primary" %></p>
           <%= f.submit 'Enregistrer', class: "btn btn-success" %>
         </div>
