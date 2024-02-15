@@ -233,7 +233,7 @@
                 <div class="d-flex justify-content-around">
                   <p class="card-text"><strong><%= image_tag 'icons/book.png', alt: 'Oeuvres', width: 40 %></strong>
                     <% if tour.tour_requirement&.min_number_of_works == tour.tour_requirement&.max_number_of_works %>
-                      <%= tour_requirement&.min_number_of_works %> oeuvres
+                      <%= tour.tour_requirement&.min_number_of_works %> oeuvres
                     <% else %>
                       <%= tour.tour_requirement&.min_number_of_works %> - <%= tour.tour_requirement&.max_number_of_works %> oeuvres</p>
                     <% end %>

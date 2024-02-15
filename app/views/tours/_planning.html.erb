@@ -55,9 +55,12 @@
   </div>
 
 
-
 <h2 class=" border border-1 mt-5 rounded-8 bg-grey text-center my-3">Planning du tour</h3>
 
+<p class="bg-success-secondary p-3 my-2 rounded-8 border border-success text-success"><i class="fas fa-check-circle text-success pe-2">
+  </i>Votre planning a bien été généré. Vous pouvez le regénérer si vous souhaitez faire des modifications de configuration (heure de début, de fin, de nouveau jour).
+  Ajoutez des pauses si vous le souhaitez. Vous pouvez le télécharger et l'envoyer par mail à tous vos candidats. Configurez le dossier jury.
+</p>
 
 
   <div class="text-center text-secondary py-4 ">Ajoutez des pauses, décalez un jour, ou bien regénerez un planning avec des caractéristiques différentes si celui là ne convient pas</div>
@@ -85,7 +88,7 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="pauseModalLabel">Add Pause</h5>
+              <h5 class="modal-title" id="pauseModalLabel">Ajouter une pause</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -96,7 +99,7 @@
                 <%= f.input :date, as: :hidden, input_html: { class: "pause_day" } %>
                 <%= f.input :start_time, collection: @tour.performances.where(start_date: day).map { |p| p.start_time.strftime("%H:%M") }, label: 'Heure de début', input_html: { class: 'form-control' } %>
                 <%= f.input :end_time, as: :time, label: 'End time', input_html: { value: '12:00' } %>
-                <%= f.button :submit, 'Add Pause', class: 'btn btn-dark-outline' %>
+                <%= f.button :submit, 'Créer', class: 'btn btn-dark border' %>
               <% end %>
             </div>
           </div>

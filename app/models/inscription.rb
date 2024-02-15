@@ -99,7 +99,16 @@ class Inscription < ApplicationRecord
   end
 
   def has_complete_airs?
-    category.semi_imposed_works.any? && category.semi_imposed_works.sum(:number) == semi_imposed_work_airs&.count && category.choice_imposed_works.any? && category.choice_imposed_works&.sum(:number_to_select) == choice_imposed_work_airs.count
+    result = true
+    if category.semi_imposed_works.any?
+      result = category.semi_imposed_works.sum(:number) == semi_imposed_work_airs&.count
+    end
+
+    if category.choice_imposed_works.any?
+      result = result && category.choice_imposed_works&.sum(:number_to_select) == choice_imposed_work_airs.count
+    end
+    result
+
   end
 
   def motivation_essay
