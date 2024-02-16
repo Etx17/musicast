@@ -12,6 +12,8 @@
           <% if @candidat.nationality.present? %>
             <p class="m-0" style="font-size: 3em"><%= flag_emoji(@candidat&.nationality) %></p>
           <% end %>
+
+          <p class="m-0">Professeur: <%= @candidat&.last_teacher %></p>
         </div>
         <%= link_to edit_candidat_path, class:"btn btn-light rounded-circle p-0" do %>
           <i class="fas fa-pencil rounded-circle shadow text-secondary p-3" ></i>

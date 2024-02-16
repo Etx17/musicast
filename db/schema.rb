@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_15_094900) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_16_094042) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -107,6 +107,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_15_094900) do
     t.text "medium_bio_en"
     t.text "long_bio_en"
     t.string "banner_color"
+    t.string "last_teacher"
     t.index ["user_id"], name: "index_candidats_on_user_id"
   end
 

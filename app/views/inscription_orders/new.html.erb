@@ -1,16 +1,16 @@
 <div class="container">
   <div class="row">
     <div class="col">
-    <h1>Nouveau paiement</h1>
-    Vous reconnaissez que blablabla
+    <h1>Nouveau paiement sécurisé</h1>
+    <p>Vous êtes sur le point de payer pour votre inscription à la compétition</h2>
     Vous certifiez que votre dossier est parfaitement complet par rapport au requirements énoncés ( vérifiez encore ici )
-    Une inscription n'est pas remboursable.
+    Une inscription n'est pas remboursable par Musicast.
 
-    <h3>Dans la version prochaine, vous pourrez changer vos airs jusqu'a une date limite de modification de dossier prévue par la catégorie en question.</h3>
+
 
     <%= form_tag inscription_orders_path do %>
       <%= hidden_field_tag :inscription_id, params[:inscription].present? ? params[:inscription] : params[:inscription_id]%>
-      <%= submit_tag 'Continuer', class: 'btn btn-dark' %>
+      <%= submit_tag "Continuer", class: 'btn btn-dark' %>
     <% end %>
     </div>
     <div class="col"></div>
