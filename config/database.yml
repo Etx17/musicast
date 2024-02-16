@@ -81,6 +81,6 @@ test:
 #
 production:
   <<: *default
-  database: musikast_production
-  username: musikast
+  database: test_concours_production
+  username: test_concours
   password: <%= ENV["TEST_CONCOURS_DATABASE_PASSWORD"] %>
