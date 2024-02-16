@@ -1,7 +1,8 @@
 <div class="col-12 col-md-6 col-lg-4">
   <div class="card h-100 shadow-sm position-relative card-hover" data-bs-toggle="modal" data-bs-target="#categoryModal" data-edition-competition-id="<%= edition_competition.id %>">
     <%= link_to organism_competition_edition_competition_path(edition_competition.organism, edition_competition.competition, edition_competition), class: "text-decoration-none text-dark" do %>
-      <img src="https://source.unsplash.com/random/?competition/300x200" class="card-img-top" alt="Competition Image" style="max-height: 300px; object-fit: cover;">
+      <%# <img src="https://source.unsplash.com/random/?competition/300x200" class="card-img-top" alt="Competition Image" style="max-height: 300px; object-fit: cover;"> %>
+      <%= image_tag edition_competition.competition.photo.attached? ? edition_competition.competition.photo : "https://source.unsplash.com/random/?competition/300x200", class:"card-img-top", alt:"Competition Image", style:"max-height: 300px; object-fit: cover;" %>
       <small class="text-white badge border bg-primary rounded-pill position-absolute " style="top: 10px; left: 10px;"><%= edition_competition.days_remaining %> days remaining</small>
       <div class="card-body">
         <h3 class="card-title"><%= edition_competition.competition.nom_concours %></h3>

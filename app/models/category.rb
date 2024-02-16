@@ -116,7 +116,7 @@ class Category < ApplicationRecord
   end
 
   def seed_sixty_inscriptions_honneur
-    6.times do
+    60.times do
       u = User.create(
         email: Faker::Internet.email,
         password: 'password',
@@ -150,8 +150,8 @@ class Category < ApplicationRecord
         submitted_content: "https://www.youtube.com/watch?v=FrxSZCLbhSQ"
       )
 
-      air1 = Air.sample
-      air2 = Air.sample
+      air1 = Air.all.sample
+      air2 = Air.all.sample
       SemiImposedWorkAir.create(
         inscription: i,
         air: air1,
