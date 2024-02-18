@@ -24,13 +24,9 @@ class Users::InvitationsController < Devise::InvitationsController
   end
 
   def update
-    if false #to implement
-    # if resource.needs_to_accept_terms?
-      # redirect_to root_path
-    else
-      super
-    end
+    super
   end
+
 
   protected
 

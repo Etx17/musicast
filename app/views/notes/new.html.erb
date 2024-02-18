@@ -1,3 +1,4 @@
+<div class="p-3">
 <%= link_to "Retour", jury_jury_inscriptions_path( @jury, category_id: @inscription.category.id), class:"btn btn-outline-dark my-3" %>
 
 <h1>Nouvelle note</h1>
@@ -23,3 +24,4 @@
   <h2>Lettre de motivation du candidat</h2>
   <p><%= @inscription.motivation_essay.submitted_content %></p>
 <% end %>
+</div>
