@@ -8,7 +8,7 @@
     <div class="d-flex flex-column flex-sm-row gap-3 mt-3">
       <%= f.input :first_name, label: 'Prénom' , input_html: {class:"border border-0  mb-0"} %>
       <%= f.input :last_name, label: 'Nom', input_html: {class:"border border-0  mb-0 "}  %>
-      <%= f.input :birthdate, label: 'Date de naissance', input_html: {class:"border border-0  mb-0"} , hint: "Votre identité sera validée le jour du concours, attention a rentrer votre date de naissance exacte!" %>
+      <%= f.input :birthdate,  as: :date, html5: true, label: 'Date de naissance', input_html: {class:"border border-0  mb-0"} , hint: "Votre identité sera validée le jour du concours, attention a rentrer votre date de naissance exacte!" %>
     </div>
     <div class="d-flex align-items-start gap-2">
       <p class="mb-0">Nationalité: </p>

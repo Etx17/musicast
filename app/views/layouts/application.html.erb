@@ -28,7 +28,7 @@
           <%= render "shared/sidebar" %>
         </div>
       <% end %>
-      <div class="bg-light col-md-<%= current_user.present? ? '10' : '12'%>">
+      <div class="bg-light p-0 col-md-<%= current_user.present? ? '10' : '12'%>">
         <div class="d-flex flex-wrap d-md-none px-2 breadcrumbs-xs">
           <%= render_breadcrumbs separator: '/' if current_user&.organisateur.present? %>
         </div>
