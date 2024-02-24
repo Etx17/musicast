@@ -5,6 +5,38 @@
 
 
 <%= link_to "Consulter l'ordre de passage du premier tour", organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour), class:"btn btn-success my-3" if @tour %>
+
+<%= link_to "+ Ajouter une inscription tardive", "#", class:"btn btn-success my-3", data: { bs_toggle: "modal", bs_target: "#myModal" } %>
+  <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Ajouter une inscription tardive</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p> Vous pouvez inviter un utilisateur à s'inscrire tardivement. L'utilisateur invité recevra un email avec un lien pour s'inscrire. </p>
+          <%= simple_form_for(User.new, url: user_invitation_path, method: :post) do |f| %>
+            <%= f.input :email, required: true, placeholder: "Entrez un email", autofocus: true %>
+            <%= f.input :inscription_role, as: :hidden, input_html: { value: "candidate" } %>
+            <%= f.input :category_id, as: :hidden, input_html: { value: @category.id } %>
+
+            <% f.object.build_candidat %>
+            <%= f.simple_fields_for :candidat do |c| %>
+              <%= c.input :first_name, hint: "L'utilisateur invité(e) pourra modifier ou rectifier ces informations", required: true %>
+              <%= c.input :last_name, hint: "L'utilisateur invité(e) pourra modifier ou rectifier ces informations", required: true%>
+            <% end %>
+
+            <%= f.button :submit, "Inviter l'utilisateur", class:"btn btn-dark", data: {bs_dismiss: "modal"} %>
+          <% end %>
+        </div>
+
+      </div>
+    </div>
+  </div>
+<p>Invitations pour s'inscrire tardivement envoyées: <span class="bg-info p-1"><%= @category.inscriptions.where(is_late_inscription: true).count %> </span></p>
+
+
 <div id="inscriptions" class="row">
 <% @category ||= inscriptions.first.category%>
 

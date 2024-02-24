@@ -93,6 +93,7 @@ class Inscription < ApplicationRecord
 
   def has_complete_requirement_items?
     # TOFIX
+    return false if category.requirement_items.count != inscription_item_requirements.count
     return false if inscription_item_requirements.any?{|i| i.has_submitted_content? == false }
     return false if inscription_item_requirements.any?{|i| i.verification_status == "checked_invalid" }
     true

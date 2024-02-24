@@ -88,7 +88,21 @@
         <div class="d-flex justify-content-between align-items-center mb-2">
           <h3 class="mb-0">Dossier</h3>
 
+          <% unless inscription.has_complete_requirement_items? %>
+            <div class=" badge d-inline-block rounded-pill py-1 px-2 border border-danger bg-danger-secondary text-danger ">
+              <i class="fas fa-exclamation-triangle"></i> à complêter
+            </div>
+          <% end %>
+
           <% if current_user.organisateur %>
+            <%= link_to  edit_inscription_path(inscription), class: "btn btn-outline-dark w-50"  do %>
+              <div class="d-flex align-items-center justify-content-center">
+                <i class="fas fa-edit me-2"></i>
+                <span>Modifier</span>
+              </div>
+            <% end %>
+          <% end %>
+          <% if current_user.candidat && inscription.is_late_inscription && Date.today < inscription.category.tours.first.final_performance_submission_deadline %>
             <%= link_to  edit_inscription_path(inscription), class: "btn btn-outline-dark w-50"  do %>
               <div class="d-flex align-items-center justify-content-center">
                 <i class="fas fa-edit me-2"></i>
@@ -111,6 +125,7 @@
       <% if inscription.inscription_item_requirements.none? %>
           <p class="text-secondary"> Il n'y a rien ici pour l'instant</p>
         <% end %>
+
         <%# items requirements %>
         <% inscription.inscription_item_requirements&.each do |item| %>
           <div class="p-3 shadow bg-light mb-3">

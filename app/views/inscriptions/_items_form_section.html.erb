@@ -26,7 +26,7 @@
             <div class="row">
               <div class="col">
                 <% if irf.object.submitted_file.attached? %>
-                  <embed src="<%= url_for(irf.object.submitted_file) %>" width="500" height="375" type="application/pdf">
+                  <embed src="<%= url_for(irf.object.submitted_file) %>" width="500" height="200" type="application/pdf">
                   <%= irf.input :submitted_file, as: :file, label: "Choisissez un autre PDF si vous souhaitez remplacer le document ci dessus" %>
                 <% else %>
                   <%= irf.input :submitted_file, as: :file, label: "Uploadez un PDF", required: true %>
