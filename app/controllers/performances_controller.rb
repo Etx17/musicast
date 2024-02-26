@@ -27,7 +27,7 @@ class PerformancesController < ApplicationController
   def update
     @performance = Performance.find(params[:id])
     authorize @performance
-    
+
     if params[:performance][:ordered_air_selection].present?
       params[:performance][:ordered_air_selection] = JSON.parse(params[:performance][:ordered_air_selection])
     end
@@ -41,6 +41,8 @@ class PerformancesController < ApplicationController
       render :edit
     end
   end
+
+
 
 
 

@@ -130,13 +130,11 @@ class InscriptionsController < ApplicationController
 
   def destroy
     authorize @inscription
-
+    category = @inscription.category
     @inscription.destroy
 
-    respond_to do |format|
-      format.html { redirect_to inscriptions_path, notice: "Inscription was successfully destroyed." }
-      format.json { head :no_content }
-    end
+   redirect_to organism_competition_edition_competition_category_tour_path(category.edition_competition.competition.organism, category.edition_competition.competition, category.edition_competition, category, params["tour_id"]), notice: "L'inscription a été supprimée avec succès."
+
   end
 
   def update_status

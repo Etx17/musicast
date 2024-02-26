@@ -1,6 +1,6 @@
 class InscriptionOrder < ApplicationRecord
   belongs_to :user
-  belongs_to :inscription
+  belongs_to :inscription, optional: true
 
   enum state: { pending: 0, paid: 1, failed: 2 }
   monetize :amount_cents
