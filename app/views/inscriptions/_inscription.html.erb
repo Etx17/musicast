@@ -49,7 +49,10 @@
           <% if inscription.candidate_brings_pianist_accompagnateur %>
           <p>Ce candidat indique venir avec son propre pianiste accompagnateur</p>
           <% end %>
-
+          <p>
+          Préférence horaire:
+          <%= inscription.time_preference %>
+          </p>
 
           <!-- Rediriger vers le paiement si ca n'est pas encore fait -->
           <% unless current_user.organisateur %>

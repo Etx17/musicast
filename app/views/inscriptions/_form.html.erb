@@ -24,7 +24,7 @@
     </div>
 
     <%= f.input :candidate_brings_pianist_accompagnateur, as: :boolean, label: "Souhaitez vous emmener votre propre pianiste accompagnateur? (cochez pour OUI)" if inscription.category.allow_own_pianist_accompagnateur %>
-
+    <%= f.input :time_preference, label: "Préférence horaire de passage", collection: Inscription.time_preferences.keys.to_a, prompt: 'Select a time preference' %>
     <div class="d-flex align-items-start gap-2">
       <%= f.check_box :terms_accepted, required: true, class: "mt-1" %>
       <%= f.label :terms_accepted, required: true, class:"text-secondary"  do %>

@@ -25,6 +25,11 @@ class Inscription < ApplicationRecord
     accepted: 2,
     rejected: 3
   }
+  enum time_preference: {
+    no_preference: 0,
+    morning: 1,
+    afternoon: 2,
+  }
 
   delegate :edition_competition, to: :category
   delegate :competition, to: :edition_competition

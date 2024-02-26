@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_24_100555) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_26_105129) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -292,6 +292,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_24_100555) do
     t.float "average_score"
     t.boolean "terms_accepted", default: false
     t.boolean "is_late_inscription", default: false
+    t.integer "time_preference", default: 0
     t.index ["candidat_id"], name: "index_inscriptions_on_candidat_id"
     t.index ["category_id"], name: "index_inscriptions_on_category_id"
   end
