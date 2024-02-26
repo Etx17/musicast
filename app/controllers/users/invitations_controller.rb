@@ -6,11 +6,30 @@ class Users::InvitationsController < Devise::InvitationsController
   end
 
   def create
+    # Cas ou on un organisme invite un candidat pour une inscription tardive mais que le candidat est déjà inscrit
+    existing_user = User.find_by_email(params["user"]["email"])
+    if existing_user && existing_user.candidat
+      category = Category.find(params["user"]["category_id"])
+      existing_inscription = Inscription.find_by(candidat: existing_user.candidat, category: category)
+
+      if existing_inscription
+        existing_inscription.update(is_late_inscription: true)
+      else
+        Inscription.create(is_late_inscription: true, candidat: existing_user.candidat, category: category, terms_accepted: true)
+      end
+      # Notifier le candidat
+      flash[:notice] = "Candidat déjà inscrit, inscription mise à jour"
+      redirect_back(fallback_location: root_path)
+      return
+    end
+
 
     @user = User.invite!(invite_params) do |u|
       u.skip_invitation = true
     end
 
+
+    super
     if @user.errors.empty?
       case @user.inscription_role
       when "jury"
@@ -25,7 +44,7 @@ class Users::InvitationsController < Devise::InvitationsController
         end
         # @user.deliver_invitation
       end
-      super
+
       # redirect_back(fallback_location: root_path)
     end
   end
