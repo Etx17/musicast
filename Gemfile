@@ -83,6 +83,8 @@ group :development, :test do
   gem 'pry-byebug'
   gem 'annotate'
   gem 'faker'
+  gem 'rspec-rails', '~> 5.0'
+  gem 'factory_bot_rails'
 end
 
 group :development do
