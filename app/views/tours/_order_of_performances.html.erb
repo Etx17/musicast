@@ -66,6 +66,7 @@
               <th class="p-2 text-center bg-grey ">Pianiste accompagnateur</th>
             <% end %>
             <th class="p-2 text-center bg-grey ">Minutage</th>
+            <th class="p-2 text-center bg-grey ">Préférence de passage</th>
             <th class="p-2 text-center bg-grey ">Actions</th>
           </tr>
         </thead>
@@ -137,6 +138,9 @@
                 <% end %>
                 <td class="p-2 text-center bg-light <%= performance.minutes == 0 ? 'text-danger' : 'text-secondary' %>">
                   <%= performance.minutes %>
+                </td>
+                <td class="p-2 text-center bg-light text-secondary">
+                  <%= performance.inscription.time_preference %>
                 </td>
                 <td class="p-2 text-center bg-light">
                   <%= link_to "Supprimer", organism_competition_edition_competition_category_inscription_path(@organism, @competition, @edition_competition, @category, performance.inscription, tour_id: @tour.id), method: :delete, data: { turbo_confirm: "Are you sure?", turbo_method: :delete}, class: "btn btn-danger" %>

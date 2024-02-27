@@ -1,3 +1,4 @@
+<div class="p-3 bg-light">
 <% edition_competition ||= @edition_competition  %>
 <h1 class="text-center mt-3"><%= action_name == "new" ? "Créer une édition" : "Modifier l'édition"  %></h1>
 <%= simple_form_for([@organism, @competition, edition_competition]) do |f| %>
@@ -46,6 +47,7 @@
     <%= f.button :submit, 'Enregistrer', class: "btn btn-dark mx-auto w-100 py-2 mb-2" %>
   </div>
 <% end %>
+  </div>
 <script>
   document.addEventListener('DOMContentLoaded', (event) => {
     const selectElement = document.querySelector('#edition_competition_address_attributes_country');
