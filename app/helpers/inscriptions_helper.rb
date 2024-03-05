@@ -26,7 +26,7 @@ module InscriptionsHelper
     case inscription.status
     when 'in_review'
       buttons << button_to(update_status_organism_competition_edition_competition_category_inscription_path(inscription.organism, inscription.competition, inscription.edition_competition, inscription.category, inscription, status: 'accepted'), method: :patch, class: 'btn btn-success border border-0  btn-sm') do
-        concat content_tag(:i, '', class: 'fa fa-check')
+        concat content_tag(:i, '', class: 'fa fa-check accept-inscription')
         concat ' Accept'
       end
       buttons << button_to(update_status_organism_competition_edition_competition_category_inscription_path(inscription.organism, inscription.competition, inscription.edition_competition, inscription.category, inscription, status: 'rejected'), method: :patch, class: 'btn btn-outline-secondary border border-0  btn-sm') do

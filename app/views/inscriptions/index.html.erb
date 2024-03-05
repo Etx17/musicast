@@ -41,7 +41,7 @@
 <% @category ||= inscriptions.first.category%>
 
 <% Inscription.statuses.keys.reject { |status| status == 'draft' }.each do |status| %>
-    <div class="col bg-light shadow-sm mb-1" style="border-radius: 0.25rem;">
+    <div class="col bg-light shadow-sm mb-1" style="border-radius: 0.25rem;" id="<%= status %>">
       <h5 class="text-center text-capitalize"><%= status %> (<%= @inscriptions&.select { |inscription| inscription.status == status }&.count %>)</h5>
       <% @inscriptions&.select { |inscription| inscription.status == status }&.each do |inscription| %>
         <div class="card p-3 mb-2 ">
