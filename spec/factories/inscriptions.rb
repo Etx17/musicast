@@ -15,5 +15,9 @@ FactoryBot.define do
     trait :in_review do
       status { "in_review" }
     end
+
+    trait :accepted do
+      status { "accepted" }
+    end
   end
 end

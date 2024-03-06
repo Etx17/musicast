@@ -4,7 +4,6 @@ class StripeCheckoutSessionService
     session = event.data.object
     # Find the corresponding InscriptionOrder
     inscription_order = InscriptionOrder.find_by(checkout_session_id: session.id)
-
     # Update the InscriptionOrder status to 'paid'
     if inscription_order
       inscription_order.update(state: 'paid')
