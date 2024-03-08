@@ -20,10 +20,12 @@ class PagesController < ApplicationController
 
     @disciplines = MusicCategories::DISCIPLINES
 
-    @edition_competitions = EditionCompetition.includes(:categories, :address)
-                                          .where('end_of_registration > ?', Time.now)
-                                          .where(status: 'published')
-                                        .order(:end_of_registration)
+    # @edition_competitions = EditionCompetition.includes(:categories, :address)
+    #                                       .where('end_of_registration > ?', Time.now)
+    #                                       .where(status: 'published')
+    #                                     .order(:end_of_registration)
+    @edition_competitions = EditionCompetition.published_and_upcoming
+
     if session[:discipline].present?
       @edition_competitions = @edition_competitions.joins(:categories)
                                                     .where(categories: { discipline: session[:discipline].to_i })

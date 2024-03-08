@@ -25,6 +25,7 @@ class EditionCompetition < ApplicationRecord
 
   validate :correct_mime_type_of_rule_document
 
+  scope :published_and_upcoming, -> {includes(:categories, :address).where('end_of_registration > ?', Time.now).where(status: 'published').order(:end_of_registration)}
   def correct_mime_type_of_rule_document
     if rule_document.attached? && !rule_document.content_type.in?(%w(application/pdf))
       errors.add(:rule_document, 'Doit être un fichier PDF')
