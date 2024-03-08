@@ -15,5 +15,11 @@ FactoryBot.define do
     trait :published do
       status { "published" }
     end
+    trait :past do
+      annee { 2020 }
+      end_of_registration { "2020-01-01 00:00:00" }
+      start_date { "2020-01-10" }
+      end_date { "2020-01-12" }
+    end
   end
 end

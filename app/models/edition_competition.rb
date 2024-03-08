@@ -14,18 +14,31 @@ class EditionCompetition < ApplicationRecord
 
   # Validations
   validates :annee, presence: true
-  validates :annee, comparison: { greater_than_or_equal_to: Date.today.year }
+  # validates :annee, comparison: { greater_than_or_equal_to: Date.today.year }
   validates :end_of_registration, presence: true
   validates :start_date, presence: true
   validates :end_date, presence: true
-  validates :start_date, comparison: { greater_than_or_equal_to: Date.today }
-  validates :end_date, comparison: { greater_than_or_equal_to: :start_date }
+  # validates :start_date, comparison: { greater_than_or_equal_to: Date.today }
+  # validates :end_date, comparison: { greater_than_or_equal_to: :start_date }
   validates :end_of_registration, comparison: { less_than_or_equal_to: :start_date }
 
 
   validate :correct_mime_type_of_rule_document
 
-  scope :published_and_upcoming, -> {includes(:categories, :address).where('end_of_registration > ?', Time.now).where(status: 'published').order(:end_of_registration)}
+  # scope :published_and_upcoming, -> {
+  #   includes(:categories, :address)
+  #   .where('end_of_registration > ?', Time.current)
+  #   .where(status: 'published')
+  #   .order(:end_of_registration)
+  # }
+
+  def self.published_and_upcoming
+    EditionCompetition.includes(:categories, :address)
+                      .where('end_of_registration > ?', Time.current)
+                      .where(status: 'published')
+                      .order(:end_of_registration)
+  end
+
   def correct_mime_type_of_rule_document
     if rule_document.attached? && !rule_document.content_type.in?(%w(application/pdf))
       errors.add(:rule_document, 'Doit être un fichier PDF')
