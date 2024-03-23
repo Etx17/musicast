@@ -28,8 +28,8 @@ class PagesController < ApplicationController
 
     if session[:discipline].present?
       @edition_competitions = @edition_competitions.joins(:categories)
-                                                    .where(categories: { discipline: session[:discipline].to_i })
-    end
+                                                    .where(categories: { discipline: session[:discipline].to_i }).explain(analyze: true)
+    end # This means that only records with matching values in both tables will be included in the result set.
 
     if session[:country].present?
       country = ISO3166::Country[session[:country]].iso_short_name
