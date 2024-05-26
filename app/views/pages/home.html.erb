@@ -3,12 +3,25 @@
 <%= render "dropdown_inputs" %>
 
 <main class="container mt-4">
+    <% @countries_with_upcoming_competitions.each do |country| %>
+      <% country_data = ISO3166::Country.all.find { |c| c.iso_short_name == country }%>
+      <% country_code = country_data&.alpha2 %>
+      <div class="country-flag-link">
+        <%= link_to flag_emoji(country_code), url_for(params: { country: country }), style: "font-size: 2em; text-decoration: none" %>
+      </div>
+    <% end %>
   <h2 class="text-center fw-bold mb-4">
     Competitions (<%= @edition_competitions.count %>) <%= flag_emoji(session["country"]) if session["country"]%>
   </h2>
   <div class="row g-4">
-    <% @edition_competitions.each do |edition_competition| %>
-      <%= render "edition_competition_card", edition_competition: edition_competition %>
+
+    <% if @edition_competitions.any? %>
+      <% @edition_competitions.each do |edition_competition| %>
+        <%= render "edition_competition_card", edition_competition: edition_competition %>
+      <% end %>
+    <% else %>
+      <p class="text-center mt-5 text-secondary">No competition found 🥲. Come back later or change the filters of research.</p>
     <% end %>
+
   </div>
 </main>

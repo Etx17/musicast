@@ -274,3 +274,16 @@ html {
 .text-bordeau {
   color: #350711;
 }
+
+.country-flag-link {
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  transition: all 0.3s ease;
+}
+
+.country-flag-link:hover {
+  background-color: #f5f5f5;
+  border-color: #999;
+}
