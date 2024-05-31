@@ -97,7 +97,6 @@ group :development do
   gem 'binding_of_caller'
   gem 'meta_request'
   gem 'activerecord-explain-analyze'
-  gem 'rack-mini-profiler'
 
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler"
