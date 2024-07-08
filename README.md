@@ -9,4 +9,3 @@ rails db:create db:migrate db:seed
 EditionCompetition.update_all(status: "published")
 ```
 
-Cela donne une structure claire et lisible à vos instructions, facilitant leur compréhension et leur exécution.
