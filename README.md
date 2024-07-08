@@ -9,3 +9,8 @@ rails db:create db:migrate db:seed
 EditionCompetition.update_all(status: "published")
 ```
 
+Lancer un serveur ngrok afin de pouvoir effectuer les payments
+```bash
+ngrok http 3000
+```
+Vérifier sur Stripe d'avoir configuré le webhook
