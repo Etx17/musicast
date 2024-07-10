@@ -8,11 +8,10 @@ Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Allow ngrok for testing webhooks
-  config.hosts << "e41c-95-178-109-242.ngrok-free.app"
+  config.hosts << "c8dd-2a04-cec0-11c2-3807-1127-1444-eea5-4cb6.ngrok-free.app"
 
-  # In the development environment your application's code is reloaded any time
-  # it changes. This slows down response time but is perfect for development
-  # since you don't have to restart the web server when you make code changes.
+  # Rails.application.routes.default_url_options[:host] = 'localhost:3000'
+
   config.cache_classes = false
 
   # Do not eager load code on boot.

@@ -7,6 +7,7 @@ class StripeCheckoutSessionService
     # Update the InscriptionOrder status to 'paid'
     if inscription_order
       inscription_order.update(state: 'paid')
+      inscription_order.send_notification
     else
       Rails.logger.error "StripeCheckoutSessionService: Couldn't find InscriptionOrder with stripe_session_id = #{session.id}"
     end
