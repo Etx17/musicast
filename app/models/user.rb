@@ -12,6 +12,7 @@ class User < ApplicationRecord
   has_one :partner
   has_one :jury
   has_one :candidat
+  has_many :notifications, as: :recipient, dependent: :destroy, class_name: 'Noticed::Notification'
   has_many :inscriptions_paiements
 
   has_many :inscription_orders

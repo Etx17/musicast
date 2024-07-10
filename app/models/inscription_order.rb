@@ -8,7 +8,9 @@ class InscriptionOrder < ApplicationRecord
   after_update :set_inscription_status, if: :saved_change_to_state?
 
   def send_notification
-    PaymentSucceededNotifier.with(inscription_order: self, message: "Payment succedeed").deliver(User.all)
+    candidate_recipient = self.user
+    organiser_recipient = inscription.category.edition_competition.competition.organism.organisateur.user
+    PaymentSucceededNotifier.with(inscription_order: self, message: "Payment succedeed").deliver([candidate_recipient, organiser_recipient])
   end
 
   private
