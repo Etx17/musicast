@@ -8,7 +8,7 @@ Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Allow ngrok for testing webhooks
-  config.hosts << "c8dd-2a04-cec0-11c2-3807-1127-1444-eea5-4cb6.ngrok-free.app"
+  config.hosts << "84c6-2001-861-6d10-1730-7938-1cc9-275-a946.ngrok-free.app"
 
   # Rails.application.routes.default_url_options[:host] = 'localhost:3000'
 
