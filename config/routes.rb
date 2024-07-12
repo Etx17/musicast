@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get 'tour_requirements/update'
   get 'tour_requirements/edit'
   get 'tour_requirements/show'
+  
 
   resources :leads
   resources :performances

@@ -4,7 +4,7 @@ module NavbarHelper
 
     if user_signed_in?
         links << { label: '<i class="fas fa-envelope text-secondary custom-size"></i>'.html_safe, url: "#", dropdown: false }
-        links << { label: '<i class="fas fa-bell large text-secondary custom-size"></i>'.html_safe, url: "#", dropdown: false }
+        links << { label: '<i class="fas fa-bell large text-secondary custom-size notification-icon"></i>'.html_safe, url: "#", dropdown: false, html_options: { id: 'notification-icon-bell' } }
       if current_user.candidat.present?
         # Add links for candidat
         # links << { label: "Candidat", url: candidat_path(current_user.candidat), dropdown: false }

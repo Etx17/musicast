@@ -16,6 +16,14 @@
         <% end %>
       </ul>
 
+      <div id="notification-popup" class="col-10 col-lg-3"style="display: none; position: absolute; right: 20px; top: 60px; z-index: 1000;">
+        <div class="shadow p-3 bg-light">
+          <% current_user.notifications.each do |notification| %>
+            <%= link_to notification.message, notification.url %>
+          <% end %>
+        </div>
+      </div>
+
       <% if user_signed_in? %>
         <div class="ml-auto">
           <li class="nav-item dropdown text-decoration-none" style="list-style: none;">
@@ -38,3 +46,22 @@
     </div>
   </div>
 </div>
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const notificationIcon = document.querySelector('.notification-icon');
+    const notificationPopup = document.getElementById('notification-popup');
+
+    notificationIcon.addEventListener('click', function(event) {
+      event.stopPropagation();
+      notificationPopup.style.display = notificationPopup.style.display === 'none' ? 'block' : 'none';
+    });
+
+    document.addEventListener('click', function(event) {
+      if (event.target !== notificationIcon) {
+        notificationPopup.style.display = 'none';
+      }
+    });
+  });
+</script>
