@@ -68,17 +68,23 @@ class Inscription < ApplicationRecord
   end
 
   def associated_airs
-    airs = []
-    airs += self.choice_imposed_work_airs&.map(&:air)
-    airs += self.semi_imposed_work_airs&.map(&:air)
-    airs.uniq!
-    # Exclude airs that have already been used in other performances
-    # But for the current tour, i need to still see the ones that are selected
-    self.performances.map(&:air_selection).flatten.reject { |air_id| air_id.blank? }.map{ |air_id| Air.find(air_id) }
-    airs
+    # Collect all unique airs associated with this inscription
+    airs = (self.choice_imposed_work_airs&.map(&:air) + self.semi_imposed_work_airs&.map(&:air)).uniq
+
+    # Collect IDs of airs already selected in this inscription's performances
+    selected_air_ids = self.performances.map(&:air_selection).flatten.reject(&:blank?)
+
+    # Find all airs that have been selected in other inscriptions' performances
+    # Exclude these airs unless they are selected in the current inscription's performances
+    already_used_air_ids = Performance.where.not(inscription_id: self.id).map(&:air_selection).flatten.uniq.reject(&:blank?)
+    airs_to_exclude = already_used_air_ids - selected_air_ids
+
+    # Filter the airs to exclude the ones used in other inscriptions' performances
+    airs.reject! { |air| airs_to_exclude.include?(air.id.to_s) }
 
     airs
   end
+
 
   def used_airs
     # self.performances.map(&:air_selection).flatten.reject { |air_id| air_id.blank? }.map{ |air_id| Air.find(air_id) }
