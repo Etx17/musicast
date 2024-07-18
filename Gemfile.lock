@@ -410,6 +410,8 @@ GEM
       concurrent-ruby (~> 1.0)
     unaccent (0.4.0)
     uniform_notifier (1.16.0)
+    view_components (0.1.0)
+      rails
     warden (1.2.9)
       rack (>= 2.0.9)
     web-console (4.2.1)
@@ -486,6 +488,7 @@ DEPENDENCIES
   stripe_event
   turbo-rails
   tzinfo-data
+  view_components (~> 0.1.0)
   web-console
   wicked_pdf
   wkhtmltopdf-binary
