@@ -113,4 +113,4 @@ end
 
 gem "noticed", "~> 2.4"
 
-gem "view_components", "~> 0.1.0"
+gem "view_component", "~> 3.13"
