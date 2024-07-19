@@ -30,27 +30,13 @@
             <small class="text-info"><i class="fas fa-info-circle text-info pe-2 "></i>Vous devez vous créer un compte pour pouvoir vous inscrire à une compétition. Suivez ce <%= link_to "lien", new_user_registration_path %></small>
           </div>
         <% end %>
+
         <% category.semi_imposed_works&.each do |semi_imposed_work| %>
           <%= render SemiImposedWorkCardComponent.new(semi_imposed_work: semi_imposed_work) %>
         <% end %>
 
-        <% if category.imposed_work.present? %>
-          <div class="card mb-3">
-            <div class="card-header">  Oeuvres imposées: <span class="h5 ps-2"> <%= category.imposed_work.airs.count %></span></div>
-            <div class="card-body bg-light">
-              <ul class="list-group list-group-flush">
-              <div><%= category.imposed_work.title %></div>
-              <small class="text-secondary"><%= category.imposed_work.guidelines %></small>
-                <li class="list-group-item d-flex flex-column">
-                  <% category.imposed_work.airs.each do |air| %>
-                    <span> <i class="fas fa-feather text-secondary pe-2 small"></i><%= air.title %> - <%= air.composer %> - <%= air.oeuvre %> - <%= air.tonality %></span>
-                    <small class="text-secondary"> <%= air.infos %> </small>
-                  <% end %>
-                </li>
-              </ul>
-            </div>
-          </div>
-        <% end %>
+
+        <%= render ChoiceImposedWorkCardComponent.new(category: category) if category.imposed_work.present?%>
 
         <% category.choice_imposed_works&.each do |choice_imposed_work|  %>
           <div class="card mb-3">

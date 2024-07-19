@@ -1,0 +1,15 @@
+<div class="card mb-3">
+  <div class="card-header">  Oeuvres imposées: <span class="h5 ps-2"> <%= @category.imposed_work.airs.count %></span></div>
+  <div class="card-body bg-light">
+    <ul class="list-group list-group-flush">
+    <div><%= @category.imposed_work.title %></div>
+    <small class="text-secondary"><%= @category.imposed_work.guidelines %></small>
+      <li class="list-group-item d-flex flex-column">
+        <% @category.imposed_work.airs.each do |air| %>
+          <span> <i class="fas fa-feather text-secondary pe-2 small"></i><%= air.title %> - <%= air.composer %> - <%= air.oeuvre %> - <%= air.tonality %></span>
+          <small class="text-secondary"> <%= air.infos %> </small>
+        <% end %>
+      </li>
+    </ul>
+  </div>
+</div>
