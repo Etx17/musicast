@@ -36,26 +36,11 @@
         <% end %>
 
 
-        <%= render ChoiceImposedWorkCardComponent.new(category: category) if category.imposed_work.present?%>
+        <%= render ImposedWorkCardComponent.new(category: category) if category.imposed_work.present?%>
 
         <% category.choice_imposed_works&.each do |choice_imposed_work|  %>
-          <div class="card mb-3">
-            <div class="card-header">
-              Choisir<span class="h5 pe-2"> <%= choice_imposed_work.number_to_select %></span>oeuvres parmis:
-            </div>
-            <div class="card-body bg-light">
-              <span><%= choice_imposed_work.title %></span>
-              <small class="text-secondary"><%= choice_imposed_work.guidelines %></small>
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item d-flex flex-column">
-                  <% choice_imposed_work.airs.each do |air| %>
-                    <span><i class="fas fa-feather text-secondary pe-2 small"></i> <%= air.title %> - <%= air.composer %> - <%= air.oeuvre %> - <%= air.tonality %></span>
-                    <small class="text-secondary"> <%= air.infos %> </small>
-                  <% end %>
-                </li>
-              </ul>
-            </div>
-          </div>
+          <%= render ChoiceImposedWorkCardComponent.new(choice_imposed_work: choice_imposed_work) %>
+          
         <% end %>
 
 
