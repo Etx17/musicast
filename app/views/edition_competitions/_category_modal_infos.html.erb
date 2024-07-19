@@ -35,12 +35,12 @@
           <%= render SemiImposedWorkCardComponent.new(semi_imposed_work: semi_imposed_work) %>
         <% end %>
 
+        <%# <%= render(SemiImposedWorkCardComponent.with_collection(category.semi_imposed_works)) a décommenter plus tard %>
 
         <%= render ImposedWorkCardComponent.new(category: category) if category.imposed_work.present?%>
 
         <% category.choice_imposed_works&.each do |choice_imposed_work|  %>
           <%= render ChoiceImposedWorkCardComponent.new(choice_imposed_work: choice_imposed_work) %>
-          
         <% end %>
 
 
@@ -49,16 +49,11 @@
           <div class="card mb-3">
             <div class="card-header">Eléments requis:</div>
             <ul class="list-group list-group-flush">
-              <% category.requirement_items.each do |item| %>
-                <li class="list-group-item p-2 d-flex flex-column ">
-                  <p class="lead mb-1"><span class="badge rounded-pill border text-dark bg-light-gradient shadow-sm "><%= item.type_item %></span> <%= item.title %></p>
-
-                  <small class="text-secondary bg-white p-2"><%= item.description_item %></small>
-                </li>
-              <% end %>
+              <%= render(RequirementItemComponent.with_collection(category.requirement_items)) %>
             </ul>
           </div>
         <% end %>
+
       </div>
       <div class="modal-footer">
         <% if current_user %>
