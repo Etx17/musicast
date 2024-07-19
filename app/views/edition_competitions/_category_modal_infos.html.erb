@@ -16,8 +16,11 @@
             <%= link_to "Continuer", new_user_registration_path, class: "btn btn-dark" %>
           <% end %>
         </div>
+
+        <h3 class="text-center py-3">Consignes de séléction des airs</h3>
+
         <% if current_user&.candidat&.has_minimum_informations_for_inscription? %>
-          <small class="text-success"><i class="fas fa-check-circle text-success"></i>Vous pourrez remplir votre dossier a l'étape suivante</small>
+          <small class="text-success text-center pb-"><i class="fas fa-check-circle text-success"></i>Vous pourrez remplir votre dossier et sélectionner vos oeuvres à l'étape suivante.</small>
         <% elsif current_user %>
           <div class="p-1 my-2 border rounded-8 bg-info-secondary border-info">
             <small class="text-info"><i class="fas fa-info-circle text-info pe-2 "></i>Vous devez avoir complêté votre <%= link_to "profil", edit_candidat_path(current_user.candidat) %> pour pouvoir constituer un dossier d'inscription. En cliquant sur "continuer" vous serez redirigé dessus pour éditer vos informations</small>
@@ -27,30 +30,14 @@
             <small class="text-info"><i class="fas fa-info-circle text-info pe-2 "></i>Vous devez vous créer un compte pour pouvoir vous inscrire à une compétition. Suivez ce <%= link_to "lien", new_user_registration_path %></small>
           </div>
         <% end %>
-        <p class="text-secondary mb-0"><%= category.description %></p>
-
         <% category.semi_imposed_works&.each do |semi_imposed_work| %>
-          <div class="card mb-3">
-            <div class="card-header">
-              Présenter<span class="h4 pe-2"> <%= semi_imposed_work.number %></span>oeuvres
-            </div>
-            <div class="card-body">
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item d-flex flex-column">
-                <span><%= semi_imposed_work.title %></span>
-                <small class="text-secondary"><%= semi_imposed_work.guidelines %></small>
-                  <span><i class="fas fa-clock text-secondary pe-2"></i><small><%= semi_imposed_work.max_length_minutes %>min max au total.</small></span>
-
-                </li>
-              </ul>
-            </div>
-          </div>
+          <%= render SemiImposedWorkCardComponent.new(semi_imposed_work: semi_imposed_work) %>
         <% end %>
 
         <% if category.imposed_work.present? %>
           <div class="card mb-3">
-            <div class="card-header">  Oeuvres imposées: <span class="h4 ps-2"> <%= category.imposed_work.airs.count %></span></div>
-            <div class="card-body">
+            <div class="card-header">  Oeuvres imposées: <span class="h5 ps-2"> <%= category.imposed_work.airs.count %></span></div>
+            <div class="card-body bg-light">
               <ul class="list-group list-group-flush">
               <div><%= category.imposed_work.title %></div>
               <small class="text-secondary"><%= category.imposed_work.guidelines %></small>
@@ -68,9 +55,9 @@
         <% category.choice_imposed_works&.each do |choice_imposed_work|  %>
           <div class="card mb-3">
             <div class="card-header">
-              Choisir<span class="h4 pe-2"> <%= choice_imposed_work.number_to_select %></span>oeuvres parmis:
+              Choisir<span class="h5 pe-2"> <%= choice_imposed_work.number_to_select %></span>oeuvres parmis:
             </div>
-            <div class="card-body">
+            <div class="card-body bg-light">
               <span><%= choice_imposed_work.title %></span>
               <small class="text-secondary"><%= choice_imposed_work.guidelines %></small>
               <ul class="list-group list-group-flush">
@@ -85,7 +72,9 @@
           </div>
         <% end %>
 
+
         <% if category.requirement_items.any? %>
+        <h3 class="text-center py-3">Pièces requises</h3>
           <div class="card mb-3">
             <div class="card-header">Eléments requis:</div>
             <ul class="list-group list-group-flush">
