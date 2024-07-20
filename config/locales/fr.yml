@@ -1,0 +1,29 @@
+fr:
+  discipline:
+    alto: Alto
+    ancient_instruments_and_baroque_music: Instruments anciens et musique baroque
+    bassoon: Basson
+    cello: Violoncelle
+    chamber_music: Musique de chambre
+    choirs_and_choral_singing: Chœurs et chant choral
+    clarinet: Clarinette
+    composition_and_musical_writing: Composition et écriture musicale
+    double_bass: Contrebasse
+    flute: Flûte
+    guitar: Guitare
+    harp: Harpe
+    horn: Cor
+    lyrical_singing: Chant lyrique
+    oboe: Hautbois
+    orchestration_and_orchestra_conducting: Orchestration et direction d'orchestre
+    percussion: Percussion
+    piano: Piano
+    trombone: Trombone
+    trumpet: Trompette
+    tuba: Tuba
+    violin: Violon
+  type_item:
+    youtube_link: Lien YouTube
+    recommendation_letter: Lettre de recommandation
+    parental_authorization: Autorisation parentale
+    motivation_essay: Dissertation de motivation
