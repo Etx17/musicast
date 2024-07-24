@@ -1,4 +1,147 @@
 fr:
+  simple_form:
+    placeholders:
+      defaults:
+        annee: "Entrez une année"
+      edition_competition:
+        new:
+          annee: "Entrez une année pour la nouvelle édition"
+        annee: "Entrez une année"
+    hints:
+      defaults:
+        annee: "Année de l'édition"
+      edition_competition:
+        new:
+          annee: "Année de la nouvelle édition"
+        annee: "Année de l'édition"
+    required:
+      text: "obligatoire"
+      mark: "*"
+      html: "<span class='required'>*</span>"
+  date:
+    month_names: [nil, "Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"]
+    abbr_month_names: [nil, "Janv", "Févr", "Mars", "Avr", "Mai", "Juin", "Juil", "Août", "Sept", "Oct", "Nov", "Déc"]
+    order:
+      - :year
+      - :month
+      - :day
+  activerecord:
+    models:
+      competition: "Concours"
+      document: "Document"
+      edition_competition: "Édition de Concours"
+      education: "Formation"
+      experience: "Expérience"
+    attributes:
+      competition:
+        organism_id: "ID de l'organisme"
+        nom_concours: "Nom du concours"
+        description: "Description"
+        created_at: "Créé le"
+        updated_at: "Mis à jour le"
+        slug: "Slug"
+      document:
+        document_type: "Type de document"
+        file_url: "URL du fichier"
+        user_id: "ID de l'utilisateur"
+        created_at: "Créé le"
+        updated_at: "Mis à jour le"
+        parent_type: "Type de parent"
+        parent_id: "ID du parent"
+      edition_competition:
+        competition_id: "ID du concours"
+        annee: "Année"
+        details_specifiques: "Détails spécifiques"
+        created_at: "Créé le"
+        updated_at: "Mis à jour le"
+        end_of_registration: "Fin des inscriptions"
+        start_date: "Date de début"
+        end_date: "Date de fin"
+        reglement_url: "URL du règlement"
+        status: "Statut"
+      education:
+        title: "Titre"
+        start_date: "Date de début"
+        end_date: "Date de fin"
+        description: "Description"
+        candidat_id: "ID du candidat"
+        created_at: "Créé le"
+        updated_at: "Mis à jour le"
+      experience:
+        title: "Titre"
+        start_date: "Date de début"
+        end_date: "Date de fin"
+        description: "Description"
+        candidat_id: "ID du candidat"
+        created_at: "Créé le"
+        updated_at: "Mis à jour le"
+    models:
+      competition: "Concours"
+      document: "Document"
+      edition_competition: "Édition de Concours"
+      education: "Formation"
+      experience: "Expérience"
+    attributes:
+      competition:
+        organism_id: "ID de l'organisme"
+        nom_concours: "Nom du concours"
+        description: "Description"
+        created_at: "Créé le"
+        updated_at: "Mis à jour le"
+        slug: "Slug"
+      document:
+        document_type: "Type de document"
+        file_url: "URL du fichier"
+        user_id: "ID de l'utilisateur"
+        created_at: "Créé le"
+        updated_at: "Mis à jour le"
+        parent_type: "Type de parent"
+        parent_id: "ID du parent"
+      edition_competition:
+        competition_id: "ID du concours"
+        annee: "Année"
+        details_specifiques: "Détails spécifiques"
+        created_at: "Créé le"
+        updated_at: "Mis à jour le"
+        end_of_registration: "Fin des inscriptions"
+        start_date: "Date de début"
+        end_date: "Date de fin"
+        reglement_url: "URL du règlement"
+        status: "Statut"
+      education:
+        title: "Titre"
+        start_date: "Date de début"
+        end_date: "Date de fin"
+        description: "Description"
+        candidat_id: "ID du candidat"
+        created_at: "Créé le"
+        updated_at: "Mis à jour le"
+      experience:
+        title: "Titre"
+        start_date: "Date de début"
+        end_date: "Date de fin"
+        description: "Description"
+        candidat_id: "ID du candidat"
+        created_at: "Créé le"
+        updated_at: "Mis à jour le"
+    errors:
+      models:
+        competition:
+          attributes:
+            nom_concours:
+              blank: "Le nom du concours ne peut pas être vide."
+              too_short: "Le nom du concours est trop court."
+      messages:
+        blank: "ne peut pas être vide."
+        too_short: "est trop court."
+  errors:
+    attributes:
+      nom_concours:
+        blank: "ne peut pas être vide."
+        too_short: "est trop court."
+    messages:
+      blank: "ne peut pas être vide."
+      too_short: "est trop court."
   discipline:
     alto: Alto
     ancient_instruments_and_baroque_music: Instruments anciens et musique baroque

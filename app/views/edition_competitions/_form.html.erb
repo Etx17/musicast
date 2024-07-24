@@ -8,7 +8,7 @@
   <div class="form-inputs row">
     <div class="col-md-6">
       <%= f.input :annee, input_html: { style:"border: none;", value: Date.today.year }, label: "Année"  %>
-      <%= f.input :end_of_registration, as: :date,label: "Cloturation des inscriptions", input_html: { value: Date.today }, hint: "Date jusqu'à laquelle vous acceptez de recevoir des candidatures" %>
+      <%= f.input :end_of_registration, as: :date, label: "Cloturation des inscriptions", input_html: { value: Date.today }, hint: "Date jusqu'à laquelle vous acceptez de recevoir des candidatures" %>
       <%= f.input :start_date, as: :date, input_html: { value: Date.today }, label: "Date de début de l'évènement" %>
       <%= f.input :end_date, as: :date, input_html: { value: Date.today },  label: "Date de fin de l'évènement" %>
        <%= f.simple_fields_for :address do |address_fields| %>

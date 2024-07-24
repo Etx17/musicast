@@ -14,3 +14,9 @@ Lancer un serveur ngrok afin de pouvoir effectuer les payments
 ngrok http 3000
 ```
 Vérifier sur Stripe d'avoir configuré le webhook
+
+
+Supprimer le candidat mal seedé: (quickfix)
+```bash
+Candidat.first(2).last.destroy
+```

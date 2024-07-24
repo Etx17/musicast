@@ -20,7 +20,7 @@ class EditionCompetitionsController < ApplicationController
   def new
     @edition_competition = @competition.edition_competitions.build
     @edition_competition.build_address
-
+    
   end
 
   def edit;
