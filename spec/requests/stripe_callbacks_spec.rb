@@ -28,7 +28,6 @@ RSpec.describe "Stripe callbacks", type: :request do
     organiser_recipient = order.inscription.category.edition_competition.competition.organism.organisateur.user
     candidate_recipient = order.user
 
-
     event = StripeMock.mock_webhook_event('checkout.session.completed', {data:{ object:{id: 'cs_test'}}})
     StripeCheckoutSessionService.new.call(event)
     expect(organiser_recipient.notifications.count).to eq(1)
