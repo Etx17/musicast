@@ -10,13 +10,13 @@
     <div class="container">
 
       <div class="row">
-        <%= render 'choice_imposed_works_section', category: category, competition: category.competition, edition_competition: category.edition_competition %>
-        <%= render 'semi_imposed_works_section', category: category, competition: category.competition, edition_competition: category.edition_competition %>
+        <%= render 'choice_imposed_works_section', category: category, competition: category.competition, edition_competition: category.edition_competition if @category.includes_choice_imposed_works? %>
+        <%= render 'semi_imposed_works_section', category: category, competition: category.competition, edition_competition: category.edition_competition if @category.includes_semi_imposed_works? %>
       </div>
 
       <div class="row">
         <% if current_user.organisateur %>
-          <%= render 'imposed_works_section', category: category %>
+          <%= render 'imposed_works_section', category: category if @category.includes_imposed_works%>
         <% else %>
           <%= render 'imposed_works_section', category: category if category.imposed_work.any? %>
         <% end %>

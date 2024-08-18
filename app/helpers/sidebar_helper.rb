@@ -32,7 +32,7 @@ module SidebarHelper
 
         if categories.present?
           categories.each do |category|
-            links << { label: category.name, url: organism_competition_edition_competition_category_path(last_edition_competition.competition.organism_id, last_edition_competition.competition_id, last_edition_competition, category) }
+            links << { label: content_tag(:i, '', class: 'fas fa-music text-secondary') + " #{category.name}", url: organism_competition_edition_competition_category_path(last_edition_competition.competition.organism_id, last_edition_competition.competition_id, last_edition_competition, category) }
           end
         end
 

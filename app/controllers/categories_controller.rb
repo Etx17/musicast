@@ -89,6 +89,9 @@ class CategoriesController < ApplicationController
       :price_cents,
       :allow_own_pianist_accompagnateur,
       :photo,
+      :includes_semi_imposed_works,
+      :includes_imposed_works,
+      :includes_choice_imposed_works,
       tours_attributes: %i[id tour_number _destroy],
       ).tap do |whitelisted|
       whitelisted[:price_cents] = (whitelisted[:price_cents].to_f * 100).to_i if whitelisted[:price_cents]
