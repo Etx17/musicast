@@ -1,13 +1,25 @@
-
-<div class="sidebar bg-light w-100 px-4 pt-3" style="position: sticky; top: 90px; height: 90vh;">
-  <% sidebar_links.each do |link| %>
-    <%= link_to link[:url], class: "nav-link mb-3 p-2" do %>
-      <% if link[:status] %>
-        <span class="badge rounded-pill border bg-success-secondary text-dark"><%= link[:status] %></span>
-        <span class=""><%= link[:label] %></span>
-      <% else %>
-      <span class="h5"><%= link[:label] %></span>
-      <% end %>
+<div class="sidebar">
+  <ul class="nav flex-column">
+    <% sidebar_links.each do |link| %>
+      <li class="nav-item">
+        <%= link_to link[:url], class: "nav-link #{active_link?(link[:url])}" do %>
+          <%= link[:label].html_safe %>
+          <% if link[:status].present? %>
+            <span class="competition-status rounded-pill border border-info  <%= link[:status] %>"><%= link[:status].capitalize %></span>
+          <% end %>
+        <% end %>
+        <% if link[:children].present? %>
+          <ul class="nav flex-column">
+            <% link[:children].each do |child_link| %>
+              <li class="nav-item">
+                <%= link_to child_link[:url], class: "nav-link #{active_link?(child_link[:url])}" do %>
+                  <%= child_link[:label].html_safe %>
+                <% end %>
+              </li>
+            <% end %>
+          </ul>
+        <% end %>
+      </li>
     <% end %>
-  <% end %>
+  </ul>
 </div>

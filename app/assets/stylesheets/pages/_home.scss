@@ -287,3 +287,67 @@ html {
   background-color: #f5f5f5;
   border-color: #999;
 }
+
+// Sidebar styles
+.sidebar {
+  background-color: #f8f9fa;
+  border-right: 1px solid #e9ecef;
+  height: 100vh;
+  padding-top: 20px;
+}
+
+.nav-item {
+  margin-bottom: 5px;
+}
+
+.nav-link {
+  color: #495057;
+  transition: all 0.3s ease;
+  border-radius: 5px;
+  padding: 10px 15px;
+
+  &:hover, &.active {
+    background-color: #e9ecef;
+    color: #212529;
+  }
+
+  i {
+    margin-right: 10px;
+    width: 20px;
+    text-align: center;
+  }
+}
+
+.nav-item .nav {
+  margin-left: 20px;
+
+  .nav-item {
+    margin-bottom: 2px;
+  }
+
+  .nav-link {
+    font-size: 0.9em;
+    padding: 8px 15px;
+
+    &:hover, &.active {
+      background-color: #dee2e6;
+    }
+  }
+}
+
+// Add a subtle hover effect
+.nav-item:hover > .nav-link {
+  transform: translateX(5px);
+}
+
+// Style for competition status
+.competition-status {
+  font-size: 0.8em;
+  padding: 2px 5px;
+  border-radius: 3px;
+  margin-left: 5px;
+
+  &.active { background-color: #28a745; color: white; }
+  &.pending { background-color: #ffc107; color: black; }
+  &.closed { background-color: #dc3545; color: white; }
+}

@@ -14,25 +14,28 @@ module SidebarHelper
       elsif current_user.organisateur.present?
         links << { label: content_tag(:i, '', class: 'fas fa-home') + " Tableau de bord", url: organisateur_dashboard_path }
 
-
         current_user.organisateur.competitions.each do |competition|
           last_edition_competition = competition.edition_competitions.last
 
           if competition.edition_competitions.present?
-            links << {
+            edition_link = {
               label: content_tag(:i, '', class: 'fas fa-trophy text-secondary') + " #{competition.nom_concours} #{last_edition_competition.annee}",
               url: organism_competition_edition_competition_path(competition.organism_id, competition.id, last_edition_competition),
-              status: last_edition_competition.status
+              status: last_edition_competition.status,
+              children: []
             }
-          end
-        end
 
-        last_edition_competition = current_user.organisateur&.competitions&.last&.edition_competitions&.last
-        categories = last_edition_competition&.categories
+            categories = last_edition_competition.categories
+            if categories.present?
+              categories.each do |category|
+                edition_link[:children] << {
+                  label: content_tag(:i, '', class: 'fas fa-music text-secondary') + " #{category.name}",
+                  url: organism_competition_edition_competition_category_path(last_edition_competition.competition.organism_id, last_edition_competition.competition_id, last_edition_competition, category)
+                }
+              end
+            end
 
-        if categories.present?
-          categories.each do |category|
-            links << { label: category.name, url: organism_competition_edition_competition_category_path(last_edition_competition.competition.organism_id, last_edition_competition.competition_id, last_edition_competition, category) }
+            links << edition_link
           end
         end
 

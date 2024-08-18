@@ -16,4 +16,8 @@ module ApplicationHelper
     flags[nationality_code]
   end
 
+  def active_link?(path)
+    current_page?(path) ? 'active' : ''
+  end
+
 end
