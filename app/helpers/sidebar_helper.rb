@@ -12,14 +12,15 @@ module SidebarHelper
           links << { label: inscription.category.name, url: inscription_path(inscription), status: inscription.status }
         end
       elsif current_user.organisateur.present?
-        links << { label: "Tableau de bord", url: organisateur_dashboard_path }
+        links << { label: content_tag(:i, '', class: 'fas fa-home') + " Tableau de bord", url: organisateur_dashboard_path }
+
 
         current_user.organisateur.competitions.each do |competition|
           last_edition_competition = competition.edition_competitions.last
 
           if competition.edition_competitions.present?
             links << {
-              label: "#{competition.nom_concours} #{last_edition_competition.annee}",
+              label: content_tag(:i, '', class: 'fas fa-trophy text-secondary') + " #{competition.nom_concours} #{last_edition_competition.annee}",
               url: organism_competition_edition_competition_path(competition.organism_id, competition.id, last_edition_competition),
               status: last_edition_competition.status
             }

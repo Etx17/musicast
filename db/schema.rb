@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_07_08_091728) do
+ActiveRecord::Schema[7.0].define(version: 2024_08_18_122134) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -126,6 +126,10 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_08_091728) do
     t.integer "status", default: 0
     t.boolean "allow_own_pianist_accompagnateur"
     t.integer "preselection_vote_type", default: 0
+    t.boolean "includes_semi_imposed_works", default: false
+    t.boolean "includes_imposed_works", default: false
+    t.boolean "includes_free_choices", default: false
+    t.boolean "includes_choice_imposed_works", default: false
     t.index ["edition_competition_id"], name: "index_categories_on_edition_competition_id"
     t.index ["slug"], name: "index_categories_on_slug", unique: true
   end
