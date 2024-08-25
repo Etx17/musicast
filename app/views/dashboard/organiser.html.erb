@@ -24,25 +24,23 @@
 
     <div class="col-12 col-md-6">
       <div class="card border-0 shadow-sm rounded mb-4" style="background: #EEEEEE;">
-        <div class="card-body d-flex flex-column">
-          <h3 class="mb-4">
+        <div class="card-header border border-transparent">
             <i class="fas fa-building"> </i> Informations de l'organisme
-          </h3>
-          <div class="d-flex flex-column">
+        </div>
+        <div class="card-body bg-light d-flex flex-column">
             <div class="text-center">
-              <%= image_tag(@organism.logo.attached? ? url_for(@organism.logo) : "https://source.unsplash.com/random", class: "", height: 100, width: "auto") %>
+              <%= image_tag(@organism.logo.attached? ? url_for(@organism.logo) : "garnier.png", class: "", height: 100, width: "auto") %>
             </div>
             <p><%= @organism.nom %></p>
             <p><%= @organism.description %></p>
-          </div>
           <%= link_to "Modifier", edit_organism_path(@organism), class: "btn btn-outline-dark mx-auto mt-3" %>
         </div>
       </div>
 
       <div class="card border-0 shadow-sm rounded mb-4" style="background: #EEEEEE;">
-          <div class="card-header border border-transparent">
-            <i class="fas fa-person"> </i> Partenaires
-          </div>
+        <div class="card-header border border-transparent">
+          <i class="fas fa-person"> </i> Partenaires
+        </div>
         <div class="card-body bg-light">
           <p> <%= image_tag 'icons/piano', width: 20 %> Pianistes Accompagnateurs</p>
           <%= turbo_frame_tag 'new_pianist_frame' do %>

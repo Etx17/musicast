@@ -1,9 +1,8 @@
-<div class="container mt-5">
+<div class="container mt-5 bg-light p-3 shadow-sm rounded-8">
+  <%= link_to content_tag(:i, '', class: 'fas fa-arrow-left'), organisateur_dashboard_path(@organism), class: "btn btn-outline-dark border-0 mb-3" %>
   <div class="row">
     <div class="col-md-6">
       <h1 class="text-center mb-5" style="font-size: 5em;">Editions</h1>
-
-
         <div class="card border-0 shadow-sm rounded mb-4 mt-4 bg-grey">
           <div class="card-body">
             <% @competition.edition_competitions.each_with_index do |edition_competition, index| %>
@@ -22,18 +21,18 @@
                     <% elsif edition_competition.draft? %>
                       <span class="badge rounded-pill bg-transparent text-warning border border-warning mb-1 mr-1">Non publié</span>
                     <% end %>
-
                   </div>
                 </div>
               <% end %>
             <% end %>
 
-
            <% if current_user.organisateur == @competition.organisateur %>
-              <h2 class="mb-4">Générer une édition du concours</h2>
+            <div class="bg-white p-3">
+              <p class="mb-4">Générer une édition du concours</p>
               <%= link_to new_organism_competition_edition_competition_path(@organism, @competition), class: 'btn btn-outline-dark w-100' do %>
                 <i class="fas fa-plus"></i> Ajouter une édition
               <% end %>
+              </div>
             <% end %>
 
           </div>
