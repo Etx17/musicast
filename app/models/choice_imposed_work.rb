@@ -7,4 +7,5 @@ class ChoiceImposedWork < ApplicationRecord
   accepts_nested_attributes_for :choice_imposed_work_airs, allow_destroy: true
   accepts_nested_attributes_for :airs, allow_destroy: true
   belongs_to :category
+
 end

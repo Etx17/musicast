@@ -115,4 +115,6 @@ gem "noticed", "~> 2.4"
 
 gem "view_component", "~> 3.13"
 
-gem 'i18n-debug' 
+gem 'i18n-debug'
+
+gem "wicked"

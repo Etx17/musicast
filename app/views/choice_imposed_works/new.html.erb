@@ -1,6 +1,13 @@
-<%= link_to "Retour", :back, class:"btn btn-outline-dark mt-4 mb-2" %>
-<h1 class="pt-3">Nouvelle liste à choix </h1>
-<p class="p-3 bg-info-secondary text-secondary">
-  <i class="fas fa-info-circle"></i>
-  Une liste à choix vous permet de contraindre le candidat à sélectionner un ou plusieurs airs parmi une liste que vous définissez. Vous pouvez ajouter des consignes afin de guider le candidat</p>
-<%= render "form", choice_imposed_work: @choice_imposed_work %>
+<div class="container">
+  <div class="row justify-content-center">
+      <div class="p-3 bg-white">
+        <%= link_to "Retour", :back, class: "btn btn-outline-dark mt-4 mb-2" %>
+        <h1 class="pt-3">Nouvelle liste à choix</h1>
+        <p class="p-3 bg-info-secondary text-secondary">
+          <i class="fas fa-info-circle"></i>
+          Une liste à choix vous permet de contraindre le candidat à sélectionner un ou plusieurs airs parmi une liste que vous définissez. Vous pouvez ajouter des consignes afin de guider le candidat.
+        </p>
+        <%= render "form", choice_imposed_work: @choice_imposed_work %>
+      </div>
+  </div>
+</div>

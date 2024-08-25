@@ -427,6 +427,8 @@ GEM
     websocket-driver (0.7.6)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
+    wicked (2.0.0)
+      railties (>= 3.0.7)
     wicked_pdf (2.7.0)
       activesupport
     wkhtmltopdf-binary (0.12.6.6)
@@ -495,6 +497,7 @@ DEPENDENCIES
   tzinfo-data
   view_component (~> 3.13)
   web-console
+  wicked
   wicked_pdf
   wkhtmltopdf-binary
 
