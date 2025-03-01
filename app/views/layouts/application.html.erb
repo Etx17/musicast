@@ -21,7 +21,7 @@
 
   <div class="px-2">
     <div class="row">
-      <% if current_user&.organisateur || current_user&.jury %>
+        <% if current_user.present? %>
         <div class="col-md-2 p-0 d-none d-md-block bg-light border-end">
           <!-- Sidebar -->
           <%= render "shared/sidebar" %>
@@ -38,12 +38,7 @@
         <!-- Main content -->
         <%= yield %>
       </div>
-      <% if current_user&.candidat %>
-        <div class="col-md-2 p-0 d-none d-md-block bg-light border-start">
-          <!-- Sidebar -->
-          <%= render "shared/sidebar" %>
-        </div>
-      <% end %>
+
 
 
     </div>
