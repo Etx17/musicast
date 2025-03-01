@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby "3.3.0"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 7.0.8"
+gem "rails", "~> 8.0.1"
 gem 'faraday'
 gem 'nokogiri'
 gem 'devise_invitable', '~> 2.0.0'
@@ -24,7 +24,7 @@ gem 'wkhtmltopdf-binary'
 gem "countries"
 
 # Use the Puma web server [https://github.com/puma/puma]
-gem "puma", "~> 5.0"
+gem "puma", "~> 6.4"
 gem 'stripe'
 gem 'stripe_event'
 
@@ -44,7 +44,7 @@ gem "stimulus-rails"
 gem "jbuilder"
 
 # Use Redis adapter to run Action Cable in production
-gem "redis", "~> 4.0"
+gem "redis", "~> 5.0"
 
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
@@ -83,7 +83,7 @@ group :development, :test do
   gem 'pry-byebug'
   gem 'annotate'
   gem 'faker'
-  gem 'rspec-rails', '~> 5.0'
+  gem 'rspec-rails'
   gem 'factory_bot_rails'
   gem 'stripe-ruby-mock', '~> 3.1.0', :require => 'stripe_mock'
 end

@@ -10,7 +10,7 @@ class EditionCompetition < ApplicationRecord
   delegate :organism, to: :competition
   has_one_attached :rule_document, dependent: :destroy
 
-  enum status: { draft: 0, published: 1, archived: 2 }
+  enum :status, { draft: 0, published: 1, archived: 2 }
 
   # Validations
   validates :annee, presence: true

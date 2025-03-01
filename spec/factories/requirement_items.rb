@@ -3,7 +3,6 @@ FactoryBot.define do
   # t.integer "type_item"
   # t.text "description_item"
   # t.string "title"
-  # enum type_item: { youtube_link: 0, recommendation_letter: 1, parental_authorization: 2, motivation_essay: 3 }
 
   factory :requirement_item do
     category factory: :category

@@ -19,13 +19,13 @@ class Inscription < ApplicationRecord
   scope :by_category, -> (category_id) { where(category_id: category_id).includes(candidat: :user) }
   scope :by_candidat, ->(candidat_id) { where(candidat_id: candidat_id) }
 
-  enum status: {
+  enum :status, {
     draft: 0,
     in_review: 1,
     accepted: 2,
     rejected: 3
   }
-  enum time_preference: {
+  enum :time_preference, {
     no_preference: 0,
     morning: 1,
     afternoon: 2,

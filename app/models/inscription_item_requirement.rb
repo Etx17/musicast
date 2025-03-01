@@ -68,7 +68,7 @@ class InscriptionItemRequirement < ApplicationRecord
   end
 
 
-  enum verification_status: { not_checked_yet: 0, checked_valid: 1, checked_invalid: 2, ai_failed: 3, not_sure: 4, no_need_to_check: 5 }
+  enum :verification_status, { not_checked_yet: 0, checked_valid: 1, checked_invalid: 2, ai_failed: 3, not_sure: 4, no_need_to_check: 5 }
 
   def status_text
     case verification_status

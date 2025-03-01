@@ -18,7 +18,7 @@ class User < ApplicationRecord
   has_many :inscription_orders
   has_many :documents
 
-  enum inscription_role: { candidate: 0, organiser: 1, jury: 2, partner: 3 }
+  enum :inscription_role, { candidate: 0, organiser: 1, jury: 2, partner: 3 }
   validates :inscription_role, presence: true
   validates :accepted_terms, acceptance: { accept: true }
 

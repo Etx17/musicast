@@ -9,7 +9,7 @@ class Performance < ApplicationRecord
   delegate :candidat, to: :inscription
 
 
-  enum status: {
+  enum :status, {
     draft: 0,
     in_review: 1,
     accepted: 2,

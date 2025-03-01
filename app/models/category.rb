@@ -24,19 +24,15 @@ class Category < ApplicationRecord
 
   accepts_nested_attributes_for :categories_juries, allow_destroy: true
 
-  enum status: {
-    draft: 0,
-    published: 1,
-    archived: 2
-  }
+  enum :status, { draft: 0, published: 1, archived: 2 }
 
-  enum preselection_vote_type: {
+  enum :preselection_vote_type, {
     no_vote: 0,
     hundred_points: 1,
   }
 
   # Dangereux, attention a la suppression des catégories et a l'ajout
-  enum discipline: {
+  enum :discipline, {
     alto: 1,
     ancient_instruments_and_baroque_music: 2,
     bassoon: 3,
