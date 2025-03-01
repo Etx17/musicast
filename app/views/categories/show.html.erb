@@ -1,4 +1,4 @@
-<div class="pt-5">
+<div class="pt-5 container">
   <div class="row">
     <div class="col">
       <h1 class="text-center mb-3 " style="font-size: 5.5em;"><%= @category.name %></h1>
@@ -52,7 +52,7 @@
       </div>
     </div>
   <% end %>
-
+  <div class="container">
   <div id="program">
     <%= render "program_container_section", category: @category %>
   </div>
@@ -72,5 +72,5 @@
   <div id="jury">
     <%= render "juries_section", category: @category if @category.hundred_points? %>
   </div>
-
+</div>
 </div>

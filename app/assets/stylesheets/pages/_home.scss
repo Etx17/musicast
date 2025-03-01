@@ -293,7 +293,7 @@ html {
   background-color: #f8f9fa;
   border-right: 1px solid #e9ecef;
   height: 100vh;
-  padding-top: 20px;
+  overflow-y: auto;
 }
 
 .nav-item {
@@ -335,10 +335,6 @@ html {
   }
 }
 
-// Add a subtle hover effect
-.nav-item:hover > .nav-link {
-  transform: translateX(5px);
-}
 
 // Style for competition status
 .competition-status {

@@ -1,4 +1,14 @@
 <div class="sidebar">
+  <div class="p-3 mt-2 d-flex flex-column align-items-center">
+    <% if current_user.inscription_role == "organiser" %>
+        <%= image_tag "https://i.pravatar.cc/50", class: "rounded-circle" %>
+        <span class="text-center"><%= current_user.organisateur&.organism&.nom %></span>
+    <% else %>
+      <%= image_tag "https://i.pravatar.cc/50", class: "rounded-circle" %>
+      <%= current_user.first_name %> <%= current_user.last_name %>
+    <% end %>
+  </div>
+
   <ul class="nav flex-column">
     <% sidebar_links.each do |link| %>
       <li class="nav-item">

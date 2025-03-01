@@ -50,6 +50,22 @@ class User < ApplicationRecord
     end
   end
 
+  def is_organisateur?
+    inscription_role == "organisateur" || Organisateur.exists?(user: self)
+  end
+
+  def is_candidat?
+    inscription_role == "candidat" || Candidat.exists?(user: self)
+  end
+
+  def is_jury?
+    inscription_role == "jury" || Jury.exists?(user: self)
+  end
+
+  def is_partner?
+    inscription_role == "partner" || Partner.exists?(user: self)
+  end
+
   def organisateur
     Organisateur.find_by(user: self)
   end
@@ -65,9 +81,9 @@ class User < ApplicationRecord
   def first_name
     case inscription_role
     when "organiser"
-      organisateur&.first_name || "Utilisateur (prénom à modifier)"
+      organisateur&.first_name || "Mr. Organisateur"
     when "candidate"
-      candidat&.first_name || "Utilisateur (prénom à modifier)"
+      candidat&.first_name || "Mr. Candidat"
     when "jury"
       jury&.first_name || "Utilisateur (prénom à modifier)"
     when "partner"
