@@ -170,3 +170,66 @@ fr:
     recommendation_letter: Lettre de recommandation
     parental_authorization: Autorisation parentale
     motivation_essay: Dissertation de motivation
+  language_name: "Français"
+  navbar:
+    home: "Accueil"
+    competitions: "Compétitions"
+    about: "À propos"
+    contact: "Contact"
+    login: "Connexion"
+    signup: "S'inscrire"
+    switch_language: "English"
+  airs:
+    # Common elements
+    common:
+      title: "Titre"
+      length_minutes: "Durée (minutes)"
+      composer: "Compositeur"
+      oeuvre: "Œuvre"
+      character: "Personnage"
+      tonality: "Tonalité"
+      infos: "Informations additionnelles"
+      actions:
+        show: "Voir ce morceau"
+        edit: "Modifier ce morceau"
+        destroy: "Supprimer ce morceau"
+        back: "Retour aux morceaux"
+        new: "Nouveau morceau"
+        submit: "Enregistrer"
+
+    # View-specific translations
+    index:
+      title: "Morceaux"
+      new: "Nouveau morceau"
+
+    show:
+      title: "Détails du morceau"
+      notice: "Morceau enregistré avec succès."
+
+    new:
+      title: "Nouveau morceau"
+
+    edit:
+      title: "Modifier le morceau"
+
+    form:
+      character_hint: "Si air d'opéra"
+      error: "Veuillez corriger les erreurs ci-dessous:"
+  categories:
+    show:
+      back_to_categories: "Retour aux catégories"
+      edit_category: "Modifier la catégorie"
+      view_applications: "Candidatures"
+      delete: "Supprimer"
+      finish_configuration: "J'ai terminé la configuration de la catégorie"
+      configure_program: "Configurer le programme"
+      configure_tours: "Configurer les tours"
+      configure_requirements: "Configurer les pièces requises"
+      configure_prizes: "Configurer les prix"
+      badges:
+        create_program: "Créez au moins 1 programme"
+        create_tour: "Créez au moins 1 tour"
+        create_requirement: "Créez au moins 1 document requis (optionnel)"
+        create_prize: "Créez au moins 1 prix"
+        create_jury: "Créez au moins 1 pré-juré votant"
+      applications: "Candidatures"

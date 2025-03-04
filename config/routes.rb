@@ -6,7 +6,8 @@ Rails.application.routes.draw do
   get 'tour_requirements/update'
   get 'tour_requirements/edit'
   get 'tour_requirements/show'
-  
+
+   get '/language/switch', to: 'language#switch', as: 'switch_language'
 
   resources :leads
   resources :performances

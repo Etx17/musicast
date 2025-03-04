@@ -30,8 +30,8 @@
       <% if user_signed_in? %>
         <div class="ml-auto">
           <li class="nav-item dropdown text-decoration-none" style="list-style: none;">
-            <a href="#" class="avatar" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <%= image_tag "https://kitt.lewagon.com/placeholder/users/ssaunier", class: "avatar", alt: "dropdown menu" %>
+            <a href="#" class="avatar me-3" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <%= image_tag "https://placehold.co/40x40", class: "avatar", alt: "dropdown menu" %>
             </a>
             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
               <% sidebar_links.each do |link| %>
@@ -46,6 +46,13 @@
           </li>
         </div>
       <% end %>
+
+      <div class="ms-auto d-flex align-items-center">
+        <span class="me-2"><%= t('language_name') %></span>
+        <%= link_to t('navbar.switch_language'),
+                    switch_language_path(locale: I18n.locale == :fr ? :en : :fr),
+                    class: "btn btn-sm btn-outline-secondary" %>
+      </div>
     </div>
   </div>
 </div>

@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   include Pundit::Authorization
   before_action :set_breadcrumbs
   before_action :configure_permitted_parameters, if: :devise_controller?
-
+  before_action :set_locale
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
 
@@ -38,4 +38,7 @@ class ApplicationController < ActionController::Base
     redirect_to(request.referrer || root_path)
   end
 
+  def set_locale
+    I18n.locale = session[:locale] || I18n.default_locale
+  end
 end

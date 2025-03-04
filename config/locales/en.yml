@@ -27,3 +27,61 @@ en:
     recommendation_letter: Recommendation Letter
     parental_authorization: Parental Authorization
     motivation_essay: Motivation Essay
+  language_name: "English"
+  navbar:
+    home: "Home"
+    competitions: "Competitions"
+    about: "About"
+    contact: "Contact"
+    login: "Login"
+    signup: "Sign up"
+    switch_language: "Français"
+  airs:
+    # Common elements
+    common:
+      title: "Title"
+      length_minutes: "Duration (minutes)"
+      composer: "Composer"
+      oeuvre: "Work"
+      character: "Character"
+      tonality: "Tonality"
+      infos: "Additional information"
+      actions:
+        show: "Show this piece"
+        edit: "Edit this piece"
+        destroy: "Delete this piece"
+        back: "Back to pieces"
+        new: "New piece"
+        submit: "Save"
+    # View-specific translations
+    index:
+      title: "Pieces"
+      new: "New piece"
+    show:
+      title: "Piece details"
+      notice: "Piece was successfully saved."
+    new:
+      title: "New piece"
+    edit:
+      title: "Edit piece"
+    form:
+      character_hint: "For opera arias only"
+      error: "Please correct the errors below:"
+  categories:
+    show:
+      back_to_categories: "Back to categories"
+      edit_category: "Edit category"
+      view_applications: "Applications"
+      delete: "Delete"
+      finish_configuration: "I have finished configuring the category"
+      configure_program: "Configure program"
+      configure_tours: "Configure rounds"
+      configure_requirements: "Configure required documents"
+      configure_prizes: "Configure prizes"
+      badges:
+        create_program: "Create at least 1 program"
+        create_tour: "Create at least 1 round"
+        create_requirement: "Create at least 1 required document (optional)"
+        create_prize: "Create at least 1 prize"
+        create_jury: "Create at least 1 voting pre-jury"
+      applications: "Applications"

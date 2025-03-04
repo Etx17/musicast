@@ -23,5 +23,17 @@ module TestConcours
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+    #   # Set default locale to French
+    config.i18n.default_locale = :fr
+
+    # Load locale files from all subdirectories
+    config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
+
+    # Available locales
+    config.i18n.available_locales = [:fr, :en]
+
+    # Fallback to default locale
+    config.i18n.fallbacks = true
+    
   end
 end

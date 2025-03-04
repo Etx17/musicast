@@ -1,14 +1,14 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Airs</h1>
+<h1><%= t('airs.index.title') %></h1>
 
 <div id="airs">
   <% @airs.each do |air| %>
     <%= render air %>
     <p>
-      <%= link_to "Show this air", air %>
+      <%= link_to t('airs.common.actions.show'), air %>
     </p>
   <% end %>
 </div>
 
-<%= link_to "New air", new_air_path %>
+<%= link_to t('airs.common.actions.new'), new_air_path %>
