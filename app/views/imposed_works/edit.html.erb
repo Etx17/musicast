@@ -2,8 +2,15 @@
   <%# Button deretour  %>
   <%= link_to 'Retour', :back, class: 'btn btn-secondary' %>
 
-  <h1 class="text-center" style="font-size: 3.5em;">Modifier les oeuvres imposées</h1>
+  <h1><%= t('imposed_works.edit.title') %></h1>
 
   <div class="text-center text-white rounded-pill bg-info mb-5 w-50 mx-auto d-block" style="font-size: 3em;"><%= @imposed_work.category.name %></div>
   <%= render 'form', imposed_work: @imposed_work %>
+
+  <br>
+
+  <div>
+    <%= link_to t('imposed_works.common.actions.show'), [@organism, @competition, @edition_competition, @category, @imposed_work] %> |
+    <%= link_to t('imposed_works.common.actions.back'), organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category) %>
+  </div>
 </div>

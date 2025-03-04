@@ -1,13 +1,24 @@
 <div id="<%= dom_id imposed_work %>">
 
   <p>
-    <strong>Title:</strong>
+    <strong><%= t('imposed_works.common.title') %>:</strong>
     <%= imposed_work.title %>
   </p>
 
   <p>
-    <strong>Guidelines:</strong>
+    <strong><%= t('imposed_works.common.guidelines') %>:</strong>
     <%= imposed_work.guidelines %>
   </p>
+
+  <% if imposed_work.airs.any? %>
+    <h3><%= t('imposed_works.common.airs') %></h3>
+    <ul>
+      <% imposed_work.airs.each do |air| %>
+        <li><%= air.title %> - <%= air.composer %></li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p><em><%= t('imposed_works.show.no_airs') %></em></p>
+  <% end %>
 
 </div>

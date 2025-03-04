@@ -85,3 +85,33 @@ en:
         create_prize: "Create at least 1 prize"
         create_jury: "Create at least 1 voting pre-jury"
       applications: "Applications"
+  imposed_works:
+    # Common elements
+    common:
+      title: "Title"
+      guidelines: "Guidelines"
+      airs: "Required pieces"
+      actions:
+        show: "View this required program"
+        edit: "Edit this required program"
+        destroy: "Delete this required program"
+        back: "Back to required programs"
+        new: "New required program"
+        submit: "Save changes"
+        add_piece: "Add a piece"
+    # View-specific translations
+    index:
+      title: "Required Programs"
+      new: "New required program"
+    show:
+      title: "Required Program Details"
+      notice: "Required program was successfully saved."
+      no_airs: "No pieces have been added to this program."
+    new:
+      title: "New Required Program"
+    edit:
+      title: "Edit Required Program"
+    form:
+      title_placeholder: "e.g.: 2 works by Fauré"
+      guidelines_placeholder: "e.g.: These required works will be randomly distributed in the candidate's program between rounds"
+      error: "Please correct the errors below:"

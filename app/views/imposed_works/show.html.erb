@@ -1,10 +1,15 @@
 <p style="color: green"><%= notice %></p>
 
+<h1><%= t('imposed_works.show.title') %></h1>
+
 <%= render @imposed_work %>
 
 <div>
-  <%= link_to "Edit this imposed work", edit_imposed_work_path(@imposed_work) %> |
-  <%= link_to "Back to imposed works", imposed_works_path %>
+  <%= link_to t('imposed_works.common.actions.edit'), edit_organism_competition_edition_competition_category_imposed_work_path(@organism, @competition, @edition_competition, @category, @imposed_work) %> |
+  <%= link_to t('imposed_works.common.actions.back'), organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category) %>
 
-  <%= button_to "Destroy this imposed work", @imposed_work, method: :delete %>
+  <%= button_to t('imposed_works.common.actions.destroy'),
+                organism_competition_edition_competition_category_imposed_work_path(@organism, @competition, @edition_competition, @category, @imposed_work),
+                method: :delete,
+                data: { confirm: t('common.confirmations.are_you_sure') } %>
 </div>

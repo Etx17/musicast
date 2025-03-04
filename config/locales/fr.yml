@@ -233,3 +233,38 @@ fr:
         create_prize: "Créez au moins 1 prix"
         create_jury: "Créez au moins 1 pré-juré votant"
       applications: "Candidatures"
+  imposed_works:
+    # Common elements
+    common:
+      title: "Titre"
+      guidelines: "Consignes"
+      airs: "Airs imposés"
+      actions:
+        show: "Voir ce programme imposé"
+        edit: "Modifier ce programme imposé"
+        destroy: "Supprimer ce programme imposé"
+        back: "Retour aux programmes imposés"
+        new: "Nouveau programme imposé"
+        submit: "Enregistrer les modifications"
+        add_piece: "Ajouter un morceau"
+
+    # View-specific translations
+    index:
+      title: "Programmes imposés"
+      new: "Nouveau programme imposé"
+
+    show:
+      title: "Détails du programme imposé"
+      notice: "Programme imposé enregistré avec succès."
+      no_airs: "Aucun air n'a été ajouté à ce programme."
+
+    new:
+      title: "Nouveau programme imposé"
+
+    edit:
+      title: "Modifier le programme imposé"
+
+    form:
+      title_placeholder: "ex: 2 oeuvres de Fauré"
+      guidelines_placeholder: "ex: Ces oeuvres imposées seront réparties aléatoirement dans le programme du candidat entre les tours"
+      error: "Veuillez corriger les erreurs ci-dessous:"
