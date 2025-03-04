@@ -41,8 +41,12 @@ class ImposedWorksController < ApplicationController
 
   def destroy
     @imposed_work = ImposedWork.find(params[:id])
+    @imposed_work.airs.destroy_all if @imposed_work.airs.any?
     if @imposed_work.destroy
       redirect_to(params[:redirect_path] || root_path, notice: "Imposed work was successfully destroyed.")
+    else
+      redirect_to organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category),
+                 alert: "Failed to destroy imposed work: #{@imposed_work.errors.full_messages.join(', ')}"
     end
   end
 
