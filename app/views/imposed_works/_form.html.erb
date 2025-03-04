@@ -4,11 +4,11 @@
   <%= f.hidden_field :category, value: @imposed_work.category, disabled: true %>
 
   <div class="form-inputs p-3">
-    <div class="shadow p-3 mb-5" style="border-radius: 10px;">
-      <%= f.input :title, label_html: { class: ' h2' }, input_html: { class: 'p-2 border' }, hint: "(ex: 2 oeuvres de Fauré)", label: '<i class="fas fa-book text-gradient "></i> Titre'.html_safe %>
-      <%= f.input :guidelines, label_html: { class: 'h2' }, input_html: { class: 'p-2 border' },hint: "(ex: Ces oeuvres imposées seront réparties aléatoirement dans le programme du candidat entre les tours)", label: '<i class="fas fa-info-circle text-gradient "></i> Consignes'.html_safe %>
+    <div class="bg-light border p-3 mb-5" style="border-radius: 10px;">
+      <%= f.input :title, required: true, placeholder: "ex: 2 oeuvres de Fauré", label_html: { class: '' }, input_html: { class: 'p-2 border' }, label: '<i class="fas fa-book text-secondary "></i> Titre'.html_safe %>
+      <%= f.input :guidelines, required: true, placeholder: "ex: Ces oeuvres imposées seront réparties aléatoirement dans le programme du candidat entre les tours", label_html: { class: '' }, input_html: { class: 'p-2 border' }, label: '<i class="fas fa-info-circle text-secondary "></i> Consignes'.html_safe %>
     </div>
-    <h3 class="text-center mb-5" style="font-size: 3em;"> Airs imposés</h3>
+    <h4 class="text-center mb-5" style=""> Airs imposés</h4>
 
     <div data-controller="airs">
       <div data-airs-target="container">
