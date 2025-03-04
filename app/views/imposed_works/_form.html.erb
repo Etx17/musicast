@@ -3,7 +3,7 @@
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
   <%= f.hidden_field :category, value: @imposed_work.category, disabled: true %>
 
-  <div class="form-inputs p-3">
+  <div class="form-inputs">
     <div class="bg-light border p-3 mb-5" style="border-radius: 10px;">
       <%= f.input :title, required: true, placeholder: "ex: 2 oeuvres de Fauré", label_html: { class: '' }, input_html: { class: 'p-2 border' }, label: '<i class="fas fa-book text-secondary "></i> Titre'.html_safe %>
       <%= f.input :guidelines, required: true, placeholder: "ex: Ces oeuvres imposées seront réparties aléatoirement dans le programme du candidat entre les tours", label_html: { class: '' }, input_html: { class: 'p-2 border' }, label: '<i class="fas fa-info-circle text-secondary "></i> Consignes'.html_safe %>
@@ -11,7 +11,7 @@
     <h4 class="text-center mb-5" style=""> Airs imposés</h4>
 
     <div data-controller="airs">
-      <div data-airs-target="container">
+      <div data-airs-target="container" class="bg-white">
         <%= f.simple_fields_for :airs do |air| %>
           <%= render 'shared/air_fields', f: air %>
         <% end %>
@@ -24,11 +24,11 @@
       </div>
 
       <div class="d-flex gap-3 justify-content-center">
-        <%= link_to '#', data: { action: 'airs#addAir' }, class: 'p-3 rounded-pill btn btn-outline-primary mb-5' do %>
+        <%= link_to '#', data: { action: 'airs#addAir' }, class: 'px-2 btn btn-dark mb-5' do %>
           <i class="fas fa-plus"></i> Ajouter un morceau
         <% end %>
 
-        <%= button_tag(type: 'submit', class: 'p-3 rounded-pill btn btn-primary mb-5') do %>
+        <%= button_tag(type: 'submit', class: 'px-2  btn btn-dark mb-5') do %>
           <i class="fa-solid fa-floppy-disk"></i> Enregistrer les modifications
         <% end %>
       </div>
