@@ -17,7 +17,11 @@
         <%= image_tag @organism.logo, class:" align-items-start p-0 m-0 mb-4", style: "width: 200px; object-fit: cover;" %>
       </div>
     <% end %>
-    <%= f.file_field :logo, class: "form-control" %>
+    <% if @organism.persisted? %>
+      <%= f.hidden_field :logo_attachment_signed_id, value: @organism.logo.signed_id if @organism.logo.attached? %>
+    <% else %>
+      <%= f.file_field :logo, class: "form-control" %>
+    <% end %>
   </div>
 
   <div class="form-actions">

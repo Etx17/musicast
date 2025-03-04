@@ -23,7 +23,7 @@
       <% end %>
     </div>
     <div class="col-md-6">
-      <%= f.input :details_specifiques, input_html: {style:"border: none;"}%>
+      <%= f.input :details_specifiques, input_html: {style:"border: none;"}, placeholder: "Précisez les nouvelles modalités de cette édition si nécessaire"%>
       <div class="gap-2 d-flex flex-column">
         <%= f.label "Règlement du concours (PDF, PNG, JPG)" %>
         <%= f.file_field :rule_document %>
