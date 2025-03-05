@@ -1,4 +1,3 @@
-
   <% if @tour.category.edition_competition.competition.organism.logo.attached? %>
     <%= image_tag @tour.category.edition_competition.competition.organism.logo, style: "width: 200px; height: 200px; box-shadow: 0 .5rem 1rem rgba(0,0,0,.15); border-radius: 50%; display: block; margin-left: auto; margin-right: auto; margin-bottom: 30px;" %>
 
@@ -13,9 +12,9 @@
       <table class="table ">
         <thead>
           <tr>
-            <th scope="col">Candidat</th>
-            <th scope="col">Heure de passage</th>
-            <th scope="col">Ordre</th>
+            <th scope="col"><%= t('tours.show_pdf.candidate') %></th>
+            <th scope="col"><%= t('tours.show_pdf.passage_time') %></th>
+            <th scope="col"><%= t('tours.show_pdf.order') %></th>
           </tr>
         </thead>
         <tbody>
@@ -32,7 +31,7 @@
               <% end %>
             <% elsif item.is_a?(Pause) && item.date == day %>
               <tr style="background: #DDDDDD">
-                <td>Pause</td>
+                <td><%= t('tours.show_pdf.break') %></td>
                   <td id="pause_time_<%= day %>_<%= index %>" class="text-center" ><strong><%= item.start_time.strftime('%H:%M') %> - <%= item.end_time.strftime('%H:%M') %></strong></td>
                 <td>
                   <% last_pause_of_the_day = items.reverse.find { |i| i.is_a?(Pause) && i.date == day } %>

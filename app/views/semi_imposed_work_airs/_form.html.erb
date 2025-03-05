@@ -1,14 +1,13 @@
-
 <%= simple_form_for(@semi_imposed_work_air) do |f| %>
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
-    <%= f.association :semi_imposed_work %>
-    <%= f.association :air %>
+    <%= f.association :semi_imposed_work, label: t('semi_imposed_work_airs.form.semi_imposed_work') %>
+    <%= f.association :air, label: t('semi_imposed_work_airs.form.air') %>
   </div>
 
   <div class="form-actions">
-    <%= f.button :submit %>
+    <%= f.button :submit, t('global.actions.submit') %>
   </div>
 <% end %>

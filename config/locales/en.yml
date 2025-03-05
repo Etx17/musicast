@@ -915,6 +915,7 @@ en:
     items_form_section:
       youtube_hint: "Link to your YouTube video"
       replace_document: "Replace document"
+
   juries:
     form:
       update: "Update"
@@ -928,9 +929,11 @@ en:
 
     new:
       new_jury: "New jury"
+
   layouts:
     application:
       title: "TestConcours"
+
   notes:
     form:
       note_value: "Note Value"
@@ -952,6 +955,7 @@ en:
       view_video: "View video %{number}"
       no_video_available: "The candidate has not provided any available video"
       candidate_motivation_letter: "Candidate's Motivation Letter"
+
   organisateurs:
     form:
       organization_name: "Organization Name"
@@ -975,6 +979,7 @@ en:
     show:
       edit: "Edit this organizer"
       destroy: "Destroy this organizer"
+
   organisms:
     organism:
       name: "Name"
@@ -994,17 +999,21 @@ en:
 
     show:
       modify: "Modify"
+
   pages:
     dropdown_inputs:
       discipline: "Discipline"
+
     edition_competition_card:
       days_remaining: "days remaining"
       from: "from"
       to: "to"
       first_prize: "1st prize"
+
     home:
       competitions: "Competitions"
       no_competition_found: "No competition found 🥲. Come back later or change the filters of research."
+
     landing:
       musikast: "Musikast"
       organize_publish_competitions: "Organize & publish your competitions"
@@ -1023,6 +1032,7 @@ en:
       communicate_easily_description: "Send notifications to your candidates with one click. Notify acceptance or rejection of their file, their selection to move to the next round, send them the generated schedule."
       create_jury: "Create a voting pre-selection jury"
       create_jury_description: "You can invite people of your choice to be part of a pre-selection jury for one of the categories of your competition. This jury can assign a score from 1 to 100 to each file."
+
     pricing:
       pricing: "Pricing"
       competitions: "Competitions"
@@ -1031,6 +1041,7 @@ en:
       commission_cap: "However, once the total amount of commissions reaches €1000 (which corresponds to 200 applications), we no longer take a commission. Beyond this point, we only take the Stripe payment fees to cover costs."
       other_services: "Auditions, Masterclasses, and Internships"
       other_services_description: "For auditions, masterclasses, and internships, Musicast earns revenue from the deposit of the announcement and its duration."
+
     privacy_policy:
       title: "**Musicast Privacy Policy**"
       section1:
@@ -1051,6 +1062,7 @@ en:
       section3:
         title: "**3. Contact**"
         p1: "If you have any questions regarding this privacy policy, please contact us at privacy@musicast.io."
+
     terms_of_use:
       title: "Terms of Use of the Musicast Web Platform"
       section1:
@@ -1067,6 +1079,7 @@ en:
         title: "**3. Intellectual Property**"
         p1: "All content on the platform, including text, graphics, logos, icons, images, audio clips, digital downloads, and data compilations, is the property of Musicast or its content providers and is protected by French and international copyright laws."
         p2: "You agree not to reproduce, duplicate, copy, sell, resell, or exploit any portion of the platform without our express written permission."
+
   partners:
     form:
       partner_role: "Partner role"
@@ -1097,6 +1110,7 @@ en:
       checkout_summary: "Checkout summary"
       purchase_of: "Purchase of <strong>%{inscription}</strong> for <strong>%{amount}</strong>"
       pay: "Pay"
+
   performances:
     form:
       tour_requirements: "Tour Requirements"
@@ -1196,3 +1210,330 @@ en:
       edit: "Edit this programme requirement"
       back: "Back to programme requirements"
       destroy: "Destroy this programme requirement"
+
+  requirement_items:
+    form:
+      category: "Category"
+      type_item: "Item type"
+      description_item: "Item description"
+      title: "Title"
+
+    requirement_item:
+      category: "Category"
+      type_item: "Item type"
+      description_item: "Item description"
+      title: "Title"
+
+    edit:
+      editing_requirement_item: "Editing requirement item"
+
+    index:
+      requirement_items: "Requirement items"
+      new_requirement_item: "New requirement item"
+
+    new:
+      new_requirement_item: "New requirement item"
+
+  semi_imposed_work_airs:
+    form:
+      semi_imposed_work: "Semi-imposed work"
+      air: "Air"
+
+    semi_imposed_work_air:
+      semi_imposed_work: "Semi-imposed work"
+      air: "Air"
+
+    edit:
+      editing_semi_imposed_work_air: "Editing semi-imposed work air"
+
+    index:
+      semi_imposed_work_airs: "Semi-imposed work airs"
+      new_semi_imposed_work_air: "New semi-imposed work air"
+
+    new:
+      new_semi_imposed_work_air: "New semi-imposed work air"
+  semi_imposed_works:
+    form:
+      title: "Title"
+      title_hint: "Give a title to your line, for example \"German Lieds\""
+      guidelines: "Guidelines"
+      guidelines_hint: "Describe your instruction here as precisely as possible"
+      number: "Number of works"
+      number_hint: "How many works are required in this instruction?"
+      max_length_minutes: "Maximum total duration (in minutes)"
+      max_length_minutes_hint: "This duration will help calculate the schedule"
+
+    semi_imposed_work:
+      guidelines: "Guidelines"
+      number: "Number"
+      max_length_minutes: "Maximum length in minutes"
+
+    edit:
+      edit_semi_imposed_work: "Edit a listing of works with specific constraints"
+
+    index:
+      semi_imposed_works: "Semi-imposed works"
+      show_semi_imposed_work: "Show this semi-imposed work"
+      new_semi_imposed_work: "New semi-imposed work"
+
+    new:
+      new_semi_imposed_work: "New semi-imposed work"
+      back_to_semi_imposed_works: "Back to semi-imposed works"
+
+    show:
+      edit_semi_imposed_work: "Edit this semi-imposed work"
+      back_to_semi_imposed_works: "Back to semi-imposed works"
+      destroy_semi_imposed_work: "Destroy this semi-imposed work"
+
+  shared:
+    flashes:
+      close: "Close"
+
+    navbar:
+      dropdown_menu: "dropdown menu"
+
+    components:
+      music_search_component:
+        search_composer: "Search for Composer..."
+        loading: "Loading..."
+
+  tours:
+    results:
+      save_results_and_finish_tour: "Save results and finish tour"
+      finish_tour_confirm: "Are you sure you want to finish this tour? This action is irreversible and candidates will be notified of the results."
+      candidates_will_be_notified: "Candidates will be notified of the results."
+      tour_finished_title: "Tour finished."
+      notification_instruction: "Send a notification to each candidate to inform them of their result."
+      use_buttons_below: "Use the buttons below to notify candidates"
+      qualified_sent_to_next_tour: "Qualified candidates have been sent to the next tour."
+      next_tour: "Next tour"
+      no_next_tour: "There is no next tour. Congratulations to the finalists!"
+      send_qualified_to_next_tour: "Send qualified candidates to the next tour"
+      candidate: "Candidate"
+      order: "Order"
+      presented_airs: "Presented airs"
+      result: "Result"
+      no_performances_yet: "No performances have been added to this tour yet."
+      and_others: "and %{count} others"
+      see_more: "see more"
+
+    tour_configuration_form:
+      start_time: "Start time"
+      start_time_hint: "Indicate the start time of the tour."
+      max_end_of_day_time: "Maximum end of day time"
+      max_end_of_day_time_hint: "Indicate the maximum end time of the day."
+      new_day_start_time: "New day start time"
+      new_day_start_time_hint: "If the tour extends to another day due to the number of candidates, you can indicate a different start time for this new day."
+      confirm_and_generate: "Confirm configuration and generate schedule"
+
+    tour:
+      tour_configuration: "Tour Configuration"
+      order_of_passage: "Order of passage"
+      planning: "Planning"
+      results: "Results"
+      tour_is_finished: "The tour is finished."
+      no_planning_yet: "You don't have a schedule yet."
+      generate_planning_instruction: "You can generate one by clicking on the button below."
+      generate_with_current_order: "You will generate a schedule with the current order of passage."
+      generate_planning: "Generate schedule"
+      can_generate_after_deadline: "You can only generate the schedule once the performance submission deadline for the tour has passed, on:"
+
+    edit:
+      edit_tour: "Edit tour"
+
+    index:
+      tours: "Tours"
+      show_this_tour: "Show this tour"
+      new_tour: "New tour"
+
+    new:
+      new_tour: "New tour"
+
+    schedule:
+      your_planning: "Your schedule (You can modify it as long as you haven't sent the invitations)"
+      can_modify_later: "You can modify it later of course, but you will have to notify the candidates yourself."
+
+    show_jury_pdf:
+      required_item_photo: "Required item photo"
+      years_old: "yo"
+      notes: "NOTES"
+
+    show_pdf:
+      candidate: "Candidate"
+      passage_time: "Passage time"
+      order: "Order"
+      break: "Break"
+
+    form:
+      title_placeholder: "Tour title (e.g.: Preliminary, Semi-final, Final)"
+      description_placeholder: "Tour description"
+      start_date: "Start date"
+      final_performance_submission_deadline: "Final performance submission deadline"
+      imposed_air_selection_label: "Imposed air selection"
+      imposed_air_selection_label_optional: "Imposed air selection (optional)"
+      none: "None"
+      multiple_selection_help: "Hold Ctrl (or Cmd on Mac) to select multiple options"
+      create_imposed_work_first: "You must first create an imposed work for this category"
+      no_pianist_accompagnateur: "No pianist accompanist for this tour"
+      configurations: "Configurations"
+      tour_requirement_description_placeholder: "Tour requirement description"
+      min_number_of_works: "Minimum number of works"
+      max_number_of_works: "Maximum number of works"
+      min_duration_minute: "Minimum duration (in minutes)"
+      max_duration_minute: "Maximum duration (in minutes)"
+
+    order_of_performances:
+      current_order: "Current order"
+      shuffle_confirm: "Are you sure you want to randomly shuffle the order of performances?"
+      shuffle_randomly: "Shuffle randomly"
+      assign_pianists: "Assign pianists"
+      assign_pianist: "Assign pianist"
+      pianists_for_tour: "Pianists for this tour"
+      select_pianists: "Select pianists"
+      pianist_assignment_config: "Pianist assignment configuration"
+      max_consecutive_performances: "Maximum number of consecutive performances per pianist"
+      assign: "Assign"
+      change_order_instructions: "Change the order by modifying the number and clicking on"
+      or_shuffle: "or shuffle with"
+      candidate: "Candidate"
+      order: "Order"
+      presented_airs: "Presented airs"
+      pianist_accompanist: "Pianist accompanist"
+      timing: "Timing"
+      passage_preference: "Passage preference"
+      actions: "Actions"
+      no_performances_yet: "No performances have been added to this tour yet."
+      and_others: "and %{count} others"
+      see_more: "see more"
+      change_order_confirm: "Are you sure you want to change the order?"
+      select_pianist: "Select pianist"
+      brings_own_pianist: "Brings own pianist"
+
+    planning:
+      reconfigure_planning: "Reconfigure planning"
+      modify_constraints: "Modify constraints"
+      email_subject: "Information about your competition passage"
+      email_body: "Hello, here is the information regarding your competition passage..."
+      send_email_to_all_candidates: "Send email to all candidates"
+      recipients: "recipients"
+      email_example: "e.g.: Hello, here is the information regarding your passage..."
+      download_planning_pdf: "Download planning (PDF)"
+      configure_jury_folder: "Configure jury folder"
+      download_jury_folder_pdf: "Download jury folder (PDF)"
+      jury_planning_configuration: "Jury planning configuration"
+      tour_planning: "Tour planning"
+      planning_generated_success: "The planning has been successfully generated"
+      add_breaks_instructions: "You can add breaks by clicking on the + Add break button"
+      change_date_confirm: "Are you sure you want to change the date? This will affect all performances on this day."
+      add_break: "Add break"
+      breaks_chronological_order: "Breaks must be added in chronological order"
+      start_time: "Start time"
+      end_time: "End time"
+      candidate: "Candidate"
+      passage_time: "Passage time"
+      order: "Order"
+      break: "Break"
+      delete_break_confirm: "Are you sure you want to delete this break?"
+
+    planning_jury_form:
+      detailed_program: "Detailed program"
+      simple_air: "Simple air"
+      notes_space: "Notes space"
+      profile_photo: "Profile photo"
+      artistic_photo: "Artistic photo"
+      short_bio: "Short bio"
+      medium_bio: "Medium bio"
+      long_bio: "Long bio"
+      short_bio_en: "Short bio (EN)"
+      medium_bio_en: "Medium bio (EN)"
+      long_bio_en: "Long bio (EN)"
+      order_of_passage: "Order of passage"
+
+    results:
+      save_results_and_finish_tour: "Save results and finish tour"
+      finish_tour_confirm: "Are you sure you want to finish this tour? This action is irreversible."
+      candidates_will_be_notified: "Candidates will be notified by email"
+      tour_finished_title: "The tour is finished"
+      notification_instruction: "You can now notify candidates of their result"
+      use_buttons_below: "Use the buttons below to send emails"
+      qualified_sent_to_next_tour: "Qualified candidates have been sent to the next tour"
+      next_tour: "Next tour"
+      no_next_tour: "There is no next tour"
+      send_qualified_to_next_tour: "Send qualified to next tour"
+     tour:
+      title: "Titre"
+      description: "Description"
+      start_date: "Date de début"
+      final_performance_submission_deadline: "Date limite de soumission finale des performances"
+      category: "Catégorie"
+
+    edit:
+      editing_tour: "Modification du tour"
+
+    index:
+      tours: "Tours"
+      new_tour: "Nouveau tour"
+
+    new:
+      new_tour: "Nouveau tour"
+
+    show:
+      tour_details: "Détails du tour"
+      description: "Description"
+      start_date: "Date de début"
+      final_performance_submission_deadline: "Date limite de soumission finale des performances"
+      performances: "Performances"
+      planning: "Planning"
+      results: "Résultats"
+      configure_tour_planning: "Configurer le planning du tour"
+      start_date: "Date de début"
+      start_time: "Heure de début"
+      time_between_performances: "Temps entre les performances (minutes)"
+      performances_per_day: "Performances par jour"
+
+    tour_configuration_form:
+      start_time: "Heure de début"
+      start_time_hint: "Indiquez l'heure de début du tour."
+      max_end_of_day_time: "Heure de fin de journée maximale"
+      max_end_of_day_time_hint: "Indiquez l'heure de fin maximale de la journée."
+      new_day_start_time: "Heure de début du nouveau jour"
+      new_day_start_time_hint: "Si le tour s'étend à un autre jour en raison du nombre de candidats, vous pouvez indiquer une heure de début différente pour ce nouveau jour."
+      confirm_and_generate: "Confirmer la configuration et générer le planning"
+
+    tour:
+      tour_configuration:
+      order_of_passage: "Ordre de passage"
+      planning: "Planning"
+      results: "Résultats"
+      tour_is_finished: "Le tour est terminé."
+      no_planning_yet: "Vous n'avez pas encore de planning."
+      generate_planning_instruction: "Vous pouvez en générer un en cliquant sur le bouton ci-dessous."
+      generate_with_current_order: "Vous allez générer un planning avec l'ordre de passage actuel."
+      generate_planning: "Générer le planning"
+      can_generate_after_deadline: "Vous ne pourrez générer le planning qu'une fois la date limite de soumission des performances pour le tour passée, le :"
+
+    edit:
+      edit_tour: "Modifier le tour"
+
+    index:
+      tours: "Tours"
+      show_this_tour: "Voir ce tour"
+      new_tour: "Nouveau tour"
+
+    new:
+      new_tour: "Nouveau tour"
+
+    schedule:
+      your_planning: "Votre planning (Vous pouvez le modifier tant que vous n'avez pas envoyer les convocations)"
+      can_modify_later: "Vous pourrez le modifier ultérieurement bien sur, mais devrez notifier vous même les candidats."
+
+    show_jury_pdf:
+      required_item_photo: "Photo d'item requis"
+      years_old: "ans"
+      notes: "NOTES"
+
+    show_pdf:
+      candidate: "Candidat"
+      passage_time: "Heure de passage"
+      order: "Ordre"
+      break: "Pause"

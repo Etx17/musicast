@@ -1,7 +1,7 @@
 <div id="<%= dom_id tour %>" class="bg-light">
   <main class="flex flex-col gap-2 px-2">
   <h1 class=" text-center py-3"><%= @tour.title.upcase %></h1>
-  <%= link_to "<-  Retour", :back, class: "btn btn-light border mb-3 mt-0" %>
+  <%= link_to t('global.actions.back'), :back, class: "btn btn-light border mb-3 mt-0" %>
   <!--  Section planning s'il existe-->
 
 
@@ -12,7 +12,7 @@
         <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="tourConfirmationModalLabel">Tour Configuration</h5>
+            <h5 class="modal-title" id="tourConfirmationModalLabel"><%= t('tours.tour.tour_configuration') %></h5>
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">X</button>
           </div>
           <div class="modal-body">
@@ -28,13 +28,13 @@
   <!-- tabs -->
   <ul class="nav nav-pills mb-3 justify-content-center border" id="myTab" role="tablist">
     <li class="nav-item w-25 text-center" role="presentation">
-      <a class="h-100 nav-link <%= 'active' unless @tour.has_planning? %>" id="order-tab" data-bs-toggle="tab" href="#order" role="tab" aria-controls="order" aria-selected="<%= !@tour.has_planning? %>" style="font-size: 1.1em;"><i class="fas fa-list pe-2"></i>Ordre de passage</a>
+      <a class="h-100 nav-link <%= 'active' unless @tour.has_planning? %>" id="order-tab" data-bs-toggle="tab" href="#order" role="tab" aria-controls="order" aria-selected="<%= !@tour.has_planning? %>" style="font-size: 1.1em;"><i class="fas fa-list pe-2"></i><%= t('tours.tour.order_of_passage') %></a>
     </li>
     <li class="nav-item w-25 text-center" role="presentation">
-      <a class=" h-100 nav-link <%= 'active' if @tour.has_planning? && @tour.performances.none?{|p| p.is_qualified } %>" id="planning-tab" data-bs-toggle="tab" href="#planning" role="tab" aria-controls="planning" aria-selected="<%= @tour.has_planning? %>" style="font-size: 1.1em;"><i class="fas fa-calendar-alt pe-2"></i>Planning</a>
+      <a class=" h-100 nav-link <%= 'active' if @tour.has_planning? && @tour.performances.none?{|p| p.is_qualified } %>" id="planning-tab" data-bs-toggle="tab" href="#planning" role="tab" aria-controls="planning" aria-selected="<%= @tour.has_planning? %>" style="font-size: 1.1em;"><i class="fas fa-calendar-alt pe-2"></i><%= t('tours.tour.planning') %></a>
     </li>
     <li class="nav-item w-25 text-center" role="presentation">
-      <a class=" h-100 nav-link <%= 'active' if @tour.performances.any?{|p| p.is_qualified }  %>" id="results-tab" data-bs-toggle="tab" href="#results" role="tab" aria-controls="results" aria-selected="" style="font-size: 1.1em;"><i class="fas fa-trophy pe-2"></i>Résultats</a>
+      <a class=" h-100 nav-link <%= 'active' if @tour.performances.any?{|p| p.is_qualified }  %>" id="results-tab" data-bs-toggle="tab" href="#results" role="tab" aria-controls="results" aria-selected="" style="font-size: 1.1em;"><i class="fas fa-trophy pe-2"></i><%= t('tours.tour.results') %></a>
     </li>
   </ul>
 
@@ -45,7 +45,7 @@
            <div class="d-flex justify-content-center">
             <div class="d-flex flex-column justif-content-center align-items-center">
               <i class="fas fa-calendar-alt fa-10x text-light-grey"></i>
-              <p class="small my-3">Le tour est terminé. <br></p>
+              <p class="small my-3"><%= t('tours.tour.tour_is_finished') %><br></p>
             </div>
           </div>
       <% else %>
@@ -60,17 +60,17 @@
           <div class="d-flex flex-column justif-content-center align-items-center">
             <i class="fas fa-calendar-alt fa-10x text-light-grey"></i>
 
-            <p class="small text-center">Vous n'avez pas de planning pour l'instant. <br>Vous pouvez en générer un en cliquant sur le bouton ci-dessous. <br>Vous générerez un planning avec l'ordre de passage actuel.</p>
+            <p class="small text-center"><%= t('tours.tour.no_planning_yet') %><br><%= t('tours.tour.generate_planning_instruction') %><br><%= t('tours.tour.generate_with_current_order') %></p>
             <%# <p class="text-danger text-center">Certains candidats n'ont pas rempli leur performances. Veuillez consulter l'ordre de passage pour mettre à jour les performances des candidats qui ne l'ont pas remplie</p> %>
             <% if tour.is_ready_for_planning_generation? || current_user.admin? %>
             <button class="items-center justify-center btn btn-success py-2 mb-5 rounded-16 text-center" style="font-size: 1.4em;"  data-bs-target="#tourConfirmationModal" data-bs-toggle="modal" data-bs-dismiss="modal" aria-label="Close" <%= "disabled" if @tour.performances.none? %> >
-              Générer le planning
+              <%= t('tours.tour.generate_planning') %>
             </button>
             <% else %>
-              <p>Vous ne pouvez générer le planning qu'une fois la date limite de soumission de performance pour le tour passée, le :</p>
+              <p><%= t('tours.tour.can_generate_after_deadline') %></p>
               <p class="lead p-3 border border-warning border-2 rounded-8"><%= tour.final_performance_submission_deadline.strftime("%d/%m/%Y à %H:%M") %></p>
               <button class="items-center justify-center btn btn-success py-2 mb-5 rounded-16 text-center" style="font-size: 1.4em;"  data-bs-target="#tourConfirmationModal" data-bs-toggle="modal" data-bs-dismiss="modal" aria-label="Close" <%= "disabled" %> >
-                Générer le planning
+                <%= t('tours.tour.generate_planning') %>
               </button>
             <% end %>
           </div>
@@ -83,7 +83,7 @@
             <div class="d-flex flex-column justif-content-center align-items-center">
               <i class="fas fa-calendar-alt fa-10x text-light-grey"></i>
 
-              <p class="small my-3">Le tour est terminé. <br></p>
+              <p class="small my-3"><%= t('tours.tour.tour_is_finished') %><br></p>
 
             </div>
           </div>

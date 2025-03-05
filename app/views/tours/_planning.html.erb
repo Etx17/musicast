@@ -1,11 +1,11 @@
 <div class="row px-3" >
   <div class="d-flex justify-content-center mx-auto mb-3">
     <% if @tour.has_planning? %>
-      <button class="items-center mx-3 justify-center btn btn-outline-success py-3 rounded-16"  data-bs-target="#tourConfirmationModal" data-bs-toggle="modal" data-bs-dismiss="modal" aria-label="Close" >
+      <button class="items-center mx-3 justify-center btn btn-outline-success py-3 rounded-16"  data-bs-target="#tourConfirmationModal" data-bs-toggle="modal" data-bs-dismiss="modal" aria-label="<%= t('global.actions.close') %>" >
         <i class="fas fa-sync-alt pe-3"></i>
-        Reconfigurer le planning <br>
+        <%= t('tours.planning.reconfigure_planning') %> <br>
         <small class="text-secondary">
-          Modifiez les contraintes horaires du tour, et regénérez un planning
+          <%= t('tours.planning.modify_constraints') %>
         </small>
       </button>
 
@@ -15,10 +15,10 @@
       <% email_list = @performances.map { |p| p.candidat.user.email }.join(',') %>
 
       <%# Button that opens the default email client with a pre-filled email %>
-      <a href="mailto:<%= email_list %>?subject=Your%20Subject&body=Your%20Body" class="items-center mx-3 justify-center btn btn-outline-success py-3 rounded-16">
+      <a href="mailto:<%= email_list %>?subject=<%= t('tours.planning.email_subject') %>&body=<%= t('tours.planning.email_body') %>" class="items-center mx-3 justify-center btn btn-outline-success py-3 rounded-16">
         <i class="fas fa-envelope"></i>
-        Envoyer un mail à tous les candidats <br>
-        <small class="text-secondary">(<%= email_list.split(',').count %> destinataires) <br>Par exemple un planning PDF. Conservez votre signature</small>
+        <%= t('tours.planning.send_email_to_all_candidates') %> <br>
+        <small class="text-secondary">(<%= email_list.split(',').count %> <%= t('tours.planning.recipients') %>) <br><%= t('tours.planning.email_example') %></small>
       </a>
 
     <% end %>
@@ -27,15 +27,15 @@
 
   <%# bouton télécharger, imprimer %>
   <div class="d-flex gap-3 justify-content-between">
-    <%= link_to "Télécharger ce planning PDF", show_pdf_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour), class: "btn btn-primary", target: '_blank' %>
+    <%= link_to t('tours.planning.download_planning_pdf'), show_pdf_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour), class: "btn btn-primary", target: '_blank' %>
 
   <!-- Button to open the modal -->
       <div class="d-flex gap-3">
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#planningJuryFormModal">
-          Configurer le dossier jury
+          <%= t('tours.planning.configure_jury_folder') %>
         </button>
         <% if !session[:detailed_program].nil? %>
-          <%= link_to "Télécharger le dossier du jury PDF", show_jury_pdf_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour), class: "btn btn-success border border-danger", target: '_blank', disabled: session[:detailed_program].nil? %>
+          <%= link_to t('tours.planning.download_jury_folder_pdf'), show_jury_pdf_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour), class: "btn btn-success border border-danger", target: '_blank', disabled: session[:detailed_program].nil? %>
         <% end %>
       </div>
     </div>
@@ -44,8 +44,8 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="planningJuryFormModalLabel">Jury Planning Configuration</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <h5 class="modal-title" id="planningJuryFormModalLabel"><%= t('tours.planning.jury_planning_configuration') %></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="<%= t('global.actions.close') %>"></button>
         </div>
         <div class="modal-body">
           <%= render "planning_jury_form" %>
@@ -55,15 +55,14 @@
   </div>
 
 
-<h2 class=" border border-1 mt-5 rounded-8 bg-grey text-center my-3">Planning du tour</h3>
+<h2 class=" border border-1 mt-5 rounded-8 bg-grey text-center my-3"><%= t('tours.planning.tour_planning') %></h3>
 
 <p class="bg-success-secondary p-3 my-2 rounded-8 border border-success text-success"><i class="fas fa-check-circle text-success pe-2">
-  </i>Votre planning a bien été généré. Vous pouvez le regénérer si vous souhaitez faire des modifications de configuration (heure de début, de fin, de nouveau jour).
-  Ajoutez des pauses si vous le souhaitez. Vous pouvez le télécharger et l'envoyer par mail à tous vos candidats. Configurez le dossier jury.
+  </i><%= t('tours.planning.planning_generated_success') %>
 </p>
 
 
-  <div class="text-center text-secondary py-4 ">Ajoutez des pauses, décalez un jour, ou bien regénerez un planning avec des caractéristiques différentes si celui là ne convient pas</div>
+  <div class="text-center text-secondary py-4 "><%= t('tours.planning.add_breaks_instructions') %></div>
   <% @tour.days_of_performances.each do |day| %>
     <div class="col shadow-sm mx-2 bg-grey" data-controller="start-time" data-day="<%= day.strftime('%Y-%m-%d') %>">
       <h2 class="text-center"><%= day.strftime('%a %d %B %Y') %></h2>
@@ -72,12 +71,12 @@
           <div class="d-flex" style="max-height: 40px;">
             <%= f.input :old_start_date, as: :hidden, input_html: { data: { start_time_target: "oldStartDate" } } %>
             <%= f.input :new_start_date, label: false, input_html: { data: { start_time_target: "newStartDate", date_target: "newStartDate" } } %>
-            <%= button_tag(type: 'submit', class: "btn btn-outline-secondary h-100", data: { turbo_confirm: "Changer la date modifiera la dates des performance ultérieures de ce tour" }) do %>
+            <%= button_tag(type: 'submit', class: "btn btn-outline-secondary h-100", data: { turbo_confirm: t('tours.planning.change_date_confirm') }) do %>
               <i class="fas fa-sync-alt"></i>
             <% end %>
           </div>
           <div class="btn btn-primary mb-2  " data-controller="start-time" data-bs-toggle="modal" data-bs-target="#pauseModal" data-action="click->start-time#fetchStartTimes" data-day="<%= day %>">
-            + Ajouter une pause
+            + <%= t('tours.planning.add_break') %>
           </div>
         </div>
       <% end %>
@@ -88,18 +87,18 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="pauseModalLabel">Ajouter une pause</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              <h5 class="modal-title" id="pauseModalLabel"><%= t('tours.planning.add_break') %></h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="<%= t('global.actions.close') %>"></button>
             </div>
             <div class="modal-body">
 
-              <p class="text-warning" >Vous ne pouvez qu'ajouter des pauses dans l'ordre chronologique. Commencez par celle du matin si vous en voulez une le matin, puis pause déjeuner, et pause dans l'après midi</p>
+              <p class="text-warning" ><%= t('tours.planning.breaks_chronological_order') %></p>
 
               <%= simple_form_for [@organism, @competition, @edition_competition, @category, @tour, Pause.new] do |f| %>
                 <%= f.input :date, as: :hidden, input_html: { class: "pause_day" } %>
-                <%= f.input :start_time, collection: @tour.performances.where(start_date: day).map { |p| p.start_time.strftime("%H:%M") }, label: 'Heure de début', input_html: { class: 'form-control' } %>
-                <%= f.input :end_time, as: :time, label: 'End time', input_html: { value: '12:00' } %>
-                <%= f.button :submit, 'Créer', class: 'btn btn-dark border' %>
+                <%= f.input :start_time, collection: @tour.performances.where(start_date: day).map { |p| p.start_time.strftime("%H:%M") }, label: t('tours.planning.start_time'), input_html: { class: 'form-control' } %>
+                <%= f.input :end_time, as: :time, label: t('tours.planning.end_time'), input_html: { value: '12:00' } %>
+                <%= f.button :submit, t('global.actions.create'), class: 'btn btn-dark border' %>
               <% end %>
             </div>
           </div>
@@ -110,9 +109,9 @@
       <table class="table ">
         <thead>
           <tr>
-            <th scope="col">Candidat</th>
-            <th scope="col">Heure de passage</th>
-            <th scope="col">Ordre</th>
+            <th scope="col"><%= t('tours.planning.candidate') %></th>
+            <th scope="col"><%= t('tours.planning.passage_time') %></th>
+            <th scope="col"><%= t('tours.planning.order') %></th>
           </tr>
         </thead>
         <tbody>
@@ -130,16 +129,16 @@
                 <% end %>
               <% elsif item.is_a?(Pause) && item.date == day %>
                 <tr>
-                  <td>Pause</td>
+                  <td><%= t('tours.planning.break') %></td>
                     <td id="pause_time_<%= day %>_<%= index %>"><%= item.start_time.strftime('%H:%M') %> - <%= item.end_time.strftime('%H:%M') %></td>
                   <td>
                     <% last_pause_of_the_day = items.reverse.find { |i| i.is_a?(Pause) && i.date == day } %>
 
                     <% if last_pause_of_the_day == item %>
-                      <%= button_to 'Supprimer', organism_competition_edition_competition_category_tour_pause_path(@organism, @competition, @edition_competition, @category, @tour, item), method: :delete, data: { turbo_confirm: "Supprimer cette pause modifiera l'ordre de passage des performances ultérieures de ce tour" }, class: 'btn btn-outline-danger' %>
+                      <%= button_to t('global.actions.delete'), organism_competition_edition_competition_category_tour_pause_path(@organism, @competition, @edition_competition, @category, @tour, item), method: :delete, data: { turbo_confirm: t('tours.planning.delete_break_confirm') }, class: 'btn btn-outline-danger' %>
                     <% else %>
                       <div class="btn btn-outline-danger disabled">
-                        Supprimer
+                        <%= t('global.actions.delete') %>
                       </div>
                     <% end %>
                   </td>

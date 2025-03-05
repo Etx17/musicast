@@ -1,12 +1,12 @@
 <div class="container">
-  <%= link_to "Retour", :back, class:'btn btn-outline-dark mt-4 mb-2' %>
-  <h1>Modifier le tour</h1>
+  <%= link_to t('global.actions.back'), :back, class:'btn btn-outline-dark mt-4 mb-2' %>
+  <h1><%= t('tours.edit.edit_tour') %></h1>
 
   <%= render "form", tour: @tour %>
 
   <br>
 
   <div>
-  <%= link_to "Retour", :back, class: "bg-dark text-light" %>
+  <%= link_to t('global.actions.back'), :back, class: "bg-dark text-light" %>
   </div>
 </div>
