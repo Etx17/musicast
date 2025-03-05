@@ -1,4 +1,3 @@
-
 <%= simple_form_for([@organism, @competition, @edition_competition, @category, @categories_jury]) do |f| %>
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
@@ -7,9 +6,9 @@
 
   <div class="form-inputs p-3">
     <div class="shadow p-3 mb-5" style="border-radius: 10px;">
-      <%= cf.input :jury_id, label: false, collection: Jury.all.map { |jury| [jury.name_and_email, jury.id] }, prompt: "Choisissez un ou plusieurs jurés", input_html: {class:"p-3", multiple: true}, required: false %>
+      <%= f.input :jury_id, label: false, collection: Jury.all.map { |jury| [jury.name_and_email, jury.id] }, prompt: t('categories_juries.new.choose_jurors'), input_html: {class:"p-3", multiple: true}, required: false %>
     </div>
-    <h3 class="text-center mb-5" style="font-size: 3em;"> Liste d'airs</h3>
+    <h3 class="text-center mb-5" style="font-size: 3em;"><%= t('categories_juries.new.air_list') %></h3>
 
     <div data-controller="airs">
       <div data-airs-target="container">
@@ -26,11 +25,11 @@
 
       <div class="d-flex gap-3 justify-content-center">
         <%= link_to '#', data: { action: 'airs#addAir' }, class: 'p-3 rounded-pill btn btn-outline-primary mb-5' do %>
-          <i class="fas fa-plus"></i> Ajouter un morceau
+          <i class="fas fa-plus"></i> <%= t('categories_juries.new.add_piece') %>
         <% end %>
 
         <%= button_tag(type: 'submit', class: 'p-3 rounded-pill btn btn-primary mb-5') do %>
-          <i class="fa-solid fa-floppy-disk"></i> Enregistrer les modifications
+          <i class="fa-solid fa-floppy-disk"></i> <%= t('categories_juries.new.save_changes') %>
         <% end %>
       </div>
     </div>

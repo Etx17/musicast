@@ -403,3 +403,10 @@ en:
       edit: "Edit"
       back: "Back"
       description: "Description"
+
+  categories_juries:
+    new:
+      choose_jurors: "Choose one or more jurors"
+      air_list: "Air list"
+      add_piece: "Add a piece"
+      save_changes: "Save changes"

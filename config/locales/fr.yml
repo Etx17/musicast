@@ -342,3 +342,9 @@ fr:
       edit: "Modifier"
       back: "Retour"
       description: "Description"
+  categories_juries:
+    new:
+      choose_jurors: "Choisissez un ou plusieurs jurés"
+      air_list: "Liste d'airs"
+      add_piece: "Ajouter un morceau"
+      save_changes: "Enregistrer les modifications"
