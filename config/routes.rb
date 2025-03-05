@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get '/language/switch', to: 'language#switch', as: 'switch_language'
   mount StripeEvent::Engine, at: '/stripe-webhooks'
 
   get 'tour_requirements/new'
@@ -7,7 +8,6 @@ Rails.application.routes.draw do
   get 'tour_requirements/edit'
   get 'tour_requirements/show'
 
-   get '/language/switch', to: 'language#switch', as: 'switch_language'
 
   resources :leads
   resources :performances
@@ -117,5 +117,4 @@ Rails.application.routes.draw do
   resources :inscription_orders, only: [:new, :show, :create] do
     resources :payments, only: :new
   end
-
 end
