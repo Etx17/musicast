@@ -1,4 +1,3 @@
-
 <%= simple_form_for(@candidat) do |f| %>
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
@@ -6,18 +5,18 @@
   <div class="form-inputs bg-white p-3 rounded-4 shadow-sm">
 
     <div class="d-flex flex-column flex-sm-row gap-3 mt-3">
-      <%= f.input :first_name, label: 'Prénom' , input_html: {class:"border border-0  mb-0"} %>
-      <%= f.input :last_name, label: 'Nom', input_html: {class:"border border-0  mb-0 "}  %>
-      <%= f.input :birthdate,  as: :date, html5: true, label: 'Date de naissance', input_html: {class:"border border-0  mb-0"} , hint: "Votre identité sera validée le jour du concours, attention a rentrer votre date de naissance exacte!" %>
+      <%= f.input :first_name, label: t('candidats.form.first_name'), input_html: {class:"border border-0  mb-0"} %>
+      <%= f.input :last_name, label: t('candidats.form.last_name'), input_html: {class:"border border-0  mb-0 "}  %>
+      <%= f.input :birthdate, as: :date, html5: true, label: t('candidats.form.birthdate'), input_html: {class:"border border-0  mb-0"}, hint: t('candidats.form.birthdate_hint') %>
     </div>
     <div class="d-flex align-items-start gap-2">
-      <p class="mb-0">Nationalité: </p>
+      <p class="mb-0"><%= t('candidats.form.nationality') %>: </p>
       <%= f.country_select :nationality, {only: ["AM", "AT", "BY", "BE", "BA", "BG", "CH", "CZ", "DE", "DK", "EE", "ES", "FI", "FR", "GB", "GE", "GI", "GR", "HU", "IE", "IS", "IT", "LT", "LU", "LV", "NO", "NL", "PO", "PL", "PT", "RO", "SE", "SI", "SK", "TR", "UA"], selected: "FR"}, { class: "mb-3 p-2 bg-light border rounded" }  %>
     </div>
     <hr>
 
    <div class="form-group">
-    <%= f.label "Portrait (photo HD de votre visage)" %>
+    <%= f.label t('candidats.form.portrait') %>
     <%= f.file_field :portrait, class: 'form-control' %>
     <% if @candidat.portrait.attached? %>
       <small class="text-success"> <%= @candidat.portrait.filename %></small>
@@ -30,7 +29,7 @@
   </div>
 
   <div class="form-group">
-    <%= f.label "Photo artistique (HD)" %>
+    <%= f.label t('candidats.form.artistic_photo') %>
     <%= f.file_field :artistic_photo, class: 'form-control' %>
      <% if @candidat.artistic_photo.attached? %>
       <small class="text-success"> <%= @candidat.artistic_photo.filename %></small>
@@ -43,7 +42,7 @@
   </div>
 
    <div class="form-group">
-    <%= f.label "CV (anglais)" %>
+    <%= f.label t('candidats.form.cv_english') %>
     <%= f.file_field :cv_english, class: 'form-control' %>
      <% if @candidat.cv_english.attached? %>
       <small class="text-success"> <%= @candidat.cv_english.filename %></small>
@@ -54,13 +53,13 @@
       </small>
     <% end %>
   </div>
-    <%= f.input :last_teacher, label: "Nom du professeur", hint: "Renseignez le nom de votre professeur actuel ou du dernier", required: true %>
-    <%= f.input :banner_color, as: :color, label: "Couleur de votre bannière", input_html: { style: "width: 50%; height: 50px;" } %>
+    <%= f.input :last_teacher, label: t('candidats.form.last_teacher'), hint: t('candidats.form.last_teacher_hint'), required: true %>
+    <%= f.input :banner_color, as: :color, label: t('candidats.form.banner_color'), input_html: { style: "width: 50%; height: 50px;" } %>
 
 
      <hr>
 
-    <p class="bg-info-secondary p-3 text-secondary align-self-start rounded-8"> <i class="fas fa-info-circle text-secondary pe-2"></i>Vous pouvez traduire vos biographies avec l'Intelligence Artificielle en utilisant
+    <p class="bg-info-secondary p-3 text-secondary align-self-start rounded-8"> <i class="fas fa-info-circle text-secondary pe-2"></i><%= t('candidats.form.translation_info') %>
       <a href="https://www.deepl.com/translator" target="_blank" class="text-primary">DeepL</a> ou
       <a href="https://chat.openai.com/" target="_blank" class="text-primary">ChatGPT</a>
 
@@ -70,19 +69,19 @@
       <div class="col">
         <div class="form-group" data-controller="character-counter">
           <div class="d-flex gap-3 align-items-center">
-          <%= f.label "Courte biographie*" %>
+          <%= f.label t('candidats.form.short_bio') %>
           <small class="text-secondary"><span data-character-counter-target="counter">0</span>/300 </small>
           </div>
-          <%= f.input :short_bio, label: false, placeholder: "Une version très courte de votre parcours, à destination des jurys de concours", input_html: { class:"border border-0", data: { action: "input->character-counter#update", character_counter_target: "input", class:"border border-0 "} } %>
+          <%= f.input :short_bio, label: false, placeholder: t('candidats.form.short_bio_placeholder'), input_html: { class:"border border-0", data: { action: "input->character-counter#update", character_counter_target: "input", class:"border border-0 "} } %>
         </div>
       </div>
       <div class="col">
         <div class="form-group" data-controller="character-counter">
           <div class="d-flex gap-3 align-items-center">
-            <%= f.label "Short biography (english)*" %>
+            <%= f.label t('candidats.form.short_bio_en') %>
             <small class="text-secondary"><span data-character-counter-target="counter">0</span>/300 </small>
           </div>
-          <%= f.input :short_bio_en, label: false, placeholder: "Une version très courte de votre parcours, à destination des jurys de concours", input_html: { class:"border border-0", data: { action: "input->character-counter#update", character_counter_target: "input", class:"border border-0 "} } %>
+          <%= f.input :short_bio_en, label: false, placeholder: t('candidats.form.short_bio_en_placeholder'), input_html: { class:"border border-0", data: { action: "input->character-counter#update", character_counter_target: "input", class:"border border-0 "} } %>
         </div>
       </div>
     </div>
@@ -91,21 +90,19 @@
       <div class="col">
         <div class="form-group" data-controller="character-counter">
           <div class="d-flex gap-3 align-items-center">
-          <%= f.label "Biographie moyenne*" %>
-          <small class="text-secondary"><span data-character-counter-target="counter">0</span>/1000 </small>
+          <%= f.label t('candidats.form.medium_bio') %>
+          <small class="text-secondary"><span data-character-counter-target="counter">0</span>/600 </small>
           </div>
-          <%= f.input :medium_bio, label: false, placeholder: "Une version résumée de votre parcours, à destination des jurys de concours", input_html: { class:"border border-0", style: 'height: 100px;', data: { action: "input->character-counter#update", character_counter_target: "input", class:"border border-0 "} } %>
+          <%= f.input :medium_bio, label: false, placeholder: t('candidats.form.medium_bio_placeholder'), input_html: { class:"border border-0", data: { action: "input->character-counter#update", character_counter_target: "input", class:"border border-0 "} } %>
         </div>
       </div>
-
-
       <div class="col">
         <div class="form-group" data-controller="character-counter">
           <div class="d-flex gap-3 align-items-center">
-          <%= f.label "Medium biography (english)*" %>
-          <small class="text-secondary"><span data-character-counter-target="counter">0</span>/1000 </small>
+            <%= f.label t('candidats.form.medium_bio_en') %>
+            <small class="text-secondary"><span data-character-counter-target="counter">0</span>/600 </small>
           </div>
-          <%= f.input :medium_bio_en, label: false, placeholder: "Une version résumée de votre parcours, à destination des jurys de concours", input_html: { class:"border border-0", style: 'height: 100px;', data: { action: "input->character-counter#update", character_counter_target: "input", class:"border border-0 "} } %>
+          <%= f.input :medium_bio_en, label: false, placeholder: t('candidats.form.medium_bio_en_placeholder'), input_html: { class:"border border-0", data: { action: "input->character-counter#update", character_counter_target: "input", class:"border border-0 "} } %>
         </div>
       </div>
     </div>
@@ -114,85 +111,75 @@
       <div class="col">
         <div class="form-group" data-controller="character-counter">
           <div class="d-flex gap-3 align-items-center">
-          <%= f.label "Biographie détaillée*" %>
-          <small class="text-secondary"><span data-character-counter-target="counter">0</span>/3000 </small>
+          <%= f.label t('candidats.form.long_bio') %>
+          <small class="text-secondary"><span data-character-counter-target="counter">0</span>/1200 </small>
           </div>
-          <%= f.input :long_bio, label: false, placeholder: "Une version détaillée de votre parcours, à destination des jurys de concours", input_html: { class:"border border-0", style: 'height: 200px;', data: { action: "input->character-counter#update", character_counter_target: "input", class:"border border-0 "} } %>
+          <%= f.input :long_bio, label: false, placeholder: t('candidats.form.long_bio_placeholder'), input_html: { class:"border border-0", data: { action: "input->character-counter#update", character_counter_target: "input", class:"border border-0 "} } %>
         </div>
       </div>
-
-       <div class="col">
+      <div class="col">
         <div class="form-group" data-controller="character-counter">
           <div class="d-flex gap-3 align-items-center">
-          <%= f.label "Biographie détaillée (english)*" %>
-          <small class="text-secondary"><span data-character-counter-target="counter">0</span>/3000 </small>
+            <%= f.label t('candidats.form.long_bio_en') %>
+            <small class="text-secondary"><span data-character-counter-target="counter">0</span>/1200 </small>
           </div>
-          <%= f.input :long_bio_en, label: false, placeholder: "Une version détaillée de votre parcours, à destination des jurys de concours", input_html: { class:"border border-0", style: 'height: 200px;', data: { action: "input->character-counter#update", character_counter_target: "input", class:"border border-0 "} } %>
+          <%= f.input :long_bio_en, label: false, placeholder: t('candidats.form.long_bio_en_placeholder'), input_html: { class:"border border-0", data: { action: "input->character-counter#update", character_counter_target: "input", class:"border border-0 "} } %>
         </div>
       </div>
     </div>
 
-
-     <div class="form-group" data-controller="character-counter">
+    <div class="form-group" data-controller="character-counter">
       <div class="d-flex gap-3 align-items-center">
-      <%= f.label "Répertoire*" %>
-      <small class="text-secondary"><span data-character-counter-target="counter">0</span>/2000 </small>
+        <%= f.label t('candidats.form.repertoire') %>
+        <small class="text-secondary"><span data-character-counter-target="counter">0</span>/1200 </small>
       </div>
-      <%= f.input :repertoire, label: false, placeholder: "Une version détaillée de votre parcours, à destination des jurys de concours", input_html: { class:"border border-0", style: 'height: 200px;', data: { action: "input->character-counter#update", character_counter_target: "input", class:"border border-0 "} } %>
+      <%= f.input :repertoire, label: false, placeholder: t('candidats.form.repertoire_placeholder'), input_html: { class:"border border-0", data: { action: "input->character-counter#update", character_counter_target: "input", class:"border border-0 "} } %>
     </div>
 
-  </div>
+    <hr>
 
-  <div class="form-inputs bg-white p-3 rounded-4 shadow-sm mt-3">
-    <div data-controller="experiences">
-      <h3>Expériences</h3>
-      <div data-experiences-target="container">
-        <%= f.simple_fields_for :experiences do |fexp| %>
-          <%= render "experience_fields", f:fexp %>
+    <h3><%= t('candidats.form.experiences_title') %></h3>
+    <div data-controller="nested-form" data-nested-form-wrapper-selector-value=".nested-fields">
+      <template data-nested-form-target="template">
+        <%= f.simple_fields_for :experiences, Experience.new, child_index: 'NEW_RECORD' do |experience| %>
+          <%= render "experience_fields", f: experience %>
         <% end %>
-      </div>
+      </template>
 
-      <div data-experiences-target="template" style="display: none">
-        <%= f.simple_fields_for :experiences, Experience.new, child_index: 'NEW_RECORD' do |fexp| %>
-          <%= render "experience_fields", f:fexp %>
-        <% end %>
-      </div>
+      <%= f.simple_fields_for :experiences do |experience| %>
+        <%= render "experience_fields", f: experience %>
+      <% end %>
 
-      <div class="d-flex gap-3 justify-content-center">
-        <%= link_to "#", data: { action: 'experiences#addExperience' }, class: ' rounded-pill btn btn-outline-secondary m-0' do %>
-          <i class="fas fa-plus fa-2x m-0 "></i>
-        <% end %>
+      <div data-nested-form-target="add_item">
+        <button type="button" data-action="nested-form#add" class="btn btn-primary">
+          <i class="fas fa-plus"></i> <%= t('candidats.experiences_section.add_experience') %>
+        </button>
       </div>
     </div>
-  </div>
 
-   <div class="form-inputs bg-white p-3 rounded-4 shadow-sm mt-3">
-    <div data-controller="experiences">
-      <h3>Formation</h3>
-      <div data-experiences-target="container">
-        <%= f.simple_fields_for :educations do |fexp| %>
-          <%= render "education_fields", f:fexp %>
-        <% end %>
-      </div>
+    <hr>
 
-      <div data-experiences-target="template" style="display: none">
-        <%= f.simple_fields_for :educations, Education.new, child_index: 'NEW_RECORD' do |fexp| %>
-          <%= render "education_fields", f:fexp %>
+    <h3><%= t('candidats.form.education_title') %></h3>
+    <div data-controller="nested-form" data-nested-form-wrapper-selector-value=".nested-fields">
+      <template data-nested-form-target="template">
+        <%= f.simple_fields_for :educations, Education.new, child_index: 'NEW_RECORD' do |education| %>
+          <%= render "education_fields", f: education %>
         <% end %>
-      </div>
+      </template>
 
-      <div class="d-flex gap-3 justify-content-center">
-        <%= link_to '#', data: { action: 'experiences#addExperience' }, class: ' rounded-pill btn btn-outline-secondary m-0' do %>
-          <i class="fas fa-plus fa-2x m-0 "></i>
-        <% end %>
+      <%= f.simple_fields_for :educations do |education| %>
+        <%= render "education_fields", f: education %>
+      <% end %>
+
+      <div data-nested-form-target="add_item">
+        <button type="button" data-action="nested-form#add" class="btn btn-primary">
+          <i class="fas fa-plus"></i> <%= t('candidats.education_section.add_education') %>
+        </button>
       </div>
     </div>
   </div>
 
-
-
-
-  <div class="form-actions">
-    <%= f.button :submit, "Enregistrer", class:"btn btn-primary" %>
+  <div class="form-actions text-center mt-4">
+    <%= f.button :submit, t('candidats.form.save'), class: "btn btn-primary" %>
   </div>
 <% end %>

@@ -1,6 +1,6 @@
 <div class="p-3 bg-white rounded-4 d-flex flex-column border mt-3">
   <div class="d-flex justify-content-start align-items-start gap-3 mb-3">
-    <h2>Diplômes & Certifications</h2>
+    <h2><%= t('candidats.diplomas.title') %></h2>
   </div>
 
     <% if @candidat.diplomas.attached? %>
@@ -10,22 +10,22 @@
             <embed src="<%= url_for(diploma) %>" width="200" height="200" type="application/pdf">
             <div class="d-flex gap-3 justify-content-between ">
 
-              <%= link_to 'Voir', url_for(diploma), target: "_blank", class: "btn btn-outline-dark border-0 shadow-sm" %>
-              <%= button_to 'Delete', delete_diploma_candidat_path(diploma_id: diploma.id), method: :delete, data: { turbo_confirm: 'Are you sure?' }, class: "btn btn-outline-dark border-0 shadow-sm" if current_user.candidat == @candidat %>
+              <%= link_to t('candidats.diplomas.view'), url_for(diploma), target: "_blank", class: "btn btn-outline-dark border-0 shadow-sm" %>
+              <%= button_to t('candidats.diplomas.delete'), delete_diploma_candidat_path(diploma_id: diploma.id), method: :delete, data: { turbo_confirm: t('candidats.diplomas.delete_confirm') }, class: "btn btn-outline-dark border-0 shadow-sm" if current_user.candidat == @candidat %>
             </div>
           </div>
         <% end %>
       </div>
     <% else %>
       <% if current_user.candidat == @candidat %>
-      <p class="text-muted">Vous n'avez pas encore ajouté de diplôme.</p>
+      <p class="text-muted"><%= t('candidats.diplomas.no_diplomas') %></p>
       <% end %>
     <% end %>
     <% if current_user.candidat == @candidat %>
       <%= form_with(model: @candidat, url: add_diploma_candidat_path(@candidat), local: true,  method: :post) do |form| %>
-        <%= form.label :new_diploma, "Ajouter un diplôme" %>
+        <%= form.label :new_diploma, t('candidats.diplomas.add_diploma') %>
         <%= form.file_field :new_diploma, multiple: true %>
-        <%= form.submit "Ajouter" %>
+        <%= form.submit t('candidats.diplomas.add') %>
       <% end %>
     <% end %>
 

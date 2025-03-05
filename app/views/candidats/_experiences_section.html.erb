@@ -1,12 +1,12 @@
 <div class="p-3 bg-white rounded-4 d-flex flex-column border">
   <div class="d-flex justify-content-start align-items-start gap-3 mb-3">
-    <h2>Expériences professionnelles</h2>
+    <h2><%= t('candidats.experiences_section.title') %></h2>
     <%= link_to edit_candidat_path, class:"btn btn-light rounded-circle p-0" do %>
       <i class="fas fa-pencil rounded-circle shadow text-secondary p-2" ></i>
     <% end %>
   </div>
   <% if @candidat.experiences.none? %>
-    <p class="text-muted">Aucune expérience renseignée</p>
+    <p class="text-muted"><%= t('candidats.experiences_section.no_experiences') %></p>
   <% end %>
   <ul class="list-unstyled">
     <% @candidat.experiences.each do |experience| %>
@@ -17,10 +17,10 @@
             <div>
               <h3 class="font-semibold"><%= experience.title %></h3>
               <p class="text-muted m-0"><%= experience.description %></p>
-              <p class="text-muted m-0"><%= experience.start_date&.strftime('%b %Y') %> - <%= experience.end_date.present? ? experience.end_date&.strftime('%b %Y') : 'Present' %></p>
+              <p class="text-muted m-0"><%= experience.start_date&.strftime('%b %Y') %> - <%= experience.end_date.present? ? experience.end_date&.strftime('%b %Y') : t('candidats.experiences_section.present') %></p>
             </div>
           </div>
-          <%= button_to candidat_experience_path(@candidat, experience), method: :delete, data: {turbo_confirm: "Supprimer cette expérience ?"}, class: 'btn btn-primary  border-0' do %>
+          <%= button_to candidat_experience_path(@candidat, experience), method: :delete, data: {turbo_confirm: t('candidats.experiences_section.delete_confirm')}, class: 'btn btn-primary  border-0' do %>
             <i class="fas fa-times"></i>
           <% end %>
         </div>

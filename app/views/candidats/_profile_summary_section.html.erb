@@ -13,7 +13,7 @@
             <p class="m-0" style="font-size: 3em"><%= flag_emoji(@candidat&.nationality) %></p>
           <% end %>
 
-          <p class="m-0">Professeur: <%= @candidat&.last_teacher %></p>
+          <p class="m-0"><%= t('candidats.profile_summary_section.teacher') %>: <%= @candidat&.last_teacher %></p>
         </div>
         <%= link_to edit_candidat_path, class:"btn btn-light rounded-circle p-0" do %>
           <i class="fas fa-pencil rounded-circle shadow text-secondary p-3" ></i>
@@ -21,30 +21,30 @@
       </div>
       <div class="d-flex gap-3">
         <% if @candidat.cv_english.attached? %>
-          <a href="<%= url_for(@candidat.cv_english) %>" class="btn btn-dark rounded my-3 btn-sm align-self-start" target="_blank">Voir CV (english)</a>
+          <a href="<%= url_for(@candidat.cv_english) %>" class="btn btn-dark rounded my-3 btn-sm align-self-start" target="_blank"><%= t('candidats.profile_summary_section.view_cv') %></a>
         <% end %>
-        <%= link_to "Voir photo artistique", url_for(@candidat.artistic_photo) , class: "btn btn-dark btn-sm rounded my-3  align-self-start", target: "_blank", rel: "noopener" if @candidat.artistic_photo.attached?%>
+        <%= link_to t('candidats.profile_summary_section.view_artistic_photo'), url_for(@candidat.artistic_photo) , class: "btn btn-dark btn-sm rounded my-3  align-self-start", target: "_blank", rel: "noopener" if @candidat.artistic_photo.attached?%>
       </div>
     </div>
   </div>
   <ul class="nav nav-pills text-center" id="myTab" role="tablist">
     <li class="nav-item" role="presentation">
-      <button class="nav-link " id="short-bio-tab" data-bs-toggle="tab" data-bs-target="#short-bio" type="button" role="tab" aria-controls="short-bio" aria-selected="true">Short bio</button>
+      <button class="nav-link " id="short-bio-tab" data-bs-toggle="tab" data-bs-target="#short-bio" type="button" role="tab" aria-controls="short-bio" aria-selected="true"><%= t('candidats.profile_summary_section.short_bio') %></button>
     </li>
     <li class="nav-item" role="presentation">
-      <button class="nav-link active" id="medium-bio-tab" data-bs-toggle="tab" data-bs-target="#medium-bio" type="button" role="tab" aria-controls="medium-bio" aria-selected="false">Medium bio</button>
+      <button class="nav-link active" id="medium-bio-tab" data-bs-toggle="tab" data-bs-target="#medium-bio" type="button" role="tab" aria-controls="medium-bio" aria-selected="false"><%= t('candidats.profile_summary_section.medium_bio') %></button>
     </li>
     <li class="nav-item" role="presentation">
-      <button class="nav-link" id="long-bio-tab" data-bs-toggle="tab" data-bs-target="#long-bio" type="button" role="tab" aria-controls="long-bio" aria-selected="false">Long bio</button>
+      <button class="nav-link" id="long-bio-tab" data-bs-toggle="tab" data-bs-target="#long-bio" type="button" role="tab" aria-controls="long-bio" aria-selected="false"><%= t('candidats.profile_summary_section.long_bio') %></button>
     </li>
     <li class="nav-item" role="presentation">
-      <button class="nav-link " id="short-bio-en-tab" data-bs-toggle="tab" data-bs-target="#short-bio-en" type="button" role="tab" aria-controls="short-bio-en" aria-selected="true">Short bio(english)</button>
+      <button class="nav-link " id="short-bio-en-tab" data-bs-toggle="tab" data-bs-target="#short-bio-en" type="button" role="tab" aria-controls="short-bio-en" aria-selected="true"><%= t('candidats.profile_summary_section.short_bio_en') %></button>
     </li>
     <li class="nav-item" role="presentation">
-      <button class="nav-link" id="medium-bio-en-tab" data-bs-toggle="tab" data-bs-target="#medium-bio-en" type="button" role="tab" aria-controls="medium-bio-en" aria-selected="false">Medium bio (english)</button>
+      <button class="nav-link" id="medium-bio-en-tab" data-bs-toggle="tab" data-bs-target="#medium-bio-en" type="button" role="tab" aria-controls="medium-bio-en" aria-selected="false"><%= t('candidats.profile_summary_section.medium_bio_en') %></button>
     </li>
     <li class="nav-item" role="presentation">
-      <button class="nav-link" id="long-bio-en-tab" data-bs-toggle="tab" data-bs-target="#long-bio-en" type="button" role="tab" aria-controls="long-bio-en" aria-selected="false">Long bio (english)</button>
+      <button class="nav-link" id="long-bio-en-tab" data-bs-toggle="tab" data-bs-target="#long-bio-en" type="button" role="tab" aria-controls="long-bio-en" aria-selected="false"><%= t('candidats.profile_summary_section.long_bio_en') %></button>
     </li>
 
   </ul>
@@ -52,32 +52,32 @@
   <div class="tab-content" id="myTabContent">
 
     <div class="tab-pane fade p-3" id="short-bio" role="tabpanel" aria-labelledby="short-bio-tab">
-      <p class="text-dark"><%= @candidat.short_bio || "Pas encore renseignée..." %></p>
+      <p class="text-dark"><%= @candidat.short_bio || t('candidats.profile_summary_section.not_provided_short') %></p>
     </div>
 
     <div class="tab-pane fade show active p-3" id="medium-bio" role="tabpanel" aria-labelledby="medium-bio-tab">
-      <p class="text-dark"><%= @candidat.medium_bio || "Biographie de taille moyenne pas encore renseignée..." %></p>
+      <p class="text-dark"><%= @candidat.medium_bio || t('candidats.profile_summary_section.not_provided_medium') %></p>
     </div>
 
     <div class="tab-pane fade p-3" id="long-bio" role="tabpanel" aria-labelledby="long-bio-tab">
-      <p class="text-dark"><%= @candidat.long_bio || "Biographie complête pas encore renseignée..." %></p>
+      <p class="text-dark"><%= @candidat.long_bio || t('candidats.profile_summary_section.not_provided_long') %></p>
     </div>
 
     <div class="tab-pane fade p-3" id="short-bio-en" role="tabpanel" aria-labelledby="short-bio-en-tab">
-      <p class="text-dark"><%= @candidat.short_bio_en || "Pas encore renseignée..." %></p>
+      <p class="text-dark"><%= @candidat.short_bio_en || t('candidats.profile_summary_section.not_provided_short') %></p>
     </div>
 
     <div class="tab-pane fade show p-3" id="medium-bio-en" role="tabpanel" aria-labelledby="medium-bio-en-tab">
-      <p class="text-dark"><%= @candidat.medium_bio_en || "Biographie de taille moyenne pas encore renseignée..." %></p>
+      <p class="text-dark"><%= @candidat.medium_bio_en || t('candidats.profile_summary_section.not_provided_medium') %></p>
     </div>
 
     <div class="tab-pane fade p-3" id="long-bio-en" role="tabpanel" aria-labelledby="long-bio-en-tab">
-      <p class="text-dark"><%= @candidat.long_bio_en || "Biographie complête pas encore renseignée..." %></p>
+      <p class="text-dark"><%= @candidat.long_bio_en || t('candidats.profile_summary_section.not_provided_long') %></p>
     </div>
   </div>
 
   <div class="p-3">
-    <h3>Répertoire</h3>
+    <h3><%= t('candidats.profile_summary_section.repertoire') %></h3>
     <p class="text-dark"><%= @candidat.repertoire %></p>
   </div>
 </div>

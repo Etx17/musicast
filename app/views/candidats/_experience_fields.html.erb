@@ -1,30 +1,29 @@
-
 <div class="nested-fields border-top row my-3 px-3 pt-2" data-new-record="<%= f.object.new_record? %>">
   <div class="col-12">
     <div class="d-flex justify-content-between w-100 align-items-center">
-      <small class="text-secondary"><i class="fas fa-text "></i> <%= f.index.is_a?(Integer) ? f.index + 1 : 'NEW' %> </small>
+      <small class="text-secondary"><i class="fas fa-text "></i> <%= f.index.is_a?(Integer) ? f.index + 1 : t('candidats.form.new_record') %> </small>
       <% if f.object.new_record? %>
         <%= link_to '#', data: { action: 'removeExperience' }, class: 'btn btn-primary' do %>
-          <i class="fas fa-trash pe-2"></i>Supprimer
+          <i class="fas fa-trash pe-2"></i><%= t('candidats.form.delete') %>
         <% end %>
       <% end %>
     </div>
   </div>
   <div class="d-flex align-items-start flex-column flex-md-row gap-1" >
     <div class="d-flex  align-items-center gap-2">
-      <p class="">Titre</p>
+      <p class=""><%= t('candidats.experiences_section.title_label') %></p>
       <%= f.input :title, label: false, input_html: {class:"border border-0 "} %>
     </div>
     <div class="d-flex  align-items-center gap-2">
-      <p class="">Du: </p>
+      <p class=""><%= t('candidats.experiences_section.from') %>: </p>
       <%= f.input :start_date, label: false, input_html: {class:"border border-0 "}  %>
     </div>
     <div class="d-flex  align-items-center gap-2">
-      <p class="">au: </p>
+      <p class=""><%= t('candidats.experiences_section.to') %>: </p>
       <%= f.input :end_date, label: false, input_html: {class:"border border-0 "}%>
     </div>
   </div>
 
 
-  <%= f.input :description, input_html: {class:"border border-0 "}, label: false, placeholder: "Décrivez votre expérience ici" %>
+  <%= f.input :description, input_html: {class:"border border-0 "}, label: false, placeholder: t('candidats.experiences_section.description_placeholder') %>
 </div>

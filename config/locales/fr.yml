@@ -268,3 +268,152 @@ fr:
       title_placeholder: "ex: 2 oeuvres de Fauré"
       guidelines_placeholder: "ex: Ces oeuvres imposées seront réparties aléatoirement dans le programme du candidat entre les tours"
       error: "Veuillez corriger les erreurs ci-dessous:"
+
+  candidats:
+    # Common elements
+    common:
+      profile: "Profil"
+      experiences: "Expériences"
+      education: "Formation"
+      diplomas: "Diplômes"
+      actions:
+        edit: "Modifier"
+        back: "Retour"
+        save: "Enregistrer"
+        delete: "Supprimer"
+        show: "Voir"
+        new: "Nouveau candidat"
+
+    # Profile section
+    profile_summary_section:
+      title: "Résumé du profil"
+      name: "Nom"
+      first_name: "Prénom"
+      last_name: "Nom de famille"
+      birth_date: "Date de naissance"
+      nationality: "Nationalité"
+      address: "Adresse"
+      phone: "Téléphone"
+      email: "Email"
+      biography: "Biographie"
+      website: "Site web"
+      social_media: "Réseaux sociaux"
+      teacher: "Professeur"
+      view_cv: "Voir CV (anglais)"
+      view_artistic_photo: "Voir photo artistique"
+      short_bio: "Courte biographie"
+      medium_bio: "Biographie moyenne"
+      long_bio: "Biographie détaillée"
+      short_bio_en: "Courte biographie (anglais)"
+      medium_bio_en: "Biographie moyenne (anglais)"
+      long_bio_en: "Biographie détaillée (anglais)"
+      repertoire: "Répertoire"
+      not_provided_short: "Pas encore renseignée..."
+      not_provided_medium: "Biographie de taille moyenne pas encore renseignée..."
+      not_provided_long: "Biographie complète pas encore renseignée..."
+
+    # Experiences section
+    experiences_section:
+      title: "Expériences professionnelles"
+      no_experiences: "Aucune expérience professionnelle n'a été ajoutée."
+      add_experience: "Ajouter une expérience"
+      position: "Poste"
+      company: "Entreprise/Organisation"
+      start_date: "Date de début"
+      end_date: "Date de fin"
+      current: "Poste actuel"
+      description: "Description"
+      delete_confirm: "Supprimer cette expérience ?"
+      present: "Présent"
+      title_label: "Titre"
+      from: "Du"
+      to: "au"
+      description_placeholder: "Décrivez votre expérience ici"
+
+    # Education section
+    education_section:
+      title: "Formation"
+      no_education: "Aucune formation n'a été ajoutée."
+      add_education: "Ajouter une formation"
+      institution: "Institution"
+      degree: "Diplôme/Certificat"
+      field: "Domaine d'études"
+      start_date: "Date de début"
+      end_date: "Date de fin"
+      current: "En cours"
+      description: "Description"
+      delete_confirm: "Supprimer cette formation ?"
+      present: "Présent"
+      title_label: "Titre"
+      from: "Du"
+      to: "au"
+      description_placeholder: "Décrivez votre formation ici"
+
+    # Diplomas section
+    diplomas:
+      title: "Diplômes et certifications"
+      no_diplomas: "Aucun diplôme n'a été ajouté."
+      add_diploma: "Ajouter un diplôme"
+      name: "Nom du diplôme"
+      institution: "Institution"
+      date: "Date d'obtention"
+      description: "Description"
+      view: "Voir"
+      delete: "Delete"
+      delete_confirm: "Are you sure?"
+      add: "Ajouter"
+
+    # Form
+    form:
+      first_name: "Prénom"
+      last_name: "Nom"
+      birthdate: "Date de naissance"
+      birthdate_hint: "Votre identité sera validée le jour du concours, attention a rentrer votre date de naissance exacte!"
+      nationality: "Nationalité"
+      portrait: "Portrait (photo HD de votre visage)"
+      artistic_photo: "Photo artistique (HD)"
+      cv_english: "CV (anglais)"
+      last_teacher: "Nom du professeur"
+      last_teacher_hint: "Renseignez le nom de votre professeur actuel ou du dernier"
+      banner_color: "Couleur de votre bannière"
+      translation_info: "Vous pouvez traduire vos biographies avec l'Intelligence Artificielle en utilisant"
+      short_bio: "Courte biographie*"
+      short_bio_placeholder: "Une version très courte de votre parcours, à destination des jurys de concours"
+      short_bio_en: "Short biography (english)*"
+      short_bio_en_placeholder: "Une version très courte de votre parcours, à destination des jurys de concours"
+      medium_bio: "Biographie moyenne*"
+      medium_bio_placeholder: "Une version résumée de votre parcours, à destination des jurys de concours"
+      medium_bio_en: "Medium biography (english)*"
+      medium_bio_en_placeholder: "Une version résumée de votre parcours, à destination des jurys de concours"
+      long_bio: "Biographie détaillée*"
+      long_bio_placeholder: "Une version détaillée de votre parcours, à destination des jurys de concours"
+      long_bio_en: "Biographie détaillée (english)*"
+      long_bio_en_placeholder: "Une version détaillée de votre parcours, à destination des jurys de concours"
+      repertoire: "Répertoire*"
+      repertoire_placeholder: "Une version détaillée de votre parcours, à destination des jurys de concours"
+      experiences_title: "Expériences"
+      education_title: "Formation"
+      save: "Enregistrer"
+      new_record: "NEW"
+      delete: "Supprimer"
+
+    # Edit page
+    edit:
+      title: "Modifier vos informations"
+      subtitle: "Ces informations sont nécessaires pour pouvoir vous inscrire à un concours."
+      warning_prefix: "Attention"
+      warning: "les informations que vous renseignez ici seront utilisées pour vous contacter et pour vous inscrire à un concours. Merci de les renseigner avec soin. Vous pourrez les modifier ultérieurement."
+      back: "Retour"
+      show: "Voir ce candidat"
+      back_to_list: "Retour à la liste des candidats"
+
+    # Index page
+    index:
+      title: "Candidats"
+      show: "Voir ce candidat"
+      new: "Nouveau candidat"
+
+    # New page
+    new:
+      title: "Nouveau candidat"
+      back: "Retour à la liste des candidats"
