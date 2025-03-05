@@ -410,3 +410,41 @@ en:
       air_list: "Air list"
       add_piece: "Add a piece"
       save_changes: "Save changes"
+
+  choice_imposed_works:
+    choice_imposed_work:
+      programme_requirement: "Programme Requirement"
+      title: "Title"
+      guidelines: "Guidelines"
+      number_to_select: "Number to select"
+
+    form:
+      list_configuration: "List configuration"
+      title_placeholder: "e.g.: 2 German lieder"
+      list_title: "List title"
+      number_placeholder: "e.g.: 2"
+      number_to_choose: "Number of works to choose"
+      guidelines_placeholder: "e.g.: Choose 2 German lieder from the early 20th century from the following list. Your selection should not exceed 30 minutes. You must have at least 2 different composers"
+      be_precise: "Be as precise as possible"
+      guidelines: "Guidelines"
+      air_list: "Air list"
+      add_piece: "Add a piece"
+      save_changes: "Save changes"
+
+    edit:
+      title: "Edit this imposed choice list"
+      back: "Back"
+
+    index:
+      title: "Choice imposed works"
+      show: "Show this choice imposed work"
+      new: "New choice imposed work"
+
+    new:
+      back: "Back"
+      title: "New choice list"
+      explanation: "A choice list allows you to require the candidate to select one or more airs from a list that you define. You can add guidelines to guide the candidate."
+
+    show:
+      edit: "Edit this choice imposed work"
+      destroy: "Destroy this choice imposed work"

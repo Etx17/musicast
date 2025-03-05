@@ -245,103 +245,38 @@ fr:
       min_age: "Âge minimum"
       max_age: "Âge maximum"
       discipline: "Discipline"
-    choice_imposed_works_section:
-      title: "Œuvres au choix"
-      what_is_it: "Qu'est-ce que c'est ?"
-      explanation: "Cette section vous permet de définir des listes d'œuvres parmi lesquelles les candidats devront faire un choix. Par exemple, vous pouvez créer une liste de 5 airs d'opéra et demander aux candidats d'en choisir 2 à présenter."
-      create_instruction: "Créez une liste d'œuvres parmi lesquelles les candidats devront choisir."
-      candidate_must_choose:
-        one: "Le candidat doit choisir 1 œuvre dans cette liste"
-        other: "Le candidat doit choisir %{count} œuvres dans cette liste"
-      add_new_list: "Ajouter une nouvelle liste d'œuvres au choix"
-    form:
-      information: "Informations sur la catégorie"
-      name: "Nom de la catégorie"
-      discipline: "Discipline"
-      min_age: "Âge minimum"
-      max_age: "Âge maximum"
-      description: "Description"
-      allow_own_pianist: "Permettre aux candidats d'amener leur propre pianiste accompagnateur"
-      registration_fee: "Frais d'inscription (en %{currency})"
-      enter_price_in_euros: "Entrez le prix en euros"
-      preselection_vote_type: "Type de vote pour la présélection"
-      preselection_vote_hint: "Choisissez comment les jurés voteront pour la présélection des candidats"
-      add_photo: "Ajouter une photo"
-      no_image_added: "Aucune image ajoutée"
-      program_configuration: "Configuration du programme"
-      include_choices_in_list: "Inclure des œuvres au choix dans une liste"
-      include_choices_hint: "Les candidats devront choisir parmi une liste d'œuvres que vous définirez"
-      include_semi_imposed_works: "Inclure des œuvres semi-imposées"
-      include_semi_imposed_hint: "Les candidats devront présenter des œuvres selon des critères spécifiques"
-      include_imposed_works: "Inclure des œuvres imposées"
-      include_imposed_hint: "Les candidats devront présenter des œuvres spécifiques que vous imposerez"
-      save: "Enregistrer la catégorie"
-    imposed_works_section:
-      title: "Œuvres imposées"
-      create_instruction: "Créez une liste d'œuvres que tous les candidats devront présenter."
-      create_list: "Créer une liste d'œuvres imposées"
-      edit_list: "Modifier la liste"
-    juries_section:
-      title:
-        zero: "Jury (aucun membre)"
-        one: "Jury (1 membre)"
-        other: "Jury (%{count} membres)"
-      description: "Ajoutez des membres du jury pour cette catégorie."
-      add_member: "Ajouter un membre du jury"
-      choose_member: "Choisir un membre du jury"
-      no_members: "Pas de membres du jury disponibles ? "
-      go_here: "Allez ici pour en créer"
-    new_imposed_work:
-      title: "Nouvelle œuvre imposée"
-    prizes_section:
-      title:
-        zero: "Prix (aucun)"
-        one: "Prix (1)"
-        other: "Prix (%{count})"
-      description: "Définissez les prix qui seront attribués aux lauréats de cette catégorie."
-      add_prize: "Ajouter un prix"
-    program_container_section:
-      title: "Programme demandé"
-      description: "Définissez le programme que les candidats devront présenter."
-    requirement_items_section:
-      title:
-        zero: "Pièces nécessaires (aucune)"
-        one: "Pièces nécessaires (1)"
-        other: "Pièces nécessaires (%{count})"
-      add_required_item: "Ajouter un élément requis"
-      description: "Créez et modifiez les pièces que le candidat doit fournir pour son inscription (optionnel)"
-      info_text_1: "Le profil du candidat comprend déjà un portrait et une photo artistique/de presse de haute qualité (300dpi), des biographies de différentes longueurs, un répertoire, et un CV à jour accessibles directement. Pour votre concours, indiquez si vous avez besoin de documents spécifiques, tels qu'une lettre de recommandation ou des vidéos."
-      info_text_2: "Musicast s'engage à respecter la confidentialité et la sécurité des données de ses utilisateurs, conformément au RGPD. Pour cette raison, nous ne collectons pas de pièces d'identité. Cette mesure préventive vise à minimiser les risques liés à la gestion de données sensibles et à protéger nos utilisateurs contre les potentielles conséquences d'une violation de données, telles que la fraude ou le vol d'identité. Nous encourageons des alternatives sécurisées pour la vérification d'identité, garantissant ainsi la protection et la sécurité des informations personnelles."
-      item_title: "Donnez un titre à cet item"
-      title_placeholder: "ex: Lettre de recommandation de votre professeur"
-      item_type: "Type de pièce"
-      select_type: "Sélectionnez un type"
-      details: "Détails"
-      details_placeholder: "Renseignez ici les spécifications, par exemple de longueur pour une lettre de motivation, de durée pour une vidéo sur YouTube, ou autre..."
-    semi_imposed_works_section:
-      title: "Œuvres semi-imposées"
-      what_is_it: "Qu'est-ce que c'est ?"
-      explanation: "Cette section vous permet de définir des critères pour les œuvres que les candidats devront présenter. Par exemple, vous pouvez demander une sonate classique, un morceau contemporain, etc."
-      create_instruction: "Créez des critères pour les œuvres que les candidats devront présenter."
-      add_new_list: "Ajouter une nouvelle liste d'œuvres semi-imposées"
-    edit:
-      title: "Modifier la catégorie"
-      back: "Retour"
-    index:
-      title: "Catégories"
-      new: "Nouvelle catégorie"
-      show: "Voir"
-      edit: "Modifier"
-      delete: "Supprimer"
-      years: "ans"
-    new:
-      title: "Nouvelle catégorie"
-      back: "Retour"
-    show:
-      years: "ans"
-      edit: "Modifier"
-      back: "Retour"
-      description: "Description"
+    choice_imposed_works:
+      choice_imposed_work:
+        programme_requirement: "Exigence du programme"
+        title: "Titre"
+        guidelines: "Consignes"
+        number_to_select: "Nombre à sélectionner"
+      form:
+        list_configuration: "Configuration de la liste"
+        title_placeholder: "ex: 2 lieder Allemands"
+        list_title: "Titre de la liste"
+        number_placeholder: "ex: 2"
+        number_to_choose: "Nombre d'œuvres à choisir"
+        guidelines_placeholder: "ex: Choisissez 2 lieder Allemands du début du 20è siècle dans la liste suivante. Votre sélection ne doit pas dépasser 30 minutes. Vous devez avoir au moins 2 auteurs différents"
+        be_precise: "Soyez le plus précis possible"
+        guidelines: "Consignes"
+        air_list: "Liste d'airs"
+        add_piece: "Ajouter un morceau"
+        save_changes: "Enregistrer les modifications"
+      edit:
+        title: "Modifier cette liste de choix imposés"
+        back: "Retour"
+      index:
+        title: "Œuvres à choix imposés"
+        show: "Voir cette œuvre à choix imposé"
+        new: "Nouvelle œuvre à choix imposé"
+      new:
+        back: "Retour"
+        title: "Nouvelle liste à choix"
+        explanation: "Une liste à choix vous permet de contraindre le candidat à sélectionner un ou plusieurs airs parmi une liste que vous définissez. Vous pouvez ajouter des consignes afin de guider le candidat."
+      show:
+        edit: "Modifier cette œuvre à choix imposé"
+        destroy: "Supprimer cette œuvre à choix imposé"
   categories_juries:
     new:
       choose_jurors: "Choisissez un ou plusieurs jurés"
