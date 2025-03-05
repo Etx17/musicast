@@ -448,3 +448,31 @@ en:
     show:
       edit: "Edit this choice imposed work"
       destroy: "Destroy this choice imposed work"
+
+  competitions:
+    competition:
+      name: "Name"
+      description: "Description"
+      cover_photo: "Cover photo"
+
+    form:
+      warning: "Warning: do not include the year in the competition title. You will later publish editions of this competition with all the necessary details"
+      name_hint: "Often the same name as the organization"
+      banner_label: "Add a banner (you can do this later). Recommended dimensions: Full width, 100px height."
+      no_image: "No image yet"
+      save: "Save"
+
+    index:
+      title: "Competitions"
+      show: "Show this competition"
+      new: "New competition"
+
+    show:
+      editions: "Editions"
+      configure_categories: "Configure categories for this edition"
+      published: "Published"
+      not_published: "Not published"
+      generate_edition: "Generate a competition edition"
+      add_edition: "Add an edition"
+      competition: "Competition"
+      information: "Information"

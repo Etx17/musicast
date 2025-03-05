@@ -283,3 +283,27 @@ fr:
       air_list: "Liste d'airs"
       add_piece: "Ajouter un morceau"
       save_changes: "Enregistrer les modifications"
+  competitions:
+    competition:
+      name: "Nom"
+      description: "Description"
+      cover_photo: "Photo de couverture"
+    form:
+      warning: "Attention: ne renseignez pas d'année dans le titre du concours. Vous publierez ensuite des éditions de ce concours avec tous les détails nécessaires"
+      name_hint: "Souvent le même nom que l'organisme"
+      banner_label: "Ajouter une bannière (vous pouvez le faire plus tard). Dimensions recommandées : Largeur complète, hauteur 100px."
+      no_image: "Pas encore d'image"
+      save: "Enregistrer"
+    index:
+      title: "Concours"
+      show: "Voir ce concours"
+      new: "Nouveau concours"
+    show:
+      editions: "Éditions"
+      configure_categories: "Configurer les catégories de cette édition"
+      published: "Publiée"
+      not_published: "Non publié"
+      generate_edition: "Générer une édition du concours"
+      add_edition: "Ajouter une édition"
+      competition: "Concours"
+      information: "Informations"

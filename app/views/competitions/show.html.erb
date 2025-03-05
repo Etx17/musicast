@@ -2,12 +2,12 @@
   <%= link_to content_tag(:i, '', class: 'fas fa-arrow-left'), organisateur_dashboard_path(@organism), class: "btn btn-outline-dark border-0 mb-3" %>
   <div class="row">
     <div class="col-md-6">
-      <h1 class="text-center mb-5" style="font-size: 5em;">Editions</h1>
+      <h1 class="text-center mb-5" style="font-size: 5em;"><%= t('competitions.show.editions') %></h1>
         <div class="card border-0 shadow-sm rounded mb-4 mt-4 bg-grey">
           <div class="card-body">
             <% @competition.edition_competitions.each_with_index do |edition_competition, index| %>
               <%= link_to organism_competition_edition_competition_path(@organism, @competition, edition_competition), data: { controller: "hover" } do %>
-                <div class="btn btn-success">Configurer les catégories de cette édition</div>
+                <div class="btn btn-success"><%= t('competitions.show.configure_categories') %></div>
                 <div class="card mb-3 shadow-sm" style="width: 100%; height: 300px; background-image: url('https://source.unsplash.com/random/?opera/300/200'); background-size: cover;" data-action="mouseenter->hover#hover mouseleave->hover#unhover">
                   <div class="card-img-overlay d-flex justify-content-center align-items-center" style="background-color: rgba(0, 0, 0, 0.5);">
                     <h2 class="card-title text-white" style="font-size: 3em;" data-hover-target="text"><%= edition_competition.annee %></h2>
@@ -17,9 +17,9 @@
                       <span class="badge rounded-pill bg-transparent text-white border border-white mb-1 mr-1"><%= category.name %></span>
                     <% end %>
                      <% if edition_competition.published? %>
-                      <span class="badge rounded-pill bg-transparent text-success border border-success mb-1 mr-1">Publiée</span>
+                      <span class="badge rounded-pill bg-transparent text-success border border-success mb-1 mr-1"><%= t('competitions.show.published') %></span>
                     <% elsif edition_competition.draft? %>
-                      <span class="badge rounded-pill bg-transparent text-warning border border-warning mb-1 mr-1">Non publié</span>
+                      <span class="badge rounded-pill bg-transparent text-warning border border-warning mb-1 mr-1"><%= t('competitions.show.not_published') %></span>
                     <% end %>
                   </div>
                 </div>
@@ -28,9 +28,9 @@
 
            <% if current_user.organisateur == @competition.organisateur %>
             <div class="bg-white p-3">
-              <p class="mb-4">Générer une édition du concours</p>
+              <p class="mb-4"><%= t('competitions.show.generate_edition') %></p>
               <%= link_to new_organism_competition_edition_competition_path(@organism, @competition), class: 'btn btn-outline-dark w-100' do %>
-                <i class="fas fa-plus"></i> Ajouter une édition
+                <i class="fas fa-plus"></i> <%= t('competitions.show.add_edition') %>
               <% end %>
               </div>
             <% end %>
@@ -40,13 +40,13 @@
     </div>
 
     <div class="col-md-6">
-      <h1 class="text-center mb-5" style="font-size: 5em;">Concours</h1>
+      <h1 class="text-center mb-5" style="font-size: 5em;"><%= t('competitions.show.competition') %></h1>
       <div class="card border-0 shadow-sm rounded bg-grey mb-4">
         <div class="card-body">
           <p class="text-success"><%= notice %></p>
 
           <div class="mt-3 d-flex justify-content-between">
-            <h2>Informations</h2>
+            <h2><%= t('competitions.show.information') %></h2>
             <div class="d-flex gap-3">
               <%= link_to edit_organism_competition_path(@organism, @competition), data: { turbo_action: 'replace', turbo_frame: "competition_#{@competition.id}" }, class: 'btn btn-outline-dark', style: 'width: 100px; height: 40px;' do %>
                 <i class="fas fa-pencil"></i>

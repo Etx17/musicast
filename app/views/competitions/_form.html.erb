@@ -8,29 +8,28 @@
     <div class="my-5 w-100">
       <div class="p-2 bg-light text-dark border col-12 col-sm-6 mx-auto" style="border-radius: 12px;">
         <span class="text-secondary" > <i class="fas fa-info-circle" ></i>
-          Attention: ne renseignez pas d'année dans le titre du concours.
-          Vous publierez ensuite des éditions de ce concours avec tous les détails nécessaires
+          <%= t('competitions.form.warning') %>
         </span>
       </div>
     </div>
     <div class="row mt-5">
       <div class="form-inputs col-12 col-md-6">
-        <%= f.input :nom_concours, class: " p-3 border border-1", hint: "Souvent le même nom que l'organisme" %>
+        <%= f.input :nom_concours, class: " p-3 border border-1", hint: t('competitions.form.name_hint') %>
         <%= f.input :description %>
       </div>
 
       <div class="form-inputs col-12 col-md-6 d-flex flex-column gap-1">
         <div data-controller="image-preview" data-image-preview-url="<%= @competition.photo.attached? ? url_for(@competition.photo) : '' %>">
-          <%= f.input :photo, as: :file, input_html: { data: { image_preview_target: "input" } }, label: "Ajouter une bannière (vous pouvez le faire plus tard). Dimensions recommandées : Largeur complète, hauteur 100px." %>
+          <%= f.input :photo, as: :file, input_html: { data: { image_preview_target: "input" } }, label: t('competitions.form.banner_label') %>
           <div class="w-100" style="height: 150px; background: #f8f9fa; max-width: 500px;">
             <div data-image-preview-target="preview" class="h-100 w-100" style="background-size: contain; display: none;"></div>
-            <div data-image-preview-target="placeholder" class="text-center p-5">No image yet</div>
+            <div data-image-preview-target="placeholder" class="text-center p-5"><%= t('competitions.form.no_image') %></div>
           </div>
         </div>
       </div>
     </div>
 
     <div class="form-actions">
-      <%= f.button :submit, "Enregistrer", class: "btn btn-dark my-3" %>
+      <%= f.button :submit, t('competitions.form.save'), class: "btn btn-dark my-3" %>
     </div>
 <% end %>
