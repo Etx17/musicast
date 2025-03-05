@@ -1,10 +1,9 @@
-
 <% if inscription.is_payed? %>
 <div class="rounded-pill border text-secondary border-success bg-success-secondary py-1 px-2">
-  <i class="fas fa-check text-success"></i> Inscription payée
+  <i class="fas fa-check text-success"></i> <%= t('inscriptions.pills.payment.paid') %>
 </div>
 <% else %>
   <div class="rounded-pill border text-secondary bg-secondary-secondary py-1 px-2">
-    <i class="fas fa-warning text-info"></i> Inscription non payée
+    <i class="fas fa-warning text-info"></i> <%= t('inscriptions.pills.payment.unpaid') %>
   </div>
 <% end %>

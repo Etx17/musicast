@@ -1,4 +1,4 @@
-<h2 class=mt-4>Pièces à fournir:</h2>
+<h2 class=mt-4><%= t('inscriptions.items_form_section.required_documents') %>:</h2>
 <div class="d-flex flex-wrap gap-2">
   <% inscription.inscription_item_requirements.each do | item_requirement| %>
     <div class="card m-2" style="width: calc(50% - 24px); max-height: 500px; overflow-y: auto;">
@@ -15,21 +15,21 @@
 
             <div class="form-group" data-controller="character-counter">
               <div class="d-flex gap-3 align-items-center">
-              <%= f.label 'Lettre de motivation', required: true %>
+              <%= f.label t('inscriptions.items_form_section.motivation_letter'), required: true %>
               <small class="text-secondary"><span data-character-counter-target="counter">0</span>/1000 </small>
               </div>
               <%= irf.input :submitted_content, label: false, as: :text, input_html: { style: 'height: 300px;',  data: { action: "input->character-counter#update", character_counter_target: "input", class:"border border-0 "} }, required: true %>
             </div>
           <% when 'youtube_link' %>
-            <%= irf.input :submitted_content, as: :url, label: "YouTube URL", hint: "Assurez vous que la vidéo soit publique et qu'elle soit bien accessible. Assurez vous que l'url contienne youtube.com ou youtu.be ", required: true %>
+            <%= irf.input :submitted_content, as: :url, label: t('inscriptions.items_form_section.youtube_link'), hint: t('inscriptions.items_form_section.youtube_hint'), required: true %>
           <% else %>
             <div class="row">
               <div class="col">
                 <% if irf.object.submitted_file.attached? %>
                   <embed src="<%= url_for(irf.object.submitted_file) %>" width="500" height="200" type="application/pdf">
-                  <%= irf.input :submitted_file, as: :file, label: "Choisissez un autre PDF si vous souhaitez remplacer le document ci dessus" %>
+                  <%= irf.input :submitted_file, as: :file, label: t('inscriptions.items_form_section.replace_document') %>
                 <% else %>
-                  <%= irf.input :submitted_file, as: :file, label: "Uploadez un PDF", required: true %>
+                  <%= irf.input :submitted_file, as: :file, label: t('inscriptions.items_form_section.upload_pdf'), required: true %>
                 <% end %>
               </div>
             </div>

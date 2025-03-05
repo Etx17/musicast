@@ -1,3 +1,12 @@
+<div class="container">
+  <h1><%= t('inscriptions.new.title') %></h1>
+
+  <%= render "form", inscription: @inscription %>
+
+  <div>
+    <%= link_to t('global.actions.back'), inscriptions_path %>
+  </div>
+</div>
 
 <div class="d-flex align-items-center justify-content-center gap-3 w-100 border-bottom bg-white">
   <%= image_tag "icons/folder.png", width: 50 %>
@@ -16,8 +25,6 @@
     <button id="close-button" class="btn btn-danger text-white mb-2">J'ai compris</button>
   </div>
 <% end %>
-
-<%= render "form", inscription: @inscription %>
 
 <br>
 

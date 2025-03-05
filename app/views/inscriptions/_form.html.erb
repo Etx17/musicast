@@ -1,4 +1,3 @@
-
 <div class="container">
   <%= simple_form_for(@inscription) do |f| %>
     <%= f.error_notification %>
@@ -14,7 +13,7 @@
       <%= render "choice_imposed_work_section", inscription: @inscription, f: f %>
 
       <% if inscription.category.imposed_work&.airs&.any? %>
-        <h3>Airs imposés</h3>
+        <h3><%= t('inscriptions.form.imposed_airs') %></h3>
         <ul>
           <% inscription.category&.imposed_work&.airs&.each do |air| %>
             <li> <%= air.title %> - <%= air.composer %> - <%= air.oeuvre %> </li>
@@ -23,16 +22,16 @@
       <% end %>
     </div>
 
-    <%= f.input :candidate_brings_pianist_accompagnateur, as: :boolean, label: "Souhaitez vous emmener votre propre pianiste accompagnateur? (cochez pour OUI)" if inscription.category.allow_own_pianist_accompagnateur %>
-    <%= f.input :time_preference, label: "Préférence horaire de passage", collection: Inscription.time_preferences.keys.to_a, prompt: 'Select a time preference' %>
+    <%= f.input :candidate_brings_pianist_accompagnateur, as: :boolean, label: t('inscriptions.form.bring_own_pianist') if inscription.category.allow_own_pianist_accompagnateur %>
+    <%= f.input :time_preference, label: t('inscriptions.form.time_preference'), collection: Inscription.time_preferences.keys.to_a, prompt: t('inscriptions.form.select_time_preference') %>
     <div class="d-flex align-items-start gap-2">
       <%= f.check_box :terms_accepted, required: true, class: "mt-1" %>
       <%= f.label :terms_accepted, required: true, class:"text-secondary"  do %>
-        <span class="text-danger">*</span> Je confirme par la présente renoncer à mon droit de rétractation et je suis conscient que toute inscription payée mais incomplète après la date limite de soumission des candidatures n'est pas remboursable par Musicast. Pour toute demande de remboursement, veuillez contacter directement l'organisme concerné. Veuillez noter que la commission de Musicast n'est pas remboursable.
+        <span class="text-danger">*</span> <%= t('inscriptions.form.terms_acceptance_html') %>
       <% end %>
     </div>
     <div class="form-actions">
-      <%= f.button :submit, "Enregistrer", class: "btn btn-dark" %>
+      <%= f.button :submit, t('global.actions.save'), class: "btn btn-dark" %>
     </div>
   <% end %>
 </div>

@@ -1,10 +1,9 @@
-
 <% if inscription.has_complete_requirement_items? %>
 <div class="rounded-pill border border-success text-secondary bg-success-secondary py-1 px-2">
-  <i class="fas fa-check text-success"></i> Pièces requises renseignées
+  <i class="fas fa-check text-success"></i> <%= t('inscriptions.pills.items.complete') %>
 </div>
 <% else %>
   <div class="rounded-pill border text-secondary bg-secondary-secondary py-1 px-2">
-    <i class="fas fa-warning text-info"></i> Pièces requises à complêter
+    <i class="fas fa-warning text-info"></i> <%= t('inscriptions.pills.items.incomplete') %>
   </div>
 <% end %>

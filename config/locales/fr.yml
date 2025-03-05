@@ -667,3 +667,137 @@ fr:
       total: "TOTAL"
       reminder: "Rappel: Finissez de constituer votre dossier s'il n'est pas terminé. Les dossiers incomplets sont automatiquement rejetés et ne sont pas remboursables."
       view_application: "Voir ma candidature"
+
+  inscriptions:
+    pills:
+      items:
+        complete: "Documents complets"
+        incomplete: "Documents incomplets"
+      airs:
+        complete: "Airs complets"
+        incomplete: "Airs incomplets"
+      payment:
+        paid: "Payé"
+        unpaid: "Non payé"
+
+    choice_imposed_work_section:
+      select_air: "Sélectionner l'air #%{number}"
+      select_an_air: "Sélectionner un air"
+
+    semi_imposed_work_section:
+      select_air: "Sélectionner l'air #%{number}"
+      select_an_air: "Sélectionner un air"
+
+    form:
+      imposed_airs: "Airs imposés"
+      bring_own_pianist: "J'amène mon propre pianiste accompagnateur"
+      time_preference: "Préférence horaire"
+      select_time_preference: "Sélectionner une préférence horaire"
+      terms_acceptance_html: "J'accepte les <a href='#' target='_blank'>conditions générales</a> du concours"
+
+    items_form_section:
+      required_documents: "Documents requis"
+      motivation_letter: "Lettre de motivation"
+      upload_pdf: "Télécharger un PDF"
+      youtube_link: "Lien YouTube"
+
+    inscription:
+      application_file: "Dossier de candidature"
+      competition_category: "%{competition} - %{category}"
+      view_cv_new_tab: "Voir le CV (nouvel onglet)"
+      send_email: "Envoyer un email"
+      registration_details: "Détails de l'inscription"
+      date_range: "Du %{start} au %{end}"
+      candidate_brings_pianist: "Le candidat amène son propre pianiste accompagnateur"
+      time_preference: "Préférence horaire"
+      payment: "Paiement"
+      not_paid_yet: "Vous n'avez pas encore payé votre inscription"
+      pay: "Payer"
+      refresh_if_problem: "Rafraîchissez la page si vous rencontrez un problème"
+      file: "Dossier"
+      to_complete: "À compléter"
+      days_remaining_to_edit: "%{count} jour(s) restant(s) pour modifier"
+      nothing_here_yet: "Rien ici pour le moment"
+      ok: "OK"
+      video_not_available: "Vidéo non disponible"
+      air_list: "Liste des airs"
+      imposed_airs: "Airs imposés"
+      round_by_round_program: "Programme tour par tour"
+      round_number: "Tour #%{number}"
+      imposed_airs_in_round: "%{count} air(s) imposé(s) dans ce tour"
+      round_rules: "Règles du tour"
+      works: "Œuvres"
+      works_count: "%{count} œuvre(s)"
+      works_range: "Entre %{min} et %{max} œuvres"
+      piano: "Piano"
+      duration_range: "Entre %{min} et %{max} minutes"
+      accompanying_pianist: "Pianiste accompagnateur"
+      pianist: "Pianiste"
+      program: "Programme"
+      invalid_program_duration: "Durée du programme invalide: %{minutes} minutes"
+      valid_program_duration: "Durée du programme valide: %{minutes} minutes"
+      imposed: " (imposé)"
+      update_order: "Mettre à jour l'ordre"
+      edit_program: "Modifier le programme"
+      days_remaining: "%{count} jour(s) restant(s)"
+      no_program_yet_html: "Vous n'avez pas encore créé votre programme pour ce tour. Date limite: %{deadline}"
+      create_my_program: "Créer mon programme"
+
+    edit:
+      title: "Modifier l'inscription"
+
+    index:
+      title: "Inscriptions"
+      new: "Nouvelle inscription"
+
+    new:
+      title: "Nouvelle inscription"
+
+    note_card:
+      view_video_and_vote: "Consulter vidéo & vote"
+      to_evaluate: "À évaluer"
+
+    pills:
+      performances:
+        complete: "Programme complété"
+        incomplete: "Programme à compléter"
+
+    semi_imposed_work_section:
+      air_validation_failed: "La validation d'un air a échoué"
+      piece_title: "Titre de la pièce %{number}"
+      title_placeholder: "ex: La Donna è Mobile"
+      minutes_placeholder: "ex: 2"
+      round_to_unit: "Arrondissez à l'unité"
+      duration: "Minutage"
+      work: "Oeuvre"
+      work_placeholder: "ex: Rigoletto"
+      character: "Personnage"
+      character_placeholder: "ex: Le duc de Mantoue"
+      character_hint: "Si air d'opéra seulement"
+      base_tonality: "Tonalité de base"
+
+    candidate_index:
+      your_applications: "VOS CANDIDATURES"
+      start_date: "Date de début"
+
+    index:
+      applications: "Candidatures"
+      view_first_round_order: "Consulter l'ordre de passage du premier tour"
+      add_late_registration: "+ Ajouter une inscription tardive"
+      late_registration_explanation: "Vous pouvez inviter un utilisateur à s'inscrire tardivement. L'utilisateur invité recevra un email avec un lien pour s'inscrire."
+      enter_email: "Entrez un email"
+      invited_user_can_modify: "L'utilisateur invité(e) pourra modifier ou rectifier ces informations"
+      invite_user: "Inviter l'utilisateur"
+      late_invitations_sent: "Invitations pour s'inscrire tardivement envoyées"
+
+    edit:
+      modify_application: "Modifier votre dossier d'inscription"
+      can_modify_until: "Vous pouvez modifier votre dossier jusqu'au %{date}"
+      will_be_submitted: "Votre dossier sera soumis au jury de préselection à cette date si vous avez réglé votre inscription."
+
+    jury_index:
+      applications_to_rate: "Candidatures à noter"
+
+    items_form_section:
+      youtube_hint: "Lien vers votre vidéo YouTube"
+      replace_document: "Remplacer le document"
