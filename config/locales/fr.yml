@@ -567,3 +567,103 @@ fr:
       edit: "Modifier cet air à choix libre"
       back: "Retour aux airs à choix libre"
       destroy: "Supprimer cet air à choix libre"
+
+  free_choices:
+    form:
+      programme_requirement: "Exigence de programme"
+      number: "Nombre"
+      max_length_minutes: "Durée maximale en minutes"
+      submit: "Enregistrer"
+
+    free_choice:
+      programme_requirement: "Exigence de programme"
+      number: "Nombre"
+      max_length_minutes: "Durée maximale en minutes"
+
+    edit:
+      title: "Modifier le choix libre"
+      show: "Voir ce choix libre"
+      back: "Retour aux choix libres"
+
+    index:
+      title: "Choix libres"
+      show: "Voir ce choix libre"
+      new: "Nouveau choix libre"
+
+    new:
+      title: "Nouveau choix libre"
+      back: "Retour aux choix libres"
+
+    show:
+      edit: "Modifier ce choix libre"
+      back: "Retour aux choix libres"
+      destroy: "Supprimer ce choix libre"
+
+  imposed_works:
+    common:
+      title: "Titre"
+      guidelines: "Consignes"
+      airs: "Pièces requises"
+      actions:
+        show: "Voir ce programme imposé"
+        edit: "Modifier ce programme imposé"
+        destroy: "Supprimer ce programme imposé"
+        back: "Retour aux programmes imposés"
+        new: "Nouveau programme imposé"
+        submit: "Enregistrer les modifications"
+        add_piece: "Ajouter une pièce"
+    index:
+      title: "Programmes Imposés"
+      new: "Nouveau programme imposé"
+    show:
+      title: "Détails du Programme Imposé"
+      notice: "Le programme imposé a été enregistré avec succès."
+      no_airs: "Aucune pièce n'a été ajoutée à ce programme."
+    new:
+      title: "Nouveau Programme Imposé"
+    edit:
+      title: "Modifier le Programme Imposé"
+      back_button: "Retour"
+    form:
+      title_placeholder: "ex.: 2 œuvres de Fauré"
+      guidelines_placeholder: "ex.: Ces œuvres imposées seront réparties aléatoirement dans le programme du candidat entre les tours"
+      error: "Veuillez corriger les erreurs ci-dessous:"
+    air_fields:
+      new: "NOUVEAU"
+      delete: "Supprimer"
+      title_placeholder: "Titre *"
+      composer_placeholder: "Compositeur *"
+      oeuvre_placeholder: "Œuvre *"
+      character_hint: "Si air d'opéra seulement"
+      character_placeholder: "Personnage"
+      minutes_placeholder: "Minutes *"
+      tonality_placeholder: "Tonalité *"
+      additional_info_placeholder: "Informations additionnelles *"
+
+  global:
+    actions:
+      back: "Retour"
+      edit: "Modifier"
+      show: "Voir"
+      delete: "Supprimer"
+      destroy: "Supprimer"
+      continue: "Continuer"
+      submit: "Enregistrer"
+      cancel: "Annuler"
+
+  inscription_orders:
+    new:
+      title: "Nouveau paiement sécurisé"
+      about_to_pay: "Vous êtes sur le point de payer pour votre inscription à la compétition"
+      certification_html: "Vous certifiez que votre dossier est parfaitement complet par rapport aux exigences énoncées (vérifiez encore <a href='#'>ici</a>)"
+      no_refund: "Une inscription n'est pas remboursable par Musicast."
+
+    show:
+      congratulations: "Félicitations, votre inscription a bien été enregistrée"
+      order_number: "Inscription Order #%{id}"
+      issued_on: "ÉMIS LE"
+      user: "UTILISATEUR"
+      inscription: "INSCRIPTION"
+      total: "TOTAL"
+      reminder: "Rappel: Finissez de constituer votre dossier s'il n'est pas terminé. Les dossiers incomplets sont automatiquement rejetés et ne sont pas remboursables."
+      view_application: "Voir ma candidature"

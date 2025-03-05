@@ -1,4 +1,4 @@
-<%= simple_form_for([@organism, @competition, @edition_competition, @category, @imposed_work], html: { class: 'form-horizontal' }) do |f| %>
+<%= simple_form_for([@organism, @competition, @edition_competition, @category, @imposed_work], html: { data: { controller: 'nested-form', nested_form_wrapper_selector_value: '.nested-fields' } }) do |f| %>
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
   <%= f.hidden_field :category, value: @imposed_work.category, disabled: true %>
@@ -19,30 +19,22 @@
     </div>
     <h4 class="text-center mb-5"><%= t('imposed_works.common.airs') %></h4>
 
-    <div data-controller="airs">
-      <div data-airs-target="container" class="bg-white">
-        <%= f.simple_fields_for :airs do |air| %>
-          <%= render 'shared/air_fields', f: air %>
-        <% end %>
-      </div>
+    <template data-nested-form-target="template">
+      <%= f.fields_for :airs, Air.new, child_index: 'NEW_RECORD' do |air_fields| %>
+        <%= render 'shared/air_fields', f: air_fields %>
+      <% end %>
+    </template>
 
-      <div data-airs-target="template" style="display: none">
-        <%= f.simple_fields_for :airs, Air.new, child_index: 'NEW_RECORD' do |air| %>
-          <%= render 'shared/air_fields', f: air %>
-        <% end %>
-      </div>
+    <%= f.fields_for :airs do |air_fields| %>
+      <%= render 'shared/air_fields', f: air_fields %>
+    <% end %>
 
-      <div class="d-flex gap-3 justify-content-center">
-        <%= link_to '#', data: { action: 'airs#addAir' }, class: 'px-2 btn btn-dark mb-5' do %>
-          <i class="fas fa-plus"></i> <%= t('imposed_works.common.actions.add_piece') %>
-        <% end %>
-
-        <%= button_tag(type: 'submit', class: 'px-2 btn btn-dark mb-5') do %>
-          <i class="fa-solid fa-floppy-disk"></i> <%= t('imposed_works.common.actions.submit') %>
-        <% end %>
-      </div>
+    <div data-nested-form-target="links">
+      <%= link_to t('imposed_works.common.actions.add_piece'), '#', class: 'btn btn-primary', data: { action: 'nested-form#add' } %>
     </div>
   </div>
 
-
+  <div class="form-actions">
+    <%= f.button :submit, t('imposed_works.common.actions.submit'), class: 'btn btn-primary' %>
+  </div>
 <% end %>

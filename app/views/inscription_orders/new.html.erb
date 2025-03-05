@@ -1,16 +1,14 @@
 <div class="container">
   <div class="row">
     <div class="col">
-    <h1>Nouveau paiement sécurisé</h1>
-    <p>Vous êtes sur le point de payer pour votre inscription à la compétition</h2>
-    Vous certifiez que votre dossier est parfaitement complet par rapport au requirements énoncés ( vérifiez encore ici )
-    Une inscription n'est pas remboursable par Musicast.
-
-
+    <h1><%= t('inscription_orders.new.title') %></h1>
+    <p><%= t('inscription_orders.new.about_to_pay') %></p>
+    <%= t('inscription_orders.new.certification_html') %>
+    <%= t('inscription_orders.new.no_refund') %>
 
     <%= form_tag inscription_orders_path do %>
       <%= hidden_field_tag :inscription_id, params[:inscription].present? ? params[:inscription] : params[:inscription_id]%>
-      <%= submit_tag "Continuer", class: 'btn btn-dark' %>
+      <%= submit_tag t('global.actions.continue'), class: 'btn btn-dark' %>
     <% end %>
     </div>
     <div class="col"></div>

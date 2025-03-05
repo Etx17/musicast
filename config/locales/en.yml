@@ -107,10 +107,22 @@ en:
       title: "New Required Program"
     edit:
       title: "Edit Required Program"
+      back_button: "Back"
     form:
       title_placeholder: "e.g.: 2 works by Fauré"
       guidelines_placeholder: "e.g.: These required works will be randomly distributed in the candidate's program between rounds"
       error: "Please correct the errors below:"
+    air_fields:
+      new: "NEW"
+      delete: "Delete"
+      title_placeholder: "Title *"
+      composer_placeholder: "Composer *"
+      oeuvre_placeholder: "Work *"
+      character_hint: "For opera arias only"
+      character_placeholder: "Character"
+      minutes_placeholder: "Minutes *"
+      tonality_placeholder: "Tonality *"
+      additional_info_placeholder: "Additional information *"
   candidats:
     common:
       profile: "Profile"
@@ -245,11 +257,9 @@ en:
     index:
       title: "Candidates"
       show: "Show this candidate"
-      new: "New candidate"
-
-    new:
-      title: "New candidate"
-      back: "Back to candidates"
+      new:
+        title: "New candidate"
+        back: "Back to candidates"
 
   categories:
     common:
@@ -711,3 +721,62 @@ en:
       edit: "Edit this free choice air"
       back: "Back to free choice airs"
       destroy: "Destroy this free choice air"
+
+  free_choices:
+    form:
+      programme_requirement: "Programme requirement"
+      number: "Number"
+      max_length_minutes: "Maximum length in minutes"
+      submit: "Save"
+
+    free_choice:
+      programme_requirement: "Programme requirement"
+      number: "Number"
+      max_length_minutes: "Maximum length in minutes"
+
+    edit:
+      title: "Editing free choice"
+      show: "Show this free choice"
+      back: "Back to free choices"
+
+    index:
+      title: "Free choices"
+      show: "Show this free choice"
+      new: "New free choice"
+
+    new:
+      title: "New free choice"
+      back: "Back to free choices"
+
+    show:
+      edit: "Edit this free choice"
+      back: "Back to free choices"
+      destroy: "Destroy this free choice"
+
+  global:
+    actions:
+      back: "Back"
+      edit: "Edit"
+      show: "View"
+      delete: "Delete"
+      destroy: "Delete"
+      continue: "Continue"
+      submit: "Save"
+      cancel: "Cancel"
+
+  inscription_orders:
+    new:
+      title: "New secure payment"
+      about_to_pay: "You are about to pay for your competition registration"
+      certification_html: "You certify that your application is perfectly complete according to the stated requirements (check again <a href='#'>here</a>)"
+      no_refund: "Registration is not refundable by Musicast."
+
+    show:
+      congratulations: "Congratulations, your registration has been successfully recorded"
+      order_number: "Registration Order #%{id}"
+      issued_on: "ISSUED ON"
+      user: "USER"
+      inscription: "REGISTRATION"
+      total: "TOTAL"
+      reminder: "Reminder: Finish completing your application if it is not finished. Incomplete applications are automatically rejected and are not refundable."
+      view_application: "View my application"

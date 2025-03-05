@@ -1,35 +1,35 @@
 <div class="nested-fields row border shadow my-3 px-3 pt-2" data-new-record="<%= f.object.new_record? %>">
   <div class="col-12">
     <div class="d-flex justify-content-between align-items-center">
-      <h2><i class="fas fa-music text-gradient"></i> #<%= f.index.is_a?(Integer) ? f.index + 1 : 'NEW' %></h2>
+      <h2><i class="fas fa-music text-gradient"></i> #<%= f.index.is_a?(Integer) ? f.index + 1 : t('imposed_works.air_fields.new') %></h2>
       <% if f.object.new_record? %>
         <%= link_to '#', data: { action: 'removeAir' }, class: 'btn btn-primary' do %>
-          <i class="fas fa-trash pe-2"></i>Supprimer
+          <i class="fas fa-trash pe-2"></i><%= t('imposed_works.air_fields.delete') %>
         <% end %>
       <% end %>
     </div>
   </div>
   <div class="col-6 col-md-6">
-    <%= f.input :title, label: false, required: true, input_html: { class: 'p-2 border rounded-pill', placeholder: 'Title *' } %>
+    <%= f.input :title, label: false, required: true, input_html: { class: 'p-2 border rounded-pill', placeholder: t('imposed_works.air_fields.title_placeholder') } %>
   </div>
   <div class="col-6 col-md-6">
-    <%= f.input :composer, label: false, required: true, input_html: { class: 'p-2 border rounded-pill', placeholder: 'Composer *' } %>
+    <%= f.input :composer, label: false, required: true, input_html: { class: 'p-2 border rounded-pill', placeholder: t('imposed_works.air_fields.composer_placeholder') } %>
   </div>
   <div class="col-6">
-    <%= f.input :oeuvre, label: false, required: true, input_html: { class: 'p-2 border rounded-pill', placeholder: 'Oeuvre *' } %>
+    <%= f.input :oeuvre, label: false, required: true, input_html: { class: 'p-2 border rounded-pill', placeholder: t('imposed_works.air_fields.oeuvre_placeholder') } %>
   </div>
   <div class="col-6 col-md-4">
-    <%= f.input :character, label: false, hint:"Si air d'opéra seulement", input_html: { class: 'p-2 border rounded-pill', placeholder: 'Character' } if true %>
+    <%= f.input :character, label: false, hint: t('imposed_works.air_fields.character_hint'), input_html: { class: 'p-2 border rounded-pill', placeholder: t('imposed_works.air_fields.character_placeholder') } if true %>
   </div>
   <div class="col-6 col-md-4">
-    <%= f.input :length_minutes, label: false, required: true, input_html: { class: 'p-2 border rounded-pill', placeholder: 'Minutes *' } %>
+    <%= f.input :length_minutes, label: false, required: true, input_html: { class: 'p-2 border rounded-pill', placeholder: t('imposed_works.air_fields.minutes_placeholder') } %>
   </div>
   <div class="col-6 col-md-4">
-    <%= f.input :tonality, label: false, required: true, input_html: { class: 'p-2 border rounded-pill', placeholder: 'Tonality *' } %>
+    <%= f.input :tonality, label: false, required: true, input_html: { class: 'p-2 border rounded-pill', placeholder: t('imposed_works.air_fields.tonality_placeholder') } %>
   </div>
 
   <div class="col-6 col-md-4">
-    <%= f.input :infos, label: false, required: true, input_html: { class: 'p-2 border rounded-pill', placeholder: 'Informations additionelles *' } %>
+    <%= f.input :infos, label: false, required: true, input_html: { class: 'p-2 border rounded-pill', placeholder: t('imposed_works.air_fields.additional_info_placeholder') } %>
   </div>
 
   <div class="col-6">

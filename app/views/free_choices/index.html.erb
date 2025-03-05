@@ -1,14 +1,14 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Free choices</h1>
+<h1><%= t('free_choices.index.title') %></h1>
 
 <div id="free_choices">
   <% @free_choices.each do |free_choice| %>
     <%= render free_choice %>
     <p>
-      <%= link_to "Show this free choice", free_choice %>
+      <%= link_to t('free_choices.index.show'), free_choice %>
     </p>
   <% end %>
 </div>
 
-<%= link_to "New free choice", new_free_choice_path %>
+<%= link_to t('free_choices.index.new'), new_free_choice_path %>
