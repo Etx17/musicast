@@ -3,8 +3,8 @@
 <%= render @free_choice_air %>
 
 <div>
-  <%= link_to "Edit this free choice air", edit_free_choice_air_path(@free_choice_air) %> |
-  <%= link_to "Back to free choice airs", free_choice_airs_path %>
+  <%= link_to t('free_choice_airs.show.edit'), edit_free_choice_air_path(@free_choice_air) %> |
+  <%= link_to t('free_choice_airs.show.back'), free_choice_airs_path %>
 
-  <%= button_to "Destroy this free choice air", @free_choice_air, method: :delete %>
+  <%= button_to t('free_choice_airs.show.destroy'), @free_choice_air, method: :delete %>
 </div>

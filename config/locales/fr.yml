@@ -180,7 +180,6 @@ fr:
     signup: "S'inscrire"
     switch_language: "English"
   airs:
-    # Common elements
     common:
       title: "Titre"
       length_minutes: "Durée (minutes)"
@@ -197,7 +196,6 @@ fr:
         new: "Nouveau morceau"
         submit: "Enregistrer"
 
-    # View-specific translations
     index:
       title: "Morceaux"
       new: "Nouveau morceau"
@@ -308,12 +306,10 @@ fr:
       competition: "Concours"
       information: "Informations"
   dashboard:
-    # Common elements
     common:
       close: "Fermer"
       confirm_delete: "Êtes-vous sûr de vouloir supprimer cet élément ?"
 
-    # Jury section partial
     jury_section:
       title: "Jury"
       associated_jury_members: "Membres jury associés"
@@ -332,16 +328,13 @@ fr:
       email_label: "Email"
       assign_jury_role: "Attribuer le rôle de Jury"
 
-    # Admin dashboard
     admin:
       title: "Tableau de bord administrateur"
 
-    # Jury dashboard
     jury:
       files_to_evaluate: "Vos dossiers à évaluer (groupées par catégories)"
       view_applications: "Voir %{count} inscriptions"
 
-    # Organiser dashboard
     organiser:
       dashboard: "Tableau de Bord"
       your_competitions: "Vos concours"
@@ -458,13 +451,11 @@ fr:
         resend_instructions: "Renvoyer les instructions de déverrouillage"
 
   edition_competitions:
-    # Common elements
     common:
       continue: "Continuer"
       view: "Voir"
       delete: "Supprimer"
 
-    # Category modal infos
     category_modal_infos:
       view_rules: "Voir le règlement du concours"
       selection_instructions: "Consignes de séléction des airs"
@@ -476,7 +467,6 @@ fr:
       required_documents: "Pièces requises"
       required_elements: "Eléments requis:"
 
-    # Edition competition partial
     edition_competition:
       edit: "Modifier"
       delete: "Supprimer cette édition"
@@ -492,7 +482,6 @@ fr:
       share_link: "Lien de partage"
       qr_code: "QR code"
 
-    # Form
     form:
       create_edition: "Créer une édition"
       edit_edition: "Modifier l'édition"
@@ -510,26 +499,21 @@ fr:
       competition_rules: "Règlement du concours (PDF, PNG, JPG)"
       save: "Enregistrer"
 
-    # Candidate edition competition
     candidate_edition_competition:
       choose_category: "Choisissez une catégorie"
       available: "disponibles"
 
-    # Edit
     edit:
       back: "Retour"
 
-    # Index
     index:
       title: "Éditions de concours"
       show: "Voir cette édition de concours"
       new: "Nouvelle édition de concours"
 
-    # New
     new:
       cancel: "Annuler"
 
-    # Show
     show:
       edition_published: "Votre édition est publiée. Consultez les candidatures de chaques catégories puis générez l'ordre de passage et le planning sur chaque tour ci dessous"
       edition: "Édition"
@@ -554,3 +538,32 @@ fr:
       configure_category: "Configurer la catégorie"
       applications: "%{count} candidature(s)"
       confirm_delete_category: "Êtes-vous sûr de vouloir supprimer cette catégorie ?"
+
+  free_choice_airs:
+    form:
+      free_choice: "Choix libre"
+      air: "Air"
+      submit: "Enregistrer"
+
+    free_choice_air:
+      free_choice: "Choix libre"
+      air: "Air"
+
+    edit:
+      title: "Modifier l'air à choix libre"
+      show: "Voir cet air à choix libre"
+      back: "Retour aux airs à choix libre"
+
+    index:
+      title: "Airs à choix libre"
+      show: "Voir cet air à choix libre"
+      new: "Nouvel air à choix libre"
+
+    new:
+      title: "Nouvel air à choix libre"
+      back: "Retour aux airs à choix libre"
+
+    show:
+      edit: "Modifier cet air à choix libre"
+      back: "Retour aux airs à choix libre"
+      destroy: "Supprimer cet air à choix libre"

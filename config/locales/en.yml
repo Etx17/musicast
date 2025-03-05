@@ -37,7 +37,6 @@ en:
     signup: "Sign up"
     switch_language: "Français"
   airs:
-    # Common elements
     common:
       title: "Title"
       length_minutes: "Duration (minutes)"
@@ -53,7 +52,6 @@ en:
         back: "Back to pieces"
         new: "New piece"
         submit: "Save"
-    # View-specific translations
     index:
       title: "Pieces"
       new: "New piece"
@@ -86,7 +84,6 @@ en:
         create_jury: "Create at least 1 voting pre-jury"
       applications: "Applications"
   imposed_works:
-    # Common elements
     common:
       title: "Title"
       guidelines: "Guidelines"
@@ -99,7 +96,6 @@ en:
         new: "New required program"
         submit: "Save changes"
         add_piece: "Add a piece"
-    # View-specific translations
     index:
       title: "Required Programs"
       new: "New required program"
@@ -116,7 +112,6 @@ en:
       guidelines_placeholder: "e.g.: These required works will be randomly distributed in the candidate's program between rounds"
       error: "Please correct the errors below:"
   candidats:
-    # Common elements
     common:
       profile: "Profile"
       experiences: "Experiences"
@@ -130,7 +125,6 @@ en:
         show: "View"
         new: "New candidate"
 
-    # Profile section
     profile_summary_section:
       title: "Profile Summary"
       name: "Name"
@@ -158,7 +152,6 @@ en:
       not_provided_medium: "Medium biography not provided yet..."
       not_provided_long: "Long biography not provided yet..."
 
-    # Experiences section
     experiences_section:
       title: "Professional Experiences"
       no_experiences: "No experiences provided"
@@ -176,7 +169,6 @@ en:
       to: "to"
       description_placeholder: "Describe your experience here"
 
-    # Education section
     education_section:
       title: "Education"
       no_education: "No education provided"
@@ -195,7 +187,6 @@ en:
       to: "to"
       description_placeholder: "Describe your education here"
 
-    # Diplomas section
     diplomas:
       title: "Diplomas & Certifications"
       no_diplomas: "You haven't added any diplomas yet."
@@ -209,7 +200,6 @@ en:
       delete_confirm: "Are you sure?"
       add: "Add"
 
-    # Form
     form:
       first_name: "First Name"
       last_name: "Last Name"
@@ -243,7 +233,6 @@ en:
       new_record: "NEW"
       delete: "Delete"
 
-    # Edit page
     edit:
       title: "Edit your information"
       subtitle: "This information is necessary to register for a competition."
@@ -253,26 +242,22 @@ en:
       show: "Show this candidate"
       back_to_list: "Back to candidates"
 
-    # Index page
     index:
       title: "Candidates"
       show: "Show this candidate"
       new: "New candidate"
 
-    # New page
     new:
       title: "New candidate"
       back: "Back to candidates"
 
   categories:
-    # Common elements
     common:
       save: "Save"
       close: "Close"
       delete: "Delete"
       confirm_delete: "Are you sure you want to delete this item?"
 
-    # Category partial
     category:
       edition_competition: "Competition Edition"
       name: "Name"
@@ -281,7 +266,6 @@ en:
       max_age: "Maximum Age"
       discipline: "Discipline"
 
-    # Choice imposed works section
     choice_imposed_works_section:
       title: "Optional Works"
       what_is_it: "What is this?"
@@ -292,7 +276,6 @@ en:
         other: "The candidate must choose %{count} works from this list"
       add_new_list: "Add a new list of optional works"
 
-    # Form
     form:
       information: "Category Information"
       name: "Category Name"
@@ -316,14 +299,12 @@ en:
       include_imposed_hint: "Candidates will have to present specific works that you will impose"
       save: "Save Category"
 
-    # Imposed works section
     imposed_works_section:
       title: "Imposed Works"
       create_instruction: "Create a list of works that all candidates must present."
       create_list: "Create a list of imposed works"
       edit_list: "Edit list"
 
-    # Juries section
     juries_section:
       title:
         zero: "Jury (no members)"
@@ -335,11 +316,9 @@ en:
       no_members: "No jury members available? "
       go_here: "Go here to create some"
 
-    # New imposed work
     new_imposed_work:
       title: "New Imposed Work"
 
-    # Prizes section
     prizes_section:
       title:
         zero: "Prizes (none)"
@@ -348,12 +327,10 @@ en:
       description: "Define the prizes that will be awarded to the winners of this category."
       add_prize: "Add a prize"
 
-    # Program container section
     program_container_section:
       title: "Required Program"
       description: "Define the program that candidates must present."
 
-    # Requirement items section
     requirement_items_section:
       title:
         zero: "Required Documents (none)"
@@ -370,7 +347,6 @@ en:
       details: "Details"
       details_placeholder: "Specify requirements here, for example length for a cover letter, duration for a YouTube video, or other..."
 
-    # Semi imposed works section
     semi_imposed_works_section:
       title: "Semi-imposed Works"
       what_is_it: "What is this?"
@@ -378,12 +354,10 @@ en:
       create_instruction: "Create criteria for the works that candidates must present."
       add_new_list: "Add a new list of semi-imposed works"
 
-    # Edit page
     edit:
       title: "Edit Category"
       back: "Back"
 
-    # Index page
     index:
       title: "Categories"
       new: "New Category"
@@ -392,12 +366,10 @@ en:
       delete: "Delete"
       years: "years"
 
-    # New page
     new:
       title: "New Category"
       back: "Back"
 
-    # Show page
     show:
       years: "years"
       edit: "Edit"
@@ -478,12 +450,10 @@ en:
       information: "Information"
 
   dashboard:
-    # Common elements
     common:
       close: "Close"
       confirm_delete: "Are you sure you want to delete this item?"
 
-    # Jury section partial
     jury_section:
       title: "Jury"
       associated_jury_members: "Associated jury members"
@@ -502,16 +472,13 @@ en:
       email_label: "Email"
       assign_jury_role: "Assign Jury Role"
 
-    # Admin dashboard
     admin:
       title: "Admin Dashboard"
 
-    # Jury dashboard
     jury:
       files_to_evaluate: "Your files to evaluate (grouped by categories)"
       view_applications: "View %{count} applications"
 
-    # Organiser dashboard
     organiser:
       dashboard: "Dashboard"
       your_competitions: "Your competitions"
@@ -628,13 +595,11 @@ en:
         resend_instructions: "Resend unlock instructions"
 
   edition_competitions:
-    # Common elements
     common:
       continue: "Continue"
       view: "View"
       delete: "Delete"
 
-    # Category modal infos
     category_modal_infos:
       view_rules: "View competition rules"
       selection_instructions: "Selection instructions"
@@ -646,7 +611,6 @@ en:
       required_documents: "Required documents"
       required_elements: "Required elements:"
 
-    # Edition competition partial
     edition_competition:
       edit: "Edit"
       delete: "Delete this edition"
@@ -662,7 +626,6 @@ en:
       share_link: "Share link"
       qr_code: "QR code"
 
-    # Form
     form:
       create_edition: "Create an edition"
       edit_edition: "Edit edition"
@@ -680,26 +643,21 @@ en:
       competition_rules: "Competition rules (PDF, PNG, JPG)"
       save: "Save"
 
-    # Candidate edition competition
     candidate_edition_competition:
       choose_category: "Choose a category"
       available: "available"
 
-    # Edit
     edit:
       back: "Back"
 
-    # Index
     index:
       title: "Competition editions"
       show: "View this competition edition"
       new: "New competition edition"
 
-    # New
     new:
       cancel: "Cancel"
 
-    # Show
     show:
       edition_published: "Your edition is published. Check the applications for each category and then generate the order of passage and schedule for each round below"
       edition: "Edition"
@@ -724,3 +682,32 @@ en:
       configure_category: "Configure category"
       applications: "%{count} application(s)"
       confirm_delete_category: "Are you sure you want to delete this category?"
+
+  free_choice_airs:
+    form:
+      free_choice: "Free choice"
+      air: "Air"
+      submit: "Save"
+
+    free_choice_air:
+      free_choice: "Free choice"
+      air: "Air"
+
+    edit:
+      title: "Editing free choice air"
+      show: "Show this free choice air"
+      back: "Back to free choice airs"
+
+    index:
+      title: "Free choice airs"
+      show: "Show this free choice air"
+      new: "New free choice air"
+
+    new:
+      title: "New free choice air"
+      back: "Back to free choice airs"
+
+    show:
+      edit: "Edit this free choice air"
+      back: "Back to free choice airs"
+      destroy: "Destroy this free choice air"
