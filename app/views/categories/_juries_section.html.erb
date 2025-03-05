@@ -1,19 +1,19 @@
 <div class="card shadow">
   <div class="card-header d-flex justify-content-between align-items-center">
-    <h2 style="font-size: 3em;">Comité de sélection des dossiers (<%= category.juries.count %>)</h2>
+    <h2 style="font-size: 3em;"><%= t('categories.juries_section.title', count: category.juries.count) %></h2>
   </div>
 
   <div class="border-start p-3 d-flex flex-column justify-content-between w-100 align-items-center bg-white">
     <div class="d-flex flex-column align-items-center justify-content-center">
-      <p class="text-secondary">Désignez des partenaires de votre organisme pour leur permettre de voter sur les dossiers de candidature</p>
+      <p class="text-secondary"><%= t('categories.juries_section.description') %></p>
 
       <%= simple_form_for([@organism, @competition, @edition_competition, @category, CategoriesJury.new], data: {turbo: false}) do |f| %>
         <div class="shadow p-3 mb-5" style="border-radius: 10px;">
-        <h3>Ajouter un membre</h3>
+        <h3><%= t('categories.juries_section.add_member') %></h3>
           <%= f.hidden_field :category_id, value: @category.id %>
-          <%= f.input :jury_id, label: false, collection: @organism.juries.map { |jury| [jury.name_and_email, jury.id] }, prompt: "Choisissez un membre de votre organisme", input_html: {class:"p-3"}, required: true %>
-          <p>Vous n'avez pas de membres associés à votre organisme ?<%= link_to " Rendez vous ici", organisateur_dashboard_path, class:"text-decoration-none text-primary" %></p>
-          <%= f.submit 'Enregistrer', class: "btn btn-success" %>
+          <%= f.input :jury_id, label: false, collection: @organism.juries.map { |jury| [jury.name_and_email, jury.id] }, prompt: t('categories.juries_section.choose_member'), input_html: {class:"p-3"}, required: true %>
+          <p><%= t('categories.juries_section.no_members') %><%= link_to t('categories.juries_section.go_here'), organisateur_dashboard_path, class:"text-decoration-none text-primary" %></p>
+          <%= f.submit t('categories.common.save'), class: "btn btn-success" %>
         </div>
       <% end %>
     </div>
@@ -23,7 +23,7 @@
             <div class="card mb-4 bg-white" style="height: 200px">
               <div class="card-header d-flex justify-content-between align-items-center">
                 <h6 class="card-title mb-0 w-75"><%= categories_jury.jury.email %></h6>
-                <%= button_to organism_competition_edition_competition_category_categories_jury_path(@organism, @competition, @edition_competition, @category, categories_jury), method: :delete, data: { turbo_confirm: 'Are you sure?' }, class: 'btn btn-outline-dark btn-sm ms-2 border-0' do %>
+                <%= button_to organism_competition_edition_competition_category_categories_jury_path(@organism, @competition, @edition_competition, @category, categories_jury), method: :delete, data: { turbo_confirm: t('categories.common.confirm_delete') }, class: 'btn btn-outline-dark btn-sm ms-2 border-0' do %>
                   <i class="fas fa-times"></i>
                 <% end %>
               </div>

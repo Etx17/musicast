@@ -263,3 +263,143 @@ en:
     new:
       title: "New candidate"
       back: "Back to candidates"
+
+  categories:
+    # Common elements
+    common:
+      save: "Save"
+      close: "Close"
+      delete: "Delete"
+      confirm_delete: "Are you sure you want to delete this item?"
+
+    # Category partial
+    category:
+      edition_competition: "Competition Edition"
+      name: "Name"
+      description: "Description"
+      min_age: "Minimum Age"
+      max_age: "Maximum Age"
+      discipline: "Discipline"
+
+    # Choice imposed works section
+    choice_imposed_works_section:
+      title: "Optional Works"
+      what_is_it: "What is this?"
+      explanation: "This section allows you to define lists of works from which candidates must make a choice. For example, you can create a list of 5 opera arias and ask candidates to choose 2 to present."
+      create_instruction: "Create a list of works from which candidates will have to choose."
+      candidate_must_choose:
+        one: "The candidate must choose 1 work from this list"
+        other: "The candidate must choose %{count} works from this list"
+      add_new_list: "Add a new list of optional works"
+
+    # Form
+    form:
+      information: "Category Information"
+      name: "Category Name"
+      discipline: "Discipline"
+      min_age: "Minimum Age"
+      max_age: "Maximum Age"
+      description: "Description"
+      allow_own_pianist: "Allow candidates to bring their own accompanying pianist"
+      registration_fee: "Registration Fee (in %{currency})"
+      enter_price_in_euros: "Enter price in euros"
+      preselection_vote_type: "Preselection Vote Type"
+      preselection_vote_hint: "Choose how jurors will vote for candidate preselection"
+      add_photo: "Add Photo"
+      no_image_added: "No image added"
+      program_configuration: "Program Configuration"
+      include_choices_in_list: "Include optional works from a list"
+      include_choices_hint: "Candidates will have to choose from a list of works that you will define"
+      include_semi_imposed_works: "Include semi-imposed works"
+      include_semi_imposed_hint: "Candidates will have to present works according to specific criteria"
+      include_imposed_works: "Include imposed works"
+      include_imposed_hint: "Candidates will have to present specific works that you will impose"
+      save: "Save Category"
+
+    # Imposed works section
+    imposed_works_section:
+      title: "Imposed Works"
+      create_instruction: "Create a list of works that all candidates must present."
+      create_list: "Create a list of imposed works"
+      edit_list: "Edit list"
+
+    # Juries section
+    juries_section:
+      title:
+        zero: "Jury (no members)"
+        one: "Jury (1 member)"
+        other: "Jury (%{count} members)"
+      description: "Add jury members for this category."
+      add_member: "Add a jury member"
+      choose_member: "Choose a jury member"
+      no_members: "No jury members available? "
+      go_here: "Go here to create some"
+
+    # New imposed work
+    new_imposed_work:
+      title: "New Imposed Work"
+
+    # Prizes section
+    prizes_section:
+      title:
+        zero: "Prizes (none)"
+        one: "Prize (1)"
+        other: "Prizes (%{count})"
+      description: "Define the prizes that will be awarded to the winners of this category."
+      add_prize: "Add a prize"
+
+    # Program container section
+    program_container_section:
+      title: "Required Program"
+      description: "Define the program that candidates must present."
+
+    # Requirement items section
+    requirement_items_section:
+      title:
+        zero: "Required Documents (none)"
+        one: "Required Document (1)"
+        other: "Required Documents (%{count})"
+      add_required_item: "Add a required item"
+      description: "Create and modify the documents that the candidate must provide for registration (optional)"
+      info_text_1: "The candidate's profile already includes a portrait and a high-quality artistic/press photo (300dpi), biographies of different lengths, a repertoire, and an up-to-date CV that are directly accessible. For your competition, indicate if you need specific documents, such as a letter of recommendation or videos."
+      info_text_2: "Musicast is committed to respecting the privacy and security of its users' data, in accordance with GDPR. For this reason, we do not collect identity documents. This preventive measure aims to minimize risks related to the management of sensitive data and to protect our users against the potential consequences of a data breach, such as fraud or identity theft. We encourage secure alternatives for identity verification, thus ensuring the protection and security of personal information."
+      item_title: "Give a title to this item"
+      title_placeholder: "e.g.: Letter of recommendation from your teacher"
+      item_type: "Item type"
+      select_type: "Select a type"
+      details: "Details"
+      details_placeholder: "Specify requirements here, for example length for a cover letter, duration for a YouTube video, or other..."
+
+    # Semi imposed works section
+    semi_imposed_works_section:
+      title: "Semi-imposed Works"
+      what_is_it: "What is this?"
+      explanation: "This section allows you to define criteria for the works that candidates must present. For example, you can request a classical sonata, a contemporary piece, etc."
+      create_instruction: "Create criteria for the works that candidates must present."
+      add_new_list: "Add a new list of semi-imposed works"
+
+    # Edit page
+    edit:
+      title: "Edit Category"
+      back: "Back"
+
+    # Index page
+    index:
+      title: "Categories"
+      new: "New Category"
+      show: "View"
+      edit: "Edit"
+      delete: "Delete"
+      years: "years"
+
+    # New page
+    new:
+      title: "New Category"
+      back: "Back"
+
+    # Show page
+    show:
+      years: "years"
+      edit: "Edit"
+      back: "Back"
+      description: "Description"

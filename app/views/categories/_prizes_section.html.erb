@@ -2,12 +2,12 @@
   <div class="card-header d-flex justify-content-between align-items-center">
     <div>
       <div class="d-flex gap-3 align-items-center">
-        <h2 style="font-size: 3em;">Prix (<%= category.prizes.count %>)</h2>
+        <h2 style="font-size: 3em;"><%= t('categories.prizes_section.title', count: category.prizes.count) %></h2>
         <%= link_to new_organism_competition_edition_competition_category_prize_path(@organism, @competition, @edition_competition, category), class: "btn btn-success my-3" do %>
-          + Ajouter un prix
+          + <%= t('categories.prizes_section.add_prize') %>
         <% end %>
       </div>
-      <span class="text-secondary">Créez et modifier les pièces que le candidat doit fournir pour son inscription (optionnel)</span>
+      <span class="text-secondary"><%= t('categories.prizes_section.description') %></span>
 
     </div>
 
@@ -19,7 +19,7 @@
         <div class="card mb-4 bg-white">
           <div class="card-header d-flex justify-content-between align-items-center">
             <h5 class="card-title mb-0"><%= prize.title %></h5>
-            <%= button_to organism_competition_edition_competition_category_prize_path(@organism, @competition, @edition_competition, @category, prize), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-outline-dark btn-sm ms-2 border-0' do %>
+            <%= button_to organism_competition_edition_competition_category_prize_path(@organism, @competition, @edition_competition, @category, prize), method: :delete, data: { confirm: t('categories.common.confirm_delete') }, class: 'btn btn-outline-dark btn-sm ms-2 border-0' do %>
               <i class="fas fa-times"></i>
             <% end %>
           </div>

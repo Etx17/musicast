@@ -233,187 +233,112 @@ fr:
         create_prize: "Créez au moins 1 prix"
         create_jury: "Créez au moins 1 pré-juré votant"
       applications: "Candidatures"
-  imposed_works:
-    # Common elements
     common:
-      title: "Titre"
-      guidelines: "Consignes"
-      airs: "Airs imposés"
-      actions:
-        show: "Voir ce programme imposé"
-        edit: "Modifier ce programme imposé"
-        destroy: "Supprimer ce programme imposé"
-        back: "Retour aux programmes imposés"
-        new: "Nouveau programme imposé"
-        submit: "Enregistrer les modifications"
-        add_piece: "Ajouter un morceau"
-
-    # View-specific translations
-    index:
-      title: "Programmes imposés"
-      new: "Nouveau programme imposé"
-
-    show:
-      title: "Détails du programme imposé"
-      notice: "Programme imposé enregistré avec succès."
-      no_airs: "Aucun air n'a été ajouté à ce programme."
-
-    new:
-      title: "Nouveau programme imposé"
-
-    edit:
-      title: "Modifier le programme imposé"
-
-    form:
-      title_placeholder: "ex: 2 oeuvres de Fauré"
-      guidelines_placeholder: "ex: Ces oeuvres imposées seront réparties aléatoirement dans le programme du candidat entre les tours"
-      error: "Veuillez corriger les erreurs ci-dessous:"
-
-  candidats:
-    # Common elements
-    common:
-      profile: "Profil"
-      experiences: "Expériences"
-      education: "Formation"
-      diplomas: "Diplômes"
-      actions:
-        edit: "Modifier"
-        back: "Retour"
-        save: "Enregistrer"
-        delete: "Supprimer"
-        show: "Voir"
-        new: "Nouveau candidat"
-
-    # Profile section
-    profile_summary_section:
-      title: "Résumé du profil"
-      name: "Nom"
-      first_name: "Prénom"
-      last_name: "Nom de famille"
-      birth_date: "Date de naissance"
-      nationality: "Nationalité"
-      address: "Adresse"
-      phone: "Téléphone"
-      email: "Email"
-      biography: "Biographie"
-      website: "Site web"
-      social_media: "Réseaux sociaux"
-      teacher: "Professeur"
-      view_cv: "Voir CV (anglais)"
-      view_artistic_photo: "Voir photo artistique"
-      short_bio: "Courte biographie"
-      medium_bio: "Biographie moyenne"
-      long_bio: "Biographie détaillée"
-      short_bio_en: "Courte biographie (anglais)"
-      medium_bio_en: "Biographie moyenne (anglais)"
-      long_bio_en: "Biographie détaillée (anglais)"
-      repertoire: "Répertoire"
-      not_provided_short: "Pas encore renseignée..."
-      not_provided_medium: "Biographie de taille moyenne pas encore renseignée..."
-      not_provided_long: "Biographie complète pas encore renseignée..."
-
-    # Experiences section
-    experiences_section:
-      title: "Expériences professionnelles"
-      no_experiences: "Aucune expérience professionnelle n'a été ajoutée."
-      add_experience: "Ajouter une expérience"
-      position: "Poste"
-      company: "Entreprise/Organisation"
-      start_date: "Date de début"
-      end_date: "Date de fin"
-      current: "Poste actuel"
-      description: "Description"
-      delete_confirm: "Supprimer cette expérience ?"
-      present: "Présent"
-      title_label: "Titre"
-      from: "Du"
-      to: "au"
-      description_placeholder: "Décrivez votre expérience ici"
-
-    # Education section
-    education_section:
-      title: "Formation"
-      no_education: "Aucune formation n'a été ajoutée."
-      add_education: "Ajouter une formation"
-      institution: "Institution"
-      degree: "Diplôme/Certificat"
-      field: "Domaine d'études"
-      start_date: "Date de début"
-      end_date: "Date de fin"
-      current: "En cours"
-      description: "Description"
-      delete_confirm: "Supprimer cette formation ?"
-      present: "Présent"
-      title_label: "Titre"
-      from: "Du"
-      to: "au"
-      description_placeholder: "Décrivez votre formation ici"
-
-    # Diplomas section
-    diplomas:
-      title: "Diplômes et certifications"
-      no_diplomas: "Aucun diplôme n'a été ajouté."
-      add_diploma: "Ajouter un diplôme"
-      name: "Nom du diplôme"
-      institution: "Institution"
-      date: "Date d'obtention"
-      description: "Description"
-      view: "Voir"
-      delete: "Delete"
-      delete_confirm: "Are you sure?"
-      add: "Ajouter"
-
-    # Form
-    form:
-      first_name: "Prénom"
-      last_name: "Nom"
-      birthdate: "Date de naissance"
-      birthdate_hint: "Votre identité sera validée le jour du concours, attention a rentrer votre date de naissance exacte!"
-      nationality: "Nationalité"
-      portrait: "Portrait (photo HD de votre visage)"
-      artistic_photo: "Photo artistique (HD)"
-      cv_english: "CV (anglais)"
-      last_teacher: "Nom du professeur"
-      last_teacher_hint: "Renseignez le nom de votre professeur actuel ou du dernier"
-      banner_color: "Couleur de votre bannière"
-      translation_info: "Vous pouvez traduire vos biographies avec l'Intelligence Artificielle en utilisant"
-      short_bio: "Courte biographie*"
-      short_bio_placeholder: "Une version très courte de votre parcours, à destination des jurys de concours"
-      short_bio_en: "Short biography (english)*"
-      short_bio_en_placeholder: "Une version très courte de votre parcours, à destination des jurys de concours"
-      medium_bio: "Biographie moyenne*"
-      medium_bio_placeholder: "Une version résumée de votre parcours, à destination des jurys de concours"
-      medium_bio_en: "Medium biography (english)*"
-      medium_bio_en_placeholder: "Une version résumée de votre parcours, à destination des jurys de concours"
-      long_bio: "Biographie détaillée*"
-      long_bio_placeholder: "Une version détaillée de votre parcours, à destination des jurys de concours"
-      long_bio_en: "Biographie détaillée (english)*"
-      long_bio_en_placeholder: "Une version détaillée de votre parcours, à destination des jurys de concours"
-      repertoire: "Répertoire*"
-      repertoire_placeholder: "Une version détaillée de votre parcours, à destination des jurys de concours"
-      experiences_title: "Expériences"
-      education_title: "Formation"
       save: "Enregistrer"
-      new_record: "NEW"
+      close: "Fermer"
       delete: "Supprimer"
-
-    # Edit page
+      confirm_delete: "Êtes-vous sûr de vouloir supprimer cet élément ?"
+    category:
+      edition_competition: "Édition de la compétition"
+      name: "Nom"
+      description: "Description"
+      min_age: "Âge minimum"
+      max_age: "Âge maximum"
+      discipline: "Discipline"
+    choice_imposed_works_section:
+      title: "Œuvres au choix"
+      what_is_it: "Qu'est-ce que c'est ?"
+      explanation: "Cette section vous permet de définir des listes d'œuvres parmi lesquelles les candidats devront faire un choix. Par exemple, vous pouvez créer une liste de 5 airs d'opéra et demander aux candidats d'en choisir 2 à présenter."
+      create_instruction: "Créez une liste d'œuvres parmi lesquelles les candidats devront choisir."
+      candidate_must_choose:
+        one: "Le candidat doit choisir 1 œuvre dans cette liste"
+        other: "Le candidat doit choisir %{count} œuvres dans cette liste"
+      add_new_list: "Ajouter une nouvelle liste d'œuvres au choix"
+    form:
+      information: "Informations sur la catégorie"
+      name: "Nom de la catégorie"
+      discipline: "Discipline"
+      min_age: "Âge minimum"
+      max_age: "Âge maximum"
+      description: "Description"
+      allow_own_pianist: "Permettre aux candidats d'amener leur propre pianiste accompagnateur"
+      registration_fee: "Frais d'inscription (en %{currency})"
+      enter_price_in_euros: "Entrez le prix en euros"
+      preselection_vote_type: "Type de vote pour la présélection"
+      preselection_vote_hint: "Choisissez comment les jurés voteront pour la présélection des candidats"
+      add_photo: "Ajouter une photo"
+      no_image_added: "Aucune image ajoutée"
+      program_configuration: "Configuration du programme"
+      include_choices_in_list: "Inclure des œuvres au choix dans une liste"
+      include_choices_hint: "Les candidats devront choisir parmi une liste d'œuvres que vous définirez"
+      include_semi_imposed_works: "Inclure des œuvres semi-imposées"
+      include_semi_imposed_hint: "Les candidats devront présenter des œuvres selon des critères spécifiques"
+      include_imposed_works: "Inclure des œuvres imposées"
+      include_imposed_hint: "Les candidats devront présenter des œuvres spécifiques que vous imposerez"
+      save: "Enregistrer la catégorie"
+    imposed_works_section:
+      title: "Œuvres imposées"
+      create_instruction: "Créez une liste d'œuvres que tous les candidats devront présenter."
+      create_list: "Créer une liste d'œuvres imposées"
+      edit_list: "Modifier la liste"
+    juries_section:
+      title:
+        zero: "Jury (aucun membre)"
+        one: "Jury (1 membre)"
+        other: "Jury (%{count} membres)"
+      description: "Ajoutez des membres du jury pour cette catégorie."
+      add_member: "Ajouter un membre du jury"
+      choose_member: "Choisir un membre du jury"
+      no_members: "Pas de membres du jury disponibles ? "
+      go_here: "Allez ici pour en créer"
+    new_imposed_work:
+      title: "Nouvelle œuvre imposée"
+    prizes_section:
+      title:
+        zero: "Prix (aucun)"
+        one: "Prix (1)"
+        other: "Prix (%{count})"
+      description: "Définissez les prix qui seront attribués aux lauréats de cette catégorie."
+      add_prize: "Ajouter un prix"
+    program_container_section:
+      title: "Programme demandé"
+      description: "Définissez le programme que les candidats devront présenter."
+    requirement_items_section:
+      title:
+        zero: "Pièces nécessaires (aucune)"
+        one: "Pièces nécessaires (1)"
+        other: "Pièces nécessaires (%{count})"
+      add_required_item: "Ajouter un élément requis"
+      description: "Créez et modifiez les pièces que le candidat doit fournir pour son inscription (optionnel)"
+      info_text_1: "Le profil du candidat comprend déjà un portrait et une photo artistique/de presse de haute qualité (300dpi), des biographies de différentes longueurs, un répertoire, et un CV à jour accessibles directement. Pour votre concours, indiquez si vous avez besoin de documents spécifiques, tels qu'une lettre de recommandation ou des vidéos."
+      info_text_2: "Musicast s'engage à respecter la confidentialité et la sécurité des données de ses utilisateurs, conformément au RGPD. Pour cette raison, nous ne collectons pas de pièces d'identité. Cette mesure préventive vise à minimiser les risques liés à la gestion de données sensibles et à protéger nos utilisateurs contre les potentielles conséquences d'une violation de données, telles que la fraude ou le vol d'identité. Nous encourageons des alternatives sécurisées pour la vérification d'identité, garantissant ainsi la protection et la sécurité des informations personnelles."
+      item_title: "Donnez un titre à cet item"
+      title_placeholder: "ex: Lettre de recommandation de votre professeur"
+      item_type: "Type de pièce"
+      select_type: "Sélectionnez un type"
+      details: "Détails"
+      details_placeholder: "Renseignez ici les spécifications, par exemple de longueur pour une lettre de motivation, de durée pour une vidéo sur YouTube, ou autre..."
+    semi_imposed_works_section:
+      title: "Œuvres semi-imposées"
+      what_is_it: "Qu'est-ce que c'est ?"
+      explanation: "Cette section vous permet de définir des critères pour les œuvres que les candidats devront présenter. Par exemple, vous pouvez demander une sonate classique, un morceau contemporain, etc."
+      create_instruction: "Créez des critères pour les œuvres que les candidats devront présenter."
+      add_new_list: "Ajouter une nouvelle liste d'œuvres semi-imposées"
     edit:
-      title: "Modifier vos informations"
-      subtitle: "Ces informations sont nécessaires pour pouvoir vous inscrire à un concours."
-      warning_prefix: "Attention"
-      warning: "les informations que vous renseignez ici seront utilisées pour vous contacter et pour vous inscrire à un concours. Merci de les renseigner avec soin. Vous pourrez les modifier ultérieurement."
+      title: "Modifier la catégorie"
       back: "Retour"
-      show: "Voir ce candidat"
-      back_to_list: "Retour à la liste des candidats"
-
-    # Index page
     index:
-      title: "Candidats"
-      show: "Voir ce candidat"
-      new: "Nouveau candidat"
-
-    # New page
+      title: "Catégories"
+      new: "Nouvelle catégorie"
+      show: "Voir"
+      edit: "Modifier"
+      delete: "Supprimer"
+      years: "ans"
     new:
-      title: "Nouveau candidat"
-      back: "Retour à la liste des candidats"
+      title: "Nouvelle catégorie"
+      back: "Retour"
+    show:
+      years: "ans"
+      edit: "Modifier"
+      back: "Retour"
+      description: "Description"

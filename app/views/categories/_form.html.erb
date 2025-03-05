@@ -4,46 +4,46 @@
 
   <div class="row bg-light p-3 shadow-sm mb-3" style="border-radius: 8px;">
     <div class="col-md-6">
-      <h3>Informations</h3>
+      <h3><%= t('categories.form.information') %></h3>
 
       <div class="form-inputs w-100">
         <div class="row">
           <div class="col-md-6">
-            <%= f.input :name, required: true %>
+            <%= f.input :name, required: true, label: t('categories.form.name') %>
           </div>
 
           <div class="col-md-6">
-            <%= f.input :discipline, label: "Discipline", as: :select, collection: Category.disciplines.keys.map { |discipline| [discipline.humanize, discipline] }, input_html: { class: 'form-select', required: true } %>
+            <%= f.input :discipline, label: t('categories.form.discipline'), as: :select, collection: Category.disciplines.keys.map { |discipline| [discipline.humanize, discipline] }, input_html: { class: 'form-select', required: true } %>
           </div>
 
         </div>
         <div class="row">
           <div class="col-md-6">
-            <%= f.input :min_age, required: true %>
+            <%= f.input :min_age, required: true, label: t('categories.form.min_age') %>
           </div>
           <div class="col-md-6">
-            <%= f.input :max_age, required: true %>
+            <%= f.input :max_age, required: true, label: t('categories.form.max_age') %>
           </div>
         </div>
         <div class="form-group" data-controller="character-counter">
           <div class="d-flex gap-3 align-items-center">
-          <%= f.label "Description*" %>
+          <%= f.label t('categories.form.description') + "*" %>
           <small class="text-secondary"><span data-character-counter-target="counter">0</span>/1000 </small>
           </div>
           <%= f.input :description, label: false, placeholder: "", input_html: { class:"border border-0", data: { action: "input->character-counter#update", character_counter_target: "input", class:"border border-0 "} } %>
         </div>
         <div class="d-flex p-2 bg-light-grey rounded-8 align-items-center">
           <%= f.input :allow_own_pianist_accompagnateur, as: :boolean, label: false, input_html: {style:"background-color: #28CF75;"} %>
-          <%= f.label "Le candidat peut venir avec son pianiste accompagnateur personnel." %>
+          <%= f.label t('categories.form.allow_own_pianist') %>
         </div>
-        <%= f.input :price_cents, label: "Frais d'inscription (#{@category.price_currency})", class: "form-control",input_html: { value: @category.price_cents / 100, step: 1, min: 0, class: "form-control", id: "price_euros", placeholder: "Enter price in Euros" }  %>
+        <%= f.input :price_cents, label: t('categories.form.registration_fee', currency: @category.price_currency), class: "form-control",input_html: { value: @category.price_cents / 100, step: 1, min: 0, class: "form-control", id: "price_euros", placeholder: t('categories.form.enter_price_in_euros') }  %>
         <div class="form-group w-100">
           <%= f.input :preselection_vote_type,
             collection: Category.preselection_vote_types.keys.map { |key| [key.humanize, key] },
             as: :radio_buttons,
-            label: "Type de vote pour la présélection",
+            label: t('categories.form.preselection_vote_type'),
             required: true,
-            hint: "Souhaitez vous qu'un vote pour la préselection ait lieu ?",
+            hint: t('categories.form.preselection_vote_hint'),
             item_wrapper_class: 'd-flex mb-2 mx-3 border border-light gap-3'
           %>
         </div>
@@ -55,45 +55,45 @@
     <div class="col-md-6">
       <div class="form-inputs col-12 d-flex flex-column gap-1">
         <div data-controller="image-preview" data-image-preview-url="<%= @category.photo.attached? ? url_for(@category.photo) : '' %>">
-          <%= f.input :photo, as: :file, input_html: { data: { image_preview_target: "input" } }, label: "Ajouter une photo" %>
+          <%= f.input :photo, as: :file, input_html: { data: { image_preview_target: "input" } }, label: t('categories.form.add_photo') %>
           <div class="w-100" style="height: 400px; background: #f8f9fa;">
             <div data-image-preview-target="preview" class="h-100 w-100" style="background-size: contain; display: none;"></div>
-            <div data-image-preview-target="placeholder" class="text-center text-muted border p-5 w-100">Vous n'avez pas encore ajouté d'image</div>
+            <div data-image-preview-target="placeholder" class="text-center text-muted border p-5 w-100"><%= t('categories.form.no_image_added') %></div>
           </div>
         </div>
       </div>
 
     <div class="mt-4">
-      <h5>Configuration du programme</h5>
+      <h5><%= t('categories.form.program_configuration') %></h5>
 
       <div class="form-group mb-3">
         <div class="d-flex align-items-center">
           <%= f.input :includes_choice_imposed_works,
                       as: :boolean,
-                      label: "Inclure des choix dans une liste",
+                      label: t('categories.form.include_choices_in_list'),
                       wrapper_html: { class: "form-check form-switch" },
                       input_html: { class: "form-check-input", role: "switch" },
-                      hint: "Cochez cette option si vous souhaitez proposer une ou plusieurs listes d'œuvres parmi lesquelles le candidat devra faire une sélection." %>
+                      hint: t('categories.form.include_choices_hint') %>
         </div>
       </div>
       <div class="form-group mb-3">
         <div class="d-flex align-items-center">
           <%= f.input :includes_semi_imposed_works,
                       as: :boolean,
-                      label: "Inclure des œuvres semi-imposées",
+                      label: t('categories.form.include_semi_imposed_works'),
                       wrapper_html: { class: "form-check form-switch" },
                       input_html: { class: "form-check-input", role: "switch" },
-                      hint: "Cochez cette option si tout ou partie du programme du candidat devra suivre une ou plusieurs consignes spécifiques. (Par exemple voici deux consignes : 3 airs de Mozart au choix, 2 airs d'oratorio)" %>
+                      hint: t('categories.form.include_semi_imposed_hint') %>
         </div>
       </div>
       <div class="form-group mb-3">
         <div class="d-flex align-items-center">
           <%= f.input :includes_imposed_works,
                       as: :boolean,
-                      label: "Inclure des œuvres imposées",
+                      label: t('categories.form.include_imposed_works'),
                       wrapper_html: { class: "form-check form-switch" },
                       input_html: { class: "form-check-input", role: "switch" },
-                      hint: "Cochez cette option si vous voulez imposer des œuvres spécifiques que le candidat devra obligatoirement interpréter." %>
+                      hint: t('categories.form.include_imposed_hint') %>
         </div>
       </div>
     </div>
@@ -102,7 +102,7 @@
 
 
   <div class="form-actions">
-    <%= f.button :submit, 'Enregistrer', class:"btn btn-dark w-100 p-3 mb-5" %>
+    <%= f.button :submit, t('categories.form.save'), class:"btn btn-dark w-100 p-3 mb-5" %>
   </div>
   </div>
 

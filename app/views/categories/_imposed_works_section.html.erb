@@ -1,6 +1,6 @@
 <!-- Section Oeuvres obligatoires: table "imposed_works" -->
 <div class="col p-3 border-top border-5 d-flex flex-column align-items-center bg-white">
-  <h2 class=" px-3 rounded-pill">Oeuvres obligatoires</h3>
+  <h2 class=" px-3 rounded-pill"><%= t('categories.imposed_works_section.title') %></h3>
     <% imposed_work = @category.imposed_work %>
     <% if imposed_work&.persisted? %>
       <div class="container p-3">
@@ -11,11 +11,11 @@
           </div>
           <div class="w-100 d-flex justify-content-between mb-3">
             <%= link_to edit_organism_competition_edition_competition_category_imposed_work_path(@organism, @competition, @edition_competition, @category, imposed_work), class: 'btn btn-light btn-sm px-3', style: 'width: auto;' do %>
-              <i class="fas fa-pencil"></i> Editer la liste
+              <i class="fas fa-pencil"></i> <%= t('categories.imposed_works_section.edit_list') %>
             <% end %>
 
-            <%= button_to organism_competition_edition_competition_category_imposed_work_path(@organism, @competition, @edition_competition, @category, imposed_work, redirect_path: organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category)), method: :delete, data: { confirm: 'Are you sure?', turbo_confirm: "Are you sure?" }, class: 'btn btn-light btn-sm', style: 'width: 100px;' do %>
-              <i class="fas fa-trash"></i> Supprimer
+            <%= button_to organism_competition_edition_competition_category_imposed_work_path(@organism, @competition, @edition_competition, @category, imposed_work, redirect_path: organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category)), method: :delete, data: { confirm: t('categories.common.confirm_delete'), turbo_confirm: t('categories.common.confirm_delete') }, class: 'btn btn-light btn-sm', style: 'width: 100px;' do %>
+              <i class="fas fa-trash"></i> <%= t('categories.common.delete') %>
             <% end %>
           </div>
         </div>
@@ -31,7 +31,7 @@
                   <%= link_to edit_air_path(work, redirect_path: organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category)), class: 'btn btn-outline-dark btn-sm border-0' do %>
                     <i class="fas fa-pencil"></i>
                   <% end %>
-                  <%= button_to air_path(work, redirect_path: organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category)), method: :delete, data: { confirm: 'Are you sure?', turbo_confirm: "Are you sure?" }, class: 'btn btn-outline-dark btn-sm border-0' do %>
+                  <%= button_to air_path(work, redirect_path: organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category)), method: :delete, data: { confirm: t('categories.common.confirm_delete'), turbo_confirm: t('categories.common.confirm_delete') }, class: 'btn btn-outline-dark btn-sm border-0' do %>
                     <i class="fas fa-trash"></i>
                   <% end %>
                 </div>
@@ -43,8 +43,8 @@
         <% end %>
       </div>
     <% else %>
-     <p class="text-muted"><i class="fas fa-info-circle text-secondary pe-1"></i> Créez une liste d'airs obligatoires si nécessaire. Si vous souhaitez que le candidat inteprête l'un deux sur un tour en particulier, vous pourrez configurer cela dans "Modifer" sur un tour.</p>
-      <%= link_to "Créer une liste d'oeuvre obligatoires", new_organism_competition_edition_competition_category_imposed_work_path(@organism, @competition, @edition_competition, @category, category_id: @category.id), class: "btn btn-success" %>
+     <p class="text-muted"><i class="fas fa-info-circle text-secondary pe-1"></i> <%= t('categories.imposed_works_section.create_instruction') %></p>
+      <%= link_to t('categories.imposed_works_section.create_list'), new_organism_competition_edition_competition_category_imposed_work_path(@organism, @competition, @edition_competition, @category, category_id: @category.id), class: "btn btn-success" %>
     <% end %>
 
 </div>
