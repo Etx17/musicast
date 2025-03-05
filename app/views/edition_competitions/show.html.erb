@@ -3,20 +3,20 @@
   <div class="row">
     <h1 class="text-center" style="font-size: 5em;"><%=  @edition_competition.annee%></h1>
     <% if @edition_competition.published? %>
-    <p class="bg-success-secondary text-success border rounded-8 p-3"><i class="fas fa-check-circle pe-2"></i>Votre édition est publiée. Consultez les candidatures de chaques catégories puis générez l'ordre de passage et le planning sur chaque tour ci dessous</p>
+    <p class="bg-success-secondary text-success border rounded-8 p-3"><i class="fas fa-check-circle pe-2"></i><%= t('edition_competitions.show.edition_published') %></p>
     <% end %>
      <div class="col-md-6">
-      <h2 class="text-center mb-5 text-dark" style="font-size: 4em;">Edition</h2>
+      <h2 class="text-center mb-5 text-dark" style="font-size: 4em;"><%= t('edition_competitions.show.edition') %></h2>
       <div class="card border-0 shadow-sm rounded bg-grey">
         <div class="card-body">
           <div class="d-flex flex-column mb-1">
             <% if @edition_competition.published? %>
-             <span class=" mx-auto badge rounded-pill text-success bg-success-secondary border border-success">Publié</span>
+             <span class=" mx-auto badge rounded-pill text-success bg-success-secondary border border-success"><%= t('edition_competitions.show.published') %></span>
             <% else %>
             <button type="button" class="btn btn-success btn-lg" data-bs-toggle="modal" data-bs-target="#publishModal" <%= (@edition_competition.categories.none? || @edition_competition.categories.any? { |c| c.tours.none? }) ? 'disabled' : '' %>>
-              Prêt à publier
+              <%= t('edition_competitions.show.ready_to_publish') %>
             </button>
-            <small class="text-secondary">Vous pouvez publier après avoir configuré au moins un tour sur chaque catégorie</small>
+            <small class="text-secondary"><%= t('edition_competitions.show.publish_after_configuration') %></small>
             <% end %>
           </div>
           <%= render @edition_competition %>
@@ -28,13 +28,13 @@
       <div class="card border-0 shadow-sm rounded bg-grey">
         <div class="card-body">
           <p class="text-success"><%= notice %></p>
-          <h2>Prochain virements</h2>
+          <h2><%= t('edition_competitions.show.next_transfers') %></h2>
           <div class="mt-3 d-flex justify-content-between">
-            <p class='text-secondary'>Somme des montants des inscriptions qui vous seront versées lors de la clôture de la réception des inscriptions.</p>
+            <p class='text-secondary'><%= t('edition_competitions.show.registration_fees_sum') %></p>
           </div>
             <%# Si il n'y a pas de category %>
             <% if @edition_competition.categories.none? %>
-              <p class="text-secondary">Vous n'avez pas encore d'inscriptions pour l'instant</p>
+              <p class="text-secondary"><%= t('edition_competitions.show.no_registrations') %></p>
             <% end %>
             <% @edition_competition.categories.each do |category| %>
               <% number_of_inscriptions = category.inscriptions.where(status: "in_review").count %>
@@ -43,16 +43,16 @@
                   <thead>
                     <tr>
                       <th><%= category.name %></th>
-                      <th>Montant</th>
+                      <th><%= t('edition_competitions.show.amount') %></th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                      <td>Nombre d'inscriptions payées</td>
+                      <td><%= t('edition_competitions.show.paid_registrations') %></td>
                       <td><%= number_of_inscriptions %></td>
                     </tr>
                     <tr>
-                      <td>Total</td>
+                      <td><%= t('edition_competitions.show.total') %></td>
                       <td><%= humanized_money_with_symbol(number_of_inscriptions * (category.price - Money.new(500, 'EUR'))).gsub('.', '') %></td>                  </tr>
                   </tbody>
                 </table>
@@ -66,11 +66,11 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="publishModalLabel">Confirmation de publication</h5>
+              <h5 class="modal-title" id="publishModalLabel"><%= t('edition_competitions.show.publish_confirmation') %></h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              Êtes-vous sûr de vouloir publier maintenant votre édition? Assurez vous que vous avez bien rempli comme vous le souhaitez l'ensemble des informations de votre édition et de vos catégories. Vous ne pourrez plus modifier les catégories une fois publiées.
+              <%= t('edition_competitions.show.publish_warning') %>
               <ul>
               <% @edition_competition.categories&.each do |category| %>
                 <%= link_to organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, category), target: "_blank", rel: "noopener noreferrer" do %>
@@ -84,12 +84,12 @@
                 <div class="d-flex gap-2 pb-2">
                   <%= check_box_tag 'confirm_publish', '1', false, class: "form-check-input", required: true %>
                   <label class="form-check-label" for="confirm_publish">
-                    J'ai revu ma compétition et je confirme les informations ci dessus. Je comprends que je ne pourrais plus modifier les catégories (leurs règles, programme demandé, etc...) une fois publiées.
+                    <%= t('edition_competitions.show.confirm_publish') %>
                   </label>
                 </div>
                 <%= f.hidden_field :status, value: "published" %>
-                <%= f.submit "Publier", class: "btn btn-success", data: {turbo_confirm: "Confirmer ?"} %>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Pas tout de suite</button>
+                <%= f.submit t('edition_competitions.show.publish'), class: "btn btn-success", data: {turbo_confirm: t('edition_competitions.show.confirm')} %>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><%= t('edition_competitions.show.not_yet') %></button>
               <% end %>
             </div>
           </div>
@@ -98,15 +98,15 @@
     </div>
 
     <div class="col-md-6" data-controller="hover">
-      <h2 class="text-center text-dark mb-5" style="font-size: 4em;">Categories</h2>
+      <h2 class="text-center text-dark mb-5" style="font-size: 4em;"><%= t('edition_competitions.show.categories') %></h2>
       <% if @categories.none? %>
-        <p class="text-center text-secondary ">Commencez par ajouter une catégorie</p>
+        <p class="text-center text-secondary "><%= t('edition_competitions.show.start_by_adding') %></p>
         <%# fleche vers le bas %>
         <div class="d-flex justify-content-center mb-2">
           <i class="fas fa-arrow-down text-secondary" style="font-size: 3em;"></i>
         </div>
       <% end %>
-      <%= link_to '+ Ajouter une catégorie', new_organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition), class: "btn btn-#{@edition_competition.categories.any? ? 'outline-dark' : 'success'} w-100 mb-4" %>
+      <%= link_to t('edition_competitions.show.add_category'), new_organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition), class: "btn btn-#{@edition_competition.categories.any? ? 'outline-dark' : 'success'} w-100 mb-4" %>
       <% @categories.each do |category| %>
        <div class="mb-3">
           <!-- image link-->
@@ -122,9 +122,9 @@
 
               <!-- links -->
               <div class="d-flex justify-content-end gap-3  mb-1 position-absolute top-0 start-0 p-3 w-100">
-                <%= link_to 'Configurer la catégorie', organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, category), class: "btn btn-success" unless @edition_competition.published? %>
-                <%= link_to "Candidatures (#{category.inscriptions.where(status: 'in_review').count})", organism_competition_edition_competition_category_inscriptions_path(@organism, @competition, @edition_competition, category), class: "btn btn-light" %>
-                <%= button_to "Supprimer", organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, category), class: "btn", style: "background-color: #FFCCCC;", data: {turbo_confirm: "Êtes-vous sûr de vouloir supprimer cette catégorie ?"}, method: :delete %>
+                <%= link_to t('edition_competitions.show.configure_category'), organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, category), class: "btn btn-success" unless @edition_competition.published? %>
+                <%= link_to t('edition_competitions.show.applications', count: category.inscriptions.where(status: 'in_review').count), organism_competition_edition_competition_category_inscriptions_path(@organism, @competition, @edition_competition, category), class: "btn btn-light" %>
+                <%= button_to t('edition_competitions.common.delete'), organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, category), class: "btn", style: "background-color: #FFCCCC;", data: {turbo_confirm: t('edition_competitions.show.confirm_delete_category')}, method: :delete %>
               </div>
 
               <!-- links -->
@@ -136,14 +136,7 @@
             </div>
           <% end %>
         </div>
-
-
       <% end %>
-
-
     </div>
-
-
-
   </div>
 </div>

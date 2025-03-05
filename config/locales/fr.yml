@@ -456,3 +456,101 @@ fr:
       new:
         title: "Renvoyer les instructions de déverrouillage"
         resend_instructions: "Renvoyer les instructions de déverrouillage"
+
+  edition_competitions:
+    # Common elements
+    common:
+      continue: "Continuer"
+      view: "Voir"
+      delete: "Supprimer"
+
+    # Category modal infos
+    category_modal_infos:
+      view_rules: "Voir le règlement du concours"
+      selection_instructions: "Consignes de séléction des airs"
+      can_complete_application: "Vous pourrez remplir votre dossier et sélectionner vos oeuvres à l'étape suivante."
+      complete_profile_html: "Vous devez avoir complêté votre %{profile_link} pour pouvoir constituer un dossier d'inscription. En cliquant sur \"continuer\" vous serez redirigé dessus pour éditer vos informations"
+      profile: "profil"
+      create_account_html: "Vous devez vous créer un compte pour pouvoir vous inscrire à une compétition. Suivez ce %{link}"
+      link: "lien"
+      required_documents: "Pièces requises"
+      required_elements: "Eléments requis:"
+
+    # Edition competition partial
+    edition_competition:
+      edit: "Modifier"
+      delete: "Supprimer cette édition"
+      confirm_delete: "Supprimer l'édition?"
+      year: "Année"
+      specific_details: "Détails spécifiques"
+      start_date: "Date de début"
+      end_date: "Date de fin"
+      end_of_registration: "Fin des inscriptions"
+      rule_document: "Règlement"
+      confirm_delete_document: "Supprimer le document?"
+      no_document: "Aucun document de règlement attaché."
+      share_link: "Lien de partage"
+      qr_code: "QR code"
+
+    # Form
+    form:
+      create_edition: "Créer une édition"
+      edit_edition: "Modifier l'édition"
+      year: "Année"
+      registration_closing: "Clôture des inscriptions"
+      registration_closing_hint: "Date jusqu'à laquelle vous acceptez de recevoir des candidatures"
+      event_start_date: "Date de début de l'évènement"
+      event_end_date: "Date de fin de l'évènement"
+      street: "Numéro et rue"
+      street_placeholder: "3 rue Claude Debussy"
+      zipcode: "Code postal"
+      city: "Ville"
+      country: "Pays"
+      specific_details_placeholder: "Précisez les nouvelles modalités de cette édition si nécessaire"
+      competition_rules: "Règlement du concours (PDF, PNG, JPG)"
+      save: "Enregistrer"
+
+    # Candidate edition competition
+    candidate_edition_competition:
+      choose_category: "Choisissez une catégorie"
+      available: "disponibles"
+
+    # Edit
+    edit:
+      back: "Retour"
+
+    # Index
+    index:
+      title: "Éditions de concours"
+      show: "Voir cette édition de concours"
+      new: "Nouvelle édition de concours"
+
+    # New
+    new:
+      cancel: "Annuler"
+
+    # Show
+    show:
+      edition_published: "Votre édition est publiée. Consultez les candidatures de chaques catégories puis générez l'ordre de passage et le planning sur chaque tour ci dessous"
+      edition: "Édition"
+      published: "Publié"
+      ready_to_publish: "Prêt à publier"
+      publish_after_configuration: "Vous pouvez publier après avoir configuré au moins un tour sur chaque catégorie"
+      next_transfers: "Prochains virements"
+      registration_fees_sum: "Somme des frais d'inscription"
+      no_registrations: "Aucune inscription pour le moment"
+      amount: "Montant"
+      paid_registrations: "Inscriptions payées"
+      total: "Total"
+      publish_confirmation: "Confirmation de publication"
+      publish_warning: "Attention, une fois publiée, l'édition ne pourra plus être modifiée. Vérifiez que toutes les catégories sont correctement configurées :"
+      confirm_publish: "Je confirme que je souhaite publier cette édition"
+      publish: "Publier"
+      confirm: "Êtes-vous sûr de vouloir publier cette édition ?"
+      not_yet: "Pas encore"
+      categories: "Catégories"
+      start_by_adding: "Commencez par ajouter une catégorie"
+      add_category: "Ajouter une catégorie"
+      configure_category: "Configurer la catégorie"
+      applications: "%{count} candidature(s)"
+      confirm_delete_category: "Êtes-vous sûr de vouloir supprimer cette catégorie ?"

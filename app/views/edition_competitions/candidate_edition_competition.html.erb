@@ -5,8 +5,8 @@
   </div>
 
   <div class="container mt-3">
-    <h4 class="text-center pb-5 bold" style="font-size: 2rem;">Choisissez une catégorie</h4>
-    <small class="text-center"><%= @categories.count %> disponibles: </small>
+    <h4 class="text-center pb-5 bold" style="font-size: 2rem;"><%= t('edition_competitions.candidate_edition_competition.choose_category') %></h4>
+    <small class="text-center"><%= @categories.count %> <%= t('edition_competitions.candidate_edition_competition.available') %>: </small>
     <div class="row">
       <% @categories.each do |category| %>
       <%= render CategoryCardComponent.new(category: category) %>

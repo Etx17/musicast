@@ -626,3 +626,101 @@ en:
       new:
         title: "Resend unlock instructions"
         resend_instructions: "Resend unlock instructions"
+
+  edition_competitions:
+    # Common elements
+    common:
+      continue: "Continue"
+      view: "View"
+      delete: "Delete"
+
+    # Category modal infos
+    category_modal_infos:
+      view_rules: "View competition rules"
+      selection_instructions: "Selection instructions"
+      can_complete_application: "You can complete your application and select your works in the next step."
+      complete_profile_html: "You must have completed your %{profile_link} to be able to create an application. By clicking \"continue\" you will be redirected to edit your information"
+      profile: "profile"
+      create_account_html: "You need to create an account to register for a competition. Follow this %{link}"
+      link: "link"
+      required_documents: "Required documents"
+      required_elements: "Required elements:"
+
+    # Edition competition partial
+    edition_competition:
+      edit: "Edit"
+      delete: "Delete this edition"
+      confirm_delete: "Delete the edition?"
+      year: "Year"
+      specific_details: "Specific details"
+      start_date: "Start date"
+      end_date: "End date"
+      end_of_registration: "End of registration"
+      rule_document: "Rules"
+      confirm_delete_document: "Delete the document?"
+      no_document: "No rule document attached."
+      share_link: "Share link"
+      qr_code: "QR code"
+
+    # Form
+    form:
+      create_edition: "Create an edition"
+      edit_edition: "Edit edition"
+      year: "Year"
+      registration_closing: "Registration closing"
+      registration_closing_hint: "Date until which you accept applications"
+      event_start_date: "Event start date"
+      event_end_date: "Event end date"
+      street: "Street number and name"
+      street_placeholder: "3 Claude Debussy Street"
+      zipcode: "Zip code"
+      city: "City"
+      country: "Country"
+      specific_details_placeholder: "Specify the new terms of this edition if necessary"
+      competition_rules: "Competition rules (PDF, PNG, JPG)"
+      save: "Save"
+
+    # Candidate edition competition
+    candidate_edition_competition:
+      choose_category: "Choose a category"
+      available: "available"
+
+    # Edit
+    edit:
+      back: "Back"
+
+    # Index
+    index:
+      title: "Competition editions"
+      show: "View this competition edition"
+      new: "New competition edition"
+
+    # New
+    new:
+      cancel: "Cancel"
+
+    # Show
+    show:
+      edition_published: "Your edition is published. Check the applications for each category and then generate the order of passage and schedule for each round below"
+      edition: "Edition"
+      published: "Published"
+      ready_to_publish: "Ready to publish"
+      publish_after_configuration: "You can publish after configuring at least one round for each category"
+      next_transfers: "Next transfers"
+      registration_fees_sum: "Sum of registration fees"
+      no_registrations: "No registrations yet"
+      amount: "Amount"
+      paid_registrations: "Paid registrations"
+      total: "Total"
+      publish_confirmation: "Publication confirmation"
+      publish_warning: "Warning, once published, the edition can no longer be modified. Check that all categories are correctly configured:"
+      confirm_publish: "I confirm that I want to publish this edition"
+      publish: "Publish"
+      confirm: "Are you sure you want to publish this edition?"
+      not_yet: "Not yet"
+      categories: "Categories"
+      start_by_adding: "Start by adding a category"
+      add_category: "Add a category"
+      configure_category: "Configure category"
+      applications: "%{count} application(s)"
+      confirm_delete_category: "Are you sure you want to delete this category?"

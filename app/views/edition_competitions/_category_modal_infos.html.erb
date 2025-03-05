@@ -8,26 +8,26 @@
       <div class="modal-body p-3 bg-white">
 
         <div class="d-flex justify-content-between align-items-center">
-          <%= link_to "Voir le règlement du concours", category.edition_competition&.reglement_url, target: 'blank', class: "text-decoration-none my-3 btn btn-outline-dark rounded-4" %>
+          <%= link_to t('edition_competitions.category_modal_infos.view_rules'), category.edition_competition&.reglement_url, target: 'blank', class: "text-decoration-none my-3 btn btn-outline-dark rounded-4" %>
           <% if current_user %>
-          <%= link_to "Continuer", new_inscription_path(category_id: category.id, candidate_id: current_user.id), class: "btn btn-dark" %>
+          <%= link_to t('edition_competitions.common.continue'), new_inscription_path(category_id: category.id, candidate_id: current_user.id), class: "btn btn-dark" %>
           <% else %>
             <% session[:category_id] = category.id %>
-            <%= link_to "Continuer", new_user_registration_path, class: "btn btn-dark" %>
+            <%= link_to t('edition_competitions.common.continue'), new_user_registration_path, class: "btn btn-dark" %>
           <% end %>
         </div>
 
-        <h3 class="text-center py-3">Consignes de séléction des airs</h3>
+        <h3 class="text-center py-3"><%= t('edition_competitions.category_modal_infos.selection_instructions') %></h3>
 
         <% if current_user&.candidat&.has_minimum_informations_for_inscription? %>
-          <small class="text-success text-center pb-"><i class="fas fa-check-circle text-success"></i>Vous pourrez remplir votre dossier et sélectionner vos oeuvres à l'étape suivante.</small>
+          <small class="text-success text-center pb-"><i class="fas fa-check-circle text-success"></i><%= t('edition_competitions.category_modal_infos.can_complete_application') %></small>
         <% elsif current_user %>
           <div class="p-1 my-2 border rounded-8 bg-info-secondary border-info">
-            <small class="text-info"><i class="fas fa-info-circle text-info pe-2 "></i>Vous devez avoir complêté votre <%= link_to "profil", edit_candidat_path(current_user.candidat) %> pour pouvoir constituer un dossier d'inscription. En cliquant sur "continuer" vous serez redirigé dessus pour éditer vos informations</small>
+            <small class="text-info"><i class="fas fa-info-circle text-info pe-2 "></i><%= t('edition_competitions.category_modal_infos.complete_profile_html', profile_link: link_to(t('edition_competitions.category_modal_infos.profile'), edit_candidat_path(current_user.candidat))) %></small>
           </div>
         <% else %>
           <div class="p-1 my-2 border rounded-8 bg-info-secondary border-info">
-            <small class="text-info"><i class="fas fa-info-circle text-info pe-2 "></i>Vous devez vous créer un compte pour pouvoir vous inscrire à une compétition. Suivez ce <%= link_to "lien", new_user_registration_path %></small>
+            <small class="text-info"><i class="fas fa-info-circle text-info pe-2 "></i><%= t('edition_competitions.category_modal_infos.create_account_html', link: link_to(t('edition_competitions.category_modal_infos.link'), new_user_registration_path)) %></small>
           </div>
         <% end %>
 
@@ -45,9 +45,9 @@
 
 
         <% if category.requirement_items.any? %>
-        <h3 class="text-center py-3">Pièces requises</h3>
+        <h3 class="text-center py-3"><%= t('edition_competitions.category_modal_infos.required_documents') %></h3>
           <div class="card mb-3">
-            <div class="card-header">Eléments requis:</div>
+            <div class="card-header"><%= t('edition_competitions.category_modal_infos.required_elements') %></div>
             <ul class="list-group list-group-flush">
               <%= render(RequirementItemComponent.with_collection(category.requirement_items)) %>
             </ul>
@@ -57,10 +57,10 @@
       </div>
       <div class="modal-footer">
         <% if current_user %>
-        <%= link_to "Continuer", new_inscription_path(category_id: category.id, candidate_id: current_user.id), class: "btn btn-dark" %>
+        <%= link_to t('edition_competitions.common.continue'), new_inscription_path(category_id: category.id, candidate_id: current_user.id), class: "btn btn-dark" %>
         <% else %>
           <% session[:category_id] = category.id %>
-          <%= link_to "Continuer", new_user_registration_path, class: "btn btn-dark" %>
+          <%= link_to t('edition_competitions.common.continue'), new_user_registration_path, class: "btn btn-dark" %>
         <% end %>
       </div>
     </div>

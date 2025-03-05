@@ -1,31 +1,31 @@
 <div class="p-3 bg-light">
 <% edition_competition ||= @edition_competition  %>
-<h1 class="text-center mt-3"><%= action_name == "new" ? "Créer une édition" : "Modifier l'édition"  %></h1>
+<h1 class="text-center mt-3"><%= action_name == "new" ? t('edition_competitions.form.create_edition') : t('edition_competitions.form.edit_edition') %></h1>
 <%= simple_form_for([@organism, @competition, edition_competition]) do |f| %>
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs row">
     <div class="col-md-6">
-      <%= f.input :annee, input_html: { style:"border: none;", value: Date.today.year }, label: "Année"  %>
-      <%= f.input :end_of_registration, as: :date, label: "Cloturation des inscriptions", input_html: { value: Date.today }, hint: "Date jusqu'à laquelle vous acceptez de recevoir des candidatures" %>
-      <%= f.input :start_date, as: :date, input_html: { value: Date.today }, label: "Date de début de l'évènement" %>
-      <%= f.input :end_date, as: :date, input_html: { value: Date.today },  label: "Date de fin de l'évènement" %>
+      <%= f.input :annee, input_html: { style:"border: none;", value: Date.today.year }, label: t('edition_competitions.form.year') %>
+      <%= f.input :end_of_registration, as: :date, label: t('edition_competitions.form.registration_closing'), input_html: { value: Date.today }, hint: t('edition_competitions.form.registration_closing_hint') %>
+      <%= f.input :start_date, as: :date, input_html: { value: Date.today }, label: t('edition_competitions.form.event_start_date') %>
+      <%= f.input :end_date, as: :date, input_html: { value: Date.today }, label: t('edition_competitions.form.event_end_date') %>
        <%= f.simple_fields_for :address do |address_fields| %>
-        <%= address_fields.input :line1, label: "Numéro et rue", placeholder:" 3 rue Claude Debussy" %>
-        <%= address_fields.input :zipcode, label: "Code postal" %>
-        <%= address_fields.input :city, label: "Ville" %>
+        <%= address_fields.input :line1, label: t('edition_competitions.form.street'), placeholder: t('edition_competitions.form.street_placeholder') %>
+        <%= address_fields.input :zipcode, label: t('edition_competitions.form.zipcode') %>
+        <%= address_fields.input :city, label: t('edition_competitions.form.city') %>
         <%# <%= address_fields.country_select :country, only: ["AM", "AT", "BY", "BE", "BA", "BG", "CH", "CZ", "DE", "DK", "EE", "ES", "FI", "FR", "GB", "GE", "GI", "GR", "HU", "IE", "IS", "IT", "LT", "LU", "LV", "NO", "NL", "PO", "PL", "PT", "RO", "SE", "SI", "SK", "TR", "UA"], class: "select w-100 valid mt-1 mb-3 p-2 bg-light-grey border rounded", prompt: 'Select your country', selected: "FR" %>
         <%# <div class="select w-100 valid mt-1 mb-3 p-2 bg-light-grey border rounded"> %>
-          <p class="py-1 my-1"> Pays <span class="text-danger">*</span></p>
+          <p class="py-1 my-1"><%= t('edition_competitions.form.country') %> <span class="text-danger">*</span></p>
           <%= address_fields.country_select :country, only: ["AM", "AT", "BY", "BE", "BA", "BG", "CH", "CZ", "DE", "DK", "EE", "ES", "FI", "FR", "GB", "GE", "GI", "GR", "HU", "IE", "IS", "IT", "LT", "LU", "LV", "NO", "NL", "PO", "PL", "PT", "RO", "SE", "SI", "SK", "TR", "UA"], selected: "FR" %>
         <%# </div> %>
       <% end %>
     </div>
     <div class="col-md-6">
-      <%= f.input :details_specifiques, input_html: {style:"border: none;"}, placeholder: "Précisez les nouvelles modalités de cette édition si nécessaire"%>
+      <%= f.input :details_specifiques, input_html: {style:"border: none;"}, placeholder: t('edition_competitions.form.specific_details_placeholder') %>
       <div class="gap-2 d-flex flex-column">
-        <%= f.label "Règlement du concours (PDF, PNG, JPG)" %>
+        <%= f.label t('edition_competitions.form.competition_rules') %>
         <%= f.file_field :rule_document %>
         <% if f.object.errors[:rule_document].any? %>
           <div class="error-messages">
@@ -44,7 +44,7 @@
   </div>
 
   <div class="form-actions">
-    <%= f.button :submit, 'Enregistrer', class: "btn btn-dark mx-auto w-100 py-2 mb-2" %>
+    <%= f.button :submit, t('edition_competitions.form.save'), class: "btn btn-dark mx-auto w-100 py-2 mb-2" %>
   </div>
 <% end %>
   </div>
