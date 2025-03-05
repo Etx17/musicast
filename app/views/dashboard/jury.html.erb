@@ -1,7 +1,7 @@
 <!-- Jury Dashboard-->
 <div class="container mt-3">
 
-      <h2>Vos dossiers à évaluer (groupées par catégories)</h2>
+      <h2><%= t('dashboard.jury.files_to_evaluate') %></h2>
     <div class="row">
       <%# Il faut montrer les categories jusqu'au moment du début de la compétition (edition_competition.start_date.start_date ou un truc comme ca) %>
         <% @jury.categories_juries.select { |cj| cj.category.edition_competition.start_date > Date.today }.each do |category_jury| %>
@@ -19,7 +19,7 @@
                     <%= category_jury.category.discipline %>
                   </span>
                  <span class="btn border-bottom" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; font-size: 20px; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">
-                    Voir <%= category_jury.category.inscriptions.where(status: "in_review").count %> inscriptions
+                    <%= t('dashboard.jury.view_applications', count: category_jury.category.inscriptions.where(status: "in_review").count) %>
                   </span>
                 </div>
 

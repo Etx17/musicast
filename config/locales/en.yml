@@ -476,3 +476,153 @@ en:
       add_edition: "Add an edition"
       competition: "Competition"
       information: "Information"
+
+  dashboard:
+    # Common elements
+    common:
+      close: "Close"
+      confirm_delete: "Are you sure you want to delete this item?"
+
+    # Jury section partial
+    jury_section:
+      title: "Jury"
+      associated_jury_members: "Associated jury members"
+      jury_description: "These are all the juries that you can later assign to your competitions"
+      dissociate_jury: "Dissociate this jury from your organization"
+      associate_member: "Associate a member with my organization"
+      associate_jury: "Associate a jury with your organization"
+      check_existing: "Check if the jury you want to add already has an account"
+      search_existing: "Search among existing juries"
+      associate_jury_button: "Associate Jury"
+      invite_new: "Otherwise invite them to create an account"
+      enter_email: "Enter an email"
+      guest_can_modify: "The guest can modify or correct this information"
+      invite_user: "Invite User"
+      existing_account: "If the person you wanted to invite already has an account but doesn't have a \"Jury\" account, you can assign them this role. Enter their email and then associate them with your organization."
+      email_label: "Email"
+      assign_jury_role: "Assign Jury Role"
+
+    # Admin dashboard
+    admin:
+      title: "Admin Dashboard"
+
+    # Jury dashboard
+    jury:
+      files_to_evaluate: "Your files to evaluate (grouped by categories)"
+      view_applications: "View %{count} applications"
+
+    # Organiser dashboard
+    organiser:
+      dashboard: "Dashboard"
+      your_competitions: "Your competitions"
+      create_edition: "Create a competition edition"
+      view: "View"
+      create_competition: "Create a competition"
+      organism_info: "Organization information"
+      edit: "Edit"
+      partners: "Partners"
+      accompanying_pianists: "Accompanying Pianists"
+      add_pianist: "+ Add an accompanying pianist"
+
+  devise:
+    confirmations:
+      new:
+        title: "Resend confirmation instructions"
+        submit: "Resend confirmation instructions"
+
+    invitations:
+      edit:
+        welcome: "Welcome to Musicast"
+        setup_password: "Set up your password"
+        password_placeholder: "Enter your password"
+        password_confirmation_placeholder: "Enter your password again"
+        terms_agreement_html: "By checking this box, I acknowledge that I have read and accept the %{terms_link} and the %{privacy_link} of the Musicast platform."
+        terms_of_use: "Terms of Use"
+        privacy_policy: "Privacy Policy"
+        newsletter_agreement: "I agree to receive emails (no spam, only useful information) from Musicast."
+        save: "Save"
+        random_opera_image: "random opera image"
+      new:
+        header: "Send an invitation"
+        submit_button: "Send an invitation"
+
+    mailer:
+      confirmation_instructions:
+        welcome: "Welcome %{email}!"
+        confirm_link: "You can confirm your account email through the link below:"
+        confirm_account: "Confirm my account"
+      email_changed:
+        greeting: "Hello %{email}!"
+        changing: "We're contacting you to notify you that your email is being changed to %{email}."
+        changed: "We're contacting you to notify you that your email has been changed to %{email}."
+      password_change:
+        greeting: "Hello %{email}!"
+        message: "We're contacting you to notify you that your password has been changed."
+      reset_password_instructions:
+        greeting: "Hello %{email}!"
+        requested: "Someone has requested a link to change your password. You can do this through the link below."
+        change_link: "Change my password"
+        ignore: "If you didn't request this, please ignore this email."
+        wont_change: "Your password won't change until you access the link above and create a new one."
+      unlock_instructions:
+        greeting: "Hello %{email}!"
+        locked: "Your account has been locked due to an excessive number of unsuccessful sign in attempts."
+        click_link: "Click the link below to unlock your account:"
+        unlock_link: "Unlock my account"
+
+    passwords:
+      edit:
+        title: "Change your password"
+        new_password: "New password"
+        characters_minimum: "%{count} characters minimum"
+        confirm_password: "Confirm your new password"
+        change_password: "Change my password"
+      new:
+        title: "Forgot your password?"
+        send_instructions: "Send me reset password instructions"
+
+    registrations:
+      edit:
+        title: "Edit %{resource}"
+        waiting_confirmation: "Currently waiting confirmation for: %{email}"
+        leave_blank: "leave it blank if you don't want to change it"
+        need_current_password: "we need your current password to confirm your changes"
+        newsletter_agreement: "I agree to receive emails (no spam, only useful information) from Musicast."
+        update: "Update"
+        cancel_account: "Cancel my account"
+        unhappy: "Unhappy?"
+        cancel_my_account: "Cancel my account"
+        are_you_sure: "Are you sure?"
+        back: "Back"
+      new:
+        title: "Create my account"
+        role: "Role"
+        password: "Password"
+        characters_minimum: "%{count} characters minimum"
+        password_confirmation: "Password confirmation"
+        terms_agreement_html: "By checking this box, I acknowledge that I have read and accept the %{terms_link} and the %{privacy_link} of the Musicast platform."
+        terms_of_use: "Terms of Use"
+        privacy_policy: "Privacy Policy"
+        newsletter_agreement: "I agree to receive emails (no spam, only useful information) from Musicast."
+        create: "Create"
+
+    sessions:
+      new:
+        title: "Sign in"
+        password: "Password"
+        remember_me: "Remember me"
+        sign_in: "Sign in"
+
+    shared:
+      links:
+        log_in: "Log in"
+        sign_up: "Sign up"
+        forgot_password: "Forgot your password?"
+        no_confirmation_instructions: "Didn't receive confirmation instructions?"
+        no_unlock_instructions: "Didn't receive unlock instructions?"
+        sign_in_with: "Sign in with %{provider}"
+
+    unlocks:
+      new:
+        title: "Resend unlock instructions"
+        resend_instructions: "Resend unlock instructions"

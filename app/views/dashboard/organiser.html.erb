@@ -1,15 +1,15 @@
 <div class="container mt-5">
   <div class="row">
-    <h1 class="text-center" style='font-size: 5em;'>Tableau de Bord</h1>
+    <h1 class="text-center" style='font-size: 5em;'><%= t('dashboard.organiser.dashboard') %></h1>
     <div class="col-12 col-md-6">
       <div class="card border-0 shadow-sm rounded" style="background: #EEEEEE;">
         <div class="card-body">
-          <h1 class="mb-4">Vos concours</h1>
+          <h1 class="mb-4"><%= t('dashboard.organiser.your_competitions') %></h1>
           <div class="list-group ">
             <% @competitions&.each do |competition| %>
               <%= link_to organism_competition_path(@organism, competition) do %>
                 <div class="card mb-3" data-controller="hover" data-action="mouseenter->hover#hover mouseleave->hover#unhover" style="width: 100%; height: 300px; background-image: url('https://source.unsplash.com/random/?applications/300/200'); background-size: cover; position: relative;">
-                  <div class="btn btn-<%=  competition.edition_competitions.blank? ? 'success' : 'secondary'%>" style="position: absolute; top: 10px; left: 10px; z-index: 1;"><%=  competition.edition_competitions.blank? ? 'Créer une édition du concours' : 'Voir' %></div>
+                  <div class="btn btn-<%=  competition.edition_competitions.blank? ? 'success' : 'secondary'%>" style="position: absolute; top: 10px; left: 10px; z-index: 1;"><%=  competition.edition_competitions.blank? ? t('dashboard.organiser.create_edition') : t('dashboard.organiser.view') %></div>
                   <div class="card-img-overlay d-flex justify-content-center align-items-center" style="background-color: rgba(0, 0, 0, 0.7);" >
                     <h2 class="card-title text-white text-center" style="font-size: 3em;" data-hover-target="text"><%= competition.nom_concours %></h2>
                   </div>
@@ -17,7 +17,7 @@
               <% end %>
             <% end %>
           </div>
-          <%= link_to 'Créer un concours', new_organism_competition_path(@organism), class: 'btn btn-success mt-3' %>
+          <%= link_to t('dashboard.organiser.create_competition'), new_organism_competition_path(@organism), class: 'btn btn-success mt-3' %>
         </div>
       </div>
     </div>
@@ -25,7 +25,7 @@
     <div class="col-12 col-md-6">
       <div class="card border-0 shadow-sm rounded mb-4" style="background: #EEEEEE;">
         <div class="card-header border border-transparent">
-            <i class="fas fa-building"> </i> Informations de l'organisme
+            <i class="fas fa-building"> </i> <%= t('dashboard.organiser.organism_info') %>
         </div>
         <div class="card-body bg-light d-flex flex-column">
             <div class="text-center">
@@ -33,18 +33,18 @@
             </div>
             <p><%= @organism.nom %></p>
             <p><%= @organism.description %></p>
-          <%= link_to "Modifier", edit_organism_path(@organism), class: "btn btn-outline-dark mx-auto mt-3" %>
+          <%= link_to t('dashboard.organiser.edit'), edit_organism_path(@organism), class: "btn btn-outline-dark mx-auto mt-3" %>
         </div>
       </div>
 
       <div class="card border-0 shadow-sm rounded mb-4" style="background: #EEEEEE;">
         <div class="card-header border border-transparent">
-          <i class="fas fa-person"> </i> Partenaires
+          <i class="fas fa-person"> </i> <%= t('dashboard.organiser.partners') %>
         </div>
         <div class="card-body bg-light">
-          <p> <%= image_tag 'icons/piano', width: 20 %> Pianistes Accompagnateurs</p>
+          <p> <%= image_tag 'icons/piano', width: 20 %> <%= t('dashboard.organiser.accompanying_pianists') %></p>
           <%= turbo_frame_tag 'new_pianist_frame' do %>
-            <%= link_to '+ Ajouter un pianiste accompagnateur', new_organism_pianist_accompagnateur_path(@organism), class: 'btn btn-outline-dark mb-3', data: { turbo_frame: 'new_pianist_frame' } %>
+            <%= link_to t('dashboard.organiser.add_pianist'), new_organism_pianist_accompagnateur_path(@organism), class: 'btn btn-outline-dark mb-3', data: { turbo_frame: 'new_pianist_frame' } %>
           <% end %>
           <ul>
             <%= turbo_frame_tag 'organism_pianists' do %>

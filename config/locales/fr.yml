@@ -307,3 +307,152 @@ fr:
       add_edition: "Ajouter une édition"
       competition: "Concours"
       information: "Informations"
+  dashboard:
+    # Common elements
+    common:
+      close: "Fermer"
+      confirm_delete: "Êtes-vous sûr de vouloir supprimer cet élément ?"
+
+    # Jury section partial
+    jury_section:
+      title: "Jury"
+      associated_jury_members: "Membres jury associés"
+      jury_description: "Ce sont tous les jurys que vous pourrez assigner ultérieurement sur vos concours"
+      dissociate_jury: "Dissocier ce juré de votre organisme"
+      associate_member: "Associer un membre à mon organisme"
+      associate_jury: "Associer un jury à votre organisme"
+      check_existing: "Vérifiez si le jury que vous souhaitez ajouter a déjà un compte"
+      search_existing: "Cherchez parmi les jurés existants"
+      associate_jury_button: "Associer Jury"
+      invite_new: "Sinon invitez-le à se créer un compte"
+      enter_email: "Entrez un email"
+      guest_can_modify: "L'invité(e) pourra modifier ou rectifier ces informations"
+      invite_user: "Inviter l'utilisateur"
+      existing_account: "Si la personne que vous vouliez inviter a déjà un compte mais n'a pas de compte \"Jury\", vous pouvez lui attribuer ce rôle. Entrez son email puis associez-le à votre organisme."
+      email_label: "Email"
+      assign_jury_role: "Attribuer le rôle de Jury"
+
+    # Admin dashboard
+    admin:
+      title: "Tableau de bord administrateur"
+
+    # Jury dashboard
+    jury:
+      files_to_evaluate: "Vos dossiers à évaluer (groupées par catégories)"
+      view_applications: "Voir %{count} inscriptions"
+
+    # Organiser dashboard
+    organiser:
+      dashboard: "Tableau de Bord"
+      your_competitions: "Vos concours"
+      create_edition: "Créer une édition du concours"
+      view: "Voir"
+      create_competition: "Créer un concours"
+      organism_info: "Informations de l'organisme"
+      edit: "Modifier"
+      partners: "Partenaires"
+      accompanying_pianists: "Pianistes Accompagnateurs"
+      add_pianist: "+ Ajouter un pianiste accompagnateur"
+
+  devise:
+    confirmations:
+      new:
+        title: "Renvoyer les instructions de confirmation"
+        submit: "Renvoyer les instructions de confirmation"
+
+    invitations:
+      edit:
+        welcome: "Bienvenue sur Musicast"
+        setup_password: "Configurez votre mot de passe"
+        password_placeholder: "Entrez votre mot de passe"
+        password_confirmation_placeholder: "Entrez de nouveau votre mot de passe"
+        terms_agreement_html: "En cochant cette case, je reconnais avoir pris connaissance et accepter les %{terms_link} et la %{privacy_link} de la plateforme Musicast."
+        terms_of_use: "Conditions Générales d'Utilisation"
+        privacy_policy: "Politique de Confidentialité"
+        newsletter_agreement: "J'accepte de recevoir des mails (pas de spam, que des informations utiles) de la part de Musicast."
+        save: "Enregistrer"
+        random_opera_image: "image aléatoire d'opéra"
+      new:
+        header: "Envoyer une invitation"
+        submit_button: "Envoyer une invitation"
+
+    mailer:
+      confirmation_instructions:
+        welcome: "Bienvenue %{email} !"
+        confirm_link: "Vous pouvez confirmer votre compte email en cliquant sur le lien ci-dessous :"
+        confirm_account: "Confirmer mon compte"
+      email_changed:
+        greeting: "Bonjour %{email} !"
+        changing: "Nous vous contactons pour vous informer que votre email est en train d'être changé en %{email}."
+        changed: "Nous vous contactons pour vous informer que votre email a été changé en %{email}."
+      password_change:
+        greeting: "Bonjour %{email} !"
+        message: "Nous vous contactons pour vous informer que votre mot de passe a été changé."
+      reset_password_instructions:
+        greeting: "Bonjour %{email} !"
+        requested: "Quelqu'un a demandé un lien pour changer votre mot de passe. Vous pouvez le faire via le lien ci-dessous."
+        change_link: "Changer mon mot de passe"
+        ignore: "Si vous n'avez pas fait cette demande, veuillez ignorer cet email."
+        wont_change: "Votre mot de passe ne changera pas tant que vous n'aurez pas accédé au lien ci-dessus et créé un nouveau."
+      unlock_instructions:
+        greeting: "Bonjour %{email} !"
+        locked: "Votre compte a été verrouillé en raison d'un nombre excessif de tentatives de connexion infructueuses."
+        click_link: "Cliquez sur le lien ci-dessous pour déverrouiller votre compte :"
+        unlock_link: "Déverrouiller mon compte"
+
+    passwords:
+      edit:
+        title: "Changer votre mot de passe"
+        new_password: "Nouveau mot de passe"
+        characters_minimum: "%{count} caractères minimum"
+        confirm_password: "Confirmez votre nouveau mot de passe"
+        change_password: "Changer mon mot de passe"
+      new:
+        title: "Mot de passe oublié ?"
+        send_instructions: "Envoyez-moi les instructions de réinitialisation du mot de passe"
+
+    registrations:
+      edit:
+        title: "Modifier %{resource}"
+        waiting_confirmation: "En attente de confirmation pour : %{email}"
+        leave_blank: "laissez vide si vous ne voulez pas le changer"
+        need_current_password: "nous avons besoin de votre mot de passe actuel pour confirmer vos modifications"
+        newsletter_agreement: "J'accepte de recevoir des mails (pas de spam, que des informations utiles) de la part de Musicast."
+        update: "Mettre à jour"
+        cancel_account: "Supprimer mon compte"
+        unhappy: "Pas satisfait ?"
+        cancel_my_account: "Supprimer mon compte"
+        are_you_sure: "Êtes-vous sûr ?"
+        back: "Retour"
+      new:
+        title: "Créer mon compte"
+        role: "Rôle"
+        password: "Mot de passe"
+        characters_minimum: "%{count} caractères minimum"
+        password_confirmation: "Confirmation du mot de passe"
+        terms_agreement_html: "En cochant cette case, je reconnais avoir pris connaissance et accepter les %{terms_link} et la %{privacy_link} de la plateforme Musicast."
+        terms_of_use: "Conditions Générales d'Utilisation"
+        privacy_policy: "Politique de Confidentialité"
+        newsletter_agreement: "J'accepte de recevoir des mails (pas de spam, que des informations utiles) de la part de Musicast."
+        create: "Créer"
+
+    sessions:
+      new:
+        title: "Connexion"
+        password: "Mot de passe"
+        remember_me: "Se souvenir de moi"
+        sign_in: "Se connecter"
+
+    shared:
+      links:
+        log_in: "Se connecter"
+        sign_up: "S'inscrire"
+        forgot_password: "Mot de passe oublié ?"
+        no_confirmation_instructions: "Vous n'avez pas reçu les instructions de confirmation ?"
+        no_unlock_instructions: "Vous n'avez pas reçu les instructions de déverrouillage ?"
+        sign_in_with: "Se connecter avec %{provider}"
+
+    unlocks:
+      new:
+        title: "Renvoyer les instructions de déverrouillage"
+        resend_instructions: "Renvoyer les instructions de déverrouillage"

@@ -2,42 +2,39 @@
 <%# <h2><%= t "devise.invitations.edit.header" %>
 <div class="container my-5">
   <div class="row my-5">
-    <h1 class="text-center text-gradient" style="font-size: 3em">Bienvenue sur Musicast</h2>
+    <h1 class="text-center text-gradient" style="font-size: 3em"><%= t('devise.invitations.edit.welcome') %></h2>
     <div class="col col-md-6 my-5 p-3">
-      <h2>Configurez votre mot de passe</h2>
+      <h2><%= t('devise.invitations.edit.setup_password') %></h2>
 
       <%= simple_form_for(resource, as: resource_name, url: invitation_path(resource_name), html: { method: :put }) do |f| %>
         <%= f.error_notification %>
         <%= f.hidden_field :invitation_token %>
 
         <div class="form-inputs">
-          <%= f.input :password, placeholder: "Entrez votre mot de passe" %>
-          <%= f.input :password_confirmation, placeholder: "Entrez de nouveau votre mot de passe" %>
+          <%= f.input :password, placeholder: t('devise.invitations.edit.password_placeholder') %>
+          <%= f.input :password_confirmation, placeholder: t('devise.invitations.edit.password_confirmation_placeholder') %>
           <div class="d-flex align-items-start gap-2">
             <%= f.check_box :accepted_terms, required: true, class: "mt-1" %>
             <%= f.label :accepted_terms, required: true, class:"text-secondary"  do %>
-              <span class="text-danger">*</span> En cochant cette case, je reconnais avoir pris connaissance et accepter les <%= link_to 'Conditions Générales d’Utilisation', pages_terms_of_use_path %>
-              et la <%= link_to "Politique de Confidentialité", pages_privacy_policy_path %> de la plateforme Musicast.
+              <span class="text-danger">*</span> <%= t('devise.invitations.edit.terms_agreement_html', terms_link: link_to(t('devise.invitations.edit.terms_of_use'), pages_terms_of_use_path), privacy_link: link_to(t('devise.invitations.edit.privacy_policy'), pages_privacy_policy_path)) %>
             <% end %>
           </div>
 
           <div class="d-flex align-items-start gap-2">
             <%= f.check_box :accepts_newsletter, class: "mt-1" %>
             <%= f.label :accepts_newsletter, class:"text-secondary"  do %>
-              <span>*</span> J'accepte de recevoir des mails (pas de spam, que des informations utiles) de la part de Musicast.
-
+              <span>*</span> <%= t('devise.invitations.edit.newsletter_agreement') %>
             <% end %>
           </div>
         </div>
 
         <div class="form-actions">
-          <%= f.button :submit, "Enregistrer", class:"btn btn-dark my-3" %>
+          <%= f.button :submit, t('devise.invitations.edit.save'), class:"btn btn-dark my-3" %>
         </div>
       <% end %>
     </div>
     <div class="col col-md-6 my-5 p-3">
-      <%= image_tag "https://source.unsplash.com/random/?opera", height: 400, width: "auto", alt: "random opera image" %>
-
+      <%= image_tag "https://source.unsplash.com/random/?opera", height: 400, width: "auto", alt: t('devise.invitations.edit.random_opera_image') %>
     </div>
   </div>
 </div>
