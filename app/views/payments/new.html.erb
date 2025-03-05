@@ -3,9 +3,9 @@
   <div class="row py-4">
     <div class="col-md-3"><%= image_tag "https://source.unsplash.com/random/?pay/300/200", width: '100%' %></div>
     <div class="col">
-      <h1>Checkout summary</h1>
-      <p>Purchase of <strong><%= @inscription_order %></strong> for <strong><%= humanized_money_with_symbol @inscription_order.amount %></strong></p>
-      <button id="pay" class="btn btn-primary">Pay</button>
+      <h1><%= t('payments.new.checkout_summary') %></h1>
+      <p><%= t('payments.new.purchase_of', inscription: @inscription_order, amount: humanized_money_with_symbol(@inscription_order.amount)) %></p>
+      <button id="pay" class="btn btn-primary"><%= t('payments.new.pay') %></button>
 
       <script src="https://js.stripe.com/v3/"></script>
       <script>

@@ -478,7 +478,7 @@ en:
       enter_email: "Enter an email"
       guest_can_modify: "The guest can modify or correct this information"
       invite_user: "Invite User"
-      existing_account: "If the person you wanted to invite already has an account but doesn't have a \"Jury\" account, you can assign them this role. Enter their email and then associate them with your organization."
+      existing_account: "If the person you wanted to invite already has an account but doesn't have a "Jury" account, you can assign them this role. Enter their email and then associate them with your organization."
       email_label: "Email"
       assign_jury_role: "Assign Jury Role"
 
@@ -614,7 +614,7 @@ en:
       view_rules: "View competition rules"
       selection_instructions: "Selection instructions"
       can_complete_application: "You can complete your application and select your works in the next step."
-      complete_profile_html: "You must have completed your %{profile_link} to be able to create an application. By clicking \"continue\" you will be redirected to edit your information"
+      complete_profile_html: "You must have completed your %{profile_link} to be able to create an application. By clicking "continue" you will be redirected to edit your information"
       profile: "profile"
       create_account_html: "You need to create an account to register for a competition. Follow this %{link}"
       link: "link"
@@ -761,8 +761,9 @@ en:
       delete: "Delete"
       destroy: "Delete"
       continue: "Continue"
-      submit: "Save"
+      save: "Save"
       cancel: "Cancel"
+      submit: "Submit"
 
   inscription_orders:
     new:
@@ -914,3 +915,284 @@ en:
     items_form_section:
       youtube_hint: "Link to your YouTube video"
       replace_document: "Replace document"
+  juries:
+    form:
+      update: "Update"
+
+    jury:
+      user: "User"
+      other_information: "Other information"
+
+    edit:
+      modify_information: "Modify your information"
+
+    new:
+      new_jury: "New jury"
+  layouts:
+    application:
+      title: "TestConcours"
+  notes:
+    form:
+      note_value: "Note Value"
+      note_hint: "Give a score between 1 and 100 to this candidate"
+      details: "Details"
+      details_hint: "Provide feedback here. This feedback is anonymous."
+      save: "Save"
+
+    edit:
+      edit_note: "Edit Note"
+      candidate_videos: "Candidate Videos"
+      view_video: "View video %{number}"
+      no_video_available: "The candidate has not provided any available video"
+      candidate_motivation_letter: "Candidate's Motivation Letter"
+
+    new:
+      new_note: "New Note"
+      candidate_videos: "Candidate Videos"
+      view_video: "View video %{number}"
+      no_video_available: "The candidate has not provided any available video"
+      candidate_motivation_letter: "Candidate's Motivation Letter"
+  organisateurs:
+    form:
+      organization_name: "Organization Name"
+      organization_description: "Organization Description"
+
+    organisateur:
+      user: "User"
+      organization_name: "Organization Name"
+      organization_description: "Organization Description"
+
+    edit:
+      edit_organizer: "Edit Organizer"
+
+    index:
+      organizers: "Organizers"
+      new_organizer: "New Organizer"
+
+    new:
+      new_organizer: "New Organizer"
+
+    show:
+      edit: "Edit this organizer"
+      destroy: "Destroy this organizer"
+  organisms:
+    organism:
+      name: "Name"
+      description: "Description"
+
+    edit:
+      back: "Back"
+
+    index:
+      organisms: "Organisms"
+      show_organism: "Show this organism"
+      new_organism: "New organism"
+
+    new:
+      welcome: "Welcome to Musicast."
+      create_organism_prompt: "To get started, create your organism"
+
+    show:
+      modify: "Modify"
+  pages:
+    dropdown_inputs:
+      discipline: "Discipline"
+    edition_competition_card:
+      days_remaining: "days remaining"
+      from: "from"
+      to: "to"
+      first_prize: "1st prize"
+    home:
+      competitions: "Competitions"
+      no_competition_found: "No competition found 🥲. Come back later or change the filters of research."
+    landing:
+      musikast: "Musikast"
+      organize_publish_competitions: "Organize & publish your competitions"
+      musicast_provides: "Musicast provides you with a set of professional tools specialized in organizing, managing and promoting your competitions to a wide audience of artists."
+      get_started: "Get Started"
+      registration_without_card: "Registration <span class=\"text-success\">without card</span> or subscription"
+      launch_bonus: "Launch bonus: exclusive access to the <span class=\"text-success\">schedule generator</span>"
+      simplify_management: "Simplify management."
+      ai_validation: "AI pre-validation of registration files"
+      ai_validation_description: "Only receive complete and paid files through our platform. Our system uses artificial intelligence to validate some of the required additional documents."
+      intelligent_schedule: "Intelligent schedule generator"
+      intelligent_schedule_description: "You can easily generate and modify the order of passage once registrations are closed, and generate a customizable schedule."
+      jury_file: "Generate a file for the jury"
+      jury_file_description: "Instantly generate a customized PDF file for the jury during the tests so they can follow the proceedings and rate the candidates"
+      communicate_easily: "Communicate with candidates easily"
+      communicate_easily_description: "Send notifications to your candidates with one click. Notify acceptance or rejection of their file, their selection to move to the next round, send them the generated schedule."
+      create_jury: "Create a voting pre-selection jury"
+      create_jury_description: "You can invite people of your choice to be part of a pre-selection jury for one of the categories of your competition. This jury can assign a score from 1 to 100 to each file."
+    pricing:
+      pricing: "Pricing"
+      competitions: "Competitions"
+      competitions_description: "For competitions, Musicast earns revenue by taking a commission per registration file. This commission is paid by the competition."
+      user_fees: "The user covers the payment fees, which are €0.25 plus 1.5% of the registration fee."
+      commission_cap: "However, once the total amount of commissions reaches €1000 (which corresponds to 200 applications), we no longer take a commission. Beyond this point, we only take the Stripe payment fees to cover costs."
+      other_services: "Auditions, Masterclasses, and Internships"
+      other_services_description: "For auditions, masterclasses, and internships, Musicast earns revenue from the deposit of the announcement and its duration."
+    privacy_policy:
+      title: "**Musicast Privacy Policy**"
+      section1:
+        title: "**1. Collection and Use of Personal Data**"
+        p1: "Musicast collects personal data when you create an account, participate in a competition, or use our services. This data may include your name, email address, phone number, postal address, and payment information."
+        p2: "We use this information to manage your account, process your competition registrations, facilitate payments, and provide you with our services."
+        p3: "We may also use your data to send you communications related to our services, updates, and information about competitions you are registered for."
+        p4: "With your consent, we may use your data to send you marketing communications about our services and competitions available on our platform."
+        p5: "We do not sell your personal data to third parties. We may share your data with competition organizers you register with, but only to the extent necessary to facilitate your participation."
+        p6: "We retain your personal data for as long as necessary to provide you with our services and comply with our legal obligations."
+      section2:
+        title: "**2. Your Rights**"
+        p1: "As a Musicast user, you have certain rights regarding your personal data:"
+        rights: "- Right of access: You can request a copy of your personal data.\n- Right to rectification: You can request correction of inaccurate data.\n- Right to erasure: You can request deletion of your data in certain circumstances.\n- Right to restriction of processing: You can request limitation of processing of your data.\n- Right to data portability: You can request transfer of your data to another service.\n- Right to object: You can object to processing of your data in certain circumstances."
+        p2: "To exercise these rights, please contact us at privacy@musicast.io."
+        p3: "If you believe we have not respected your rights, you can file a complaint with the competent data protection authority."
+        p4: "We reserve the right to modify this privacy policy at any time. Any changes will be posted on this page."
+      section3:
+        title: "**3. Contact**"
+        p1: "If you have any questions regarding this privacy policy, please contact us at privacy@musicast.io."
+    terms_of_use:
+      title: "Terms of Use of the Musicast Web Platform"
+      section1:
+        title: "**1. Acceptance of Terms**"
+        p1: "By accessing the Musicast platform, you agree to be bound by these Terms of Use. If you do not accept these terms, please do not use our platform."
+        p2: "Musicast reserves the right to modify these terms at any time. Modifications will take effect upon publication on the platform. It is your responsibility to regularly review these terms."
+        p3: "Continued use of the platform after publication of modifications constitutes your acceptance of these modifications."
+      section2:
+        title: "**2. Use of the Platform**"
+        p1: "You are responsible for maintaining the confidentiality of your account and password. You agree to notify us immediately of any unauthorized use of your account."
+        p2: "You agree not to use the platform in a way that could damage, disable, overburden, or impair the platform or interfere with other users' use of the platform."
+        p3: "You agree not to attempt to access parts of the platform you are not authorized to access."
+      section3:
+        title: "**3. Intellectual Property**"
+        p1: "All content on the platform, including text, graphics, logos, icons, images, audio clips, digital downloads, and data compilations, is the property of Musicast or its content providers and is protected by French and international copyright laws."
+        p2: "You agree not to reproduce, duplicate, copy, sell, resell, or exploit any portion of the platform without our express written permission."
+  partners:
+    form:
+      partner_role: "Partner role"
+      authorization_level: "Authorization level"
+
+    partner:
+      user: "User"
+      organism: "Organism"
+      partner_role: "Partner role"
+      authorization_level: "Authorization level"
+
+    edit:
+      editing_partner: "Editing partner"
+
+    index:
+      partners: "Partners"
+      new_partner: "New partner"
+
+    new:
+      new_partner: "New partner"
+
+    show:
+      edit: "Edit this partner"
+      destroy: "Destroy this partner"
+
+  payments:
+    new:
+      checkout_summary: "Checkout summary"
+      purchase_of: "Purchase of <strong>%{inscription}</strong> for <strong>%{amount}</strong>"
+      pay: "Pay"
+  performances:
+    form:
+      tour_requirements: "Tour Requirements"
+      description: "Description"
+      number_of_works: "Number of Works"
+      duration: "Duration"
+      minutes: "minutes"
+      already_used: "Already used"
+      available_works: "Available works for this round"
+      change_airs: "Change airs (reselect airs from your registration)"
+      save: "Save"
+
+    performance:
+      inscription: "Registration"
+      tour: "Round"
+      performance_time: "Performance time"
+      result: "Result"
+
+    edit:
+      modify_performance: "Modify your performance"
+
+    index:
+      performances: "Performances"
+      show_performance: "Show this performance"
+      new_performance: "New performance"
+
+    new:
+      my_program: "My program for this round"
+      choose_airs_instructions: "Choose which airs you want to perform. Please note, if there are required airs, you will only see them after creating your program and you will need to adapt accordingly. \nYou can change the order of the airs you perform from your file on the previous page, by dragging and dropping the airs to rearrange their order and clicking on \"Update program\""
+
+    show:
+      edit_performance: "Edit this performance"
+      back_to_performances: "Back to performances"
+      destroy_performance: "Destroy this performance"
+
+  pianist_accompagnateurs:
+    form:
+      errors_prohibited: "prohibited this pianist from being saved:"
+      full_name: "Full name"
+      phone_number: "Phone number"
+      save: "Save"
+      close: "Close"
+
+    pianist:
+      confirm_delete: "Are you sure?"
+
+  prizes:
+    form:
+      create_prize: "Create a prize"
+      title: "Title"
+      title_placeholder: "e.g.: First prize Société Générale"
+      amount: "Amount:"
+      amount_hint: "Leave empty if the prize does not include money"
+      amount_placeholder: "e.g.: 1000"
+      other_reward: "Prize in kind:"
+      other_reward_placeholder: "e.g.: Role offered for La Traviata at Bastille"
+      other_reward_hint: "Leave empty if the prize is only money."
+      description_placeholder: "Prize offered by the Musical Foundation of Charente, under the direction of Mr. Dupont, etc..."
+      save: "Save"
+
+    prize:
+      title: "Title"
+      amount: "Amount"
+      description: "Description"
+      category: "Category"
+
+    index:
+      prizes: "Prizes"
+      show_prize: "Show this prize"
+      new_prize: "New prize"
+
+    new:
+      back: "Back"
+
+  programme_requirements:
+    form:
+      category: "Category"
+
+    programme_requirement:
+      category: "Category"
+
+    edit:
+      editing_programme_requirement: "Editing programme requirement"
+      show: "Show this programme requirement"
+      back: "Back to programme requirements"
+
+    index:
+      programme_requirements: "Programme requirements"
+      show: "Show this programme requirement"
+      new: "New programme requirement"
+
+    new:
+      new_programme_requirement: "New programme requirement"
+      back: "Back to programme requirements"
+
+    show:
+      edit: "Edit this programme requirement"
+      back: "Back to programme requirements"
+      destroy: "Destroy this programme requirement"

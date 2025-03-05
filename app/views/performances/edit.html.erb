@@ -1,6 +1,6 @@
 <div class="p-3">
-<h1>Modifier votre performance</h1>
-<%= link_to "Retour", :back, class: 'btn btn-light shadow-sm border mb-3' %>
+<h1><%= t('performances.edit.modify_performance') %></h1>
+<%= link_to t('global.actions.back'), :back, class: 'btn btn-light shadow-sm border mb-3' %>
 <%= render "form", performance: @performance %>
 
 <br>

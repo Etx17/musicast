@@ -3,8 +3,8 @@
 <%= render @partner %>
 
 <div>
-  <%= link_to "Edit this partner", edit_partner_path(@partner) %> |
-  <%= link_to "Back to partners", partners_path %>
+  <%= link_to t('partners.show.edit'), edit_partner_path(@partner) %> |
+  <%= link_to t('global.actions.back'), partners_path %>
 
-  <%= button_to "Destroy this partner", @partner, method: :delete %>
+  <%= button_to t('partners.show.destroy'), @partner, method: :delete %>
 </div>

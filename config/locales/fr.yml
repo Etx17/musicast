@@ -588,11 +588,9 @@ fr:
     index:
       title: "Choix libres"
       show: "Voir ce choix libre"
-      new: "Nouveau choix libre"
-
-    new:
-      title: "Nouveau choix libre"
-      back: "Retour aux choix libres"
+      new:
+        title: "Nouveau choix libre"
+        back: "Retour aux choix libres"
 
     show:
       edit: "Modifier ce choix libre"
@@ -801,3 +799,302 @@ fr:
     items_form_section:
       youtube_hint: "Lien vers votre vidéo YouTube"
       replace_document: "Remplacer le document"
+
+  juries:
+    form:
+      update: "Mettre à jour"
+
+    jury:
+      user: "Utilisateur"
+      other_information: "Autres informations"
+
+    edit:
+      modify_information: "Modifier vos informations"
+
+    new:
+      new_jury: "Nouveau jury"
+
+  layouts:
+    application:
+      title: "TestConcours"
+
+  notes:
+    form:
+      note_value: "Note"
+      note_hint: "Donnez une note entre 1 et 100 à ce candidat"
+      details: "Détails"
+      details_hint: "Donnez un feedback ici. Ce feedback est anonyme."
+      save: "Enregistrer"
+
+    edit:
+      edit_note: "Modifier la note"
+      candidate_videos: "Vidéos du candidat"
+      view_video: "Voir la vidéo %{number}"
+      no_video_available: "Le candidat n'a pas transmis de vidéo disponible"
+      candidate_motivation_letter: "Lettre de motivation du candidat"
+
+    new:
+      new_note: "Nouvelle note"
+      candidate_videos: "Vidéos du candidat"
+      view_video: "Voir la vidéo %{number}"
+      no_video_available: "Le candidat n'a pas transmis de vidéo disponible"
+      candidate_motivation_letter: "Lettre de motivation du candidat"
+
+  organisateurs:
+    form:
+      organization_name: "Nom de l'organisme"
+      organization_description: "Description de l'organisme"
+
+    organisateur:
+      user: "Utilisateur"
+      organization_name: "Nom de l'organisme"
+      organization_description: "Description de l'organisme"
+
+    edit:
+      edit_organizer: "Modifier l'organisateur"
+
+    index:
+      organizers: "Organisateurs"
+      new_organizer: "Nouvel organisateur"
+
+    new:
+      new_organizer: "Nouvel organisateur"
+
+    show:
+      edit: "Modifier cet organisateur"
+      destroy: "Supprimer cet organisateur"
+
+  global:
+    actions:
+      submit: "Soumettre"
+
+  organisms:
+    organism:
+      name: "Nom"
+      description: "Description"
+
+    edit:
+      back: "Retour"
+
+    index:
+      organisms: "Organismes"
+      show_organism: "Voir cet organisme"
+      new_organism: "Nouvel organisme"
+
+    new:
+      welcome: "Bienvenue sur Musicast."
+      create_organism_prompt: "Pour commencer, créez votre organisme"
+
+    show:
+      modify: "Modifier"
+
+  pages:
+    dropdown_inputs:
+      discipline: "Discipline"
+
+    edition_competition_card:
+      days_remaining: "jours restants"
+      from: "du"
+      to: "au"
+      first_prize: "1er prix"
+
+    home:
+      competitions: "Concours"
+      no_competition_found: "Aucun concours trouvé 🥲. Revenez plus tard ou changez les filtres de recherche."
+
+    landing:
+      musikast: "Musikast"
+      organize_publish_competitions: "Organisez & publiez vos concours"
+      musicast_provides: "Musicast vous fournit un ensemble d'outils professionnels spécialisés dans l'organisation, la gestion et la promotion de vos concours à un large public d'artistes."
+      get_started: "Commencer"
+      registration_without_card: "Inscription <span class=\"text-success\">sans carte</span> ni souscription"
+      launch_bonus: "Bonus de lancement: accès exclusif au <span class=\"text-success\">générateur de planning</span>"
+      simplify_management: "Simplifiez la gestion."
+      ai_validation: "Prévalidation des dossiers d'inscription par IA"
+      ai_validation_description: "Ne recevez que des dossiers complets et payés via notre plateforme. Notre système utilise l'intelligence artificielle pour valider une partie des pièces supplémentaires requises."
+      intelligent_schedule: "Générateur de planning intelligent"
+      intelligent_schedule_description: "Vous pouvez générer et modifier l'ordre de passage facilement une fois que les inscriptions sont closes, et générer un planning modifiable sur mesure."
+      jury_file: "Générez un dossier pour le jury"
+      jury_file_description: "Générez instantanément un dossier PDF sur mesure à destination du jury lors des épreuves pour qu'ils puissent suivre le déroulé et noter les candidats"
+      communicate_easily: "Communiquez avec les candidats facilement"
+      communicate_easily_description: "Envoyez des notifications à vos candidats en un clic. Notifiez l'acceptation ou le rejet de leur dossier, leur séléction pour passer au tour suivant, envoyez leur le planning généré."
+      create_jury: "Créez un jury de préselection votant"
+      create_jury_description: "Vous pouvez inviter les personnes de votre choix à faire partie d'un jury de présélection pour une des catégories de votre concours. Ce jury peut attribuer une note de 1 à 100 à chaque dossier."
+
+    pricing:
+      pricing: "Tarification"
+      competitions: "Concours"
+      competitions_description: "Pour les concours, Musicast perçoit une commission par dossier d'inscription. Cette commission est payée par le concours."
+      user_fees: "L'utilisateur couvre les frais de paiement, qui sont de 0,25 € plus 1,5 % des frais d'inscription."
+      commission_cap: "Cependant, une fois que le montant total des commissions atteint 1000 € (ce qui correspond à 200 candidatures), nous ne prenons plus de commission. Au-delà de ce point, nous ne prenons que les frais de paiement Stripe pour couvrir les coûts."
+      other_services: "Auditions, Masterclasses et Stages"
+      other_services_description: "Pour les auditions, masterclasses et stages, Musicast perçoit des revenus du dépôt de l'annonce et de sa durée."
+
+    privacy_policy:
+      title: "**Politique de Confidentialité de Musicast**"
+      section1:
+        title: "**1. Collecte et Utilisation des Données Personnelles**"
+        p1: "Musicast collecte des données personnelles lorsque vous créez un compte, participez à un concours, ou utilisez nos services. Ces données peuvent inclure votre nom, adresse email, numéro de téléphone, adresse postale, et informations de paiement."
+        p2: "Nous utilisons ces informations pour gérer votre compte, traiter vos inscriptions aux concours, faciliter les paiements, et vous fournir nos services."
+        p3: "Nous pouvons également utiliser vos données pour vous envoyer des communications relatives à nos services, des mises à jour, et des informations sur les concours auxquels vous êtes inscrit."
+        p4: "Avec votre consentement, nous pouvons utiliser vos données pour vous envoyer des communications marketing sur nos services et les concours disponibles sur notre plateforme."
+        p5: "Nous ne vendons pas vos données personnelles à des tiers. Nous pouvons partager vos données avec les organisateurs des concours auxquels vous vous inscrivez, mais uniquement dans la mesure nécessaire pour faciliter votre participation."
+        p6: "Nous conservons vos données personnelles aussi longtemps que nécessaire pour vous fournir nos services et respecter nos obligations légales."
+      section2:
+        title: "**2. Vos Droits**"
+        p1: "En tant qu'utilisateur de Musicast, vous avez certains droits concernant vos données personnelles :"
+        rights: "- Droit d'accès : Vous pouvez demander une copie de vos données personnelles.\n- Droit de rectification : Vous pouvez demander la correction de données inexactes.\n- Droit à l'effacement : Vous pouvez demander la suppression de vos données dans certaines circonstances.\n- Droit à la limitation du traitement : Vous pouvez demander la limitation du traitement de vos données.\n- Droit à la portabilité des données : Vous pouvez demander le transfert de vos données à un autre service.\n- Droit d'opposition : Vous pouvez vous opposer au traitement de vos données dans certaines circonstances."
+        p2: "Pour exercer ces droits, veuillez nous contacter à privacy@musicast.io."
+        p3: "Si vous estimez que nous n'avons pas respecté vos droits, vous pouvez déposer une plainte auprès de l'autorité de protection des données compétente."
+        p4: "Nous nous réservons le droit de modifier cette politique de confidentialité à tout moment. Toute modification sera publiée sur cette page."
+      section3:
+        title: "**3. Contact**"
+        p1: "Si vous avez des questions concernant cette politique de confidentialité, veuillez nous contacter à privacy@musicast.io."
+
+    terms_of_use:
+      title: "Conditions Générales d'Utilisation de la Plateforme Web de Musicast"
+      section1:
+        title: "**1. Acceptation des Conditions**"
+        p1: "En accédant à la plateforme Musicast, vous acceptez d'être lié par ces Conditions Générales d'Utilisation. Si vous n'acceptez pas ces conditions, veuillez ne pas utiliser notre plateforme."
+        p2: "Musicast se réserve le droit de modifier ces conditions à tout moment. Les modifications prendront effet dès leur publication sur la plateforme. Il est de votre responsabilité de consulter régulièrement ces conditions."
+        p3: "L'utilisation continue de la plateforme après la publication des modifications constitue votre acceptation de ces modifications."
+      section2:
+        title: "**2. Utilisation de la Plateforme**"
+        p1: "Vous êtes responsable de maintenir la confidentialité de votre compte et mot de passe. Vous acceptez de nous informer immédiatement de toute utilisation non autorisée de votre compte."
+        p2: "Vous acceptez de ne pas utiliser la plateforme d'une manière qui pourrait endommager, désactiver, surcharger ou compromettre la plateforme ou interférer avec l'utilisation de la plateforme par d'autres utilisateurs."
+        p3: "Vous acceptez de ne pas tenter d'accéder à des parties de la plateforme auxquelles vous n'êtes pas autorisé à accéder."
+      section3:
+        title: "**3. Propriété Intellectuelle**"
+        p1: "Tout le contenu de la plateforme, y compris les textes, graphiques, logos, icônes, images, clips audio, téléchargements numériques et compilations de données, est la propriété de Musicast ou de ses fournisseurs de contenu et est protégé par les lois françaises et internationales sur le droit d'auteur."
+        p2: "Vous acceptez de ne pas reproduire, dupliquer, copier, vendre, revendre ou exploiter toute partie de la plateforme sans notre permission expresse écrite."
+
+  partners:
+    form:
+      partner_role: "Rôle du partenaire"
+      authorization_level: "Niveau d'autorisation"
+
+    partner:
+      user: "Utilisateur"
+      organism: "Organisme"
+      partner_role: "Rôle du partenaire"
+      authorization_level: "Niveau d'autorisation"
+
+    edit:
+      editing_partner: "Modification du partenaire"
+
+    index:
+      partners: "Partenaires"
+      new_partner: "Nouveau partenaire"
+
+    new:
+      new_partner: "Nouveau partenaire"
+
+    show:
+      edit: "Modifier ce partenaire"
+      destroy: "Supprimer ce partenaire"
+
+  payments:
+    new:
+      checkout_summary: "Récapitulatif de paiement"
+      purchase_of: "Achat de <strong>%{inscription}</strong> pour <strong>%{amount}</strong>"
+      pay: "Payer"
+
+  performances:
+    form:
+      tour_requirements: "Exigences du tour"
+      description: "Description"
+      number_of_works: "Nombre d'œuvres"
+      duration: "Durée"
+      minutes: "minutes"
+      already_used: "Déjà utilisé"
+      available_works: "Œuvres disponibles pour ce tour"
+      change_airs: "Changer d'airs (rechoisir les airs de votre inscription)"
+      save: "Enregistrer"
+
+    performance:
+      inscription: "Inscription"
+      tour: "Tour"
+      performance_time: "Heure performance"
+      result: "Résultat"
+
+    edit:
+      modify_performance: "Modifier votre performance"
+
+    index:
+      performances: "Performances"
+      show_performance: "Voir cette performance"
+      new_performance: "Nouvelle performance"
+
+    new:
+      my_program: "Mon programme pour ce tour"
+      choose_airs_instructions: "Choisissez quels airs vous voudrez interprêter. Attention, s'il y a des airs imposés vous ne les verrez qu'après avoir crée votre programme et il faudra l'adapter en conséquence. \nVous pourrez changer l'ordre des airs que vous interprêtez depuis votre dossier sur la page précédente, en glissant-déposant les airs pour réarranger leur ordre et en cliquant sur \"Mettre à jour le programme\""
+
+    show:
+      edit_performance: "Modifier cette performance"
+      back_to_performances: "Retour aux performances"
+      destroy_performance: "Supprimer cette performance"
+
+  pianist_accompagnateurs:
+    form:
+      errors_prohibited: "ont empêché ce pianiste d'être enregistré :"
+      full_name: "Nom complet"
+      phone_number: "Numéro de téléphone"
+      save: "Enregistrer"
+      close: "Fermer"
+
+    pianist:
+      confirm_delete: "Êtes-vous sûr ?"
+
+  prizes:
+    form:
+      create_prize: "Créer un prix"
+      title: "Titre"
+      title_placeholder: "ex: Premier prix Société Générale"
+      amount: "Montant:"
+      amount_hint: "Laissez vide si jamais le prix ne comprend pas d'argent"
+      amount_placeholder: "ex: 1000"
+      other_reward: "Prix en nature:"
+      other_reward_placeholder: "ex: Rôle offert pour La Traviata a Bastille"
+      other_reward_hint: "Laissez vide si le prix est uniquement en argent."
+      description_placeholder: "Prix offert par la fondation Musicale de Charente, sous la direction de Mr.Dupont, etc..."
+      save: "Enregistrer"
+
+    prize:
+      title: "Titre"
+      amount: "Montant"
+      description: "Description"
+      category: "Catégorie"
+
+    index:
+      prizes: "Prix"
+      show_prize: "Voir ce prix"
+      new_prize: "Nouveau prix"
+
+    new:
+      back: "Retour"
+
+  programme_requirements:
+    form:
+      category: "Catégorie"
+
+    programme_requirement:
+      category: "Catégorie"
+
+    edit:
+      editing_programme_requirement: "Modifier l'exigence de programme"
+      show: "Voir cette exigence de programme"
+      back: "Retour aux exigences de programme"
+
+    index:
+      programme_requirements: "Exigences de programme"
+      show: "Voir cette exigence de programme"
+      new: "Nouvelle exigence de programme"
+
+    new:
+      new_programme_requirement: "Nouvelle exigence de programme"
+      back: "Retour aux exigences de programme"
+
+    show:
+      edit: "Modifier cette exigence de programme"
+      back: "Retour aux exigences de programme"
+      destroy: "Supprimer cette exigence de programme"

@@ -3,6 +3,6 @@
 <p style="color: green"><%= notice %></p>
 
 <%= render @organism %>
-<%= button_to 'Modifier', edit_organism_path(@organism), method: :get, data: { turbo_action: 'replace', turbo_frame: 'organism_frame' }, class: 'btn btn-outline-dark' %>
+<%= button_to t('organisms.show.modify'), edit_organism_path(@organism), method: :get, data: { turbo_action: 'replace', turbo_frame: 'organism_frame' }, class: 'btn btn-outline-dark' %>
 
 <% end %>

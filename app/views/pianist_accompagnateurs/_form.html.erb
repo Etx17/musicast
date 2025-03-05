@@ -1,7 +1,7 @@
 <%= simple_form_for [@organism, @pianist], remote: true, html: { id: 'pianist-form' } do |f| %>
   <% if @pianist.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@pianist.errors.count, "error") %> prohibited this pianist from being saved:</h2>
+      <h2><%= pluralize(@pianist.errors.count, "error") %> <%= t('pianist_accompagnateurs.form.errors_prohibited') %></h2>
 
       <ul>
         <% @pianist.errors.full_messages.each do |message| %>
@@ -10,11 +10,11 @@
       </ul>
     </div>
   <% end %>
-  <%= f.input :full_name, label: "Nom complet", input_html: { style: "border: none;"} %>
+  <%= f.input :full_name, label: t('pianist_accompagnateurs.form.full_name'), input_html: { style: "border: none;"} %>
   <%= f.input :email, input_html: { style: "border: none;"} %>
-  <%= f.input :phone_number, label: "Numéro de téléphone", input_html: { style: "border: none;"}  %>
-  <%= f.submit "Enregistrer", class: "btn btn-dark mb-3" %>
-  <%= link_to "Fermer", :back, id: "fermer-button", class: "btn btn-outline-dark mb-3" %>
+  <%= f.input :phone_number, label: t('pianist_accompagnateurs.form.phone_number'), input_html: { style: "border: none;"}  %>
+  <%= f.submit t('pianist_accompagnateurs.form.save'), class: "btn btn-dark mb-3" %>
+  <%= link_to t('pianist_accompagnateurs.form.close'), :back, id: "fermer-button", class: "btn btn-outline-dark mb-3" %>
 <% end %>
 <script>
   document.getElementById('pianist-form').addEventListener('submit', function() {

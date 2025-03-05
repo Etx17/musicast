@@ -4,19 +4,19 @@
           <div class="col-md-6">
 
             <%# <h1 style="font-size: 60px">Welcome to <span style="font-size: 2em;" class="text-gradient">Musicast</span></h1> %>
-            <h1 style="font-size: 80px;"><span class="text-gradient", style="font-size: 1.1em;">Musikast</span> <br></h1>
-            <span style="font-size: 2.8em">Organisez & publiez vos concours</span>
+            <h1 style="font-size: 80px;"><span class="text-gradient", style="font-size: 1.1em;"><%= t('pages.landing.musikast') %></span> <br></h1>
+            <span style="font-size: 2.8em"><%= t('pages.landing.organize_publish_competitions') %></span>
             <%# <p class="lead">Simplifies the process of organizing classic arts competitions and managing contestants. Adapts to your specific structure requirements.</p> %>
-            <p class="lead" style="color: rgb(100, 100, 100)">Musicast vous fournit un ensemble d'outils professionnels spécialisés dans l'organisation, la gestion et la promotion de vos concours à un large public d'artistes.</p>
+            <p class="lead" style="color: rgb(100, 100, 100)"><%= t('pages.landing.musicast_provides') %></p>
 
-            <%= link_to "Commencer", new_user_registration_path, class: "btn btn-success my-3" %>
+            <%= link_to t('pages.landing.get_started'), new_user_registration_path, class: "btn btn-success my-3" %>
             <div class="d-flex align-items-center gap-3">
               <%= image_tag "icons/block.png", width: 60 %>
-              <p class="text-secondary mb-0"><i class="fas fa-check text-success"></i> Inscription <span class="text-success">sans carte</span> ni souscription</p>
+              <p class="text-secondary mb-0"><i class="fas fa-check text-success"></i> <%= t('pages.landing.registration_without_card') %></p>
             </div>
             <div class="d-flex align-items-center gap-3">
               <%= image_tag "icons/bonus.png", width: 60 %>
-              <p class="text-secondary mb-0"><i class="fas fa-check text-success"></i> Bonus de lancement: accès exclusif au <span class="text-success">générateur de planning</span> </p>
+              <p class="text-secondary mb-0"><i class="fas fa-check text-success"></i> <%= t('pages.landing.launch_bonus') %></p>
             </div>
           </div>
           <div class="col-md-6">
@@ -26,19 +26,19 @@
 
 
   <div class="container" style="margin-top: 100px;">
-    <h2 class="text-center my-5 p-3" style="font-size: 4em;">Simplifiez la gestion.</h2>
+    <h2 class="text-center my-5 p-3" style="font-size: 4em;"><%= t('pages.landing.simplify_management') %></h2>
 
   <div class="row align-items-center">
     <div class="col-md-5">
       <img src="https://source.unsplash.com/random/?opera" alt="App Mockup" class="img-fluid rounded-lg shadow" style="height: 500px; width: 600px;">
     </div>
     <div class="col-md-7">
-     <h2 style="font-size: 4em;"  class="text-bordeau">Prévalidation des dossiers d'inscription par IA</h2>
-      <p style="font-size: 2em" class="text-secondary">Ne recevez que des dossiers complets et payés via notre plateforme. Notre système utilise l'intelligence artificielle pour valider une partie des pièces supplémentaires requises. </p>
+     <h2 style="font-size: 4em;"  class="text-bordeau"><%= t('pages.landing.ai_validation') %></h2>
+      <p style="font-size: 2em" class="text-secondary"><%= t('pages.landing.ai_validation_description') %></p>
     </div>
   </div>
   <div class="d-flex justify-content-center">
-    <%= link_to "Commencer", new_user_registration_path, class: "btn btn-success my-3 text-center" %>
+    <%= link_to t('pages.landing.get_started'), new_user_registration_path, class: "btn btn-success my-3 text-center" %>
   </div>
 
   <div class="row align-items-center flex-row-reverse">
@@ -46,13 +46,13 @@
       <img src="https://source.unsplash.com/random/?opera" alt="App Mockup" class="img-fluid rounded-lg shadow" style="height: 500px; width: 600px;">
     </div>
     <div class="col-md-7 text-end">
-      <h2 style="font-size: 4.5em;" class="text-bordeau">Générateur de planning intelligent</h2>
-      <p style="font-size: 2em" class="text-secondary">Vous pouvez générer et modifier l'ordre de passage facilement une fois que les inscriptions sont closes, et générer un planning modifiable sur mesure.  </p>
+      <h2 style="font-size: 4.5em;" class="text-bordeau"><%= t('pages.landing.intelligent_schedule') %></h2>
+      <p style="font-size: 2em" class="text-secondary"><%= t('pages.landing.intelligent_schedule_description') %></p>
     </div>
   </div>
 
   <div class="d-flex justify-content-center">
-    <%= link_to "Commencer", new_user_registration_path, class: "btn btn-success my-3 text-center" %>
+    <%= link_to t('pages.landing.get_started'), new_user_registration_path, class: "btn btn-success my-3 text-center" %>
   </div>
 
   <div class="row align-items-center">
@@ -60,13 +60,13 @@
       <img src="https://source.unsplash.com/random/?opera" alt="App Mockup" class="img-fluid rounded-lg shadow" style="height: 500px; width: 600px;">
     </div>
     <div class="col-md-7">
-       <h2 style="font-size: 4em;" class="text-bordeau">Générez un dossier pour le jury</h2>
-      <p style="font-size: 2em" class="text-secondary">Générez instantanément un dossier PDF sur mesure à destination du jury lors des épreuves pour qu'ils puissent suivre le déroulé et noter les candidats </p>
+       <h2 style="font-size: 4em;" class="text-bordeau"><%= t('pages.landing.jury_file') %></h2>
+      <p style="font-size: 2em" class="text-secondary"><%= t('pages.landing.jury_file_description') %></p>
     </div>
   </div>
 
   <div class="d-flex justify-content-center">
-    <%= link_to "Commencer", new_user_registration_path, class: "btn btn-success my-3 text-center" %>
+    <%= link_to t('pages.landing.get_started'), new_user_registration_path, class: "btn btn-success my-3 text-center" %>
   </div>
 
   <div class="row align-items-center flex-row-reverse">
@@ -74,14 +74,14 @@
       <img src="https://source.unsplash.com/random/?opera" alt="App Mockup" class="img-fluid rounded-lg shadow" style="height: 500px; width: 600px;">
     </div>
     <div class="col-md-7">
-       <h2 style="font-size: 4em;" class="text-bordeau text-end">Communiquez avec les candidats facilement</h2>
-      <p class="text-end text-secondary" style="font-size: 2em">Envoyez des notifications à vos candidats en un clic. Notifiez l'acceptation ou le rejet de leur dossier, leur séléction pour passer au tour suivant, envoyez leur le planning généré.</p>
+       <h2 style="font-size: 4em;" class="text-bordeau text-end"><%= t('pages.landing.communicate_easily') %></h2>
+      <p class="text-end text-secondary" style="font-size: 2em"><%= t('pages.landing.communicate_easily_description') %></p>
     </div>
   </div>
 
 
   <div class="d-flex justify-content-center">
-    <%= link_to "Commencer", new_user_registration_path, class: "btn btn-success my-3 text-center" %>
+    <%= link_to t('pages.landing.get_started'), new_user_registration_path, class: "btn btn-success my-3 text-center" %>
   </div>
 
   <div class="row align-items-center">
@@ -89,8 +89,8 @@
       <img src="https://source.unsplash.com/random/?opera" alt="App Mockup" class="img-fluid rounded-lg shadow" style="height: 500px; width: 600px;">
     </div>
     <div class="col-md-7">
-      <h2 style="font-size: 4em;" class="text-bordeau text-start">Créez un jury de préselection votant</h2>
-      <p class="text-start text-secondary" style="font-size: 2em">Vous pouvez inviter les personnes de votre choix à faire partie d'un jury de présélection pour une des catégories de votre concours. Ce jury peut attribuer une note de 1 à 100 à chaque dossier.</p>
+      <h2 style="font-size: 4em;" class="text-bordeau text-start"><%= t('pages.landing.create_jury') %></h2>
+      <p class="text-start text-secondary" style="font-size: 2em"><%= t('pages.landing.create_jury_description') %></p>
     </div>
   </div>
 

@@ -2,21 +2,21 @@
   <div class="card h-100 shadow-sm position-relative card-hover" data-bs-toggle="modal" data-bs-target="#categoryModal" data-edition-competition-id="<%= edition_competition.id %>">
     <%= link_to organism_competition_edition_competition_path(edition_competition.organism, edition_competition.competition, edition_competition), class: "text-decoration-none text-dark" do %>
       <%= image_tag edition_competition.competition.photo.attached? ? edition_competition.competition.photo : 'garnier.png', class:"card-img-top", alt:"Competition Image", style:"max-height: 300px; object-fit: cover;" %>
-      <small class="text-white badge border bg-primary rounded-pill position-absolute " style="top: 10px; left: 10px;"><%= edition_competition.days_remaining %> days remaining</small>
+      <small class="text-white badge border bg-primary rounded-pill position-absolute " style="top: 10px; left: 10px;"><%= edition_competition.days_remaining %> <%= t('pages.edition_competition_card.days_remaining') %></small>
       <div class="card-body">
         <h3 class="card-title"><%= edition_competition.competition.nom_concours %></h3>
         <div class="d-flex flex-column">
           <% if edition_competition.address.present? %>
           <span class="card-text text-secondary border-end border-light "><i class="fas fa-location text-dark me-2"></i><%= edition_competition.address.city %>, <%= edition_competition.address.country %> </span>
           <% end %>
-          <small class=" text-secondary "><i class="fas fa-calendar text-dark me-2"></i>du <span class="text-dark border-bottom border-info" style="font-size: 1.2em"><strong><%= edition_competition.start_date.strftime("%d %B") %></strong></span> au <span style="font-size: 1.2em" class="text-dark border-bottom border-info"><strong><%= edition_competition.end_date.strftime("%d %B %Y") %></strong></span></small>
+          <small class=" text-secondary "><i class="fas fa-calendar text-dark me-2"></i><%= t('pages.edition_competition_card.from') %> <span class="text-dark border-bottom border-info" style="font-size: 1.2em"><strong><%= edition_competition.start_date.strftime("%d %B") %></strong></span> <%= t('pages.edition_competition_card.to') %> <span style="font-size: 1.2em" class="text-dark border-bottom border-info"><strong><%= edition_competition.end_date.strftime("%d %B %Y") %></strong></span></small>
         </div>
         <div class="mt-2">
           <% edition_competition.categories.each do |category| %>
             <span class="badge border bg-secondary text-light rounded-pill p-1"><%= category.name %></span>
           <% end %>
           <% if edition_competition.max_prize_amount.present? %>
-          <span class="badge border bg-secondary text-light rounded-pill p-1">1st prize:<%= edition_competition.max_prize_amount %>€</span>
+          <span class="badge border bg-secondary text-light rounded-pill p-1"><%= t('pages.edition_competition_card.first_prize') %>:<%= edition_competition.max_prize_amount %>€</span>
           <% end %>
         </div>
       </div>

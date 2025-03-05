@@ -1,20 +1,20 @@
 <div class="container mt-2">
-  <h1>Créer un prix</h1>
+  <h1><%= t('prizes.form.create_prize') %></h1>
 <%= simple_form_for([@organism, @competition, @edition_competition, @category, @prize]) do |f| %>
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
     <div class="col-sm-6">
-    <%= f.input :title, label: "Titre", placeholder: "ex: Premier prix Société Générale" %>
-    <%= f.input :amount, label: "Montant:", hint: "Laissez vide si jamais le prix ne comprend pas d'argent", placeholder: "ex: 1000" %>
-    <%= f.input :other_reward, label: "Prix en nature:", placeholder:"ex: Rôle offert pour La Traviata a Bastille", hint: "Laissez vide si le prix est uniquement en argent." %>
-    <%= f.input :description, placeholder: "Prix offert par la fondation Musicale de Charente, sous la direction de Mr.Dupont, etc..." %>
+    <%= f.input :title, label: t('prizes.form.title'), placeholder: t('prizes.form.title_placeholder') %>
+    <%= f.input :amount, label: t('prizes.form.amount'), hint: t('prizes.form.amount_hint'), placeholder: t('prizes.form.amount_placeholder') %>
+    <%= f.input :other_reward, label: t('prizes.form.other_reward'), placeholder: t('prizes.form.other_reward_placeholder'), hint: t('prizes.form.other_reward_hint') %>
+    <%= f.input :description, placeholder: t('prizes.form.description_placeholder') %>
     </div>
   </div>
 
   <div class="form-actions">
-    <%= f.button :submit, "Enregistrer", class: "btn btn-success" %>
+    <%= f.button :submit, t('prizes.form.save'), class: "btn btn-success" %>
   </div>
 <% end %>
 </div>

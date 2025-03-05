@@ -1,15 +1,14 @@
-
 <%= simple_form_for(@organisateur) do |f| %>
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
     <%= f.association :user %>
-    <%= f.input :nom_organisme %>
-    <%= f.input :description_organisme %>
+    <%= f.input :nom_organisme, label: t('organisateurs.form.organization_name') %>
+    <%= f.input :description_organisme, label: t('organisateurs.form.organization_description') %>
   </div>
 
   <div class="form-actions">
-    <%= f.button :submit %>
+    <%= f.button :submit, t('global.actions.submit') %>
   </div>
 <% end %>

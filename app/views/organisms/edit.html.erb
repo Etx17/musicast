@@ -2,6 +2,6 @@
 <div class="mt-4 p-3">
   <%= link_to content_tag(:i, '', class: 'fas fa-arrow-left'), :back, class: "btn btn-outline-dark border-0 mb-3" %>
   <%= render "form", organism: @organism %>
-  <%= link_to "Retour", organisateur_dashboard_path, method: :get, data: { turbo_action: 'replace', turbo_frame: 'organism_frame' }, class: 'btn btn-outline-dark mt-2' %>
+  <%= link_to t('organisms.edit.back'), organisateur_dashboard_path, method: :get, data: { turbo_action: 'replace', turbo_frame: 'organism_frame' }, class: 'btn btn-outline-dark mt-2' %>
 </div>
 </div>
