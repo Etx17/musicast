@@ -160,8 +160,182 @@ fr:
     form:
       character_hint: "Si air d'opéra"
       error: "Veuillez corriger les erreurs ci-dessous:"
+  imposed_works:
+    common:
+      title: "Titre"
+      guidelines: "Consignes"
+      airs: "Morceaux requis"
+      actions:
+        show: "Voir ce programme requis"
+        edit: "Modifier ce programme requis"
+        destroy: "Supprimer ce programme requis"
+        back: "Retour aux programmes requis"
+        new: "Nouveau programme requis"
+        submit: "Enregistrer les modifications"
+        add_piece: "Ajouter un morceau"
+    index:
+      title: "Programmes requis"
+      new: "Nouveau programme requis"
+    show:
+      title: "Détails du programme requis"
+      notice: "Programme requis enregistré avec succès."
+      no_airs: "Aucun morceau n'a été ajouté à ce programme."
+    new:
+      title: "Nouveau programme requis"
+    edit:
+      title: "Modifier le programme requis"
+      back_button: "Retour"
+    form:
+      title_placeholder: "ex: 2 œuvres par Fauré"
+      guidelines_placeholder: "ex: Ces œuvres requises seront distribuées aléatoirement dans le programme du candidat entre les tours"
+      error: "Veuillez corriger les erreurs ci-dessous:"
+    air_fields:
+      new: "NOUVEAU"
+      delete: "Supprimer"
+      title_placeholder: "Titre *"
+      composer_placeholder: "Compositeur *"
+      oeuvre_placeholder: "Œuvre *"
+      character_hint: "Pour airs d'opéra uniquement"
+      character_placeholder: "Personnage"
+      minutes_placeholder: "Minutes *"
+      tonality_placeholder: "Tonalité *"
+      additional_info_placeholder: "Informations additionnelles *"
+  candidats:
+    common:
+      profile: "Profil"
+      experiences: "Expériences"
+      education: "Formation"
+      diplomas: "Diplômes"
+      actions:
+        edit: "Modifier"
+        back: "Retour"
+        save: "Enregistrer"
+        delete: "Supprimer"
+        show: "Voir"
+        new: "Nouveau candidat"
+    profile_summary_section:
+      title: "Résumé du profil"
+      name: "Nom"
+      first_name: "Prénom"
+      last_name: "Nom de famille"
+      birth_date: "Date de naissance"
+      nationality: "Nationalité"
+      address: "Adresse"
+      phone: "Téléphone"
+      email: "Email"
+      biography: "Biographie"
+      website: "Site web"
+      social_media: "Médias sociaux"
+      teacher: "Professeur"
+      view_cv: "Voir le CV (Anglais)"
+      view_artistic_photo: "Voir la photo artistique"
+      short_bio: "Biographie courte"
+      medium_bio: "Biographie moyenne"
+      long_bio: "Biographie longue"
+      short_bio_en: "Biographie courte (Anglais)"
+      medium_bio_en: "Biographie moyenne (Anglais)"
+      long_bio_en: "Biographie longue (Anglais)"
+      repertoire: "Répertoire"
+      not_provided_short: "Pas encore fourni..."
+      not_provided_medium: "Biographie moyenne non fournie..."
+      not_provided_long: "Biographie longue non fournie..."
+    experiences_section:
+      title: "Expériences professionnelles"
+      no_experiences: "Aucune expérience fournie"
+      add_experience: "Ajouter une expérience"
+      position: "Poste"
+      company: "Entreprise/Organisation"
+      start_date: "Date de début"
+      end_date: "Date de fin"
+      current: "Poste actuel"
+      description: "Description"
+      delete_confirm: "Supprimer cette expérience ?"
+      present: "Présent"
+      title_label: "Titre"
+      from: "De"
+      to: "à"
+      description_placeholder: "Décrivez votre expérience ici"
+    education_section:
+      title: "Formation"
+      no_education: "Aucune formation fournie"
+      add_education: "Ajouter une formation"
+      institution: "Institution"
+      degree: "Diplôme/Certification"
+      field: "Domaine d'étude"
+      start_date: "Date de début"
+      end_date: "Date de fin"
+      current: "Actuel"
+      description: "Description"
+      delete_confirm: "Supprimer cette formation ?"
+      present: "Présent"
+      title_label: "Titre"
+      from: "De"
+      to: "à"
+      description_placeholder: "Décrivez votre formation ici"
+    diplomas:
+      title: "Diplômes & Certifications"
+      no_diplomas: "Vous n'avez pas encore ajouté de diplômes."
+      add_diploma: "Ajouter un diplôme"
+      name: "Nom du diplôme"
+      institution: "Institution"
+      date: "Date obtenu"
+      description: "Description"
+      view: "Voir"
+      delete: "Supprimer"
+      delete_confirm: "Êtes-vous sûr ?"
+      add: "Ajouter"
+    form:
+      first_name: "Prénom"
+      last_name: "Nom"
+      birthdate: "Date de naissance"
+      birthdate_hint: "Votre identité sera vérifiée le jour de la compétition, veuillez entrer votre date de naissance exacte !"
+      nationality: "Nationalité"
+      portrait: "Portrait (Photo HD de votre visage)"
+      artistic_photo: "Photo artistique (HD)"
+      cv_english: "CV (Anglais)"
+      last_teacher: "Nom du professeur"
+      last_teacher_hint: "Entrez le nom de votre professeur actuel ou dernier professeur"
+      banner_color: "Couleur du bannière"
+      translation_info: "Vous pouvez traduire vos biographies en utilisant l'intelligence artificielle avec"
+      short_bio: "Biographie courte*"
+      short_bio_placeholder: "Une version très courte de votre parcours, pour les jurys de compétition"
+      short_bio_en: "Biographie courte (Anglais)*"
+      short_bio_en_placeholder: "Une version très courte de votre parcours, pour les jurys de compétition"
+      medium_bio: "Biographie moyenne*"
+      medium_bio_placeholder: "Une version résumée de votre parcours, pour les jurys de compétition"
+      medium_bio_en: "Biographie moyenne (Anglais)*"
+      medium_bio_en_placeholder: "Une version résumée de votre parcours, pour les jurys de compétition"
+      long_bio: "Biographie longue*"
+      long_bio_placeholder: "Une version détaillée de votre parcours, pour les jurys de compétition"
+      long_bio_en: "Biographie longue (Anglais)*"
+      long_bio_en_placeholder: "Une version détaillée de votre parcours, pour les jurys de compétition"
+      repertoire: "Repertoire*"
+      repertoire_placeholder: "Une version détaillée de votre parcours, pour les jurys de compétition"
+      experiences_title: "Expériences"
+      education_title: "Formation"
+      save: "Enregistrer"
+      new_record: "NOUVEAU"
+      delete: "Supprimer"
+    edit:
+      title: "Modifier vos informations"
+      subtitle: "Ces informations sont nécessaires pour vous inscrire à une compétition."
+      warning_prefix: "Attention"
+      warning: "Les informations que vous fournissez ici seront utilisées pour vous contacter et vous inscrire à une compétition. Veuillez les remplir avec soin. Vous pourrez les modifier plus tard."
+      back: "Retour"
+      show: "Voir ce candidat"
+      back_to_list: "Retour aux candidats"
+    index:
+      title: "Candidats"
+      show: "Voir ce candidat"
+      new:
+        title: "Nouveau candidat"
+        back: "Retour aux candidats"
   categories:
     show:
+      years: "ans"
+      edit: "Modifier"
+      back: "Retour"
+      description: "Description"
       back_to_categories: "Retour aux catégories"
       edit_category: "Modifier la catégorie"
       view_applications: "Candidatures"
@@ -169,14 +343,14 @@ fr:
       finish_configuration: "J'ai terminé la configuration de la catégorie"
       configure_program: "Configurer le programme"
       configure_tours: "Configurer les tours"
-      configure_requirements: "Configurer les pièces requises"
+      configure_requirements: "Configurer les documents requis"
       configure_prizes: "Configurer les prix"
       badges:
-        create_program: "Créez au moins 1 programme"
-        create_tour: "Créez au moins 1 tour"
-        create_requirement: "Créez au moins 1 document requis (optionnel)"
-        create_prize: "Créez au moins 1 prix"
-        create_jury: "Créez au moins 1 pré-juré votant"
+        create_program: "Créer au moins 1 programme"
+        create_tour: "Créer au moins 1 tour"
+        create_requirement: "Créer au moins 1 document requis (optionnel)"
+        create_prize: "Créer au moins 1 prix"
+        create_jury: "Créer au moins 1 pré-juré votant"
       applications: "Candidatures"
     common:
       save: "Enregistrer"
@@ -190,6 +364,15 @@ fr:
       min_age: "Âge minimum"
       max_age: "Âge maximum"
       discipline: "Discipline"
+    choice_imposed_works_section:
+      title: "Oeuvres optionnelles"
+      what_is_it: "Qu'est ce que c'est?"
+      explanation: "Cette section vous permet de définir des listes d'œuvres parmi lesquelles les candidats devront faire un choix. Par exemple, vous pouvez créer une liste de 5 arias d'opéra et demander aux candidats de choisir 2 à présenter."
+      create_instruction: "Créer une liste d'œuvres parmi lesquelles les candidats devront faire un choix."
+      candidate_must_choose:
+        one: "Le candidat doit choisir 1 œuvre de cette liste"
+        other: "Le candidat doit choisir %{count} œuvres de cette liste"
+      add_new_list: "Ajouter une nouvelle liste d'œuvres optionnelles"
     choice_imposed_works:
       choice_imposed_work:
         programme_requirement: "Exigence du programme"
@@ -222,12 +405,127 @@ fr:
       show:
         edit: "Modifier cette œuvre à choix imposé"
         destroy: "Supprimer cette œuvre à choix imposé"
+    form:
+      information: "Informations de la catégorie"
+      name: "Nom de la catégorie"
+      discipline: "Discipline"
+      min_age: "Âge minimum"
+      max_age: "Âge maximum"
+      description: "Description"
+      allow_own_pianist: "Autoriser les candidats à apporter leur pianiste accompagnateur"
+      registration_fee: "Frais d'inscription (en %{currency})"
+      enter_price_in_euros: "Entrez le prix en euros"
+      preselection_vote_type: "Type de vote pour la présélection"
+      preselection_vote_hint: "Choisissez comment les jurés voteront pour la présélection des candidats"
+      add_photo: "Ajouter une photo"
+      no_image_added: "Aucune image ajoutée"
+      program_configuration: "Configuration du programme"
+      include_choices_in_list: "Inclure des œuvres optionnelles d'une liste"
+      include_choices_hint: "Les candidats devront choisir parmi une liste d'œuvres que vous définirez"
+      include_semi_imposed_works: "Inclure des œuvres semi-imposées"
+      include_semi_imposed_hint: "Les candidats devront présenter des œuvres suivant des critères spécifiques"
+      include_imposed_works: "Inclure des œuvres imposées"
+      include_imposed_hint: "Les candidats devront présenter des œuvres spécifiques que vous imposerez"
+      save: "Enregistrer la catégorie"
+    imposed_works_section:
+      title: "Œuvres imposées"
+      create_instruction: "Créez une liste d'œuvres que tous les candidats doivent présenter."
+      create_list: "Créer une liste d'œuvres imposées"
+      edit_list: "Modifier la liste"
+    juries_section:
+      title:
+        zero: "Jury (aucun membre)"
+        one: "Jury (1 membre)"
+        other: "Jury (%{count} membres)"
+      description: "Ajoutez des membres du jury pour cette catégorie."
+      add_member: "Ajouter un membre du jury"
+      choose_member: "Choisissez un membre du jury"
+      no_members: "Aucun membre du jury disponible ? "
+      go_here: "Allez ici pour en créer"
+    new_imposed_work:
+      title: "Nouvelle œuvre imposée"
+    prizes_section:
+      title:
+        zero: "Prix (aucun)"
+        one: "Prix (1)"
+        other: "Prix (%{count})"
+      description: "Définissez les prix qui seront attribués aux gagnants de cette catégorie."
+      add_prize: "Ajouter un prix"
+    program_container_section:
+      title: "Programme requis"
+      description: "Définissez le programme que les candidats doivent présenter."
+    requirement_items_section:
+      title:
+        zero: "Documents requis (aucun)"
+        one: "Document requis (1)"
+        other: "Documents requis (%{count})"
+      add_required_item: "Ajouter un item requis"
+      description: "Créer et modifier les documents que le candidat doit fournir pour l'inscription (optionnel)"
+      info_text_1: "Le profil du candidat inclut déjà un portrait et une photo artistique/presse de haute qualité (300dpi), des biographies de différentes longueurs, un répertoire et un CV à jour, qui sont directement accessibles. Pour votre concours, indiquez si vous avez besoin de documents spécifiques, comme une recommandation ou des vidéos."
+      info_text_2: "Musicast s'engage à respecter la vie privée et la sécurité des données de ses utilisateurs, conformément à la RGPD. Pour cette raison, nous ne collectons pas les documents d'identité. Cette mesure préventive vise à minimiser les risques liés à la gestion de données sensibles et à protéger nos utilisateurs contre les conséquences potentielles d'une violation de données, telles que le fraude ou le vol d'identité. Nous encourons des alternatives sécurisées pour la vérification de l'identité, ce qui garantit la protection et la sécurité des informations personnelles."
+      item_title: "Donnez un titre à cet item"
+      title_placeholder: "ex: Recommandation de votre professeur"
+      item_type: "Type d'item"
+      select_type: "Sélectionnez un type"
+      details: "Détails"
+      details_placeholder: "Spécifiez les exigences ici, par exemple la longueur pour une lettre de recommandation, la durée pour une vidéo YouTube, ou autre..."
+    semi_imposed_works_section:
+      title: "Œuvres semi-imposées"
+      what_is_it: "Qu'est ce que c'est?"
+      explanation: "Cette section vous permet de définir des critères pour les œuvres que les candidats doivent présenter. Par exemple, vous pouvez demander un sonate classique, une œuvre contemporaine, etc."
+      create_instruction: "Créer des critères pour les œuvres que les candidats doivent présenter."
+      add_new_list: "Ajouter une nouvelle liste d'œuvres semi-imposées"
+    edit:
+      title: "Modifier cette catégorie"
+      back: "Retour"
+    index:
+      title: "Catégories"
+      new: "Nouvelle catégorie"
+      show: "Voir cette catégorie"
+      edit: "Modifier cette catégorie"
+      delete: "Supprimer cette catégorie"
+      years: "ans"
+    new:
+      title: "Nouvelle catégorie"
+      back: "Retour"
   categories_juries:
     new:
       choose_jurors: "Choisissez un ou plusieurs jurés"
       air_list: "Liste d'airs"
       add_piece: "Ajouter un morceau"
       save_changes: "Enregistrer les modifications"
+  choice_imposed_works:
+    choice_imposed_work:
+      programme_requirement: "Exigence du programme"
+      title: "Titre"
+      guidelines: "Consignes"
+      number_to_select: "Nombre à sélectionner"
+    form:
+      list_configuration: "Configuration de la liste"
+      title_placeholder: "ex: 2 lieder Allemands"
+      list_title: "Titre de la liste"
+      number_placeholder: "ex: 2"
+      number_to_choose: "Nombre d'œuvres à choisir"
+      guidelines_placeholder: "ex: Choisissez 2 lieder Allemands du début du 20è siècle dans la liste suivante. Votre sélection ne doit pas dépasser 30 minutes. Vous devez avoir au moins 2 compositeurs différents"
+      be_precise: "Soyez le plus précis possible"
+      guidelines: "Consignes"
+      air_list: "Liste d'airs"
+      add_piece: "Ajouter un morceau"
+      save_changes: "Enregistrer les modifications"
+    edit:
+      title: "Modifier cette liste de choix imposés"
+      back: "Retour"
+    index:
+      title: "Œuvres à choix imposés"
+      show: "Voir cette œuvre à choix imposé"
+      new: "Nouvelle œuvre à choix imposé"
+    new:
+      back: "Retour"
+      title: "Nouvelle liste à choix"
+      explanation: "A choice list allows you to require the candidate to select one or more airs from a list that you define. You can add guidelines to guide the candidate."
+    show:
+      edit: "Modifier cette œuvre à choix imposé"
+      destroy: "Supprimer cette œuvre à choix imposé"
   competitions:
     competition:
       name: "Nom"
@@ -485,12 +783,10 @@ fr:
     new:
       title: "Nouvel air à choix libre"
       back: "Retour aux airs à choix libre"
-
     show:
       edit: "Modifier cet air à choix libre"
       back: "Retour aux airs à choix libre"
       destroy: "Supprimer cet air à choix libre"
-
   free_choices:
     form:
       programme_requirement: "Exigence de programme"
@@ -502,65 +798,20 @@ fr:
       programme_requirement: "Exigence de programme"
       number: "Nombre"
       max_length_minutes: "Durée maximale en minutes"
-
     edit:
       title: "Modifier le choix libre"
       show: "Voir ce choix libre"
       back: "Retour aux choix libres"
-
     index:
       title: "Choix libres"
       show: "Voir ce choix libre"
       new:
         title: "Nouveau choix libre"
         back: "Retour aux choix libres"
-
     show:
       edit: "Modifier ce choix libre"
       back: "Retour aux choix libres"
       destroy: "Supprimer ce choix libre"
-
-  imposed_works:
-    common:
-      title: "Titre"
-      guidelines: "Consignes"
-      airs: "Pièces requises"
-      actions:
-        show: "Voir ce programme imposé"
-        edit: "Modifier ce programme imposé"
-        destroy: "Supprimer ce programme imposé"
-        back: "Retour aux programmes imposés"
-        new: "Nouveau programme imposé"
-        submit: "Enregistrer les modifications"
-        add_piece: "Ajouter une pièce"
-    index:
-      title: "Programmes Imposés"
-      new: "Nouveau programme imposé"
-    show:
-      title: "Détails du Programme Imposé"
-      notice: "Le programme imposé a été enregistré avec succès."
-      no_airs: "Aucune pièce n'a été ajoutée à ce programme."
-    new:
-      title: "Nouveau Programme Imposé"
-    edit:
-      title: "Modifier le Programme Imposé"
-      back_button: "Retour"
-    form:
-      title_placeholder: "ex.: 2 œuvres de Fauré"
-      guidelines_placeholder: "ex.: Ces œuvres imposées seront réparties aléatoirement dans le programme du candidat entre les tours"
-      error: "Veuillez corriger les erreurs ci-dessous:"
-    air_fields:
-      new: "NOUVEAU"
-      delete: "Supprimer"
-      title_placeholder: "Titre *"
-      composer_placeholder: "Compositeur *"
-      oeuvre_placeholder: "Œuvre *"
-      character_hint: "Si air d'opéra seulement"
-      character_placeholder: "Personnage"
-      minutes_placeholder: "Minutes *"
-      tonality_placeholder: "Tonalité *"
-      additional_info_placeholder: "Informations additionnelles *"
-
   global:
     actions:
       back: "Retour"
@@ -571,14 +822,12 @@ fr:
       continue: "Continuer"
       submit: "Enregistrer"
       cancel: "Annuler"
-
   inscription_orders:
     new:
       title: "Nouveau paiement sécurisé"
       about_to_pay: "Vous êtes sur le point de payer pour votre inscription à la compétition"
       certification_html: "Vous certifiez que votre dossier est parfaitement complet par rapport aux exigences énoncées (vérifiez encore <a href='#'>ici</a>)"
       no_refund: "Une inscription n'est pas remboursable par Musicast."
-
     show:
       congratulations: "Félicitations, votre inscription a bien été enregistrée"
       order_number: "Inscription Order #%{id}"
@@ -588,7 +837,6 @@ fr:
       total: "TOTAL"
       reminder: "Rappel: Finissez de constituer votre dossier s'il n'est pas terminé. Les dossiers incomplets sont automatiquement rejetés et ne sont pas remboursables."
       view_application: "Voir ma candidature"
-
   inscriptions:
     pills:
       items:
@@ -603,11 +851,9 @@ fr:
       performances:
         complete: "Programme complété"
         incomplete: "Programme à compléter"
-
     choice_imposed_work_section:
       select_air: "Sélectionner l'air #%{number}"
       select_an_air: "Sélectionner un air"
-
     semi_imposed_work_section:
       select_air: "Sélectionner l'air #%{number}"
       select_an_air: "Sélectionner un air"
@@ -623,14 +869,12 @@ fr:
       character_placeholder: "ex: Le duc de Mantoue"
       character_hint: "Si air d'opéra seulement"
       base_tonality: "Tonalité de base"
-
     form:
       imposed_airs: "Airs imposés"
       bring_own_pianist: "J'amène mon propre pianiste accompagnateur"
       time_preference: "Préférence horaire"
       select_time_preference: "Sélectionner une préférence horaire"
       terms_acceptance_html: "J'accepte les <a href='#' target='_blank'>conditions générales</a> du concours"
-
     items_form_section:
       required_documents: "Documents requis"
       motivation_letter: "Lettre de motivation"
@@ -712,25 +956,19 @@ fr:
 
     jury_index:
       applications_to_rate: "Candidatures à noter"
-
   juries:
     form:
       update: "Mettre à jour"
-
     jury:
       user: "Utilisateur"
       other_information: "Autres informations"
-
     edit:
       modify_information: "Modifier vos informations"
-
     new:
       new_jury: "Nouveau jury"
-
   layouts:
     application:
       title: "TestConcours"
-
   notes:
     form:
       note_value: "Note"
@@ -738,21 +976,18 @@ fr:
       details: "Détails"
       details_hint: "Donnez un feedback ici. Ce feedback est anonyme."
       save: "Enregistrer"
-
     edit:
       edit_note: "Modifier la note"
       candidate_videos: "Vidéos du candidat"
       view_video: "Voir la vidéo %{number}"
       no_video_available: "Le candidat n'a pas transmis de vidéo disponible"
       candidate_motivation_letter: "Lettre de motivation du candidat"
-
     new:
       new_note: "Nouvelle note"
       candidate_videos: "Vidéos du candidat"
       view_video: "Voir la vidéo %{number}"
       no_video_available: "Le candidat n'a pas transmis de vidéo disponible"
       candidate_motivation_letter: "Lettre de motivation du candidat"
-
   organisateurs:
     form:
       organization_name: "Nom de l'organisme"
@@ -795,21 +1030,17 @@ fr:
 
     show:
       modify: "Modifier"
-
   pages:
     dropdown_inputs:
       discipline: "Discipline"
-
     edition_competition_card:
       days_remaining: "jours restants"
       from: "du"
       to: "au"
       first_prize: "1er prix"
-
     home:
       competitions: "Concours"
       no_competition_found: "Aucun concours trouvé. Revenez plus tard ou changez les filtres de recherche."
-
     landing:
       musikast: "Musikast"
       organize_publish_competitions: "Organisez & publiez vos concours"
@@ -875,38 +1106,30 @@ fr:
         title: "**3. Propriété Intellectuelle**"
         p1: "Tout le contenu de la plateforme, y compris les textes, graphiques, logos, icônes, images, clips audio, téléchargements numériques et compilations de données, est la propriété de Musicast ou de ses fournisseurs de contenu et est protégé par les lois françaises et internationales sur le droit d'auteur."
         p2: "Vous acceptez de ne pas reproduire, dupliquer, copier, vendre, revendre ou exploiter toute partie de la plateforme sans notre permission expresse écrite."
-
   partners:
     form:
       partner_role: "Rôle du partenaire"
       authorization_level: "Niveau d'autorisation"
-
     partner:
       user: "Utilisateur"
       organism: "Organisme"
       partner_role: "Rôle du partenaire"
       authorization_level: "Niveau d'autorisation"
-
     edit:
       editing_partner: "Modification du partenaire"
-
     index:
       partners: "Partenaires"
       new_partner: "Nouveau partenaire"
-
     new:
       new_partner: "Nouveau partenaire"
-
     show:
       edit: "Modifier ce partenaire"
       destroy: "Supprimer ce partenaire"
-
   payments:
     new:
       checkout_summary: "Récapitulatif de paiement"
       purchase_of: "Achat de <strong>%{inscription}</strong> pour <strong>%{amount}</strong>"
       pay: "Payer"
-
   performances:
     form:
       tour_requirements: "Exigences du tour"
@@ -918,30 +1141,24 @@ fr:
       available_works: "Œuvres disponibles pour ce tour"
       change_airs: "Changer d'airs (rechoisir les airs de votre inscription)"
       save: "Enregistrer"
-
     performance:
       inscription: "Inscription"
       tour: "Tour"
       performance_time: "Heure performance"
       result: "Résultat"
-
     edit:
       modify_performance: "Modifier votre performance"
-
     index:
       performances: "Performances"
       show_performance: "Voir cette performance"
       new_performance: "Nouvelle performance"
-
     new:
       my_program: "Mon programme pour ce tour"
       choose_airs_instructions: "Choisissez quels airs vous voudrez interprêter. Attention, s'il y a des airs imposés vous ne les verrez qu'après avoir crée votre programme et il faudra l'adapter en conséquence. \nVous pourrez changer l'ordre des airs que vous interprêtez depuis votre dossier sur la page précédente, en glissant-déposant les airs pour réarranger leur ordre et en cliquant sur \"Mettre à jour le programme\""
-
     show:
       edit_performance: "Modifier cette performance"
       back_to_performances: "Retour aux performances"
       destroy_performance: "Supprimer cette performance"
-
   pianist_accompagnateurs:
     form:
       errors_prohibited: "ont empêché ce pianiste d'être enregistré :"
@@ -952,7 +1169,6 @@ fr:
 
     pianist:
       confirm_delete: "Êtes-vous sûr ?"
-
   prizes:
     form:
       create_prize: "Créer un prix"
@@ -980,7 +1196,6 @@ fr:
 
     new:
       back: "Retour"
-
   programme_requirements:
     form:
       category: "Catégorie"
@@ -1006,7 +1221,6 @@ fr:
       edit: "Modifier cette exigence de programme"
       back: "Retour aux exigences de programme"
       destroy: "Supprimer cette exigence de programme"
-
   requirement_items:
     form:
       category: "Catégorie"
@@ -1029,23 +1243,18 @@ fr:
 
     new:
       new_requirement_item: "Nouvel élément requis"
-
   semi_imposed_work_airs:
     form:
       semi_imposed_work: "Œuvre semi-imposée"
       air: "Air"
-
     semi_imposed_work_air:
       semi_imposed_work: "Œuvre semi-imposée"
       air: "Air"
-
     edit:
       editing_semi_imposed_work_air: "Modification de l'air d'œuvre semi-imposée"
-
     index:
       semi_imposed_work_airs: "Airs d'œuvres semi-imposées"
       new_semi_imposed_work_air: "Nouvel air d'œuvre semi-imposée"
-
     new:
       new_semi_imposed_work_air: "Nouvel air d'œuvre semi-imposée"
   semi_imposed_works:
@@ -1080,12 +1289,19 @@ fr:
       edit_semi_imposed_work: "Modifier cette œuvre semi-imposée"
       back_to_semi_imposed_works: "Retour aux œuvres semi-imposées"
       destroy_semi_imposed_work: "Supprimer cette œuvre semi-imposée"
-
+  shared:
+    components:
+      music_search_component:
+        loading: Chargement...
+        search_composer: Rechercher un compositeur...
+    flashes:
+      close: Fermer
+      navbar:
+        dropdown_menu: menu déroulant
   components:
     music_search_component:
       search_composer: "Rechercher un compositeur..."
       loading: "Chargement..."
-
   tours:
     results:
       save_results_and_finish_tour: "Enregistrer les résultats et terminer le tour"

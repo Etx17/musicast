@@ -1,4 +1,98 @@
 en:
+  simple_form:
+    placeholders:
+      defaults:
+        annee: "Enter a year"
+      edition_competition:
+        new:
+          annee: "Enter a year for the new edition"
+        annee: "Enter a year"
+    hints:
+      defaults:
+        annee: "Year of the edition"
+      edition_competition:
+        new:
+          annee: "Year of the new edition"
+        annee: "Year of the edition"
+    required:
+      text: "required"
+      mark: "*"
+      html: "<span class='required'>*</span>"
+  date:
+    month_names: [nil, "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+    abbr_month_names: [nil, "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+    order:
+      - :year
+      - :month
+      - :day
+  activerecord:
+    models:
+      competition: "Competition"
+      document: "Document"
+      edition_competition: "Competition Edition"
+      education: "Education"
+      experience: "Experience"
+    attributes:
+      competition:
+        organism_id: "ID of the organism"
+        nom_concours: "Competition name"
+        description: "Description"
+        created_at: "Created at"
+        updated_at: "Updated at"
+        slug: "Slug"
+      document:
+        document_type: "Type of document"
+        file_url: "URL of the file"
+        user_id: "ID of the user"
+        created_at: "Created at"
+        updated_at: "Updated at"
+        parent_type: "Type of parent"
+        parent_id: "ID of the parent"
+      edition_competition:
+        competition_id: "ID of the competition"
+        annee: "Year"
+        details_specifiques: "Specific details"
+        created_at: "Created at"
+        updated_at: "Updated at"
+        end_of_registration: "End of registration"
+        start_date: "Start date"
+        end_date: "End date"
+        reglement_url: "URL of the regulation"
+        status: "Status"
+      education:
+        title: "Title"
+        start_date: "Start date"
+        end_date: "End date"
+        description: "Description"
+        candidat_id: "ID of the candidate"
+        created_at: "Created at"
+        updated_at: "Updated at"
+      experience:
+        title: "Title"
+        start_date: "Start date"
+        end_date: "End date"
+        description: "Description"
+        candidat_id: "ID of the candidate"
+        created_at: "Created at"
+        updated_at: "Updated at"
+    errors:
+      models:
+        competition:
+          attributes:
+            nom_concours:
+              blank: "The competition name cannot be empty."
+              too_short: "The competition name is too short."
+      messages:
+        blank: "cannot be empty."
+        too_short: "is too short."
+  errors:
+    attributes:
+      nom_concours:
+        blank: "The competition name cannot be empty."
+        too_short: "The competition name is too short."
+    messages:
+      blank: "cannot be empty."
+      too_short: "is too short."
   discipline:
     alto: Viola
     ancient_instruments_and_baroque_music: Ancient Instruments and Baroque Music
@@ -118,7 +212,6 @@ en:
         delete: "Delete"
         show: "View"
         new: "New candidate"
-
     profile_summary_section:
       title: "Profile Summary"
       name: "Name"
@@ -145,7 +238,6 @@ en:
       not_provided_short: "Not provided yet..."
       not_provided_medium: "Medium biography not provided yet..."
       not_provided_long: "Long biography not provided yet..."
-
     experiences_section:
       title: "Professional Experiences"
       no_experiences: "No experiences provided"
@@ -162,7 +254,6 @@ en:
       from: "From"
       to: "to"
       description_placeholder: "Describe your experience here"
-
     education_section:
       title: "Education"
       no_education: "No education provided"
@@ -180,7 +271,6 @@ en:
       from: "From"
       to: "to"
       description_placeholder: "Describe your education here"
-
     diplomas:
       title: "Diplomas & Certifications"
       no_diplomas: "You haven't added any diplomas yet."
@@ -193,7 +283,6 @@ en:
       delete: "Delete"
       delete_confirm: "Are you sure?"
       add: "Add"
-
     form:
       first_name: "First Name"
       last_name: "Last Name"
@@ -226,7 +315,6 @@ en:
       save: "Save"
       new_record: "NEW"
       delete: "Delete"
-
     edit:
       title: "Edit your information"
       subtitle: "This information is necessary to register for a competition."
@@ -235,7 +323,6 @@ en:
       back: "Back"
       show: "Show this candidate"
       back_to_list: "Back to candidates"
-
     index:
       title: "Candidates"
       show: "Show this candidate"
@@ -264,6 +351,38 @@ en:
         one: "The candidate must choose 1 work from this list"
         other: "The candidate must choose %{count} works from this list"
       add_new_list: "Add a new list of optional works"
+    choice_imposed_works:
+      choice_imposed_work:
+        programme_requirement: "Programme Requirement"
+        title: "Title"
+        guidelines: "Guidelines"
+        number_to_select: "Number to select"
+      form:
+        list_configuration: "List configuration"
+        title_placeholder: "ex: 2 German lieder"
+        list_title: "List title"
+        number_placeholder: "ex: 2"
+        number_to_choose: "Number of works to choose"
+        guidelines_placeholder: "ex: Choose 2 German lieder from the early 20th century from the following list. Your selection should not exceed 30 minutes. You must have at least 2 different composers"
+        be_precise: "Be as precise as possible"
+        guidelines: "Guidelines"
+        air_list: "Liste d'airs"
+        add_piece: "Add a piece"
+        save_changes: "Save changes"
+      edit:
+        title: "Edit this imposed choice list"
+        back: "Back"
+      index:
+        title: "Imposed choice works"
+        show: "Show this imposed choice work"
+        new: "New imposed choice work"
+      new:
+        back: "Back"
+        title: "New imposed choice list"
+        explanation: "An imposed choice list allows you to require the candidate to select one or more airs from a list that you define. You can add guidelines to guide the candidate."
+      show:
+        edit: "Edit this imposed choice work"
+        destroy: "Destroy this imposed choice work"
     form:
       information: "Category Information"
       name: "Category Name"
@@ -358,7 +477,6 @@ en:
     edit:
       title: "Edit Category"
       back: "Back"
-
     index:
       title: "Categories"
       new: "New Category"
@@ -366,12 +484,9 @@ en:
       edit: "Edit"
       delete: "Delete"
       years: "years"
-
     new:
       title: "New Category"
       back: "Back"
-
-
   categories_juries:
     new:
       choose_jurors: "Choose one or more jurors"
