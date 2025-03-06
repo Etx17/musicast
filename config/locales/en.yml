@@ -849,7 +849,6 @@ en:
       save: "Save"
       cancel: "Cancel"
       submit: "Submit"
-
   inscription_orders:
     new:
       title: "New secure payment"

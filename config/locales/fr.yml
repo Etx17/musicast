@@ -821,6 +821,7 @@ fr:
       destroy: "Supprimer"
       continue: "Continuer"
       submit: "Enregistrer"
+      save: "Enregistrer"
       cancel: "Annuler"
   inscription_orders:
     new:
