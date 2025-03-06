@@ -1543,3 +1543,11 @@ en:
       medium_bio_en: "Medium bio (EN)"
       long_bio_en: "Long bio (EN)"
       order_of_passage: "Order of passage"
+
+  sidebar:
+    home: "Home"
+    profile: "Profile"
+    applications: "Applications"
+    dashboard: "Dashboard"
+    sign_in: "Sign In"
+    sign_up: "Sign Up"

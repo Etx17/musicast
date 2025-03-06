@@ -1474,3 +1474,10 @@ fr:
       passage_time: "Heure de passage"
       order: "Ordre"
       break: "Pause"
+  sidebar:
+    home: "Accueil"
+    profile: "Profil"
+    applications: "Candidatures"
+    dashboard: "Tableau de bord"
+    sign_in: "Connexion"
+    sign_up: "S'inscrire"
