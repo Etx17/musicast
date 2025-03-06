@@ -75,55 +75,6 @@ fr:
         candidat_id: "ID du candidat"
         created_at: "Créé le"
         updated_at: "Mis à jour le"
-    models:
-      competition: "Concours"
-      document: "Document"
-      edition_competition: "Édition de Concours"
-      education: "Formation"
-      experience: "Expérience"
-    attributes:
-      competition:
-        organism_id: "ID de l'organisme"
-        nom_concours: "Nom du concours"
-        description: "Description"
-        created_at: "Créé le"
-        updated_at: "Mis à jour le"
-        slug: "Slug"
-      document:
-        document_type: "Type de document"
-        file_url: "URL du fichier"
-        user_id: "ID de l'utilisateur"
-        created_at: "Créé le"
-        updated_at: "Mis à jour le"
-        parent_type: "Type de parent"
-        parent_id: "ID du parent"
-      edition_competition:
-        competition_id: "ID du concours"
-        annee: "Année"
-        details_specifiques: "Détails spécifiques"
-        created_at: "Créé le"
-        updated_at: "Mis à jour le"
-        end_of_registration: "Fin des inscriptions"
-        start_date: "Date de début"
-        end_date: "Date de fin"
-        reglement_url: "URL du règlement"
-        status: "Statut"
-      education:
-        title: "Titre"
-        start_date: "Date de début"
-        end_date: "Date de fin"
-        description: "Description"
-        candidat_id: "ID du candidat"
-        created_at: "Créé le"
-        updated_at: "Mis à jour le"
-      experience:
-        title: "Titre"
-        start_date: "Date de début"
-        end_date: "Date de fin"
-        description: "Description"
-        candidat_id: "ID du candidat"
-        created_at: "Créé le"
-        updated_at: "Mis à jour le"
     errors:
       models:
         competition:
@@ -196,21 +147,16 @@ fr:
         back: "Retour aux morceaux"
         new: "Nouveau morceau"
         submit: "Enregistrer"
-
     index:
       title: "Morceaux"
       new: "Nouveau morceau"
-
     show:
       title: "Détails du morceau"
       notice: "Morceau enregistré avec succès."
-
     new:
       title: "Nouveau morceau"
-
     edit:
       title: "Modifier le morceau"
-
     form:
       character_hint: "Si air d'opéra"
       error: "Veuillez corriger les erreurs ci-dessous:"
@@ -310,7 +256,6 @@ fr:
     common:
       close: "Fermer"
       confirm_delete: "Êtes-vous sûr de vouloir supprimer cet élément ?"
-
     jury_section:
       title: "Jury"
       associated_jury_members: "Membres jury associés"
@@ -328,14 +273,11 @@ fr:
       existing_account: "Si la personne que vous vouliez inviter a déjà un compte mais n'a pas de compte \"Jury\", vous pouvez lui attribuer ce rôle. Entrez son email puis associez-le à votre organisme."
       email_label: "Email"
       assign_jury_role: "Attribuer le rôle de Jury"
-
     admin:
       title: "Tableau de bord administrateur"
-
     jury:
       files_to_evaluate: "Vos dossiers à évaluer (groupées par catégories)"
       view_applications: "Voir %{count} inscriptions"
-
     organiser:
       dashboard: "Tableau de Bord"
       your_competitions: "Vos concours"
@@ -347,13 +289,11 @@ fr:
       partners: "Partenaires"
       accompanying_pianists: "Pianistes Accompagnateurs"
       add_pianist: "+ Ajouter un pianiste accompagnateur"
-
   devise:
     confirmations:
       new:
         title: "Renvoyer les instructions de confirmation"
         submit: "Renvoyer les instructions de confirmation"
-
     invitations:
       edit:
         welcome: "Bienvenue sur Musicast"
@@ -369,7 +309,6 @@ fr:
       new:
         header: "Envoyer une invitation"
         submit_button: "Envoyer une invitation"
-
     mailer:
       confirmation_instructions:
         welcome: "Bienvenue %{email} !"
@@ -393,7 +332,6 @@ fr:
         locked: "Votre compte a été verrouillé en raison d'un nombre excessif de tentatives de connexion infructueuses."
         click_link: "Cliquez sur le lien ci-dessous pour déverrouiller votre compte :"
         unlock_link: "Déverrouiller mon compte"
-
     passwords:
       edit:
         title: "Changer votre mot de passe"
@@ -404,7 +342,6 @@ fr:
       new:
         title: "Mot de passe oublié ?"
         send_instructions: "Envoyez-moi les instructions de réinitialisation du mot de passe"
-
     registrations:
       edit:
         title: "Modifier %{resource}"
@@ -429,14 +366,12 @@ fr:
         privacy_policy: "Politique de Confidentialité"
         newsletter_agreement: "J'accepte de recevoir des mails (pas de spam, que des informations utiles) de la part de Musicast."
         create: "Créer"
-
     sessions:
       new:
         title: "Connexion"
         password: "Mot de passe"
         remember_me: "Se souvenir de moi"
         sign_in: "Se connecter"
-
     shared:
       links:
         log_in: "Se connecter"
@@ -445,21 +380,17 @@ fr:
         no_confirmation_instructions: "Vous n'avez pas reçu les instructions de confirmation ?"
         no_unlock_instructions: "Vous n'avez pas reçu les instructions de déverrouillage ?"
         sign_in_with: "Se connecter avec %{provider}"
-
     unlocks:
       new:
         title: "Renvoyer les instructions de déverrouillage"
         resend_instructions: "Renvoyer les instructions de déverrouillage"
-
     flashes:
       close: "Fermer"
-
   edition_competitions:
     common:
       continue: "Continuer"
       view: "Voir"
       delete: "Supprimer"
-
     category_modal_infos:
       view_rules: "Voir le règlement du concours"
       selection_instructions: "Consignes de séléction des airs"
@@ -470,7 +401,6 @@ fr:
       link: "lien"
       required_documents: "Pièces requises"
       required_elements: "Eléments requis:"
-
     edition_competition:
       edit: "Modifier"
       delete: "Supprimer cette édition"
@@ -485,7 +415,6 @@ fr:
       no_document: "Aucun document de règlement attaché."
       share_link: "Lien de partage"
       qr_code: "QR code"
-
     form:
       create_edition: "Créer une édition"
       edit_edition: "Modifier l'édition"
@@ -502,22 +431,17 @@ fr:
       specific_details_placeholder: "Précisez les nouvelles modalités de cette édition si nécessaire"
       competition_rules: "Règlement du concours (PDF, PNG, JPG)"
       save: "Enregistrer"
-
     candidate_edition_competition:
       choose_category: "Choisissez une catégorie"
       available: "disponibles"
-
     edit:
       back: "Retour"
-
     index:
       title: "Éditions de concours"
       show: "Voir cette édition de concours"
       new: "Nouvelle édition de concours"
-
     new:
       cancel: "Annuler"
-
     show:
       edition_published: "Votre édition est publiée. Consultez les candidatures de chaques catégories puis générez l'ordre de passage et le planning sur chaque tour ci dessous"
       edition: "Édition"
@@ -542,27 +466,22 @@ fr:
       configure_category: "Configurer la catégorie"
       applications: "%{count} candidature(s)"
       confirm_delete_category: "Êtes-vous sûr de vouloir supprimer cette catégorie ?"
-
   free_choice_airs:
     form:
       free_choice: "Choix libre"
       air: "Air"
       submit: "Enregistrer"
-
     free_choice_air:
       free_choice: "Choix libre"
       air: "Air"
-
     edit:
       title: "Modifier l'air à choix libre"
       show: "Voir cet air à choix libre"
       back: "Retour aux airs à choix libre"
-
     index:
       title: "Airs à choix libre"
       show: "Voir cet air à choix libre"
       new: "Nouvel air à choix libre"
-
     new:
       title: "Nouvel air à choix libre"
       back: "Retour aux airs à choix libre"
@@ -681,6 +600,9 @@ fr:
       payment:
         paid: "Payé"
         unpaid: "Non payé"
+      performances:
+        complete: "Programme complété"
+        incomplete: "Programme à compléter"
 
     choice_imposed_work_section:
       select_air: "Sélectionner l'air #%{number}"
@@ -689,6 +611,18 @@ fr:
     semi_imposed_work_section:
       select_air: "Sélectionner l'air #%{number}"
       select_an_air: "Sélectionner un air"
+      air_validation_failed: "La validation d'un air a échoué"
+      piece_title: "Titre de la pièce %{number}"
+      title_placeholder: "ex: La Donna è Mobile"
+      minutes_placeholder: "ex: 2"
+      round_to_unit: "Arrondissez à l'unité"
+      duration: "Minutage"
+      work: "Oeuvre"
+      work_placeholder: "ex: Rigoletto"
+      character: "Personnage"
+      character_placeholder: "ex: Le duc de Mantoue"
+      character_hint: "Si air d'opéra seulement"
+      base_tonality: "Tonalité de base"
 
     form:
       imposed_airs: "Airs imposés"
@@ -702,6 +636,8 @@ fr:
       motivation_letter: "Lettre de motivation"
       upload_pdf: "Télécharger un PDF"
       youtube_link: "Lien YouTube"
+      youtube_hint: "Lien vers votre vidéo YouTube"
+      replace_document: "Remplacer le document"
 
     inscription:
       application_file: "Dossier de candidature"
@@ -747,42 +683,13 @@ fr:
 
     edit:
       title: "Modifier l'inscription"
+      modify_application: "Modifier votre dossier d'inscription"
+      can_modify_until: "Vous pouvez modifier votre dossier jusqu'au %{date}"
+      will_be_submitted: "Votre dossier sera soumis au jury de préselection à cette date si vous avez réglé votre inscription."
 
     index:
       title: "Inscriptions"
       new: "Nouvelle inscription"
-
-    new:
-      title: "Nouvelle inscription"
-
-    note_card:
-      view_video_and_vote: "Consulter vidéo & vote"
-      to_evaluate: "À évaluer"
-
-    pills:
-      performances:
-        complete: "Programme complété"
-        incomplete: "Programme à compléter"
-
-    semi_imposed_work_section:
-      air_validation_failed: "La validation d'un air a échoué"
-      piece_title: "Titre de la pièce %{number}"
-      title_placeholder: "ex: La Donna è Mobile"
-      minutes_placeholder: "ex: 2"
-      round_to_unit: "Arrondissez à l'unité"
-      duration: "Minutage"
-      work: "Oeuvre"
-      work_placeholder: "ex: Rigoletto"
-      character: "Personnage"
-      character_placeholder: "ex: Le duc de Mantoue"
-      character_hint: "Si air d'opéra seulement"
-      base_tonality: "Tonalité de base"
-
-    candidate_index:
-      your_applications: "VOS CANDIDATURES"
-      start_date: "Date de début"
-
-    index:
       applications: "Candidatures"
       view_first_round_order: "Consulter l'ordre de passage du premier tour"
       add_late_registration: "+ Ajouter une inscription tardive"
@@ -792,17 +699,19 @@ fr:
       invite_user: "Inviter l'utilisateur"
       late_invitations_sent: "Invitations pour s'inscrire tardivement envoyées"
 
-    edit:
-      modify_application: "Modifier votre dossier d'inscription"
-      can_modify_until: "Vous pouvez modifier votre dossier jusqu'au %{date}"
-      will_be_submitted: "Votre dossier sera soumis au jury de préselection à cette date si vous avez réglé votre inscription."
+    new:
+      title: "Nouvelle inscription"
+
+    note_card:
+      view_video_and_vote: "Consulter vidéo & vote"
+      to_evaluate: "À évaluer"
+
+    candidate_index:
+      your_applications: "VOS CANDIDATURES"
+      start_date: "Date de début"
 
     jury_index:
       applications_to_rate: "Candidatures à noter"
-
-    items_form_section:
-      youtube_hint: "Lien vers votre vidéo YouTube"
-      replace_document: "Remplacer le document"
 
   juries:
     form:
@@ -867,11 +776,6 @@ fr:
     show:
       edit: "Modifier cet organisateur"
       destroy: "Supprimer cet organisateur"
-
-  global:
-    actions:
-      submit: "Soumettre"
-
   organisms:
     organism:
       name: "Nom"
@@ -904,7 +808,7 @@ fr:
 
     home:
       competitions: "Concours"
-      no_competition_found: "Aucun concours trouvé 🥲. Revenez plus tard ou changez les filtres de recherche."
+      no_competition_found: "Aucun concours trouvé. Revenez plus tard ou changez les filtres de recherche."
 
     landing:
       musikast: "Musikast"
@@ -1188,6 +1092,7 @@ fr:
       finish_tour_confirm: "Êtes-vous sûr de vouloir terminer ce tour ? Cette action est irréversible et les candidats seront notifiés des résultats."
       candidates_will_be_notified: "Les candidats seront notifiés des résultats."
       tour_finished_title: "Tour terminé."
+      tour_finished: "Tour terminé"
       notification_instruction: "Envoyez une notification à chacun des candidats pour les informer de leur résultat."
       use_buttons_below: "Utilisez les boutons ci dessous pour prévenir les candidats"
       qualified_sent_to_next_tour: "Les qualifiés ont été envoyés dans le tour suivant."
@@ -1201,7 +1106,7 @@ fr:
       no_performances_yet: "Aucune performance n'a encore été ajoutée à ce tour."
       and_others: "et %{count} autres"
       see_more: "voir plus"
-
+      candidates_have_been_notified: "Les candidats ont été notifiés des résultats."
     form:
       title_placeholder: "ex: Éliminatoires, Demi-finale, Finale..."
       description_placeholder: "Décrivez les règles spécifiques à ce tour..."
@@ -1287,32 +1192,30 @@ fr:
       long_bio_en: "Biographie longue (EN)"
       order_of_passage: "Ordre de passage"
 
-    results:
-      save_results_and_finish_tour: "Enregistrer les résultats et terminer le tour"
-      finish_tour_confirm: "Êtes-vous sûr de vouloir terminer ce tour ? Cette action est irréversible et les candidats seront notifiés des résultats."
-      candidates_will_be_notified: "Les candidats seront notifiés des résultats."
-      tour_finished: "Tour terminé"
-      candidates_have_been_notified: "Les candidats ont été notifiés des résultats."
-      candidate: "Candidat"
-      order: "Ordre"
-      presented_airs: "Airs présentés"
-      result: "Résultat"
-      no_performances_yet: "Aucune performance n'a encore été ajoutée à ce tour."
-      and_others: "et %{count} autres"
-      see_more: "voir plus"
-
     tour:
       title: "Titre"
       description: "Description"
       start_date: "Date de début"
       final_performance_submission_deadline: "Date limite de soumission finale des performances"
       category: "Catégorie"
+      tour_configuration: "Configuration du tour"
+      order_of_passage: "Ordre de passage"
+      planning: "Planning"
+      results: "Résultats"
+      tour_is_finished: "Le tour est terminé."
+      no_planning_yet: "Vous n'avez pas encore de planning."
+      generate_planning_instruction: "Vous pouvez en générer un en cliquant sur le bouton ci-dessous."
+      generate_with_current_order: "Vous allez générer un planning avec l'ordre de passage actuel."
+      generate_planning: "Générer le planning"
+      can_generate_after_deadline: "Vous ne pourrez générer le planning qu'une fois la date limite de soumission des performances pour le tour passée, le :"
 
     edit:
       editing_tour: "Modification du tour"
+      edit_tour: "Modifier le tour"
 
     index:
       tours: "Tours"
+      show_this_tour: "Voir ce tour"
       new_tour: "Nouveau tour"
 
     new:
@@ -1327,7 +1230,6 @@ fr:
       planning: "Planning"
       results: "Résultats"
       configure_tour_planning: "Configurer le planning du tour"
-      start_date: "Date de début"
       start_time: "Heure de début"
       time_between_performances: "Temps entre les performances (minutes)"
       performances_per_day: "Performances par jour"
@@ -1340,29 +1242,6 @@ fr:
       new_day_start_time: "Heure de début du nouveau jour"
       new_day_start_time_hint: "Si le tour s'étend à un autre jour en raison du nombre de candidats, vous pouvez indiquer une heure de début différente pour ce nouveau jour."
       confirm_and_generate: "Confirmer la configuration et générer le planning"
-
-    tour:
-      tour_configuration: "Configuration du tour"
-      order_of_passage: "Ordre de passage"
-      planning: "Planning"
-      results: "Résultats"
-      tour_is_finished: "Le tour est terminé."
-      no_planning_yet: "Vous n'avez pas encore de planning."
-      generate_planning_instruction: "Vous pouvez en générer un en cliquant sur le bouton ci-dessous."
-      generate_with_current_order: "Vous allez générer un planning avec l'ordre de passage actuel."
-      generate_planning: "Générer le planning"
-      can_generate_after_deadline: "Vous ne pourrez générer le planning qu'une fois la date limite de soumission des performances pour le tour passée, le :"
-
-    edit:
-      edit_tour: "Modifier le tour"
-
-    index:
-      tours: "Tours"
-      show_this_tour: "Voir ce tour"
-      new_tour: "Nouveau tour"
-
-    new:
-      new_tour: "Nouveau tour"
 
     schedule:
       your_planning: "Votre planning (Vous pouvez le modifier tant que vous n'avez pas envoyer les convocations)"

@@ -65,24 +65,6 @@ en:
     form:
       character_hint: "For opera arias only"
       error: "Please correct the errors below:"
-  categories:
-    show:
-      back_to_categories: "Back to categories"
-      edit_category: "Edit category"
-      view_applications: "Applications"
-      delete: "Delete"
-      finish_configuration: "I have finished configuring the category"
-      configure_program: "Configure program"
-      configure_tours: "Configure rounds"
-      configure_requirements: "Configure required documents"
-      configure_prizes: "Configure prizes"
-      badges:
-        create_program: "Create at least 1 program"
-        create_tour: "Create at least 1 round"
-        create_requirement: "Create at least 1 required document (optional)"
-        create_prize: "Create at least 1 prize"
-        create_jury: "Create at least 1 voting pre-jury"
-      applications: "Applications"
   imposed_works:
     common:
       title: "Title"
@@ -260,14 +242,12 @@ en:
       new:
         title: "New candidate"
         back: "Back to candidates"
-
   categories:
     common:
       save: "Save"
       close: "Close"
       delete: "Delete"
       confirm_delete: "Are you sure you want to delete this item?"
-
     category:
       edition_competition: "Competition Edition"
       name: "Name"
@@ -275,7 +255,6 @@ en:
       min_age: "Minimum Age"
       max_age: "Maximum Age"
       discipline: "Discipline"
-
     choice_imposed_works_section:
       title: "Optional Works"
       what_is_it: "What is this?"
@@ -285,7 +264,6 @@ en:
         one: "The candidate must choose 1 work from this list"
         other: "The candidate must choose %{count} works from this list"
       add_new_list: "Add a new list of optional works"
-
     form:
       information: "Category Information"
       name: "Category Name"
@@ -308,13 +286,11 @@ en:
       include_imposed_works: "Include imposed works"
       include_imposed_hint: "Candidates will have to present specific works that you will impose"
       save: "Save Category"
-
     imposed_works_section:
       title: "Imposed Works"
       create_instruction: "Create a list of works that all candidates must present."
       create_list: "Create a list of imposed works"
       edit_list: "Edit list"
-
     juries_section:
       title:
         zero: "Jury (no members)"
@@ -325,10 +301,8 @@ en:
       choose_member: "Choose a jury member"
       no_members: "No jury members available? "
       go_here: "Go here to create some"
-
     new_imposed_work:
       title: "New Imposed Work"
-
     prizes_section:
       title:
         zero: "Prizes (none)"
@@ -336,11 +310,9 @@ en:
         other: "Prizes (%{count})"
       description: "Define the prizes that will be awarded to the winners of this category."
       add_prize: "Add a prize"
-
     program_container_section:
       title: "Required Program"
       description: "Define the program that candidates must present."
-
     requirement_items_section:
       title:
         zero: "Required Documents (none)"
@@ -356,14 +328,33 @@ en:
       select_type: "Select a type"
       details: "Details"
       details_placeholder: "Specify requirements here, for example length for a cover letter, duration for a YouTube video, or other..."
-
     semi_imposed_works_section:
       title: "Semi-imposed Works"
       what_is_it: "What is this?"
       explanation: "This section allows you to define criteria for the works that candidates must present. For example, you can request a classical sonata, a contemporary piece, etc."
       create_instruction: "Create criteria for the works that candidates must present."
       add_new_list: "Add a new list of semi-imposed works"
-
+    show:
+      years: "years"
+      edit: "Edit"
+      back: "Back"
+      description: "Description"
+      back_to_categories: "Back to categories"
+      edit_category: "Edit category"
+      view_applications: "Applications"
+      delete: "Delete"
+      finish_configuration: "I have finished configuring the category"
+      configure_program: "Configure program"
+      configure_tours: "Configure rounds"
+      configure_requirements: "Configure required documents"
+      configure_prizes: "Configure prizes"
+      badges:
+        create_program: "Create at least 1 program"
+        create_tour: "Create at least 1 round"
+        create_requirement: "Create at least 1 required document (optional)"
+        create_prize: "Create at least 1 prize"
+        create_jury: "Create at least 1 voting pre-jury"
+      applications: "Applications"
     edit:
       title: "Edit Category"
       back: "Back"
@@ -380,11 +371,6 @@ en:
       title: "New Category"
       back: "Back"
 
-    show:
-      years: "years"
-      edit: "Edit"
-      back: "Back"
-      description: "Description"
 
   categories_juries:
     new:
@@ -392,14 +378,12 @@ en:
       air_list: "Air list"
       add_piece: "Add a piece"
       save_changes: "Save changes"
-
   choice_imposed_works:
     choice_imposed_work:
       programme_requirement: "Programme Requirement"
       title: "Title"
       guidelines: "Guidelines"
       number_to_select: "Number to select"
-
     form:
       list_configuration: "List configuration"
       title_placeholder: "e.g.: 2 German lieder"
@@ -412,43 +396,35 @@ en:
       air_list: "Air list"
       add_piece: "Add a piece"
       save_changes: "Save changes"
-
     edit:
       title: "Edit this imposed choice list"
       back: "Back"
-
     index:
       title: "Choice imposed works"
       show: "Show this choice imposed work"
       new: "New choice imposed work"
-
     new:
       back: "Back"
       title: "New choice list"
       explanation: "A choice list allows you to require the candidate to select one or more airs from a list that you define. You can add guidelines to guide the candidate."
-
     show:
       edit: "Edit this choice imposed work"
       destroy: "Destroy this choice imposed work"
-
   competitions:
     competition:
       name: "Name"
       description: "Description"
       cover_photo: "Cover photo"
-
     form:
       warning: "Warning: do not include the year in the competition title. You will later publish editions of this competition with all the necessary details"
       name_hint: "Often the same name as the organization"
       banner_label: "Add a banner (you can do this later). Recommended dimensions: Full width, 100px height."
       no_image: "No image yet"
       save: "Save"
-
     index:
       title: "Competitions"
       show: "Show this competition"
       new: "New competition"
-
     show:
       editions: "Editions"
       configure_categories: "Configure categories for this edition"
@@ -458,12 +434,10 @@ en:
       add_edition: "Add an edition"
       competition: "Competition"
       information: "Information"
-
   dashboard:
     common:
       close: "Close"
       confirm_delete: "Are you sure you want to delete this item?"
-
     jury_section:
       title: "Jury"
       associated_jury_members: "Associated jury members"
@@ -478,17 +452,14 @@ en:
       enter_email: "Enter an email"
       guest_can_modify: "The guest can modify or correct this information"
       invite_user: "Invite User"
-      existing_account: "If the person you wanted to invite already has an account but doesn't have a "Jury" account, you can assign them this role. Enter their email and then associate them with your organization."
+      existing_account: "If the person you wanted to invite already has an account but doesn't have a Jury account, you can assign them this role. Enter their email and then associate them with your organization."
       email_label: "Email"
       assign_jury_role: "Assign Jury Role"
-
     admin:
       title: "Admin Dashboard"
-
     jury:
       files_to_evaluate: "Your files to evaluate (grouped by categories)"
       view_applications: "View %{count} applications"
-
     organiser:
       dashboard: "Dashboard"
       your_competitions: "Your competitions"
@@ -500,7 +471,6 @@ en:
       partners: "Partners"
       accompanying_pianists: "Accompanying Pianists"
       add_pianist: "+ Add an accompanying pianist"
-
   devise:
     confirmations:
       new:
@@ -614,7 +584,7 @@ en:
       view_rules: "View competition rules"
       selection_instructions: "Selection instructions"
       can_complete_application: "You can complete your application and select your works in the next step."
-      complete_profile_html: "You must have completed your %{profile_link} to be able to create an application. By clicking "continue" you will be redirected to edit your information"
+      complete_profile_html: "You must have completed your %{profile_link} to be able to create an application. By clicking 'continue' you will be redirected to edit your information"
       profile: "profile"
       create_account_html: "You need to create an account to register for a competition. Follow this %{link}"
       link: "link"
@@ -793,6 +763,9 @@ en:
       payment:
         paid: "Paid"
         unpaid: "Unpaid"
+      performances:
+        complete: "Program completed"
+        incomplete: "Program to complete"
 
     choice_imposed_work_section:
       select_air: "Select air #%{number}"
@@ -801,6 +774,18 @@ en:
     semi_imposed_work_section:
       select_air: "Select air #%{number}"
       select_an_air: "Select an air"
+      air_validation_failed: "Air validation failed"
+      piece_title: "Piece title %{number}"
+      title_placeholder: "e.g.: La Donna è Mobile"
+      minutes_placeholder: "e.g.: 2"
+      round_to_unit: "Round to the nearest unit"
+      duration: "Duration"
+      work: "Work"
+      work_placeholder: "e.g.: Rigoletto"
+      character: "Character"
+      character_placeholder: "e.g.: The Duke of Mantua"
+      character_hint: "For opera arias only"
+      base_tonality: "Base tonality"
 
     form:
       imposed_airs: "Imposed airs"
@@ -814,6 +799,8 @@ en:
       motivation_letter: "Motivation letter"
       upload_pdf: "Upload PDF"
       youtube_link: "YouTube link"
+      youtube_hint: "Link to your YouTube video"
+      replace_document: "Replace document"
 
     inscription:
       application_file: "Application file"
@@ -859,42 +846,13 @@ en:
 
     edit:
       title: "Edit registration"
+      modify_application: "Modify your application file"
+      can_modify_until: "You can modify your file until %{date}"
+      will_be_submitted: "Your file will be submitted to the pre-selection jury on this date if you have paid your registration."
 
     index:
       title: "Registrations"
       new: "New registration"
-
-    new:
-      title: "New registration"
-
-    note_card:
-      view_video_and_vote: "View video & vote"
-      to_evaluate: "To evaluate"
-
-    pills:
-      performances:
-        complete: "Program completed"
-        incomplete: "Program to complete"
-
-    semi_imposed_work_section:
-      air_validation_failed: "Air validation failed"
-      piece_title: "Piece title %{number}"
-      title_placeholder: "e.g.: La Donna è Mobile"
-      minutes_placeholder: "e.g.: 2"
-      round_to_unit: "Round to the nearest unit"
-      duration: "Duration"
-      work: "Work"
-      work_placeholder: "e.g.: Rigoletto"
-      character: "Character"
-      character_placeholder: "e.g.: The Duke of Mantua"
-      character_hint: "For opera arias only"
-      base_tonality: "Base tonality"
-
-    candidate_index:
-      your_applications: "YOUR APPLICATIONS"
-      start_date: "Start Date"
-
-    index:
       applications: "Applications"
       view_first_round_order: "View first round order"
       add_late_registration: "+ Add late registration"
@@ -904,17 +862,19 @@ en:
       invite_user: "Invite user"
       late_invitations_sent: "Late registration invitations sent"
 
-    edit:
-      modify_application: "Modify your application file"
-      can_modify_until: "You can modify your file until %{date}"
-      will_be_submitted: "Your file will be submitted to the pre-selection jury on this date if you have paid your registration."
+    new:
+      title: "New registration"
+
+    note_card:
+      view_video_and_vote: "View video & vote"
+      to_evaluate: "To evaluate"
+
+    candidate_index:
+      your_applications: "YOUR APPLICATIONS"
+      start_date: "Start Date"
 
     jury_index:
       applications_to_rate: "Applications to rate"
-
-    items_form_section:
-      youtube_hint: "Link to your YouTube video"
-      replace_document: "Replace document"
 
   juries:
     form:
@@ -1316,6 +1276,8 @@ en:
       no_performances_yet: "No performances have been added to this tour yet."
       and_others: "and %{count} others"
       see_more: "see more"
+      tour_finished: "The tour is finished"
+      candidates_have_been_notified: "Candidates have been notified of the results."
 
     tour_configuration_form:
       start_time: "Start time"
@@ -1327,7 +1289,12 @@ en:
       confirm_and_generate: "Confirm configuration and generate schedule"
 
     tour:
-      tour_configuration: "Tour Configuration"
+      title: "Title"
+      description: "Description"
+      start_date: "Start date"
+      final_performance_submission_deadline: "Final performance submission deadline"
+      category: "Category"
+      tour_configuration: "Tour configuration"
       order_of_passage: "Order of passage"
       planning: "Planning"
       results: "Results"
@@ -1339,6 +1306,7 @@ en:
       can_generate_after_deadline: "You can only generate the schedule once the performance submission deadline for the tour has passed, on:"
 
     edit:
+      editing_tour: "Editing tour"
       edit_tour: "Edit tour"
 
     index:
@@ -1349,13 +1317,26 @@ en:
     new:
       new_tour: "New tour"
 
+    show:
+      tour_details: "Tour details"
+      description: "Description"
+      start_date: "Start date"
+      final_performance_submission_deadline: "Final performance submission deadline"
+      performances: "Performances"
+      planning: "Planning"
+      results: "Results"
+      configure_tour_planning: "Configure tour planning"
+      start_time: "Start time"
+      time_between_performances: "Time between performances (minutes)"
+      performances_per_day: "Performances per day"
+
     schedule:
       your_planning: "Your schedule (You can modify it as long as you haven't sent the invitations)"
       can_modify_later: "You can modify it later of course, but you will have to notify the candidates yourself."
 
     show_jury_pdf:
       required_item_photo: "Required item photo"
-      years_old: "yo"
+      years_old: "years old"
       notes: "NOTES"
 
     show_pdf:
@@ -1448,92 +1429,3 @@ en:
       medium_bio_en: "Medium bio (EN)"
       long_bio_en: "Long bio (EN)"
       order_of_passage: "Order of passage"
-
-    results:
-      save_results_and_finish_tour: "Save results and finish tour"
-      finish_tour_confirm: "Are you sure you want to finish this tour? This action is irreversible."
-      candidates_will_be_notified: "Candidates will be notified by email"
-      tour_finished_title: "The tour is finished"
-      notification_instruction: "You can now notify candidates of their result"
-      use_buttons_below: "Use the buttons below to send emails"
-      qualified_sent_to_next_tour: "Qualified candidates have been sent to the next tour"
-      next_tour: "Next tour"
-      no_next_tour: "There is no next tour"
-      send_qualified_to_next_tour: "Send qualified to next tour"
-     tour:
-      title: "Titre"
-      description: "Description"
-      start_date: "Date de début"
-      final_performance_submission_deadline: "Date limite de soumission finale des performances"
-      category: "Catégorie"
-
-    edit:
-      editing_tour: "Modification du tour"
-
-    index:
-      tours: "Tours"
-      new_tour: "Nouveau tour"
-
-    new:
-      new_tour: "Nouveau tour"
-
-    show:
-      tour_details: "Détails du tour"
-      description: "Description"
-      start_date: "Date de début"
-      final_performance_submission_deadline: "Date limite de soumission finale des performances"
-      performances: "Performances"
-      planning: "Planning"
-      results: "Résultats"
-      configure_tour_planning: "Configurer le planning du tour"
-      start_date: "Date de début"
-      start_time: "Heure de début"
-      time_between_performances: "Temps entre les performances (minutes)"
-      performances_per_day: "Performances par jour"
-
-    tour_configuration_form:
-      start_time: "Heure de début"
-      start_time_hint: "Indiquez l'heure de début du tour."
-      max_end_of_day_time: "Heure de fin de journée maximale"
-      max_end_of_day_time_hint: "Indiquez l'heure de fin maximale de la journée."
-      new_day_start_time: "Heure de début du nouveau jour"
-      new_day_start_time_hint: "Si le tour s'étend à un autre jour en raison du nombre de candidats, vous pouvez indiquer une heure de début différente pour ce nouveau jour."
-      confirm_and_generate: "Confirmer la configuration et générer le planning"
-
-    tour:
-      tour_configuration:
-      order_of_passage: "Ordre de passage"
-      planning: "Planning"
-      results: "Résultats"
-      tour_is_finished: "Le tour est terminé."
-      no_planning_yet: "Vous n'avez pas encore de planning."
-      generate_planning_instruction: "Vous pouvez en générer un en cliquant sur le bouton ci-dessous."
-      generate_with_current_order: "Vous allez générer un planning avec l'ordre de passage actuel."
-      generate_planning: "Générer le planning"
-      can_generate_after_deadline: "Vous ne pourrez générer le planning qu'une fois la date limite de soumission des performances pour le tour passée, le :"
-
-    edit:
-      edit_tour: "Modifier le tour"
-
-    index:
-      tours: "Tours"
-      show_this_tour: "Voir ce tour"
-      new_tour: "Nouveau tour"
-
-    new:
-      new_tour: "Nouveau tour"
-
-    schedule:
-      your_planning: "Votre planning (Vous pouvez le modifier tant que vous n'avez pas envoyer les convocations)"
-      can_modify_later: "Vous pourrez le modifier ultérieurement bien sur, mais devrez notifier vous même les candidats."
-
-    show_jury_pdf:
-      required_item_photo: "Photo d'item requis"
-      years_old: "ans"
-      notes: "NOTES"
-
-    show_pdf:
-      candidate: "Candidat"
-      passage_time: "Heure de passage"
-      order: "Ordre"
-      break: "Pause"
