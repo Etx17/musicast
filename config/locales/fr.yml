@@ -1299,6 +1299,24 @@ fr:
       close: Fermer
       navbar:
         dropdown_menu: menu déroulant
+    air_fields:
+      delete: "Supprimer"
+      title: "Titre"
+      composer: "Compositeur"
+      work: "Œuvre"
+      character: "Personnage"
+      character_hint: "Si air d'opéra seulement"
+      duration: "Durée"
+      duration_hint: "Arrondissez à la minute du dessus"
+      tonality: "Tonalité"
+      tonality_hint: "Tonalité originale sauf lied"
+      additional_info: "Informations additionnelles"
+      additional_info_placeholder: "ex: Inclure le récitatif à partir de 'Pur mai non sentisi'"
+      minutes: "Minutes *"
+      character_placeholder: "(optionnel) ex: Duc de Mantoue"
+      title_placeholder: "ex: La Donna è Mobile"
+      composer_placeholder: "ex: G.Verdi"
+      work_placeholder: "ex: Rigoletto"
   components:
     music_search_component:
       search_composer: "Rechercher un compositeur..."

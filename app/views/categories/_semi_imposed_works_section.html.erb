@@ -56,9 +56,9 @@
     </div>
   <% end %>
 
-    <%= link_to new_organism_competition_edition_competition_category_semi_imposed_work_path(@organism, @competition, @edition_competition, @category), class: 'btn btn-success mx-auto border-1 mt-3' do %>
-      <i class="fas fa-plus"></i> <%= t('categories.semi_imposed_works_section.add_new_list') %>
-    <% end %>
+    <button type="button" class="align-self-end btn btn-success mx-auto border-1  mt-3" data-bs-toggle="modal" data-bs-target="#semiImposedWorkModal">
+    <i class="fas fa-plus"></i>  <%= t('categories.semi_imposed_works_section.add_new_list') %>
+  </button>
 </div>
 
 <!-- Modal -->

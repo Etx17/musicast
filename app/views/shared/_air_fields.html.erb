@@ -1,10 +1,10 @@
 <div class="nested-fields row border my-3  pt-2 shadow-sm bg-light" data-new-record="<%= f.object.new_record? %>" style="border-radius: 8px;">
   <div class="col-12">
     <div class="d-flex justify-content-between align-items-center">
-      <h3 style="font-size: 1.3em;" class="text-dark" > #<%= f.index.is_a?(Integer) ? f.index + 1 : 'NEW' %></h3>
+      <h3 style="font-size: 1.3em;" class="text-dark" > #<%= f.index.is_a?(Integer) ? f.index + 1 : t('imposed_works.air_fields.new') %></h3>
       <% if f.object.new_record? %>
         <%= link_to '#', data: { action: 'airs#removeAir' }, class: 'btn btn-outline-secondary' do %>
-          <i class="fas fa-trash pe-2"></i>Supprimer
+          <i class="fas fa-trash pe-2"></i><%= t('shared.air_fields.delete') %>
         <% end %>
       <% end %>
     </div>
@@ -13,27 +13,27 @@
 
 
   <div class="col-6 col-md-6">
-    <%= f.input :title, required: true, input_html: { class: 'p-2 border rounded-8', placeholder: 'ex: La Donna è Mobile' } %>
+    <%= f.input :title, required: true, input_html: { class: 'p-2 border rounded-8', placeholder: t('shared.air_fields.title_placeholder') } %>
   </div>
   <div class="col-6 col-md-6">
-    <%= f.input :composer, required: true, input_html: { class: 'p-2 border rounded-8', placeholder: 'ex: G.Verdi' } %>
+    <%= f.input :composer, required: true, input_html: { class: 'p-2 border rounded-8', placeholder: t('shared.air_fields.composer_placeholder') } %>
   </div>
   <div class="col-6">
-    <%= f.input :oeuvre, required: true, input_html: { class: 'p-2 border rounded-8', placeholder: 'ex: Rigoletto' } %>
+    <%= f.input :oeuvre, required: true, input_html: { class: 'p-2 border rounded-8', placeholder: t('shared.air_fields.work_placeholder') } %>
   </div>
   <div class="col-6 col-md-4">
-    <%= f.input :character, hint:"Si air d'opéra seulement", input_html: { class: 'p-2 border rounded-8', placeholder: '(optionnel) ex: Duc de Mantoue' } if true %>
+    <%= f.input :character, hint: t('shared.air_fields.character_hint'), input_html: { class: 'p-2 border rounded-8', placeholder: t('shared.air_fields.character_placeholder') } if true %>
   </div>
   <div class="col-6 col-md-4">
-    <%= f.input :length_minutes, label: "Durée", required: true, hint: "Arrondissez à la minute du dessus", input_html: { class: 'p-2 border rounded-8', placeholder: 'Minutes *' } %>
+    <%= f.input :length_minutes, label: t('shared.air_fields.duration'), required: true, hint: t('shared.air_fields.duration_hint'), input_html: { class: 'p-2 border rounded-8', placeholder: t('shared.air_fields.minutes') } %>
   </div>
 
   <div class="col-6 col-md-4">
-    <%= f.input :tonality,  required: true, hint: "Tonalité originale sauf lied", collection: Air.tonalities_selection, selected: 'Do majeur' %>
+    <%= f.input :tonality, required: true, hint: t('shared.air_fields.tonality_hint'), collection: Air.tonalities_selection, selected: 'Do majeur' %>
   </div>
 
   <div class="col-12 col-md-4">
-    <%= f.input :infos, label: "Informations additionnelles", input_html: { class: 'p-2 border', placeholder: "ex: Inclure le récitatif à partir de 'Pur mai non sentesi' " } %>
+    <%= f.input :infos, label: t('shared.air_fields.additional_info'), input_html: { class: 'p-2 border', placeholder: t('shared.air_fields.additional_info_placeholder') } %>
   </div>
 
   <div class="col-6">

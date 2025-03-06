@@ -1362,15 +1362,30 @@ en:
   shared:
     flashes:
       close: "Close"
-
     navbar:
       dropdown_menu: "dropdown menu"
-
     components:
       music_search_component:
         search_composer: "Search for Composer..."
         loading: "Loading..."
-
+    air_fields:
+      delete: "Delete"
+      title: "Title"
+      composer: "Composer"
+      work: "Work"
+      character: "Character"
+      character_hint: "For opera arias only"
+      duration: "Duration"
+      duration_hint: "Round up to the next minute"
+      tonality: "Tonality"
+      tonality_hint: "Original tonality except for lieder"
+      additional_info: "Additional information"
+      additional_info_placeholder: "e.g.: Include the recitative starting from 'Pur mai non sentisi'"
+      minutes: "Minutes *"
+      character_placeholder: "(optional) e.g.: Duke of Mantua"
+      title_placeholder: "e.g.: La Donna è Mobile"
+      composer_placeholder: "e.g.: G.Verdi"
+      work_placeholder: "e.g.: Rigoletto"
   tours:
     results:
       save_results_and_finish_tour: "Save results and finish tour"
@@ -1551,3 +1566,29 @@ en:
     dashboard: "Dashboard"
     sign_in: "Sign In"
     sign_up: "Sign Up"
+
+  shared:
+    components:
+      music_search_component:
+        search_composer: "Search for Composer..."
+        loading: "Loading..."
+    flashes:
+      close: "Close"
+    air_fields:
+      delete: "Delete"
+      title: "Title"
+      composer: "Composer"
+      work: "Work"
+      character: "Character"
+      character_hint: "For opera arias only"
+      duration: "Duration"
+      duration_hint: "Round up to the next minute"
+      tonality: "Tonality"
+      tonality_hint: "Original tonality except for lieder"
+      additional_info: "Additional information"
+      additional_info_placeholder: "e.g.: Include the recitative starting from 'Pur mai non sentisi'"
+      minutes: "Minutes *"
+      character_placeholder: "(optional) e.g.: Duke of Mantua"
+      title_placeholder: "e.g.: La Donna è Mobile"
+      composer_placeholder: "e.g.: G.Verdi"
+      work_placeholder: "e.g.: Rigoletto"
