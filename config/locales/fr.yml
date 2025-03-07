@@ -817,6 +817,7 @@ fr:
       back: "Retour"
       edit: "Modifier"
       show: "Voir"
+      close: "Fermer"
       delete: "Supprimer"
       destroy: "Supprimer"
       continue: "Continuer"

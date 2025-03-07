@@ -843,6 +843,7 @@ en:
       back: "Back"
       edit: "Edit"
       show: "View"
+      close: "Close"
       delete: "Delete"
       destroy: "Delete"
       continue: "Continue"
