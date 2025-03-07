@@ -1432,6 +1432,9 @@ fr:
       order_of_passage: "Ordre de passage"
 
     tour:
+      tour: "Tour"
+      add_tour: "Ajouter un tour"
+      drag_and_drop_info: "Glissez déposez les tours pour changer leur ordre"
       title: "Titre"
       description: "Description"
       start_date: "Date de début"

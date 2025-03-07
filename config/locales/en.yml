@@ -1422,6 +1422,8 @@ en:
       confirm_and_generate: "Confirm configuration and generate schedule"
     tour:
       tour: "Round"
+      add_tour: "Add a round"
+      drag_and_drop_info: "Drag and drop the tours to change their order"
       title: "Title"
       description: "Description"
       start_date: "Start date"

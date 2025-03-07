@@ -2,13 +2,13 @@
   <div class="card shadow mb-5">
   <div class="bg-light-grey card-header d-flex justify-content-between align-items-center">
     <div class=mb-2>
-      <h2 style="font-size: 3em;"><%= t("categories.tours.tour.tour") %></h2>
-      <small class="text-secondary bg-secondary-secondary p-2 rounded-8 border "><i class="fas fa-info-circle text-secondary pe-2"></i>Glissez déposez les tours pour changer leur ordre</small>
-    </div>
+      <h2 style="font-size: 3em;"><%= t("tours.tour.tour").pluralize %></h2>
+        <small class="text-secondary bg-secondary-secondary p-2 rounded-8 border "><i class="fas fa-info-circle text-secondary pe-2"></i><%= t("tours.tour.drag_and_drop_info") %></small>
+      </div>
 
     <div class="text-center ">
       <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addTourModal">
-        Ajouter un tour
+        <%= t("tours.tour.add_tour") %>
       </button>
     </div>
 
