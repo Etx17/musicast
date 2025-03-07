@@ -49,9 +49,17 @@
 
       <div class="ms-auto d-flex align-items-center">
         <span class="me-2"><%= t('language_name') %></span>
-        <%= link_to t('navbar.switch_language'),
-                    switch_language_path(locale: I18n.locale == :fr ? :en : :fr),
-                    class: "btn btn-sm btn-outline-secondary" %>
+        <ul>
+          <% I18n.available_locales.each do |locale| %>
+            <li>
+              <% if I18n.locale == locale %>
+                <%= t(locale, scope: 'locales') %>
+              <% else %>
+                <%= link_to t(locale, scope: 'locales'), url_for(locale: locale) %>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
       </div>
     </div>
   </div>

@@ -1,4 +1,7 @@
 fr:
+  locales:
+    en: "Anglais"
+    fr: "Français"
   simple_form:
     placeholders:
       defaults:

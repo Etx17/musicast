@@ -1,4 +1,7 @@
 en:
+  locales:
+    en: "English"
+    fr: "French"
   simple_form:
     placeholders:
       defaults:
@@ -1057,8 +1060,9 @@ en:
 
   organisms:
     organism:
-      name: "Name"
+      name: "Name of your organization"
       description: "Description"
+      placeholder: "e.g: The Met Opera House, Association Pavarotti, etc..."
 
     edit:
       back: "Back"
@@ -1408,7 +1412,6 @@ en:
       see_more: "see more"
       tour_finished: "The tour is finished"
       candidates_have_been_notified: "Candidates have been notified of the results."
-
     tour_configuration_form:
       start_time: "Start time"
       start_time_hint: "Indicate the start time of the tour."
@@ -1417,8 +1420,8 @@ en:
       new_day_start_time: "New day start time"
       new_day_start_time_hint: "If the tour extends to another day due to the number of candidates, you can indicate a different start time for this new day."
       confirm_and_generate: "Confirm configuration and generate schedule"
-
     tour:
+      tour: "Round"
       title: "Title"
       description: "Description"
       start_date: "Start date"

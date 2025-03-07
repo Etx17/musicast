@@ -20,4 +20,14 @@ module ApplicationHelper
     current_page?(path) ? 'active' : ''
   end
 
+  # Helper for language switching
+  def language_switcher
+    available_locales = I18n.available_locales.map(&:to_s)
+    current_locale = I18n.locale.to_s
+
+    available_locales.reject { |locale| locale == current_locale }.map do |locale|
+      link_to t("locales.#{locale}", locale: locale), change_locale_path(locale: locale), class: 'language-link'
+    end.join(' | ').html_safe
+  end
+
 end
