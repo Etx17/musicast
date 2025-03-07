@@ -842,7 +842,14 @@ en:
       destroy: "Destroy this free choice"
 
   global:
+    profile: "Profile"
+    home: "Home"
+    offer: "Offer"
     actions:
+      login: "Login"
+      logout: "Logout"
+      change_password: "Change password"
+      create_account: "Create account"
       back: "Back"
       edit: "Edit"
       show: "View"
@@ -1481,22 +1488,23 @@ en:
       break: "Break"
 
     form:
-      title_placeholder: "Tour title (e.g.: Preliminary, Semi-final, Final)"
-      description_placeholder: "Tour description"
+      title_placeholder: "e.g.: Preliminaries, Semi-finals, Finals..."
+      description_placeholder: "Describe the specific rules for this round..."
       start_date: "Start date"
+      start_time: "Start time"
       final_performance_submission_deadline: "Final performance submission deadline"
       imposed_air_selection_label: "Imposed air selection"
       imposed_air_selection_label_optional: "Imposed air selection (optional)"
       none: "None"
       multiple_selection_help: "Hold Ctrl (or Cmd on Mac) to select multiple options"
-      create_imposed_work_first: "You must first create an imposed work for this category"
-      no_pianist_accompagnateur: "No pianist accompanist for this tour"
+      create_imposed_work_first: "You must first create an imposed work for this category before you can select imposed airs."
+      no_pianist_accompagnateur: "No accompanying pianist for this round"
       configurations: "Configurations"
-      tour_requirement_description_placeholder: "Tour requirement description"
+      tour_requirement_description_placeholder: "Describe the specific requirements for this round..."
       min_number_of_works: "Minimum number of works"
       max_number_of_works: "Maximum number of works"
-      min_duration_minute: "Minimum duration (in minutes)"
-      max_duration_minute: "Maximum duration (in minutes)"
+      min_duration_minute: "Minimum duration (minutes)"
+      max_duration_minute: "Maximum duration (minutes)"
 
     order_of_performances:
       current_order: "Current order"

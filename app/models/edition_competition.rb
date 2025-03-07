@@ -81,7 +81,7 @@ class EditionCompetition < ApplicationRecord
 
   def sharable_link
     Rails.application.routes.default_url_options[:host] = Rails.env.development? ? 'localhost:3000' : 'your_production_domain.com'
-    Rails.application.routes.url_helpers.organism_competition_edition_competition_url(competition.organism, competition, self)
+    Rails.application.routes.url_helpers.organism_competition_edition_competition_url(organism_id:, competition_id:, id:)
   end
 
   def qr_code

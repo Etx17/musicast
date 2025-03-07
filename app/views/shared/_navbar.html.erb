@@ -8,26 +8,13 @@
     </div>
 
     <div class="d-flex">
-      <ul class="navbar-nav me-auto text-decoration-none d-flex flex-row"  style="list-style: none;">
+      <ul class="navbar-nav me-auto text-decoration-none d-flex flex-row align-items-center"  style="list-style: none;">
         <% navbar_links.each do |link| %>
           <li class="nav-item text-decoration-none me-4 d-flex">
             <%= link_to link[:label], link[:url], class: "nav-link" %>
           </li>
         <% end %>
-      </ul>
-
-      <div id="notification-popup" class="col-10 col-lg-3"style="display: none; position: absolute; right: 20px; top: 60px; z-index: 1000;">
-        <div class="shadow p-3 bg-light border border-bottom">
-          <% current_user&.notifications&.each do |notification| %>
-              <%= link_to notification.message, notification.url %>
-              <div class="text-muted" style="font-size: 0.75rem;">
-                <%= notification.created_at.strftime("%Y-%m-%d %H:%M:%S") %>
-              </div>
-          <% end %>
-        </div>
-      </div>
-
-      <% if user_signed_in? %>
+        <% if user_signed_in? %>
         <div class="ml-auto">
           <li class="nav-item dropdown text-decoration-none" style="list-style: none;">
             <a href="#" class="avatar me-3" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -46,6 +33,20 @@
           </li>
         </div>
       <% end %>
+      </ul>
+
+      <div id="notification-popup" class="col-10 col-lg-3"style="display: none; position: absolute; right: 20px; top: 60px; z-index: 1000;">
+        <div class="shadow p-3 bg-light border border-bottom">
+          <% current_user&.notifications&.each do |notification| %>
+              <%= link_to notification.message, notification.url %>
+              <div class="text-muted" style="font-size: 0.75rem;">
+                <%= notification.created_at.strftime("%Y-%m-%d %H:%M:%S") %>
+              </div>
+          <% end %>
+        </div>
+      </div>
+
+      
 
       <div class="ms-auto d-flex align-items-center">
         <span class="me-2"><%= t('language_name') %></span>

@@ -816,7 +816,14 @@ fr:
       back: "Retour aux choix libres"
       destroy: "Supprimer ce choix libre"
   global:
+    profile: "Profil"
+    home: "Accueil"
+    offer: "Offre"
     actions:
+      login: "Connexion"
+      create_account: "Créer un compte"
+      logout: "Se déconnecter"
+      change_password: "Changer mon mot de passe"
       back: "Retour"
       edit: "Modifier"
       show: "Voir"
@@ -1350,6 +1357,7 @@ fr:
       title_placeholder: "ex: Éliminatoires, Demi-finale, Finale..."
       description_placeholder: "Décrivez les règles spécifiques à ce tour..."
       start_date: "Date de début"
+      start_time: "Heure de début"
       final_performance_submission_deadline: "Date limite de soumission finale des performances"
       imposed_air_selection_label: "Sélection d'airs imposés"
       imposed_air_selection_label_optional: "Sélection d'airs imposés (optionnel)"
