@@ -7,7 +7,6 @@ u = User.create(
   accepted_terms: true
 )
 
-
 # Creating organism
 o = Organism.create(
   organisateur: u.organisateur,
@@ -122,68 +121,68 @@ i=0
 
 
 # Seeder les candidats performances
-# 6.times do
-#   u = User.create(
-#     email: Faker::Internet.email,
-#     password: 'password',
-#     password_confirmation: 'password',
-#     inscription_role: 'candidate',
-#     accepted_terms: true
-#   )
-#   u.candidat.update(
-#     first_name: Faker::Name.first_name,
-#     last_name: Faker::Name.last_name,
-#     birthdate: Faker::Date.birthday(min_age: 18, max_age: 65),
-#     nationality: "FR",
-#     short_bio: Faker::Lorem.paragraph(sentence_count: 2),
-#     medium_bio: Faker::Lorem.paragraph(sentence_count: 5),
-#     long_bio: Faker::Lorem.paragraph(sentence_count: 10),
-#     repertoire: Faker::Lorem.paragraph(sentence_count: 5),
-#     short_bio_en: Faker::Lorem.paragraph(sentence_count: 2),
-#     medium_bio_en: Faker::Lorem.paragraph(sentence_count: 5),
-#     long_bio_en: Faker::Lorem.paragraph(sentence_count: 10),
-#   )
-#   i=Inscription.create(
-#     category: categ,
-#     status: 'in_review',
-#     candidat: u.candidat,
-#     terms_accepted: true
-#   )
+6.times do
+  u = User.create(
+    email: Faker::Internet.email,
+    password: 'password',
+    password_confirmation: 'password',
+    inscription_role: 'candidate',
+    accepted_terms: true
+  )
+  u.candidat.update(
+    first_name: Faker::Name.first_name,
+    last_name: Faker::Name.last_name,
+    birthdate: Faker::Date.birthday(min_age: 18, max_age: 65),
+    nationality: "FR",
+    short_bio: Faker::Lorem.paragraph(sentence_count: 2),
+    medium_bio: Faker::Lorem.paragraph(sentence_count: 5),
+    long_bio: Faker::Lorem.paragraph(sentence_count: 10),
+    repertoire: Faker::Lorem.paragraph(sentence_count: 5),
+    short_bio_en: Faker::Lorem.paragraph(sentence_count: 2),
+    medium_bio_en: Faker::Lorem.paragraph(sentence_count: 5),
+    long_bio_en: Faker::Lorem.paragraph(sentence_count: 10),
+  )
+  i=Inscription.create(
+    category: categ,
+    status: 'in_review',
+    candidat: u.candidat,
+    terms_accepted: true
+  )
 
-#   InscriptionItemRequirement.create(
-#     inscription: i,
-#     requirement_item: categ.requirement_items.find_by(type_item: "youtube_link"),
-#     submitted_content: "https://www.youtube.com/watch?v=FrxSZCLbhSQ"
-#   )
+  InscriptionItemRequirement.create(
+    inscription: i,
+    requirement_item: categ.requirement_items.find_by(type_item: "youtube_link"),
+    submitted_content: "https://www.youtube.com/watch?v=FrxSZCLbhSQ"
+  )
 
-#   air1 = Air.all.sample
-#   air2 = Air.all.sample
-#   SemiImposedWorkAir.create(
-#     inscription: i,
-#     air: air1,
-#     semi_imposed_work: categ.semi_imposed_works.first
-#   )
-#   SemiImposedWorkAir.create(
-#     inscription: i,
-#     air: air2,
-#     semi_imposed_work: categ.semi_imposed_works.first
-#   )
-#   Performance.create(
-#     inscription: i,
-#     tour: categ.tours.first,
-#     air_selection: [air1.id, air2.id],
-#     ordered_air_selection: [air1.id, air2.id]
-#   )
+  air1 = Air.all.sample
+  air2 = Air.all.sample
+  SemiImposedWorkAir.create(
+    inscription: i,
+    air: air1,
+    semi_imposed_work: categ.semi_imposed_works.first
+  )
+  SemiImposedWorkAir.create(
+    inscription: i,
+    air: air2,
+    semi_imposed_work: categ.semi_imposed_works.first
+  )
+  Performance.create(
+    inscription: i,
+    tour: categ.tours.first,
+    air_selection: [air1.id, air2.id],
+    ordered_air_selection: [air1.id, air2.id]
+  )
 
-#   file_path = [Rails.root.join('app', 'assets', 'images', 'john.jpeg'), Rails.root.join('app', 'assets', 'images', 'paul.jpg'), Rails.root.join('app', 'assets', 'images', 'profile.jpeg')].sample
-#   file = File.open(file_path, 'rb')
-#   p "Attaching portrait"
-#   u.candidat.portrait.attach(
-#     io: file,
-#     filename: File.basename(file_path),
-#     content_type: "image/#{File.extname(file_path).delete('.')}"
-#   )
-#   p"saving candidat"
-#   file.close
+  file_path = [Rails.root.join('app', 'assets', 'images', 'john.jpeg'), Rails.root.join('app', 'assets', 'images', 'paul.jpg'), Rails.root.join('app', 'assets', 'images', 'profile.jpeg')].sample
+  file = File.open(file_path, 'rb')
+  p "Attaching portrait"
+  u.candidat.portrait.attach(
+    io: file,
+    filename: File.basename(file_path),
+    content_type: "image/#{File.extname(file_path).delete('.')}"
+  )
+  p"saving candidat"
+  file.close
 
-# end
+end
