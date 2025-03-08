@@ -19,10 +19,9 @@
   <!-- Navbar -->
   <%= render "shared/navbar"%>
 
-  <div class="px-2">
-    <div class="row">
+    <div class="d-flex align-items-stretch">
         <% if current_user.present? %>
-        <div class="col-md-2 p-0 d-none d-md-block bg-light border-end">
+        <div class="col-md-2 p-0 d-none d-md-block bg-light">
           <!-- Sidebar -->
           <%= render "shared/sidebar" %>
         </div>
@@ -40,6 +39,6 @@
       </div>
 
     </div>
-  </div>  <%# <a href="https://www.flaticon.com/free-icons/piano" title="piano icons">Piano icons created by surang - Flaticon</a> %>
+   <%# <a href="https://www.flaticon.com/free-icons/piano" title="piano icons">Piano icons created by surang - Flaticon</a> %>
 </body>
 </html>

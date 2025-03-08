@@ -62,7 +62,7 @@
                   <h5><%= t('inscriptions.inscription.payment') %></h5>
                   <p class="text-secondary"> <%= t('inscriptions.inscription.not_paid_yet') %></p>
                   <% if @inscription.inscription_order.present? %>
-                    <button id="pay" class="btn btn-primary"><%= t('inscriptions.inscription.pay') %></button>
+                    <button id="pay" class="btn btn-success"><%= t('inscriptions.inscription.pay') %></button>
                     <small class="text-info"><%= t('inscriptions.inscription.refresh_if_problem') %></small>
                     <script src="https://js.stripe.com/v3/"></script>
                     <script>
@@ -315,8 +315,8 @@
                   <%= f.hidden_field :ordered_air_selection, data: { reorder_target: "orderedSelection" } %>
                   <%# Ces boutons apparaissent si l'utilisateur est l'organisateur %>
                   <% if Date.today < tour.final_performance_submission_deadline || current_user.organisateur.present? %>
-                    <%= f.button :submit, t('inscriptions.inscription.update_order'), data: { action: "reorder#submit", reorder_target: "submit" }, disabled: true, class: "btn btn-primary" %>
-                    <%= link_to t('inscriptions.inscription.edit_program'), edit_inscription_performance_path(inscription, performance, tour_id: tour.id), class: 'btn btn-primary ' %>
+                    <%= f.button :submit, t('inscriptions.inscription.update_order'), data: { action: "reorder#submit", reorder_target: "submit" }, disabled: true, class: "btn btn-success" %>
+                    <%= link_to t('inscriptions.inscription.edit_program'), edit_inscription_performance_path(inscription, performance, tour_id: tour.id), class: 'btn btn-success ' %>
                   <% end %>
                 <% end %>
               <% else %>

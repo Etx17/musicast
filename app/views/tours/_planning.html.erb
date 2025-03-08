@@ -11,7 +11,6 @@
 
 
       <%# Bouton qui ouvre mon application mail pour envoyer un message a tous les performances.candidat.user.email %>
-      <%# Generate the email list %>
       <% email_list = @performances.map { |p| p.candidat.user.email }.join(',') %>
 
       <%# Button that opens the default email client with a pre-filled email %>
@@ -27,11 +26,11 @@
 
   <%# bouton télécharger, imprimer %>
   <div class="d-flex gap-3 justify-content-between">
-    <%= link_to t('tours.planning.download_planning_pdf'), show_pdf_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour), class: "btn btn-primary", target: '_blank' %>
+    <%= link_to t('tours.planning.download_planning_pdf'), show_pdf_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour), class: "btn btn-success", target: '_blank' %>
 
   <!-- Button to open the modal -->
       <div class="d-flex gap-3">
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#planningJuryFormModal">
+        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#planningJuryFormModal">
           <%= t('tours.planning.configure_jury_folder') %>
         </button>
         <% if !session[:detailed_program].nil? %>
@@ -75,7 +74,7 @@
               <i class="fas fa-sync-alt"></i>
             <% end %>
           </div>
-          <div class="btn btn-primary mb-2  " data-controller="start-time" data-bs-toggle="modal" data-bs-target="#pauseModal" data-action="click->start-time#fetchStartTimes" data-day="<%= day %>">
+          <div class="btn btn-success mb-2  " data-controller="start-time" data-bs-toggle="modal" data-bs-target="#pauseModal" data-action="click->start-time#fetchStartTimes" data-day="<%= day %>">
             + <%= t('tours.planning.add_break') %>
           </div>
         </div>

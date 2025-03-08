@@ -41,7 +41,7 @@
 
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><%= t('global.actions.close') %></button>
-                    <%= form.submit t('tours.order_of_performances.assign'), id: "submit-button", class: "btn btn-primary", disabled: true %>
+                    <%= form.submit t('tours.order_of_performances.assign'), id: "submit-button", class: "btn btn-success", disabled: true %>
                   </div>
                 <% end %>
               </div>
@@ -88,7 +88,7 @@
                     <i class="text-danger fas fa-circle-exclamation"></i>
                   <% end %>
                 </td>
-                <td class="p-2 text-center bg-light" style="min-width: 110px;">
+                <td class="p-2 text-center bg-light" style="min-width: 130px;">
                   <%= form_with url: update_order_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour, performance_id: performance.id), method: :post do %>
                     <div class="d-flex">
                     <%= number_field_tag "new_order", performance.order, class: "form-control", min: 1, max: @tour.performances.count %>
@@ -129,7 +129,7 @@
                       <%= form_with url: assign_pianist_to_performance_manually_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour, performance_id: performance.id), method: :post, html: { id: "pianist-form-#{performance.id}" } do |form| %>
                         <%= form.hidden_field :performance_id, value: performance.id %>
                         <%= form.select :pianist_accompagnateur_id, @organism.pianist_accompagnateurs.map { |p| [p.full_name, p.id] }, { selected: performance.pianist_accompagnateur_id, prompt: t('tours.order_of_performances.select_pianist') }, { onchange: "document.getElementById('pianist-form-#{performance.id}').submit();" } %>
-                        <%# <%= form.submit "Update", class: "btn btn-primary mt-2" %>
+                        <%# <%= form.submit "Update", class: "btn btn-success mt-2" %>
                       <% end %>
                     <% else %>
                       <p><%= t('tours.order_of_performances.brings_own_pianist') %></p>

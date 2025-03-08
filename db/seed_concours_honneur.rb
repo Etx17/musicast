@@ -75,6 +75,36 @@ categ = Category.create(
   preselection_vote_type: "hundred_points"
 )
 
+Tour.create!(
+  imposed_air_selection: [],
+  final_performance_submission_deadline: Date.today + 29,
+  tour_number: 1,
+  category_id: categ.id,
+  start_date: Date.today + 30,
+  start_time: Time.now,
+  end_date: Date.today + 32,
+  end_time: Time.now + 6.hours,
+  is_online: false,
+  title: "Tour éliminatoire",
+  description: "Premier tour",
+  tour_requirement_attributes: { description: "Premier tour requirements", min_number_of_works: 1, max_number_of_works: 3, min_duration_minute: 3, max_duration_minute: 9, organiser_creates_program: false }
+  )
+
+Tour.create!(
+  imposed_air_selection: ["1", "2"],
+  final_performance_submission_deadline: Date.today + 55,
+  tour_number: 2,
+  category_id: categ.id,
+  start_date: Date.today + 60,
+  start_time: Time.now,
+  end_date: Date.today + 90,
+  end_time: Time.now + 6.hours,
+  is_online: false,
+  title: "Demi finale où l'orga crée le programme (config)",
+  description: "Deuxieme tour",
+  tour_requirement_attributes: { description: "Liste de requirements du second tour", min_number_of_works: 2, max_number_of_works: 4, min_duration_minute: 4.5, max_duration_minute: 12, organiser_creates_program: true }
+  )
+
 # Creating RequirementItem
 reqitem = RequirementItem.create(
   category: categ,
@@ -87,7 +117,7 @@ SemiImposedWork.create(
   category: categ,
   title: "1 air et 1 mélodie",
   guidelines: "1 air d'opéra, d'operette ou d'oratorio et 1 mélodie. L'un des deux doit impérativement être en français. Le tout ne doit pas dépasser 8 minutes",
-  number:2,
+  number: 2,
   max_length_minutes: 8
 )
 
@@ -121,7 +151,7 @@ i=0
 
 
 # Seeder les candidats performances
-6.times do
+20.times do
   u = User.create(
     email: Faker::Internet.email,
     password: 'password',

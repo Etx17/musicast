@@ -3,7 +3,7 @@
     <div class="d-flex justify-content-between w-100 align-items-center">
       <small class="text-secondary"><i class="fas fa-text "></i> <%= f.index.is_a?(Integer) ? f.index + 1 : t('candidats.form.new_record') %> </small>
       <% if f.object.new_record? %>
-        <%= link_to '#', data: { action: 'removeExperience' }, class: 'btn btn-primary' do %>
+        <%= link_to '#', data: { action: 'removeExperience' }, class: 'btn btn-success' do %>
           <i class="fas fa-trash pe-2"></i><%= t('candidats.form.delete') %>
         <% end %>
       <% end %>

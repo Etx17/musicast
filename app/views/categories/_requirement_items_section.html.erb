@@ -34,7 +34,7 @@
               <%= f.input :type_item, label: t('categories.requirement_items_section.item_type'), collection: RequirementItem.type_items.keys, prompt: t('categories.requirement_items_section.select_type') %>
               <%= f.input :description_item, label: t('categories.requirement_items_section.details'), placeholder: t('categories.requirement_items_section.details_placeholder') %>
               <div class="modal-footer">
-                <%= f.button :submit, t('categories.common.save'), class: 'btn btn-primary' %>
+                <%= f.button :submit, t('categories.common.save'), class: 'btn btn-success' %>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><%= t('categories.common.close') %></button>
               </div>
             <% end %>
