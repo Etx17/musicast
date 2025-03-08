@@ -49,9 +49,9 @@ ec = EditionCompetition.create(
   competition: c,
   annee: 2024,
   status: "draft",
-  start_date: "2024-03-24",
-  end_date: "2024-03-24",
-  end_of_registration: "2024-03-09",
+  start_date: "2025-03-24",
+  end_date: "2025-03-24",
+  end_of_registration: "2025-03-09",
   reglement_url: "https://lesmaitresduchant.com/reglement/"
 )
 Address.create(
@@ -174,7 +174,7 @@ i=0
     ordered_air_selection: [air1.id, air2.id]
   )
 
-  file_path = [Rails.root.join('app', 'assets', 'images', 'john.jpeg'), Rails.root.join('app', 'assets', 'images', 'paul.jpg'), Rails.root.join('app', 'assets', 'images', 'profile.jpeg')].sample
+  file_path = [Rails.root.join('app', 'assets', 'images', 'john.jpeg'), Rails.root.join('app', 'assets', 'images', 'paul.jpg') ].sample
   file = File.open(file_path, 'rb')
   p "Attaching portrait"
   u.candidat.portrait.attach(

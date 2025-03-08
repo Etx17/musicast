@@ -1,7 +1,7 @@
 <div class="d-flex container justify-content-center mt-4 gap-3">
   <%= form_tag(request.path, method: :get) do %>
     <div class="d-flex container justify-content-center mt-4 gap-3">
-    <%= select_tag :discipline, options_for_select(Category.disciplines.map { |name, id| [name.humanize, id] }, session[:discipline]), class: "form-control rounded-md border-gray-300", prompt: t('pages.dropdown_inputs.discipline'), onchange: "this.form.submit();"%>
+    <%= select_tag :discipline, options_for_select(Category.disciplines.map { |name, id| [t("global.instruments.#{name}"), id] }, session[:discipline]), class: "form-control rounded-md border-gray-300", prompt: t('pages.dropdown_inputs.discipline'), onchange: "this.form.submit();"%>
       <%# <%= country_select :country, :country, { prompt: "Country", only: ["AM", "AT", "BY", "BE", "BA", "BG", "CH", "CZ", "DE", "DK", "EE", "ES", "FI", "FR", "GB", "GE", "GI", "GR", "HU", "IE", "IS", "IT", "LT", "LU", "LV", "NO", "NL", "PO", "PL", "PT", "RO", "SE", "SI", "SK", "TR", "UA"], selected: session[:country] }, { class: "form-control rounded-md border-gray-300" } %>
       <%# <%= submit_tag "Search", class: "btn btn-success" %>
     </div>
