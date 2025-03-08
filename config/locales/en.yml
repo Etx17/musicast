@@ -826,22 +826,20 @@ en:
       title: "Editing free choice"
       show: "Show this free choice"
       back: "Back to free choices"
-
     index:
       title: "Free choices"
       show: "Show this free choice"
       new: "New free choice"
-
     new:
       title: "New free choice"
       back: "Back to free choices"
-
     show:
       edit: "Edit this free choice"
       back: "Back to free choices"
       destroy: "Destroy this free choice"
-
   global:
+    confirmations:
+      are_you_sure: "Are you sure ?"
     youtube_link: "YouTube link"
     profile: "Profile"
     home: "Home"

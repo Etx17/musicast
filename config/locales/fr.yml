@@ -525,7 +525,7 @@ fr:
     new:
       back: "Retour"
       title: "Nouvelle liste à choix"
-      explanation: "A choice list allows you to require the candidate to select one or more airs from a list that you define. You can add guidelines to guide the candidate."
+      explanation: "Une liste à choix vous permet de contraindre le candidat à sélectionner un ou plusieurs airs parmi une liste que vous définissez. Vous pouvez ajouter des consignes afin de guider le candidat."
     show:
       edit: "Modifier cette œuvre à choix imposé"
       destroy: "Supprimer cette œuvre à choix imposé"
@@ -816,6 +816,8 @@ fr:
       back: "Retour aux choix libres"
       destroy: "Supprimer ce choix libre"
   global:
+    confirmations:
+      are_you_sure: "Êtes-vous sûr ?"
     youtube_link: "Lien YouTube"
     profile: "Profil"
     home: "Accueil"
