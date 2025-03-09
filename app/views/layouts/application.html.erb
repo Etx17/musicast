@@ -43,19 +43,19 @@
         </div>
       <% end %>
 
-      <div class="p-0 col-md-<%= current_user.present? ? '10' : '12'%>">
+      <div class="p-0 col-12 col-md-<%= current_user.present? ? '10' : '12'%>">
         <!-- Breadcrumbs at the top -->
-        <div class="breadcrumbs-container p-3 <%= current_user.present? ? 'ms-md-2' : '' %>">
           <% if current_user&.organisateur.present? %>
-            <%= render_breadcrumbs separator: '/' %>
+            <div class="breadcrumbs-container p-3 <%= current_user.present? ? 'ms-md-2' : '' %>">
+                <%= render_breadcrumbs separator: '/' %>
+            </div>
           <% end %>
-        </div>
 
         <!-- Flash messages -->
         <%= render "shared/flashes" %>
 
         <!-- Main content -->
-        <div class="content-container p-3">
+        <div class="content-container">
           <%= yield %>
         </div>
       </div>
