@@ -2,9 +2,6 @@
   <!-- Logo at the top -->
   <div class="sidebar-header p-3 d-flex flex-column align-items-center">
     <div class="text-dark" style="font-size: 1.8em">Musi<span class="text-gradient">kast</span></div>
-    <% if current_user&.inscription_role == "organiser" %>
-      <span class="text-center mt-1 small"><%= current_user.organisateur&.organism&.nom %></span>
-    <% end %>
   </div>
 
   <!-- User profile section -->
@@ -29,6 +26,9 @@
           <% end %>
         </ul>
       </div>
+      <% if current_user&.inscription_role == "organiser" %>
+        <span class="text-center mt-2 lead text-white"><%= current_user.organisateur&.organism&.nom %></span>
+      <% end %>
     <% end %>
   </div>
 
