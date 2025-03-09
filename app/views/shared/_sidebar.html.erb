@@ -1,7 +1,7 @@
 <div class="sidebar">
   <!-- Logo at the top -->
-  <div class="sidebar-header p-3 d-flex flex-column align-items-center">
-    <div class="text-dark" style="font-size: 1.8em">Musi<span class="text-gradient">kast</span></div>
+  <div class="sidebar-header p-3 d-flex flex-column align-items-center w-100">
+    <div class="musikast-logo text-center w-100 text-white">Musikast</span></div>
   </div>
 
   <!-- User profile section -->
@@ -13,7 +13,6 @@
             <%= image_tag "https://i.pravatar.cc/50", class: "rounded-circle" %>
           <% else %>
             <%= image_tag "https://i.pravatar.cc/50", class: "rounded-circle" %>
-            <span class="ms-2"><%= current_user.first_name %> <%= current_user.last_name %></span>
           <% end %>
         </a>
         <ul class="dropdown-menu dropdown-menu-end text-small shadow" aria-labelledby="userDropdown">
@@ -27,7 +26,9 @@
         </ul>
       </div>
       <% if current_user&.inscription_role == "organiser" %>
-        <span class="text-center mt-2 lead text-white"><%= current_user.organisateur&.organism&.nom %></span>
+        <span class="text-center mt-2 text-white"><%= current_user.organisateur&.organism&.nom %></span>
+      <% else %>
+         <span class="text-center mt-2 text-white"><%= current_user.first_name %> <%= current_user.last_name %></span>
       <% end %>
     <% end %>
   </div>
@@ -95,6 +96,22 @@
     <% end %>
   </div>
 </div>
+
+<style>
+  .musikast-logo {
+    font-family: 'Questrial', sans-serif;
+    font-size: 2.2em;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+
+  .text-gradient {
+    background: linear-gradient(90deg, #3a7bd5, #00d2ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+</style>
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {

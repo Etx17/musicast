@@ -12,14 +12,9 @@
 }
 
 .sidebar-header {
-  background-color: #c0ebbd;
+  // background-color: #c0ebbd;
 }
 
-.text-gradient {
-  background: linear-gradient(90deg, #007bff, #6610f2);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
 
 .nav-link {
   padding: 0.8rem 1rem;
@@ -55,6 +50,6 @@
 
 
   .content-container {
-    padding-top: 60px; /* Space for the mobile toggle button */
+    padding-top: 60px; 
   }
 }
