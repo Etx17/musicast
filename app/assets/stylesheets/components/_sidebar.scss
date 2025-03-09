@@ -1,0 +1,60 @@
+/* Add to your application.scss or create a new stylesheet */
+.sidebar {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  background-color: #2a442c;
+}
+
+.sidebar-container {
+  z-index: 1030;
+}
+
+.sidebar-header {
+  background-color: #c0ebbd;
+}
+
+.text-gradient {
+  background: linear-gradient(90deg, #007bff, #6610f2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.nav-link {
+  padding: 0.8rem 1rem;
+  font-weight: bold;
+  color: #ffffff;
+  border-radius: 0.25rem;
+  margin-bottom: 0.2rem;
+  transition: all 0.2s ease;
+}
+
+.nav-link:hover {
+  background-color: rgba(0, 123, 255, 0.1);
+}
+
+.nav-link.active {
+  background-color: rgba(0, 123, 255, 0.2);
+  color: #007bff;
+  font-weight: 500;
+}
+
+
+
+.z-index-1050 {
+  z-index: 1050;
+}
+
+/* Mobile sidebar adjustments */
+@media (max-width: 767.98px) {
+  .offcanvas-start {
+    width: 80%;
+    max-width: 300px;
+  }
+
+
+  .content-container {
+    padding-top: 60px; /* Space for the mobile toggle button */
+  }
+}

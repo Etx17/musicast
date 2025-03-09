@@ -16,29 +16,63 @@
   </head>
 
   <body>
-  <!-- Navbar -->
-  <%= render "shared/navbar"%>
-
     <div class="d-flex align-items-stretch">
-        <% if current_user.present? %>
-        <div class="col-md-2 p-0 d-none d-md-block bg-light">
-          <!-- Sidebar -->
+      <% if current_user.present? %>
+        <!-- Mobile sidebar toggle button -->
+        <button class="btn btn-primary d-md-none position-fixed top-0 start-0 mt-2 ms-2 z-index-1050" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar" aria-controls="mobileSidebar">
+          <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- Desktop sidebar -->
+        <div class="col-md-2 p-0 d-none d-md-block bg-light vh-100 position-fixed sidebar-container">
           <%= render "shared/sidebar" %>
         </div>
+        <div class="col-md-2 d-none d-md-block">
+          <!-- Spacer to match sidebar width -->
+        </div>
+
+        <!-- Mobile sidebar (offcanvas) -->
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="mobileSidebar" aria-labelledby="mobileSidebarLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="mobileSidebarLabel">Menu</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body p-0">
+            <%= render "shared/sidebar" %>
+          </div>
+        </div>
       <% end %>
-      <div class=" p-0 col-md-<%= current_user.present? ? '10' : '12'%>">
-        <div class="d-flex flex-wrap d-md-none px-2 breadcrumbs-xs">
-          <%= render_breadcrumbs separator: '/' if current_user&.organisateur.present? %>
+
+      <div class="p-0 col-md-<%= current_user.present? ? '10' : '12'%>">
+        <!-- Breadcrumbs at the top -->
+        <div class="breadcrumbs-container p-3 <%= current_user.present? ? 'ms-md-2' : '' %>">
+          <% if current_user&.organisateur.present? %>
+            <%= render_breadcrumbs separator: '/' %>
+          <% end %>
         </div>
 
         <!-- Flash messages -->
         <%= render "shared/flashes" %>
 
         <!-- Main content -->
-        <%= yield %>
+        <div class="content-container p-3">
+          <%= yield %>
+        </div>
       </div>
-
     </div>
-   <%# <a href="https://www.flaticon.com/free-icons/piano" title="piano icons">Piano icons created by surang - Flaticon</a> %>
-</body>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        // Auto-close mobile sidebar when a link is clicked
+        const mobileLinks = document.querySelectorAll('#mobileSidebar .nav-link');
+        const bsOffcanvas = new bootstrap.Offcanvas(document.getElementById('mobileSidebar'));
+
+        mobileLinks.forEach(link => {
+          link.addEventListener('click', function() {
+            bsOffcanvas.hide();
+          });
+        });
+      });
+    </script>
+  </body>
 </html>

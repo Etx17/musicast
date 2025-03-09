@@ -76,10 +76,6 @@
   color: #EEEEEE; /* Adjust the color code to your preferred shade of grey */
 }
 
-body {
-  padding-top: 50px; /* Adjust this value based on the height of your navbar */
-}
-
 .card-hover {
   transition: transform 0.3s;
   &:hover {
@@ -288,56 +284,6 @@ html {
   border-color: #999;
 }
 
-// Sidebar styles
-.sidebar {
-  background-color: #21915e;
-  // border-right: 1px solid #e9ecef;
-  // height: 100vh;
-  height: 100%;
-  overflow-y: auto;
-}
-
-.nav-item {
-  margin-bottom: 5px;
-}
-
-.nav-link {
-  color: #495057;
-  transition: all 0.3s ease;
-  border-radius: 5px;
-  padding: 10px 15px;
-
-  &:hover, &.active {
-    background-color: #e9ecef;
-    color: #212529;
-  }
-
-  i {
-    margin-right: 10px;
-    width: 20px;
-    text-align: center;
-  }
-}
-
-.nav-item .nav {
-  margin-left: 20px;
-
-  .nav-item {
-    margin-bottom: 2px;
-  }
-
-  .nav-link {
-    font-size: 0.9em;
-    padding: 8px 15px;
-
-    &:hover, &.active {
-      background-color: #dee2e6;
-    }
-  }
-}
-
-
-// Style for competition status
 .competition-status {
   font-size: 0.8em;
   padding: 2px 5px;
