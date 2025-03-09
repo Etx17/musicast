@@ -835,6 +835,9 @@ fr:
     confirmations:
       are_you_sure: "Êtes-vous sûr ?"
     youtube_link: "Lien YouTube"
+    recommendation_letter: "Lettre de recommandation"
+    parental_authorization: "Autorisation parentale"
+    motivation_essay: "Lettre de motivation"
     profile: "Profil"
     home: "Accueil"
     offer: "Offre"

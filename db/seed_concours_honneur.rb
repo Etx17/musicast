@@ -59,7 +59,7 @@ Address.create(
   line1: "Ecole Normale de Musique Alfred Cortot",
   city: "Paris",
   zipcode: "75017",
-  country: "FR"
+  country: "France"
 )
 
 # Creating Category
