@@ -1,3 +1,5 @@
-<%= turbo_frame_tag "competition_#{@competition.id}" do %>
-  <%= render 'form', competition: @competition %>
-<% end %>
+<div class="container">
+  <%= turbo_frame_tag "competition_#{@competition.id}" do %>
+    <%= render 'form', competition: @competition %>
+  <% end %>
+</div>

@@ -85,6 +85,7 @@ class CategoriesController < ApplicationController
       :name,
       :preselection_vote_type,
       :description,
+      :description_english,
       :min_age, :max_age, :discipline,
       :price_cents,
       :allow_own_pianist_accompagnateur,

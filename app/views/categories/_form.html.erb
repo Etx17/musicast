@@ -13,7 +13,7 @@
           </div>
 
           <div class="col-md-6">
-            <%= f.input :discipline, label: t('categories.form.discipline'), as: :select, collection: Category.disciplines.keys.map { |discipline| [discipline.humanize, discipline] }, input_html: { class: 'form-select', required: true } %>
+            <%= f.input :discipline, label: t('categories.form.discipline'), as: :select, collection: Category.disciplines.keys.map { |discipline| [t("global.instruments.#{discipline}"), discipline] }, input_html: { class: 'form-select', required: true } %>
           </div>
 
         </div>
@@ -32,6 +32,13 @@
           </div>
           <%= f.input :description, label: false, placeholder: "", input_html: { class:"border border-0", data: { action: "input->character-counter#update", character_counter_target: "input", class:"border border-0 "} } %>
         </div>
+        <div class="form-group" data-controller="character-counter">
+          <div class="d-flex gap-3 align-items-center">
+          <%= f.label t('categories.form.description_english') + "*" %>
+          <small class="text-secondary"><span data-character-counter-target="counter">0</span>/1000 </small>
+          </div>
+          <%= f.input :description_english, label: false, placeholder: "", input_html: { class:"border border-0", data: { action: "input->character-counter#update", character_counter_target: "input", class:"border border-0 "} } %>
+        </div>
         <div class="d-flex p-2 bg-light-grey rounded-8 align-items-center">
           <%= f.input :allow_own_pianist_accompagnateur, as: :boolean, label: false, input_html: {style:"background-color: #28CF75;"} %>
           <%= f.label t('categories.form.allow_own_pianist') %>
@@ -39,7 +46,7 @@
         <%= f.input :price_cents, label: t('categories.form.registration_fee', currency: @category.price_currency), class: "form-control",input_html: { value: @category.price_cents / 100, step: 1, min: 0, class: "form-control", id: "price_euros", placeholder: t('categories.form.enter_price_in_euros') }  %>
         <div class="form-group w-100">
           <%= f.input :preselection_vote_type,
-            collection: Category.preselection_vote_types.keys.map { |key| [key.humanize, key] },
+            collection: Category.preselection_vote_types.keys.map { |key| [t("categories.form.#{key}"), key] },
             as: :radio_buttons,
             label: t('categories.form.preselection_vote_type'),
             required: true,
