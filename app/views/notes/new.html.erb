@@ -13,7 +13,7 @@
           <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/<%= youtube_id %>?rel=0" allowfullscreen></iframe>
         </div>
         <div class="d-block d-sm-none">
-          <%= link_to t('notes.new.view_video', number: index + 1), item.submitted_content, class: "btn btn-dark", target: "_blank", rel: "noopener" %>
+          <%= link_to t('notes.new.view_video', number: index + 1), item.submitted_content, class: "btn btn-primary", target: "_blank", rel: "noopener" %>
         </div>
       <% else %>
         <p><%= t('notes.new.no_video_available') %></p>

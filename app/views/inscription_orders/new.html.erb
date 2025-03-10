@@ -8,7 +8,7 @@
 
     <%= form_tag inscription_orders_path do %>
       <%= hidden_field_tag :inscription_id, params[:inscription].present? ? params[:inscription] : params[:inscription_id]%>
-      <%= submit_tag t('global.actions.continue'), class: 'btn btn-dark' %>
+      <%= submit_tag t('global.actions.continue'), class: 'btn btn-primary' %>
     <% end %>
     </div>
     <div class="col"></div>

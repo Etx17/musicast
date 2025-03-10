@@ -23,7 +23,7 @@
       <% if @tour.next_tour.present? && @tour.next_tour.performances.any? %>
         <div class="d-flex flex-column align-items-center">
           <p><%= t('tours.results.qualified_sent_to_next_tour') %></p>
-          <%= link_to t('tours.results.next_tour'), organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour.next_tour), class: "btn btn-dark" %>
+          <%= link_to t('tours.results.next_tour'), organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour.next_tour), class: "btn btn-primary" %>
         </div>
       <% elsif @tour.next_tour.nil? %>
         <p class="text-success"><%= t('tours.results.no_next_tour') %></p>

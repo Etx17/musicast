@@ -39,7 +39,7 @@
           <%= simple_form_for([organism, OrganismJury.new]) do |f| %>
             <%= f.hidden_field :organism_id, as: :hidden, input_html: { value: organism.id } %>
             <%= f.collection_select :jury_id, Jury.all, :id, :name_and_email, prompt: t('dashboard.jury_section.search_existing') %>
-            <%= f.button :submit, t('dashboard.jury_section.associate_jury_button'), class:"btn btn-dark" %>
+            <%= f.button :submit, t('dashboard.jury_section.associate_jury_button'), class:"btn btn-primary" %>
           <% end %>
           <hr>
 
@@ -57,7 +57,7 @@
               <%= jury.input :last_name, hint: t('dashboard.jury_section.guest_can_modify'), required: true%>
             <% end %>
 
-            <%= f.button :submit, t('dashboard.jury_section.invite_user'), class:"btn btn-dark" %>
+            <%= f.button :submit, t('dashboard.jury_section.invite_user'), class:"btn btn-primary" %>
           <% end %>
           <hr>
           <div class="d-flex justify-content-center">
@@ -69,7 +69,7 @@
               <%= f.label :email, t('dashboard.jury_section.email_label') %>
               <%= f.email_field :email, class: 'form-control', placeholder: t('dashboard.jury_section.enter_email') %>
             </div>
-            <%= f.submit t('dashboard.jury_section.assign_jury_role'), class: 'btn btn-dark' %>
+            <%= f.submit t('dashboard.jury_section.assign_jury_role'), class: 'btn btn-primary' %>
           <% end %>
 
 

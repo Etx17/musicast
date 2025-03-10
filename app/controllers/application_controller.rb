@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
     path = request.path.split('/')
     path.each_with_index do |segment, index|
       next if segment.empty? || index == 1 || path[index - 1] == "organisms" || segment == "categories" || segment == "edition_competitions" || segment == "competitions"
-
+      next if segment == "organisms"  # because it points to a list of organisms
       if path[index - 1] == "edition_competitions" && segment != "new"
         edition_competition = EditionCompetition.find(segment)
         add_breadcrumb "#{edition_competition.annee}", URI.join(root_url, "#{path[0..index].join('/')}").to_s

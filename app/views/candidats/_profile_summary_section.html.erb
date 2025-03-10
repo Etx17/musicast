@@ -21,9 +21,9 @@
       </div>
       <div class="d-flex gap-3">
         <% if @candidat.cv_english.attached? %>
-          <a href="<%= url_for(@candidat.cv_english) %>" class="btn btn-dark rounded my-3 btn-sm align-self-start" target="_blank"><%= t('candidats.profile_summary_section.view_cv') %></a>
+          <a href="<%= url_for(@candidat.cv_english) %>" class="btn btn-primary rounded my-3 btn-sm align-self-start" target="_blank"><%= t('candidats.profile_summary_section.view_cv') %></a>
         <% end %>
-        <%= link_to t('candidats.profile_summary_section.view_artistic_photo'), url_for(@candidat.artistic_photo) , class: "btn btn-dark btn-sm rounded my-3  align-self-start", target: "_blank", rel: "noopener" if @candidat.artistic_photo.attached?%>
+        <%= link_to t('candidats.profile_summary_section.view_artistic_photo'), url_for(@candidat.artistic_photo) , class: "btn btn-primary btn-sm rounded my-3  align-self-start", target: "_blank", rel: "noopener" if @candidat.artistic_photo.attached?%>
       </div>
     </div>
   </div>
