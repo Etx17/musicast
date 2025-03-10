@@ -11,6 +11,9 @@
     <dt class="col-sm-4"><%= t('edition_competitions.edition_competition.specific_details') %>:</dt>
     <dd class="col-sm-8"><%= edition_competition.details_specifiques %></dd>
 
+    <dt class="col-sm-4"><%= t('edition_competitions.edition_competition.specific_details_english') %>:</dt>
+    <dd class="col-sm-8"><%= edition_competition.specific_details_english %></dd>
+
     <dt class="col-sm-4"><%= t('edition_competitions.edition_competition.start_date') %>:</dt>
     <dd class="col-sm-8"><%= edition_competition.start_date %></dd>
 
@@ -26,6 +29,23 @@
       <div class="d-flex gap-2 align-items-center">
         <%= link_to t('edition_competitions.common.view'), url_for(edition_competition.rule_document), target: "_blank", rel: "noopener"  %>
         <%= button_to t('edition_competitions.common.delete'), remove_document_organism_competition_edition_competition_path(@organism, @competition, edition_competition), method: :delete, class:"border btn btn-outline-dark", data: { turbo_confirm: t('edition_competitions.edition_competition.confirm_delete_document') } %>
+      </div>
+      <% else %>
+        <%= t('edition_competitions.edition_competition.no_document') %>
+      <% end %>
+    </dd>
+    <% if edition_competition.rule_document.attached? %>
+      <div class="d-flex flex-column">
+        <embed src="<%= url_for(edition_competition.rule_document) %>"  height="375" type="application/pdf">
+      </div>
+    <% end %>
+
+    <dt class="col-sm-4 mt-4"><%= t('edition_competitions.edition_competition.rule_document_english') %>:</dt>
+    <dd class="col-sm-8">
+      <% if edition_competition.rule_document_english.attached? %>
+      <div class="d-flex gap-2 align-items-center">
+        <%= link_to t('edition_competitions.common.view'), url_for(edition_competition.rule_document_english), target: "_blank", rel: "noopener"  %>
+        <%= button_to t('edition_competitions.common.delete'), remove_document_organism_competition_edition_competition_path(@organism, @competition, edition_competition), method: :delete, class:"border btn btn-outline-dark", data: { turbo: {confirm: t('edition_competitions.edition_competition.confirm_delete_document') } } %>
       </div>
       <% else %>
         <%= t('edition_competitions.edition_competition.no_document') %>
