@@ -844,6 +844,9 @@ en:
     profile: "Profile"
     home: "Home"
     offer: "Offer"
+    recommendation_letter: "Recommendation letter"
+    parental_authorization: "Parental authorization"
+    motivation_essay: "Motivation essay"
     instruments:
       alto: "Alto"
       ancient_instruments_and_baroque_music: "Ancient instruments and baroque music"
