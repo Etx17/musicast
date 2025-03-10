@@ -20,7 +20,7 @@ class EditionCompetitionsController < ApplicationController
   def new
     @edition_competition = @competition.edition_competitions.build
     @edition_competition.build_address
-    
+
   end
 
   def edit;
@@ -82,6 +82,8 @@ class EditionCompetitionsController < ApplicationController
       :status,
       :end_of_registration,
       :rule_document,
+      :rule_document_english,
+      :specific_details_english,
       address_attributes: %i[line1 line2 zipcode city country],
       documents_attributes: %i[file file_url document_type]
     )

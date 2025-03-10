@@ -27,7 +27,8 @@ module NavbarHelper
         # Add more links for the user here
       end
     else
-      links << { label: t("global.offer"), url: pages_pricing_path, dropdown: false }
+      # links << { label: t("global.offer"), url: pages_pricing_path, dropdown: false }
+      links << { label: t("navbar.home"), url: root_path, dropdown: false }
       links << { label: t("global.actions.login"), url: new_user_session_path, dropdown: false }
       links << { label: t("global.actions.create_account"), url: new_user_registration_path, dropdown: false }
     end

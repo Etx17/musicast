@@ -44,13 +44,15 @@
       <% end %>
 
       <div class="p-0 col-12 col-md-<%= current_user.present? ? '10' : '12'%>">
+        <!-- navbar if no user -->
+        <% unless current_user.present? %>
+          <%= render "shared/navbar" %>
+        <% end %>
         <!-- Breadcrumbs at the top -->
           <% if current_user&.organisateur.present? %>
             <div class="breadcrumbs-container p-3 ms-5 <%= current_user.present? ? 'ms-md-2' : '' %>">
                 <%= render_breadcrumbs separator: '  |    | ' %>
             </div>
-            <ol class="breadcrumb">
-  </ol>
           <% end %>
 
         <!-- Flash messages -->

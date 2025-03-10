@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_08_18_122134) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_10_163203) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -198,6 +198,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_08_18_122134) do
     t.date "end_date"
     t.string "reglement_url"
     t.integer "status", default: 0
+    t.text "specific_details_english", default: ""
     t.index ["competition_id"], name: "index_edition_competitions_on_competition_id"
   end
 

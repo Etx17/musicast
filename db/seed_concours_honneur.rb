@@ -40,7 +40,7 @@ file.close
 # Creating competition
 c = Competition.create(
   organism: o,
-  nom_concours: "Concours Les Maîtres du Chant",
+  nom_concours: "Concours d'honneur",
   description: "Concours de chant pour les chanteurs en cours d'étude et les grands amateurs.",
 )
 

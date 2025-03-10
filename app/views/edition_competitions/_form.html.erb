@@ -24,6 +24,7 @@
     </div>
     <div class="col-md-6">
       <%= f.input :details_specifiques, input_html: {style:"border: none;"}, placeholder: t('edition_competitions.form.specific_details_placeholder') %>
+      <%= f.input :specific_details_english, input_html: {style:"border: none;"}, placeholder: t('edition_competitions.form.specific_details_placeholder') %>
       <div class="gap-2 d-flex flex-column">
         <%= f.label t('edition_competitions.form.competition_rules') %>
         <%= f.file_field :rule_document %>
@@ -40,11 +41,27 @@
           </div>
         <% end %>
       </div>
+
+      <div class="gap-2 d-flex flex-column mt-3">
+        <%= f.label t('edition_competitions.form.competition_rules_english') %>
+        <%= f.file_field :rule_document_english %>
+        <% if f.object.errors[:rule_document_english].any? %>
+          <div class="error-messages">
+            <% f.object.errors[:rule_document_english].each do |error| %>
+              <small class="text-danger"><%= error %></small>
+            <% end %>
+          </div>
+        <% end %>
+        <% if edition_competition.rule_document_english.attached? %>
+          <div class="d-flex flex-column">
+            <embed src="<%= url_for(edition_competition.rule_document_english) %>"  height="375" type="application/pdf">
+          </div>
+        <% end %>
+      </div>
     </div>
   </div>
-
-  <div class="form-actions">
-    <%= f.button :submit, t('edition_competitions.form.save'), class: "btn btn-primary mx-auto w-100 py-2 mb-2" %>
+  <div class="text-end">
+    <%= f.button :submit, t('edition_competitions.form.save'), class: "btn btn-primary w-25 py-2 mb-2" %>
   </div>
 <% end %>
   </div>

@@ -9,6 +9,7 @@ class EditionCompetition < ApplicationRecord
   delegate :organism_id, to: :competition
   delegate :organism, to: :competition
   has_one_attached :rule_document, dependent: :destroy
+  has_one_attached :rule_document_english, dependent: :destroy
 
   enum :status, { draft: 0, published: 1, archived: 2 }
 
@@ -22,16 +23,8 @@ class EditionCompetition < ApplicationRecord
   # validates :end_date, comparison: { greater_than_or_equal_to: :start_date }
   validates :end_of_registration, comparison: { less_than_or_equal_to: :start_date }
 
-
   validate :correct_mime_type_of_rule_document
-
-  # scope :published_and_upcoming, -> {
-  #   includes(:categories, :address)
-  #   .where('end_of_registration > ?', Time.current)
-  #   .where(status: 'published')
-  #   .order(:end_of_registration)
-  # }
-
+  validate :correct_mime_type_of_rule_document_english
   def self.published_and_upcoming
     EditionCompetition.includes(:categories, :address)
                       .where('end_of_registration > ?', Time.current)
@@ -42,6 +35,12 @@ class EditionCompetition < ApplicationRecord
   def correct_mime_type_of_rule_document
     if rule_document.attached? && !rule_document.content_type.in?(%w(application/pdf))
       errors.add(:rule_document, 'Doit être un fichier PDF')
+    end
+  end
+
+  def correct_mime_type_of_rule_document_english
+    if rule_document_english.attached? && !rule_document_english.content_type.in?(%w(application/pdf))
+      errors.add(:rule_document_english, 'Doit être un fichier PDF')
     end
   end
 
