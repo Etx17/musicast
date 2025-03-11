@@ -47,7 +47,7 @@ class AirsController < ApplicationController
           category = @air.imposed_work.category
         end
 
-        if category
+        if category && current_user.organises_category?(category)
           format.html { redirect_to organism_competition_edition_competition_category_path(
             category.edition_competition.organism,
             category.competition,
@@ -82,6 +82,6 @@ class AirsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def air_params
-    params.require(:air).permit(:title, :length_minutes, :composer, :infos, :oeuvre, :character, :tonality)
+    params.require(:air).permit(:title, :length_minutes, :composer, :infos, :oeuvre, :character, :tonality, :infos_english)
   end
 end

@@ -74,6 +74,10 @@ class User < ApplicationRecord
     Candidat.find_by(user: self)
   end
 
+  def organises_category?(category)
+    category.competition.organism.organisateur == organisateur
+  end
+
   def needs_to_accept_terms?
     self.terms_version < TERMS_VERSION
   end
