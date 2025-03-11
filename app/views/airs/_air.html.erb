@@ -29,4 +29,11 @@
     <%= air.tonality %>
   </p>
 
+  <% if air.infos_english.present? %>
+    <div class="mt-2">
+      <strong><%= t('shared.air_fields.additional_info_english') %>:</strong>
+      <p><%= air.infos_english %></p>
+    </div>
+  <% end %>
+
 </div>

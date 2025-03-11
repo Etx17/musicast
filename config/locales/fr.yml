@@ -143,6 +143,7 @@ fr:
       character: "Personnage"
       tonality: "Tonalité"
       infos: "Informations additionnelles"
+      infos_english: "Informations supplémentaires en anglais"
       actions:
         show: "Voir ce morceau"
         edit: "Modifier ce morceau"
@@ -205,6 +206,7 @@ fr:
       minutes_placeholder: "Minutes *"
       tonality_placeholder: "Tonalité *"
       additional_info_placeholder: "Informations additionnelles *"
+      additional_info_english_placeholder: "Informations supplémentaires en anglais..."
   candidats:
     common:
       profile: "Profil"
@@ -1363,8 +1365,10 @@ fr:
       duration_hint: "Arrondissez à la minute du dessus"
       tonality: "Tonalité"
       tonality_hint: "Tonalité originale sauf lied"
-      additional_info: "Informations additionnelles"
-      additional_info_placeholder: "ex: Inclure le récitatif à partir de 'Pur mai non sentisi'"
+      additional_info: "Informations supplémentaires"
+      additional_info_placeholder: "Entrez des informations supplémentaires..."
+      additional_info_english: "Informations supplémentaires (Anglais)"
+      additional_info_english_placeholder: "Entrez des informations supplémentaires en anglais..."
       minutes: "Minutes *"
       character_placeholder: "(optionnel) ex: Duc de Mantoue"
       title_placeholder: "ex: La Donna è Mobile"

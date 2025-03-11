@@ -36,6 +36,10 @@
     <%= f.input :infos, label: t('shared.air_fields.additional_info'), input_html: { class: 'p-2 border', placeholder: t('shared.air_fields.additional_info_placeholder') } %>
   </div>
 
+  <div class="col-12 col-md-4">
+    <%= f.input :infos_english, label: t('shared.air_fields.additional_info_english'), input_html: { class: 'p-2 border', placeholder: t('shared.air_fields.additional_info_english_placeholder') } %>
+  </div>
+
   <div class="col-6">
     <%= f.input :_destroy, as: :hidden %>
   </div>

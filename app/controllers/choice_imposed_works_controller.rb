@@ -73,6 +73,7 @@ class ChoiceImposedWorksController < ApplicationController
         title
         composer
         infos
+        infos_english
         length_minutes
         tonality
         character

@@ -83,6 +83,7 @@ class ImposedWorksController < ApplicationController
         tonality
         character
         infos
+        infos_english
         oeuvre
         _destroy
       ]

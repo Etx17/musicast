@@ -37,7 +37,27 @@ class AirsController < ApplicationController
   def update
     respond_to do |format|
       if @air.update(air_params)
-        format.html { redirect_to air_url(@air), notice: "Air was successfully updated." }
+        category = nil
+
+        if @air.choice_imposed_work_id.present?
+          category = @air.choice_imposed_work.category
+        elsif @air.semi_imposed_work_id.present?
+          category = @air.semi_imposed_work.category
+        elsif @air.imposed_work_id.present?
+          category = @air.imposed_work.category
+        end
+
+        if category
+          format.html { redirect_to organism_competition_edition_competition_category_path(
+            category.edition_competition.organism,
+            category.competition,
+            category.edition_competition,
+            category
+          ), notice: "Air was successfully updated." }
+        else
+          format.html { redirect_to root_path, notice: "Air was successfully updated." }
+        end
+
         format.json { render :show, status: :ok, location: @air }
       else
         format.html { render :edit, status: :unprocessable_entity }
