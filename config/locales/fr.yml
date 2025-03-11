@@ -1311,8 +1311,10 @@ fr:
     form:
       title: "Titre"
       title_hint: "Donnez un titre à votre ligne, par exemple \"Lieds Allemands\""
+      title_english: "Titre (Anglais)"
       guidelines: "Consignes"
       guidelines_hint: "Décrivez votre consigne ici le plus précisément"
+      guidelines_english: "Directives (Anglais)"
       number: "Nombre d'œuvres"
       number_hint: "Combien d'œuvres sont demandées dans cette consigne?"
       max_length_minutes: "Durée totale maximale (en minutes)"

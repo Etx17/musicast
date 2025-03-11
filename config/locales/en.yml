@@ -1374,9 +1374,11 @@ en:
   semi_imposed_works:
     form:
       title: "Title"
+      title_english: "Title (English)"
       title_hint: "Give a title to your line, for example \"German Lieds\""
       guidelines: "Guidelines"
       guidelines_hint: "Describe your instruction here as precisely as possible"
+      guidelines_english: "Guidelines (English)"
       number: "Number of works"
       number_hint: "How many works are required in this instruction?"
       max_length_minutes: "Maximum total duration (in minutes)"

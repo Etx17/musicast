@@ -3,10 +3,23 @@
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
-    <%= f.input :title, hint: t('semi_imposed_works.form.title_hint'), label: t('semi_imposed_works.form.title'), required: true %>
-    <%= f.input :guidelines, hint: t('semi_imposed_works.form.guidelines_hint'), label: t('semi_imposed_works.form.guidelines'), required: true  %>
+    <!-- French fields -->
+
+    <div class="mb-3">
+      <%= f.input :title, hint: t('semi_imposed_works.form.title_hint'), label: t('semi_imposed_works.form.title'), required: true %>
+    </div>
+    <div class="mb-3">
+      <%= f.input :title_english, label: t('semi_imposed_works.form.title_english') %>
+    </div>
+    <div class="mb-3">
+      <%= f.input :guidelines, hint: t('semi_imposed_works.form.guidelines_hint'), label: t('semi_imposed_works.form.guidelines'), required: true  %>
+    </div>
+    <div class="mb-3">
+      <%= f.input :guidelines_english, label: t('semi_imposed_works.form.guidelines_english') %>
+    </div>
     <%= f.input :number, hint: t('semi_imposed_works.form.number_hint'), label: t('semi_imposed_works.form.number'), required: true  %>
     <%= f.input :max_length_minutes, hint: t('semi_imposed_works.form.max_length_minutes_hint'), label: t('semi_imposed_works.form.max_length_minutes'), required: true  %>
+
   </div>
 
   <div class="form-actions">

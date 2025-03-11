@@ -59,7 +59,10 @@ class SemiImposedWorksController < ApplicationController
   end
 
   def semi_imposed_work_params
-    params.require(:semi_imposed_work).permit(:programme_requirement_id, :guidelines, :title, :number,
-                                              :max_length_minutes)
+    params.require(:semi_imposed_work).permit(
+      :programme_requirement_id, :guidelines, :guidelines_english,
+      :title, :title_english, :number,
+      :max_length_minutes
+    )
   end
 end
