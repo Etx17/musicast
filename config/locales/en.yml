@@ -363,7 +363,9 @@ en:
       form:
         list_configuration: "List configuration"
         title_placeholder: "ex: 2 German lieder"
+        title_english_placeholder: "ex: 2 German lieder (English)"
         list_title: "List title"
+        list_title_english: "List title (English)"
         number_placeholder: "ex: 2"
         number_to_choose: "Number of works to choose"
         guidelines_placeholder: "ex: Choose 2 German lieder from the early 20th century from the following list. Your selection should not exceed 30 minutes. You must have at least 2 different composers"

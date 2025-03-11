@@ -62,7 +62,9 @@ class ChoiceImposedWorksController < ApplicationController
     params.require(:choice_imposed_work).permit(
       :programme_requirement_id,
       :title,
+      :title_english,
       :guidelines,
+      :guidelines_english,
       :number_to_select,
       :category_id,
       :category,

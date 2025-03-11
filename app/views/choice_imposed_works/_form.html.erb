@@ -10,12 +10,14 @@
       <div class="row">
         <div class="col">
           <%= f.input :title, placeholder: t('choice_imposed_works.form.title_placeholder'), label_html: { class: 'p' }, input_html: { class: 'p-2 border' }, label: t('choice_imposed_works.form.list_title'), required: true %>
+          <%= f.input :title_english, placeholder: t('choice_imposed_works.form.title_placeholder'), label_html: { class: 'p' }, input_html: { class: 'p-2 border' }, label: t('choice_imposed_works.form.list_title_english'), required: true %>
         </div>
         <div class="col">
           <%= f.input :number_to_select, placeholder: t('choice_imposed_works.form.number_placeholder'), label_html: { class: 'p' }, input_html: { class: 'p-2 border' }, label: t('choice_imposed_works.form.number_to_choose'), required: true %>
         </div>
       </div>
       <%= f.input :guidelines, placeholder: t('choice_imposed_works.form.guidelines_placeholder'), label_html: { class: 'p' }, input_html: { class: 'p-2 border' }, hint: t('choice_imposed_works.form.be_precise'), label: t('choice_imposed_works.form.guidelines'), required: true %>
+      <%= f.input :guidelines_english, label_html: { class: 'p' }, input_html: { class: 'p-2 border' }, hint: t('choice_imposed_works.form.be_precise'), label: t('choice_imposed_works.form.guidelines_english'), required: true %>
     </div>
 
     <h3 class="text-start mb-5"> <i class="fas fa-book text-secondary"></i> <%= t('choice_imposed_works.form.air_list') %>:</h3>

@@ -385,7 +385,9 @@ fr:
       form:
         list_configuration: "Configuration de la liste"
         title_placeholder: "ex: 2 lieder Allemands"
+        title_english_placeholder: "ex: 2 German lieder (Français)"
         list_title: "Titre de la liste"
+        list_title_english: "Titre de la liste (Français)"
         number_placeholder: "ex: 2"
         number_to_choose: "Nombre d'œuvres à choisir"
         guidelines_placeholder: "ex: Choisissez 2 lieder Allemands du début du 20è siècle dans la liste suivante. Votre sélection ne doit pas dépasser 30 minutes. Vous devez avoir au moins 2 auteurs différents"

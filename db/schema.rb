@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_10_173904) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_11_161209) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -70,6 +70,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_10_173904) do
     t.bigint "choice_imposed_work_id"
     t.bigint "semi_imposed_work_id"
     t.text "infos"
+    t.text "infos_english"
     t.index ["choice_imposed_work_id"], name: "index_airs_on_choice_imposed_work_id"
     t.index ["imposed_work_id"], name: "index_airs_on_imposed_work_id"
     t.index ["semi_imposed_work_id"], name: "index_airs_on_semi_imposed_work_id"
@@ -162,6 +163,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_10_173904) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "category_id", null: false
+    t.string "title_english"
+    t.text "guidelines_english"
     t.index ["category_id"], name: "index_choice_imposed_works_on_category_id"
   end
 
@@ -260,6 +263,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_10_173904) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "category_id", null: false
+    t.string "title_english"
+    t.text "guidelines_english"
     t.index ["category_id"], name: "index_imposed_works_on_category_id"
   end
 
@@ -441,6 +446,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_10_173904) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "other_reward"
+    t.string "title_english"
+    t.text "description_english"
+    t.string "other_reward_english"
     t.index ["category_id"], name: "index_prizes_on_category_id"
   end
 
@@ -458,6 +466,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_10_173904) do
     t.string "title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "description_item_english"
     t.index ["category_id"], name: "index_requirement_items_on_category_id"
   end
 
@@ -480,6 +489,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_10_173904) do
     t.datetime "updated_at", null: false
     t.bigint "category_id", null: false
     t.string "title"
+    t.string "title_english"
+    t.text "guidelines_english"
     t.index ["category_id"], name: "index_semi_imposed_works_on_category_id"
   end
 
@@ -493,6 +504,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_10_173904) do
     t.boolean "organiser_creates_program"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "description_english"
     t.index ["tour_id"], name: "index_tour_requirements_on_tour_id"
   end
 
@@ -515,6 +527,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_10_173904) do
     t.datetime "final_performance_submission_deadline"
     t.text "imposed_air_selection", default: [], array: true
     t.boolean "no_pianist_accompagnateur"
+    t.string "title_english"
+    t.text "description_english"
     t.index ["category_id"], name: "index_tours_on_category_id"
   end
 
