@@ -3,7 +3,12 @@
 
   <% end %>
 
-  <h1 class="text-center"><%= I18n.transliterate(@tour.category.name) %> - <%= I18n.transliterate(@tour.title) %></h1>
+  <h1 class="text-center">
+    <%= I18n.transliterate(@tour.category.name) %> - <%= I18n.transliterate(@tour.title) %>
+    <% if @tour.title_english.present? %>
+      <br><small><%= I18n.transliterate(@tour.title_english) %></small>
+    <% end %>
+  </h1>
   <% @tour.days_of_performances.sort.each do |day| %>
     <div class="col shadow-sm mx-2 bg-grey" data-controller="start-time" data-day="<%= day.strftime('%Y-%m-%d') %>">
       <h2 class="text-center" style="margin-top: 30px; margin-bottom: 30px;"><%= day.strftime('%a %d %B %Y') %></h2>

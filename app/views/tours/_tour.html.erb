@@ -1,9 +1,20 @@
 <div id="<%= dom_id tour %>" class="bg-light">
   <main class="flex flex-col gap-2 px-2">
-  <h1 class=" text-center py-3"><%= @tour.title.upcase %></h1>
+  <h1 class="text-center py-3">
+    <%= @tour.title.upcase %>
+    <% if @tour.title_english.present? %>
+      <small class="d-block text-muted"><%= @tour.title_english.upcase %></small>
+    <% end %>
+  </h1>
   <%= link_to t('global.actions.back'), :back, class: "btn btn-light border mb-3 mt-0" %>
   <!--  Section planning s'il existe-->
 
+  <% if @tour.description_english.present? %>
+    <div class="mt-2">
+      <h4><%= t('tours.tour.english_description') %></h4>
+      <p><%= @tour.description_english %></p>
+    </div>
+  <% end %>
 
   <div class="text-center">
     <!-- Modale ouverte par les tabs dans le bouton générer le planning ou régénérer-->

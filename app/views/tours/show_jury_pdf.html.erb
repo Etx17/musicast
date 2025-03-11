@@ -1,6 +1,11 @@
 <h3 class="text-center"><%= @tour.category.edition_competition.competition.nom_concours %></h3>
 <h1 class="text-center" style="font-size: 7em"><%= @tour.category.name %></h1>
-<h1 class="text-center" style="font-size: 5em; color: #333333; margin-bottom: 30px;"><%= @tour.title %></h1>
+<h1 class="text-center" style="font-size: 5em; color: #333333; margin-bottom: 30px;">
+  <%= @tour.title %>
+  <% if @tour.title_english.present? %>
+    <br><small style="font-size: 0.7em;"><%= @tour.title_english %></small>
+  <% end %>
+</h1>
 
 <% @tour.performances.order(:order).each do |performance| %>
   <div style="position: relative; margin-bottom: 30px; page-break-inside: avoid;">

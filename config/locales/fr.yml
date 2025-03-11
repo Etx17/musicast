@@ -1402,6 +1402,11 @@ fr:
     form:
       title_placeholder: "ex: Éliminatoires, Demi-finale, Finale..."
       description_placeholder: "Décrivez les règles spécifiques à ce tour..."
+      title_english_placeholder: "ex: Preliminaries, Semi-finals, Finals..."
+      description_placeholder: "Entrez la description du tour"
+      description_english_placeholder: "Entrez la description du tour en anglais"
+      tour_requirement_description_placeholder: "Entrez la description des exigences"
+      tour_requirement_description_english_placeholder: "Entrez la description des exigences en anglais"
       start_date: "Date de début"
       start_time: "Heure de début"
       final_performance_submission_deadline: "Date limite de soumission finale des performances"
@@ -1504,6 +1509,7 @@ fr:
       generate_with_current_order: "Vous allez générer un planning avec l'ordre de passage actuel."
       generate_planning: "Générer le planning"
       can_generate_after_deadline: "Vous ne pourrez générer le planning qu'une fois la date limite de soumission des performances pour le tour passée, le :"
+      english_description: "Description (Anglais)"
 
     edit:
       editing_tour: "Modification du tour"

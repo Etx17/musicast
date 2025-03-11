@@ -5,7 +5,13 @@
     <div class="d-flex gap-3">
       <%= f.input :title, placeholder: t('tours.form.title_placeholder'), class: "form-control bg-white" %>
     </div>
-    <%= f.input :description, as: :text, placeholder: t('tours.form.description_placeholder'), class: "bg-white"  %>
+    <%= f.input :description, as: :text, placeholder: t('tours.form.description_placeholder'), class: "bg-white" %>
+
+    <div class="d-flex gap-3">
+      <%= f.input :title_english, placeholder: t('tours.form.title_english_placeholder'), class: "form-control bg-white" %>
+    </div>
+    <%= f.input :description_english, as: :text, placeholder: t('tours.form.description_english_placeholder'), class: "bg-white" %>
+
     <%= f.input :start_date, label: t('tours.form.start_date') %>
     <%= f.input :final_performance_submission_deadline, label: t('tours.form.final_performance_submission_deadline') %>
     <% if false%>
@@ -33,8 +39,14 @@
     <h2><%= t('tours.form.configurations') %></h2>
     <%= f.simple_fields_for :tour_requirement do |tr| %>
       <div class="row">
+        <!-- Original description -->
         <div class="col-md-12">
           <%= tr.input :description, class: "form-control bg-white", placeholder: t('tours.form.tour_requirement_description_placeholder') %>
+        </div>
+
+        <!-- English description -->
+        <div class="col-md-12">
+          <%= tr.input :description_english, class: "form-control bg-white", placeholder: t('tours.form.tour_requirement_description_english_placeholder') %>
         </div>
       </div>
 

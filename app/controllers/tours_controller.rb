@@ -240,8 +240,6 @@ class ToursController < ApplicationController
     @competition = @edition_competition.competition
   end
 
-
-
   def tour_params
     params.require(:tour).permit(
       :category_id,
@@ -251,6 +249,7 @@ class ToursController < ApplicationController
       :is_online,
       :tour_number, :no_pianist_accompagnateur,
       :title, :description,
+      :title_english, :description_english,
       :max_end_of_day_time,
       :new_day_start_time,
       :has_lunch_break,
@@ -267,6 +266,7 @@ class ToursController < ApplicationController
       tour_requirement_attributes: [
         :id,
         :description,
+        :description_english,
         :min_number_of_works,
         :max_number_of_works,
         :min_duration_minute,

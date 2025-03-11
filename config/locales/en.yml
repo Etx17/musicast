@@ -1546,7 +1546,12 @@ en:
       max_number_of_works: "Maximum number of works"
       min_duration_minute: "Minimum duration (minutes)"
       max_duration_minute: "Maximum duration (minutes)"
-
+      title_placeholder: "Enter tour title"
+      title_english_placeholder: "Enter tour title in English"
+      description_placeholder: "Enter tour description"
+      description_english_placeholder: "Enter tour description in English"
+      tour_requirement_description_placeholder: "Enter requirements description"
+      tour_requirement_description_english_placeholder: "Enter requirements description in English"
     order_of_performances:
       current_order: "Current order"
       shuffle_confirm: "Are you sure you want to randomly shuffle the order of performances?"
