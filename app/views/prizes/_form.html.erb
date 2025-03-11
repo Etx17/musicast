@@ -6,10 +6,14 @@
 
   <div class="form-inputs">
     <div class="col-sm-6">
-    <%= f.input :title, label: t('prizes.form.title'), placeholder: t('prizes.form.title_placeholder') %>
-    <%= f.input :amount, label: t('prizes.form.amount'), hint: t('prizes.form.amount_hint'), placeholder: t('prizes.form.amount_placeholder') %>
-    <%= f.input :other_reward, label: t('prizes.form.other_reward'), placeholder: t('prizes.form.other_reward_placeholder'), hint: t('prizes.form.other_reward_hint') %>
-    <%= f.input :description, placeholder: t('prizes.form.description_placeholder') %>
+
+      <%= f.input :title, label: t('prizes.form.title'), placeholder: t('prizes.form.title_placeholder') %>
+      <%= f.input :other_reward, label: t('prizes.form.other_reward'), placeholder: t('prizes.form.other_reward_placeholder'), hint: t('prizes.form.other_reward_hint') %>
+      <%= f.input :description, placeholder: t('prizes.form.description_placeholder') %>
+      <%= f.input :title_english, label: t('prizes.form.title_english'), placeholder: t('prizes.form.title_english_placeholder') %>
+      <%= f.input :other_reward_english, label: t('prizes.form.other_reward_english'), placeholder: t('prizes.form.other_reward_english_placeholder'), hint: t('prizes.form.other_reward_english_hint') %>
+      <%= f.input :description_english, placeholder: t('prizes.form.description_english_placeholder') %>
+      <%= f.input :amount, label: t('prizes.form.amount'), hint: t('prizes.form.amount_hint'), placeholder: t('prizes.form.amount_placeholder') %>
     </div>
   </div>
 

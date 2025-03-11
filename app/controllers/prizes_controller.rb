@@ -60,6 +60,12 @@ class PrizesController < ApplicationController
     end
     # Only allow a list of trusted parameters through.
     def prize_params
-      params.require(:prize).permit(:title, :other_reward, :amount, :description, :category_id)
+      params.require(:prize).permit(
+        :title, :title_english,
+        :other_reward, :other_reward_english,
+        :amount,
+        :description, :description_english,
+        :category_id
+      )
     end
 end
