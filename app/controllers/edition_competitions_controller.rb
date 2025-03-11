@@ -10,10 +10,10 @@ class EditionCompetitionsController < ApplicationController
     authorize @edition_competition
     @categories = @edition_competition.categories.order(created_at: :desc)
 
-    if current_user&.organisateur
+    if current_user&.organises_edition_competition?(@edition_competition)
       render :show
     else
-      render :candidate_edition_competition
+      redirect_back(fallback_location: root_path, alert: "Connect as a candidate to see other competitions")
     end
   end
 
