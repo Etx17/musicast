@@ -71,7 +71,9 @@ class ImposedWorksController < ApplicationController
       :id,
       :programme_requirement_id,
       :title,
+      :title_english,
       :guidelines,
+      :guidelines_english,
       :category_id,
       airs_attributes: %i[
         id

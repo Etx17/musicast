@@ -191,6 +191,8 @@ fr:
     form:
       title_placeholder: "ex: 2 œuvres par Fauré"
       guidelines_placeholder: "ex: Ces œuvres requises seront distribuées aléatoirement dans le programme du candidat entre les tours"
+      title_english: "Titre (Anglais)"
+      guidelines_english: "Consignes (Anglais)"
       error: "Veuillez corriger les erreurs ci-dessous:"
     air_fields:
       new: "NOUVEAU"

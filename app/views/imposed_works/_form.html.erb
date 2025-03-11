@@ -7,15 +7,18 @@
     <div class="bg-light border p-3 mb-5" style="border-radius: 10px;">
       <%= f.input :title, required: true,
                   placeholder: t('imposed_works.form.title_placeholder'),
-                  label_html: { class: '' },
+                  label_html: { class: 'small' },
                   input_html: { class: 'p-2 border' },
-                  label: '<i class="fas fa-book text-secondary"></i> '.html_safe + t('imposed_works.common.title') %>
+                  label: t('imposed_works.common.title') %>
 
       <%= f.input :guidelines, required: true,
                   placeholder: t('imposed_works.form.guidelines_placeholder'),
-                  label_html: { class: '' },
+                  label_html: { class: 'small' },
                   input_html: { class: 'p-2 border' },
-                  label: '<i class="fas fa-info-circle text-secondary"></i> '.html_safe + t('imposed_works.common.guidelines') %>
+                  label: t('imposed_works.common.guidelines') %>
+
+      <%= f.input :title_english, required: true, label: t('imposed_works.form.title_english'), label_html: { class: 'small' } %>
+      <%= f.input :guidelines_english, required: true, label: t('imposed_works.form.guidelines_english'), label_html: { class: 'small' } %>
     </div>
     <h4 class="text-center mb-5"><%= t('imposed_works.common.airs') %></h4>
 
@@ -32,6 +35,8 @@
     <div data-nested-form-target="links">
       <%= link_to t('imposed_works.common.actions.add_piece'), '#', class: 'btn btn-success', data: { action: 'nested-form#add' } %>
     </div>
+
+
   </div>
 
   <div class="form-actions">

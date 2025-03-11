@@ -190,6 +190,8 @@ en:
     form:
       title_placeholder: "e.g.: 2 works by Fauré"
       guidelines_placeholder: "e.g.: These required works will be randomly distributed in the candidate's program between rounds"
+      title_english: "Title (English)"
+      guidelines_english: "Guidelines (English)"
       error: "Please correct the errors below:"
     air_fields:
       new: "NEW"
