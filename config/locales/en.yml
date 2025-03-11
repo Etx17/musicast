@@ -445,6 +445,10 @@ en:
       title: "Required Program"
       description: "Define the program that candidates must present."
     requirement_items_section:
+      details_english_placeholder: "Enter details in English..."
+      english_fields: "English Fields"
+      french_fields: "French Fields"
+      english_version: "English version"
       title:
         zero: "Required Documents (none)"
         one: "Required Document (1)"
@@ -1337,23 +1341,23 @@ en:
   requirement_items:
     form:
       category: "Category"
-      type_item: "Item type"
-      description_item: "Item description"
+      type_item: "Item Type"
+      description_item: "Description"
+      description_item_english: "Description (English)"
       title: "Title"
-
+      french_fields: "French Fields"
+      english_fields: "English Fields"
     requirement_item:
       category: "Category"
-      type_item: "Item type"
-      description_item: "Item description"
+      type_item: "Item Type"
+      description_item: "Description"
+      description_item_english: "Description (English)"
       title: "Title"
-
     edit:
       editing_requirement_item: "Editing requirement item"
-
     index:
       requirement_items: "Requirement items"
       new_requirement_item: "New requirement item"
-
     new:
       new_requirement_item: "New requirement item"
 

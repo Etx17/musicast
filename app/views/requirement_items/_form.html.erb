@@ -6,6 +6,11 @@
     <%= f.association :category, label: t('requirement_items.form.category') %>
     <%= f.input :type_item, label: t('requirement_items.form.type_item') %>
     <%= f.input :description_item, label: t('requirement_items.form.description_item') %>
+
+    <!-- English description -->
+    <h4><%= t('requirement_items.form.english_fields') %></h4>
+    <%= f.input :description_item_english, label: t('requirement_items.form.description_item_english') %>
+
     <%= f.input :title, label: t('requirement_items.form.title') %>
   </div>
 

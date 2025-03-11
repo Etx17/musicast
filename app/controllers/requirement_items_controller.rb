@@ -69,6 +69,6 @@ class RequirementItemsController < ApplicationController
   end
 
   def requirement_item_params
-    params.require(:requirement_item).permit(:title, :type_item, :description_item, :category_id)
+    params.require(:requirement_item).permit(:title, :type_item, :description_item, :description_item_english, :category_id)
   end
 end

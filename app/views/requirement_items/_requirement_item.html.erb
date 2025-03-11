@@ -14,6 +14,13 @@
     <%= requirement_item.description_item %>
   </p>
 
+  <% if requirement_item.description_item_english.present? %>
+    <p>
+      <strong><%= t('requirement_items.requirement_item.description_item_english') %>:</strong>
+      <%= requirement_item.description_item_english %>
+    </p>
+  <% end %>
+
   <p>
     <strong><%= t('requirement_items.requirement_item.title') %>:</strong>
     <%= requirement_item.title %>

@@ -467,6 +467,11 @@ fr:
       title: "Programme requis"
       description: "Définissez le programme que les candidats doivent présenter."
     requirement_items_section:
+      french_fields: "Champs en français"
+      english_fields: "Champs en anglais"
+      english_version: "Version anglaise"
+      details_english_placeholder: "Entrez les détails en anglais..."
+      details_english: "Détails (Anglais)"
       title:
         zero: "Documents requis (aucun)"
         one: "Document requis (1)"
@@ -1279,13 +1284,16 @@ fr:
     form:
       category: "Catégorie"
       type_item: "Type d'élément"
-      description_item: "Description de l'élément"
+      description_item: "Description"
+      description_item_english: "Description (Anglais)"
       title: "Titre"
-
+      french_fields: "Champs en français"
+      english_fields: "Champs en anglais"
     requirement_item:
       category: "Catégorie"
       type_item: "Type d'élément"
-      description_item: "Description de l'élément"
+      description_item: "Description"
+      description_item_english: "Description (Anglais)"
       title: "Titre"
 
     edit:
