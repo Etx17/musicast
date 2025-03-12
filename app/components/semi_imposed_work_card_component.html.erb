@@ -1,15 +1,19 @@
 <div class="card mb-3 rounded-8">
   <div class="card-header">
-    Présenter<span class="h5 pe-2"> <%= @semi_imposed_work.number %></span>oeuvres
+    <%= t('semi_imposed_works.card.present') %><span class="h5 pe-2"> <%= @semi_imposed_work.number %></span><%= t('semi_imposed_works.card.works') %>
   </div>
   <div class="bg-light rounded-8">
     <ul class="list-group list-group-flush rounded-8">
       <li class="list-group-item d-flex flex-column">
       <span><%= @semi_imposed_work.title %></span>
-      <span class="text-english"><%= @semi_imposed_work.title_english %></span>
+      <% if @semi_imposed_work.title_english.present? %>
+        <span class="text-english"><%= @semi_imposed_work.title_english %></span>
+      <% end %>
       <small class="text-secondary"><%= @semi_imposed_work.guidelines %></small>
-      <small class="text-english"><%= @semi_imposed_work.guidelines_english %></small>
-        <span><i class="fas fa-clock text-secondary pe-2"></i><small><%= @semi_imposed_work.max_length_minutes %>min max au total.</small></span>
+      <% if @semi_imposed_work.guidelines_english.present? %>
+        <small class="text-english"><%= @semi_imposed_work.guidelines_english %></small>
+      <% end %>
+        <span><i class="fas fa-clock text-secondary pe-2"></i><small><%= @semi_imposed_work.max_length_minutes %><%= t('semi_imposed_works.card.min_max_total') %></small></span>
       </li>
     </ul>
   </div>

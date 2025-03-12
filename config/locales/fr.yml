@@ -165,6 +165,8 @@ fr:
       character_hint: "Si air d'opéra"
       error: "Veuillez corriger les erreurs ci-dessous:"
   imposed_works:
+    card:
+      required_works: "Oeuvres imposées"
     common:
       title: "Titre"
       guidelines: "Consignes"
@@ -338,6 +340,12 @@ fr:
         title: "Nouveau candidat"
         back: "Retour aux candidats"
   categories:
+    card:
+      view_details: "Voir les détails"
+      prize_pool: "Prix total"
+      first_prize: "Premier Prix"
+      years: "ans"
+      application_fee: "Frais de dossier"
     show:
       years: "ans"
       edit: "Modifier"
@@ -381,6 +389,9 @@ fr:
         other: "Le candidat doit choisir %{count} œuvres de cette liste"
       add_new_list: "Ajouter une nouvelle liste d'œuvres optionnelles"
     choice_imposed_works:
+      card:
+        choose: "Choisir"
+        works_from: "oeuvres parmi"
       choice_imposed_work:
         programme_requirement: "Exigence du programme"
         title: "Titre"
@@ -1333,6 +1344,10 @@ fr:
     new:
       new_semi_imposed_work_air: "Nouvel air d'œuvre semi-imposée"
   semi_imposed_works:
+    card:
+      present: "Présenter"
+      works: "oeuvres"
+      min_max_total: "min max au total"
     form:
       title: "Titre"
       title_hint: "Donnez un titre à votre ligne, par exemple \"Lieds Allemands\""

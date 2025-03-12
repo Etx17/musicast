@@ -5,5 +5,7 @@
   </p>
 
   <small class="text-secondary bg-white p-2"><%= @requirement_item.description_item %></small>
-  <small class="text-english bg-white p-2"><%= @requirement_item.description_item_english %></small>
+  <% if @requirement_item.description_item_english.present? %>
+    <small class="text-english bg-white p-2"><%= @requirement_item.description_item_english %></small>
+  <% end %>
 </li>

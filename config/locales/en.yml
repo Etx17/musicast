@@ -164,6 +164,8 @@ en:
       character_hint: "For opera arias only"
       error: "Please correct the errors below:"
   imposed_works:
+    card:
+      required_works: "Required works"
     common:
       title: "Title"
       guidelines: "Guidelines"
@@ -337,6 +339,12 @@ en:
         title: "New candidate"
         back: "Back to candidates"
   categories:
+    card:
+      view_details: "View details"
+      prize_pool: "Prize pool"
+      first_prize: "First prize"
+      years: "years"
+      application_fee: "Application fee"
     common:
       save: "Save"
       close: "Close"
@@ -510,6 +518,8 @@ en:
       add_piece: "Add a piece"
       save_changes: "Save changes"
   choice_imposed_works:
+    card:
+      choose: "Choose"
     choice_imposed_work:
       programme_requirement: "Programme Requirement"
       title: "Title"
@@ -1393,6 +1403,10 @@ en:
     new:
       new_semi_imposed_work_air: "New semi-imposed work air"
   semi_imposed_works:
+    card:
+      present: "Present"
+      works: "works"
+      min_max_total: "minutes max in total"
     form:
       title: "Title"
       title_english: "Title (English)"

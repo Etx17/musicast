@@ -1,18 +1,24 @@
 <div class="card mb-3 rounded-8">
   <div class="card-header">
-    Choisir<span class="h5 pe-2"> <%= @choice_imposed_work.number_to_select %></span>oeuvres parmis:
+    <%= t('choice_imposed_works.card.choose') %><span class="h5 pe-2"> <%= @choice_imposed_work.number_to_select %></span><%= t('choice_imposed_works.card.works_from') %>:
   </div>
   <div class="card-body bg-light rounded-8">
     <span><%= @choice_imposed_work.title %></span>
-    <span class="text-english">| <%= @choice_imposed_work.title_english %>what?</span><br>
+    <% if @choice_imposed_work.title_english.present? %>
+      <span class="text-english">| <%= @choice_imposed_work.title_english %></span>
+    <% end %><br>
     <small class="text-secondary"><%= @choice_imposed_work.guidelines %></small> <br>
-    <small class="text-english"><%= @choice_imposed_work.guidelines_english %></small>
+    <% if @choice_imposed_work.guidelines_english.present? %>
+      <small class="text-english"><%= @choice_imposed_work.guidelines_english %></small>
+    <% end %>
     <ul class="list-group list-group-flush">
       <li class="list-group-item d-flex flex-column">
         <% @choice_imposed_work.airs.each do |air| %>
           <span><i class="fas fa-feather text-secondary pe-2 small"></i> <%= air.title %> - <%= air.composer %> - <%= air.oeuvre %> - <%= air.tonality %></span>
           <small class="text-secondary"> <%= air.infos %> </small>
-          <small class="text-english"> <%= air.infos_english %> </small>
+          <% if air.infos_english.present? %>
+            <small class="text-english"> <%= air.infos_english %> </small>
+          <% end %>
         <% end %>
       </li>
     </ul>
