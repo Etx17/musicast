@@ -6,9 +6,10 @@
     <ul class="list-group list-group-flush rounded-8">
       <li class="list-group-item d-flex flex-column">
       <span><%= @semi_imposed_work.title %></span>
+      <span class="text-english"><%= @semi_imposed_work.title_english %></span>
       <small class="text-secondary"><%= @semi_imposed_work.guidelines %></small>
+      <small class="text-english"><%= @semi_imposed_work.guidelines_english %></small>
         <span><i class="fas fa-clock text-secondary pe-2"></i><small><%= @semi_imposed_work.max_length_minutes %>min max au total.</small></span>
-
       </li>
     </ul>
   </div>

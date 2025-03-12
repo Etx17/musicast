@@ -4,12 +4,15 @@
   </div>
   <div class="card-body bg-light rounded-8">
     <span><%= @choice_imposed_work.title %></span>
-    <small class="text-secondary"><%= @choice_imposed_work.guidelines %></small>
+    <span class="text-english">| <%= @choice_imposed_work.title_english %>what?</span><br>
+    <small class="text-secondary"><%= @choice_imposed_work.guidelines %></small> <br>
+    <small class="text-english"><%= @choice_imposed_work.guidelines_english %></small>
     <ul class="list-group list-group-flush">
       <li class="list-group-item d-flex flex-column">
         <% @choice_imposed_work.airs.each do |air| %>
           <span><i class="fas fa-feather text-secondary pe-2 small"></i> <%= air.title %> - <%= air.composer %> - <%= air.oeuvre %> - <%= air.tonality %></span>
           <small class="text-secondary"> <%= air.infos %> </small>
+          <small class="text-english"> <%= air.infos_english %> </small>
         <% end %>
       </li>
     </ul>
