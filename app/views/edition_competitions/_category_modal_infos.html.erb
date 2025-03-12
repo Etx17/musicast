@@ -15,7 +15,7 @@
             <%= link_to t('edition_competitions.category_modal_infos.view_rules_english'),  rails_blob_path(category.edition_competition.rule_document_english), target: 'blank', class: "text-decoration-none my-3 btn btn-outline-dark rounded-4" %>
           <% end %>
           <% if current_user %>
-          <%= link_to t('edition_competitions.common.continue'), new_inscription_path(category_id: category.id, candidate_id: current_user.id), class: "btn btn-primary" %>
+            <%= link_to t('edition_competitions.common.continue'), new_inscription_path(category_id: category.id, candidate_id: current_user.id), class: "btn btn-primary" %>
           <% else %>
             <% session[:category_id] = category.id %>
             <%= link_to t('edition_competitions.common.continue'), new_user_registration_path, class: "btn btn-primary" %>

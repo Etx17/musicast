@@ -1,7 +1,8 @@
   <% air_counter = 0 %>
 <% inscription.category.semi_imposed_works&.each do |semi_imposed_work| %>
-  <h3><%= semi_imposed_work.title %></h3>
+  <h5><%= semi_imposed_work.title %> <span class="text-english"><%= semi_imposed_work.title_english %></span></h5>
   <small><%= semi_imposed_work.guidelines %></small>
+  <small class="text-english"><%= semi_imposed_work.guidelines_english %></small>
   <% if f.object.errors.any? %>
     <div class="d-flex flex-column">
       <% f.object.errors.details.each do |attribute, errors| %>

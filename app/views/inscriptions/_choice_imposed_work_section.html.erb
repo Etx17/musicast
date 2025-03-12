@@ -1,6 +1,7 @@
 <% inscription.category.choice_imposed_works&.each do |choice_imposed_work| %>
-        <h3><%= choice_imposed_work.title %></h3>
+        <h5><%= choice_imposed_work.title %> <span class="text-english"><%= choice_imposed_work.title_english %></span></h5>
         <small><%= choice_imposed_work.guidelines %></small>
+        <small class="text-english"><%= choice_imposed_work.guidelines_english %></small>
         <% if f.object.errors[:choice_imposed_work_airs_attributes].any? %>
           <div class="d-flex flex-column">
             <small class="text-danger">

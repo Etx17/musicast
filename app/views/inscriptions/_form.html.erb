@@ -5,33 +5,40 @@
 
     <div class="form-inputs">
       <%= f.hidden_field :category_id, value: @inscription.category.id %>
+        <h4 class="mt-4"><%= t('inscriptions.items_form_section.required_documents') %>:</h4>
+      <div class="p-2 bg-white rounded-8">
+        <%= render "items_form_section", inscription: @inscription, f: f %>
+      </div>
 
-      <%= render "items_form_section", inscription: @inscription, f: f %>
+      <h4 class="mt-4"><%= t('global.program') %></h4>
+      <div class="p-2 bg-white rounded-8">
+        <%= render "semi_imposed_work_section", inscription: @inscription, f: f %>
 
-      <%= render "semi_imposed_work_section", inscription: @inscription, f: f %>
+        <%= render "choice_imposed_work_section", inscription: @inscription, f: f %>
 
-      <%= render "choice_imposed_work_section", inscription: @inscription, f: f %>
-
-      <% if inscription.category.imposed_work&.airs&.any? %>
-        <h3><%= t('inscriptions.form.imposed_airs') %></h3>
-        <ul>
-          <% inscription.category&.imposed_work&.airs&.each do |air| %>
-            <li> <%= air.title %> - <%= air.composer %> - <%= air.oeuvre %> </li>
-          <% end %>
-        </ul>
-      <% end %>
+        <% if inscription.category.imposed_work&.airs&.any? %>
+          <h5><%= t('inscriptions.form.imposed_airs') %></h5>
+          <ul>
+            <% inscription.category&.imposed_work&.airs&.each do |air| %>
+              <li> <%= air.title %> - <%= air.composer %> - <%= air.oeuvre %> - <%= air.infos %> | <span class="text-english"> <%= air.infos_english if air.infos_english.present? %></span></li>
+            <% end %>
+          </ul>
+        <% end %>
+      </div>
     </div>
 
-    <%= f.input :candidate_brings_pianist_accompagnateur, as: :boolean, label: t('inscriptions.form.bring_own_pianist') if inscription.category.allow_own_pianist_accompagnateur %>
-    <%= f.input :time_preference, label: t('inscriptions.form.time_preference'), collection: Inscription.time_preferences.keys.to_a, prompt: t('inscriptions.form.select_time_preference') %>
-    <div class="d-flex align-items-start gap-2">
-      <%= f.check_box :terms_accepted, required: true, class: "mt-1" %>
-      <%= f.label :terms_accepted, required: true, class:"text-secondary"  do %>
-        <span class="text-danger">*</span> <%= t('inscriptions.form.terms_acceptance_html') %>
-      <% end %>
-    </div>
-    <div class="form-actions">
-      <%= f.button :submit, t('global.actions.save'), class: "btn btn-primary" %>
-    </div>
+    <div class="p-2 bg-white rounded-8 mt-3">
+      <%= f.input :candidate_brings_pianist_accompagnateur, as: :boolean, label: t('inscriptions.form.bring_own_pianist') if inscription.category.allow_own_pianist_accompagnateur %>
+      <%= f.input :time_preference, label: t('inscriptions.form.time_preference'), collection: Inscription.time_preferences.keys.to_a, prompt: t('inscriptions.form.select_time_preference') %>
+      <div class="d-flex align-items-start gap-2">
+        <%= f.check_box :terms_accepted, required: true, class: "mt-1" %>
+        <%= f.label :terms_accepted, required: true, class:"text-secondary"  do %>
+          <span class="text-danger">*</span> <%= t('inscriptions.form.terms_acceptance_html') %>
+        <% end %>
+      </div>
+      <div class="form-actions">
+        <%= f.button :submit, t('global.actions.save'), class: "btn btn-primary" %>
+      </div>
+      </div>
   <% end %>
 </div>

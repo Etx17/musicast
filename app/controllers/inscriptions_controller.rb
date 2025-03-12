@@ -36,9 +36,8 @@ class InscriptionsController < ApplicationController
   end
 
   def new
-    # If candidat already created a inscription for the category, redirect to it
     unless current_user.candidat.has_minimum_informations_for_inscription?
-      redirect_to edit_candidat_path(current_user.candidat), notice: "Vous devez avoir complêté vos informations (photos, bios, expériences, répertoire, etc...) pour pouvoir vous inscrire"
+      redirect_to edit_candidat_path(current_user.candidat), notice: t('candidats.edit.minimum_informations_for_inscription')
       return
     end
 
@@ -79,7 +78,7 @@ class InscriptionsController < ApplicationController
     air_ids = params[:inscription][:choice_imposed_work_airs_attributes]&.values&.map{|c| c["air_id"]} || []
     if air_ids.uniq.length != air_ids.length
       @inscription.validate
-      @inscription.errors.add(:choice_imposed_work_airs_attributes, "Vous ne pouvez pas choisir le même air plus d'une fois.")
+      @inscription.errors.add(:choice_imposed_work_airs_attributes, t("inscriptions.new.same_air_multiple_times"))
       render :new, status: :unprocessable_entity and return
     end
     if @inscription.save

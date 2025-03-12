@@ -332,6 +332,7 @@ en:
       back: "Back"
       show: "Show this candidate"
       back_to_list: "Back to candidates"
+      minimum_informations_for_inscription: "You must have completed your information (photos, bios, experiences, repertoire, etc...) to be able to register"
     index:
       title: "Candidates"
       show: "Show this candidate"
@@ -865,6 +866,7 @@ en:
       back: "Back to free choices"
       destroy: "Destroy this free choice"
   global:
+    program: "Program"
     confirmations:
       are_you_sure: "Are you sure ?"
     youtube_link: "YouTube link"
@@ -930,6 +932,18 @@ en:
       view_application: "View my application"
 
   inscriptions:
+    new:
+      same_air_multiple_times: "You can't pick the same air more than once."
+      cancel: "Cancel"
+      title: "New registration"
+      fill_application_file: "Fill my application file"
+      competition_category: "Competition: %{competition} | Category: %{category}"
+      warning_message:
+        can_modify_until: "You can modify your file until %{date}"
+        will_be_submitted: "Your file will be submitted on this date if you have paid your registration."
+        not_required_now: "You are not required to provide the requested documents now, but make sure to do so before the submission date."
+        fill_works_now: "However, fill in the works to choose, even if you modify them later."
+        understood: "I understand"
     pills:
       items:
         complete: "Complete documents"
@@ -943,11 +957,9 @@ en:
       performances:
         complete: "Program completed"
         incomplete: "Program to complete"
-
     choice_imposed_work_section:
       select_air: "Select air #%{number}"
       select_an_air: "Select an air"
-
     semi_imposed_work_section:
       select_air: "Select air #%{number}"
       select_an_air: "Select an air"
@@ -963,14 +975,12 @@ en:
       character_placeholder: "e.g.: The Duke of Mantua"
       character_hint: "For opera arias only"
       base_tonality: "Base tonality"
-
     form:
       imposed_airs: "Imposed airs"
       bring_own_pianist: "I'm bringing my own accompanying pianist"
       time_preference: "Time preference"
       select_time_preference: "Select a time preference"
       terms_acceptance_html: "I accept the <a href='#' target='_blank'>terms and conditions</a> of the competition"
-
     items_form_section:
       required_documents: "Required documents"
       motivation_letter: "Motivation letter"
@@ -978,7 +988,6 @@ en:
       youtube_link: "YouTube link"
       youtube_hint: "Link to your YouTube video"
       replace_document: "Replace document"
-
     inscription:
       application_file: "Application file"
       competition_category: "%{competition} - %{category}"
@@ -1020,13 +1029,11 @@ en:
       days_remaining: "%{count} day(s) remaining"
       no_program_yet_html: "You haven't created your program for this round yet. Deadline: %{deadline}"
       create_my_program: "Create my program"
-
     edit:
       title: "Edit registration"
       modify_application: "Modify your application file"
       can_modify_until: "You can modify your file until %{date}"
       will_be_submitted: "Your file will be submitted to the pre-selection jury on this date if you have paid your registration."
-
     index:
       title: "Registrations"
       new: "New registration"
@@ -1038,32 +1045,22 @@ en:
       invited_user_can_modify: "The invited user can modify or correct this information"
       invite_user: "Invite user"
       late_invitations_sent: "Late registration invitations sent"
-
-    new:
-      title: "New registration"
-
     note_card:
       view_video_and_vote: "View video & vote"
       to_evaluate: "To evaluate"
-
     candidate_index:
       your_applications: "YOUR APPLICATIONS"
       start_date: "Start Date"
-
     jury_index:
       applications_to_rate: "Applications to rate"
-
   juries:
     form:
       update: "Update"
-
     jury:
       user: "User"
       other_information: "Other information"
-
     edit:
       modify_information: "Modify your information"
-
     new:
       new_jury: "New jury"
 

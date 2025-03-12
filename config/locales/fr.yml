@@ -333,6 +333,7 @@ fr:
       back: "Retour"
       show: "Voir ce candidat"
       back_to_list: "Retour aux candidats"
+      minimum_informations_for_inscription: "Vous devez avoir complêté vos informations (photos, bios, expériences, répertoire, etc...) pour pouvoir vous inscrire"
     index:
       title: "Candidats"
       show: "Voir ce candidat"
@@ -868,6 +869,7 @@ fr:
     parental_authorization: "Autorisation parentale"
     motivation_essay: "Lettre de motivation"
     profile: "Profil"
+    program: "Programme"
     home: "Accueil"
     offer: "Offre"
     instruments:
@@ -909,6 +911,17 @@ fr:
       reminder: "Rappel: Finissez de constituer votre dossier s'il n'est pas terminé. Les dossiers incomplets sont automatiquement rejetés et ne sont pas remboursables."
       view_application: "Voir ma candidature"
   inscriptions:
+    new:
+      same_air_multiple_times: "Vous ne pouvez pas choisir le même air plus d'une fois."
+      title: "Nouvelle inscription"
+      fill_application_file: "Remplir mon dossier d'inscription"
+      competition_category: "Concours: %{competition} | Catégorie: %{category}"
+      warning_message:
+        can_modify_until: "Vous pourrez modifier votre dossier jusqu'au %{date}"
+        will_be_submitted: "Votre dossier sera soumis a cette date si vous avez reglé votre inscription."
+        not_required_now: "Vous n'êtes pas obligés de fournir les documents demandés maintenant, mais veillez à le faire avant la date de soumission."
+        fill_works_now: "Remplissez néanmoins les oeuvres à choisir, quitte a les modifier plus tard."
+        understood: "J'ai compris"
     pills:
       items:
         complete: "Documents complets"
@@ -953,7 +966,6 @@ fr:
       youtube_link: "Lien YouTube"
       youtube_hint: "Lien vers votre vidéo YouTube"
       replace_document: "Remplacer le document"
-
     inscription:
       application_file: "Dossier de candidature"
       competition_category: "%{competition} - %{category}"
@@ -995,13 +1007,11 @@ fr:
       days_remaining: "%{count} jour(s) restant(s)"
       no_program_yet_html: "Vous n'avez pas encore créé votre programme pour ce tour. Date limite: %{deadline}"
       create_my_program: "Créer mon programme"
-
     edit:
       title: "Modifier l'inscription"
       modify_application: "Modifier votre dossier d'inscription"
       can_modify_until: "Vous pouvez modifier votre dossier jusqu'au %{date}"
       will_be_submitted: "Votre dossier sera soumis au jury de préselection à cette date si vous avez réglé votre inscription."
-
     index:
       title: "Inscriptions"
       new: "Nouvelle inscription"
@@ -1013,10 +1023,6 @@ fr:
       invited_user_can_modify: "L'utilisateur invité(e) pourra modifier ou rectifier ces informations"
       invite_user: "Inviter l'utilisateur"
       late_invitations_sent: "Invitations pour s'inscrire tardivement envoyées"
-
-    new:
-      title: "Nouvelle inscription"
-
     note_card:
       view_video_and_vote: "Consulter vidéo & vote"
       to_evaluate: "À évaluer"
