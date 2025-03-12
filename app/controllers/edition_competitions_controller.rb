@@ -13,7 +13,11 @@ class EditionCompetitionsController < ApplicationController
     if current_user&.organises_edition_competition?(@edition_competition)
       render :show
     else
-      redirect_back(fallback_location: root_path, alert: "Connect as a candidate to see other competitions")
+      if current_user&.candidate?
+        render :candidate_edition_competition
+      else
+        redirect_back(fallback_location: root_path, alert: "Connect as a candidate to see other competitions")
+      end
     end
   end
 
