@@ -240,6 +240,7 @@
           <div class="card bg-light mb-3 border-0 rounded-8 shadow">
             <div class="card-header d-flex justify-content-between border-0">
               <%= tour.title %> - <%= t('inscriptions.inscription.round_number', number: tour.tour_number) %>
+              <span class="text-english"><%= tour.title_english %></span>
                <% if tour.imposed_air_selection.present? %>
               <small class="text-warning"><%= t('inscriptions.inscription.imposed_airs_in_round', count: tour.imposed_air_selection.count) %></small>
               <% end %>
