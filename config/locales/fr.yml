@@ -707,7 +707,8 @@ fr:
       view: "Voir"
       delete: "Supprimer"
     category_modal_infos:
-      view_rules: "Consulter le règlement du concours"
+      view_rules: "Règlement du concours"
+      view_rules_english: "Règlement du concours en Anglais"
       selection_instructions: "Consignes de séléction des airs"
       can_complete_application: "Vous pourrez remplir votre dossier et sélectionner vos oeuvres à l'étape suivante."
       complete_profile_html: "Vous devez avoir complêté votre %{profile_link} pour pouvoir constituer un dossier d'inscription. En cliquant sur \"continuer\" vous serez redirigé dessus pour éditer vos informations"

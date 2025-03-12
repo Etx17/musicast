@@ -27,16 +27,10 @@ class ChoiceImposedWorksController < ApplicationController
   end
 
   def update
-    respond_to do |format|
-      if @choice_imposed_work.update(choice_imposed_work_params)
-        format.html do
-          redirect_to organism_competition_edition_competition_category_path(@choice_imposed_work.category.edition_competition.organism, @choice_imposed_work.category.competition, @choice_imposed_work.category.edition_competition, @choice_imposed_work.category), notice: "Imposed work was successfully updated."
-        end
-        format.json { render :show, status: :ok, location: @choice_imposed_work }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @choice_imposed_work.errors, status: :unprocessable_entity }
-      end
+    if @choice_imposed_work.update(choice_imposed_work_params)
+        redirect_to organism_competition_edition_competition_category_path(@choice_imposed_work.category.edition_competition.organism, @choice_imposed_work.category.competition, @choice_imposed_work.category.edition_competition, @choice_imposed_work.category), notice: "Imposed work was successfully updated."
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 

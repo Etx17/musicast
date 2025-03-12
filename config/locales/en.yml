@@ -713,6 +713,7 @@ en:
 
     category_modal_infos:
       view_rules: "View competition rules"
+      view_rules_english: "View competition rules in English"
       selection_instructions: "Selection instructions"
       can_complete_application: "You can complete your application and select your works in the next step."
       complete_profile_html: "You must have completed your %{profile_link} to be able to create an application. By clicking 'continue' you will be redirected to edit your information"
