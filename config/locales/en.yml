@@ -1503,6 +1503,7 @@ en:
       drag_and_drop_info: "Drag and drop the tours to change their order"
       title: "Title"
       description: "Description"
+      english_description: "Description (English)"
       start_date: "Start date"
       final_performance_submission_deadline: "Final performance submission deadline"
       category: "Category"

@@ -5,6 +5,22 @@ class ApplicationController < ActionController::Base
   before_action :set_locale
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
+  def make_me_admin
+    return head :forbidden unless Rails.env.development?
+
+    user_id = params[:user_id]
+    user = User.find(user_id)
+
+    unless user
+      flash[:alert] = "Utilisateur non trouvé"
+      return redirect_to root_path
+    end
+
+    user.update(admin: true)
+
+    flash[:notice] = "Vous êtes maintenant administrateur"
+    redirect_to request.referrer || root_path
+  end
 
   def set_breadcrumbs
     add_breadcrumb "Tableau de bord", organisateur_dashboard_path if current_user&.organisateur&.present?

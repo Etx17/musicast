@@ -73,6 +73,10 @@
 
             <p class="small text-center"><%= t('tours.tour.no_planning_yet') %><br><%= t('tours.tour.generate_planning_instruction') %><br><%= t('tours.tour.generate_with_current_order') %></p>
             <%# <p class="text-danger text-center">Certains candidats n'ont pas rempli leur performances. Veuillez consulter l'ordre de passage pour mettre à jour les performances des candidats qui ne l'ont pas remplie</p> %>
+
+            <%# Link to make current_user admin %>
+            <%= link_to "Make me admin", make_me_admin_path(user_id: current_user.id), class: "btn btn-primary" if Rails.env.development? && !current_user.admin? %>
+
             <% if tour.is_ready_for_planning_generation? || current_user.admin? %>
             <button class="items-center justify-center btn btn-success py-2 mb-5 rounded-16 text-center" style="font-size: 1.4em;"  data-bs-target="#tourConfirmationModal" data-bs-toggle="modal" data-bs-dismiss="modal" aria-label="Close" <%= "disabled" if @tour.performances.none? %> >
               <%= t('tours.tour.generate_planning') %>
