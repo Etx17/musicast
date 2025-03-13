@@ -740,6 +740,7 @@ fr:
       end_date: "Date de fin"
       end_of_registration: "Fin des inscriptions"
       rule_document: "Règlement"
+      rule_document_english: "Règlement en Anglais"
       confirm_delete_document: "Supprimer le document?"
       no_document: "Aucun document de règlement attaché."
       share_link: "Lien de partage"
@@ -1006,7 +1007,7 @@ fr:
       edit_program: "Modifier le programme"
       days_remaining: "%{count} jour(s) restant(s)"
       no_program_yet_html: "Vous n'avez pas encore créé votre programme pour ce tour. Date limite: %{deadline}"
-      create_my_program: "Créer mon programme"
+      create_my_program: "Créer le programme"
     edit:
       title: "Modifier l'inscription"
       modify_application: "Modifier votre dossier d'inscription"

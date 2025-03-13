@@ -84,12 +84,6 @@ class Tour < ApplicationRecord
     final_order.each_with_index do |performance, index|
       performance.update(order: index)
     end
-
-    # Previous implementation
-    # shuffled_performances = performances.shuffle
-    # shuffled_performances.each_with_index do |performance, index|
-    #   performance.update(order: index)
-    # end
   end
 
   def update_performance_order(performance_id, new_order)

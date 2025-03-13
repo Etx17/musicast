@@ -12,6 +12,7 @@ class ApplicationController < ActionController::Base
     path.each_with_index do |segment, index|
       next if segment.empty? || index == 1 || path[index - 1] == "organisms" || segment == "categories" || segment == "edition_competitions" || segment == "competitions"
       next if segment == "organisms"  # because it points to a list of organisms
+      next if segment == "candidats" # because it points to a list of candidates
       if path[index - 1] == "edition_competitions" && segment != "new"
         edition_competition = EditionCompetition.find(segment)
         add_breadcrumb "#{edition_competition.annee}", URI.join(root_url, "#{path[0..index].join('/')}").to_s
@@ -20,6 +21,7 @@ class ApplicationController < ActionController::Base
         add_breadcrumb "#{title}", URI.join(root_url, "#{path[0..index].join('/')}").to_s
       end
     end
+
   end
 
   protected
