@@ -1218,6 +1218,7 @@ fr:
       available_works: "Œuvres disponibles pour ce tour"
       change_airs: "Changer d'airs (rechoisir les airs de votre inscription)"
       save: "Enregistrer"
+      description_english: "Description (English)"
     performance:
       inscription: "Inscription"
       tour: "Tour"

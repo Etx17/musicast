@@ -7,33 +7,67 @@
 
   <% if @performance.tour&.tour_requirement.present? %>
     <div class="card bg-light mb-3">
-      <div class="card-header"><%= @performance.tour.title %></div>
+      <div class="card-header">
+        <%= @performance.tour.title %>
+        <% if @performance.tour.title_english.present? %>
+          <span class="text-secondary fst-italic">| <%= @performance.tour.title_english %></span>
+        <% end %>
+      </div>
       <div class="card-body">
         <h5 class="card-title"><%= t('performances.form.tour_requirements') %>:</h5>
-        <p class="card-text"><strong><%= t('performances.form.description') %>:</strong> <%= @performance.tour.tour_requirement.description %></p>
-        <p class="card-text"><strong><%= t('performances.form.number_of_works') %>:</strong> <%= @performance.tour.tour_requirement.min_number_of_works %> - <%= @performance.tour.tour_requirement.max_number_of_works %></p>
-        <p class="card-text"><strong><%= t('performances.form.duration') %>:</strong> <%= @performance.tour.tour_requirement.min_duration_minute %> - <%= @performance.tour.tour_requirement.max_duration_minute %> <%= t('performances.form.minutes') %></p>
+
+        <p class="card-text">
+          <strong><%= t('performances.form.description') %>:</strong>
+          <%= @performance.tour.tour_requirement.description %>
+        </p>
+
+        <% if @performance.tour.tour_requirement.description_english.present? %>
+          <p class="card-text text-secondary fst-italic">
+            <strong><%= t('performances.form.description_english') %>:</strong>
+            <%= @performance.tour.tour_requirement.description_english %>
+          </p>
+        <% end %>
+
+        <p class="card-text">
+          <strong><%= t('performances.form.number_of_works') %>:</strong>
+          <%= @performance.tour.tour_requirement.min_number_of_works %> - <%= @performance.tour.tour_requirement.max_number_of_works %>
+        </p>
+
+        <p class="card-text">
+          <strong><%= t('performances.form.duration') %>:</strong>
+          <%= @performance.tour.tour_requirement.min_duration_minute %> - <%= @performance.tour.tour_requirement.max_duration_minute %>
+          <%= t('performances.form.minutes') %>
+        </p>
       </div>
     </div>
   <% end %>
 
     <div class="form-group">
       <ul>
-      <% @performance.inscription.used_airs.each do |air|  %>
-        <li class="text-secondary"><%= air.title %> - <%= t('performances.form.already_used') %></li>
+      <% @performance.inscription.used_airs.each do |air| %>
+        <li class="text-secondary">
+          <%= air.title %> - <%= t('performances.form.already_used') %>
+          <% if air.infos_english.present? %>
+            <div class="text-secondary fst-italic small"><%= air.infos_english %></div>
+          <% end %>
+        </li>
       <% end %>
       </ul>
       <%= f.label t('performances.form.available_works') %>
       <div class="d-flex flex-column">
-<%= f.collection_check_boxes :air_selection, @performance.inscription.associated_airs - @performance.inscription.used_airs , :id, :title, { checked: @performance.air_selection } do |b| %>          <div>
+        <%= f.collection_check_boxes :air_selection, @performance.inscription.associated_airs - @performance.inscription.used_airs, :id, :title, { checked: @performance.air_selection } do |b| %>
+          <div>
             <%= b.check_box %>
             <%= b.text %> (<%= b.object.length_minutes %> min)
+            <% if b.object.infos_english.present? %>
+              <div class="text-secondary fst-italic small"><%= b.object.infos_english %></div>
+            <% end %>
           </div>
         <% end %>
       </div>
     </div>
     <% if @performance.tour.final_performance_submission_deadline < Date.today %>
-      <%= link_to t('performances.form.change_airs'), edit_inscription_path(performance.inscription) %>
+      <%= link_to t('performances.form.change_airs'), edit_inscription_path(@performance.inscription) %>
     <% end %>
   </div>
 

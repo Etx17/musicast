@@ -1,10 +1,9 @@
-<%= link_to t('global.actions.back'), :back, class:"btn btn-primary my-3 mx-3" %>
-<h1><%= t('performances.new.my_program') %></h1>
+<div class="container">
+  <%= link_to t('global.actions.back'), :back, class:"btn btn-primary my-3" %>
+  <h1><%= t('performances.new.my_program') %></h1>
 
-<p class="text-secondary"><%= t('performances.new.choose_airs_instructions') %></p>
-<%= render "form", performance: @performance %>
+  <p class="text-secondary"><%= t('performances.new.choose_airs_instructions') %></p>
+  <%= render "form", performance: @performance %>
 
-<br>
-
-<div>
+  <br>
 </div>

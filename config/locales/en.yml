@@ -1257,7 +1257,7 @@ en:
       available_works: "Available works for this round"
       change_airs: "Change airs (reselect airs from your registration)"
       save: "Save"
-
+      description_english: "Description (English)"
     performance:
       inscription: "Registration"
       tour: "Round"
