@@ -1,73 +1,74 @@
-<div class="container">
-<p style="color: green"><%= notice %></p>
-<%= link_to t('global.actions.back'), :back, class:"btn btn-outline-dark" %>
-<h1> <%= t('inscriptions.index.applications') %>
-  <span class="badge rounded-pill bg-secondary">
-    <%= link_to @category.name, organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category), class:"text-decoration-none text-white"%>
-  </span>
-</h1>
+<div class="p-3">
+  <p style="color: green"><%= notice %></p>
+  <%= link_to t('global.actions.back'), :back, class:"btn btn-outline-dark" %>
+  <h1> <%= t('inscriptions.index.applications') %>
+    <span class="badge rounded-pill bg-secondary">
+      <%= link_to @category.name, organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category), class:"text-decoration-none text-white"%>
+    </span>
+  </h1>
 
 
-<%= link_to t('inscriptions.index.view_first_round_order'), organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour), class:"btn btn-success my-3" if @tour %>
+  <%= link_to t('inscriptions.index.view_first_round_order'), organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour), class:"btn btn-success my-3" if @tour %>
 
-<%= link_to t('inscriptions.index.add_late_registration'), "#", class:"btn btn-success my-3", data: { bs_toggle: "modal", bs_target: "#myModal" } %>
-  <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel"><%= t('inscriptions.index.add_late_registration') %></h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <p> <%= t('inscriptions.index.late_registration_explanation') %> </p>
-          <%= simple_form_for(User.new, url: user_invitation_path, method: :post) do |f| %>
-            <%= f.input :email, required: true, placeholder: t('inscriptions.index.enter_email'), autofocus: true %>
-            <%= f.input :inscription_role, as: :hidden, input_html: { value: "candidate" } %>
-            <%= f.input :category_id, as: :hidden, input_html: { value: @category.id } %>
+  <%= link_to t('inscriptions.index.add_late_registration'), "#", class:"btn btn-success my-3", data: { bs_toggle: "modal", bs_target: "#myModal" } %>
+    <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel"><%= t('inscriptions.index.add_late_registration') %></h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p> <%= t('inscriptions.index.late_registration_explanation') %> </p>
+            <%= simple_form_for(User.new, url: user_invitation_path, method: :post) do |f| %>
+              <%= f.input :email, required: true, placeholder: t('inscriptions.index.enter_email'), autofocus: true %>
+              <%= f.input :inscription_role, as: :hidden, input_html: { value: "candidate" } %>
+              <%= f.input :category_id, as: :hidden, input_html: { value: @category.id } %>
 
-            <% f.object.build_candidat %>
-            <%= f.simple_fields_for :candidat do |c| %>
-              <%= c.input :first_name, hint: t('inscriptions.index.invited_user_can_modify'), required: true %>
-              <%= c.input :last_name, hint: t('inscriptions.index.invited_user_can_modify'), required: true%>
-            <% end %>
-
-            <%= f.button :submit, t('inscriptions.index.invite_user'), class:"btn btn-primary", data: {bs_dismiss: "modal"} %>
-          <% end %>
-        </div>
-
-      </div>
-    </div>
-  </div>
-<p><%= t('inscriptions.index.late_invitations_sent') %>: <span class="bg-info p-1"><%= @category.inscriptions.where(is_late_inscription: true).count %> </span></p>
-
-
-<div id="inscriptions" class="row">
-<% @category ||= inscriptions.first.category%>
-
-<% Inscription.statuses.keys.reject { |status| status == 'draft' }.each do |status| %>
-    <div class="col bg-light shadow-sm mb-1" style="border-radius: 0.25rem;" id="<%= status %>">
-      <h5 class="text-center text-capitalize"><%= status %> (<%= @inscriptions&.select { |inscription| inscription.status == status }&.count %>)</h5>
-      <% @inscriptions&.select { |inscription| inscription.status == status }&.each do |inscription| %>
-        <div class="card p-3 mb-2 ">
-
-            <div class="d-flex justify-content-between align-items-start">
-              <h6 class="card-title"><%= inscription_status_icon(inscription) %> <%= inscription.candidat.first_name %></h6>
-              <% if @category.hundred_points? %>
-                <span><%= inscription.average_score %>/100</span>
+              <% f.object.build_candidat %>
+              <%= f.simple_fields_for :candidat do |c| %>
+                <%= c.input :first_name, hint: t('inscriptions.index.invited_user_can_modify'), required: true %>
+                <%= c.input :last_name, hint: t('inscriptions.index.invited_user_can_modify'), required: true%>
               <% end %>
 
-              <p class="card-text mb-0">
-              </p>
-            </div>
-
-          <div class="d-flex justify-content-between">
-            <%= buttons_for_inscription(inscription).html_safe %>
+              <%= f.button :submit, t('inscriptions.index.invite_user'), class:"btn btn-primary", data: {bs_dismiss: "modal"} %>
+            <% end %>
           </div>
+
+        </div>
+      </div>
+    </div>
+  <p><%= t('inscriptions.index.late_invitations_sent') %>: <span class="bg-info p-1"><%= @category.inscriptions.where(is_late_inscription: true).count %> </span></p>
+
+
+  <div id="inscriptions" class="row px-2">
+    <% @category ||= inscriptions.first.category%>
+
+    <%# <% Inscription.statuses.keys.reject { |status| status == 'draft' }.each do |status| %>
+    <% Inscription.statuses.keys.each do |status| %>
+        <div class="col bg-light shadow-sm mb-1" style="border-radius: 0.25rem;" id="<%= t("inscriptions.statuses.#{status}") %>">
+          <h5 class="text-center"><%= t("inscriptions.statuses.#{status}") %> (<%= @inscriptions&.select { |inscription| inscription.status == status }&.count %>)</h5>
+          <% @inscriptions&.select { |inscription| inscription.status == status }&.each do |inscription| %>
+            <div class="card p-3 mb-2 ">
+
+                <div class="d-flex justify-content-between align-items-start">
+                  <h6 class="card-title"><%= inscription_status_icon(inscription) %> <%= inscription.candidat.first_name %></h6>
+                  <% if @category.hundred_points? %>
+                    <span><%= inscription.average_score %>/100</span>
+                  <% end %>
+
+                  <p class="card-text mb-0">
+                  </p>
+                </div>
+
+              <div class="d-flex justify-content-between">
+                <%= buttons_for_inscription(inscription).html_safe %>
+              </div>
+            </div>
+          <% end %>
         </div>
       <% end %>
-    </div>
-  <% end %>
-</div>
+  </div>
 
 
 </div>

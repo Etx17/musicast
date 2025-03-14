@@ -27,8 +27,9 @@ class Inscription < ApplicationRecord
   enum :status, {
     draft: 0,
     in_review: 1,
-    accepted: 2,
-    rejected: 3
+    request_changes: 2,
+    accepted: 3,
+    rejected: 4,
   }
   enum :time_preference, {
     no_preference: 0,
@@ -104,15 +105,19 @@ class Inscription < ApplicationRecord
   end
 
   def is_payed?
-    inscription_order.present? && inscription_order&.paid?
+    # Soit c'est payé, soit il y a une preuve de paiement # si c'est une preuve caduque, on peut toujours request changes avec un message
+    (inscription_order.present? && inscription_order&.paid?) || payment_proof.attached?
   end
 
   def has_complete_requirement_items?
-    # TOFIX
     return false if category.requirement_items.count != inscription_item_requirements.count
     return false if inscription_item_requirements.any?{|i| i.has_submitted_content? == false }
     return false if inscription_item_requirements.any?{|i| i.verification_status == "checked_invalid" }
     true
+  end
+
+  def is_ready_to_be_reviewed?
+    has_complete_requirement_items? && has_complete_airs? && is_payed? #&& has_complete_performances? -> non car le candidat peut changer ses perfs jusqu'a une date limite.
   end
 
   def has_complete_airs?

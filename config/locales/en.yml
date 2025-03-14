@@ -951,6 +951,9 @@ en:
       view_application: "View my application"
 
   inscriptions:
+    controller:
+      application_under_review: "Your application is being reviewed. You will receive an email when the process is complete."
+      inscription_updated: "The application has been successfully updated."
     new:
       same_air_multiple_times: "You can't pick the same air more than once."
       cancel: "Cancel"
@@ -1084,6 +1087,16 @@ en:
     remove_proof: "Remove proof"
     confirm_remove_proof: "Are you sure you want to remove this payment proof?"
     proof_removed: "Payment proof has been removed successfully."
+    statuses:
+      draft: "Draft"
+      in_review: "In review"
+      pending: "Pending"
+      accepted: "Accepted"
+      rejected: "Rejected"
+      request_changes: "Request changes"
+      waiting_for_payment: "Waiting for payment"
+      waiting_for_jury: "Waiting for jury"
+      waiting_for_payment: "Waiting for payment"
   juries:
     form:
       update: "Update"

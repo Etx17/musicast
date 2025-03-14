@@ -91,6 +91,7 @@ class InscriptionsController < ApplicationController
   def update
     authorize @inscription
     @inscription.assign_attributes(inscription_params)
+
     if @inscription.valid?
       # TODO: OpenAI validation part if extension enabled ( create table organism_extensions, with enum extensions_type etc)
       if false
@@ -110,11 +111,15 @@ class InscriptionsController < ApplicationController
         end
       end
 
-
-
-      # Si on a modifié des airs d'un choice_imposed_work ou d'un semi_imposed_work, on doit supprimer les performances des tours actuels et suivants.
-      @inscription.save
-      redirect_to inscription_url(@inscription), notice: "L'inscription a été mise à jour avec succès."
+      # Si l'inscription est completée (mais pas forcément correcte), on la passe en in_review
+      if @inscription.is_ready_to_be_reviewed? && @inscription.status == "draft" || @inscription.status == "request_changes"
+        @inscription.status = "in_review"
+        redirect_to inscription_url(@inscription), notice: t('inscriptions.controller.application_under_review')
+      else
+        # Si on a modifié des airs d'un choice_imposed_work ou d'un semi_imposed_work, on doit supprimer les performances des tours actuels et suivants.
+        @inscription.save
+        redirect_to inscription_url(@inscription), notice: t('inscriptions.controller.inscription_updated')
+      end
     else
       render :edit, status: :unprocessable_entity
     end

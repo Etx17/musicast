@@ -57,7 +57,7 @@
 
           <!-- Rediriger vers le paiement si ca n'est pas encore fait -->
           <% unless current_user.organisateur %>
-            <% if inscription.draft? %>
+            <% if inscription.draft? || inscription.request_changes? || inscription.in_review? %>
 
               <!-- Old stripe payment part, to reactive maybe one day
               <div class="card shadow-sm mb-3 bg-light">

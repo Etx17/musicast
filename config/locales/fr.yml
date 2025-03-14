@@ -913,6 +913,9 @@ fr:
       reminder: "Rappel: Finissez de constituer votre dossier s'il n'est pas terminé. Les dossiers incomplets sont automatiquement rejetés et ne sont pas remboursables."
       view_application: "Voir ma candidature"
   inscriptions:
+    controller:
+      application_under_review: "Votre candidature est en cours de validation. Vous recevrez un mail dès que cela sera terminé."
+      inscription_updated: "L'inscription a été mise à jour avec succès."
     new:
       same_air_multiple_times: "Vous ne pouvez pas choisir le même air plus d'une fois."
       title: "Nouvelle inscription"
@@ -1047,6 +1050,15 @@ fr:
 
     jury_index:
       applications_to_rate: "Candidatures à noter"
+    statuses:
+      draft: "Brouillon"
+      in_review: "À examiner"
+      pending: "En attente de paiement"
+      request_changes: "Modifications demandées"
+      accepted: "Accepté"
+      rejected: "Rejeté"
+      waiting_for_payment: "En attente de paiement"
+      waiting_for_jury: "En attente de jury"
   juries:
     form:
       update: "Mettre à jour"
