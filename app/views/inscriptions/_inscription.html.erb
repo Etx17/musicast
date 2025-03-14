@@ -102,66 +102,67 @@
           </p>
 
           <!-- Rediriger vers le paiement si ca n'est pas encore fait -->
-          <% unless current_user.organisateur %>
-            <% if inscription.draft? || inscription.request_changes? || inscription.in_review? %>
 
-              <!-- Old stripe payment part, to reactive maybe one day
-              <div class="card shadow-sm mb-3 bg-light">
-                <div class="card-body d-flex flex-column align-items-start">
-                  <h5><%= t('inscriptions.inscription.payment') %></h5>
-                  <p class="text-secondary"> <%= t('inscriptions.inscription.not_paid_yet') %></p>
-                  <% if @inscription.inscription_order.present? %>
-                    <button id="pay" class="btn btn-success"><%= t('inscriptions.inscription.pay') %></button>
-                    <small class="text-info"><%= t('inscriptions.inscription.refresh_if_problem') %></small>
-                    <script src="https://js.stripe.com/v3/"></script>
-                    <script>
-                      const paymentButton = document.getElementById('pay');
-                      paymentButton.addEventListener('click', () => {
-                        const stripe = Stripe('<%= Rails.application.credentials.dig(:stripe_test_pk) %>');
-                        stripe.redirectToCheckout({
-                          sessionId: '<%= @inscription.inscription_order.checkout_session_id %>'
-                        });
+          <% if inscription.draft? || inscription.request_changes? || inscription.in_review? %>
+
+            <!-- Old stripe payment part, to reactive maybe one day
+            <div class="card shadow-sm mb-3 bg-light">
+              <div class="card-body d-flex flex-column align-items-start">
+                <h5><%= t('inscriptions.inscription.payment') %></h5>
+                <p class="text-secondary"> <%= t('inscriptions.inscription.not_paid_yet') %></p>
+                <% if @inscription.inscription_order.present? %>
+                  <button id="pay" class="btn btn-success"><%= t('inscriptions.inscription.pay') %></button>
+                  <small class="text-info"><%= t('inscriptions.inscription.refresh_if_problem') %></small>
+                  <script src="https://js.stripe.com/v3/"></script>
+                  <script>
+                    const paymentButton = document.getElementById('pay');
+                    paymentButton.addEventListener('click', () => {
+                      const stripe = Stripe('<%= Rails.application.credentials.dig(:stripe_test_pk) %>');
+                      stripe.redirectToCheckout({
+                        sessionId: '<%= @inscription.inscription_order.checkout_session_id %>'
                       });
-                    </script>
-                  <% else %>
-                    <%= form_tag inscription_orders_path do %>
-                      <%= hidden_field_tag :inscription_id, inscription.id %>
-                      <%= submit_tag t('inscriptions.inscription.pay'), class: 'btn btn-primary' %>
-                    <% end %>
+                    });
+                  </script>
+                <% else %>
+                  <%= form_tag inscription_orders_path do %>
+                    <%= hidden_field_tag :inscription_id, inscription.id %>
+                    <%= submit_tag t('inscriptions.inscription.pay'), class: 'btn btn-primary' %>
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
+              -->
+            <%# Bouton payer qui ouvre une modale avec l'iban de l'organisme et les instructions %>
+
+            <%# Upload proof of paiment part %>
+            <div class="card shadow-sm mb-3 bg-light">
+              <div class="card-body d-flex flex-column align-items-start">
+                <div class="d-flex justify-content-between align-items-center w-100 mb-2">
+                  <h5><%= t('inscriptions.inscription.payment_proof') %></h5>
+                  <% if inscription.payment_proof.attached? %>
+                    <span class="badge rounded-pill text-success border-success border">
+                      <i class="fas fa-check-circle text-success pe-1"></i><%= t('inscriptions.inscription.proof_submitted') %>
+                    </span>
                   <% end %>
                 </div>
-              </div>
-               -->
-              <%# Bouton payer qui ouvre une modale avec l'iban de l'organisme et les instructions %>
 
-              <%# Upload proof of paiment part %>
-              <div class="card shadow-sm mb-3 bg-light">
-                <div class="card-body d-flex flex-column align-items-start">
-                  <div class="d-flex justify-content-between align-items-center w-100 mb-2">
-                    <h5><%= t('inscriptions.inscription.payment_proof') %></h5>
-                    <% if inscription.payment_proof.attached? %>
-                      <span class="badge rounded-pill text-success border-success border">
-                        <i class="fas fa-check-circle text-success pe-1"></i><%= t('inscriptions.inscription.proof_submitted') %>
-                      </span>
+                <% if inscription.payment_proof.attached? %>
+                  <!-- Affichage du fichier existant -->
+                  <div class="d-flex flex-column w-100 mb-3">
+                    <% if inscription.payment_proof.content_type.include?('pdf') %>
+                      <embed src="<%= url_for(inscription.payment_proof) %>" width="100%" height="300" type="application/pdf">
+                    <% else %>
+                      <%= image_tag url_for(inscription.payment_proof), class: "img-fluid mb-2", style: "max-height: 300px;" %>
                     <% end %>
+                    <%= link_to t('global.actions.view'), url_for(inscription.payment_proof), target: "_blank", rel: "noopener", class: "btn btn-sm btn-outline-primary mb-3 w-50" %>
                   </div>
+                <% else %>
+                  <!-- Instructions pour l'upload initial -->
+                  <p class="text-secondary"><%= t('inscriptions.inscription.upload_payment_proof_instruction') %></p>
+                <% end %>
 
-                  <% if inscription.payment_proof.attached? %>
-                    <!-- Affichage du fichier existant -->
-                    <div class="d-flex flex-column w-100 mb-3">
-                      <% if inscription.payment_proof.content_type.include?('pdf') %>
-                        <embed src="<%= url_for(inscription.payment_proof) %>" width="100%" height="300" type="application/pdf">
-                      <% else %>
-                        <%= image_tag url_for(inscription.payment_proof), class: "img-fluid mb-2", style: "max-height: 300px;" %>
-                      <% end %>
-                      <%= link_to t('global.actions.view'), url_for(inscription.payment_proof), target: "_blank", rel: "noopener", class: "btn btn-sm btn-outline-primary mb-3 w-50" %>
-                    </div>
-                  <% else %>
-                    <!-- Instructions pour l'upload initial -->
-                    <p class="text-secondary"><%= t('inscriptions.inscription.upload_payment_proof_instruction') %></p>
-                  <% end %>
-
-                  <!-- Formulaire pour upload/modification -->
+                <!-- Formulaire pour upload/modification -->
+                <% unless current_user.organisateur %>
                   <%= form_with(model: inscription, local: true, multipart: true) do |form| %>
                     <div class="form-group mb-3">
                       <%= form.label :payment_proof, inscription.payment_proof.attached? ? t('inscriptions.inscription.change_payment_proof') : t('inscriptions.inscription.payment_proof_file'), class: "form-label" %>
@@ -173,15 +174,11 @@
                       <%= form.submit t('global.actions.save'), class: "btn btn-primary" %>
                     </div>
                   <% end %>
-                </div>
+                <% end %>
               </div>
-            <% end %>
+            </div>
           <% end %>
-          <%= raise%>
-          <% if current_user.organisateur %>
-          <%# Montrer le prof of payment mais pas le édit/delete %>
 
-          <% end %>
         </div>
       </div>
 
