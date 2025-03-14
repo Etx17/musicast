@@ -916,6 +916,8 @@ fr:
     controller:
       application_under_review: "Votre candidature est en cours de validation. Vous recevrez un mail dès que cela sera terminé."
       inscription_updated: "L'inscription a été mise à jour avec succès."
+      changes_requested_success: "Les modifications ont été demandées avec succès. Le candidat a été notifié."
+      changes_requested_error: "Une erreur s'est produite lors de la demande de modifications."
     new:
       same_air_multiple_times: "Vous ne pouvez pas choisir le même air plus d'une fois."
       title: "Nouvelle inscription"
@@ -1013,6 +1015,13 @@ fr:
       days_remaining: "%{count} jour(s) restant(s)"
       no_program_yet_html: "Vous n'avez pas encore créé votre programme pour ce tour. Date limite: %{deadline}"
       create_my_program: "Créer le programme"
+      request_changes_button: "Demander des modifications"
+      request_changes_title: "Demander des modifications à la candidature"
+      changes_requested_label: "Modifications demandées"
+      changes_requested_placeholder: "Veuillez décrire les modifications nécessaires pour cette candidature..."
+      changes_requested_hint: "Soyez précis sur ce qui doit être corrigé ou ajouté. Le candidat verra ce message."
+      changes_requested_title: "Modifications demandées par l'organisateur"
+      submit_changes_request: "Envoyer la demande"
       payment_proof: "Justificatif de paiement"
       upload_payment_proof_instruction: "Veuillez télécharger une preuve de votre paiement (reçu de virement bancaire, capture d'écran, etc.)"
       payment_proof_file: "Fichier justificatif"

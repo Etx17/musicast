@@ -168,6 +168,20 @@ class InscriptionsController < ApplicationController
     end
   end
 
+  def request_changes
+    @inscription = Inscription.find(params[:id])
+    authorize @inscription if defined?(Pundit)
+
+    if @inscription.update(changes_requested: params[:changes_requested], status: :request_changes)
+      # Envoyer une notification au candidat (optionnel)
+      # InscriptionMailer.changes_requested(@inscription).deliver_later
+
+      redirect_to @inscription, notice: t('inscriptions.controller.changes_requested_success')
+    else
+      redirect_to @inscription, alert: t('inscriptions.controller.changes_requested_error')
+    end
+  end
+
   private
 
   def extract_pdf_content

@@ -954,6 +954,8 @@ en:
     controller:
       application_under_review: "Your application is being reviewed. You will receive an email when the process is complete."
       inscription_updated: "The application has been successfully updated."
+      changes_requested_success: "Changes have been requested successfully. The candidate has been notified."
+      changes_requested_error: "There was an error requesting changes."
     new:
       same_air_multiple_times: "You can't pick the same air more than once."
       cancel: "Cancel"
@@ -1052,6 +1054,13 @@ en:
       days_remaining: "%{count} day(s) remaining"
       no_program_yet_html: "You haven't created your program for this round yet. Deadline: %{deadline}"
       create_my_program: "Create the program"
+      request_changes_button: "Request Changes"
+      request_changes_title: "Request Changes to Application"
+      changes_requested_label: "Changes Requested"
+      changes_requested_placeholder: "Please describe the changes needed for this application..."
+      changes_requested_hint: "Be specific about what needs to be corrected or added. The candidate will see this message."
+      changes_requested_title: "Changes Requested by Organizer"
+      submit_changes_request: "Submit Request"
     edit:
       title: "Edit registration"
       modify_application: "Modify your application file"
@@ -1070,7 +1079,6 @@ en:
       late_invitations_sent: "Late registration invitations sent"
     note_card:
       view_video_and_vote: "View video & vote"
-      to_evaluate: "To evaluate"
     candidate_index:
       your_applications: "YOUR APPLICATIONS"
       start_date: "Start Date"
@@ -1483,36 +1491,6 @@ en:
       edit_semi_imposed_work: "Edit this semi-imposed work"
       back_to_semi_imposed_works: "Back to semi-imposed works"
       destroy_semi_imposed_work: "Destroy this semi-imposed work"
-
-  shared:
-    flashes:
-      close: "Close"
-    navbar:
-      dropdown_menu: "dropdown menu"
-    components:
-      music_search_component:
-        search_composer: "Search for Composer..."
-        loading: "Loading..."
-    air_fields:
-      delete: "Delete"
-      title: "Title"
-      composer: "Composer"
-      work: "Work"
-      character: "Character"
-      character_hint: "For opera arias only"
-      duration: "Duration"
-      duration_hint: "Round up to the next minute"
-      tonality: "Tonality"
-      tonality_hint: "Original tonality except for lieder"
-      additional_info: "Additional Information"
-      additional_info_english: "Additional Information (English)"
-      additional_info_placeholder: "Enter additional information..."
-      additional_info_english_placeholder: "Enter additional information in English..."
-      minutes: "Minutes *"
-      character_placeholder: "(optional) e.g.: Duke of Mantua"
-      title_placeholder: "e.g.: La Donna è Mobile"
-      composer_placeholder: "e.g.: G.Verdi"
-      work_placeholder: "e.g.: Rigoletto"
   tours:
     results:
       save_results_and_finish_tour: "Save results and finish tour"
@@ -1729,3 +1707,9 @@ en:
       title_placeholder: "e.g.: La Donna è Mobile"
       composer_placeholder: "e.g.: G.Verdi"
       work_placeholder: "e.g.: Rigoletto"
+    navbar:
+      dropdown_menu: "dropdown menu"
+    components:
+      music_search_component:
+        search_composer: "Search for Composer..."
+        loading: "Loading..."

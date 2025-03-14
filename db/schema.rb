@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_14_091101) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_14_160207) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -304,6 +304,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_14_091101) do
     t.boolean "terms_accepted", default: false
     t.boolean "is_late_inscription", default: false
     t.integer "time_preference", default: 0
+    t.text "changes_requested", default: ""
     t.index ["candidat_id"], name: "index_inscriptions_on_candidat_id"
     t.index ["category_id"], name: "index_inscriptions_on_category_id"
   end

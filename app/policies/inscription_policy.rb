@@ -25,6 +25,10 @@ class InscriptionPolicy < ApplicationPolicy
     allowed_to_edit?
   end
 
+  def request_changes?
+    record.has_same_organisateur_as?(user.organisateur.id)
+  end
+
   # class Scope < Scope
   #   def resolve
   #     scope.includes(inscription: [:candidat, { category: { edition_competition: { competition: { organism: :organisateur } } } }])
