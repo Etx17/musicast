@@ -853,6 +853,7 @@ fr:
       logout: "Se déconnecter"
       change_password: "Changer mon mot de passe"
       back: "Retour"
+      view: "Voir"
       edit: "Modifier"
       show: "Voir"
       close: "Fermer"
@@ -933,6 +934,7 @@ fr:
       payment:
         paid: "Payé"
         unpaid: "Non payé"
+        proof_submitted: "Justificatif soumis"
       performances:
         complete: "Programme complété"
         incomplete: "Programme à compléter"
@@ -1008,6 +1010,12 @@ fr:
       days_remaining: "%{count} jour(s) restant(s)"
       no_program_yet_html: "Vous n'avez pas encore créé votre programme pour ce tour. Date limite: %{deadline}"
       create_my_program: "Créer le programme"
+      payment_proof: "Justificatif de paiement"
+      upload_payment_proof_instruction: "Veuillez télécharger une preuve de votre paiement (reçu de virement bancaire, capture d'écran, etc.)"
+      payment_proof_file: "Fichier justificatif"
+      payment_proof_formats: "Formats acceptés : PDF, PNG, JPEG"
+      upload_proof: "Télécharger le justificatif"
+      proof_submitted: "Justificatif soumis"
     edit:
       title: "Modifier l'inscription"
       modify_application: "Modifier votre dossier d'inscription"
@@ -1092,6 +1100,8 @@ fr:
   organisms:
     organism:
       name: "Nom"
+      iban: "IBAN"
+      iban_hint: "Entrez votre IBAN pour recevoir les paiements des candidats"
       description: "Description"
 
     edit:

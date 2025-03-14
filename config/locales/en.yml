@@ -512,20 +512,24 @@ en:
     new:
       title: "New Category"
       back: "Back"
+
   categories_juries:
     new:
       choose_jurors: "Choose one or more jurors"
       air_list: "Air list"
       add_piece: "Add a piece"
       save_changes: "Save changes"
+
   choice_imposed_works:
     card:
       choose: "Choose"
+
     choice_imposed_work:
       programme_requirement: "Programme Requirement"
       title: "Title"
       guidelines: "Guidelines"
       number_to_select: "Number to select"
+
     form:
       list_configuration: "List configuration"
       title_placeholder: "e.g.: 2 German lieder"
@@ -538,35 +542,43 @@ en:
       air_list: "Air list"
       add_piece: "Add a piece"
       save_changes: "Save changes"
+
     edit:
       title: "Edit this imposed choice list"
       back: "Back"
+
     index:
       title: "Choice imposed works"
       show: "Show this choice imposed work"
       new: "New choice imposed work"
+
     new:
       back: "Back"
       title: "New choice list"
       explanation: "A choice list allows you to require the candidate to select one or more airs from a list that you define. You can add guidelines to guide the candidate."
+
     show:
       edit: "Edit this choice imposed work"
       destroy: "Destroy this choice imposed work"
+
   competitions:
     competition:
       name: "Name"
       description: "Description"
       cover_photo: "Cover photo"
+
     form:
       warning: "Warning: do not include the year in the competition title. You will later publish editions of this competition with all the necessary details"
       name_hint: "Often the same name as the organization"
       banner_label: "Add a banner (you can do this later). Recommended dimensions: Full width, 100px height."
       no_image: "No image yet"
       save: "Save"
+
     index:
       title: "Competitions"
       show: "Show this competition"
       new: "New competition"
+
     show:
       editions: "Editions"
       configure_categories: "Configure categories for this edition"
@@ -576,10 +588,12 @@ en:
       add_edition: "Add an edition"
       competition: "Competition"
       information: "Information"
+
   dashboard:
     common:
       close: "Close"
       confirm_delete: "Are you sure you want to delete this item?"
+
     jury_section:
       title: "Jury"
       associated_jury_members: "Associated jury members"
@@ -597,11 +611,14 @@ en:
       existing_account: "If the person you wanted to invite already has an account but doesn't have a Jury account, you can assign them this role. Enter their email and then associate them with your organization."
       email_label: "Email"
       assign_jury_role: "Assign Jury Role"
+
     admin:
       title: "Admin Dashboard"
+
     jury:
       files_to_evaluate: "Your files to evaluate (grouped by categories)"
       view_applications: "View %{count} applications"
+
     organiser:
       dashboard: "Dashboard"
       your_competitions: "Your competitions"
@@ -613,6 +630,7 @@ en:
       partners: "Partners"
       accompanying_pianists: "Accompanying Pianists"
       add_pianist: "+ Add an accompanying pianist"
+
   devise:
     confirmations:
       new:
@@ -955,6 +973,7 @@ en:
       payment:
         paid: "Paid"
         unpaid: "Unpaid"
+        proof_submitted: "Proof submitted"
       performances:
         complete: "Program completed"
         incomplete: "Program to complete"
@@ -1054,6 +1073,12 @@ en:
       start_date: "Start Date"
     jury_index:
       applications_to_rate: "Applications to rate"
+    payment_proof: "Payment Proof"
+    upload_payment_proof_instruction: "Please upload a proof of your payment (bank transfer receipt, screenshot, etc.)"
+    payment_proof_file: "Payment proof file"
+    payment_proof_formats: "Accepted formats: PDF, PNG, JPEG"
+    upload_proof: "Upload proof"
+    proof_submitted: "Proof submitted"
   juries:
     form:
       update: "Update"
@@ -1119,6 +1144,8 @@ en:
     organism:
       name: "Name of your organization"
       description: "Description"
+      iban: "IBAN"
+      iban_hint: "Enter your IBAN to receive payments from candidates"
       placeholder: "e.g: The Met Opera House, Association Pavarotti, etc..."
 
     edit:

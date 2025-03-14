@@ -15,6 +15,8 @@ class Inscription < ApplicationRecord
   accepts_nested_attributes_for :semi_imposed_work_airs
   accepts_nested_attributes_for :notes
 
+  has_one_attached :payment_proof
+
 
   scope :by_category, -> (category_id) { where(category_id: category_id).includes(candidat: :user) }
   scope :by_candidat, ->(candidat_id) { where(candidat_id: candidat_id) }

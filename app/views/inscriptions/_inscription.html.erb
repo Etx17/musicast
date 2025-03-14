@@ -58,6 +58,8 @@
           <!-- Rediriger vers le paiement si ca n'est pas encore fait -->
           <% unless current_user.organisateur %>
             <% if inscription.draft? %>
+
+              <!-- Old stripe payment part, to reactive maybe one day
               <div class="card shadow-sm mb-3 bg-light">
                 <div class="card-body d-flex flex-column align-items-start">
                   <h5><%= t('inscriptions.inscription.payment') %></h5>
@@ -83,8 +85,50 @@
                   <% end %>
                 </div>
               </div>
+               -->
+              <%# Bouton payer qui ouvre une modale avec l'iban de l'organisme et les instructions %>
+              
+              <%# Upload proof of paiment part %>
+              <div class="card shadow-sm mb-3 bg-light">
+                <div class="card-body d-flex flex-column align-items-start">
+                  <h5><%= t('inscriptions.inscription.payment_proof') %></h5>
+                  <p class="text-secondary"><%= t('inscriptions.inscription.upload_payment_proof_instruction') %></p>
+
+                  <%= form_with(model: inscription, local: true, multipart: true) do |form| %>
+                    <div class="form-group mb-3">
+                      <%= form.label :payment_proof, t('inscriptions.inscription.payment_proof_file'), class: "form-label" %>
+                      <%= form.file_field :payment_proof, class: "form-control", accept: "image/png,image/jpeg,application/pdf" %>
+                      <small class="form-text text-muted"><%= t('inscriptions.inscription.payment_proof_formats') %></small>
+                    </div>
+                    <%= form.submit t('inscriptions.inscription.upload_proof'), class: "btn btn-primary" %>
+                  <% end %>
+                </div>
+              </div>
             <% end %>
           <% end %>
+
+        <!-- Affichage de la preuve de paiement si elle existe -->
+        <% if inscription.payment_proof.attached? %>
+          <div class="card shadow-sm mb-3 bg-light">
+            <div class="card-body d-flex flex-column align-items-start">
+              <div class="d-flex justify-content-between align-items-center w-100 mb-2">
+                <h5><%= t('inscriptions.inscription.payment_proof') %></h5>
+                <span class="badge rounded-pill text-success border-success border">
+                  <i class="fas fa-check-circle text-success pe-1"></i><%= t('inscriptions.inscription.proof_submitted') %>
+                </span>
+              </div>
+              <div class="d-flex flex-column">
+                <% if inscription.payment_proof.content_type.include?('pdf') %>
+                  <embed src="<%= url_for(inscription.payment_proof) %>" width="100%" height="300" type="application/pdf">
+                <% else %>
+                  <%= image_tag url_for(inscription.payment_proof), class: "img-fluid mb-2", style: "max-height: 300px;" %>
+                <% end %>
+                <%= link_to t('global.actions.view'), url_for(inscription.payment_proof), target: "_blank", rel: "noopener", class: "btn btn-sm btn-outline-primary" %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+
         </div>
       </div>
 

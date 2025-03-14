@@ -6,7 +6,7 @@
 
   <div class="form-inputs">
     <%= f.input :nom, label: t("organisms.organism.name"), placeholder: t("organisms.organism.placeholder"), required: true, error: f.object.errors[:nom].to_sentence %>
-    <%= f.input :description, error: f.object.errors[:description].to_sentence %>
+    <%= f.input :description, error: f.object.errors[:description].to_sentence, input_html: { rows: 8} %>
   </div>
 
   <%# Logo file field input  %>
@@ -23,6 +23,12 @@
       <%= f.file_field :logo, class: "form-control" %>
     <% end %>
   </div>
+
+<%# section for bank info: IBAN, BIC, bank name %>
+  <div class="form-group mb-3">
+    <%= f.input :iban, label: t('organisms.organism.iban'), class: "form-control", hint: t('organisms.organism.iban_hint') %>
+  </div>
+
 
   <div class="form-actions">
     <%= f.button :submit, t('global.actions.save'), class: "btn btn-primary" %>

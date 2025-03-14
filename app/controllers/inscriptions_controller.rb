@@ -92,21 +92,26 @@ class InscriptionsController < ApplicationController
     authorize @inscription
     @inscription.assign_attributes(inscription_params)
     if @inscription.valid?
-      # If there is a updated submitted_file, we need to send it to openai
-      params[:inscription][:inscription_item_requirements_attributes].each do |_key, requirement_attributes|
-        if requirement_attributes[:submitted_file].present?
-          # 1. Check that it is a pdf
-          next unless requirement_attributes[:submitted_file].content_type == "application/pdf"
-          # 2. Extract the text
-          content = requirement_attributes[:submitted_file].tempfile.read
-          inscription_requirement_item = InscriptionItemRequirement.find(requirement_attributes[:id])
-          requirement_item = RequirementItem.find(requirement_attributes[:requirement_item_id])
-          reader = PDF::Reader.new(StringIO.new(content))
-          text = reader.pages.map(&:text).join(" ").gsub(/\s+/, ' ')[0..500]
-          # 3. send it to open AI and update status
-          send_to_openai(text, requirement_item, inscription_requirement_item)
+      # TODO: OpenAI validation part if extension enabled ( create table organism_extensions, with enum extensions_type etc)
+      if false
+        params[:inscription][:inscription_item_requirements_attributes]&.each do |_key, requirement_attributes|
+          if requirement_attributes[:submitted_file].present?
+            # 1. Check that it is a pdf
+            next unless requirement_attributes[:submitted_file].content_type == "application/pdf"
+            # 2. Extract the text
+            content = requirement_attributes[:submitted_file].tempfile.read
+            inscription_requirement_item = InscriptionItemRequirement.find(requirement_attributes[:id])
+            requirement_item = RequirementItem.find(requirement_attributes[:requirement_item_id])
+            reader = PDF::Reader.new(StringIO.new(content))
+            text = reader.pages.map(&:text).join(" ").gsub(/\s+/, ' ')[0..500]
+            # 3. send it to open AI and update status
+            send_to_openai(text, requirement_item, inscription_requirement_item)
+          end
         end
       end
+
+      
+
       # Si on a modifié des airs d'un choice_imposed_work ou d'un semi_imposed_work, on doit supprimer les performances des tours actuels et suivants.
       @inscription.save
       redirect_to inscription_url(@inscription), notice: "L'inscription a été mise à jour avec succès."
@@ -195,6 +200,7 @@ class InscriptionsController < ApplicationController
         :status,
         :air,
         :terms_accepted,
+        :payment_proof,
         :candidate_brings_pianist_accompagnateur,
         inscription_item_requirements_attributes: %i[id submitted_file submitted_content document_id requirement_item_id _destroy],
         choice_imposed_work_airs_attributes: [:id, :choice_imposed_work_id, :air_id],
@@ -206,6 +212,7 @@ class InscriptionsController < ApplicationController
         :category_id,
         :status,
         :terms_accepted,
+        :payment_proof,
         :air,
         :candidate_brings_pianist_accompagnateur,
         inscription_item_requirements_attributes: %i[id submitted_file submitted_content document_id requirement_item_id _destroy],
