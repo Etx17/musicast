@@ -1063,7 +1063,7 @@ fr:
       applications_to_rate: "Candidatures à noter"
     statuses:
       draft: "Brouillon"
-      in_review: "À examiner"
+      in_review: "En cours d'examen"
       pending: "En attente de paiement"
       request_changes: "Modifications demandées"
       accepted: "Accepté"

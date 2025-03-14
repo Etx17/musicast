@@ -17,7 +17,7 @@
         <h5 class="text-center text-secondary mb-5"><%= t('inscriptions.inscription.competition_category', competition: @inscription.category.competition.nom_concours, category: @inscription.category.name) %></h5>
         <h2 class="text-center"><%= inscription.candidat.first_name %> <%= inscription.candidat.last_name %></h2>
 
-        <% if inscription.changes_requested.present? %>
+        <% if inscription.changes_requested.present? && inscription.request_changes? %>
           <div class="border border-info bg-light-info text-info p-3 rounded-8 alert-warning mt-3 mb-4 w-100">
             <div class="d-flex justify-content-between align-items-center mb-2">
               <h5 class="mb-0"><i class="fas fa-exclamation-triangle me-2"></i><%= t('inscriptions.inscription.changes_requested_title') %></h5>
@@ -86,7 +86,7 @@
           <div class="card-header d-flex justify-content-between align-items-center w-100">
             <h5 class=mb-1><%= t('inscriptions.inscription.registration_details') %></h5>
              <span class=" badge rounded-pill <%= inscription.draft? ? 'text-secondary border border-secondary bg-grey' : inscription.in_review? ? 'text-info border border-info bg-info-secondary' : inscription.accepted? ? 'text-success border-success bg-success-secondary' : 'text-danger border-danger bg-danger-secondary' %>">
-              <i class="fas fa-circle small"></i> <%= inscription.status&.capitalize %>
+              <i class="fas fa-circle small"></i> <%= t("inscriptions.statuses.#{inscription.status}") %>
             </span>
           </div>
         <div class="card-body d-flex flex-column align-items-start">
@@ -154,7 +154,7 @@
                       <% else %>
                         <%= image_tag url_for(inscription.payment_proof), class: "img-fluid mb-2", style: "max-height: 300px;" %>
                       <% end %>
-                      <%= link_to t('global.actions.view'), url_for(inscription.payment_proof), target: "_blank", rel: "noopener", class: "btn btn-sm btn-outline-primary mb-3" %>
+                      <%= link_to t('global.actions.view'), url_for(inscription.payment_proof), target: "_blank", rel: "noopener", class: "btn btn-sm btn-outline-primary mb-3 w-50" %>
                     </div>
                   <% else %>
                     <!-- Instructions pour l'upload initial -->
@@ -171,19 +171,17 @@
 
                     <div class="d-flex gap-2">
                       <%= form.submit t('global.actions.save'), class: "btn btn-primary" %>
-
-                      <% if inscription.payment_proof.attached? %>
-                        <!-- Option pour supprimer la preuve de paiement -->
-                        <%= form.check_box :remove_payment_proof, class: "form-check-input me-2" %>
-                        <%= form.label :remove_payment_proof, t('inscriptions.inscription.remove_proof'), class: "form-check-label" %>
-                      <% end %>
                     </div>
                   <% end %>
                 </div>
               </div>
             <% end %>
           <% end %>
+          <%= raise%>
+          <% if current_user.organisateur %>
+          <%# Montrer le prof of payment mais pas le édit/delete %>
 
+          <% end %>
         </div>
       </div>
 
@@ -198,7 +196,7 @@
           <% end %>
 
           <% if current_user.organisateur %>
-            <%= link_to edit_inscription_path(inscription), class: "btn btn-outline-dark w-50" do %>
+            <%= link_to edit_inscription_path(inscription), class: "btn btn-primary w-50" do %>
               <div class="d-flex align-items-center justify-content-center">
                 <i class="fas fa-edit me-2"></i>
                 <span><%= t('global.actions.edit') %></span>
@@ -206,7 +204,7 @@
             <% end %>
           <% end %>
           <% if current_user.candidat && inscription.is_late_inscription && Date.today < inscription.category.tours.first.final_performance_submission_deadline %>
-            <%= link_to edit_inscription_path(inscription), class: "btn btn-outline-dark w-50" do %>
+            <%= link_to edit_inscription_path(inscription), class: "btn btn-primary w-50" do %>
               <div class="d-flex align-items-center justify-content-center">
                 <i class="fas fa-edit me-2"></i>
                 <span><%= t('global.actions.edit') %></span>
@@ -214,7 +212,7 @@
             <% end %>
           <% end %>
           <% if current_user.candidat && inscription.category.edition_competition.end_of_registration > Date.today %>
-            <%= link_to edit_inscription_path(inscription), class: "btn btn-outline-dark w-50" do %>
+            <%= link_to edit_inscription_path(inscription), class: "btn btn-primary w-50" do %>
               <div class="d-flex align-items-center justify-content-center">
                 <i class="fas fa-edit me-2"></i>
                 <span><%= t('global.actions.edit') %></span>
@@ -278,7 +276,7 @@
         <div class="d-flex justify-content-between align-items-center mb-2">
           <h3><%= t('inscriptions.inscription.air_list') %></h3>
           <% if current_user.candidat && inscription.category.edition_competition.end_of_registration > Date.today %>
-            <%= link_to edit_inscription_path(inscription), class: 'btn btn-outline-dark w-50' do %>
+            <%= link_to edit_inscription_path(inscription), class: 'btn btn-primary w-50' do %>
               <div class="d-flex align-items-center justify-content-center">
                 <i class="fas fa-edit me-2"></i>
                 <span><%= t('global.actions.edit') %></span>
