@@ -1079,6 +1079,11 @@ en:
     payment_proof_formats: "Accepted formats: PDF, PNG, JPEG"
     upload_proof: "Upload proof"
     proof_submitted: "Proof submitted"
+    change_payment_proof: "Change payment proof"
+    update_proof: "Update proof"
+    remove_proof: "Remove proof"
+    confirm_remove_proof: "Are you sure you want to remove this payment proof?"
+    proof_removed: "Payment proof has been removed successfully."
   juries:
     form:
       update: "Update"

@@ -110,7 +110,7 @@ class InscriptionsController < ApplicationController
         end
       end
 
-      
+
 
       # Si on a modifié des airs d'un choice_imposed_work ou d'un semi_imposed_work, on doit supprimer les performances des tours actuels et suivants.
       @inscription.save
@@ -147,6 +147,20 @@ class InscriptionsController < ApplicationController
     end
 
     redirect_to inscriptions_path(category_id: @inscription.category_id)
+  end
+
+  def remove_payment_proof
+    @inscription = Inscription.find(params[:id])
+
+    # Vérifier que l'utilisateur actuel est autorisé à modifier cette inscription
+    authorize @inscription if defined?(Pundit)
+
+    @inscription.payment_proof.purge
+
+    respond_to do |format|
+      format.html { redirect_to @inscription, notice: t('inscriptions.inscription.proof_removed') }
+      format.json { head :no_content }
+    end
   end
 
   private
@@ -200,7 +214,7 @@ class InscriptionsController < ApplicationController
         :status,
         :air,
         :terms_accepted,
-        :payment_proof,
+        :payment_proof, :remove_payment_proof,
         :candidate_brings_pianist_accompagnateur,
         inscription_item_requirements_attributes: %i[id submitted_file submitted_content document_id requirement_item_id _destroy],
         choice_imposed_work_airs_attributes: [:id, :choice_imposed_work_id, :air_id],
@@ -212,7 +226,7 @@ class InscriptionsController < ApplicationController
         :category_id,
         :status,
         :terms_accepted,
-        :payment_proof,
+        :payment_proof, :remove_payment_proof,
         :air,
         :candidate_brings_pianist_accompagnateur,
         inscription_item_requirements_attributes: %i[id submitted_file submitted_content document_id requirement_item_id _destroy],

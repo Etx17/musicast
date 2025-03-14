@@ -22,6 +22,9 @@ Rails.application.routes.draw do
     resources :inscriptions do
       resources :inscription_orders, only: [:new, :create]
       resources :performances, only: [:new, :create, :edit, :update]
+      member do
+        delete :remove_payment_proof
+      end
     end
     resources :imposed_works
     resources :airs

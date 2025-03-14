@@ -17,6 +17,9 @@ class Inscription < ApplicationRecord
 
   has_one_attached :payment_proof
 
+  attr_accessor :remove_payment_proof
+
+  before_save :check_remove_payment_proof
 
   scope :by_category, -> (category_id) { where(category_id: category_id).includes(candidat: :user) }
   scope :by_candidat, ->(candidat_id) { where(candidat_id: candidat_id) }
@@ -127,5 +130,13 @@ class Inscription < ApplicationRecord
 
   def motivation_essay
     inscription_item_requirements.filter{|i| i.item_type == "motivation_essay"}.first
+  end
+
+  private
+
+  def check_remove_payment_proof
+    if remove_payment_proof == "1" && payment_proof.attached?
+      payment_proof.purge
+    end
   end
 end

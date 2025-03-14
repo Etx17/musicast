@@ -1016,6 +1016,11 @@ fr:
       payment_proof_formats: "Formats acceptés : PDF, PNG, JPEG"
       upload_proof: "Télécharger le justificatif"
       proof_submitted: "Justificatif soumis"
+      change_payment_proof: "Changer le justificatif"
+      update_proof: "Mettre à jour le justificatif"
+      remove_proof: "Supprimer le justificatif"
+      confirm_remove_proof: "Êtes-vous sûr de vouloir supprimer ce justificatif ?"
+      proof_removed: "Justificatif de paiement supprimé avec succès."
     edit:
       title: "Modifier l'inscription"
       modify_application: "Modifier votre dossier d'inscription"
