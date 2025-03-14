@@ -17,20 +17,31 @@
         <h5 class="text-center text-secondary mb-5"><%= t('inscriptions.inscription.competition_category', competition: @inscription.category.competition.nom_concours, category: @inscription.category.name) %></h5>
         <h2 class="text-center"><%= inscription.candidat.first_name %> <%= inscription.candidat.last_name %></h2>
 
-        <!-- Ajout du bouton Request Changes pour l'organisateur -->
-        <% if current_user.organisateur && inscription.in_review? %>
-          <div class="d-flex justify-content-center mt-3">
+        <% if inscription.changes_requested.present? %>
+          <div class="border border-info bg-light-info text-info p-3 rounded-8 alert-warning mt-3 mb-4 w-100">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <h5 class="mb-0"><i class="fas fa-exclamation-triangle me-2"></i><%= t('inscriptions.inscription.changes_requested_title') %></h5>
+            </div>
+            <p class="mb-0"><%= simple_format(inscription.changes_requested) %></p>
+          </div>
+        <% end %>
+
+        <!-- Bouton Request Changes pour l'organisateur -->
+        <% if current_user.organisateur && (inscription.in_review? || inscription.request_changes?) %>
+          <div class="d-flex justify-content-center mt-3 mb-4 w-100">
             <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#requestChangesModal">
-              <i class="fas fa-exclamation-triangle me-2"></i><%= t('inscriptions.inscription.request_changes_button') %>
+              <i class="fas fa-exclamation-triangle me-2"></i>
+              <%= inscription.request_changes? ? t('inscriptions.inscription.edit_changes_request') : t('inscriptions.inscription.request_changes_button') %>
             </button>
           </div>
 
-          <!-- Modal pour demander des modifications -->
           <div class="modal fade" id="requestChangesModal" tabindex="-1" aria-labelledby="requestChangesModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="requestChangesModalLabel"><%= t('inscriptions.inscription.request_changes_title') %></h5>
+                  <h5 class="modal-title" id="requestChangesModalLabel">
+                    <%= inscription.request_changes? ? t('inscriptions.inscription.edit_changes_title') : t('inscriptions.inscription.request_changes_title') %>
+                  </h5>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -48,21 +59,6 @@
                 </div>
               </div>
             </div>
-          </div>
-        <% end %>
-
-        <!-- Affichage des modifications demandées si présentes -->
-        <% if inscription.changes_requested.present? %>
-          <div class="alert alert-warning mt-3">
-            <div class="d-flex justify-content-between align-items-center mb-2">
-              <h5 class="mb-0"><i class="fas fa-exclamation-triangle me-2"></i><%= t('inscriptions.inscription.changes_requested_title') %></h5>
-              <% if current_user.organisateur %>
-                <button type="button" class="btn btn-sm btn-outline-warning" data-bs-toggle="modal" data-bs-target="#requestChangesModal">
-                  <i class="fas fa-edit"></i> <%= t('global.actions.edit') %>
-                </button>
-              <% end %>
-            </div>
-            <p class="mb-0"><%= simple_format(inscription.changes_requested) %></p>
           </div>
         <% end %>
 

@@ -1061,6 +1061,8 @@ en:
       changes_requested_hint: "Be specific about what needs to be corrected or added. The candidate will see this message."
       changes_requested_title: "Changes Requested by Organizer"
       submit_changes_request: "Submit Request"
+      edit_changes_request: "Edit Requested Changes"
+      edit_changes_title: "Edit Requested Changes"
     edit:
       title: "Edit registration"
       modify_application: "Modify your application file"

@@ -1017,6 +1017,8 @@ fr:
       create_my_program: "Créer le programme"
       request_changes_button: "Demander des modifications"
       request_changes_title: "Demander des modifications à la candidature"
+      edit_changes_request: "Modifier les modifications demandées"
+      edit_changes_title: "Modifier les modifications demandées"
       changes_requested_label: "Modifications demandées"
       changes_requested_placeholder: "Veuillez décrire les modifications nécessaires pour cette candidature..."
       changes_requested_hint: "Soyez précis sur ce qui doit être corrigé ou ajouté. Le candidat verra ce message."
