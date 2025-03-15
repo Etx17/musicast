@@ -124,9 +124,9 @@
                     });
                   </script>
                 <% else %>
-                  <%= form_tag inscription_orders_path do %>
-                    <%= hidden_field_tag :inscription_id, inscription.id %>
-                    <%= submit_tag t('inscriptions.inscription.pay'), class: 'btn btn-primary' %>
+                  <%# <%= form_tag inscription_orders_path do %> %>
+                    <%# <%= hidden_field_tag :inscription_id, inscription.id %> %>
+                    <%# <%= submit_tag t('inscriptions.inscription.pay'), class: 'btn btn-primary' %> %>
                   <% end %>
                 <% end %>
               </div>
@@ -145,6 +145,13 @@
                     </span>
                   <% end %>
                 </div>
+
+                 <% if inscription.category.competition.organism.iban.present? %>
+                    <div class="mb-3">
+                      <strong><%= t('inscriptions.inscription.payment_iban_label') %>:</strong>
+                      <span class="ms-2"><%= inscription.category.competition.organism.iban %></span>
+                    </div>
+                  <% end %>
 
                 <% if inscription.payment_proof.attached? %>
                   <!-- Affichage du fichier existant -->
