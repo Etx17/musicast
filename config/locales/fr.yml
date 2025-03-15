@@ -975,6 +975,8 @@ fr:
       youtube_hint: "Lien vers votre vidéo YouTube"
       replace_document: "Remplacer le document"
     inscription:
+      payment_iban_label: "IBAN"
+      inscription_fee: "Frais d'inscription"
       application_file: "Dossier de candidature"
       competition_category: "%{competition} - %{category}"
       view_cv_new_tab: "Voir le CV (nouvel onglet)"

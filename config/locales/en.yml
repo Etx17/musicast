@@ -1014,6 +1014,8 @@ en:
       youtube_hint: "Link to your YouTube video"
       replace_document: "Replace document"
     inscription:
+      payment_iban_label: "IBAN"
+      inscription_fee: "Inscription fee"
       application_file: "Application file"
       competition_category: "%{competition} - %{category}"
       view_cv_new_tab: "View CV (new tab)"

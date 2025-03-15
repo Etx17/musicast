@@ -1,6 +1,5 @@
 <div id="<%= dom_id inscription %>">
   <div class="row p-5">
-    <%# Placeholder unsplash avatar picture %>
     <div class="d-flex flex-column flex-lg-row align-items-center bg-white p-2 mb-3">
       <div class="d-flex flex-column align-items-start justify-content-start">
         <%= link_to t('global.actions.back'), :back, class: "btn btn-primary mx-auto mb-5", style: "width: 100px;" %>
@@ -124,9 +123,9 @@
                     });
                   </script>
                 <% else %>
-                  <%# <%= form_tag inscription_orders_path do %> %>
-                    <%# <%= hidden_field_tag :inscription_id, inscription.id %> %>
-                    <%# <%= submit_tag t('inscriptions.inscription.pay'), class: 'btn btn-primary' %> %>
+                  <%= form_tag inscription_orders_path do %> %>
+                    <%= hidden_field_tag :inscription_id, inscription.id %> %>
+                    <%= submit_tag t('inscriptions.inscription.pay'), class: 'btn btn-primary' %> %>
                   <% end %>
                 <% end %>
               </div>
@@ -150,6 +149,7 @@
                     <div class="mb-3">
                       <strong><%= t('inscriptions.inscription.payment_iban_label') %>:</strong>
                       <span class="ms-2"><%= inscription.category.competition.organism.iban %></span>
+                      <span class="ms-2"><%= t('inscriptions.inscription.inscription_fee') %>: <%= number_to_currency(inscription.category.price_cents/100.0, unit: inscription.category.price_currency , separator: ",", delimiter: " ") %></span>
                     </div>
                   <% end %>
 
@@ -366,21 +366,32 @@
 
               <% performance = inscription.performances.find_by(tour: tour) %>
               <% if performance&.pianist_accompagnateur.present? %>
-                <div class="d-flex align-items-center border-top py-3">
-                  <small><%= t('inscriptions.inscription.accompanying_pianist') %></small>
-                  <div class="d-flex align-items-center">
-                    <%= image_tag 'icons/piano.png', alt: t('inscriptions.inscription.piano'), width: 40 %>
-                    <%= t('inscriptions.inscription.pianist') %>
-                  </div>
-                  <div class="d-flex flex-column justify-content-start gap-3 align-items-end">
-                    <div class="d-flex align-items-center gap-1 border p-1 rounded-4">
-                      <i class="fas fa-envelope"></i>
-                      <small><a href="mailto:<%= performance.pianist_accompagnateur.email %>" class="text-decoration-none text-secondary"><%= performance.pianist_accompagnateur.email %></a></small>
+                <div class="card mb-3 border">
+                  <div class="card-header bg-light">
+                    <div class="d-flex align-items-center">
+                      <%= image_tag 'icons/piano.png', alt: t('inscriptions.inscription.piano'), width: 30, class: "me-2" %>
+                      <h6 class="mb-0"><%= t('inscriptions.inscription.accompanying_pianist') %></h6>
                     </div>
-
-                    <div class="d-flex align-items-center gap-1 border p-1 rounded-4">
-                      <i class="fas fa-phone"></i>
-                      <small><%= performance.pianist_accompagnateur.phone_number %></small>
+                  </div>
+                  <div class="card-body py-2">
+                    <div class="row align-items-center">
+                      <div class="col-md-6">
+                        <p class="mb-1 fw-bold"><%= performance.pianist_accompagnateur.full_name %></p>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="d-flex flex-column gap-2">
+                          <div class="d-flex align-items-center">
+                            <i class="fas fa-envelope me-2 text-secondary"></i>
+                            <a href="mailto:<%= performance.pianist_accompagnateur.email %>" class="text-decoration-none text-secondary">
+                              <%= performance.pianist_accompagnateur.email %>
+                            </a>
+                          </div>
+                          <div class="d-flex align-items-center">
+                            <i class="fas fa-phone me-2 text-secondary"></i>
+                            <span><%= performance.pianist_accompagnateur.phone_number %></span>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
