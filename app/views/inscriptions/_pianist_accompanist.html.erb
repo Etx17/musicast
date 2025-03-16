@@ -1,5 +1,33 @@
+
+<% if performance&.inscription&.candidate_brings_pianist_accompagnateur %>
+  <div class="card mb-3 border">
+    <div class="card-header bg-light">
+      <div class="d-flex align-items-center">
+        <%= image_tag 'icons/piano.png', alt: t('inscriptions.inscription.piano'), width: 30, class: "me-2" %>
+        <h6 class="mb-0"><%= t('inscriptions.inscription.accompanying_pianist') %></h6>
+      </div>
+    </div>
+    <div class="card-body py-2">
+      <div class="row align-items-center">
+        <div class="col-md-6">
+          <p class="mb-1 fw-bold"><%= performance.inscription.candidate_brings_pianist_accompagnateur_full_name %></p>
+        </div>
+        <div class="col-md-6">
+          <div class="d-flex flex-column gap-2">
+            <div class="d-flex align-items-center">
+              <i class="fas fa-envelope me-2 text-secondary"></i>
+              <a href="mailto:<%= performance.inscription.candidate_brings_pianist_accompagnateur_email %>" class="text-decoration-none text-secondary">
+                <%= performance.inscription.candidate_brings_pianist_accompagnateur_email %>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 <%# If a pianist has been assigned by the organism to the performance, we display the pianist's information %>
-<% if performance&.pianist_accompagnateur.present? %>
+<% elsif performance&.pianist_accompagnateur.present? %>
   <div class="card mb-3 border">
     <div class="card-header bg-light">
       <div class="d-flex align-items-center">
@@ -29,7 +57,8 @@
       </div>
     </div>
   </div>
-<% elsif performance&.inscription.candidate_brings_pianist_accompagnateur %>
+<% else %>
+  <%# Faire la meme mais mettre un placeholder en mode: Le concours va vous assigner un pianiste accompagnateur qui apparaitra ici, veuillez vérifier régulirement  %>
   <div class="card mb-3 border">
     <div class="card-header bg-light">
       <div class="d-flex align-items-center">
@@ -38,21 +67,7 @@
       </div>
     </div>
     <div class="card-body py-2">
-      <div class="row align-items-center">
-        <div class="col-md-6">
-          <p class="mb-1 fw-bold"><%= performance.inscription.candidate_brings_pianist_accompagnateur_full_name %></p>
-        </div>
-        <div class="col-md-6">
-          <div class="d-flex flex-column gap-2">
-            <div class="d-flex align-items-center">
-              <i class="fas fa-envelope me-2 text-secondary"></i>
-              <a href="mailto:<%= performance.inscription.candidate_brings_pianist_accompagnateur_email %>" class="text-decoration-none text-secondary">
-                <%= performance.inscription.candidate_brings_pianist_accompagnateur_email %>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
+      <p class="mb-0"><%= t('inscriptions.inscription.accompanying_pianist_placeholder') %></p>
     </div>
   </div>
 <% end %>
