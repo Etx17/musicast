@@ -913,9 +913,6 @@ fr:
       reminder: "Rappel: Finissez de constituer votre dossier s'il n'est pas terminé. Les dossiers incomplets sont automatiquement rejetés et ne sont pas remboursables."
       view_application: "Voir ma candidature"
   inscriptions:
-    form:
-      candidate_brings_pianist_accompagnateur_email: "Email du pianiste accompagnateur"
-      candidate_brings_pianist_accompagnateur_full_name: "Nom du pianiste accompagnateur"
     controller:
       application_under_review: "Votre candidature est en cours de validation. Vous recevrez un mail dès que cela sera terminé."
       inscription_updated: "L'inscription a été mise à jour avec succès."
@@ -965,9 +962,13 @@ fr:
       character_hint: "Si air d'opéra seulement"
       base_tonality: "Tonalité de base"
     form:
+      candidate_brings_pianist_accompagnateur_email: "Email du pianiste accompagnateur"
+      candidate_brings_pianist_accompagnateur_full_name: "Nom du pianiste accompagnateur"
+      candidate_brings_pianist_accompagnateur: "Je m'accompagne du pianiste"
       imposed_airs: "Airs imposés"
       bring_own_pianist: "J'amène mon propre pianiste accompagnateur"
       time_preference: "Préférence horaire"
+      time_preference_info: "Il n'est pas garanti que votre heure de passage corresponde à votre préférence"
       select_time_preference: "Sélectionner une préférence horaire"
       terms_acceptance_html: "J'accepte les <a href='#' target='_blank'>conditions générales</a> du concours"
     items_form_section:
@@ -1488,6 +1489,7 @@ fr:
       candidates_have_been_notified: "Les candidats ont été notifiés des résultats."
     form:
       title_placeholder: "ex: Éliminatoires, Demi-finale, Finale..."
+      accompaniment_settings: "Configuration des accompagnements"
       description_placeholder: "Décrivez les règles spécifiques à ce tour..."
       title_english_placeholder: "ex: Preliminaries, Semi-finals, Finals..."
       description_placeholder: "Entrez la description du tour"
@@ -1503,6 +1505,7 @@ fr:
       multiple_selection_help: "Maintenez Ctrl (ou Cmd sur Mac) pour sélectionner plusieurs options"
       create_imposed_work_first: "Vous devez d'abord créer une œuvre imposée pour cette catégorie avant de pouvoir sélectionner des airs imposés."
       requires_pianist_accompanist: "Requiert un pianiste accompagnateur"
+      requires_pianist_accompanist_hint: "Cochez si <span class='text-primary'>soit vous soit le candidat</span> procure un pianiste accompagnateur pour ce tour"
       configurations: "Configurations"
       tour_requirement_description_placeholder: "Décrivez les exigences spécifiques pour ce tour..."
       min_number_of_works: "Nombre minimum d'œuvres"

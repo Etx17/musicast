@@ -49,9 +49,9 @@ ec = EditionCompetition.create(
   competition: c,
   annee: 2024,
   status: "draft",
-  start_date: "2025-03-24",
-  end_date: "2025-03-24",
-  end_of_registration: "2025-03-09",
+  start_date: Date.today + 1.month,
+  end_date: Date.today + 1.month + 3.days,
+  end_of_registration: Date.today + 1.month - 1.week,
   reglement_url: "https://lesmaitresduchant.com/reglement/",
   details_specifiques: "Édition spéciale du concours d'honneur avec un focus sur le répertoire français",
   specific_details_english: "Special edition of the Honor Competition with a focus on French repertoire"

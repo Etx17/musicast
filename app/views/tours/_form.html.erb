@@ -34,8 +34,27 @@
     </div>
     <% end %>
 
-    <%= f.input :requires_pianist_accompanist, as: :boolean, input_html: {class:"bg-success border border-2"}, label: t('tours.form.requires_pianist_accompanist') %>
-
+    <div class="card border my-3">
+      <div class="card-header bg-primary-light">
+        <i class="fas fa-info-circle me-2 text-primary"></i><%= t('tours.form.accompaniment_settings') %>
+      </div>
+      <div class="p-3 bg-white">
+        <div class="form-check form-switch">
+          <%= f.check_box :requires_pianist_accompanist,
+                          class: "form-check-input",
+                          role: "switch",
+                          id: "flexSwitchPianistAccompanist",
+                          checked: f.object.requires_pianist_accompanist.nil? ? true : f.object.requires_pianist_accompanist %>
+          <%= f.label :requires_pianist_accompanist,
+                      t('tours.form.requires_pianist_accompanist'),
+                      class: "form-check-label",
+                      for: "flexSwitchPianistAccompanist" %>
+        </div>
+        <small class="form-text text-muted mt-2">
+          <%= raw(t('tours.form.requires_pianist_accompanist_hint')).html_safe %>
+        </small>
+      </div>
+    </div>
     <h2><%= t('tours.form.configurations') %></h2>
     <%= f.simple_fields_for :tour_requirement do |tr| %>
       <div class="row">

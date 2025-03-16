@@ -43,6 +43,12 @@ class EditionCompetitionsController < ApplicationController
   def update
     authorize @edition_competition
     if @edition_competition.update(edition_competition_params)
+      # si jamais on a updaté a "published", alors il faut publier les catégories
+      if @edition_competition.status == "published"
+        @edition_competition.categories.each do |category|
+          category.update(status: "published")
+        end
+      end
       redirect_to organism_competition_edition_competition_url(@organism, @competition, @edition_competition), notice: "Edition competition was successfully updated."
     else
       render :edit, status: :unprocessable_entity

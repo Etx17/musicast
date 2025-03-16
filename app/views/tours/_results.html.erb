@@ -37,7 +37,7 @@
     <div class="d-flex flex-column align-items-center">
       <h2 class="text-center py-2">Candidats</h2>
 
-      <%= mail_to @tour.performances.where(is_qualified: false).map { |performance| performance.inscription.candidat.user.email }.join(','), class: 'btn btn-outline-success mb-3 text-dark shadow-sm rounded-8' do %>
+      <%= mail_to @tour.performances.where(is_qualified: false).map { |performance| performance.inscription.candidat.user.email }.join(','), class: 'btn btn-primary mb-3 shadow-sm rounded-8' do %>
         <i class="fas fa-envelope text-secondary  "></i> Envoyer un mail aux candidats non qualifiés
       <% end %>
     </div>
@@ -58,7 +58,7 @@
           <% else %>
             <%= button_to 'Qualifier', qualify_performance_organism_competition_edition_competition_category_tour_path(
               @organism, @competition, @edition_competition, @category, @tour, performance_id: performance.id
-            ), method: :put, class: 'btn btn-outline-success ml-auto rounded-4' %>
+            ), method: :put, class: 'btn btn-primary ml-auto rounded-4' %>
           <% end %>
       </div>
     <% end %>
@@ -70,7 +70,7 @@
     <div class="d-flex flex-column align-items-center">
     <h2 class="text-center py-2">Qualifiés ( <%= @tour.performances.where(is_qualified: true).count %> )</h2>
 
-      <%= mail_to @tour.performances.where(is_qualified: true).map { |performance| performance.inscription.candidat.user.email }.join(','), class: 'btn btn-outline-success mb-3 text-dark shadow-sm rounded-8' do %>
+      <%= mail_to @tour.performances.where(is_qualified: true).map { |performance| performance.inscription.candidat.user.email }.join(','), class: 'btn btn-primary mb-3 shadow-sm rounded-8' do %>
         <i class="fas fa-envelope text-secondary  "></i> Envoyer un mail aux qualifiés
       <% end %>
     </div>

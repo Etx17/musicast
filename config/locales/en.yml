@@ -1006,6 +1006,7 @@ en:
       imposed_airs: "Imposed airs"
       bring_own_pianist: "I'm bringing my own accompanying pianist"
       time_preference: "Time preference"
+      time_preference_info: "It's not guaranted that your time of passage will be matching your preference, but we will do our best to accomodate you."
       select_time_preference: "Select a time preference"
       terms_acceptance_html: "I accept the <a href='#' target='_blank'>terms and conditions</a> of the competition"
     items_form_section:
@@ -1598,7 +1599,9 @@ en:
       none: "None"
       multiple_selection_help: "Hold Ctrl (or Cmd on Mac) to select multiple options"
       create_imposed_work_first: "You must first create an imposed work for this category before you can select imposed airs."
-      requires_pianist_accompanist: Requires a pianist accompanist"
+      requires_pianist_accompanist: "Requires a pianist accompanist"
+      requires_pianist_accompanist_hint: "Check if <span class='text-primary'>either you or the candidate</span> brings a pianist accompanist for this round"
+      accompaniment_settings: "Accompaniment settings"
       configurations: "Configurations"
       tour_requirement_description_placeholder: "Describe the specific requirements for this round..."
       min_number_of_works: "Minimum number of works"
