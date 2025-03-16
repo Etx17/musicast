@@ -1499,7 +1499,7 @@ fr:
       none: "Aucun"
       multiple_selection_help: "Maintenez Ctrl (ou Cmd sur Mac) pour sélectionner plusieurs options"
       create_imposed_work_first: "Vous devez d'abord créer une œuvre imposée pour cette catégorie avant de pouvoir sélectionner des airs imposés."
-      no_pianist_accompagnateur: "Pas de pianiste accompagnateur pour ce tour"
+      requires_pianist_accompanist: "Requiert un pianiste accompagnateur"
       configurations: "Configurations"
       tour_requirement_description_placeholder: "Décrivez les exigences spécifiques pour ce tour..."
       min_number_of_works: "Nombre minimum d'œuvres"

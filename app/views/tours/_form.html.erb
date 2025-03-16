@@ -34,7 +34,7 @@
     </div>
     <% end %>
 
-    <%= f.input :no_pianist_accompagnateur, as: :boolean, input_html: {class:"bg-success border border-2"}, label: t('tours.form.no_pianist_accompagnateur') %>
+    <%= f.input :requires_pianist_accompanist, as: :boolean, input_html: {class:"bg-success border border-2"}, label: t('tours.form.requires_pianist_accompanist') %>
 
     <h2><%= t('tours.form.configurations') %></h2>
     <%= f.simple_fields_for :tour_requirement do |tr| %>

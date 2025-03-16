@@ -1596,7 +1596,7 @@ en:
       none: "None"
       multiple_selection_help: "Hold Ctrl (or Cmd on Mac) to select multiple options"
       create_imposed_work_first: "You must first create an imposed work for this category before you can select imposed airs."
-      no_pianist_accompagnateur: "No accompanying pianist for this round"
+      requires_pianist_accompanist: Requires a pianist accompanist"
       configurations: "Configurations"
       tour_requirement_description_placeholder: "Describe the specific requirements for this round..."
       min_number_of_works: "Minimum number of works"

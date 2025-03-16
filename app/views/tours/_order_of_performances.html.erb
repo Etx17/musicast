@@ -10,7 +10,7 @@
           <%= t('tours.order_of_performances.shuffle_randomly') %>
         <% end %>
 
-        <% unless @tour.no_pianist_accompagnateur %>
+        <% unless @tour.requires_pianist_accompanist %>
           <%= button_tag type: 'button', class: "btn btn-outline-dark rounded-8", style: "height: 38px;", data: { bs_toggle: "modal", bs_target: "#assignPianistModal" }, disabled: @tour.performances.none?  do %>
             <i class="fas fa-user pe-1"></i>
             <%= t('tours.order_of_performances.assign_pianists') %>
