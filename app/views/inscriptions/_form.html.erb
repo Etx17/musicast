@@ -29,6 +29,8 @@
 
     <div class="p-2 bg-white rounded-8 mt-3">
       <%= f.input :candidate_brings_pianist_accompagnateur, as: :boolean, label: t('inscriptions.form.bring_own_pianist') if inscription.category.allow_own_pianist_accompagnateur %>
+      <%= f.input :candidate_brings_pianist_accompagnateur_email, label: t('inscriptions.form.candidate_brings_pianist_accompagnateur_email') %>
+      <%= f.input :candidate_brings_pianist_accompagnateur_full_name, label: t('inscriptions.form.candidate_brings_pianist_accompagnateur_full_name') %>
       <%= f.input :time_preference, label: t('inscriptions.form.time_preference'), collection: Inscription.time_preferences.keys.to_a, prompt: t('inscriptions.form.select_time_preference') %>
       <div class="d-flex align-items-start gap-2">
         <%= f.check_box :terms_accepted, required: true, class: "mt-1" %>

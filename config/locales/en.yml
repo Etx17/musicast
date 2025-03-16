@@ -1001,6 +1001,8 @@ en:
       character_hint: "For opera arias only"
       base_tonality: "Base tonality"
     form:
+      candidate_brings_pianist_accompagnateur_email: "Email of the accompanying pianist"
+      candidate_brings_pianist_accompagnateur_full_name: "Full name of the accompanying pianist"
       imposed_airs: "Imposed airs"
       bring_own_pianist: "I'm bringing my own accompanying pianist"
       time_preference: "Time preference"

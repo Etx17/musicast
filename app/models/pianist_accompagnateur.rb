@@ -1,12 +1,11 @@
 class PianistAccompagnateur < ApplicationRecord
   has_many :performances
-  belongs_to :organism
+  belongs_to :organism, optional: true
   VALID_PHONE_REGEX = /\A(\+?\d{1,3}\s?)?(\()?(\d{3})(?(2)\))[-.\s]?\d{3}[-.\s]?\d{4}\z|\A(\+?\d{1,3})?[-.\s]?\d{2}[-.\s]?\d{2}[-.\s]?\d{2}[-.\s]?\d{2}[-.\s]?\d{2}\z/
   validates :full_name, :email, :phone_number, presence: true
   validates :full_name, :email, length: { minimum: 2, maximum: 50}
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
 
-  validates :phone_number, format: { with: VALID_PHONE_REGEX }
   def is_assigned_to_future_performance?
     performances.where('start_date > ?', Date.today).any?
   end

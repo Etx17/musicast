@@ -913,6 +913,9 @@ fr:
       reminder: "Rappel: Finissez de constituer votre dossier s'il n'est pas terminé. Les dossiers incomplets sont automatiquement rejetés et ne sont pas remboursables."
       view_application: "Voir ma candidature"
   inscriptions:
+    form:
+      candidate_brings_pianist_accompagnateur_email: "Email du pianiste accompagnateur"
+      candidate_brings_pianist_accompagnateur_full_name: "Nom du pianiste accompagnateur"
     controller:
       application_under_review: "Votre candidature est en cours de validation. Vous recevrez un mail dès que cela sera terminé."
       inscription_updated: "L'inscription a été mise à jour avec succès."
