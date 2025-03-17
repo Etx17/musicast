@@ -1,5 +1,60 @@
 <%= form_with(url: store_form_data_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour), method: "post", local: true) do |f| %>
- <div>
+  <div class="mb-3">
+    <p class="text-secondary"><i class="fas fa-info-circle text-primary me-1"></i><%= t('tours.planning.jury_form_description') %></p>
+  </div>
+  <div class="mb-3">
+    <h6><%= t('tours.planning.candidate_information') %></h6>
+    <div class="form-check form-switch">
+      <%= f.check_box :show_candidate_number, class: "form-check-input", role: "switch", checked: session[:detailed_program]&.dig(:show_candidate_number) || true, id: "switchCandidateNumber" %>
+      <%= f.label :show_candidate_number, t('tours.planning.candidate_number'), class: "form-check-label", for: "switchCandidateNumber" %>
+    </div>
+    <div class="form-check form-switch">
+      <%= f.check_box :show_full_name, class: "form-check-input", role: "switch", checked: session[:detailed_program]&.dig(:show_full_name) || true, id: "switchFullName" %>
+      <%= f.label :show_full_name, t('tours.planning.full_name'), class: "form-check-label", for: "switchFullName" %>
+    </div>
+    <div class="form-check form-switch">
+      <%= f.check_box :show_nationality, class: "form-check-input", role: "switch", checked: session[:detailed_program]&.dig(:show_nationality), id: "switchNationality" %>
+      <%= f.label :show_nationality, t('tours.planning.nationality'), class: "form-check-label", for: "switchNationality" %>
+    </div>
+    <div class="form-check form-switch">
+      <%= f.check_box :show_birth_date, class: "form-check-input", role: "switch", checked: session[:detailed_program]&.dig(:show_birth_date), id: "switchBirthDate" %>
+      <%= f.label :show_birth_date, t('tours.planning.birth_date'), class: "form-check-label", for: "switchBirthDate" %>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <h6><%= t('tours.planning.performance_information') %></h6>
+    <div class="form-check form-switch">
+      <%= f.check_box :show_performance_time, class: "form-check-input", role: "switch", checked: session[:detailed_program]&.dig(:show_performance_time) || true, id: "switchPerformanceTime" %>
+      <%= f.label :show_performance_time, t('tours.planning.performance_time'), class: "form-check-label", for: "switchPerformanceTime" %>
+    </div>
+    <div class="form-check form-switch">
+      <%= f.check_box :show_program, class: "form-check-input", role: "switch", checked: session[:detailed_program]&.dig(:show_program) || true, id: "switchProgram" %>
+      <%= f.label :show_program, t('tours.planning.program'), class: "form-check-label", for: "switchProgram" %>
+    </div>
+    <div class="form-check form-switch">
+      <%= f.check_box :show_accompanist, class: "form-check-input", role: "switch", checked: session[:detailed_program]&.dig(:show_accompanist), id: "switchAccompanist" %>
+      <%= f.label :show_accompanist, t('tours.planning.accompanist'), class: "form-check-label", for: "switchAccompanist" %>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <h6><%= t('tours.planning.additional_options') %></h6>
+    <div class="form-check form-switch">
+      <%= f.check_box :include_scoring_grid, class: "form-check-input", role: "switch", checked: session[:detailed_program]&.dig(:include_scoring_grid), id: "switchScoringGrid" %>
+      <%= f.label :include_scoring_grid, t('tours.planning.include_scoring_grid'), class: "form-check-label", for: "switchScoringGrid" %>
+    </div>
+    <div class="form-check form-switch">
+      <%= f.check_box :include_notes_section, class: "form-check-input", role: "switch", checked: session[:detailed_program]&.dig(:include_notes_section) || true, id: "switchNotesSection" %>
+      <%= f.label :include_notes_section, t('tours.planning.include_notes_section'), class: "form-check-label", for: "switchNotesSection" %>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-end mt-4">
+    <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal"><%= t('global.actions.cancel') %></button>
+    <%= f.submit t('global.actions.save'), class: "btn btn-primary" %>
+  </div>
+<div>
   <%= f.label :detailed_program, t('tours.planning_jury_form.detailed_program') %>
   <%= f.check_box :detailed_program, checked: session[:detailed_program] %>
 </div>

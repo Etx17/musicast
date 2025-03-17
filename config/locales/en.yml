@@ -1572,7 +1572,8 @@ en:
       generate_with_current_order: "You will generate a schedule with the current order of passage."
       generate_planning: "Generate schedule"
       can_generate_after_deadline: "You can only generate the schedule once the performance submission deadline for the tour has passed, on:"
-
+    planning:
+      jury_form_description: "coucou"
     edit:
       editing_tour: "Editing tour"
       edit_tour: "Edit tour"
@@ -1667,6 +1668,7 @@ en:
       brings_own_pianist: "Brings own pianist"
 
     planning:
+      jury_form_description: "Select the fields you want to see on the Jury document"
       reconfigure_planning: "Reconfigure planning"
       modify_constraints: "Modify constraints"
       email_subject: "Information about your competition passage"

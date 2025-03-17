@@ -1536,7 +1536,6 @@ fr:
       max_number_of_works: "Nombre maximum d'œuvres"
       min_duration_minute: "Durée minimale (minutes)"
       max_duration_minute: "Durée maximale (minutes)"
-
     order_of_performances:
       current_order: "Ordre actuel"
       shuffle_confirm: "Êtes-vous sûr de vouloir mélanger aléatoirement l'ordre des performances ?"
@@ -1565,6 +1564,8 @@ fr:
       brings_own_pianist: "Amène son propre pianiste"
 
     planning:
+      candidate_information: Informations sur le candidat
+      jury_form_description: "Sélectionnez les champs que vous souhaitez voir apparaître sur le dossier Jury"
       reconfigure_planning: "Reconfigurer le planning"
       modify_constraints: "Modifier les contraintes"
       email_subject: "Informations concernant votre passage au concours"
