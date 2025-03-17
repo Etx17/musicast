@@ -44,8 +44,8 @@
 
     <% if @performance.tour.imposed_air_selection.present? %>
       <div class="form-group mb-4">
-        <div class="card border-warning">
-          <div class="card-header bg-warning text-dark">
+        <div class="card">
+          <div class="card-header bg-primary-light text-dark">
             <h5 class="mb-0"><%= t('performances.form.imposed_works') %></h5>
           </div>
           <div class="card-body">
@@ -126,7 +126,7 @@
             <% if available_airs.any? %>
               <% available_airs.each do |air| %>
                 <div class="form-check mb-2">
-                  <%= check_box_tag "performance[air_selection][]", air.id, false, id: "new_air_#{air.id}", class: "form-check-input" %>
+                  <%= check_box_tag "performance[air_selection][]", air.id, false, id: "new_air_#{air.id}", class: "form-check-input", style:"border: solid 1px !important" %>
                   <label for="new_air_<%= air.id %>" class="form-check-label">
                     <%= air.title %> (<%= air.length_minutes %> min)
                     <% if air.infos_english.present? %>
