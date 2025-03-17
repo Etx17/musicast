@@ -1329,6 +1329,18 @@ en:
       change_airs: "Change airs (reselect airs from your registration)"
       save: "Save"
       description_english: "Description (English)"
+      selected_works: "Currently Selected Works"
+      keep: "Keep"
+      imposed: "Imposed"
+      no_works_selected: "No works selected yet"
+      works_used_in_other_rounds: "Works Used in Other Rounds"
+      current_duration: "Current Program Duration"
+      duration_warning: "Warning: This duration does not meet the requirements for this round"
+      imposed_works: "Imposed Works for This Round"
+      imposed_works_explanation: "These works are required for this round and cannot be removed."
+      no_optional_works_selected: "No optional works selected yet"
+      no_more_available_works: "No more works available for selection"
+
     performance:
       inscription: "Registration"
       tour: "Round"
@@ -1351,7 +1363,10 @@ en:
       edit_performance: "Edit this performance"
       back_to_performances: "Back to performances"
       destroy_performance: "Destroy this performance"
-
+    update:
+      success: "Performance updated successfully"
+    create:
+      success: "Performance created successfully"
   pianist_accompagnateurs:
     form:
       errors_prohibited: "prohibited this pianist from being saved:"

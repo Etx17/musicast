@@ -1256,7 +1256,19 @@ fr:
       purchase_of: "Achat de <strong>%{inscription}</strong> pour <strong>%{amount}</strong>"
       pay: "Payer"
   performances:
+    update:
+      success: "Performance mise à jour avec succès"
     form:
+      imposed_works: "Œuvres imposées"
+      imposed_works_explanation: "Ces œuvres sont imposées pour ce tour. Vous ne pouvez pas les modifier."
+      selected_works: "Œuvres actuellement sélectionnées"
+      keep: "Conserver"
+      imposed: "Imposé"
+      no_works_selected: "Aucune œuvre sélectionnée"
+      works_used_in_other_rounds: "Œuvres utilisées dans d'autres tours"
+      current_duration: "Durée actuelle du programme"
+      no_optional_works_selected: "Aucune œuvre optionnelle sélectionnée"
+      no_more_available_works: "Aucune œuvre disponible pour sélection"
       tour_requirements: "Exigences du tour"
       description: "Description"
       number_of_works: "Nombre d'œuvres"
@@ -1267,6 +1279,13 @@ fr:
       change_airs: "Changer d'airs (rechoisir les airs de votre inscription)"
       save: "Enregistrer"
       description_english: "Description (English)"
+      selected_works: "Œuvres Actuellement Sélectionnées"
+      keep: "Conserver"
+      imposed: "Imposé"
+      no_works_selected: "Aucune œuvre sélectionnée"
+      works_used_in_other_rounds: "Œuvres Utilisées dans d'Autres Tours"
+      current_duration: "Durée Actuelle du Programme"
+      duration_warning: "Attention : Cette durée ne respecte pas les exigences pour ce tour"
     performance:
       inscription: "Inscription"
       tour: "Tour"
@@ -1278,6 +1297,8 @@ fr:
       performances: "Performances"
       show_performance: "Voir cette performance"
       new_performance: "Nouvelle performance"
+    create:
+      success: "Performance créée avec succès"
     new:
       my_program: "Mon programme pour ce tour"
       choose_airs_instructions: "Choisissez quels airs vous voudrez interprêter. Attention, s'il y a des airs imposés vous ne les verrez qu'après avoir crée votre programme et il faudra l'adapter en conséquence. \nVous pourrez changer l'ordre des airs que vous interprêtez depuis votre dossier sur la page précédente, en glissant-déposant les airs pour réarranger leur ordre et en cliquant sur \"Mettre à jour le programme\""

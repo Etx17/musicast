@@ -9,11 +9,22 @@ class PerformancesController < ApplicationController
   def create
     @inscription = Inscription.find(params[:inscription_id])
     @tour = Tour.find(params[:performance][:tour_id])
-    performance_params = performance_params()
-    performance_params[:air_selection] = performance_params[:air_selection].reject(&:empty?)
-    @performance = Performance.new(performance_params.merge(inscription: @inscription, tour: @tour))
+
+    # Process performance params
+    processed_params = performance_params
+    processed_params[:air_selection] = processed_params[:air_selection].reject(&:empty?) if processed_params[:air_selection].present?
+
+    # Make sure imposed airs are always included
+    if @tour.imposed_air_selection.present?
+      processed_params[:air_selection] ||= []
+      processed_params[:air_selection] += @tour.imposed_air_selection
+      processed_params[:air_selection].uniq!
+    end
+
+    @performance = Performance.new(processed_params.merge(inscription: @inscription, tour: @tour))
+
     if @performance.save
-      redirect_to @performance.inscription
+      redirect_to @performance.inscription, notice: t('performances.create.success')
     else
       render :new
     end
@@ -32,11 +43,22 @@ class PerformancesController < ApplicationController
       params[:performance][:ordered_air_selection] = JSON.parse(params[:performance][:ordered_air_selection])
     end
 
-    updated_params = performance_params
-    updated_params = updated_params.merge(air_selection: @performance.air_selection) if params[:performance][:air_selection].blank?
+    # Ensure air_selection is an array of IDs
+    if params[:performance][:air_selection].present?
+      params[:performance][:air_selection] = params[:performance][:air_selection].map(&:to_s)
+    else
+      # If no airs were selected, initialize with an empty array
+      params[:performance][:air_selection] = []
+    end
 
-    if @performance.update(updated_params)
-      redirect_to inscription_path(@performance.inscription)
+    # Make sure imposed airs are always included
+    if @performance.tour.imposed_air_selection.present?
+      params[:performance][:air_selection] += @performance.tour.imposed_air_selection
+      params[:performance][:air_selection].uniq!
+    end
+
+    if @performance.update(performance_params)
+      redirect_to inscription_path(@performance.inscription), notice: t('performances.update.success')
     else
       render :edit
     end

@@ -42,37 +42,129 @@
     </div>
   <% end %>
 
-    <div class="form-group">
-      <ul>
-      <% @performance.inscription.used_airs.each do |air| %>
-        <li class="text-secondary">
-          <%= air.title %> - <%= t('performances.form.already_used') %>
-          <% if air.infos_english.present? %>
-            <div class="text-secondary fst-italic small"><%= air.infos_english %></div>
-          <% end %>
-        </li>
+    <% if @performance.tour.imposed_air_selection.present? %>
+      <div class="form-group mb-4">
+        <div class="card border-warning">
+          <div class="card-header bg-warning text-dark">
+            <h5 class="mb-0"><%= t('performances.form.imposed_works') %></h5>
+          </div>
+          <div class="card-body">
+            <p class="card-text"><%= t('performances.form.imposed_works_explanation') %></p>
+            <div class="imposed-works">
+              <% @performance.tour.imposed_air_selection.each do |air_id| %>
+                <% air = Air.find(air_id) %>
+                <div class="selected-air mb-2 p-2 border rounded d-flex justify-content-between align-items-center bg-light">
+                  <div>
+                    <strong><%= air.title %></strong> (<%= air.length_minutes %> min)
+                    <% if air.infos_english.present? %>
+                      <div class="text-secondary fst-italic small"><%= air.infos_english %></div>
+                    <% end %>
+                  </div>
+                  <div class="form-check">
+                    <%= check_box_tag "performance[air_selection][]", air.id, true, id: "imposed_air_#{air.id}",
+                                    class: "form-check-input", disabled: true %>
+                    <%= hidden_field_tag "performance[air_selection][]", air.id %>
+                    <label for="imposed_air_<%= air.id %>" class="form-check-label">
+                      <span class="badge bg-warning"><%= t('performances.form.imposed') %></span>
+                    </label>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="form-group mb-4">
+      <h5><%= t('performances.form.selected_works') %></h5>
+      <%
+        # Get all selected airs that are not imposed
+        selected_airs = @performance.airs.reject { |air| @performance.imposed_air_selection&.include?(air.id.to_s) }
+      %>
+      <% if selected_airs.present? %>
+        <div class="card mb-3">
+          <div class="card-body">
+            <div class="current-selection">
+              <% selected_airs.each do |air| %>
+                <div class="selected-air mb-2 p-2 border rounded d-flex justify-content-between align-items-center">
+                  <div>
+                    <strong><%= air.title %></strong> (<%= air.length_minutes %> min)
+                    <% if air.infos_english.present? %>
+                      <div class="text-secondary fst-italic small"><%= air.infos_english %></div>
+                    <% end %>
+                  </div>
+                  <div class="form-check">
+                    <%= check_box_tag "performance[air_selection][]", air.id, true, id: "air_#{air.id}", class: "form-check-input" %>
+                    <label for="air_<%= air.id %>" class="form-check-label"><%= t('performances.form.keep') %></label>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% else %>
+        <p class="text-muted"><%= t('performances.form.no_optional_works_selected') %></p>
       <% end %>
-      </ul>
-      <%= f.label t('performances.form.available_works') %>
-      <div class="d-flex flex-column">
-        <%= f.collection_check_boxes :air_selection, @performance.inscription.associated_airs - @performance.inscription.used_airs, :id, :title, { checked: @performance.air_selection } do |b| %>
-          <div>
-            <%= b.check_box %>
-            <%= b.text %> (<%= b.object.length_minutes %> min)
-            <% if b.object.infos_english.present? %>
-              <div class="text-secondary fst-italic small"><%= b.object.infos_english %></div>
+    </div>
+
+    <div class="form-group">
+      <h5><%= t('performances.form.available_works') %></h5>
+
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex flex-column">
+            <%
+              # Get all available airs that are not already selected and not imposed
+              available_airs = @performance.inscription.associated_airs - @performance.inscription.used_airs + @performance.airs
+              available_airs = available_airs.uniq.reject { |air|
+                @performance.air_selection.include?(air.id.to_s) ||
+                @performance.air_selection.include?(air.id) ||
+                @performance.imposed_air_selection&.include?(air.id.to_s)
+              }
+            %>
+            <% if available_airs.any? %>
+              <% available_airs.each do |air| %>
+                <div class="form-check mb-2">
+                  <%= check_box_tag "performance[air_selection][]", air.id, false, id: "new_air_#{air.id}", class: "form-check-input" %>
+                  <label for="new_air_<%= air.id %>" class="form-check-label">
+                    <%= air.title %> (<%= air.length_minutes %> min)
+                    <% if air.infos_english.present? %>
+                      <div class="text-secondary fst-italic small"><%= air.infos_english %></div>
+                    <% end %>
+                  </label>
+                </div>
+              <% end %>
+            <% else %>
+              <p class="text-muted"><%= t('performances.form.no_more_available_works') %></p>
             <% end %>
           </div>
-        <% end %>
+        </div>
       </div>
+
+      <% if @performance.tour.final_performance_submission_deadline < Date.today %>
+        <div class="mt-3">
+          <%= link_to t('performances.form.change_airs'), edit_inscription_path(@performance.inscription), class: "btn btn-outline-secondary btn-sm" %>
+        </div>
+      <% end %>
     </div>
-    <% if @performance.tour.final_performance_submission_deadline < Date.today %>
-      <%= link_to t('performances.form.change_airs'), edit_inscription_path(@performance.inscription) %>
+
+    <% if @performance.has_incorrect_duration? %>
+      <div class="alert alert-warning mt-4">
+        <div class="d-flex align-items-center">
+          <i class="fas fa-info-circle me-2 fs-4"></i>
+          <div>
+            <strong><%= t('performances.form.current_duration') %>: <%= @performance.minutes %> <%= t('performances.form.minutes') %></strong>
+              <div class="text-danger"><%= t('performances.form.duration_warning') %></div>
+          </div>
+        </div>
+      </div>
     <% end %>
   </div>
 
-  <div class="form-actions">
+  <div class="form-actions mt-4">
     <%= f.button :submit, t('performances.form.save'), class:"btn btn-primary" %>
+    <%= link_to t('global.actions.cancel'), inscription_path(@performance.inscription), class: "btn btn-outline-secondary ms-2" %>
   </div>
 <% end %>
 </div>
