@@ -13,9 +13,9 @@ class ButtonComponent < ViewComponent::Base
   def button_classes
     case @button_type
     when "primary"
-      "btn btn-primary"
+      "btn btn-primary text-white"
     when "primary-bigger"
-      "btn btn-primary btn-lg"
+      "btn btn-primary btn-lg text-white"
     when "secondary"
       "btn btn-outline-secondary"
     when "secondary-bigger"

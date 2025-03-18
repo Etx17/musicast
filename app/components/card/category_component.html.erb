@@ -1,0 +1,30 @@
+<%= render(Card::BaseComponent.new(
+  height: @height,
+  image: @image,
+  links: @links,
+  redirect: @redirect,
+  bottom_button_links: @bottom_button_links,
+  bottom_left_label: @bottom_left_label,
+  top_left_pill: @top_left_pill,
+  bottom_left_pill: @bottom_left_pill,
+)) do %>
+  <div class="p-3">
+    <h5 class="h4 mb-3"><%= category.name.truncate(50) %></h5>
+
+    <% if category.description.present? %>
+      <p class="card-text small mb-2"><%= category.description.truncate(100) %></p>
+    <% end %>
+
+    <% if category.description_english.present? %>
+      <p class="card-text small text-muted fst-italic"><%= category.description_english.truncate(100) %></p>
+    <% end %>
+
+    <div class="d-flex flex-wrap gap-1 mt-2">
+      <% if category.tours.any? %>
+        <span class="badge bg-light text-dark">
+          <i class="fas fa-music me-1"></i> <%= category.tours.count %> <%= category.tours.count > 1 ? I18n.t('global.rounds') : I18n.t('global.round') %>
+        </span>
+      <% end %>
+    </div>
+  </div>
+<% end %>

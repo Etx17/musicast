@@ -9,7 +9,7 @@
   end
 %>
 
-<div class="bg-white radius mb-3 mb-md-3 element-width position-relative <%= @has_shadow ? "shadow-sm" : "" %> <%= @highlight_card ? "highlight-card" : "" %>" style="height: <%= adjusted_height %>px; <%= @has_shadow ? "border: 0.7px solid lightgray;" : "" %>" >
+<div class="bg-white radius mb-3 mb-md-3 position-relative <%= @has_shadow ? "shadow-sm" : "" %> <%= @highlight_card ? "highlight-card" : "" %>" style="height: <%= adjusted_height %>px; <%= @has_shadow ? "border: 0.7px solid lightgray;" : "" %>; width: 350px;" >
   <!-- Top left pill (label, class-->
   <% if @top_left_pill.present? %>
     <div class="position-absolute <%= @top_left_pill[:class] %>" style="top: 10px; left: 10px;z-index:2">
@@ -28,10 +28,10 @@
   <div class="position-relative">
     <% if @redirect.present? %>
       <%= link_to @redirect do %>
-        <div class="track_img background-image lazy rounded-top-box " style="background-image: url('<%= @image %>');width:100%;aspect-ratio:<%=@ratio%>; <%= @image_style %>" data-src="<%= @image %>" loading="lazy" ></div>
+        <div class="card-img background-image lazy rounded-top-box " style="background-image: url('<%= @image %>');width:100%;aspect-ratio:<%=@ratio%>; <%= @image_style %>" data-src="<%= @image %>" loading="lazy" ></div>
       <% end %>
     <% else %>
-      <div class="track_img background-image lazy rounded-top-box " style="background-image: url('<%= @image %>');width:100%;aspect-ratio:<%=@ratio%>; <%= @image_style %>" data-src="<%= @image %>" loading="lazy" ></div>
+      <div class="card-img background-image lazy rounded-top-box " style="background-image: url('<%= @image %>');width:100%;aspect-ratio:<%=@ratio%>; <%= @image_style %>" data-src="<%= @image %>" loading="lazy" ></div>
     <% end %>
 
     <!-- Bottom left pill -->
@@ -43,7 +43,7 @@
   </div>
 
   <!-- yielded content -->
-  <%= content_tag :div, class: 'card-content' do %>
+  <%= content_tag :div do %>
     <%= content %>
   <% end %>
 

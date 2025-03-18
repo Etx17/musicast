@@ -1,7 +1,7 @@
 
     <% if @only_vertical_dots %>
       <!-- Only black vertical dots -->
-      <div class="position-relative new-components" data-controller="dropdown">
+      <div class="position-relative" data-controller="dropdown">
         <button class="bg-transparent border border-transparent" type="button" data-dropdown-target="button" data-action="click->dropdown#toggle" style="border: none !important;">
           <i class="fa-solid fa-ellipsis text-black" style="transform: rotate(90deg); font-size: 24px;"></i>
         </button>
@@ -26,7 +26,7 @@
       </div>
     <% else %>
       <!-- Button that contains dots -->
-      <div class="position-relative new-components" data-controller="dropdown">
+      <div class="position-relative" data-controller="dropdown">
         <div class="dropdown kebab-dropdown <%= @rounded ? 'kebab-dropdown-rounded' : '' %> <%= @align %>">
           <button class="kebab-button" type="button" data-dropdown-target="button" data-action="click->dropdown#toggle">
             <i class="fa-solid fa-ellipsis <%= @rounded ? 'text-white' : '' %>"></i>

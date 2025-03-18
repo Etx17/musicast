@@ -1,19 +1,19 @@
-<div class="bg-light-grey" style="height: 100vh;">
+<div class="bg-light-grey" style="min-height: 100vh;">
 
   <div class="text-center py-5 text-white" style="position: relative; background: url('https://source.unsplash.com/random/?opera/400/400') no-repeat center center; background-size: cover;">
     <h1 class="display-4 text-dark" style="position: relative; z-index: 1;"><%= @edition_competition.competition.nom_concours %> - <%= @edition_competition.annee %></h1>
   </div>
 
-  <div class="container mt-3">
-    <h4 class="text-center pb-5 bold" style="font-size: 2rem;"><%= t('edition_competitions.candidate_edition_competition.choose_category') %></h4>
-    <small class="text-center"><%= @categories.count %> <%= t('edition_competitions.candidate_edition_competition.available') %>: </small>
-    <div class="row">
-      <% @categories.each do |category| %>
-      <%= render CategoryCardComponent.new(category: category) %>
-      <%= render 'category_modal_infos', category: category %>
-    <% end %>
-    </div>
+  <div class="container mt-3 pb-5">
+    <h4 class="text-center pb-3 bold" style="font-size: 2rem;"><%= t('edition_competitions.candidate_edition_competition.choose_category') %></h4>
+    <p class="text-center mb-4"><%= @categories.count %> <%= t('edition_competitions.candidate_edition_competition.available') %></p>
 
+    <div class="cards-container">
+      <% @categories.each do |category| %>
+        <%= render Card::CategoryComponent.new(category: category) %>
+        <%= render 'category_modal_infos', category: category %>
+      <% end %>
+    </div>
   </div>
 
 </div>
