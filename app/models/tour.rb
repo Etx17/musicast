@@ -49,7 +49,9 @@ class Tour < ApplicationRecord
   end
 
   def next_tour
-    category.tours.where(is_finished: false).order(:tour_number).first
+    category.tours.where("tour_number > ?", tour_number)
+             .order(tour_number: :asc)
+             .first
   end
 
   def generate_initial_performance_order
@@ -162,6 +164,11 @@ class Tour < ApplicationRecord
       .exists?
   end
 
+  def previous_tour
+    category.tours.where("tour_number < ?", tour_number)
+             .order(tour_number: :desc)
+             .first
+  end
 
   private
 

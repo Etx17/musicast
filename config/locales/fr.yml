@@ -1645,6 +1645,8 @@ fr:
       order_of_passage: "Ordre de passage"
 
     tour:
+      next_tour: "Prochain tour"
+      previous_tour: "Tour précédent"
       tour: "Tour"
       add_tour: "Ajouter un tour"
       drag_and_drop_info: "Glissez déposez les tours pour changer leur ordre"
