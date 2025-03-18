@@ -14,7 +14,14 @@ class Competition < ApplicationRecord
   validates :description, length: { minimum: 3, maximum: 500 }
 
   def organisateur
-    # returns the association organisateur of the competition
     organism.organisateur
+  end
+
+  def image_or_default
+    if photo.attached?
+      Rails.application.routes.url_helpers.rails_blob_path(photo, only_path: true)
+    else
+      "https://placehold.co/300x300"
+    end
   end
 end

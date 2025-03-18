@@ -9,6 +9,7 @@
     <small class="text-center"><%= @categories.count %> <%= t('edition_competitions.candidate_edition_competition.available') %>: </small>
     <div class="row">
       <% @categories.each do |category| %>
+
       <%= render CategoryCardComponent.new(category: category) %>
       <%= render 'category_modal_infos', category: category %>
     <% end %>
