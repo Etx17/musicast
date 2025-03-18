@@ -1,63 +1,74 @@
 <%= form_with(url: store_form_data_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour), method: "post", local: true) do |f| %>
- <div>
-  <%= f.label :detailed_program, t('tours.planning_jury_form.detailed_program') %>
-  <%= f.check_box :detailed_program, checked: session[:detailed_program] %>
-</div>
+  <div class="mb-3">
+    <p class="text-secondary"><i class="fas fa-info-circle text-primary me-1"></i><%= t('tours.planning.jury_form_description') %></p>
+  </div>
 
-<div>
-  <%= f.label :simple_air, t('tours.planning_jury_form.simple_air') %>
-  <%= f.check_box :simple_air, checked: session[:simple_air] %>
-</div>
+  <div class="mb-3">
+    <h6><%= t('tours.planning.program_options') %></h6>
+    <div class="form-check form-switch">
+      <%= f.check_box :detailed_program, class: "form-check-input", role: "switch", checked: session[:detailed_program], id: "switchDetailedProgram" %>
+      <%= f.label :detailed_program, t('tours.planning.detailed_program'), class: "form-check-label", for: "switchDetailedProgram" %>
+    </div>
+    <div class="form-check form-switch">
+      <%= f.check_box :simple_air, class: "form-check-input", role: "switch", checked: session[:simple_air], id: "switchSimpleAir" %>
+      <%= f.label :simple_air, t('tours.planning.simple_air'), class: "form-check-label", for: "switchSimpleAir" %>
+    </div>
+  </div>
 
-<div>
-  <%= f.label :notes_space, t('tours.planning_jury_form.notes_space') %>
-  <%= f.check_box :notes_space, checked: session[:notes_space] %>
-</div>
+  <div class="mb-3">
+    <h6><%= t('tours.planning.biography_options') %></h6>
+    <div class="form-check form-switch">
+      <%= f.check_box :short_bio, class: "form-check-input", role: "switch", checked: session[:short_bio], id: "switchShortBio" %>
+      <%= f.label :short_bio, t('tours.planning.short_bio'), class: "form-check-label", for: "switchShortBio" %>
+    </div>
+    <div class="form-check form-switch">
+      <%= f.check_box :medium_bio, class: "form-check-input", role: "switch", checked: session[:medium_bio], id: "switchMediumBio" %>
+      <%= f.label :medium_bio, t('tours.planning.medium_bio'), class: "form-check-label", for: "switchMediumBio" %>
+    </div>
+    <div class="form-check form-switch">
+      <%= f.check_box :long_bio, class: "form-check-input", role: "switch", checked: session[:long_bio], id: "switchLongBio" %>
+      <%= f.label :long_bio, t('tours.planning.long_bio'), class: "form-check-label", for: "switchLongBio" %>
+    </div>
+    <div class="form-check form-switch">
+      <%= f.check_box :short_bio_en, class: "form-check-input", role: "switch", checked: session[:short_bio_en], id: "switchShortBioEn" %>
+      <%= f.label :short_bio_en, t('tours.planning.short_bio_en'), class: "form-check-label", for: "switchShortBioEn" %>
+    </div>
+    <div class="form-check form-switch">
+      <%= f.check_box :medium_bio_en, class: "form-check-input", role: "switch", checked: session[:medium_bio_en], id: "switchMediumBioEn" %>
+      <%= f.label :medium_bio_en, t('tours.planning.medium_bio_en'), class: "form-check-label", for: "switchMediumBioEn" %>
+    </div>
+    <div class="form-check form-switch">
+      <%= f.check_box :long_bio_en, class: "form-check-input", role: "switch", checked: session[:long_bio_en], id: "switchLongBioEn" %>
+      <%= f.label :long_bio_en, t('tours.planning.long_bio_en'), class: "form-check-label", for: "switchLongBioEn" %>
+    </div>
+  </div>
 
-<div>
-  <%= f.label :profile_photo, t('tours.planning_jury_form.profile_photo') %>
-  <%= f.check_box :profile_photo, checked: session[:profile_photo] %>
-</div>
+  <div class="mb-3">
+    <h6><%= t('tours.planning.photo_options') %></h6>
+    <div class="form-check form-switch">
+      <%= f.check_box :profile_photo, class: "form-check-input", role: "switch", checked: session[:profile_photo], id: "switchProfilePhoto" %>
+      <%= f.label :profile_photo, t('tours.planning.profile_photo'), class: "form-check-label", for: "switchProfilePhoto" %>
+    </div>
+    <div class="form-check form-switch">
+      <%= f.check_box :artistic_photo, class: "form-check-input", role: "switch", checked: session[:artistic_photo], id: "switchArtisticPhoto" %>
+      <%= f.label :artistic_photo, t('tours.planning.artistic_photo'), class: "form-check-label", for: "switchArtisticPhoto" %>
+    </div>
+  </div>
 
-<div>
-  <%= f.label :artistic_photo, t('tours.planning_jury_form.artistic_photo') %>
-  <%= f.check_box :artistic_photo, checked: session[:artistic_photo] %>
-</div>
+  <div class="mb-3">
+    <h6><%= t('tours.planning.additional_options') %></h6>
+    <div class="form-check form-switch">
+      <%= f.check_box :notes_space, class: "form-check-input", role: "switch", checked: session[:notes_space], id: "switchNotesSpace" %>
+      <%= f.label :notes_space, t('tours.planning.notes_space'), class: "form-check-label", for: "switchNotesSpace" %>
+    </div>
+    <div class="form-check form-switch">
+      <%= f.check_box :order_of_passage, class: "form-check-input", role: "switch", checked: session[:order_of_passage], id: "switchOrderOfPassage" %>
+      <%= f.label :order_of_passage, t('tours.planning.order_of_passage'), class: "form-check-label", for: "switchOrderOfPassage" %>
+    </div>
+  </div>
 
-<div>
-  <%= f.label :short_bio, t('tours.planning_jury_form.short_bio') %>
-  <%= f.check_box :short_bio, checked: session[:short_bio] %>
-</div>
-
-<div>
-  <%= f.label :medium_bio, t('tours.planning_jury_form.medium_bio') %>
-  <%= f.check_box :medium_bio, checked: session[:medium_bio] %>
-</div>
-
-<div>
-  <%= f.label :long_bio, t('tours.planning_jury_form.long_bio') %>
-  <%= f.check_box :long_bio, checked: session[:long_bio] %>
-</div>
-
-<div>
-  <%= f.label :short_bio_en, t('tours.planning_jury_form.short_bio_en') %>
-  <%= f.check_box :short_bio_en, checked: session[:short_bio_en] %>
-</div>
-
-<div>
-  <%= f.label :medium_bio_en, t('tours.planning_jury_form.medium_bio_en') %>
-  <%= f.check_box :medium_bio_en, checked: session[:medium_bio_en] %>
-</div>
-
-<div>
-  <%= f.label :long_bio_en, t('tours.planning_jury_form.long_bio_en') %>
-  <%= f.check_box :long_bio_en, checked: session[:long_bio_en] %>
-</div>
-
-<div>
-  <%= f.label :order_of_passage, t('tours.planning_jury_form.order_of_passage') %>
-  <%= f.check_box :order_of_passage, checked: session[:order_of_passage] %>
-</div>
-
-<%= f.submit t('global.actions.save') %>
+  <div class="d-flex justify-content-end mt-4">
+    <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal"><%= t('global.actions.cancel') %></button>
+    <%= f.submit t('global.actions.save'), class: "btn btn-primary" %>
+  </div>
 <% end %>

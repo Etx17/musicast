@@ -23,4 +23,11 @@ class Organism < ApplicationRecord
     self.slug = nom.parameterize if nom_changed?
   end
 
+  def logo_or_default
+    if logo.attached?
+      Rails.application.routes.url_helpers.rails_blob_path(logo, only_path: true)
+    else
+      "https://placehold.co/40x40"
+    end
+  end
 end

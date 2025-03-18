@@ -87,6 +87,14 @@ class Category < ApplicationRecord
     tours.present? && tours.count > 0
   end
 
+  def image_or_default
+    if photo.attached?
+      Rails.application.routes.url_helpers.rails_blob_path(photo, only_path: true)
+    else
+      "https://placehold.co/300x300?text=#{CGI.escape(name)}"
+    end
+  end
+
   def has_a_requirement_item?
     requirement_items.present? && requirement_items.count > 0
   end

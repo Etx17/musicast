@@ -202,6 +202,7 @@ class ToursController < ApplicationController
   end
 
   def store_form_data
+    
     session[:detailed_program] = params[:detailed_program] == "1"
     session[:simple_air] = params[:simple_air] == "1"
     session[:notes_space] = params[:notes_space] == "1"
