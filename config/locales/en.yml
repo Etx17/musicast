@@ -490,15 +490,23 @@ en:
       finish_configuration: "I have finished configuring the category"
       configure_program: "Configure program"
       configure_tours: "Configure rounds"
-      configure_requirements: "Configure required documents"
-      configure_prizes: "Configure prizes"
-      badges:
-        create_program: "Create at least 1 program"
-        create_tour: "Create at least 1 round"
-        create_requirement: "Create at least 1 required document (optional)"
-        create_prize: "Create at least 1 prize"
-        create_jury: "Create at least 1 voting pre-jury"
+      configure_docs_prizes_jury: "Configure documents, prizes & jury"
+      published: "Your category has been published"
       applications: "Applications"
+      badges:
+        create_program: "Create program"
+        create_tour: "Create tour"
+        create_requirement: "Create required document"
+        create_prize: "Create prize"
+        create_jury: "Create jury"
+      tabs:
+        program: "Program"
+        tours: "Tours"
+        docs_prizes_jury: "Documents, Prizes & Jury"
+      sections:
+        requirements: "Required documents"
+        prizes: "Prizes"
+        jury: "Jury"
     edit:
       title: "Edit Category"
       back: "Back"

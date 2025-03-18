@@ -356,18 +356,27 @@ fr:
       edit_category: "Modifier la catégorie"
       view_applications: "Candidatures"
       delete: "Supprimer"
-      finish_configuration: "J'ai terminé la configuration de la catégorie"
+      confirm_delete: "Êtes-vous sûr?"
+      finish_configuration: "Terminer la configuration"
       configure_program: "Configurer le programme"
       configure_tours: "Configurer les tours"
-      configure_requirements: "Configurer les documents requis"
-      configure_prizes: "Configurer les prix"
-      badges:
-        create_program: "Créer au moins 1 programme"
-        create_tour: "Créer au moins 1 tour"
-        create_requirement: "Créer au moins 1 document requis (optionnel)"
-        create_prize: "Créer au moins 1 prix"
-        create_jury: "Créer au moins 1 pré-juré votant"
+      configure_docs_prizes_jury: "Configurer les documents, prix et jury"
+      published: "Votre catégorie a été publiée"
       applications: "Candidatures"
+      badges:
+        create_program: "Créer un programme"
+        create_tour: "Créer un tour"
+        create_requirement: "Créer un document requis"
+        create_prize: "Créer un prix"
+        create_jury: "Créer un jury"
+      tabs:
+        program: "Programme"
+        tours: "Tours"
+        docs_prizes_jury: "Documents, Prix & Jury"
+      sections:
+        requirements: "Documents requis"
+        prizes: "Prix"
+        jury: "Jury"
     common:
       save: "Enregistrer"
       close: "Fermer"
@@ -530,6 +539,8 @@ fr:
       guidelines: "Consignes"
       number_to_select: "Nombre à sélectionner"
     form:
+      list_title_english: Titre de la liste (Anglais)
+      guidelines_english: Consignes (Anglais)
       list_configuration: "Configuration de la liste"
       title_placeholder: "ex: 2 lieder Allemands"
       list_title: "Titre de la liste"

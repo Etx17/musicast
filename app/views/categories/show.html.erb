@@ -1,83 +1,109 @@
-<div class="pt-5 container">
+<div class="container">
   <div class="row">
     <div class="col">
-      <h1 class="text-center mb-3 " style="font-size: 5.5em;"><%= @category.name %></h1>
-      <div class="border-0 rounded">
-        <div class="mt-3 d-flex w-100 gap-3 justify-content-around">
-          <%= link_to organism_competition_edition_competition_path(@organism, @competition, @edition_competition), class: "btn btn-primary" do %>
-            <i class="fas fa-arrow-left"></i> <%= t('categories.show.back_to_categories') %>
-          <% end %>
-          <%= link_to edit_organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category), class: 'btn btn-primary' do %>
-            <i class="fas fa-edit"></i> <%= t('categories.show.edit_category') %>
-          <% end %>
-          <%= link_to organism_competition_edition_competition_category_inscriptions_path(@organism, @competition, @edition_competition, @category), class: "btn btn-primary" do %>
-            <i class="fas fa-eye"></i> <%= t('categories.show.view_applications') %> ( <%= @category.inscriptions.where(status: 'in_review').count %> )
-          <% end %>
-          <%= button_to organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category), method: :delete, class: 'btn btn-primary', data: { confirm: 'Are you sure?' } do %>
-            <i class="fas fa-trash"></i> <%= t('categories.show.delete') %>
-          <% end %>
-        </div>
-        <div class="d-flex justify-content-center mt-5 mb-5">
-          <% if @category.ready_to_publish? && !@category.edition_competition.published? %>
-            <%= link_to t('categories.show.finish_configuration'), organism_competition_edition_competition_path(@organism, @competition, @edition_competition), class: "btn btn-success" %>
+      <h1 class="text-center mb-3" style="font-size: 5.5em;"><%= @category.name %></h1>
+
+      <!-- Action buttons -->
+      <div class="mt-3 d-flex w-100 gap-3 justify-content-around mb-4">
+        <%= link_to organism_competition_edition_competition_path(@organism, @competition, @edition_competition), class: "btn btn-primary" do %>
+          <i class="fas fa-arrow-left"></i> <%= t('categories.show.back_to_categories') %>
+        <% end %>
+        <%= link_to edit_organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category), class: 'btn btn-primary' do %>
+          <i class="fas fa-edit"></i> <%= t('categories.show.edit_category') %>
+        <% end %>
+        <%= link_to organism_competition_edition_competition_category_inscriptions_path(@organism, @competition, @edition_competition, @category), class: "btn btn-primary" do %>
+          <i class="fas fa-eye"></i> <%= t('categories.show.view_applications') %> (<%= @category.inscriptions.where(status: 'in_review').count %>)
+        <% end %>
+        <%= button_to organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category), method: :delete, class: 'btn btn-primary', data: { confirm: t('categories.show.confirm_delete') } do %>
+          <i class="fas fa-trash"></i> <%= t('categories.show.delete') %>
+        <% end %>
+      </div>
+
+      <!-- Configuration status -->
+      <div class="d-flex justify-content-center mb-4">
+        <% if @category.ready_to_publish? && !@category.edition_competition.published? %>
+          <%= link_to t('categories.show.finish_configuration'), organism_competition_edition_competition_path(@organism, @competition, @edition_competition), class: "btn btn-success" %>
+        <% else %>
+          <% if !@category.has_a_program? %>
+            <%= link_to t('categories.show.configure_program'), '#', class: "btn btn-success", onclick: "document.getElementById('program-tab').click(); return false;" %>
+          <% elsif !@category.has_a_tour? %>
+            <%= link_to t('categories.show.configure_tours'), '#', class: "btn btn-success", onclick: "document.getElementById('tours-tab').click(); return false;" %>
+          <% elsif !@category.has_a_requirement_item? || !@category.has_a_prize? %>
+            <%= link_to t('categories.show.configure_docs_prizes_jury'), '#', class: "btn btn-success", onclick: "document.getElementById('docs-prizes-jury-tab').click(); return false;" %>
           <% else %>
-            <% if !@category.has_a_program? %>
-              <%= link_to t('categories.show.configure_program'), '#program', class: "btn btn-success" %>
-            <% elsif !@category.has_a_tour? %>
-              <%= link_to t('categories.show.configure_tours'), '#tour', class: "btn btn-success" %>
-            <% elsif !@category.has_a_requirement_item? %>
-              <%= link_to t('categories.show.configure_requirements'), '#requirement-item', class: "btn btn-success" %>
-            <% elsif !@category.has_a_prize? %>
-              <%= link_to t('categories.show.configure_prizes'), '#prize', class: "btn btn-success" %>
-              <%= link_to organism_competition_edition_competition_category_inscriptions_path(@organism, @competition, @edition_competition, @category), class: "btn btn-primary" do %>
-                <i class="fas fa-eye"></i> <%= t('categories.show.view_applications') %> ( <%= @category.inscriptions.where(status: 'in_review').count %> )
-              <% end %>
-            <% else %>
-
-              <p class="text-success"> <i class="fas fa-check-circle text-success me-1"></i> Votre catégorie a été publiée</p>
-
-            <% end %>
+            <p class="text-success"><i class="fas fa-check-circle text-success me-1"></i> <%= t('categories.show.published') %></p>
           <% end %>
+        <% end %>
+      </div>
+
+      <!-- Status badges -->
+      <div class="d-flex flex-wrap w-100 gap-2 mb-3 justify-content-center">
+        <%= badge_with_icon(@category, t('categories.show.badges.create_program'), :has_a_program?) %>
+        <%= badge_with_icon(@category, t('categories.show.badges.create_tour'), :has_a_tour?) %>
+        <%= badge_with_icon(@category, t('categories.show.badges.create_requirement'), :has_a_requirement_item?) %>
+        <%= badge_with_icon(@category, t('categories.show.badges.create_prize'), :has_a_prize?) %>
+        <%= badge_with_icon(@category, t('categories.show.badges.create_jury'), :has_a_voting_jury?) if @category.hundred_points?%>
+      </div>
+
+      <!-- Applications card -->
+      <%= link_to organism_competition_edition_competition_category_inscriptions_path(@organism, @competition, @edition_competition, @category), data: { controller: "hover" } do %>
+        <div class="card mb-4" style="width: 100%; height: 300px; background-image: url('<%= @category.image_or_default %>'); background-size: cover;" data-action="mouseenter->hover#hover mouseleave->hover#unhover">
+          <div class="card-img-overlay d-flex justify-content-center align-items-center" style="background-color: rgba(0, 0, 0, 0.5);">
+            <h1 class="card-title text-white" style="font-size: 3em;" data-hover-target="text"><%= t('categories.show.applications') %> (<%= @category.inscriptions.where(status: 'in_review').count %>)</h1>
+          </div>
+        </div>
+      <% end %>
+
+      <!-- Tabs navigation -->
+      <ul class="nav nav-tabs" id="categoryTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+          <a class="nav-link active" id="program-tab" data-bs-toggle="tab" href="#program-content" role="tab" aria-controls="program-content" aria-selected="true">
+            <i class="fas fa-music me-2"></i><%= t('categories.show.tabs.program') %>
+          </a>
+        </li>
+        <li class="nav-item" role="presentation">
+          <a class="nav-link" id="tours-tab" data-bs-toggle="tab" href="#tours-content" role="tab" aria-controls="tours-content" aria-selected="false">
+            <i class="fas fa-calendar-alt me-2"></i><%= t('categories.show.tabs.tours') %>
+          </a>
+        </li>
+        <li class="nav-item" role="presentation">
+          <a class="nav-link" id="docs-prizes-jury-tab" data-bs-toggle="tab" href="#docs-prizes-jury-content" role="tab" aria-controls="docs-prizes-jury-content" aria-selected="false">
+            <i class="fas fa-file-alt me-2"></i><%= t('categories.show.tabs.docs_prizes_jury') %>
+          </a>
+        </li>
+      </ul>
+
+      <!-- Tab content -->
+      <div class="tab-content pt-4" id="categoryTabsContent">
+        <div class="tab-pane fade show active" id="program-content" role="tabpanel" aria-labelledby="program-tab">
+          <%= render "program_container_section", category: @category %>
+        </div>
+
+        <div class="tab-pane fade" id="tours-content" role="tabpanel" aria-labelledby="tours-tab">
+          <%= render "tours_section", category: @category %>
+        </div>
+
+        <div class="tab-pane fade" id="docs-prizes-jury-content" role="tabpanel" aria-labelledby="docs-prizes-jury-tab">
+          <div class="row">
+            <div class="col-12 mb-4">
+              <h2><%= t('categories.show.sections.requirements') %></h2>
+              <%= render "requirement_items_section", category: @category %>
+            </div>
+
+            <div class="col-12 mb-4">
+              <h2><%= t('categories.show.sections.prizes') %></h2>
+              <%= render "prizes_section", category: @category %>
+            </div>
+
+            <% if @category.hundred_points? %>
+              <div class="col-12">
+                <h2><%= t('categories.show.sections.jury') %></h2>
+                <%= render "juries_section", category: @category %>
+              </div>
+            <% end %>
+          </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="d-flex flex-wrap w-100 gap-2 mb-3">
-
-    <%= badge_with_icon(@category, t('categories.show.badges.create_program'), :has_a_program?) %>
-    <%= badge_with_icon(@category, t('categories.show.badges.create_tour'), :has_a_tour?) %>
-    <%= badge_with_icon(@category, t('categories.show.badges.create_requirement'), :has_a_requirement_item?) %>
-    <%= badge_with_icon(@category, t('categories.show.badges.create_prize'), :has_a_prize?) %>
-    <%= badge_with_icon(@category, t('categories.show.badges.create_jury'), :has_a_voting_jury?) if @category.hundred_points?%>
-
-  </div>
-
-   <%= link_to organism_competition_edition_competition_category_inscriptions_path(@organism, @competition, @edition_competition, @category), data: { controller: "hover" } do %>
-    <div class="card mb-3" style="width: 100%; height: 300px; background-image: url('https://source.unsplash.com/random/?opera/300/200'); background-size: cover;" data-action="mouseenter->hover#hover mouseleave->hover#unhover">
-      <div class="card-img-overlay d-flex justify-content-center align-items-center" style="background-color: rgba(0, 0, 0, 0.5);">
-        <h1 class="card-title text-white" style="font-size: 3em;" data-hover-target="text"><%= t('categories.show.applications') %> (<%= @category.inscriptions.where(status: 'in_review').count %>)</h1>
-      </div>
-    </div>
-  <% end %>
-  <div class="container">
-  <div id="program">
-    <%= render "program_container_section", category: @category %>
-  </div>
-
-  <div id="tour">
-    <%= render "tours_section", category: @category %>
-  </div>
-
-  <div id="requirement-item">
-    <%= render "requirement_items_section", category: @category %>
-  </div>
-
-  <div id="prize">
-    <%= render "prizes_section", category: @category %>
-  </div>
-
-  <div id="jury">
-    <%= render "juries_section", category: @category if @category.hundred_points? %>
-  </div>
-</div>
 </div>
