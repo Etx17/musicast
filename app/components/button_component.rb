@@ -1,13 +1,14 @@
 # frozen_string_literal: true
 
 class ButtonComponent < ViewComponent::Base
-  def initialize(text:, path:, icon: "", button_type: "primary", data: {})
+  def initialize(text:, path:, icon: "", button_type: "primary", data: {}, target: nil)
     super()
     @icon = icon
     @text = text
     @path = path
     @button_type = button_type
     @data = data
+    @targ
   end
 
   def button_classes

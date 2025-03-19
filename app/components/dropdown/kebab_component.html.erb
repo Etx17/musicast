@@ -1,9 +1,8 @@
-
     <% if @only_vertical_dots %>
       <!-- Only black vertical dots -->
       <div class="position-relative" data-controller="dropdown">
         <button class="bg-transparent border border-transparent" type="button" data-dropdown-target="button" data-action="click->dropdown#toggle" style="border: none !important;">
-          <i class="fa-solid fa-ellipsis text-black" style="transform: rotate(90deg); font-size: 24px;"></i>
+          <i class="fa-solid fa-ellipsis text-black" style="transform: rotate(90deg); font-size: 18px;"></i>
         </button>
         <!-- Dropdown Menu-->
         <ul role="menu" class="dropdown-menu" style="z-index: 3; right: 0;" data-dropdown-target="menu" aria-labelledby="dropdownMenuButton">
@@ -11,7 +10,7 @@
             <% next if item.show_item == false %>
             <li>
               <%= link_to item.path,
-                          method: (item.method unless item.class&.include?("deletion-button")),
+                          method: item.method,
                           remote: item.remote,
                           class: "dropdown-item#{' disabled' if item.state == 'disabled'}#{' ' + item.class if item.class.present?}",
                           title: item.hint,
@@ -37,7 +36,7 @@
               <% next if item.show_item == false %>
               <li>
                 <%= link_to item.path,
-                            method: (item.method unless item.class&.include?("deletion-button")),
+                            method: item.method,
                             remote: item.remote,
                             class: "dropdown-item#{' disabled' if item.state == 'disabled'}#{' ' + item.class if item.class.present?}",
                             title: item.hint,

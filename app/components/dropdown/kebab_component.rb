@@ -24,6 +24,14 @@ class Dropdown::KebabComponent < ViewComponent::Base
       self.method = "get" if method.nil? && !load_modal
       self.remote = false if remote.nil?
       self.hint = text if hint.nil? && text.present?
+
+      # Ensure data hash exists
+      self.data ||= {}
+
+      # Add turbo-method for delete actions
+      if self.method == :delete || self.method == "delete"
+        self.data[:turbo_method] = "delete"
+      end
     end
   end
 
