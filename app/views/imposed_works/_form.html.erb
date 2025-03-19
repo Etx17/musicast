@@ -1,4 +1,4 @@
-<%= simple_form_for([@organism, @competition, @edition_competition, @category, @imposed_work], html: { data: { controller: 'nested-form', nested_form_wrapper_selector_value: '.nested-fields' } }) do |f| %>
+<%= simple_form_for([@organism, @competition, @edition_competition, @category, @imposed_work], html: { data: { controller: 'airs' } }) do |f| %>
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
   <%= f.hidden_field :category, value: @imposed_work.category, disabled: true %>
@@ -22,21 +22,21 @@
     </div>
     <h4 class="text-center mb-5"><%= t('imposed_works.common.airs') %></h4>
 
-    <template data-nested-form-target="template">
-      <%= f.fields_for :airs, Air.new, child_index: 'NEW_RECORD' do |air_fields| %>
-        <%= render 'shared/air_fields', f: air_fields %>
+    <div data-airs-target="container">
+      <%= f.fields_for :airs do |air_fields| %>
+        <%= render 'imposed_works/air_fields', f: air_fields %>
       <% end %>
-    </template>
-
-    <%= f.fields_for :airs do |air_fields| %>
-      <%= render 'shared/air_fields', f: air_fields %>
-    <% end %>
-
-    <div data-nested-form-target="links">
-      <%= link_to t('imposed_works.common.actions.add_piece'), '#', class: 'btn btn-success', data: { action: 'nested-form#add' } %>
     </div>
 
+    <div data-airs-target="template" style="display: none">
+      <%= f.fields_for :airs, Air.new, child_index: 'NEW_RECORD' do |air_fields| %>
+        <%= render 'imposed_works/air_fields', f: air_fields %>
+      <% end %>
+    </div>
 
+    <div class="d-flex justify-content-center mt-3 mb-4">
+      <%= link_to t('imposed_works.common.actions.add_piece'), '#', class: 'btn btn-success', data: { action: 'airs#addAir' } %>
+    </div>
   </div>
 
   <div class="form-actions">
