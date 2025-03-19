@@ -12,7 +12,7 @@ class RequirementItemsController < ApplicationController
 
   def create
     @requirement_item = @category.requirement_items.build(requirement_item_params)
-
+    session[:active_tab] = "docs-prizes-jury-tab"
     if @requirement_item.save
       redirect_to organism_competition_edition_competition_category_path(@competition.organism, @competition, @edition_competition, @category),
                   notice: 'Requirement item was successfully created.'
@@ -37,6 +37,7 @@ class RequirementItemsController < ApplicationController
   end
 
   def destroy
+    session[:active_tab] = "docs-prizes-jury-tab"
     if @requirement_item.delete
       redirect_to organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category),
                 notice: 'La pièce requise a été supprimée.'

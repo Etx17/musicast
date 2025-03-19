@@ -3,7 +3,7 @@
     <div>
       <div class="d-flex gap-3 align-items-center">
         <h2 style="font-size: 3em;"><%= t('categories.prizes_section.title', count: category.prizes.count) %></h2>
-        <%= link_to new_organism_competition_edition_competition_category_prize_path(@organism, @competition, @edition_competition, category), class: "btn btn-success my-3" do %>
+        <%= link_to new_organism_competition_edition_competition_category_prize_path(@organism, @competition, @edition_competition, category, redirect_tab: "docs-prizes-jury-content"), class: "btn btn-success my-3" do %>
           + <%= t('categories.prizes_section.add_prize') %>
         <% end %>
       </div>

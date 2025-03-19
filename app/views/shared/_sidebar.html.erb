@@ -60,20 +60,20 @@
   </div>
 
   <!-- Main navigation -->
-  <ul class="nav flex-column mt-2">
+  <ul class="nav gap-3 flex-column mt-2">
     <% sidebar_links.each do |link| %>
-      <li class="nav-item text-white">
-        <%= link_to link[:url], class: "nav-link text-white #{active_link?(link[:url])}" do %>
+      <li class="nav-item-sidebar text-white px-2">
+        <%= link_to link[:url], class: "nav-link-sidebar text-white #{active_link?(link[:url])}" do %>
           <%= link[:label].html_safe %>
           <% if link[:status].present? %>
             <span class="competition-status rounded-pill border border-info <%= link[:status] %>"><%= link[:status].capitalize %></span>
           <% end %>
         <% end %>
         <% if link[:children].present? %>
-          <ul class="nav flex-column ms-3">
+          <ul class="nav flex-column gap-3 ms-3">
             <% link[:children].each do |child_link| %>
-              <li class="nav-item text-white">
-                <%= link_to child_link[:url], class: "nav-link text-white #{active_link?(child_link[:url])}" do %>
+              <li class="d-flex flex-column gap-3 nav-item-sidebar text-white">
+                <%= link_to child_link[:url], class: "nav-link-sidebar text-white #{active_link?(child_link[:url])}" do %>
                   <%= child_link[:label].html_safe %>
                 <% end %>
               </li>

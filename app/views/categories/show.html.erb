@@ -57,33 +57,58 @@
       <!-- Tabs navigation -->
       <ul class="nav nav-tabs" id="categoryTabs" role="tablist">
         <li class="nav-item" role="presentation">
-          <a class="nav-link active" id="program-tab" data-bs-toggle="tab" href="#program-content" role="tab" aria-controls="program-content" aria-selected="true">
+          <a class="nav-link <%= session[:active_tab] == 'program-tab' || session[:active_tab].blank? ? 'active' : '' %>"
+             id="program-tab"
+             data-bs-toggle="tab"
+             href="#program-content"
+             role="tab"
+             aria-controls="program-content"
+             aria-selected="<%= session[:active_tab] == 'program-tab' || session[:active_tab].blank? ? 'true' : 'false' %>">
             <i class="fas fa-music me-2"></i><%= t('categories.show.tabs.program') %>
           </a>
         </li>
         <li class="nav-item" role="presentation">
-          <a class="nav-link" id="tours-tab" data-bs-toggle="tab" href="#tours-content" role="tab" aria-controls="tours-content" aria-selected="false">
+          <a class="nav-link <%= session[:active_tab] == 'tours-tab' ? 'active' : '' %>"
+             id="tours-tab"
+             data-bs-toggle="tab"
+             href="#tours-content"
+             role="tab"
+             aria-controls="tours-content"
+             aria-selected="<%= session[:active_tab] == 'tours-tab' ? 'true' : 'false' %>">
             <i class="fas fa-calendar-alt me-2"></i><%= t('categories.show.tabs.tours') %>
           </a>
         </li>
         <li class="nav-item" role="presentation">
-          <a class="nav-link" id="docs-prizes-jury-tab" data-bs-toggle="tab" href="#docs-prizes-jury-content" role="tab" aria-controls="docs-prizes-jury-content" aria-selected="false">
+          <a class="nav-link <%= session[:active_tab] == 'docs-prizes-jury-tab' ? 'active' : '' %>"
+             id="docs-prizes-jury-tab"
+             data-bs-toggle="tab"
+             href="#docs-prizes-jury-content"
+             role="tab"
+             aria-controls="docs-prizes-jury-content"
+             aria-selected="<%= session[:active_tab] == 'docs-prizes-jury-tab' ? 'true' : 'false' %>">
             <i class="fas fa-file-alt me-2"></i><%= t('categories.show.tabs.docs_prizes_jury') %>
           </a>
         </li>
       </ul>
-
       <!-- Tab content -->
       <div class="tab-content pt-4" id="categoryTabsContent">
-        <div class="tab-pane fade show active" id="program-content" role="tabpanel" aria-labelledby="program-tab">
+        <div class="tab-pane fade <%= session[:active_tab] == 'program-tab' || session[:active_tab].blank? ? 'show active' : '' %>"
+             id="program-content"
+             role="tabpanel"
+             aria-labelledby="program-tab">
           <%= render "program_container_section", category: @category %>
         </div>
-
-        <div class="tab-pane fade" id="tours-content" role="tabpanel" aria-labelledby="tours-tab">
+        <div class="tab-pane fade <%= session[:active_tab] == 'tours-tab' ? 'show active' : '' %>"
+             id="tours-content"
+             role="tabpanel"
+             aria-labelledby="tours-tab">
           <%= render "tours_section", category: @category %>
         </div>
 
-        <div class="tab-pane fade" id="docs-prizes-jury-content" role="tabpanel" aria-labelledby="docs-prizes-jury-tab">
+        <div class="tab-pane fade <%= session[:active_tab] == 'docs-prizes-jury-tab' ? 'show active' : '' %>"
+             id="docs-prizes-jury-content"
+             role="tabpanel"
+             aria-labelledby="docs-prizes-jury-tab">
           <div class="row">
             <div class="col-12 mb-4">
               <h2><%= t('categories.show.sections.requirements') %></h2>
@@ -107,3 +132,5 @@
     </div>
   </div>
 </div>
+
+<% session.delete(:active_tab) if session[:active_tab].present? %>

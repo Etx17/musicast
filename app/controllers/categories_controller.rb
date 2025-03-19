@@ -17,15 +17,15 @@ class CategoriesController < ApplicationController
     @tour.build_tour_requirement
     @tour.pauses.build
 
+    session[:active_tab] ||= 'program-tab'
+    @active_tab = session[:active_tab]
   end
 
-  # GET /categories/new
   def new
     @category = Category.new
     authorize @category
   end
 
-  # GET /categories/1/edit
   def edit
     authorize @category
   end

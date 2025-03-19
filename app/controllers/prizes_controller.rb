@@ -16,6 +16,7 @@ class PrizesController < ApplicationController
   def create
     @prize = Prize.new(prize_params)
     @prize.category = @category
+    session[:active_tab] = "docs-prizes-jury-tab"
     respond_to do |format|
       if @prize.save
         format.html { redirect_to [@organism, @competition, @edition_competition, @category], notice: "Prize was successfully created." }
@@ -40,7 +41,7 @@ class PrizesController < ApplicationController
   # DELETE /prizes/1 or /prizes/1.json
   def destroy
     @prize.destroy
-
+    session[:active_tab] = "docs-prizes-jury-tab"
     respond_to do |format|
       format.html { redirect_to [@organism, @competition, @edition_competition, @category], notice: "Prize was successfully destroyed." }
     end

@@ -27,6 +27,7 @@ class ToursController < ApplicationController
     @tour.tour_requirement = TourRequirement.new(tour_params[:tour_requirement_attributes])
     @tour.category = @category
     @tour.tour_number = @category.tours.count + 1
+    session[:active_tab] = "tours-tab"
     if @tour.save
       redirect_to organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category),
                   notice: "Tour crée avec succès."
@@ -39,6 +40,7 @@ class ToursController < ApplicationController
     # Voir que ca fait bien marcher a la fois l'update de tour a is_finished, et aussi la creation de schedule pour un tour (apres configuration)
     authorize @tour
     creating_schedule = params.fetch(:tour, {}).delete(:creating_schedule) { false }
+    session[:active_tab] = "tours-tab"
     if @tour.update(tour_params)
       if creating_schedule == "true"
         if @tour.pauses.any? || @tour.performances.any? { |p| p.start_time.present? }
@@ -98,6 +100,7 @@ class ToursController < ApplicationController
 
   def destroy
     @tour.destroy
+    session[:active_tab] = "tours-tab"
     redirect_to organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category),
                 notice: "Tour supprimé."
   end
@@ -202,7 +205,7 @@ class ToursController < ApplicationController
   end
 
   def store_form_data
-    
+
     session[:detailed_program] = params[:detailed_program] == "1"
     session[:simple_air] = params[:simple_air] == "1"
     session[:notes_space] = params[:notes_space] == "1"
