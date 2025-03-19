@@ -628,6 +628,7 @@ en:
       view_applications: "View %{count} applications"
 
     organiser:
+      confirm_delete_pianist: "Delete pianist ?"
       dashboard: "Dashboard"
       your_competitions: "Your competitions"
       create_edition: "Create a competition edition"

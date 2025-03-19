@@ -24,8 +24,18 @@
 
     <div class="col-12 col-md-6">
       <div class="card border-0 shadow-sm rounded mb-4" style="background: #EEEEEE;">
-        <div class="card-header border border-transparent">
-            <i class="fas fa-building"> </i> <%= t('dashboard.organiser.organism_info') %>
+        <div class="card-header border border-transparent d-flex justify-content-between align-items-center">
+            <div>
+              <i class="fas fa-building"> </i> <%= t('dashboard.organiser.organism_info') %>
+            </div>
+            <% kebab_items = [
+              {
+                icon: "fas fa-edit",
+                text: t('global.actions.edit'),
+                path: edit_organism_path(@organism)
+              }
+            ] %>
+            <%= render(Dropdown::KebabComponent.new(items: kebab_items, only_vertical_dots: false)) %>
         </div>
         <div class="card-body bg-light d-flex flex-column">
             <div class="text-center">
@@ -33,7 +43,6 @@
             </div>
             <p><%= @organism.nom %></p>
             <p><%= @organism.description %></p>
-          <%= link_to t('dashboard.organiser.edit'), edit_organism_path(@organism), class: "btn btn-outline-dark mx-auto mt-3" %>
         </div>
       </div>
 
@@ -49,7 +58,25 @@
           <ul>
             <%= turbo_frame_tag 'organism_pianists' do %>
               <% @organism.pianist_accompagnateurs.each do |pianist| %>
-                <%= render "pianist_accompagnateurs/pianist", pianist: pianist %>
+                <li class="d-flex justify-content-between align-items-center mb-2">
+                  <span><%= pianist.full_name %></span>
+                  <% pianist_kebab_items = [
+                    {
+                      icon: "fas fa-edit",
+                      text: t('global.actions.edit'),
+                      path: edit_organism_pianist_accompagnateur_path(@organism, pianist)
+                    },
+                    {
+                      icon: "fas fa-trash",
+                      text: t('global.actions.delete'),
+                      path: organism_pianist_accompagnateur_path(@organism, pianist),
+                      method: :delete,
+                      data: { confirm: t('dashboard.organiser.confirm_delete_pianist'), turbo_confirm: t('dashboard.organiser.confirm_delete_pianist') },
+                      class: "deletion-button"
+                    }
+                  ] %>
+                  <%= render(Dropdown::KebabComponent.new(items: pianist_kebab_items, only_vertical_dots: true)) %>
+                </li>
               <% end %>
             <% end %>
           </ul>

@@ -620,6 +620,7 @@ fr:
       files_to_evaluate: "Vos dossiers à évaluer (groupées par catégories)"
       view_applications: "Voir %{count} inscriptions"
     organiser:
+      confirm_delete_pianist: "Confirmez la suppression du pianiste"
       dashboard: "Tableau de Bord"
       your_competitions: "Vos concours"
       create_edition: "Créer une édition du concours"
