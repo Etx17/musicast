@@ -531,7 +531,7 @@ en:
   choice_imposed_works:
     card:
       choose: "Choose"
-
+      works_from: "works from"
     choice_imposed_work:
       programme_requirement: "Programme Requirement"
       title: "Title"
@@ -893,6 +893,10 @@ en:
       back: "Back to free choices"
       destroy: "Destroy this free choice"
   global:
+    free: "Free"
+    years: "years"
+    round: "round"
+    rounds: "rounds"
     program: "Program"
     confirmations:
       are_you_sure: "Are you sure ?"

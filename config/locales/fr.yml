@@ -533,6 +533,9 @@ fr:
       add_piece: "Ajouter un morceau"
       save_changes: "Enregistrer les modifications"
   choice_imposed_works:
+    card:
+      choose: "Choisir"
+      works_from: "oeuvres parmi"
     choice_imposed_work:
       programme_requirement: "Exigence du programme"
       title: "Titre"
@@ -858,6 +861,10 @@ fr:
       back: "Retour aux choix libres"
       destroy: "Supprimer ce choix libre"
   global:
+    free: "Gratuit"
+    years: "ans"
+    round: "tour"
+    rounds: "tours"
     actions:
       login: "Connexion"
       create_account: "Créer un compte"
