@@ -585,6 +585,7 @@ fr:
       show: "Voir ce concours"
       new: "Nouveau concours"
     show:
+      confirm_delete: "Confirmer la suppression de l'édition"
       editions: "Éditions"
       configure_categories: "Configurer les catégories de cette édition"
       published: "Publiée"
@@ -620,6 +621,8 @@ fr:
       files_to_evaluate: "Vos dossiers à évaluer (groupées par catégories)"
       view_applications: "Voir %{count} inscriptions"
     organiser:
+      jury_members: Membres du jury
+      add_jury: Ajouter un membre du jury
       confirm_delete_pianist: "Confirmez la suppression du pianiste"
       dashboard: "Tableau de Bord"
       your_competitions: "Vos concours"
@@ -790,6 +793,7 @@ fr:
     new:
       cancel: "Annuler"
     show:
+      confirm_delete: "Confirmez la suppression de l'édition"
       edition_published: "Votre édition est publiée. Consultez les candidatures de chaques catégories puis générez l'ordre de passage et le planning sur chaque tour ci dessous"
       edition: "Édition"
       published: "Publié"

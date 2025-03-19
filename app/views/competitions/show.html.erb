@@ -48,16 +48,26 @@
 
           <div class="mt-3 d-flex justify-content-between">
             <h2><%= t('competitions.show.information') %></h2>
-            <div class="d-flex gap-3">
-              <%= link_to edit_organism_competition_path(@organism, @competition), data: { turbo_action: 'replace', turbo_frame: "competition_#{@competition.id}" }, class: 'btn btn-outline-dark', style: 'width: 100px; height: 40px;' do %>
-                <i class="fas fa-pencil"></i>
-              <% end %>
+            <div>
+              <% kebab_items = [
+                {
+                  icon: "fas fa-pencil",
+                  text: t('global.actions.edit'),
+                  path: edit_organism_competition_path(@organism, @competition),
+                  data: { turbo_action: 'replace', turbo_frame: "competition_#{@competition.id}" }
+                },
+                {
+                  icon: "fas fa-trash",
+                  text: t('global.actions.delete'),
+                  path: organism_competition_path(@organism, @competition),
+                  method: :delete,
+                  data: { confirm: t('competitions.show.confirm_delete'), turbo_confirm: t('competitions.show.confirm_delete') },
+                  class: "deletion-button"
+                }
+              ] %>
 
-              <%= button_to organism_competition_path(@organism, @competition), method: :delete, class: 'btn btn-outline-dark', style: 'width: 100px; height: 40px;' do %>
-                <i class="fas fa-trash"></i>
-              <% end %>
+              <%= render(Dropdown::KebabComponent.new(items: kebab_items, only_vertical_dots: false)) %>
             </div>
-
           </div>
           <%= turbo_frame_tag "competition_#{@competition.id}" do %>
             <%= render @competition %>

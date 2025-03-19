@@ -628,6 +628,8 @@ en:
       view_applications: "View %{count} applications"
 
     organiser:
+      jury_members: Jury members
+      add_jury: Add jury
       confirm_delete_pianist: "Delete pianist ?"
       dashboard: "Dashboard"
       your_competitions: "Your competitions"
@@ -813,6 +815,7 @@ en:
       cancel: "Cancel"
 
     show:
+      confirm_delete: "Delete edition ?"
       edition_published: "Your edition is published. Check the applications for each category and then generate the order of passage and schedule for each round below"
       edition: "Edition"
       published: "Published"

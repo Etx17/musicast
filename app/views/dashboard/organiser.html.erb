@@ -55,7 +55,7 @@
           <%= turbo_frame_tag 'new_pianist_frame' do %>
             <%= link_to t('dashboard.organiser.add_pianist'), new_organism_pianist_accompagnateur_path(@organism), class: 'btn btn-outline-dark mb-3', data: { turbo_frame: 'new_pianist_frame' } %>
           <% end %>
-          <ul>
+          <ul class="list-unstyled">
             <%= turbo_frame_tag 'organism_pianists' do %>
               <% @organism.pianist_accompagnateurs.each do |pianist| %>
                 <li class="d-flex justify-content-between align-items-center mb-2">
