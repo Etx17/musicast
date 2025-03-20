@@ -342,18 +342,25 @@
 
           <div class="card bg-light mb-3 border-0 rounded-8 shadow">
             <div class="card-header d-flex justify-content-between border-0">
-              <%= tour.title %> - <%= t('inscriptions.inscription.round_number', number: tour.tour_number) %>
+              <% if I18n.locale == :en && tour.title_english.present? %>
+                <%= tour.title_english %> - <%= t('inscriptions.inscription.round_number', number: tour.tour_number) %>
+              <% else %>
+                <%= tour.title %> - <%= t('inscriptions.inscription.round_number', number: tour.tour_number) %>
+              <% end %>
 
-              <span class="text-english"><%= tour.title_english %></span>
-               <% if tour.imposed_air_selection.present? %>
-              <small class="text-warning"><%= t('inscriptions.inscription.imposed_airs_in_round', count: tour.imposed_air_selection.count) %></small>
+              <% if tour.imposed_air_selection.present? %>
+                <small class="text-warning"><%= t('inscriptions.inscription.imposed_airs_in_round', count: tour.imposed_air_selection.count) %></small>
               <% end %>
             </div>
             <div class="card-body">
 
               <% if tour.tour_requirement.present? %>
                 <h5 class="card-title"><%= t('inscriptions.inscription.round_rules') %></h5>
-                <p class="card-text text-secondary"><%= tour.tour_requirement&.description %> <span class="text-english"><%= tour.tour_requirement&.description_english %></span></p>
+                <% if I18n.locale == :en && tour.tour_requirement&.description_english.present? %>
+                  <p class="card-text text-secondary"><%= tour.tour_requirement&.description_english %></p>
+                <% else %>
+                  <p class="card-text text-secondary"><%= tour.tour_requirement&.description %></p>
+                <% end %>
                 <div class="d-flex justify-content-around">
                   <p class="card-text"><strong><%= image_tag 'icons/book.png', alt: t('inscriptions.inscription.works'), width: 40 %></strong>
                     <% if tour.tour_requirement&.min_number_of_works == tour.tour_requirement&.max_number_of_works %>
