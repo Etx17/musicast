@@ -1,4 +1,3 @@
-
 <div class="d-flex flex-wrap gap-2">
   <% inscription.inscription_item_requirements.each do | item_requirement| %>
     <div class="card m-2" style="width: calc(50% - 24px); max-height: 500px; overflow-y: auto;">
@@ -7,10 +6,14 @@
           <%= image_tag icon_for(item_requirement.item_type), class: 'item-icon', width: 50, height: 50 %>
           <h3><%= item_requirement.requirement_item.title %></h3>
         </div>
-        <p><%= item_requirement.requirement_item.description_item %>
-          <span class="text-english"><%= item_requirement.requirement_item.description_item_english if item_requirement.requirement_item.description_item_english.present? %></span>
-       </p>
-       <%= f.simple_fields_for :inscription_item_requirements, item_requirement do |irf| %>
+
+        <% if I18n.locale == :en && item_requirement.requirement_item.description_item_english.present? %>
+          <p><%= item_requirement.requirement_item.description_item_english %></p>
+        <% else %>
+          <p><%= item_requirement.requirement_item.description_item %></p>
+        <% end %>
+
+        <%= f.simple_fields_for :inscription_item_requirements, item_requirement do |irf| %>
           <%= irf.hidden_field :requirement_item_id %>
           <% case item_requirement.requirement_item.type_item %>
           <% when 'motivation_essay' %>
