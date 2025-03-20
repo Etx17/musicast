@@ -20,7 +20,11 @@
           <h5><%= t('inscriptions.form.imposed_airs') %></h5>
           <ul>
             <% inscription.category&.imposed_work&.airs&.each do |air| %>
-              <li> <%= air.title %> - <%= air.composer %> - <%= air.oeuvre %> - <%= air.infos %> | <span class="text-english"> <%= air.infos_english if air.infos_english.present? %></span></li>
+              <% if I18n.locale == :en && air.infos_english.present? %>
+                <li> <%= air.title %> - <%= air.composer %> - <%= air.oeuvre %> - <%= air.infos_english %> </li>
+              <% else %>
+                <li> <%= air.title %> - <%= air.composer %> - <%= air.oeuvre %> - <%= air.infos %> </li>
+              <% end %>
             <% end %>
           </ul>
         <% end %>

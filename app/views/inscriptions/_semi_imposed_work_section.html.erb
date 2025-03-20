@@ -1,8 +1,17 @@
-  <% air_counter = 0 %>
+<% air_counter = 0 %>
 <% inscription.category.semi_imposed_works&.each do |semi_imposed_work| %>
-  <h5><%= semi_imposed_work.title %> <span class="text-english"><%= semi_imposed_work.title_english %></span></h5>
-  <small><%= semi_imposed_work.guidelines %></small>
-  <small class="text-english"><%= semi_imposed_work.guidelines_english %></small>
+    <% if I18n.locale == :en && semi_imposed_work.title_english.present? %>
+      <h5><%= semi_imposed_work.title_english %></h5>
+    <% else %>
+      <h5><%= semi_imposed_work.title %></h5>
+    <% end %>
+
+    <% if I18n.locale == :en && semi_imposed_work.guidelines_english.present? %>
+      <small class="text-english"><%= semi_imposed_work.guidelines_english %></small>
+    <% else %>
+      <small><%= semi_imposed_work.guidelines %></small>
+    <% end %>
+
   <% if f.object.errors.any? %>
     <div class="d-flex flex-column">
       <% f.object.errors.details.each do |attribute, errors| %>
