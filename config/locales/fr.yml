@@ -536,11 +536,13 @@ fr:
     card:
       choose: "Choisir"
       works_from: "oeuvres parmi"
+      selection_required: "Nombre à sélectionner"
     choice_imposed_work:
       programme_requirement: "Exigence du programme"
       title: "Titre"
       guidelines: "Consignes"
       number_to_select: "Nombre à sélectionner"
+      selection_required: "Nombre à sélectionner"
     form:
       list_title_english: Titre de la liste (Anglais)
       guidelines_english: Consignes (Anglais)

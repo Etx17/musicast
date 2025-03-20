@@ -2,20 +2,15 @@
   <div class="card-header"><%= t('imposed_works.card.required_works') %>: <span class="h5 ps-2"> <%= @category.imposed_work.airs.count %></span></div>
   <div class="card-body bg-light rounded-8">
     <ul class="list-group list-group-flush">
-      <div><%= @category.imposed_work.title %></div>
-      <% if @category.imposed_work.title_english.present? %>
-        <div class="text-english"><%= @category.imposed_work.title_english %></div>
-      <% end %>
-      <small class="text-secondary"><%= @category.imposed_work.guidelines %></small>
-      <% if @category.imposed_work.guidelines_english.present? %>
-        <small class="text-english"><%= @category.imposed_work.guidelines_english %></small>
-      <% end %>
+      <div><%= @title %></div>
+      <small class="text-secondary"><%= @guidelines %></small>
       <li class="list-group-item d-flex flex-column bg-white">
         <% @category.imposed_work.airs.each do |air| %>
           <span> <i class="fas fa-feather text-secondary pe-2 small"></i><%= air.title %> - <%= air.composer %> - <%= air.oeuvre %> - <%= air.tonality %></span>
-          <small class="text-secondary"> <%= air.infos %> </small>
-          <% if air.infos_english.present? %>
-            <small class="text-english"> <%= air.infos_english %> </small>
+          <% if I18n.locale == :en && air.infos_english.present? %>
+            <small class="text-secondary"> <%= air.infos_english %> </small>
+          <% else %>
+            <small class="text-secondary"> <%= air.infos %> </small>
           <% end %>
         <% end %>
       </li>

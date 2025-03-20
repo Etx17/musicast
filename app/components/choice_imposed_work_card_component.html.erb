@@ -1,26 +1,87 @@
-<div class="card mb-3 rounded-8">
-  <div class="card-header">
-    <%= t('choice_imposed_works.card.choose') %><span class="h5 pe-2"> <%= @choice_imposed_work.number_to_select %></span><%= t('choice_imposed_works.card.works_from') %>:
+<div class="card mb-3 rounded-8 shadow-sm border-0">
+  <div class="card-header bg-primary text-white py-3">
+    <div class="d-flex align-items-center">
+      <i class="fas fa-music me-3" style="font-size: 1.2rem;"></i>
+      <h5 class="mb-0 fw-bold">
+        <%= t('choice_imposed_works.card.choose') %>
+        <span class="badge bg-white text-primary mx-2 px-3" style="font-size: 1.1rem;">
+          <%= @choice_imposed_work.number_to_select %>
+        </span>
+        <%= t('choice_imposed_works.card.works_from') %>:
+      </h5>
+    </div>
   </div>
-  <div class="card-body bg-light rounded-8">
-    <span><%= @choice_imposed_work.title %></span>
-    <% if @choice_imposed_work.title_english.present? %>
-      <span class="text-english">| <%= @choice_imposed_work.title_english %></span>
-    <% end %><br>
-    <small class="text-secondary"><%= @choice_imposed_work.guidelines %></small> <br>
-    <% if @choice_imposed_work.guidelines_english.present? %>
-      <small class="text-english"><%= @choice_imposed_work.guidelines_english %></small>
-    <% end %>
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item d-flex flex-column">
-        <% @choice_imposed_work.airs.each do |air| %>
-          <span><i class="fas fa-feather text-secondary pe-2 small"></i> <%= air.title %> - <%= air.composer %> - <%= air.oeuvre %> - <%= air.tonality %></span>
-          <small class="text-secondary"> <%= air.infos %> </small>
-          <% if air.infos_english.present? %>
-            <small class="text-english"> <%= air.infos_english %> </small>
-          <% end %>
-        <% end %>
-      </li>
-    </ul>
+
+  <div class="card-body">
+    <h5 class="card-title mb-2 text-primary"><%= @title %></h5>
+    <p class="card-text text-secondary mb-4"><%= @guidelines %></p>
+
+    <div class="list-group mt-3">
+      <% @choice_imposed_work.airs.each_with_index do |air, index| %>
+        <div class="list-group-item mb-3 p-0 border shadow-sm rounded overflow-hidden">
+          <!-- En-tête de l'œuvre -->
+          <div class="bg-light-grey p-3 border-bottom">
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="d-flex align-items-center">
+                <div class="me-3">
+                  <span class="badge rounded-circle bg-primary text-white p-2" style="width: 28px; height: 28px;">
+                    <%= index + 1 %>
+                  </span>
+                </div>
+                <h6 class="mb-0 fw-bold" style="font-size: 1.05rem;"><%= air.title %></h6>
+              </div>
+              <% if air.length_minutes.present? %>
+                <span class="badge bg-primary bg-opacity-10 text-primary px-3">
+                  <i class="far fa-clock me-1"></i><%= air.length_minutes %> min
+                </span>
+              <% end %>
+            </div>
+          </div>
+
+          <!-- Détails de l'œuvre -->
+          <div class="p-3">
+            <div class="d-flex flex-wrap gap-3 text-muted">
+              <% if air.composer.present? %>
+                <div class="d-flex align-items-center">
+                  <i class="fas fa-user text-primary me-2"></i>
+                  <span><%= air.composer %></span>
+                </div>
+              <% end %>
+
+              <% if air.oeuvre.present? %>
+                <div class="d-flex align-items-center">
+                  <i class="fas fa-book text-primary me-2"></i>
+                  <span><%= air.oeuvre %></span>
+                </div>
+              <% end %>
+
+              <% if air.tonality.present? %>
+                <div class="d-flex align-items-center">
+                  <i class="fas fa-music text-primary me-2"></i>
+                  <span><%= air.tonality %></span>
+                </div>
+              <% end %>
+            </div>
+
+            <% air_info = I18n.locale == :en && air.infos_english.present? ? air.infos_english : air.infos %>
+            <% if air_info.present? %>
+              <div class="mt-3 border-start border-4 border-primary ps-3 py-1">
+                <div class="text-secondary">
+                  <%= air_info %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="card-footer bg-white text-center py-3 border-top">
+    <div class="d-inline-block bg-primary text-white px-4 py-2 rounded-pill shadow-sm">
+      <i class="fas fa-check-circle me-2"></i>
+      <strong><%= t('choice_imposed_works.card.selection_required') %>:</strong>
+      <span class="fs-5"><%= @choice_imposed_work.number_to_select %></span>
+    </div>
   </div>
 </div>

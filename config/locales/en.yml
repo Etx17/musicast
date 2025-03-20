@@ -532,12 +532,13 @@ en:
     card:
       choose: "Choose"
       works_from: "works from"
+      selection_required: "Selection required"
     choice_imposed_work:
       programme_requirement: "Programme Requirement"
       title: "Title"
       guidelines: "Guidelines"
       number_to_select: "Number to select"
-
+      selection_required: "Selection required"
     form:
       list_configuration: "List configuration"
       title_placeholder: "e.g.: 2 German lieder"
