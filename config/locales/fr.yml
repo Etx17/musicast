@@ -1450,6 +1450,9 @@ fr:
       present: "Présenter"
       works: "oeuvres"
       min_max_total: "min max au total"
+      time_requirement: "Durée minimale"
+      number_requirement: "Nombre requis"
+      choose_yourself: "Choisissez vous-même"
     form:
       title: "Titre"
       title_hint: "Donnez un titre à votre ligne, par exemple \"Lieds Allemands\""

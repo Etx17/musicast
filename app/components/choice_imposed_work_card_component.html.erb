@@ -1,7 +1,6 @@
 <div class="card mb-3 bg-white rounded-8 border">
   <div class="card-header bg-primary text-white py-3">
     <div class="d-flex align-items-center">
-      <i class="fas fa-music me-3" style="font-size: 1.2rem;"></i>
       <h5 class="mb-0 fw-bold">
         <%= t('choice_imposed_works.card.choose') %>
         <span class="badge bg-white text-primary mx-2 px-3" style="font-size: 1.1rem;">
@@ -83,14 +82,6 @@
           </div>
         </div>
       <% end %>
-    </div>
-  </div>
-
-  <div class="card-footer bg-white text-center py-3 border-top">
-    <div class="d-inline-block bg-primary text-white px-4 py-2 rounded-pill shadow-sm">
-      <i class="fas fa-check-circle me-2"></i>
-      <strong><%= t('choice_imposed_works.card.selection_required') %>:</strong>
-      <span class="fs-5"><%= @choice_imposed_work.number_to_select %></span>
     </div>
   </div>
 </div>

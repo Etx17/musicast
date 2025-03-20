@@ -1508,6 +1508,9 @@ en:
       present: "Present"
       works: "works"
       min_max_total: "minutes max in total"
+      time_requirement: "Time requirement"
+      number_requirement: "Number required"
+      choose_yourself: "Choose yourself"
     form:
       title: "Title"
       title_english: "Title (English)"

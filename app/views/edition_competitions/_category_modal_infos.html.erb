@@ -52,8 +52,8 @@
         <% if category.requirement_items.any? %>
         <h3 class="text-center py-3"><%= t('edition_competitions.category_modal_infos.required_documents') %></h3>
           <div class="card mb-3">
-            <div class="card-header"><%= t('edition_competitions.category_modal_infos.required_elements') %></div>
-            <ul class="list-group list-group-flush">
+            <div class="card-header bg-primary text-white"><%= t('edition_competitions.category_modal_infos.required_elements') %></div>
+            <ul class="list-group list-group-flush p-3">
               <%= render(RequirementItemComponent.with_collection(category.requirement_items)) %>
             </ul>
           </div>
