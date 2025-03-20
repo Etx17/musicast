@@ -14,7 +14,11 @@
 
   <div class="card-body">
     <h5 class="card-title mb-2 text-primary"><%= @title %></h5>
-    <p class="card-text text-secondary mb-4"><%= @guidelines %></p>
+     <div class="d-flex align-items-center mb-4 px-2 py-1 rounded border" style="width: fit-content;">
+      <i class="fas fa-info-circle text-secondary me-1"></i>
+      <p class="card-text text-secondary mb-0"><%= @guidelines %></p>
+    </div>
+
 
     <div class="list-group mt-3">
       <% @choice_imposed_work.airs.each_with_index do |air, index| %>
