@@ -1,19 +1,86 @@
-<div class="card mb-3 rounded-8">
-  <div class="card-header"><%= t('imposed_works.card.required_works') %>: <span class="h5 ps-2"> <%= @category.imposed_work.airs.count %></span></div>
-  <div class="card-body bg-light rounded-8">
-    <ul class="list-group list-group-flush">
-      <div><%= @title %></div>
-      <small class="text-secondary"><%= @guidelines %></small>
-      <li class="list-group-item d-flex flex-column bg-white">
-        <% @category.imposed_work.airs.each do |air| %>
-          <span> <i class="fas fa-feather text-secondary pe-2 small"></i><%= air.title %> - <%= air.composer %> - <%= air.oeuvre %> - <%= air.tonality %></span>
-          <% if I18n.locale == :en && air.infos_english.present? %>
-            <small class="text-secondary"> <%= air.infos_english %> </small>
-          <% else %>
-            <small class="text-secondary"> <%= air.infos %> </small>
-          <% end %>
-        <% end %>
-      </li>
-    </ul>
+<div class="card mb-3 bg-white rounded-8 border">
+  <div class="card-header bg-primary text-white py-3">
+    <div class="d-flex align-items-center">
+      <i class="fas fa-music me-3" style="font-size: 1.2rem;"></i>
+      <h5 class="mb-0 fw-bold">
+        <%= t('imposed_works.card.required_works') %>:
+        <span class="badge bg-white text-primary mx-2 px-3" style="font-size: 1.1rem;">
+          <%= @category.imposed_work.airs.count %>
+        </span>
+      </h5>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <h5 class="card-title mb-2 text-primary"><%= @title %></h5>
+    <div class="d-flex align-items-center mb-4 px-2 py-1 rounded border" style="width: fit-content;">
+      <i class="fas fa-info-circle text-secondary me-1"></i>
+      <p class="card-text text-secondary mb-0"><%= @guidelines %></p>
+    </div>
+
+    <div class="list-group mt-3">
+      <% @category.imposed_work.airs.each_with_index do |air, index| %>
+        <div class="list-group-item mb-3 p-0 border shadow-sm rounded overflow-hidden">
+          <!-- En-tête de l'œuvre -->
+          <div class="bg-primary-light p-2 border-bottom">
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="d-flex align-items-center">
+                <div class="me-2">
+                  <span class="badge rounded-circle bg-primary text-white p-2" style="width: 25px; height: 25px; font-size: 0.8rem;">
+                    <%= index + 1 %>
+                  </span>
+                </div>
+                <h6 class="mb-0 fw-bold" style="font-size: 1rem;"><%= air.title %></h6>
+              </div>
+              <% if air.length_minutes.present? %>
+                <span class="badge bg-primary bg-opacity-10 text-primary px-2 py-1" style="font-size: 0.8rem;">
+                  <i class="far fa-clock me-1"></i><%= air.length_minutes %> min
+                </span>
+              <% end %>
+            </div>
+          </div>
+
+          <!-- Détails de l'œuvre -->
+          <div class="p-2 bg-white">
+            <div class="row g-0">
+              <!-- Colonne gauche: infos supplémentaires -->
+              <div class="col-8">
+                <% air_info = I18n.locale == :en && air.infos_english.present? ? air.infos_english : air.infos %>
+                <% if air_info.present? %>
+                  <div class="border-start border-4 border-primary ps-2 py-1 me-2" style="font-size: 0.85rem;">
+                    <div class="text-secondary">
+                      <%= air_info %>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+
+              <!-- Colonne droite: métadonnées verticales -->
+              <div class="col-4">
+                <div class="d-flex flex-column align-items-end gap-1">
+                  <% if air.composer.present? %>
+                    <span class="badge bg-primary bg-opacity-10 text-primary px-2 py-1" style="font-size: 0.75rem;">
+                      <i class="fas fa-user me-1"></i><%= air.composer %>
+                    </span>
+                  <% end %>
+
+                  <% if air.oeuvre.present? %>
+                    <span class="badge bg-primary bg-opacity-10 text-primary px-2 py-1" style="font-size: 0.75rem;">
+                      <i class="fas fa-book me-1"></i><%= air.oeuvre %>
+                    </span>
+                  <% end %>
+
+                  <% if air.tonality.present? %>
+                    <span class="badge bg-primary bg-opacity-10 text-primary px-2 py-1" style="font-size: 0.75rem;">
+                      <i class="fas fa-music me-1"></i><%= air.tonality %>
+                    </span>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
   </div>
 </div>

@@ -167,6 +167,7 @@ fr:
   imposed_works:
     card:
       required_works: "Oeuvres imposées"
+      all_required: "Toutes les œuvres imposées"
     common:
       title: "Titre"
       guidelines: "Consignes"

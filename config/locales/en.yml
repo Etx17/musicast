@@ -166,6 +166,7 @@ en:
   imposed_works:
     card:
       required_works: "Required works"
+      all_required: "All required works"
     common:
       title: "Title"
       guidelines: "Guidelines"
