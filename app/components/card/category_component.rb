@@ -1,6 +1,7 @@
 class Card::CategoryComponent < ViewComponent::Base
   attr_reader :category, :height, :image, :redirect, :bottom_button_links,
-              :bottom_left_label, :bottom_left_pill, :top_left_pill
+              :bottom_left_label, :bottom_left_pill, :top_left_pill,
+              :category_name, :category_description
 
   def initialize(category:)
     @category = category
@@ -25,6 +26,12 @@ class Card::CategoryComponent < ViewComponent::Base
   def before_render
     if @photo.present?
       @image = helpers.url_for(@photo)
+    end
+
+    @category_description = if I18n.locale == :en && @category.description_english.present?
+      @category.description_english
+    else
+      @category.description
     end
 
     price_text = @price_cents > 0 ?
@@ -60,6 +67,12 @@ class Card::CategoryComponent < ViewComponent::Base
         label: "#{I18n.t('categories.card.prize_pool')}: #{helpers.humanized_money_with_symbol(@prize_pool_total_amount)}",
         class: "badge rounded-pill bg-success text-white"
       }
+    end
+
+    @formatted_prize_pool = if @prize_pool_total_amount.present? && @prize_pool_total_amount > 0
+      helpers.humanized_money_with_symbol(@prize_pool_total_amount)
+    else
+      nil
     end
 
     @formatted_biggest_prize = if @biggest_prize_amount.present? && @biggest_prize_amount > 0
