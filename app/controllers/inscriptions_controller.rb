@@ -190,6 +190,26 @@ class InscriptionsController < ApplicationController
     end
   end
 
+  def start_inscription
+    category = Category.find(params[:category_id])
+
+    existing_inscription = current_user.candidat.inscriptions.find_by(category_id: category.id)
+
+    if existing_inscription
+      redirect_to edit_inscription_path(existing_inscription, tab: 'program')
+    else
+      inscription = current_user.candidat.inscriptions.new(
+        category_id: category.id,
+        status: 'draft'
+      )
+      if inscription.save(validate: false)
+        redirect_to edit_inscription_path(inscription, tab: 'program')
+      else
+        redirect_back(fallback_location: root_path, alert: "Impossible de créer l'inscription")
+      end
+    end
+  end
+
   private
 
   def extract_pdf_content

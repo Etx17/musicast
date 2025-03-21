@@ -20,6 +20,9 @@ Rails.application.routes.draw do
     resources :performances
     resources :candidate_programs
     resources :inscriptions do
+      collection do
+        get :start_inscription
+      end
       resources :inscription_orders, only: [:new, :create]
       resources :performances, only: [:new, :create, :edit, :update]
       member do
