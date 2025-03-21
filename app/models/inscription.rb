@@ -137,6 +137,16 @@ class Inscription < ApplicationRecord
     inscription_item_requirements.filter{|i| i.item_type == "motivation_essay"}.first
   end
 
+  def self.find_or_create_without_validation(attributes)
+    result = find_by(attributes)
+    return result if result
+
+    record = new(attributes)
+    record.status = 'draft' if record.status.blank?
+    record.save(validate: false)
+    record
+  end
+
   private
 
   def check_remove_payment_proof
