@@ -97,7 +97,6 @@ class InscriptionsController < ApplicationController
       @inscription.payment_proof.purge
       @inscription.payment_proof.attach(params[:inscription][:payment_proof])
     end
-
     if @inscription.valid?
 
       # TODO: OpenAI validation part if extension enabled ( create table organism_extensions, with enum extensions_type etc)
