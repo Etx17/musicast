@@ -182,9 +182,13 @@ class Inscription < ApplicationRecord
 
   def validate_choice_imposed_works
     category.choice_imposed_works.each do |choice_imposed_work|
+      if choice_imposed_work_airs.map(&:air_id).uniq.length != choice_imposed_work_airs.count
+        return errors.add(:base, :duplicate_choice_imposed_works, message: "You cannot select the same air multiple times")
+      end
+
       required_selections = choice_imposed_work.number_to_select
       if choice_imposed_work_airs.count < required_selections
-        errors.add(:base, :missing_choice_imposed_works, message: "erreur a traduire ")
+        errors.add(:base, :missing_choice_imposed_works, message: "You must selected some options")
       end
     end
   end

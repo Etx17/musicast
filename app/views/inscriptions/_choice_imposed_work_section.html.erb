@@ -10,11 +10,12 @@
   <% else %>
     <small><%= choice_imposed_work.guidelines %></small>
   <% end %>
-
-  <% if f.object.errors[:choice_imposed_work_airs_attributes].any? %>
+  <% if f.object.errors[:base].any? %>
     <div class="d-flex flex-column">
       <small class="text-danger">
-        <%= f.object.errors[:choice_imposed_work_airs_attributes].first %>
+        <% f.object.errors[:base].each do |error| %>
+          <%= error %>
+        <% end %>
       </small>
     </div>
   <% end %>
@@ -26,3 +27,5 @@
     <% end %>
   <% end %>
 <% end %>
+
+<%# Add some javascript to remove the error message if user selected airs are unique %>
