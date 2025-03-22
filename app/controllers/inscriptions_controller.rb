@@ -192,19 +192,20 @@ class InscriptionsController < ApplicationController
   def start_inscription
     category = Category.find(params[:category_id])
 
-    existing_inscription = current_user.candidat.inscriptions.find_by(category_id: category.id)
+    inscription = current_user.candidat.inscriptions.find_by(category_id: category.id)
 
-    if existing_inscription
-      redirect_to edit_inscription_path(existing_inscription, tab: 'program')
+    if inscription
+      redirect_to edit_inscription_step_path(inscription, :program)
     else
       inscription = current_user.candidat.inscriptions.new(
         category_id: category.id,
         status: 'draft'
       )
+
       if inscription.save(validate: false)
-        redirect_to edit_inscription_path(inscription, tab: 'program')
+        redirect_to edit_inscription_step_path(inscription, :program)
       else
-        redirect_back(fallback_location: root_path, alert: "Impossible de créer l'inscription")
+        redirect_to root_path, alert: t('inscriptions.notices.could_not_create')
       end
     end
   end

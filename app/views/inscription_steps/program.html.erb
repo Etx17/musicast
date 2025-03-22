@@ -1,0 +1,45 @@
+<div class="container mt-4">
+  <%# <h2 class="mb-4"><%= t('inscriptions.steps.program.title') %>
+  <%= form_for @inscription, url: wizard_path, method: :put do |f| %>
+    <div class="card shadow-sm mb-4">
+      <div class="card-body">
+        <%# <h4 class="card-title mb-3"><%= t('inscriptions.steps.program.semi_imposed_works') %>
+        <%= render "inscriptions/semi_imposed_work_section", inscription: @inscription, f: f %>
+      </div>
+    </div>
+
+    <div class="card shadow-sm mb-4">
+      <div class="card-body">
+        <%# <h4 class="card-title mb-3"><%= t('inscriptions.steps.program.choice_imposed_works') %>
+        <%= render "inscriptions/choice_imposed_work_section", inscription: @inscription, f: f %>
+      </div>
+    </div>
+
+    <% if @inscription.category.imposed_work&.airs&.any? %>
+      <div class="card shadow-sm mb-4">
+        <div class="card-body">
+          <%# <h4 class="card-title mb-3"><%= t('inscriptions.form.imposed_airs') %>
+          <ul class="list-group mb-3">
+            <% @inscription.category&.imposed_work&.airs&.each do |air| %>
+              <li class="list-group-item">
+                <strong><%= air.title %></strong> - <%= air.composer %> - <%= air.oeuvre %>
+                <div class="mt-1 text-muted">
+                  <% if I18n.locale == :en && air.infos_english.present? %>
+                    <%= air.infos_english %>
+                  <% else %>
+                    <%= air.infos %>
+                  <% end %>
+                </div>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="d-flex justify-content-between mt-4">
+      <%= link_to t('global.actions.cancel'), inscription_path(@inscription), class: "btn btn-outline-secondary" %>
+      <%= f.submit t('global.actions.next'), class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>

@@ -9,14 +9,30 @@ class Inscription < ApplicationRecord
   has_many :choice_imposed_work_airs, dependent: :destroy
   has_many :semi_imposed_work_airs, dependent: :destroy
 
-  validates :terms_accepted, acceptance: { accept: true }
   accepts_nested_attributes_for :inscription_item_requirements, allow_destroy: true
-  accepts_nested_attributes_for :choice_imposed_work_airs
-  accepts_nested_attributes_for :semi_imposed_work_airs
+  accepts_nested_attributes_for :choice_imposed_work_airs, allow_destroy: true
+  accepts_nested_attributes_for :semi_imposed_work_airs, allow_destroy: true
   accepts_nested_attributes_for :notes
 
   has_one_attached :payment_proof
 
+    # Step 1: Program validations
+    with_options on: :program do |program|
+      validate :validate_semi_imposed_works
+      validate :validate_choice_imposed_works
+    end
+
+    # Step 2: Item Requirements validations
+    with_options on: :item_requirements do |items|
+      items.validate :validate_required_documents
+    end
+
+    # Step 3: Preferences validations
+    with_options on: :preferences do |prefs|
+      prefs.validates :time_preference, presence: true
+      prefs.validates :terms_accepted, acceptance: true
+      prefs.validate :validate_pianist_details
+    end
   attr_accessor :remove_payment_proof
 
   before_save :check_remove_payment_proof
@@ -117,7 +133,7 @@ class Inscription < ApplicationRecord
   end
 
   def is_ready_to_be_reviewed?
-    has_complete_requirement_items? && has_complete_airs? && is_payed? #&& has_complete_performances? -> non car le candidat peut changer ses perfs jusqu'a une date limite.
+    valid?(:program) && valid?(:item_requirements) && valid?(:preferences)
   end
 
   def has_complete_airs?
@@ -152,6 +168,53 @@ class Inscription < ApplicationRecord
   def check_remove_payment_proof
     if remove_payment_proof == "1" && payment_proof.attached?
       payment_proof.purge
+    end
+  end
+
+  def validate_semi_imposed_works
+    # Check if we need to validate semi-imposed works for this category
+    if category&.semi_imposed_works&.any?
+      if semi_imposed_work_airs.none?
+        errors.add(:base, :missing_semi_imposed_works, message: I18n.t('inscriptions.validations.missing_semi_imposed_works'))
+      end
+    end
+  end
+
+  def validate_choice_imposed_works
+    category.choice_imposed_works.each do |choice_imposed_work|
+      required_selections = choice_imposed_work.number_to_select
+      if choice_imposed_work_airs.count < required_selections
+        errors.add(:base, :missing_choice_imposed_works, message: "erreur a traduire ")
+      end
+    end
+  end
+
+  def validate_required_documents
+    # Check if all required documents are present
+    required_items = category.requirement_items.where(required: true)
+
+    required_items.each do |item|
+      requirement = inscription_item_requirements.find_by(requirement_item: item)
+
+      if requirement.nil? || !requirement.submitted_file.attached?
+        errors.add(:base, :missing_required_document,
+                  message: I18n.t('inscriptions.validations.missing_required_document',
+                                  document: item.title))
+      end
+    end
+  end
+
+  def validate_pianist_details
+    if candidate_brings_pianist_accompagnateur?
+      if candidate_brings_pianist_accompagnateur_full_name.blank?
+        errors.add(:candidate_brings_pianist_accompagnateur_full_name, :blank)
+      end
+
+      if candidate_brings_pianist_accompagnateur_email.blank?
+        errors.add(:candidate_brings_pianist_accompagnateur_email, :blank)
+      elsif !candidate_brings_pianist_accompagnateur_email.match?(URI::MailTo::EMAIL_REGEXP)
+        errors.add(:candidate_brings_pianist_accompagnateur_email, :invalid)
+      end
     end
   end
 end

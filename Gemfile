@@ -75,6 +75,8 @@ gem "font-awesome-sass", "~> 6.1"
 gem "simple_form", github: "heartcombo/simple_form"
 gem "sassc-rails"
 
+gem "wicked"
+
 group :development, :test do
   gem "dotenv-rails"
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -118,4 +120,3 @@ gem "view_component", "~> 3.13"
 gem 'i18n-debug'
 gem 'rails-i18n', '~> 8.0.0'
 gem "wicked"
-

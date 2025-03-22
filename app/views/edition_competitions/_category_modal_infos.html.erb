@@ -17,7 +17,7 @@
 
           <% if current_user %>
             <% if inscription = current_user.candidat.inscriptions.find_by(category_id: category.id) %>
-              <%= link_to t('edition_competitions.common.continue'), edit_inscription_path(inscription, tab: 'program'), class: "btn btn-primary" %>
+              <%= link_to t('edition_competitions.common.continue'), edit_inscription_step_path(inscription, :program), class: "btn btn-primary" %>
             <% else %>
               <%= link_to t('edition_competitions.common.continue'), start_inscription_inscriptions_path(category_id: category.id), class: "btn btn-primary" %>
             <% end %>

@@ -23,6 +23,7 @@ Rails.application.routes.draw do
       collection do
         get :start_inscription
       end
+      resources :steps, controller: 'inscription_steps'
       resources :inscription_orders, only: [:new, :create]
       resources :performances, only: [:new, :create, :edit, :update]
       member do

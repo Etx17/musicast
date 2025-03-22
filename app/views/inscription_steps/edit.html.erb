@@ -1,0 +1,107 @@
+
+<% if step == :program %>
+
+
+<% elsif step == :item_requirements %>
+<div class="container mt-4">
+  <h2 class="mb-4"><%= t('inscriptions.steps.item_requirements.title') %></h2>
+
+  <%= form_for @inscription, url: wizard_path, method: :put do |f| %>
+    <div class="card shadow-sm mb-4">
+      <div class="card-body">
+        <h4 class="card-title mb-3"><%= t('inscriptions.items_form_section.required_documents') %></h4>
+        <%= render "inscriptions/items_form_section", inscription: @inscription, f: f %>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-between mt-4">
+      <%= link_to t('global.actions.previous'), previous_wizard_path, class: "btn btn-outline-secondary" %>
+      <%= f.submit t('global.actions.next'), class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>
+
+<% elsif step == :preferences %>
+<div class="container mt-4">
+  <h2 class="mb-4"><%= t('inscriptions.steps.preferences.title') %></h2>
+
+  <%= form_for @inscription, url: wizard_path, method: :put do |f| %>
+    <% if @inscription.category.allow_own_pianist_accompagnateur %>
+      <div class="card shadow-sm mb-4">
+        <div class="card-body">
+          <h4 class="card-title mb-3"><%= t('inscriptions.form.pianist_preferences') %></h4>
+          <%= f.input :candidate_brings_pianist_accompagnateur,
+                      as: :boolean,
+                      id: "inscription_candidate_brings_pianist_accompagnateur",
+                      label: t('inscriptions.form.bring_own_pianist'),
+                      input_html: { onchange: "togglePianistDetails()" } %>
+
+          <div id="pianist_details" style="display: <%= @inscription.candidate_brings_pianist_accompagnateur ? 'block' : 'none' %>;">
+            <div class="row">
+              <div class="col-md-6">
+                <%= f.input :candidate_brings_pianist_accompagnateur_full_name,
+                            label: t('inscriptions.form.candidate_brings_pianist_accompagnateur_full_name') %>
+              </div>
+              <div class="col-md-6">
+                <%= f.input :candidate_brings_pianist_accompagnateur_email,
+                            label: t('inscriptions.form.candidate_brings_pianist_accompagnateur_email') %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="card shadow-sm mb-4">
+      <div class="card-body">
+        <h4 class="card-title mb-3"><%= t('inscriptions.form.time_preferences') %></h4>
+        <%= f.input :time_preference,
+                    label: t('inscriptions.form.time_preference'),
+                    hint: t('inscriptions.form.time_preference_info'),
+                    collection: Inscription.time_preferences.keys.to_a,
+                    prompt: t('inscriptions.form.select_time_preference') %>
+      </div>
+    </div>
+
+    <div class="card shadow-sm mb-4">
+      <div class="card-body">
+        <h4 class="card-title mb-3"><%= t('inscriptions.form.terms') %></h4>
+        <div class="d-flex align-items-start gap-2 mb-3">
+          <%= f.check_box :terms_accepted, required: true, class: "mt-1" %>
+          <%= f.label :terms_accepted, required: true, class:"text-secondary" do %>
+            <span class="text-danger">*</span> <%= t('inscriptions.form.terms_acceptance_html') %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div class="card shadow-sm mb-4">
+      <div class="card-body">
+        <h4 class="card-title mb-3"><%= t('inscriptions.form.payment') %></h4>
+        <%= f.input :payment_proof,
+                    as: :file,
+                    label: t('inscriptions.form.payment_proof'),
+                    hint: t('inscriptions.form.payment_proof_info') %>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-between mt-4">
+      <%= link_to t('global.actions.previous'), previous_wizard_path, class: "btn btn-outline-secondary" %>
+      <%= f.submit t('global.actions.finish'), class: "btn btn-success" %>
+    </div>
+  <% end %>
+</div>
+
+<script>
+  function togglePianistDetails() {
+    const pianistCheckbox = document.getElementById('inscription_candidate_brings_pianist_accompagnateur');
+    const pianistDetails = document.getElementById('pianist_details');
+
+    if (pianistCheckbox.checked) {
+      pianistDetails.style.display = 'block';
+    } else {
+      pianistDetails.style.display = 'none';
+    }
+  }
+</script>
+<% end %>
