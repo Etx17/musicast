@@ -173,39 +173,30 @@ class Inscription < ApplicationRecord
 
   def validate_semi_imposed_works
     # Check if we need to validate semi-imposed works for this category
-    if category&.semi_imposed_works&.any?
-      if semi_imposed_work_airs.none?
-        errors.add(:base, :missing_semi_imposed_works, message: I18n.t('inscriptions.validations.missing_semi_imposed_works'))
-      end
-    end
+    # if category&.semi_imposed_works&.any?
+    #   if semi_imposed_work_airs.none?
+    #     errors.add(:base, :missing_semi_imposed_works, message: I18n.t('inscriptions.validations.missing_semi_imposed_works'))
+    #   end
+    # end
   end
 
   def validate_choice_imposed_works
-    category.choice_imposed_works.each do |choice_imposed_work|
-      if choice_imposed_work_airs.map(&:air_id).uniq.length != choice_imposed_work_airs.count
-        return errors.add(:base, :duplicate_choice_imposed_works, message: "You cannot select the same air multiple times")
-      end
-
-      required_selections = choice_imposed_work.number_to_select
-      if choice_imposed_work_airs.count < required_selections
-        errors.add(:base, :missing_choice_imposed_works, message: "You must selected some options")
-      end
-    end
+    # Validate that user ticked the right amount of airs
   end
 
   def validate_required_documents
     # Check if all required documents are present
-    required_items = category.requirement_items.where(required: true)
+    # required_items = category.requirement_items.where(required: true)
 
-    required_items.each do |item|
-      requirement = inscription_item_requirements.find_by(requirement_item: item)
+    # required_items.each do |item|
+    #   requirement = inscription_item_requirements.find_by(requirement_item: item)
 
-      if requirement.nil? || !requirement.submitted_file.attached?
-        errors.add(:base, :missing_required_document,
-                  message: I18n.t('inscriptions.validations.missing_required_document',
-                                  document: item.title))
-      end
-    end
+    #   if requirement.nil? || !requirement.submitted_file.attached?
+    #     errors.add(:base, :missing_required_document,
+    #               message: I18n.t('inscriptions.validations.missing_required_document',
+    #                               document: item.title))
+    #   end
+    # end
   end
 
   def validate_pianist_details

@@ -3,12 +3,20 @@ class InscriptionStepsController < ApplicationController
 
   steps :program, :item_requirements, :preferences
 
+
+
   before_action :set_inscription
 
   def edit
     case step
     when :program
     when :item_requirements
+      if @inscription.inscription_item_requirements.none?
+        @inscription.category.requirement_items.each do |item|
+          @inscription.inscription_item_requirements.new(requirement_item: item)
+        end
+        @inscription.save(validate: false)
+      end
     when :preferences
     end
     render_wizard
@@ -21,14 +29,14 @@ class InscriptionStepsController < ApplicationController
     when :program
       if @inscription.valid?(:program)
         @inscription.save
-        redirect_to next_wizard_path
+        redirect_to wizard_path(:item_requirements, action: "edit")
       else
         render 'program', status: :unprocessable_entity
       end
     when :item_requirements
       if @inscription.valid?(:item_requirements)
         @inscription.save
-        redirect_to next_wizard_path
+        redirect_to wizard_path(:preferences, action: "edit")
       else
         render 'item_requirements', status: :unprocessable_entity
       end
