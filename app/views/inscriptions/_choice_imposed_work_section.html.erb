@@ -28,5 +28,59 @@
   <% end %>
 <% end %>
 
-<%# Add some javascript to remove the error message if user selected airs are unique %>
-<%# If a user picked an air, remove this air from the other choice_imposed_work options so that user don't pick it twice %>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const airSelects = document.querySelectorAll('select[name*="[choice_imposed_work_airs_attributes]"][name*="[air_id]"]');
+
+    function updateAvailableOptions() {
+      const selectedValues = new Map();
+
+      airSelects.forEach(select => {
+        if (select.value && select.value !== '') {
+          selectedValues.set(select, select.value);
+        }
+      });
+
+      airSelects.forEach(currentSelect => {
+        Array.from(currentSelect.options).forEach(option => {
+          if (option.value === '') return;
+
+          let isSelectedElsewhere = false;
+
+          selectedValues.forEach((value, select) => {
+            if (select !== currentSelect && value === option.value) {
+              isSelectedElsewhere = true;
+            }
+          });
+
+          if (isSelectedElsewhere) {
+            option.disabled = true;
+            option.style.color = '#aaa';
+          } else {
+            option.disabled = false;
+            option.style.color = '';
+          }
+        });
+      });
+
+      const errorDivs = document.querySelectorAll('.text-danger');
+      if (errorDivs) {
+        const allSelected = Array.from(airSelects).every(select => {
+          return select.disabled || select.value !== '';
+        });
+
+        if (allSelected) {
+          errorDivs.forEach(div => {
+            div.style.display = 'none';
+          });
+        }
+      }
+    }
+
+    airSelects.forEach(select => {
+      select.addEventListener('change', updateAvailableOptions);
+    });
+
+    updateAvailableOptions();
+  });
+</script>
