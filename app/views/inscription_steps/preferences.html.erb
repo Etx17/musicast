@@ -1,7 +1,7 @@
 <div class="container mt-4">
   <%# <h2 class="mb-4"><%= t('inscriptions.steps.preferences.title') %>
 
-  <%= simple_form_for @inscription, url: wizard_path, method: :put do |f| %>
+  <%= simple_form_for @inscription, url: wizard_path(:preferences, action: "update"), method: :put do |f| %>
     <% if @inscription.category.allow_own_pianist_accompagnateur %>
       <div class="card shadow-sm mb-4">
         <div class="card-body">

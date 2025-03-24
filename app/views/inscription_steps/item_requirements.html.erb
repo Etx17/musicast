@@ -20,7 +20,7 @@
         </div>
       <% end %>
 
-      <%= form_for @inscription, url: wizard_path, method: :put do |f| %>
+      <%= form_for @inscription, url: wizard_path(:item_requirements, action: "update"), method: :put do |f| %>
         <div class="d-flex flex-wrap gap-2">
           <% @inscription.inscription_item_requirements.each do |item_requirement| %>
             <div class="card m-2" style="width: calc(50% - 24px); max-height: 500px; overflow-y: auto;">

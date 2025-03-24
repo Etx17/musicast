@@ -2,9 +2,6 @@ class InscriptionStepsController < ApplicationController
   include Wicked::Wizard
 
   steps :program, :item_requirements, :preferences
-
-
-
   before_action :set_inscription
 
   def edit
@@ -24,7 +21,6 @@ class InscriptionStepsController < ApplicationController
 
   def update
     @inscription.assign_attributes(inscription_params)
-
     case step
     when :program
       if @inscription.valid?(:program)
