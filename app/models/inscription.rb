@@ -18,7 +18,6 @@ class Inscription < ApplicationRecord
 
     # Step 1: Program validations
     with_options on: :program do |program|
-      validate :validate_semi_imposed_works
       validate :validate_choice_imposed_works
     end
 
@@ -171,17 +170,9 @@ class Inscription < ApplicationRecord
     end
   end
 
-  def validate_semi_imposed_works
-    # Check if we need to validate semi-imposed works for this category
-    # if category&.semi_imposed_works&.any?
-    #   if semi_imposed_work_airs.none?
-    #     errors.add(:base, :missing_semi_imposed_works, message: I18n.t('inscriptions.validations.missing_semi_imposed_works'))
-    #   end
-    # end
-  end
-
   def validate_choice_imposed_works
-    # Validate that user ticked the right amount of airs
+    # Validate that user did not select twice the same air
+    
   end
 
   def validate_required_documents
