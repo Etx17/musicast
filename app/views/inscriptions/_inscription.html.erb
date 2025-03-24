@@ -283,7 +283,7 @@
         <div class="d-flex justify-content-between align-items-center mb-2">
           <h3><%= t('inscriptions.inscription.air_list') %></h3>
           <% if current_user.candidat && inscription.category.edition_competition.end_of_registration > Date.today %>
-            <%= link_to edit_inscription_path(inscription), class: 'btn btn-primary w-50' do %>
+            <%= link_to edit_inscription_step_path(inscription, :program), class: 'btn btn-primary w-50' do %>
               <div class="d-flex align-items-center justify-content-center">
                 <i class="fas fa-edit me-2"></i>
                 <span><%= t('global.actions.edit') %></span>
