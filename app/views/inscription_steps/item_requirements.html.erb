@@ -15,7 +15,7 @@
         </div>
       <% end %>
 
-      <%= form_for @inscription, url: wizard_path(:item_requirements, action: "update"), method: :put do |f| %>
+      <%= form_for @inscription, url: wizard_path(:item_requirements, action: "update"), method: :put, html: { id: "item-requirements-form" } do |f| %>
         <div class="d-flex flex-wrap gap-2">
           <% @inscription.inscription_item_requirements.each do |item_requirement| %>
             <div class="card m-2" style="width: calc(50% - 24px); max-height: 500px; overflow-y: auto;">
@@ -40,25 +40,69 @@
                         <%= f.label "Motivation Letter", required: true %>
                         <small class="text-secondary"><span data-character-counter-target="counter">0</span>/1000 </small>
                       </div>
-                      <%= irf.input :submitted_content, label: false, as: :text, input_html: { style: 'height: 300px;', data: { action: "input->character-counter#update", character_counter_target: "input", class: "border border-0 " } }, required: true %>
+                      <%= irf.input :submitted_content, label: false, as: :text,
+                                    input_html: {
+                                      style: 'height: 300px;',
+                                      data: {
+                                        action: "input->character-counter#update",
+                                        character_counter_target: "input",
+                                        class: "border border-0"
+                                      },
+                                      class: irf.object.submitted_content.present? ? "is-valid" : "",
+                                      required: true
+                                    } %>
                     </div>
                   <% when 'youtube_link' %>
-                    <%= irf.input :submitted_content, as: :url, label: "YouTube Video Link", hint: "Please provide a link to your YouTube video", required: true %>
+                    <%= irf.input :submitted_content, as: :url,
+                                  label: "YouTube Video Link",
+                                  hint: "Please provide a link to your YouTube video",
+                                  input_html: {
+                                    class: irf.object.submitted_content.present? ? "is-valid" : "",
+                                    data: { action: "input->file-validator#validateYouTubeUrl" }
+                                  },
+                                  required: true %>
                   <% else %>
                     <div class="row">
                       <div class="col">
-                        <% if irf.object.submitted_file.attached? && irf.object.submitted_file.persisted? %>
+                        <% if irf.object.submitted_file.attached? && irf.object.persisted? %>
                           <div class="mb-3">
                             <label class="form-label">Current Document</label>
                             <div class="d-flex align-items-center">
                               <span class="badge bg-success me-2"><i class="fas fa-check"></i> Uploaded</span>
-                              <%# <%= link_to "View", url_for(irf.object.submitted_file), class: "btn btn-sm btn-outline-primary", target: "_blank" %>
+                              <%= link_to "View", url_for(irf.object.submitted_file), class: "btn btn-sm btn-outline-primary", target: "_blank" %>
                             </div>
                             <embed src="<%= url_for(irf.object.submitted_file) %>" width="100%" height="200" type="application/pdf" class="mt-2">
                           </div>
-                          <%= irf.input :submitted_file, as: :file, label: "Replace Document" %>
+                          <%= irf.input :submitted_file, as: :file,
+                                       label: "Replace Document",
+                                       input_html: {
+                                         class: "file-input",
+                                         data: {
+                                           action: "change->file-validator#validateFile",
+                                           file_validator_accepted_types: "application/pdf",
+                                           file_validator_max_size: "10",
+                                           requirement_item_id: item_requirement.requirement_item.id
+                                         }
+                                       } %>
+                          <div class="invalid-feedback file-error-message" style="display: none;">
+                            Please upload a valid PDF file (maximum 10MB).
+                          </div>
                         <% else %>
-                          <%= irf.input :submitted_file, as: :file, label: "Upload PDF Document", required: true %>
+                          <%= irf.input :submitted_file, as: :file,
+                                       label: "Upload PDF Document",
+                                       input_html: {
+                                         class: "file-input",
+                                         data: {
+                                           action: "change->file-validator#validateFile",
+                                           file_validator_accepted_types: "application/pdf",
+                                           file_validator_max_size: "10",
+                                           requirement_item_id: item_requirement.requirement_item.id
+                                         }
+                                       },
+                                       required: true %>
+                          <div class="invalid-feedback file-error-message" style="display: none;">
+                            Please upload a valid PDF file (maximum 10MB).
+                          </div>
                         <% end %>
                       </div>
                     </div>
@@ -73,7 +117,7 @@
           <%= link_to previous_wizard_path, class: "btn btn-outline-secondary" do %>
             <i class="fas fa-arrow-left me-1"></i> Previous
           <% end %>
-          <%= f.submit "Next", class: "btn btn-primary" %>
+          <%= f.submit "Next", class: "btn btn-primary", id: "submit-button" %>
         </div>
       <% end %>
     </div>
@@ -82,6 +126,129 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
+    // File validation controller
+    const fileValidator = {
+      init() {
+        // File inputs with validation
+        document.querySelectorAll('.file-input').forEach(input => {
+          input.addEventListener('change', this.validateFileInputEvent.bind(this));
+        });
+
+        // YouTube URL inputs
+        document.querySelectorAll('[data-action*="input->file-validator#validateYouTubeUrl"]').forEach(input => {
+          input.addEventListener('input', this.validateYouTubeUrlEvent.bind(this));
+        });
+
+        // Form submission validation
+        const form = document.getElementById('item-requirements-form');
+        if (form) {
+          form.addEventListener('submit', this.validateFormSubmission.bind(this));
+        }
+      },
+
+      validateFileInputEvent(event) {
+        const input = event.target;
+        const file = input.files[0];
+        const errorElement = input.parentElement.nextElementSibling;
+        const formGroup = input.closest('.form-group');
+
+        if (!file) {
+          // No file selected
+          input.classList.remove('is-valid');
+          input.classList.remove('is-invalid');
+          if (errorElement) errorElement.style.display = 'none';
+          return true;
+        }
+
+        const acceptedTypes = input.dataset.fileValidatorAcceptedTypes.split(',');
+        const maxSizeMB = parseFloat(input.dataset.fileValidatorMaxSize);
+
+        // Check file type
+        const isValidType = acceptedTypes.includes(file.type);
+
+        // Check file size
+        const isValidSize = file.size <= (maxSizeMB * 1024 * 1024);
+
+        if (!isValidType || !isValidSize) {
+          // Invalid file
+          input.classList.add('is-invalid');
+          input.classList.remove('is-valid');
+          if (errorElement) {
+            errorElement.style.display = 'block';
+            if (!isValidType) {
+              errorElement.textContent = `Please upload a valid PDF file. Current type: ${file.type}`;
+            } else {
+              errorElement.textContent = `File size too large. Maximum size: ${maxSizeMB}MB. Current size: ${(file.size / (1024 * 1024)).toFixed(2)}MB`;
+            }
+          }
+          return false;
+        } else {
+          // Valid file
+          input.classList.add('is-valid');
+          input.classList.remove('is-invalid');
+          if (errorElement) errorElement.style.display = 'none';
+          return true;
+        }
+      },
+
+      validateYouTubeUrlEvent(event) {
+        const input = event.target;
+        const url = input.value.trim();
+
+        if (!url) {
+          // No URL entered
+          input.classList.remove('is-valid');
+          input.classList.remove('is-invalid');
+          return true;
+        }
+
+        // Basic YouTube URL validation
+        const youtubeRegex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+$/;
+        const isValid = youtubeRegex.test(url);
+
+        if (isValid) {
+          input.classList.add('is-valid');
+          input.classList.remove('is-invalid');
+          return true;
+        } else {
+          input.classList.add('is-invalid');
+          input.classList.remove('is-valid');
+          return false;
+        }
+      },
+
+      validateFormSubmission(event) {
+        let isValid = true;
+
+        // Check all file inputs
+        document.querySelectorAll('.file-input').forEach(input => {
+          // Skip validation for file inputs if they already have a file attached (persisted)
+          const requirementItemId = input.dataset.requirementItemId;
+          const isRequired = input.hasAttribute('required');
+
+          if (isRequired || input.files.length > 0) {
+            const inputValid = this.validateFileInputEvent({target: input});
+            isValid = isValid && inputValid;
+          }
+        });
+
+        // Check all YouTube URL inputs
+        document.querySelectorAll('[data-action*="input->file-validator#validateYouTubeUrl"]').forEach(input => {
+          const inputValid = this.validateYouTubeUrlEvent({target: input});
+          isValid = isValid && inputValid;
+        });
+
+        if (!isValid) {
+          event.preventDefault();
+          // Scroll to the first error
+          const firstError = document.querySelector('.is-invalid');
+          if (firstError) {
+            firstError.scrollIntoView({behavior: 'smooth', block: 'center'});
+          }
+        }
+      }
+    };
+
     // Initialize character counters for motivation essays
     document.querySelectorAll('[data-controller="character-counter"]').forEach(function(counterElement) {
       const input = counterElement.querySelector('[data-character-counter-target="input"]');
@@ -99,12 +266,30 @@
           if (input.value.length > 1000) {
             counter.classList.add('text-danger');
             counter.classList.remove('text-secondary');
+            input.classList.add('is-invalid');
+            input.classList.remove('is-valid');
+          } else if (input.value.length > 0) {
+            counter.classList.add('text-secondary');
+            counter.classList.remove('text-danger');
+            input.classList.add('is-valid');
+            input.classList.remove('is-invalid');
           } else {
             counter.classList.add('text-secondary');
             counter.classList.remove('text-danger');
+            input.classList.remove('is-valid');
+            input.classList.remove('is-invalid');
           }
         });
+
+        // Trigger initial validation
+        if (input.value) {
+          const event = new Event('input');
+          input.dispatchEvent(event);
+        }
       }
     });
+
+    // Initialize file validation
+    fileValidator.init();
   });
 </script>
