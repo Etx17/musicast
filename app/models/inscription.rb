@@ -16,21 +16,17 @@ class Inscription < ApplicationRecord
 
   has_one_attached :payment_proof
 
-    # Step 1: Program validations
     with_options on: :program do |program|
       validate :validate_choice_imposed_works
     end
 
-    # Step 2: Item Requirements validations
     with_options on: :item_requirements do |items|
       items.validate :validate_required_documents
     end
 
-    # Step 3: Preferences validations
     with_options on: :preferences do |prefs|
-      prefs.validates :time_preference, presence: true
-      prefs.validates :terms_accepted, acceptance: true
-      prefs.validate :validate_pianist_details
+      prefs.validates :terms_accepted, acceptance: { accept: true, message: "must be accepted" }, allow_nil: false
+      prefs.validates :payment_proof, presence: true
     end
   attr_accessor :remove_payment_proof
 
@@ -179,7 +175,6 @@ class Inscription < ApplicationRecord
   end
 
   def validate_required_documents
-    # Check if documents are of the right format but i guess it's done in the view with JS no ?
   end
 
   def validate_pianist_details

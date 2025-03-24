@@ -1,4 +1,13 @@
 <div class="container mt-4">
+  <!-- Application file button - only displayed when complete -->
+  <% if @inscription.has_complete_requirement_items? && @inscription.is_payed? && @inscription.has_complete_airs? %>
+    <div class="d-flex justify-content-end mb-3">
+      <%= link_to inscription_path(@inscription), class: "btn btn-success" do %>
+        <i class="fas fa-folder-open me-2"></i> Votre dossier d'inscription
+      <% end %>
+    </div>
+  <% end %>
+
   <%# <h2 class="mb-4"><%= t('inscriptions.steps.preferences.title') %>
 
   <%= simple_form_for @inscription, url: wizard_path(:preferences, action: "update"), method: :put do |f| %>
@@ -42,22 +51,90 @@
     <div class="card shadow-sm mb-4">
       <div class="card-body">
         <h4 class="card-title mb-3"><%= t('inscriptions.form.terms') %></h4>
-        <div class="d-flex align-items-start gap-2 mb-3">
-          <%= f.check_box :terms_accepted, required: true, class: "mt-1" %>
-          <%= f.label :terms_accepted, required: true, class:"text-secondary" do %>
-            <span class="text-danger">*</span> <%= t('inscriptions.form.terms_acceptance_html') %>
-          <% end %>
+
+        <div class="d-flex align-items-center justify-content-between mb-3">
+          <div class="form-check form-switch">
+            <%= f.check_box :terms_accepted,
+                            class: "form-check-input",
+                            role: "switch",
+                            id: "terms-switch" %>
+            <%= f.label :terms_accepted, class: "form-check-label text-secondary" do %>
+              <span class="text-danger">*</span> <%= t('inscriptions.form.terms_acceptance_html') %>
+            <% end %>
+          </div>
         </div>
+
+        <% if @inscription.errors[:terms_accepted].any? %>
+          <div class="text-danger">
+            <%= @inscription.errors[:terms_accepted].join(", ") %>
+          </div>
+        <% end %>
       </div>
     </div>
 
     <div class="card shadow-sm mb-4">
       <div class="card-body">
         <h4 class="card-title mb-3"><%= t('inscriptions.form.payment') %></h4>
-        <%= f.input :payment_proof,
-                    as: :file,
-                    label: t('inscriptions.inscription.payment_proof'),
-                    hint: t('inscriptions.inscription.upload_payment_proof_instruction') %>
+
+        <!-- Price and IBAN Information - No alerts -->
+        <div class="mb-4" style="width: fit-content;">
+          <!-- Price display -->
+          <div class="d-flex align-items-center mb-3">
+            <i class="fas fa-money-bill-wave text-success me-2"></i>
+            <span class="fw-bold">Registration Fee:</span>
+            <span class="ms-2 fs-5 fw-bold text-success">
+              <%= humanized_money_with_symbol(@inscription.category.price).gsub('.', '') %>
+            </span>
+          </div>
+
+          <!-- IBAN with copy button -->
+          <% if @inscription.category.competition.organism.iban.present? %>
+            <div class="d-flex align-items-center">
+              <i class="fas fa-university me-2"></i>
+              <span class="fw-bold"><%= t('inscriptions.inscription.payment_iban_label') %>:</span>
+              <code class="ms-2 p-1 bg-white border rounded"><%= @inscription.category.competition.organism.iban %></code>
+              <button type="button" class="btn btn-sm btn-outline-secondary ms-2 copy-btn" data-clipboard-text="<%= @inscription.category.competition.organism.iban %>">
+                <i class="fas fa-copy"></i> Copy
+              </button>
+              <span class="ms-2 text-success copy-success" style="display: none;">
+                <i class="fas fa-check"></i> Copied
+              </span>
+            </div>
+          <% end %>
+        </div>
+
+        <% if @inscription.errors[:payment_proof].any? %>
+          <div class="text-danger mb-3">
+            <%= @inscription.errors[:payment_proof].join(", ") %>
+          </div>
+        <% end %>
+
+        <% if @inscription.payment_proof.attached? && @inscription.payment_proof.persisted? %>
+          <div class="mb-3">
+            <label class="form-label small text-muted">Current Payment Proof</label>
+            <div class="d-flex align-items-center mb-2">
+              <span class="badge bg-success me-2"><i class="fas fa-check"></i> Uploaded</span>
+            </div>
+
+            <% if @inscription.payment_proof.content_type.include?('pdf') %>
+              <embed src="<%= url_for(@inscription.payment_proof) %>" width="100%" height="300" type="application/pdf" class="mt-2">
+            <% else %>
+              <%= image_tag url_for(@inscription.payment_proof), class: "img-fluid mb-2", style: "max-height: 300px;" %>
+            <% end %>
+
+            <div class="mt-2">
+              <%= f.input :payment_proof,
+                         as: :file,
+                         label: "Replace Payment Proof",
+                         hint: t('inscriptions.inscription.upload_payment_proof_instruction') %>
+            </div>
+          </div>
+        <% else %>
+          <%= f.input :payment_proof,
+                     as: :file,
+                     label: t('inscriptions.inscription.payment_proof'),
+                     hint: t('inscriptions.inscription.upload_payment_proof_instruction') %>
+        <% end %>
       </div>
     </div>
 
@@ -79,4 +156,29 @@
       pianistDetails.style.display = 'none';
     }
   }
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Initialize clipboard.js
+    var clipboard = new ClipboardJS('.copy-btn');
+
+    clipboard.on('success', function(e) {
+      // Find the success message element
+      var successElement = e.trigger.nextElementSibling;
+
+      // Show success message
+      if (successElement) {
+        successElement.style.display = 'inline';
+
+        // Hide message after 2 seconds
+        setTimeout(function() {
+          successElement.style.display = 'none';
+        }, 2000);
+      }
+
+      e.clearSelection();
+    });
+  });
 </script>

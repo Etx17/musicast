@@ -1,4 +1,13 @@
 <div class="container mt-4">
+  <!-- Application file button - only displayed when complete -->
+  <% if @inscription.has_complete_requirement_items? && @inscription.is_payed? && @inscription.has_complete_airs? %>
+    <div class="d-flex justify-content-end mb-3">
+      <%= link_to inscription_path(@inscription), class: "btn btn-success" do %>
+        <i class="fas fa-folder-open me-2"></i> Votre dossier d'inscription
+      <% end %>
+    </div>
+  <% end %>
+
   <%# <h2 class="mb-4"><%= t('inscriptions.steps.program.title') %>
   <%= form_for @inscription, url: wizard_path(:program, action: "update"), method: :put do |f| %>
     <div class="card shadow-sm mb-4">
