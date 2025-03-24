@@ -171,23 +171,15 @@ class Inscription < ApplicationRecord
   end
 
   def validate_choice_imposed_works
-    # Validate that user did not select twice the same air
-    
+    choice_imposed_work_airs.group_by(&:air_id).each do |air_id, choice_imposed_work_airs|
+      if choice_imposed_work_airs.count > 1
+        errors.add(:base, :duplicate_air_id, message: "You can't select twice the same air")
+      end
+    end
   end
 
   def validate_required_documents
-    # Check if all required documents are present
-    # required_items = category.requirement_items.where(required: true)
-
-    # required_items.each do |item|
-    #   requirement = inscription_item_requirements.find_by(requirement_item: item)
-
-    #   if requirement.nil? || !requirement.submitted_file.attached?
-    #     errors.add(:base, :missing_required_document,
-    #               message: I18n.t('inscriptions.validations.missing_required_document',
-    #                               document: item.title))
-    #   end
-    # end
+    # Check if documents are of the right format but i guess it's done in the view with JS no ?
   end
 
   def validate_pianist_details

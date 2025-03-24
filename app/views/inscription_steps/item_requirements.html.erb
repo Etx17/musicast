@@ -4,11 +4,6 @@
       <h2 class="mb-0">Required Documents</h2>
     </div>
     <div class="card-body">
-      <div class="alert alert-info">
-        <i class="fas fa-info-circle me-2"></i>
-        Please upload all required documents. All documents marked with * are mandatory.
-      </div>
-
       <% if @inscription.errors.any? %>
         <div class="alert alert-danger">
           <h4><%= @inscription.errors.count %> error(s) prevented this form from being saved:</h4>
