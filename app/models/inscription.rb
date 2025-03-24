@@ -18,6 +18,7 @@ class Inscription < ApplicationRecord
 
     with_options on: :program do |program|
       validate :validate_choice_imposed_works
+      validate :validate_semi_imposed_works
     end
 
     with_options on: :item_requirements do |items|
@@ -166,6 +167,16 @@ class Inscription < ApplicationRecord
     end
   end
 
+  def validate_semi_imposed_works
+    if category.semi_imposed_works.any?
+      category.semi_imposed_works&.each do |semi_imposed_work|
+        if semi_imposed_work.number > semi_imposed_work_airs.length
+          errors.add(:base, :missing_airs, message: "You must select #{semi_imposed_work.number} airs for #{semi_imposed_work.title}")
+        end
+      end
+    end
+  end
+
   def validate_choice_imposed_works
     choice_imposed_work_airs.group_by(&:air_id).each do |air_id, choice_imposed_work_airs|
       if choice_imposed_work_airs.count > 1
@@ -175,6 +186,13 @@ class Inscription < ApplicationRecord
   end
 
   def validate_required_documents
+    if category.requirement_items.any?
+      category.requirement_items&.each do |requirement_item|
+        if requirement_item && inscription_item_requirements.none? { |i| i.item_type == requirement_item.type_item }
+          errors.add(:base, :missing_document, message: "You must upload a #{requirement_item.title}")
+        end
+      end
+    end
   end
 
   def validate_pianist_details

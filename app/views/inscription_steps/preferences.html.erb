@@ -8,6 +8,9 @@
     </div>
   <% end %>
 
+  <!-- Include the progress bar partial -->
+  <%= render 'progress_bar' %>
+
   <%# <h2 class="mb-4"><%= t('inscriptions.steps.preferences.title') %>
 
   <%= simple_form_for @inscription, url: wizard_path(:preferences, action: "update"), method: :put do |f| %>

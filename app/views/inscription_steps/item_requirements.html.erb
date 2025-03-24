@@ -8,13 +8,16 @@
     </div>
   <% end %>
 
+  <!-- Include the progress bar partial -->
+  <%= render 'progress_bar' %>
+
   <div class="card shadow-sm mb-4">
     <div class="card-header bg-light">
       <h2 class="mb-0">Required Documents</h2>
     </div>
     <div class="card-body">
       <% if @inscription.errors.any? %>
-        <div class="alert alert-danger">
+        <div class=" text-danger alert-danger">
           <h4><%= @inscription.errors.count %> error(s) prevented this form from being saved:</h4>
           <ul>
             <% @inscription.errors.full_messages.each do |message| %>
@@ -73,7 +76,7 @@
                   <% else %>
                     <div class="row">
                       <div class="col">
-                        <% if irf.object.submitted_file.attached? && irf.object.persisted? %>
+                        <% if irf.object.submitted_file.attached? && irf.object.submitted_file.persisted? %>
                           <div class="mb-3">
                             <label class="form-label">Current Document</label>
                             <div class="d-flex align-items-center">

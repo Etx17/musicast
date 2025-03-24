@@ -1,0 +1,115 @@
+<div class="progress-steps mb-4 mt-3">
+  <div class="progress mb-2" style="height: 8px;">
+    <% completed_steps = 0 %>
+    <% total_steps = wizard_steps.count %>
+
+    <% if @inscription.valid?(:program) %>
+      <% completed_steps += 1 %>
+    <% end %>
+
+    <% if @inscription.valid?(:item_requirements) %>
+      <% completed_steps += 1 %>
+    <% end %>
+
+    <% if @inscription.valid?(:preferences) %>
+      <% completed_steps += 1 %>
+    <% end %>
+
+    <% progress_percentage = (completed_steps.to_f / total_steps) * 100 %>
+
+    <div class="progress-bar bg-success" role="progressbar" style="width: <%= progress_percentage %>%;"
+         aria-valuenow="<%= progress_percentage %>" aria-valuemin="0" aria-valuemax="100"></div>
+  </div>
+
+  <div class="step-indicators d-flex justify-content-between">
+    <% wizard_steps.each_with_index do |step_name, index| %>
+      <%
+         # Determine if this step is completed, current, or upcoming
+         is_current = step == step_name
+         is_completed = false
+         is_accessible = false
+
+         case step_name
+         when :program
+           is_completed = @inscription.valid?(:program)
+           is_accessible = true
+         when :item_requirements
+           is_completed = @inscription.valid?(:item_requirements)
+           is_accessible = @inscription.valid?(:program)
+         when :preferences
+           is_completed = @inscription.valid?(:preferences)
+           is_accessible = @inscription.valid?(:program) && @inscription.valid?(:item_requirements)
+         end
+
+         # Set appropriate classes based on step status
+         step_classes = "step-indicator d-flex flex-column align-items-center"
+         step_classes += " active" if is_current
+         step_classes += " completed" if is_completed
+
+         # Set button styles
+         button_classes = "btn rounded-circle d-flex justify-content-center align-items-center"
+         button_classes += is_current ? " btn-primary" : (is_completed ? " btn-success" : " btn-light")
+
+         # Set icon based on status
+         icon_class = is_completed ? "fa-check" : "fa-#{index + 1}"
+      %>
+
+      <div class="<%= step_classes %>" style="width: calc(100% / <%= total_steps %>);">
+        <% if is_accessible %>
+          <%= link_to edit_inscription_step_path(@inscription, step_name), class: button_classes, style: "width: 40px; height: 40px;" do %>
+            <i class="fas <%= icon_class %>"></i>
+          <% end %>
+        <% else %>
+          <button class="<%= button_classes %>" style="width: 40px; height: 40px;" disabled>
+            <i class="fas <%= icon_class %>"></i>
+          </button>
+        <% end %>
+
+        <span class="step-name mt-2 text-center" style="font-size: 0.85rem;">
+          <% case step_name
+             when :program %>
+            Program
+          <% when :item_requirements %>
+            Required Documents
+          <% when :preferences %>
+            Preferences
+          <% end %>
+        </span>
+      </div>
+
+      <% if index < wizard_steps.count - 1 %>
+        <div class="step-connector flex-grow-1 align-self-center">
+          <hr style="border-top: 2px dashed #ccc; margin: 0 8px; position: relative; top: -20px;">
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+
+  <!-- Display progress details -->
+  <div class="steps-progress text-end mt-1">
+    <small class="text-muted">
+      Completed: <%= completed_steps %> of <%= total_steps %> steps
+    </small>
+  </div>
+</div>
+
+<style>
+  .progress-steps {
+    position: relative;
+  }
+
+  .step-indicator.completed .btn {
+    box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.25);
+  }
+
+  .step-indicator.active .btn {
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+  }
+
+  .step-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+  }
+</style>
