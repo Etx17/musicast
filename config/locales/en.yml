@@ -899,6 +899,7 @@ en:
       back: "Back to free choices"
       destroy: "Destroy this free choice"
   global:
+    terms: "Terms"
     semi_imposed_works: "Semi-imposed works"
     choice_imposed_works: "Choice imposed works"
     imposed_works: "Imposed works"
@@ -995,6 +996,17 @@ en:
         youtube_hint: "Link to your YouTube video"
         replace_document: "Replace document"
         upload_pdf: "Upload PDF"
+      preferences:
+        title: "Preferences"
+        time_preferences: "Time preferences"
+        terms: "Terms"
+        payment: "Payment"
+        payment_info: "Payment information"
+        payment_method: "Payment method"
+        time_preference: "Time preference"
+        time_preference_info: "It's not guaranted that your time of passage will be matching your preference, but we will do our best to accomodate you."
+        select_time_preference: "Select a time preference"
+        registration_fee: "Registration fee"
     progress:
       completed: "Completed"
       of: "of"
@@ -1069,6 +1081,8 @@ en:
       replace_document: "Replace document"
     inscription:
       payment_proof: "Payment proof"
+      current_payment_proof: "Current payment proof"
+      replace_payment_proof: "Replace payment proof"
       upload_payment_proof_instruction: "Please upload a proof of your payment (bank transfer receipt, screenshot, etc.)"
       payment_proof_file: "Payment proof file"
       payment_proof_formats: "Accepted formats: PDF, PNG, JPEG"
