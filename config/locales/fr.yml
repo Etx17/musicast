@@ -869,6 +869,9 @@ fr:
       back: "Retour aux choix libres"
       destroy: "Supprimer ce choix libre"
   global:
+    semi_imposed_works: "Oeuvres semi-imposées"
+    choice_imposed_works: "Oeuvres à choix"
+    imposed_works: "Oeuvres imposées"
     free: "Gratuit"
     years: "ans"
     round: "tour"
@@ -892,6 +895,7 @@ fr:
       submit: "Enregistrer"
       save: "Enregistrer"
       cancel: "Annuler"
+      copy: "Copier"
     confirmations:
       are_you_sure: "Êtes-vous sûr ?"
     youtube_link: "Lien YouTube"
@@ -925,6 +929,8 @@ fr:
       trumpet: "Trompette"
       tuba: "Tuba"
       violin: "Violon"
+    messages:
+      copied_to_clipboard: "Copié dans le presse-papier"
   inscription_orders:
     new:
       title: "Nouveau paiement sécurisé"
@@ -941,6 +947,31 @@ fr:
       reminder: "Rappel: Finissez de constituer votre dossier s'il n'est pas terminé. Les dossiers incomplets sont automatiquement rejetés et ne sont pas remboursables."
       view_application: "Voir ma candidature"
   inscriptions:
+    steps:
+      item_requirements:
+        title: "Documents requis"
+        current_document: "Document actuel"
+        uploaded: "Téléchargé"
+        pdf_file_error: "Veuillez télécharger un fichier PDF"
+        file_too_large: "Le fichier est trop lourd. Maximum: %{max}MB. Actuel: %{current}MB"
+        invalid_file_type: "Le fichier n'est pas valide. Type actuel: %{type}"
+        replace_document: "Remplacer le document"
+        upload_pdf: "Télécharger un PDF"
+        youtube_link: "Lien YouTube"
+        youtube_link_hint: "Lien vers votre vidéo YouTube"
+        motivation_letter: "Lettre de motivation"
+        youtube_link: "Lien YouTube"
+        youtube_hint: "Lien vers votre vidéo YouTube"
+        replace_document: "Remplacer le document"
+        upload_pdf: "Télécharger un PDF"
+    progress:
+      completed: "Complété"
+      of: "sur"
+      steps: "étapes"
+      program: "Programme"
+      item_requirements: "Documents requis"
+      preferences: "Préférences"
+
     controller:
       application_under_review: "Votre candidature est en cours de validation. Vous recevrez un mail dès que cela sera terminé."
       inscription_updated: "L'inscription a été mise à jour avec succès."
@@ -1427,6 +1458,7 @@ fr:
       description_item: "Description"
       description_item_english: "Description (Anglais)"
       title: "Titre"
+      title_english: "Titre (Anglais)"
       french_fields: "Champs en français"
       english_fields: "Champs en anglais"
     requirement_item:

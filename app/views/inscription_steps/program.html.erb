@@ -1,5 +1,4 @@
 <div class="container mt-4">
-  <!-- Application file button - only displayed when complete -->
   <% if @inscription.has_complete_requirement_items? && @inscription.is_payed? && @inscription.has_complete_airs? %>
     <div class="d-flex justify-content-end mb-3">
       <%= link_to inscription_path(@inscription), class: "btn btn-success" do %>
@@ -8,21 +7,20 @@
     </div>
   <% end %>
 
-  <!-- Include the progress bar partial -->
   <%= render 'progress_bar' %>
 
-  <%# <h2 class="mb-4"><%= t('inscriptions.steps.program.title') %>
+  <h2 class="mb-4"><%= t('inscriptions.progress.program') %></h2>
   <%= form_for @inscription, url: wizard_path(:program, action: "update"), method: :put do |f| %>
     <div class="card shadow-sm mb-4">
       <div class="card-body">
-        <%# <h4 class="card-title mb-3"><%= t('inscriptions.steps.program.semi_imposed_works') %>
+        <h4 class="card-title mb-3"><%= t('global.semi_imposed_works') %></h4>
         <%= render "inscriptions/semi_imposed_work_section", inscription: @inscription, f: f %>
       </div>
     </div>
 
     <div class="card shadow-sm mb-4">
       <div class="card-body">
-        <%# <h4 class="card-title mb-3"><%= t('inscriptions.steps.program.choice_imposed_works') %>
+        <h4 class="card-title mb-3"><%= t('global.choice_imposed_works') %></h4>
         <%= render "inscriptions/choice_imposed_work_section", inscription: @inscription, f: f %>
       </div>
     </div>
@@ -30,7 +28,7 @@
     <% if @inscription.category.imposed_work&.airs&.any? %>
       <div class="card shadow-sm mb-4">
         <div class="card-body">
-          <%# <h4 class="card-title mb-3"><%= t('inscriptions.form.imposed_airs') %>
+          <h4 class="card-title mb-3"><%= t('global.imposed_works') %></h4>
           <ul class="list-group mb-3">
             <% @inscription.category&.imposed_work&.airs&.each do |air| %>
               <li class="list-group-item">

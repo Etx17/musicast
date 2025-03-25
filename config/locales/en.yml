@@ -899,6 +899,9 @@ en:
       back: "Back to free choices"
       destroy: "Destroy this free choice"
   global:
+    semi_imposed_works: "Semi-imposed works"
+    choice_imposed_works: "Choice imposed works"
+    imposed_works: "Imposed works"
     free: "Free"
     years: "years"
     round: "round"
@@ -949,8 +952,14 @@ en:
       destroy: "Delete"
       continue: "Continue"
       save: "Save"
-      cancel: "Cancel"
       submit: "Submit"
+      next: "Next"
+      view: "View"
+      previous: "Previous"
+      cancel: "Cancel"
+      copy: "Copy"
+    messages:
+      copied_to_clipboard: "Copied to clipboard"
   inscription_orders:
     new:
       title: "New secure payment"
@@ -969,6 +978,30 @@ en:
       view_application: "View my application"
 
   inscriptions:
+    steps:
+      item_requirements:
+        title: "Required documents"
+        current_document: "Current document"
+        uploaded: "Uploaded"
+        pdf_file_error: "Please upload a valid PDF file"
+        file_too_large: "The file is too large. Maximum: %{max}MB. Current: %{current}MB"
+        invalid_file_type: "The file is not valid. Current type: %{type}"
+        replace_document: "Replace document"
+        upload_pdf: "Upload PDF"
+        youtube_link: "YouTube link"
+        youtube_link_hint: "Link to your YouTube video"
+        motivation_letter: "Motivation letter"
+        youtube_link: "YouTube link"
+        youtube_hint: "Link to your YouTube video"
+        replace_document: "Replace document"
+        upload_pdf: "Upload PDF"
+    progress:
+      completed: "Completed"
+      of: "of"
+      steps: "steps"
+      program: "Program"
+      item_requirements: "Required documents"
+      preferences: "Preferences"
     controller:
       application_under_review: "Your application is being reviewed. You will receive an email when the process is complete."
       inscription_updated: "The application has been successfully updated."
@@ -1469,6 +1502,7 @@ en:
       description_item: "Description"
       description_item_english: "Description (English)"
       title: "Title"
+      title_english: "Title (English)"
       french_fields: "French Fields"
       english_fields: "English Fields"
     requirement_item:

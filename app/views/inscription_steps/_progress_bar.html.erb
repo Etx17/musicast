@@ -66,14 +66,7 @@
         <% end %>
 
         <span class="step-name mt-2 text-center" style="font-size: 0.85rem;">
-          <% case step_name
-             when :program %>
-            Program
-          <% when :item_requirements %>
-            Required Documents
-          <% when :preferences %>
-            Preferences
-          <% end %>
+          <%= t("inscriptions.progress.#{step_name}") %>
         </span>
       </div>
 
@@ -88,7 +81,7 @@
   <!-- Display progress details -->
   <div class="steps-progress text-end mt-1">
     <small class="text-muted">
-      Completed: <%= completed_steps %> of <%= total_steps %> steps
+      <%= t('inscriptions.progress.completed') %>: <%= completed_steps %> <%= t('inscriptions.progress.of') %> <%= total_steps %> <%= t('inscriptions.progress.steps') %>
     </small>
   </div>
 </div>
