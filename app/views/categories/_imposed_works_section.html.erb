@@ -43,11 +43,6 @@
             <div class="d-flex flex-column align-items-end">
               <% air_kebab_items = [
                 {
-                  icon: "fas fa-edit",
-                  text: t('global.actions.edit'),
-                  path: edit_air_path(work, redirect_path: organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category))
-                },
-                {
                   icon: "fas fa-trash",
                   text: t('global.actions.delete'),
                   path: air_path(work, redirect_path: organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category)),
@@ -65,6 +60,6 @@
     </div>
   <% else %>
    <p class="text-muted"><i class="fas fa-info-circle text-secondary pe-1"></i> <%= t('categories.imposed_works_section.create_instruction') %></p>
-    <%= link_to t('categories.imposed_works_section.create_list'), new_organism_competition_edition_competition_category_imposed_work_path(@organism, @competition, @edition_competition, @category, category_id: @category.id), class: "btn btn-success" %>
+    <%= link_to t('categories.imposed_works_section.create_list'), new_organism_competition_edition_competition_category_imposed_work_path(@organism, @competition, @edition_competition, @category, category: @category), class: "btn btn-success" %>
   <% end %>
 </div>

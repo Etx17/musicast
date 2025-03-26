@@ -455,6 +455,7 @@ en:
       title: "Required Program"
       description: "Define the program that candidates must present."
     requirement_items_section:
+      details_english: "Details (English)"
       details_english_placeholder: "Enter details in English..."
       english_fields: "English Fields"
       french_fields: "French Fields"
@@ -480,6 +481,7 @@ en:
       create_instruction: "Create criteria for the works that candidates must present."
       add_new_list: "Add a new list of semi-imposed works"
     show:
+      confirm_delete: "Delete category ?"
       years: "years"
       edit: "Edit"
       back: "Back"
@@ -544,6 +546,8 @@ en:
       list_configuration: "List configuration"
       title_placeholder: "e.g.: 2 German lieder"
       list_title: "List title"
+      list_title_english: "List title (English)"
+      guidelines_english: "Guidelines (English)"
       number_placeholder: "e.g.: 2"
       number_to_choose: "Number of works to choose"
       guidelines_placeholder: "e.g.: Choose 2 German lieder from the early 20th century from the following list. Your selection should not exceed 30 minutes. You must have at least 2 different composers"
@@ -590,6 +594,7 @@ en:
       new: "New competition"
 
     show:
+      confirm_delete: "Delete competition ?"
       editions: "Editions"
       configure_categories: "Configure categories for this edition"
       published: "Published"
