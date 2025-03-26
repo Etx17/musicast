@@ -15,7 +15,9 @@
             <%= link_to t('edition_competitions.category_modal_infos.view_rules_english'), rails_blob_path(category.edition_competition.rule_document_english), target: 'blank', class: "text-decoration-none my-3 btn btn-outline-dark rounded-4" %>
           <% end %>
 
-          <% if current_user %>
+          <% if current_user&.candidat&.has_minimum_informations_for_inscription? == false %>
+            <%= link_to t('edition_competitions.common.continue'), edit_candidat_path(current_user.candidat), class: "btn btn-primary" %>
+          <% elsif current_user %>
             <% if inscription = current_user.candidat.inscriptions.find_by(category_id: category.id) %>
               <%= link_to t('edition_competitions.common.continue'), edit_inscription_step_path(inscription, :program), class: "btn btn-primary" %>
             <% else %>
@@ -65,14 +67,7 @@
         <% end %>
 
       </div>
-      <div class="modal-footer">
-        <% if current_user %>
-        <%= link_to t('edition_competitions.common.continue'), new_inscription_path(category_id: category.id, candidate_id: current_user.id), class: "btn btn-primary" %>
-        <% else %>
-          <% session[:category_id] = category.id %>
-          <%= link_to t('edition_competitions.common.continue'), new_user_registration_path, class: "btn btn-primary" %>
-        <% end %>
-      </div>
+
     </div>
   </div>
 </div>
