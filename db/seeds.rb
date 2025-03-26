@@ -334,12 +334,14 @@ tour = category.tours.first
 
 Candidat.all.each do |candidat|
   candidat.update(first_name: Faker::Name.first_name)
-  inscription = Inscription.create!(candidat_id: candidat.id, category_id: category.id, status: 'in_review', terms_accepted: true)
+  inscription = Inscription.new(candidat_id: candidat.id, category_id: category.id, status: 'in_review', terms_accepted: true)
+  inscription.save(validate: false)
   # Performance.create!(inscription: inscription, tour: tour, air_selection: ["1", "2", "3", "4"])
 end
 
 #Create new Jury for each Organism existing
 Organism.all.each do |organism|
+  organism.update(iban: "FR7610002006000000000000000")
   user = User.create!(email: Faker::Internet.email, password: "password123", password_confirmation: "password123", inscription_role: "jury")
   Jury.create(user: user, email: user.email, first_name: Faker::Name.first_name, last_name: Faker::Name.last_name)
 end

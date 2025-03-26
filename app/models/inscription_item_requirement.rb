@@ -7,7 +7,7 @@ class InscriptionItemRequirement < ApplicationRecord
   validate :submitted_content_is_youtube_url, if: :requirement_item_is_youtube_url?
   validate :submitted_file_is_correct_mime_type, if: :requirement_item_is_pdf?
 
-  validates :submitted_content, length: { maximum: 1000 }, if: :requirement_item_is_motivational_letter?
+  validates :submitted_content, length: { minimum: 1, maximum: 1000 }, if: :requirement_item_is_motivational_letter?
 
   def requirement_item_is_motivational_letter?
     item_type == "motivation_essay"

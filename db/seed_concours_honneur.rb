@@ -218,18 +218,20 @@ end
     medium_bio_en: Faker::Lorem.paragraph(sentence_count: 5),
     long_bio_en: Faker::Lorem.paragraph(sentence_count: 10),
   )
-  i=Inscription.create(
+  i=Inscription.new(
     category: categ,
     status: 'in_review',
     candidat: u.candidat,
     terms_accepted: true
   )
+  i.save(validate: false)
 
-  InscriptionItemRequirement.create(
-    inscription: i,
+  j=InscriptionItemRequirement.new(
+    inscription_id: i.id,
     requirement_item: categ.requirement_items.find_by(type_item: "youtube_link"),
     submitted_content: "https://www.youtube.com/watch?v=FrxSZCLbhSQ"
   )
+  j.save(validate: false)
 
   # Create airs with English info
   air1 = Air.create!(
