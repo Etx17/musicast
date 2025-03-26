@@ -201,13 +201,13 @@ en:
       new: "NEW"
       delete: "Delete"
       title_placeholder: "Title *"
-      composer_placeholder: "Composer *"
-      oeuvre_placeholder: "Work *"
+      composer_placeholder: "Composer *: ex G.Fauré, J.S. Bach, etc."
+      oeuvre_placeholder: "Work *: ex No. 1 in G minor, BWV 1001, etc."
       character_hint: "For opera arias only"
       character_placeholder: "Character"
       minutes_placeholder: "Minutes *"
-      tonality_placeholder: "Tonality *"
-      additional_info_placeholder: "Additional information *"
+      tonality_placeholder: "Tonality *: ex G major, C minor, etc."
+      additional_info_placeholder: "Additional information *: ex This piece is a setting of a poem by R.M.Rilke, etc."
       additional_info_english_placeholder: "Additional information in English..."
   candidats:
     common:
