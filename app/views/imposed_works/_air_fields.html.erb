@@ -5,7 +5,6 @@
       <span class="badge bg-primary bg-gradient me-2">
         #<%= f.index.is_a?(Integer) ? f.index + 1 : t('imposed_works.air_fields.new') %>
       </span>
-      <i class="fas fa-music text-primary"></i>
     </h5>
     <% if f.object.new_record? %>
       <%= link_to '#', data: { action: 'airs#removeAir' }, class: 'btn btn-outline-danger btn-sm' do %>
