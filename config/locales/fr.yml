@@ -869,6 +869,7 @@ fr:
       back: "Retour aux choix libres"
       destroy: "Supprimer ce choix libre"
   global:
+    inscription: inscription
     back_to_var: "Retour à %{var}"
     terms: "Conditions"
     semi_imposed_works: "Oeuvres semi-imposées"

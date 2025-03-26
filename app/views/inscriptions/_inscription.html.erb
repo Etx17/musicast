@@ -1,18 +1,22 @@
 <div id="<%= dom_id inscription %>">
+  <div class="d-flex flex-md-row align-items-center p-3 pb-0 gap-3">
+    <%= image_tag "icons/folder.png", width: 50 %>
+    <h1 class="text-center text-dark pt-3"> <%= t('inscriptions.inscription.application_file') %>
+    <%# <span class="lead text-secondary"><%= t('inscriptions.inscription.competition_category', competition: @inscription.category.competition.nom_concours, category: @inscription.category.name) %>
+  </div>
+  <%= render Navigation::BackLinkComponent.new(
+    link_path: inscriptions_path,
+    link_text: t('global.inscription').pluralize
+  ) %>
   <div class="row p-5">
-    <div class="d-flex flex-column flex-lg-row align-items-center bg-white p-2 mb-3">
+    <div class="d-flex flex-column flex-lg-row align-items-center p-2 mb-3">
       <div class="d-flex flex-column align-items-start justify-content-start">
-        <%= link_to t('global.actions.back'), :back, class: "btn btn-primary mx-auto mb-5", style: "width: 100px;" %>
         <%= image_tag inscription.candidat.portrait.attached? ? inscription.candidat.portrait : "https://placehold.co/200x200",
-         class: "rounded-circle align-items-center p-0 m-0", style: "width: 200px; height: 200px; object-fit: cover;" %>
+         class: "rounded-circle align-items-center p-0 m-0 border border-primary", style: "width: 200px; height: 200px; object-fit: cover;" %>
       </div>
 
       <div class="mx-5">
-        <div class="d-flex flex-column flex-md-row align-items-center justify-content-center py-5 gap-3 w-100 bg-white">
-          <%= image_tag "icons/folder.png", width: 50 %>
-          <h1 class="text-center text-primary pt-3" style="font-size: 3.4em"> <%= t('inscriptions.inscription.application_file') %></h1>
-          <%= image_tag "icons/folder.png", width: 50 %>
-        </div>
+
         <h5 class="text-center text-secondary mb-5"><%= t('inscriptions.inscription.competition_category', competition: @inscription.category.competition.nom_concours, category: @inscription.category.name) %></h5>
         <h2 class="text-center"><%= inscription.candidat.first_name %> <%= inscription.candidat.last_name %></h2>
 
@@ -81,14 +85,15 @@
     </div>
 
     <div class="col p-0">
-      <div class=" card shadow mb-3 bg-white rounded-8">
+      <div class=" p-3  mb-3 bg-transparent rounded-8">
+        <div>
           <div class="card-header d-flex justify-content-between align-items-center w-100">
-            <h5 class=mb-1><%= t('inscriptions.inscription.registration_details') %></h5>
+            <h3 class=mb-1><%= t('inscriptions.inscription.registration_details') %></h3>
              <span class=" badge rounded-pill <%= inscription.draft? ? 'text-secondary border border-secondary bg-grey' : inscription.in_review? ? 'text-info border border-info bg-info-secondary' : inscription.accepted? ? 'text-success border-success bg-success-secondary' : 'text-danger border-danger bg-danger-secondary' %>">
               <i class="fas fa-circle small"></i> <%= t("inscriptions.statuses.#{inscription.status}") %>
             </span>
           </div>
-        <div class="card-body d-flex flex-column align-items-start">
+        <div class=" p-3 bg-light rounded mb-3 mt-1 d-flex flex-column align-items-start">
           <p><%= inscription.category.edition_competition.competition.nom_concours %> - <small><%= inscription.category.name %></small></p>
           <p><i class="fas fa-calendar-alt me-2"></i><%= t('inscriptions.inscription.date_range', start: inscription.category.edition_competition.start_date, end: inscription.category.edition_competition.end_date) %></p>
           <p><i class="fas fa-map-marker-alt me-2"></i><%= inscription.category.edition_competition.address.line1 %> - <%= inscription.category.edition_competition.address.city %></p>
@@ -99,13 +104,14 @@
           <%= t('inscriptions.inscription.time_preference') %>:
           <%= inscription.time_preference %>
           </p>
+        </div>
 
           <!-- Rediriger vers le paiement si ca n'est pas encore fait -->
 
           <% if inscription.draft? || inscription.request_changes? || inscription.in_review? %>
 
             <!-- Old stripe payment part, to reactive maybe one day
-            <div class="card shadow-sm mb-3 bg-light">
+            <div class="card mb-3 bg-light">
               <div class="card-body d-flex flex-column align-items-start">
                 <h5><%= t('inscriptions.inscription.payment') %></h5>
                 <p class="text-secondary"> <%= t('inscriptions.inscription.not_paid_yet') %></p>
@@ -134,7 +140,7 @@
             <%# Bouton payer qui ouvre une modale avec l'iban de l'organisme et les instructions %>
 
             <%# Upload proof of paiment part %>
-            <div class="card shadow-sm mb-3 bg-light">
+            <div class="p-3 rounded mb-3 bg-light">
               <div class="card-body d-flex flex-column align-items-start">
                 <div class="d-flex justify-content-between align-items-center w-100 mb-2">
                   <h5><%= t('inscriptions.inscription.payment_proof') %></h5>
@@ -161,7 +167,7 @@
                     <% else %>
                       <%= image_tag url_for(inscription.payment_proof), class: "img-fluid mb-2", style: "max-height: 300px;" %>
                     <% end %>
-                    <%= link_to t('global.actions.view'), url_for(inscription.payment_proof), target: "_blank", rel: "noopener", class: "btn btn-sm btn-outline-primary mb-3 w-50" %>
+                    <%= link_to t('global.actions.view'), url_for(inscription.payment_proof), target: "_blank", rel: "noopener", class: " mt-2 btn-outline-primary mb-3 w-50" %>
                   </div>
                 <% else %>
                   <!-- Instructions pour l'upload initial -->
@@ -188,8 +194,63 @@
 
         </div>
       </div>
+      <div class="p-3 card-body my-3 bg-transparent rounded-8">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <h3><%= t('inscriptions.inscription.air_list') %></h3>
+          <% if current_user.candidat && inscription.category.edition_competition.end_of_registration > Date.today %>
+            <%= link_to edit_inscription_step_path(inscription, :program), class: 'btn btn-primary w-50' do %>
+              <div class="d-flex align-items-center justify-content-center">
+                <i class="fas fa-edit me-2"></i>
+                <span><%= t('global.actions.edit') %></span>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+        <% if inscription.remaining_days_before_end_of_registration > 0 %>
+          <span class="text-success"><%= t('inscriptions.inscription.days_remaining_to_edit', count: inscription.remaining_days_before_end_of_registration) %></span>
+        <% end %>
+        <% inscription.choice_imposed_work_airs.includes(:choice_imposed_work).map(&:choice_imposed_work).uniq.each do |choice_imposed_work| %>
+          <div class="p-3 rounded mb-3 bg-light">
+            <div class="card-body">
+              <h5 class="card-title"><%= choice_imposed_work.title %></h5>
+              <ul class="list-group list-group-flush">
+                <% inscription.choice_imposed_work_airs.where(choice_imposed_work: choice_imposed_work).each do |choice_imposed_work_air| %>
+                  <li class="list-group-item bg-white text-secondary"><%= choice_imposed_work_air.air.title %></li>
+                <% end %>
+              </ul>
+            </div>
+          </div>
+        <% end %>
 
-      <div class="p-3 shadow bg-white rounded-8">
+        <% inscription.semi_imposed_work_airs&.includes(:semi_imposed_work).map(&:semi_imposed_work).uniq.each do |semi_imposed_work| %>
+          <div class="p-3 rounded mb-3 bg-light">
+            <div class="card-body">
+              <h5 class="card-title"><%= semi_imposed_work.title %></h5>
+              <ul class="list-group list-group-flush">
+                <% inscription.semi_imposed_work_airs.where(semi_imposed_work: semi_imposed_work).each do |semi_imposed_work_air| %>
+                  <li class="list-group-item bg-light text-secondary"><%= semi_imposed_work_air.air.title %></li>
+                <% end %>
+              </ul>
+            </div>
+          </div>
+        <% end %>
+
+        <% if inscription.category.imposed_work.present? %>
+          <div class="p-3 rounded mb-3 bg-light">
+            <div class="card-body">
+              <h4 class="card-title"><%= t('inscriptions.inscription.imposed_airs') %></h4>
+              <ul class="list-group list-group-flush">
+                <% inscription.category.imposed_work&.airs&.each do |air| %>
+                  <li class="list-group-item bg-light text-secondary"><%= air.title %></li>
+                <% end %>
+              </ul>
+            </div>
+          </div>
+        <% end %>
+
+      </div>
+
+      <div class="p-3 bg-transparent rounded">
         <div class="d-flex justify-content-between align-items-center mb-2">
           <h3 class="mb-0"><%= t('inscriptions.inscription.file') %></h3>
           <%# To not net here, it's just a test %>
@@ -230,13 +291,13 @@
         <% if inscription.remaining_days_before_end_of_registration > 0 %>
           <span class="text-success"><%= t('inscriptions.inscription.days_remaining_to_edit', count: inscription.remaining_days_before_end_of_registration) %></span>
         <% end %>
-      <% if inscription.inscription_item_requirements.none? %>
+        <% if inscription.inscription_item_requirements.none? %>
           <p class="text-secondary"> <%= t('inscriptions.inscription.nothing_here_yet') %></p>
         <% end %>
 
         <%# items requirements %>
         <% inscription.inscription_item_requirements&.each do |item| %>
-          <div class="p-3 shadow bg-light mb-3">
+          <div class="p-3 rounded bg-light mb-3">
             <div class="card-body border-0">
               <div class="d-flex justify-content-between align-items-center mb-2">
               <h5 class="card-title text-muted"><%= item.requirement_item&.title %></h5>
@@ -278,77 +339,22 @@
         <% end %>
       </div>
 
-      <div class="p-3 card-body shadow my-3 bg-white rounded-8">
 
-        <div class="d-flex justify-content-between align-items-center mb-2">
-          <h3><%= t('inscriptions.inscription.air_list') %></h3>
-          <% if current_user.candidat && inscription.category.edition_competition.end_of_registration > Date.today %>
-            <%= link_to edit_inscription_step_path(inscription, :program), class: 'btn btn-primary w-50' do %>
-              <div class="d-flex align-items-center justify-content-center">
-                <i class="fas fa-edit me-2"></i>
-                <span><%= t('global.actions.edit') %></span>
-              </div>
-            <% end %>
-          <% end %>
-        </div>
-        <% if inscription.remaining_days_before_end_of_registration > 0 %>
-          <span class="text-success"><%= t('inscriptions.inscription.days_remaining_to_edit', count: inscription.remaining_days_before_end_of_registration) %></span>
-        <% end %>
-        <% inscription.choice_imposed_work_airs.includes(:choice_imposed_work).map(&:choice_imposed_work).uniq.each do |choice_imposed_work| %>
-          <div class="p-3 rounded-4 shadow-sm mb-3 bg-light-grey">
-            <div class="card-body">
-              <h4 class="card-title"><%= choice_imposed_work.title %></h4>
-              <ul class="list-group list-group-flush">
-                <% inscription.choice_imposed_work_airs.where(choice_imposed_work: choice_imposed_work).each do |choice_imposed_work_air| %>
-                  <li class="list-group-item bg-light"><%= choice_imposed_work_air.air.title %></li>
-                <% end %>
-              </ul>
-            </div>
-          </div>
-        <% end %>
-
-        <% inscription.semi_imposed_work_airs&.includes(:semi_imposed_work).map(&:semi_imposed_work).uniq.each do |semi_imposed_work| %>
-          <div class="p-3 rounded-4 shadow-sm mb-3 bg-light-grey">
-            <div class="card-body">
-              <h4 class="card-title"><%= semi_imposed_work.title %></h4>
-              <ul class="list-group list-group-flush">
-                <% inscription.semi_imposed_work_airs.where(semi_imposed_work: semi_imposed_work).each do |semi_imposed_work_air| %>
-                  <li class="list-group-item bg-light"><%= semi_imposed_work_air.air.title %></li>
-                <% end %>
-              </ul>
-            </div>
-          </div>
-        <% end %>
-
-        <% if inscription.category.imposed_work.present? %>
-          <div class="p-3 rounded-4 shadow-sm mb-3 bg-light-grey">
-            <div class="card-body">
-              <h4 class="card-title"><%= t('inscriptions.inscription.imposed_airs') %></h4>
-              <ul class="list-group list-group-flush">
-                <% inscription.category.imposed_work&.airs&.each do |air| %>
-                  <li class="list-group-item bg-light"><%= air.title %></li>
-                <% end %>
-              </ul>
-            </div>
-          </div>
-        <% end %>
-
-      </div>
 
     </div>
 
     <div class="col pe-0">
-      <div class="rounded-8 bg-white p-3 shadow">
+      <div class="bg-transparent p-3">
         <h3><%= t('inscriptions.inscription.round_by_round_program') %></h3>
         <% inscription.category.tours.order(:tour_number).each do |tour| %>
           <% performance = inscription.performances.find_by(tour: tour) %>
 
-          <div class="card bg-light mb-3 border-0 rounded-8 shadow">
+          <div class="p-3 bg-light mb-3 rounded">
             <div class="card-header d-flex justify-content-between border-0">
               <% if I18n.locale == :en && tour.title_english.present? %>
-                <%= tour.title_english %> - <%= t('inscriptions.inscription.round_number', number: tour.tour_number) %>
+                <h5><%= tour.title_english %> - <%= t('inscriptions.inscription.round_number', number: tour.tour_number) %></h5>
               <% else %>
-                <%= tour.title %> - <%= t('inscriptions.inscription.round_number', number: tour.tour_number) %>
+                <h5><%= tour.title %> - <%= t('inscriptions.inscription.round_number', number: tour.tour_number) %></h5>
               <% end %>
 
               <% if tour.imposed_air_selection.present? %>
@@ -358,12 +364,17 @@
             <div class="card-body">
 
               <% if tour.tour_requirement.present? %>
-                <h5 class="card-title"><%= t('inscriptions.inscription.round_rules') %></h5>
                 <% if I18n.locale == :en && tour.tour_requirement&.description_english.present? %>
-                  <p class="card-text text-secondary"><%= tour.tour_requirement&.description_english %></p>
+                    <p class="card-text text-secondary bg-infobox-light rounded p-2">
+                      <i class="fas fa-info-circle text-secondary px-1"></i> <%= tour.tour_requirement&.description_english %>
+                    </p>
+                  </div>
                 <% else %>
-                  <p class="card-text text-secondary"><%= tour.tour_requirement&.description %></p>
+                  <p class="card-text text-secondary bg-infobox-light rounded p-2">
+                    <i class="fas fa-info-circle text-secondary px-1"></i><%= tour.tour_requirement&.description %>
+                  </p>
                 <% end %>
+
                 <div class="d-flex justify-content-around">
                   <p class="card-text"><strong><%= image_tag 'icons/book.png', alt: t('inscriptions.inscription.works'), width: 40 %></strong>
                     <% if tour.tour_requirement&.min_number_of_works == tour.tour_requirement&.max_number_of_works %>
@@ -404,7 +415,7 @@
                       <li data-id="<%= air_id %>"
                           data-action="dragstart->reorder#dragStart dragover->reorder#dragOver drop->reorder#drop dragend->reorder#dragEnd"
                           draggable="true"
-                          class="draggable-item shadow-sm"
+                          class="draggable-item"
                           style="cursor: move; border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; border-radius: 8px;"
                           >
                         <%= index + 1 %> - <%= air.title %>, <%= air.length_minutes %> min<%= t('inscriptions.inscription.imposed') if imposed %>
@@ -419,7 +430,7 @@
                   <% end %>
                 <% end %>
               <% else %>
-                <div class="d-flex flex-column shadow rounded-4">
+                <div class="d-flex flex-column shadow rounded">
                   <small class="bg-grey p-2 text-secondary">
                     <span class="badge rounded-pill text-danger border-danger border"><%= t('inscriptions.inscription.days_remaining', count: tour.remaining_days) %></span>
                     <i class="fas fa-info-circle text-secondary px-1"></i><%= t('inscriptions.inscription.no_program_yet_html', deadline: tour.final_performance_submission_deadline.strftime("%d/%m/%Y")) %>
