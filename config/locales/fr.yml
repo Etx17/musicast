@@ -1510,6 +1510,8 @@ fr:
   semi_imposed_works:
     card:
       present: "Présenter"
+      number: "Nombre d'oeuvres à présenter dans cette consigne"
+      max_length_minutes: "Durée maximale totale en minutes"
       works: "oeuvres"
       min_max_total: "min max au total"
       time_requirement: "Durée minimale"
@@ -1522,6 +1524,7 @@ fr:
       guidelines: "Consignes"
       guidelines_hint: "Décrivez votre consigne ici le plus précisément"
       guidelines_english: "Directives (Anglais)"
+      guidelines_hint_english: "Décrivez votre consigne ici le plus précisément en anglais"
       number: "Nombre d'œuvres"
       number_hint: "Combien d'œuvres sont demandées dans cette consigne?"
       max_length_minutes: "Durée totale maximale (en minutes)"
@@ -1558,6 +1561,7 @@ fr:
       navbar:
         dropdown_menu: menu déroulant
     air_fields:
+      select_tonality: "Sélectionnez une tonalité"
       delete: "Supprimer"
       title: "Titre"
       composer: "Compositeur"

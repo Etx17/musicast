@@ -38,7 +38,16 @@
       <div class="d-flex flex-column p-2">
         <div class="p-3 bg-infobox-light mb-3 text-start m-1 rounded-8" style="font-style: italic;">
           <i class="fas fa-circle-info pe-1 text-secondary"></i>
-          <%= semi_imposed_work.guidelines %>
+          <% if I18n.locale != :en %>
+            <%= semi_imposed_work.guidelines %>
+          <% else %>
+            <%= semi_imposed_work.guidelines_english %>
+          <% end %>
+          <%# Add number of works and maximal total duration of list %>
+          <div class="d-flex flex-column">
+            <span class="text-secondary"><%= t('semi_imposed_works.card.number') %> : <%= semi_imposed_work.number %></span>
+            <span class="text-secondary"><%= t('semi_imposed_works.card.max_length_minutes') %> : <%= semi_imposed_work.max_length_minutes %></span>
+          </div>
         </div>
 
         <% if false %>
@@ -89,7 +98,9 @@
 
               <div class="form-inputs">
                 <%= f.input :title, hint: t('semi_imposed_works.form.title_hint'), label: t('semi_imposed_works.form.title'), required: true %>
+                <%= f.input :title_english, label: t('semi_imposed_works.form.title_english'), required: true %>
                 <%= f.input :guidelines, hint: t('semi_imposed_works.form.guidelines_hint'), label: t('semi_imposed_works.form.guidelines'), required: true  %>
+                <%= f.input :guidelines_english, hint: t('semi_imposed_works.form.guidelines_hint_english'), label: t('semi_imposed_works.form.guidelines_english'), required: true  %>
                 <%= f.input :number, hint: t('semi_imposed_works.form.number_hint'), label: t('semi_imposed_works.form.number'), required: true  %>
                 <%= f.input :max_length_minutes, hint: t('semi_imposed_works.form.max_length_minutes_hint'), label: t('semi_imposed_works.form.max_length_minutes'), required: true  %>
               </div>

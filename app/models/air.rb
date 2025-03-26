@@ -15,14 +15,32 @@ class Air < ApplicationRecord
   validates :oeuvre, length: { maximum: 50 }
 
   def self.tonalities_selection
-    [ 'Aucune',
-    'Do majeur', 'Do mineur', 'Do♯ majeur', 'Do♯ mineur', 'Ré♭ majeur', 'Ré♭ mineur',
-    'Ré majeur', 'Ré mineur', 'Ré♯ majeur', 'Ré♯ mineur', 'Mi♭ majeur', 'Mi♭ mineur',
-    'Mi majeur', 'Mi mineur',
-    'Fa majeur', 'Fa mineur', 'Fa♯ majeur', 'Fa♯ mineur', 'Sol♭ majeur', 'Sol♭ mineur',
-    'Sol majeur', 'Sol mineur', 'Sol♯ majeur', 'Sol♯ mineur', 'La♭ majeur', 'La♭ mineur',
-    'La majeur', 'La mineur', 'La♯ majeur', 'La♯ mineur', 'Si♭ majeur', 'Si♭ mineur',
-    'Si majeur', 'Si mineur'
+    [
+      'Aucune / None',
+      'C Major / Do majeur / C',
+      'C Minor / Do mineur / Cm',
+      'C♯/D♭ Major / Do♯/Ré♭ majeur / C#/Db',
+      'C♯/D♭ Minor / Do♯/Ré♭ mineur / C#m/Dbm',
+      'D Major / Ré majeur / D',
+      'D Minor / Ré mineur / Dm',
+      'D♯/E♭ Major / Ré♯/Mi♭ majeur / D#/Eb',
+      'D♯/E♭ Minor / Ré♯/Mi♭ mineur / D#m/Ebm',
+      'E Major / Mi majeur / E',
+      'E Minor / Mi mineur / Em',
+      'F Major / Fa majeur / F',
+      'F Minor / Fa mineur / Fm',
+      'F♯/G♭ Major / Fa♯/Sol♭ majeur / F#/Gb',
+      'F♯/G♭ Minor / Fa♯/Sol♭ mineur / F#m/Gbm',
+      'G Major / Sol majeur / G',
+      'G Minor / Sol mineur / Gm',
+      'G♯/A♭ Major / Sol♯/La♭ majeur / G#/Ab',
+      'G♯/A♭ Minor / Sol♯/La♭ mineur / G#m/Abm',
+      'A Major / La majeur / A',
+      'A Minor / La mineur / Am',
+      'A♯/B♭ Major / La♯/Si♭ majeur / A#/Bb',
+      'A♯/B♭ Minor / La♯/Si♭ mineur / A#m/Bbm',
+      'B Major / Si majeur / B',
+      'B Minor / Si mineur / Bm'
   ]
   end
 end

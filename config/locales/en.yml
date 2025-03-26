@@ -1561,6 +1561,8 @@ en:
     card:
       present: "Present"
       works: "works"
+      number: "Number of works to present in this instruction"
+      max_length_minutes: "Maximum total duration in minutes"
       min_max_total: "minutes max in total"
       time_requirement: "Time requirement"
       number_requirement: "Number required"
@@ -1571,6 +1573,7 @@ en:
       title_hint: "Give a title to your line, for example \"German Lieds\""
       guidelines: "Guidelines"
       guidelines_hint: "Describe your instruction here as precisely as possible"
+      guidelines_hint_english: "Describe your instruction here as precisely as possible in English"
       guidelines_english: "Guidelines (English)"
       number: "Number of works"
       number_hint: "How many works are required in this instruction?"
@@ -1849,6 +1852,7 @@ en:
     flashes:
       close: "Close"
     air_fields:
+      select_tonality: "Select a tonality"
       delete: "Delete"
       title: "Title"
       composer: "Composer"

@@ -63,9 +63,10 @@
                   label: false,
                   required: true,
                   wrapper_html: { class: 'mb-0' },
+                  prompt: "Sélectionnez une tonalité",
+                  collection: Air.tonalities_selection,
                   input_html: {
-                    class: 'form-control',
-                    placeholder: t('imposed_works.air_fields.tonality_placeholder')
+                    class: 'form-select',
                   } %>
     </div>
     <div class="col-md-2">
