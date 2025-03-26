@@ -195,20 +195,17 @@
         </div>
       </div>
       <div class="p-3 card-body my-3 bg-transparent rounded-8">
-        <div class="d-flex justify-content-between align-items-center mb-2">
-          <h3><%= t('inscriptions.inscription.air_list') %></h3>
+        <div class="d-flex justify-content-start gap-2 align-items-center mb-2">
+          <h3 class=mb-0><%= t('inscriptions.inscription.air_list') %></h3>
           <% if current_user.candidat && inscription.category.edition_competition.end_of_registration > Date.today %>
-            <%= link_to edit_inscription_step_path(inscription, :program), class: 'btn btn-primary w-50' do %>
-              <div class="d-flex align-items-center justify-content-center">
-                <i class="fas fa-edit me-2"></i>
-                <span><%= t('global.actions.edit') %></span>
-              </div>
+            <%= link_to edit_inscription_step_path(inscription, :program), class: 'text-primary' do %>
+                <i class="fas fa-edit fa-lg"></i>
             <% end %>
           <% end %>
+          <% if inscription.remaining_days_before_end_of_registration > 0 %>
+            <span class="text-success"><%= t('inscriptions.inscription.days_remaining_to_edit', count: inscription.remaining_days_before_end_of_registration) %></span>
+          <% end %>
         </div>
-        <% if inscription.remaining_days_before_end_of_registration > 0 %>
-          <span class="text-success"><%= t('inscriptions.inscription.days_remaining_to_edit', count: inscription.remaining_days_before_end_of_registration) %></span>
-        <% end %>
         <% inscription.choice_imposed_work_airs.includes(:choice_imposed_work).map(&:choice_imposed_work).uniq.each do |choice_imposed_work| %>
           <div class="p-3 rounded mb-3 bg-light">
             <div class="card-body">
@@ -251,7 +248,7 @@
       </div>
 
       <div class="p-3 bg-transparent rounded">
-        <div class="d-flex justify-content-between align-items-center mb-2">
+        <div class="d-flex justify-content-start gap-2 align-items-center mb-2">
           <h3 class="mb-0"><%= t('inscriptions.inscription.file') %></h3>
           <%# To not net here, it's just a test %>
 
@@ -263,34 +260,28 @@
           <% end %>
 
           <% if current_user.organisateur %>
-            <%= link_to edit_inscription_step_path(inscription, :item_requirements), class: "btn btn-primary w-50" do %>
-              <div class="d-flex align-items-center justify-content-center">
-                <i class="fas fa-edit me-2"></i>
-                <span><%= t('global.actions.edit') %></span>
-              </div>
+            <%= link_to edit_inscription_step_path(inscription, :item_requirements), class: "text-primary" do %>
+                <i class="fas fa-edit fa-lg"></i>
             <% end %>
 
           <% end %>
           <% if current_user.candidat && inscription.is_late_inscription && Date.today < inscription.category.tours.first.final_performance_submission_deadline %>
-             <%= link_to edit_inscription_step_path(inscription, :item_requirements), class: "btn btn-primary w-50" do %>
-              <div class="d-flex align-items-center justify-content-center">
-                <i class="fas fa-edit me-2"></i>
-                <span><%= t('global.actions.edit') %></span>
-              </div>
+             <%= link_to edit_inscription_step_path(inscription, :item_requirements), class: "text-primary" do %>
+                <i class="fas fa-edit fa-lg"></i>
             <% end %>
           <% end %>
+
           <% if current_user.candidat && inscription.category.edition_competition.end_of_registration > Date.today %>
-             <%= link_to edit_inscription_step_path(inscription, :item_requirements), class: "btn btn-primary w-50" do %>
-              <div class="d-flex align-items-center justify-content-center">
-                <i class="fas fa-edit me-2"></i>
-                <span><%= t('global.actions.edit') %></span>
-              </div>
+            <%= link_to edit_inscription_step_path(inscription, :item_requirements), class: "text-primary" do %>
+                <i class="fas fa-edit fa-lg"></i>
             <% end %>
+          <% end %>
+
+          <% if inscription.remaining_days_before_end_of_registration > 0 %>
+            <span class="text-success"><%= t('inscriptions.inscription.days_remaining_to_edit', count: inscription.remaining_days_before_end_of_registration) %></span>
           <% end %>
         </div>
-        <% if inscription.remaining_days_before_end_of_registration > 0 %>
-          <span class="text-success"><%= t('inscriptions.inscription.days_remaining_to_edit', count: inscription.remaining_days_before_end_of_registration) %></span>
-        <% end %>
+
         <% if inscription.inscription_item_requirements.none? %>
           <p class="text-secondary"> <%= t('inscriptions.inscription.nothing_here_yet') %></p>
         <% end %>
