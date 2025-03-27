@@ -9,15 +9,16 @@
     link_text: t('global.inscription').pluralize
   ) %>
   <div class="row p-5">
-    <div class="d-flex flex-column flex-lg-row align-items-center p-2 mb-3">
+    <div class="d-flex flex-column flex-lg-row align-items-center justify-content-between p-2 mb-3">
       <div class="d-flex flex-column align-items-start justify-content-start">
         <%= image_tag inscription.candidat.portrait.attached? ? inscription.candidat.portrait : "https://placehold.co/200x200",
-         class: "rounded-circle align-items-center p-0 m-0 border border-primary", style: "width: 200px; height: 200px; object-fit: cover;" %>
+          class: "rounded align-items-center p-0 m-0 border border-primary", style: "width: 200px; height: 200px; object-fit: cover;"
+        %>
       </div>
 
       <div class="mx-5">
 
-        <h5 class="text-center text-secondary mb-5"><%= t('inscriptions.inscription.competition_category', competition: @inscription.category.competition.nom_concours, category: @inscription.category.name) %></h5>
+        <h5 class="text-center text-secondary mt-2"><%= t('inscriptions.inscription.competition_category', competition: @inscription.category.competition.nom_concours, category: @inscription.category.name) %></h5>
         <h2 class="text-center"><%= inscription.candidat.first_name %> <%= inscription.candidat.last_name %></h2>
 
         <% if inscription.changes_requested.present? && inscription.request_changes? %>
@@ -77,6 +78,20 @@
           </div>
         <% end %>
       </div>
+
+      <% youtube_item = inscription.inscription_item_requirements.find { |item| item.item_type == "youtube_link" && item.submitted_content.present? } %>
+        <% if youtube_item&.youtube_id.present? %>
+          <div class="embed-responsive embed-responsive-16by9">
+            <iframe
+              class="embed-responsive-item"
+              src="https://www.youtube.com/embed/<%= youtube_item.youtube_id %>?rel=0"
+              allowfullscreen
+              style="width: auto; height: 200px;"
+            ></iframe>
+          </div>
+        <% else %>
+        <div></div>
+        <% end %>
     </div>
     <div class="d-flex flex-wrap py-3 align-items-start gap-3">
       <%= render 'payed_pill', inscription: inscription %>
@@ -421,7 +436,7 @@
                   <% end %>
                 <% end %>
               <% else %>
-                <div class="d-flex flex-column shadow rounded">
+                <div class="d-flex flex-column rounded">
                   <small class="bg-grey p-2 text-secondary">
                     <span class="badge rounded-pill text-danger border-danger border"><%= t('inscriptions.inscription.days_remaining', count: tour.remaining_days) %></span>
                     <i class="fas fa-info-circle text-secondary px-1"></i><%= t('inscriptions.inscription.no_program_yet_html', deadline: tour.final_performance_submission_deadline.strftime("%d/%m/%Y")) %>
