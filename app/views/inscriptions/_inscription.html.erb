@@ -1,5 +1,5 @@
 <div id="<%= dom_id inscription %>">
-  <div class="d-flex flex-md-row align-items-center p-3 pb-0 gap-3">
+  <div class="d-flex flex-md-row align-items-center p-3 pb-0 gap-3 mx-2">
     <%= image_tag "icons/folder.png", width: 50 %>
     <h1 class="text-center text-dark pt-3"> <%= t('inscriptions.inscription.application_file') %>
     <%# <span class="lead text-secondary"><%= t('inscriptions.inscription.competition_category', competition: @inscription.category.competition.nom_concours, category: @inscription.category.name) %>
@@ -18,13 +18,13 @@
 
       <div class="mx-5">
 
-        <h5 class="text-center text-secondary mt-2"><%= t('inscriptions.inscription.competition_category', competition: @inscription.category.competition.nom_concours, category: @inscription.category.name) %></h5>
-        <h2 class="text-center"><%= inscription.candidat.first_name %> <%= inscription.candidat.last_name %></h2>
+        <h1 class="text-center"><%= t('inscriptions.inscription.competition_category', competition: @inscription.category.competition.nom_concours, category: @inscription.category.name) %></h1>
+        <h5 class="text-center text-secondary"><%= inscription.candidat.first_name %> <%= inscription.candidat.last_name %></h5>
 
         <% if inscription.changes_requested.present? && inscription.request_changes? %>
-          <div class="border border-info bg-light-info text-info p-3 rounded-8 alert-warning mt-3 mb-4 w-100">
+          <div class="bg-infobox-light text-info p-3 rounded-8 alert-warning mt-3 mb-4 w-100">
             <div class="d-flex justify-content-between align-items-center mb-2">
-              <h5 class="mb-0"><i class="fas fa-exclamation-triangle me-2"></i><%= t('inscriptions.inscription.changes_requested_title') %></h5>
+              <span class="mb-0 text-info"><i class="fas fa-exclamation-triangle me-2 text-info"></i><%= t('inscriptions.inscription.changes_requested_title') %></span>
             </div>
             <p class="mb-0"><%= simple_format(inscription.changes_requested) %></p>
           </div>
