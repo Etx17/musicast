@@ -9,7 +9,7 @@
     link_text: t('global.inscription').pluralize
   ) %>
   <div class="row p-5">
-    <div class="d-flex flex-column flex-lg-row align-items-center justify-content-between p-2 mb-3">
+    <div class="d-flex flex-column rounded flex-lg-row align-items-center justify-content-between p-3 mb-3" style="background-color: #f0fff3;">
       <div class="d-flex flex-column align-items-start justify-content-start">
         <%= image_tag inscription.candidat.portrait.attached? ? inscription.candidat.portrait : "https://placehold.co/200x200",
           class: "rounded align-items-center p-0 m-0 border border-primary", style: "width: 200px; height: 200px; object-fit: cover;"
@@ -104,18 +104,21 @@
         <div>
           <div class="card-header d-flex justify-content-between align-items-center w-100">
             <h3 class=mb-1><%= t('inscriptions.inscription.registration_details') %></h3>
-             <span class=" badge rounded-pill <%= inscription.draft? ? 'text-secondary border border-secondary bg-grey' : inscription.in_review? ? 'text-info border border-info bg-info-secondary' : inscription.accepted? ? 'text-success border-success bg-success-secondary' : 'text-danger border-danger bg-danger-secondary' %>">
+             <span class=" badge rounded-pill <%= inscription.draft? ? 'text-secondary border border-secondary bg-grey' : inscription.in_review? ? 'text-info bg-info-secondary' : inscription.accepted? ? 'text-success bg-success-secondary' : 'text-danger border-danger bg-danger-secondary' %>">
               <i class="fas fa-circle small"></i> <%= t("inscriptions.statuses.#{inscription.status}") %>
             </span>
           </div>
         <div class=" p-3 bg-light rounded mb-3 mt-1 d-flex flex-column align-items-start">
-          <p><%= inscription.category.edition_competition.competition.nom_concours %> - <small><%= inscription.category.name %></small></p>
-          <p><i class="fas fa-calendar-alt me-2"></i><%= t('inscriptions.inscription.date_range', start: inscription.category.edition_competition.start_date, end: inscription.category.edition_competition.end_date) %></p>
-          <p><i class="fas fa-map-marker-alt me-2"></i><%= inscription.category.edition_competition.address.line1 %> - <%= inscription.category.edition_competition.address.city %></p>
+          <h5><%= inscription.category.edition_competition.competition.nom_concours %> - <small><%= inscription.category.name %></small></h5>
+          <p><i class="fas fa-calendar-alt me-2 p-3 bg-infobox-light rounded-pill "></i><%= t('inscriptions.inscription.date_range', start: inscription.category.edition_competition.start_date, end: inscription.category.edition_competition.end_date) %></p>
+          <p><i class="fas fa-map-marker-alt me-2 p-3 bg-infobox-light rounded-pill"></i><%= inscription.category.edition_competition.address.line1 %> - <%= inscription.category.edition_competition.address.city %></p>
           <% if inscription.candidate_brings_pianist_accompagnateur %>
-          <p><%= t('inscriptions.inscription.candidate_brings_pianist') %></p>
+          <p>
+            <i class="fas fa-user-check me-2 p-3 bg-infobox-light rounded-pill"></i>
+            <%= t('inscriptions.inscription.candidate_brings_pianist') %>
+          </p>
           <% end %>
-          <p> <i class="fas fa-clock me-2"></i>
+          <p> <i class="fas fa-clock me-2 p-3 bg-infobox-light rounded-pill"></i>
           <%= t('inscriptions.inscription.time_preference') %>:
           <%= inscription.time_preference %>
           </p>
@@ -160,7 +163,7 @@
                 <div class="d-flex justify-content-between align-items-center w-100 mb-2">
                   <h5><%= t('inscriptions.inscription.payment_proof') %></h5>
                   <% if inscription.payment_proof.attached? %>
-                    <span class="badge rounded-pill text-success border-success border">
+                    <span class="badge rounded-pill text-success bg-primary-light">
                       <i class="fas fa-check-circle text-success pe-1"></i><%= t('inscriptions.inscription.proof_submitted') %>
                     </span>
                   <% end %>
