@@ -93,11 +93,11 @@ class Performance < ApplicationRecord
 
   def has_incorrect_duration?
     false
-    if minutes > tour.tour_requirement.max_duration_minute
+    if minutes >= tour.tour_requirement.max_duration_minute
       # errors.add(:minutes, "La durée de votre prestation dépasse le maximum autorisé pour ce tour.")
       return true
     end
-    if minutes < tour.tour_requirement.min_duration_minute
+    if minutes <= tour.tour_requirement.min_duration_minute
       return true
     end
   end

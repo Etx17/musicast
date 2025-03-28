@@ -347,9 +347,6 @@
           </div>
         <% end %>
       </div>
-
-
-
     </div>
 
     <div class="col pe-0">
@@ -358,7 +355,7 @@
         <% inscription.category.tours.order(:tour_number).each do |tour| %>
           <% performance = inscription.performances.find_by(tour: tour) %>
 
-          <div class="p-3 bg-light mb-3 rounded">
+          <div class="p-3 bg-infobox-light mb-3 rounded">
             <div class="card-header d-flex justify-content-between border-0">
               <% if I18n.locale == :en && tour.title_english.present? %>
                 <h5><%= tour.title_english %> - <%= t('inscriptions.inscription.round_number', number: tour.tour_number) %></h5>
@@ -374,25 +371,25 @@
 
               <% if tour.tour_requirement.present? %>
                 <% if I18n.locale == :en && tour.tour_requirement&.description_english.present? %>
-                    <p class="card-text text-secondary bg-infobox-light rounded p-2">
+                    <p class="card-text text-secondary bg-infobox-light rounded p-2 mb-0">
                       <i class="fas fa-info-circle text-secondary px-1"></i> <%= tour.tour_requirement&.description_english %>
                     </p>
                   </div>
                 <% else %>
-                  <p class="card-text text-secondary bg-infobox-light rounded p-2">
+                  <p class="card-text text-secondary bg-infobox-light rounded p-2 mb-0">
                     <i class="fas fa-info-circle text-secondary px-1"></i><%= tour.tour_requirement&.description %>
                   </p>
                 <% end %>
 
-                <div class="d-flex justify-content-around">
-                  <p class="card-text"><strong><%= image_tag 'icons/book.png', alt: t('inscriptions.inscription.works'), width: 40 %></strong>
+                <div class="d-flex justify-content-start gap-3">
+                  <p class="card-text p-1 px-2 bg-primary-light rounded-pill"><strong><i class="fas fa-book p-1 rounded-pill text-primary"></i></strong>
                     <% if tour.tour_requirement&.min_number_of_works == tour.tour_requirement&.max_number_of_works %>
                       <%= t('inscriptions.inscription.works_count', count: tour.tour_requirement&.min_number_of_works) %>
                     <% else %>
                       <%= t('inscriptions.inscription.works_range', min: tour.tour_requirement&.min_number_of_works, max: tour.tour_requirement&.max_number_of_works) %></p>
                     <% end %>
 
-                  <p class="card-text"><strong><%= image_tag 'icons/hourglass.png', alt: t('inscriptions.inscription.piano'), width: 40 %></strong> <%= t('inscriptions.inscription.duration_range', min: tour.tour_requirement&.min_duration_minute, max: tour.tour_requirement&.max_duration_minute) %></p>
+                  <p class=" p-1 px-2 bg-primary-light rounded-pill"><strong><i class="fas fa-clock p-1 rounded-pill text-primary"></i></strong> <%= t('inscriptions.inscription.duration_range', min: tour.tour_requirement&.min_duration_minute, max: tour.tour_requirement&.max_duration_minute) %></p>
                 </div>
               <% end %>
 
@@ -403,21 +400,26 @@
               <div class="d-flex justify-content-start align-items-center gap-2 mb-2 border-top pt-3">
                 <h5 class="card-title mb-0 "><%= t('inscriptions.inscription.program') %>: </h5>
                 <% if tour.remaining_days > 0 %>
-                  <span class="badge rounded-pill text-warning border-warning border"><%= t('inscriptions.inscription.days_remaining_to_edit', count: tour.remaining_days) %></span>
+                  <span class=" badge rounded-pill text-info bg-info-secondary">
+                    <i class="fas fa-clock me-1"></i>
+                    <%= t('inscriptions.inscription.days_remaining_to_edit', count: tour.remaining_days) %>
+                  </span>
                 <% end %>
-              </div>
-              <% if performance.present? %>
-                <% if performance.has_incorrect_duration? %>
-                  <small class="text-danger">
+
+                <% if performance.present? && performance.has_incorrect_duration? %>
+                  <span class=" badge rounded-pill text-danger bg-danger-secondary">
                     <i class="fas fa-exclamation-triangle"></i> <%= t('inscriptions.inscription.invalid_program_duration', minutes: performance.minutes) %>
-                  </small>
-                <% else %>
-                  <small class="text-success">
+                  </span>
+                <% elsif performance.present? %>
+                   <span class=" badge rounded-pill text-success bg-primary-light">
                     <i class="fas fa-check-circle"></i> <%= t('inscriptions.inscription.valid_program_duration', minutes: performance.minutes) %>
                   </small>
                 <% end %>
+              </div>
+              <% if performance.present? %>
+
                 <%= simple_form_for(performance, url: performance_path(performance), method: :patch, data: { controller: "reorder" }) do |f| %>
-                  <ul data-reorder-target="list" class="list-unstyled" >
+                  <ul data-reorder-target="list" class="list-unstyled bg-white" >
                     <% performance.ordered_air_selection&.each_with_index do |air_id, index| %>
                       <% air = Air.find(air_id) %>
                       <% imposed = performance.tour.imposed_air_selection&.include?(air_id.to_s) %>

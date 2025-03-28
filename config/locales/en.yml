@@ -1132,7 +1132,7 @@ en:
       accompanying_pianist: "Accompanying pianist"
       pianist: "Pianist"
       program: "Program"
-      invalid_program_duration: "Invalid program duration: %{minutes} minutes"
+      invalid_program_duration: "Invalid duration: %{minutes} minutes"
       valid_program_duration: "Valid program duration: %{minutes} minutes"
       imposed: " (imposed)"
       update_order: "Update order"
