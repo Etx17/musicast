@@ -18,16 +18,11 @@
       <div class="card shadow-sm mb-4">
         <div class="card-body">
           <h4 class="card-title mb-3"><%= t('inscriptions.form.pianist_preferences') %></h4>
-          <div class="form-check form-switch">
-            <%= f.check_box :candidate_brings_pianist_accompagnateur,
-                            class: "form-check-input",
-                            role: "switch",
-                            id: "inscription_candidate_brings_pianist_accompagnateur",
-                            onchange: "togglePianistDetails()" %>
-            <%= f.label :candidate_brings_pianist_accompagnateur,
-                        t('inscriptions.form.bring_own_pianist'),
-                        class: "form-check-label" %>
-          </div>
+          <%= f.input :candidate_brings_pianist_accompagnateur,
+                      as: :boolean,
+                      id: "inscription_candidate_brings_pianist_accompagnateur",
+                      label: t('inscriptions.form.bring_own_pianist'),
+                      input_html: { onchange: "togglePianistDetails()" } %>
 
           <div id="pianist_details" style="display: <%= @inscription.candidate_brings_pianist_accompagnateur ? 'block' : 'none' %>;">
             <div class="row">

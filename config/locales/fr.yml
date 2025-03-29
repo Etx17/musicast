@@ -1093,7 +1093,7 @@ fr:
       imposed_airs: "Airs imposés"
       round_by_round_program: "Programme tour par tour"
       round_number: "Tour #%{number}"
-      imposed_airs_in_round: "%{count} air(s) imposé(s) dans ce tour"
+      imposed_airs_in_round: "%{count} air(s) imposé(s)"
       round_rules: "Règles du tour"
       works: "Œuvres"
       works_count: "%{count} œuvre(s)"

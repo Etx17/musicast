@@ -1123,7 +1123,7 @@ en:
       imposed_airs: "Imposed airs"
       round_by_round_program: "Round by round program"
       round_number: "Round #%{number}"
-      imposed_airs_in_round: "%{count} imposed air(s) in this round"
+      imposed_airs_in_round: "%{count} imposed air(s)"
       round_rules: "Round rules"
       works: "Works"
       works_count: "%{count} work(s)"
