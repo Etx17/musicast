@@ -986,7 +986,10 @@ fr:
       program: "Programme"
       item_requirements: "Documents requis"
       preferences: "Préférences"
-
+    time_preferences:
+      no_preference: "No preference"
+      morning: "Morning"
+      afternoon: "Afternoon"
     controller:
       application_under_review: "Votre candidature est en cours de validation. Vous recevrez un mail dès que cela sera terminé."
       inscription_updated: "L'inscription a été mise à jour avec succès."

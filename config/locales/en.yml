@@ -1070,6 +1070,10 @@ en:
       character_placeholder: "e.g.: The Duke of Mantua"
       character_hint: "For opera arias only"
       base_tonality: "Base tonality"
+    time_preferences:
+      no_preference: "No preference"
+      morning: "Morning"
+      afternoon: "Afternoon"
     form:
       pianist_preferences: "Pianist preferences"
       candidate_brings_pianist_accompagnateur_email: "Email of the accompanying pianist"

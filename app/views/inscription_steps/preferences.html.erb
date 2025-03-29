@@ -51,7 +51,7 @@
         <%= f.input :time_preference,
                     label: t('inscriptions.steps.preferences.time_preference'),
                     hint: t('inscriptions.steps.preferences.time_preference_info'),
-                    collection: Inscription.time_preferences.keys.to_a,
+                    collection: Inscription.time_preferences.keys.map { |k| [t("inscriptions.time_preferences.#{k}"), k] },
                     prompt: t('inscriptions.steps.preferences.select_time_preference') %>
       </div>
     </div>
