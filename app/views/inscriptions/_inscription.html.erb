@@ -329,9 +329,17 @@
                 </div>
               <% end %>
 
-              <%# Pianist section  %>
+              <%# accompaniment section  %>
 
               <%= render 'pianist_accompanist', performance: performance if tour.requires_pianist_accompanist %>
+              <% if tour.requires_orchestra %>
+               <div class="d-flex justify-content-start gap-3 pb-2 mt-2">
+                <span>
+                  <i class="fas fa-music p-3 rounded-pill text-secondary border bg-white"></i>
+                  <%= t('inscriptions.inscription.orchestra_accompaniment') %>
+                </span>
+              </div>
+              <% end %>
 
               <div class="d-flex justify-content-start align-items-center gap-2 mb-2 border-top pt-3">
                 <h5 class="card-title mb-0 "><%= t('inscriptions.inscription.program') %>: </h5>

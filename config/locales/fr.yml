@@ -1067,6 +1067,7 @@ fr:
       replace_document: "Remplacer le document"
     inscription:
       pianist_assignment_pending: "En attente"
+      orchestra_accompaniment: "Accompagnement orchestral"
       pianist_assignment_explanation: "Le concours vous assignera un pianiste accompagnateur une fois la date limite de dépôt des candidatures atteinte. Veuillez consulter régulièrement cette page pour voir les informations de contact de votre pianiste."
       pianist_assignment_date: "Date prévue d'assignation : > %{date}"
       payment_iban_label: "IBAN"
@@ -1609,6 +1610,8 @@ fr:
       see_more: "voir plus"
       candidates_have_been_notified: "Les candidats ont été notifiés des résultats."
     form:
+      requires_orchestra: "Requiert un accompagnement orchestre ?"
+      requires_orchestra_hint: "Cochez si votre tours requiert un accompagnement par un orchestre"
       title_placeholder: "ex: Éliminatoires, Demi-finale, Finale..."
       accompaniment_settings: "Configuration des accompagnements"
       description_placeholder: "Décrivez les règles spécifiques à ce tour..."

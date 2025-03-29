@@ -53,7 +53,24 @@
         <small class="form-text text-muted mt-2">
           <%= raw(t('tours.form.requires_pianist_accompanist_hint')).html_safe %>
         </small>
+
+        <div class="form-check form-switch">
+            <%= f.check_box :requires_orchestra,
+                            class: "form-check-input",
+                            role: "switch",
+                            id: "flexSwitchOrchestra",
+                            checked: f.object.requires_orchestra.nil? ? true : f.object.requires_orchestra %>
+            <%= f.label :requires_orchestra,
+                        t('tours.form.requires_orchestra'),
+                        class: "form-check-label",
+                        for: "flexSwitchOrchestra" %>
+          </div>
+          <small class="form-text text-muted mt-2">
+            <%= raw(t('tours.form.requires_orchestra_hint')).html_safe %>
+          </small>
+        </div>
       </div>
+
     </div>
     <h2><%= t('tours.form.configurations') %></h2>
     <%= f.simple_fields_for :tour_requirement do |tr| %>

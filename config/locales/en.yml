@@ -1087,6 +1087,7 @@ en:
       youtube_hint: "Link to your YouTube video"
       replace_document: "Replace document"
     inscription:
+      orchestra_accompaniment: "Orchestral accompaniment"
       payment_proof: "Payment proof"
       current_payment_proof: "Current payment proof"
       replace_payment_proof: "Replace payment proof"
@@ -1712,6 +1713,8 @@ en:
       break: "Break"
 
     form:
+      requires_orchestra: "Requires orchestra accompaniment ?"
+      requires_orchestra_hint: "Check if this round requires an orchestra accompaniment"
       title_placeholder: "e.g.: Preliminaries, Semi-finals, Finals..."
       description_placeholder: "Describe the specific rules for this round..."
       start_date: "Start date"

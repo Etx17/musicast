@@ -252,6 +252,7 @@ class ToursController < ApplicationController
       :end_date, :end_time,
       :is_online,
       :tour_number, :requires_pianist_accompanist,
+      :requires_orchestra,
       :title, :description,
       :title_english, :description_english,
       :max_end_of_day_time,
