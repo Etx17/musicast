@@ -1036,6 +1036,7 @@ fr:
       character_hint: "Si air d'opéra seulement"
       base_tonality: "Tonalité de base"
     form:
+      pianist_preferences: "Pianiste accompagnateur"
       time_preferences: "Préférences horaires"
       terms: "Conditions"
       payment: "Paiement"

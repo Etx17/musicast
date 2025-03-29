@@ -909,6 +909,7 @@ en:
     semi_imposed_works: "Semi-imposed works"
     choice_imposed_works: "Choice imposed works"
     imposed_works: "Imposed works"
+    inscription: "application"
     free: "Free"
     years: "years"
     round: "round"

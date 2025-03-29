@@ -1,0 +1,89 @@
+<div class="d-flex flex-column rounded flex-lg-row align-items-center justify-content-between p-3 " style="background-color:rgb(253, 255, 240);">
+      <div class="d-flex flex-column align-items-start justify-content-start">
+        <%= image_tag inscription.candidat.portrait.attached? ? inscription.candidat.portrait : "https://placehold.co/200x200",
+          class: "rounded align-items-center p-0 m-0 border border-primary", style: "width: 200px; height: 200px; object-fit: cover;"
+        %>
+      </div>
+
+      <div class="mx-5">
+
+        <h1 class="text-center"><%= t('inscriptions.inscription.competition_category', competition: inscription.category.competition.nom_concours, category: inscription.category.name) %></h1>
+        <h5 class="text-center text-secondary"><%= inscription.candidat.first_name %> <%= inscription.candidat.last_name %></h5>
+
+        <% if inscription.changes_requested.present? && inscription.request_changes? %>
+          <div class="bg-infobox-light text-info p-3 rounded-8 alert-warning mt-3 mb-4 w-100">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <span class="mb-0 text-info"><i class="fas fa-exclamation-triangle me-2 text-info"></i><%= t('inscriptions.inscription.changes_requested_title') %></span>
+            </div>
+            <p class="mb-0"><%= simple_format(inscription.changes_requested) %></p>
+          </div>
+        <% end %>
+
+        <!-- Bouton Request Changes pour l'organisateur -->
+        <% if current_user.organisateur && (inscription.in_review? || inscription.request_changes?) %>
+          <div class="d-flex justify-content-center mt-3 mb-4 w-100">
+            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#requestChangesModal">
+              <i class="fas fa-exclamation-triangle me-2"></i>
+              <%= inscription.request_changes? ? t('inscriptions.inscription.edit_changes_request') : t('inscriptions.inscription.request_changes_button') %>
+            </button>
+          </div>
+
+          <div class="modal fade" id="requestChangesModal" tabindex="-1" aria-labelledby="requestChangesModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="requestChangesModalLabel">
+                    <%= inscription.request_changes? ? t('inscriptions.inscription.edit_changes_title') : t('inscriptions.inscription.request_changes_title') %>
+                  </h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <%= form_with(url: request_changes_inscription_path(inscription), method: :patch, local: true) do |form| %>
+                    <div class="form-group mb-3">
+                      <%= form.label :changes_requested, t('inscriptions.inscription.changes_requested_label'), class: "form-label" %>
+                      <%= form.text_area :changes_requested, value: inscription.changes_requested, class: "form-control", rows: 5, placeholder: t('inscriptions.inscription.changes_requested_placeholder') %>
+                      <small class="form-text text-muted"><%= t('inscriptions.inscription.changes_requested_hint') %></small>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                      <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal"><%= t('global.actions.cancel') %></button>
+                      <%= form.submit t('inscriptions.inscription.submit_changes_request'), class: "btn btn-warning" %>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+
+        <% if Rails.env.development? || current_user.organisateur || current_user.jury%>
+          <div class="d-flex align-items-center justify-content-center gap-3 mb-2">
+            <%= link_to candidat_path(inscription.candidat), target: "_blank", class: "btn rounded-8 btn-secondary btn-sm " do %>
+              <i class="fas fa-eye pe-1"></i><%= t('inscriptions.inscription.view_cv_new_tab') %>
+            <% end %>
+
+            <%= mail_to inscription.candidat.user.email, class: 'btn rounded-8 btn-secondary btn-sm' do %>
+              <i class="fas fa-envelope pe-1"></i> <%= t('inscriptions.inscription.send_email') %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+
+      <% youtube_item = inscription.inscription_item_requirements.find { |item| item.item_type == "youtube_link" && item.submitted_content.present? } %>
+        <% if youtube_item&.youtube_id.present? %>
+          <div class="embed-responsive embed-responsive-16by9">
+            <iframe
+              class="embed-responsive-item"
+              src="https://www.youtube.com/embed/<%= youtube_item.youtube_id %>?rel=0"
+              allowfullscreen
+              style="width: auto; height: 200px;"
+            ></iframe>
+          </div>
+        <% else %>
+        <div></div>
+        <% end %>
+    </div>
+    <div class="d-flex flex-wrap py-3 align-items-start gap-3">
+      <%= render 'payed_pill', inscription: inscription %>
+      <%= render 'items_pill', inscription: inscription %>
+      <%= render 'airs_pill', inscription: inscription %>
+    </div>

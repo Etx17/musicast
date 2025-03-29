@@ -1,104 +1,19 @@
 <div id="<%= dom_id inscription %>">
-  <div class="d-flex flex-md-row align-items-center p-3 pb-0 gap-3 mx-2">
+  <div class="d-flex flex-row justify-content-between align-items-center p-3 pb-0 gap-3 mx-2">
+    <div class="d-flex flex-row align-items-center gap-2">
     <%= image_tag "icons/folder.png", width: 50 %>
-    <h1 class="text-center text-dark pt-3"> <%= t('inscriptions.inscription.application_file') %>
-    <%# <span class="lead text-secondary"><%= t('inscriptions.inscription.competition_category', competition: @inscription.category.competition.nom_concours, category: @inscription.category.name) %>
+    <h1 class="text-dark pt-1 mb-0"> <%= t('inscriptions.inscription.application_file') %></h1>
+    </div>
+    <%# <h1 class="px-4 py-1 rounded-pill text-info bg-infobox-light px-2" style="align-self: flex-end;">Date Limite: 29 mars</h1> %>
   </div>
   <div class="row px-5">
     <%= render Navigation::BackLinkComponent.new(
       link_path: inscriptions_path,
       link_text: t('global.inscription').pluralize
     ) %>
-    <div class="d-flex flex-column rounded flex-lg-row align-items-center justify-content-between p-3 " style="background-color:rgb(253, 255, 240);">
-      <div class="d-flex flex-column align-items-start justify-content-start">
-        <%= image_tag inscription.candidat.portrait.attached? ? inscription.candidat.portrait : "https://placehold.co/200x200",
-          class: "rounded align-items-center p-0 m-0 border border-primary", style: "width: 200px; height: 200px; object-fit: cover;"
-        %>
-      </div>
 
-      <div class="mx-5">
-
-        <h1 class="text-center"><%= t('inscriptions.inscription.competition_category', competition: @inscription.category.competition.nom_concours, category: @inscription.category.name) %></h1>
-        <h5 class="text-center text-secondary"><%= inscription.candidat.first_name %> <%= inscription.candidat.last_name %></h5>
-
-        <% if inscription.changes_requested.present? && inscription.request_changes? %>
-          <div class="bg-infobox-light text-info p-3 rounded-8 alert-warning mt-3 mb-4 w-100">
-            <div class="d-flex justify-content-between align-items-center mb-2">
-              <span class="mb-0 text-info"><i class="fas fa-exclamation-triangle me-2 text-info"></i><%= t('inscriptions.inscription.changes_requested_title') %></span>
-            </div>
-            <p class="mb-0"><%= simple_format(inscription.changes_requested) %></p>
-          </div>
-        <% end %>
-
-        <!-- Bouton Request Changes pour l'organisateur -->
-        <% if current_user.organisateur && (inscription.in_review? || inscription.request_changes?) %>
-          <div class="d-flex justify-content-center mt-3 mb-4 w-100">
-            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#requestChangesModal">
-              <i class="fas fa-exclamation-triangle me-2"></i>
-              <%= inscription.request_changes? ? t('inscriptions.inscription.edit_changes_request') : t('inscriptions.inscription.request_changes_button') %>
-            </button>
-          </div>
-
-          <div class="modal fade" id="requestChangesModal" tabindex="-1" aria-labelledby="requestChangesModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="requestChangesModalLabel">
-                    <%= inscription.request_changes? ? t('inscriptions.inscription.edit_changes_title') : t('inscriptions.inscription.request_changes_title') %>
-                  </h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                  <%= form_with(url: request_changes_inscription_path(inscription), method: :patch, local: true) do |form| %>
-                    <div class="form-group mb-3">
-                      <%= form.label :changes_requested, t('inscriptions.inscription.changes_requested_label'), class: "form-label" %>
-                      <%= form.text_area :changes_requested, value: inscription.changes_requested, class: "form-control", rows: 5, placeholder: t('inscriptions.inscription.changes_requested_placeholder') %>
-                      <small class="form-text text-muted"><%= t('inscriptions.inscription.changes_requested_hint') %></small>
-                    </div>
-                    <div class="d-flex justify-content-end">
-                      <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal"><%= t('global.actions.cancel') %></button>
-                      <%= form.submit t('inscriptions.inscription.submit_changes_request'), class: "btn btn-warning" %>
-                    </div>
-                  <% end %>
-                </div>
-              </div>
-            </div>
-          </div>
-        <% end %>
-
-        <% if Rails.env.development? || current_user.organisateur || current_user.jury%>
-          <div class="d-flex align-items-center justify-content-center gap-3 mb-2">
-            <%= link_to candidat_path(inscription.candidat), target: "_blank", class: "btn rounded-8 btn-secondary btn-sm " do %>
-              <i class="fas fa-eye pe-1"></i><%= t('inscriptions.inscription.view_cv_new_tab') %>
-            <% end %>
-
-            <%= mail_to inscription.candidat.user.email, class: 'btn rounded-8 btn-secondary btn-sm' do %>
-              <i class="fas fa-envelope pe-1"></i> <%= t('inscriptions.inscription.send_email') %>
-            <% end %>
-          </div>
-        <% end %>
-      </div>
-
-      <% youtube_item = inscription.inscription_item_requirements.find { |item| item.item_type == "youtube_link" && item.submitted_content.present? } %>
-        <% if youtube_item&.youtube_id.present? %>
-          <div class="embed-responsive embed-responsive-16by9">
-            <iframe
-              class="embed-responsive-item"
-              src="https://www.youtube.com/embed/<%= youtube_item.youtube_id %>?rel=0"
-              allowfullscreen
-              style="width: auto; height: 200px;"
-            ></iframe>
-          </div>
-        <% else %>
-        <div></div>
-        <% end %>
-    </div>
-    <div class="d-flex flex-wrap py-3 align-items-start gap-3">
-      <%= render 'payed_pill', inscription: inscription %>
-      <%= render 'items_pill', inscription: inscription %>
-      <%= render 'airs_pill', inscription: inscription %>
-    </div>
-
+    <%= render "inscriptions/inscription_header", inscription: inscription %>
+    <!-- left column -->
     <div class="col p-0">
       <div class=" p-3  mb-3 bg-transparent rounded-8">
         <div>
@@ -108,21 +23,43 @@
               <i class="fas fa-circle small"></i> <%= t("inscriptions.statuses.#{inscription.status}") %>
             </span>
           </div>
-        <div class=" p-3 bg-light rounded mb-3 mt-1 d-flex flex-column align-items-start">
-          <h5><%= inscription.category.edition_competition.competition.nom_concours %> - <small><%= inscription.category.name %></small></h5>
-          <p><i class="fas fa-calendar-alt me-2 p-3 bg-infobox-light rounded-pill "></i><%= t('inscriptions.inscription.date_range', start: inscription.category.edition_competition.start_date, end: inscription.category.edition_competition.end_date) %></p>
-          <p><i class="fas fa-map-marker-alt me-2 p-3 bg-infobox-light rounded-pill"></i><%= inscription.category.edition_competition.address.line1 %> - <%= inscription.category.edition_competition.address.city %></p>
-          <% if inscription.candidate_brings_pianist_accompagnateur %>
-          <p>
-            <i class="fas fa-user-check me-2 p-3 bg-infobox-light rounded-pill"></i>
-            <%= t('inscriptions.inscription.candidate_brings_pianist') %>
-          </p>
-          <% end %>
-          <p> <i class="fas fa-clock me-2 p-3 bg-infobox-light rounded-pill"></i>
-          <%= t('inscriptions.inscription.time_preference') %>:
-          <%= inscription.time_preference %>
-          </p>
-        </div>
+
+          <!-- Details card -->
+          <div class="p-3 bg-light rounded mb-3 mt-1 d-flex flex-column align-items-start">
+            <h5><%= inscription.category.edition_competition.competition.nom_concours %> - <small><%= inscription.category.name %></small></h5>
+            <div class="mb-2">
+              <i class="fas fa-map-marker-alt me-2 p-3 bg-infobox-light rounded-pill"></i>
+              <%= inscription.category.edition_competition.address.line1 %> - <%= inscription.category.edition_competition.address.city %>
+            </div>
+
+            <div class="d-flex flex-wrap mb-2">
+              <div class="me-4">
+                <i class="fas fa-calendar-alt me-2 p-3 bg-infobox-light rounded-pill"></i>
+                <%= t('inscriptions.inscription.date_range', start: inscription.category.edition_competition.start_date, end: inscription.category.edition_competition.end_date) %>
+              </div>
+              <div>
+                <i class="fas fa-clock me-2 p-3 bg-infobox-light rounded-pill"></i>
+                <%= t('inscriptions.inscription.time_preference') %>: <%= inscription.time_preference %>
+              </div>
+            </div>
+
+            <% if inscription.candidate_brings_pianist_accompagnateur %>
+              <div class="mb-2">
+                <i class="fas fa-user-check me-2 p-3 bg-infobox-light rounded-pill"></i>
+                <%= t('inscriptions.inscription.candidate_brings_pianist') %>
+              </div>
+            <% end %>
+
+            <!-- Rules document links -->
+              <div class="mt-2">
+                <% if inscription.category.edition_competition.rule_document.attached? %>
+                  <%= link_to t('edition_competitions.category_modal_infos.view_rules'), rails_blob_path(inscription.category.edition_competition.rule_document), target: '_blank', class: "btn btn-outline-primary btn-sm rounded-4 me-2" %>
+                <% end %>
+                <% if inscription.category.edition_competition.rule_document_english.attached? %>
+                  <%= link_to t('edition_competitions.category_modal_infos.view_rules_english'), rails_blob_path(inscription.category.edition_competition.rule_document_english), target: '_blank', class: "btn btn-outline-primary btn-sm rounded-4" %>
+                <% end %>
+              </div>
+            </div>
 
           <!-- Rediriger vers le paiement si ca n'est pas encore fait -->
 
@@ -349,6 +286,7 @@
       </div>
     </div>
 
+    <!-- right column -->
     <div class="col pe-0">
       <div class="bg-transparent p-3">
         <h2 class="text-secondary "><%= t('inscriptions.inscription.round_by_round_program').upcase %></h2>
