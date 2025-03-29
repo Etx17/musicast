@@ -970,6 +970,9 @@ fr:
       preferences:
         title: "Préférences"
         time_preferences: "Préférences horaires"
+        time_justification: "Justification"
+        time_justification_info: "Veuillez justifier votre préférence horaire"
+        time_justification_placeholder: "ex: Je ne peux pas passer le matin car mon train part à 9h"
         terms: "Conditions"
         payment: "Paiement"
         payment_info: "Informations de paiement"

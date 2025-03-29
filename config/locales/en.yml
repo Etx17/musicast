@@ -1004,8 +1004,11 @@ en:
         replace_document: "Replace document"
         upload_pdf: "Upload PDF"
       preferences:
+        time_justification: "Time justification"
+        time_justification_info: "Please justify your time preference"
         title: "Preferences"
         time_preferences: "Time preferences"
+        time_justification_placeholder: "e.g.: I'm not available in the morning because my train leaves at 9am"
         terms: "Terms"
         payment: "Payment"
         payment_info: "Payment information"

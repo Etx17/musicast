@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_29_183328) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_29_224326) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -307,6 +307,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_29_183328) do
     t.text "changes_requested", default: ""
     t.string "candidate_brings_pianist_accompagnateur_email"
     t.string "candidate_brings_pianist_accompagnateur_full_name"
+    t.text "time_justification"
     t.index ["candidat_id"], name: "index_inscriptions_on_candidat_id"
     t.index ["category_id"], name: "index_inscriptions_on_category_id"
   end

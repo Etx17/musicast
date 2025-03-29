@@ -264,6 +264,7 @@ class InscriptionsController < ApplicationController
         :payment_proof, :remove_payment_proof,
         :candidate_brings_pianist_accompagnateur,
         :candidate_brings_pianist_accompagnateur_email,
+        :time_justification,
         :candidate_brings_pianist_accompagnateur_full_name,
         inscription_item_requirements_attributes: %i[id submitted_file submitted_content document_id requirement_item_id _destroy],
         choice_imposed_work_airs_attributes: [:id, :choice_imposed_work_id, :air_id],
@@ -280,6 +281,7 @@ class InscriptionsController < ApplicationController
         :candidate_brings_pianist_accompagnateur,
         :candidate_brings_pianist_accompagnateur_email,
         :candidate_brings_pianist_accompagnateur_full_name,
+        :time_justification,
         inscription_item_requirements_attributes: %i[id submitted_file submitted_content document_id requirement_item_id _destroy],
         choice_imposed_work_airs_attributes: [:id, :choice_imposed_work_id, :air_id],
         semi_imposed_work_airs_attributes: [:id, :semi_imposed_work_id, air: [:id, :title, :length_minutes, :composer, :oeuvre, :character, :tonality]]

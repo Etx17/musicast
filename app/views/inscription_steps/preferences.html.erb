@@ -49,10 +49,16 @@
       <div class="card-body">
         <h4 class="card-title mb-3"><%= t('inscriptions.steps.preferences.time_preferences') %></h4>
         <%= f.input :time_preference,
+                    input_html: { style:"width: fit-content;" },
                     label: t('inscriptions.steps.preferences.time_preference'),
                     hint: t('inscriptions.steps.preferences.time_preference_info'),
                     collection: Inscription.time_preferences.keys.map { |k| [t("inscriptions.time_preferences.#{k}"), k] },
                     prompt: t('inscriptions.steps.preferences.select_time_preference') %>
+        <%= f.input :time_justification,
+                    as: :text,
+                    label: t('inscriptions.steps.preferences.time_justification'),
+                    placeholder: t('inscriptions.steps.preferences.time_justification_placeholder'),
+                    hint: t('inscriptions.steps.preferences.time_justification_info') %>
       </div>
     </div>
 
