@@ -55,7 +55,7 @@
       <p class="text-center text-secondary"><%= t('tours.order_of_performances.change_order_instructions') %> <i class="fas fa-check"></i> <%= t('tours.order_of_performances.or_shuffle') %> <i class="fas fa-random"></i></p>
 
 
-
+      <div class="overflow-scroll">
       <table class="table table-bordered caption-top">
         <thead>
           <tr>
@@ -124,7 +124,7 @@
                   </div>
                 </td>
                 <% if @category.is_accompagnated_by_pianist? %>
-                  <td class="p-2 text-center bg-light text-secondary"  >
+                  <td class="p-2 pt-4 text-center bg-light text-secondary"  >
                     <% if !performance.inscription.candidate_brings_pianist_accompagnateur %>
                       <%= form_with url: assign_pianist_to_performance_manually_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour, performance_id: performance.id), method: :post, html: { id: "pianist-form-#{performance.id}" } do |form| %>
                         <%= form.hidden_field :performance_id, value: performance.id %>
@@ -136,19 +136,44 @@
                     <% end %>
                   </td>
                 <% end %>
-                <td class="p-2 text-center bg-light <%= performance.minutes == 0 ? 'text-danger' : 'text-secondary' %>">
+                <td class="p-2 pt-4 text-center bg-light <%= performance.minutes == 0 ? 'text-danger' : 'text-secondary' %>">
                   <%= performance.minutes %>
                 </td>
-                <td class="p-2 text-center bg-light text-secondary">
-                  <%= performance.inscription.time_preference %>
+                <td class="p-2 pt-4 text-center bg-light text-secondary">
+                  <%= render Pill::StatusComponent.new(text: performance.inscription.time_preference, color: time_preference_color(performance.inscription.time_preference)) %>
+                  <% if performance.inscription.time_preference != "no_preference" && performance.inscription.time_justification.present? %>
+                    <i class="fas fa-info-circle ms-2"
+                      data-bs-toggle="tooltip"
+                      data-bs-placement="top"
+                      title="<%= performance.inscription.time_justification %>"
+                      style="cursor: help;"></i>
+                  <% end %>
                 </td>
-                <td class="p-2 text-center bg-light">
-                  <%= link_to t('global.actions.delete'), organism_competition_edition_competition_category_inscription_path(@organism, @competition, @edition_competition, @category, performance.inscription, tour_id: @tour.id), method: :delete, data: { turbo_confirm: t('global.confirmations.are_you_sure'), turbo_method: :delete}, class: "btn btn-danger" %>
+                <td class="p-2 text-center ">
+                  <%= render Dropdown::KebabComponent.new(items: [{
+                    icon: "fas fa-trash",
+                    text: t('global.actions.delete'),
+                    path: organism_competition_edition_competition_category_inscription_path(@organism, @competition, @edition_competition, @category, performance.inscription, tour_id: @tour.id),
+                    method: :delete,
+                    data: { turbo_confirm: t('global.confirmations.are_you_sure'), turbo_method: :delete},
+                    # class: "text-danger"
+                  }], only_vertical_dots: false) %>
+                  <%# <%= link_to t('global.actions.delete'), organism_competition_edition_competition_category_inscription_path(@organism, @competition, @edition_competition, @category, performance.inscription, tour_id: @tour.id), method: :delete, data: { turbo_confirm: t('global.confirmations.are_you_sure'), turbo_method: :delete}, class: "text-danger" %>
                 </td>
               </tr>
             <% end %>
           <% end %>
         </tbody>
       </table>
+      </div>
     </div>
   </div>
+
+  <script>
+    document.addEventListener("turbo:load", function() {
+      var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+      var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+      })
+    });
+  </script>
