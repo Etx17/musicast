@@ -1074,7 +1074,7 @@ fr:
       competition_category: "%{competition} - %{category}"
       view_cv_new_tab: "Voir le CV (nouvel onglet)"
       send_email: "Envoyer un email"
-      registration_details: "Détails de l'inscription"
+      registration_details: "Détails"
       date_range: "Du %{start} au %{end}"
       candidate_brings_pianist: "Le candidat amène son propre pianiste accompagnateur"
       time_preference: "Préférence horaire"

@@ -4,12 +4,12 @@
     <h1 class="text-center text-dark pt-3"> <%= t('inscriptions.inscription.application_file') %>
     <%# <span class="lead text-secondary"><%= t('inscriptions.inscription.competition_category', competition: @inscription.category.competition.nom_concours, category: @inscription.category.name) %>
   </div>
-  <%= render Navigation::BackLinkComponent.new(
-    link_path: inscriptions_path,
-    link_text: t('global.inscription').pluralize
-  ) %>
-  <div class="row p-5">
-    <div class="d-flex flex-column rounded flex-lg-row align-items-center justify-content-between p-3 mb-3" style="background-color: #f0fff3;">
+  <div class="row px-5">
+    <%= render Navigation::BackLinkComponent.new(
+      link_path: inscriptions_path,
+      link_text: t('global.inscription').pluralize
+    ) %>
+    <div class="d-flex flex-column rounded flex-lg-row align-items-center justify-content-between p-3 " style="background-color:rgb(253, 255, 240);">
       <div class="d-flex flex-column align-items-start justify-content-start">
         <%= image_tag inscription.candidat.portrait.attached? ? inscription.candidat.portrait : "https://placehold.co/200x200",
           class: "rounded align-items-center p-0 m-0 border border-primary", style: "width: 200px; height: 200px; object-fit: cover;"
@@ -66,8 +66,8 @@
           </div>
         <% end %>
 
-        <% if current_user.organisateur || current_user.jury%>
-          <div class="d-flex align-items-center justify-content-center gap-3">
+        <% if Rails.env.development? || current_user.organisateur || current_user.jury%>
+          <div class="d-flex align-items-center justify-content-center gap-3 mb-2">
             <%= link_to candidat_path(inscription.candidat), target: "_blank", class: "btn rounded-8 btn-secondary btn-sm " do %>
               <i class="fas fa-eye pe-1"></i><%= t('inscriptions.inscription.view_cv_new_tab') %>
             <% end %>
@@ -103,7 +103,7 @@
       <div class=" p-3  mb-3 bg-transparent rounded-8">
         <div>
           <div class="card-header d-flex justify-content-between align-items-center w-100">
-            <h3 class=mb-1><%= t('inscriptions.inscription.registration_details') %></h3>
+            <h2 class="mb-1 text-secondary"><%= t('inscriptions.inscription.registration_details').upcase %></h2>
              <span class=" badge rounded-pill <%= inscription.draft? ? 'text-secondary border border-secondary bg-grey' : inscription.in_review? ? 'text-info bg-info-secondary' : inscription.accepted? ? 'text-success bg-success-secondary' : 'text-danger border-danger bg-danger-secondary' %>">
               <i class="fas fa-circle small"></i> <%= t("inscriptions.statuses.#{inscription.status}") %>
             </span>
@@ -351,7 +351,7 @@
 
     <div class="col pe-0">
       <div class="bg-transparent p-3">
-        <h3><%= t('inscriptions.inscription.round_by_round_program') %></h3>
+        <h2 class="text-secondary "><%= t('inscriptions.inscription.round_by_round_program').upcase %></h2>
         <% inscription.category.tours.order(:tour_number).each do |tour| %>
           <% performance = inscription.performances.find_by(tour: tour) %>
 
