@@ -1065,7 +1065,7 @@ fr:
       youtube_hint: "Lien vers votre vidéo YouTube"
       replace_document: "Remplacer le document"
     inscription:
-      pianist_assignment_pending: "En attente d'assignation"
+      pianist_assignment_pending: "En attente"
       pianist_assignment_explanation: "Le concours vous assignera un pianiste accompagnateur une fois la date limite de dépôt des candidatures atteinte. Veuillez consulter régulièrement cette page pour voir les informations de contact de votre pianiste."
       pianist_assignment_date: "Date prévue d'assignation : > %{date}"
       payment_iban_label: "IBAN"
@@ -1088,7 +1088,7 @@ fr:
       nothing_here_yet: "Rien ici pour le moment"
       ok: "OK"
       video_not_available: "Vidéo non disponible"
-      air_list: "Liste des airs"
+      air_list: "Vos airs"
       imposed_airs: "Airs imposés"
       round_by_round_program: "Programme tour par tour"
       round_number: "Tour #%{number}"
