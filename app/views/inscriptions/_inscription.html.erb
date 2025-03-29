@@ -150,15 +150,18 @@
         </div>
       </div>
       <div class="p-3 card-body mt-3 bg-transparent rounded-8">
-        <div class="d-flex justify-content-start gap-2 align-items-center mb-2">
-          <h3 class=mb-0><%= t('inscriptions.inscription.air_list') %></h3>
-          <% if current_user.candidat && inscription.category.edition_competition.end_of_registration > Date.today %>
-            <%= link_to edit_inscription_step_path(inscription, :program), class: 'text-primary' do %>
-                <i class="fas fa-edit fa-lg"></i>
+        <div class="d-flex justify-content-between gap-2 align-items-center mb-2">
+          <div class="d-flex justify-content-start align-items-center gap-2">
+            <h3 class=mb-0><%= t('inscriptions.inscription.air_list') %></h3>
+            <% if current_user.candidat && inscription.category.edition_competition.end_of_registration > Date.today %>
+              <%= link_to edit_inscription_step_path(inscription, :program), class: 'text-primary' do %>
+                  <i class="fas fa-edit fa-lg"></i>
+              <% end %>
             <% end %>
-          <% end %>
+          </div>
+
           <% if inscription.remaining_days_before_end_of_registration > 0 %>
-            <span class="text-success"><%= t('inscriptions.inscription.days_remaining_to_edit', count: inscription.remaining_days_before_end_of_registration) %></span>
+            <%= render Pill::StatusComponent.new(text: t('inscriptions.inscription.days_remaining_to_edit', count: inscription.remaining_days_before_end_of_registration), color: "primary") %>
           <% end %>
         </div>
         <% inscription.choice_imposed_work_airs.includes(:choice_imposed_work).map(&:choice_imposed_work).uniq.each do |choice_imposed_work| %>
@@ -203,37 +206,35 @@
       </div>
 
       <div class="p-3 bg-transparent rounded">
-        <div class="d-flex justify-content-start gap-2 align-items-center mb-2">
-          <h3 class="mb-0"><%= t('inscriptions.inscription.file') %></h3>
-          <%# To not net here, it's just a test %>
+        <div class="d-flex justify-content-between gap-2 align-items-center mb-2">
+          <div class="d-flex justify-content-start align-items-center gap-2">
+            <h3 class="mb-0"><%= t('inscriptions.inscription.file') %></h3>
 
-          <%# end of test, it worked  %>
-          <% unless inscription.has_complete_requirement_items? %>
-            <div class=" badge d-inline-block rounded-pill py-1 px-2 border border-danger bg-danger-secondary text-danger ">
-              <i class="fas fa-exclamation-triangle"></i> <%= t('inscriptions.inscription.to_complete') %>
-            </div>
-          <% end %>
-
-          <% if current_user.organisateur %>
-            <%= link_to edit_inscription_step_path(inscription, :item_requirements), class: "text-primary" do %>
-                <i class="fas fa-edit fa-lg"></i>
+            <% unless inscription.has_complete_requirement_items? %>
+              <%= render Pill::StatusComponent.new(text: t('inscriptions.inscription.to_complete'), color: "danger") %>
             <% end %>
 
-          <% end %>
-          <% if current_user.candidat && inscription.is_late_inscription && Date.today < inscription.category.tours.first.final_performance_submission_deadline %>
-             <%= link_to edit_inscription_step_path(inscription, :item_requirements), class: "text-primary" do %>
-                <i class="fas fa-edit fa-lg"></i>
-            <% end %>
-          <% end %>
+            <% if current_user.organisateur %>
+              <%= link_to edit_inscription_step_path(inscription, :item_requirements), class: "text-primary" do %>
+                  <i class="fas fa-edit fa-lg"></i>
+              <% end %>
 
-          <% if current_user.candidat && inscription.category.edition_competition.end_of_registration > Date.today %>
-            <%= link_to edit_inscription_step_path(inscription, :item_requirements), class: "text-primary" do %>
-                <i class="fas fa-edit fa-lg"></i>
             <% end %>
-          <% end %>
+            <% if current_user.candidat && inscription.is_late_inscription && Date.today < inscription.category.tours.first.final_performance_submission_deadline %>
+              <%= link_to edit_inscription_step_path(inscription, :item_requirements), class: "text-primary" do %>
+                  <i class="fas fa-edit fa-lg"></i>
+              <% end %>
+            <% end %>
+
+            <% if current_user.candidat && inscription.category.edition_competition.end_of_registration > Date.today %>
+              <%= link_to edit_inscription_step_path(inscription, :item_requirements), class: "text-primary" do %>
+                  <i class="fas fa-edit fa-lg"></i>
+              <% end %>
+            <% end %>
+          </div>
 
           <% if inscription.remaining_days_before_end_of_registration > 0 %>
-            <span class="text-success"><%= t('inscriptions.inscription.days_remaining_to_edit', count: inscription.remaining_days_before_end_of_registration) %></span>
+            <%= render Pill::StatusComponent.new(text: t('inscriptions.inscription.days_remaining_to_edit', count: inscription.remaining_days_before_end_of_registration), color: "primary") %>
           <% end %>
         </div>
 
@@ -374,7 +375,6 @@
                     <% end %>
                   </ul>
                   <%= f.hidden_field :ordered_air_selection, data: { reorder_target: "orderedSelection" } %>
-                  <%# Ces boutons apparaissent si l'utilisateur est l'organisateur %>
                   <% if Date.today < tour.final_performance_submission_deadline || current_user.organisateur.present? %>
                     <%= f.button :submit, t('inscriptions.inscription.update_order'), data: { action: "reorder#submit", reorder_target: "submit" }, disabled: true, class: "btn btn-success" %>
                     <%= link_to t('inscriptions.inscription.edit_program'), edit_inscription_performance_path(inscription, performance, tour_id: tour.id), class: 'btn btn-success ' %>
@@ -392,14 +392,10 @@
                     <span><i class="fas fa-plus me-2"></i> <%= t('inscriptions.inscription.create_my_program') %></span>
                   <% end %>
               <% end %>
-
             </div>
           </div>
         <% end %>
       </div>
-
-
     </div>
-
   </div>
 </div>
