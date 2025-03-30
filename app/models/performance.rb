@@ -5,7 +5,7 @@ class Performance < ApplicationRecord
   has_one :tour_requirement, through: :tour
 
   # validate :performance_has_correct_duration
-
+  has_many_attached :scores, dependent: :destroy
   delegate :candidat, to: :inscription
 
 
@@ -94,7 +94,6 @@ class Performance < ApplicationRecord
   def has_incorrect_duration?
     false
     if minutes >= tour.tour_requirement.max_duration_minute
-      # errors.add(:minutes, "La durée de votre prestation dépasse le maximum autorisé pour ce tour.")
       return true
     end
     if minutes <= tour.tour_requirement.min_duration_minute

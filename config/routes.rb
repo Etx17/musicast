@@ -17,7 +17,13 @@ Rails.application.routes.draw do
     get 'tour_requirements/show'
 
     resources :leads
-    resources :performances
+    resources :performances do
+      member do
+        post 'upload_scores'
+        delete 'scores/:score_id', to: 'performances#delete_score', as: 'delete_score'
+        get 'scores/:score_id/download', to: 'performances#download_score', as: 'download_score'
+      end
+    end
     resources :candidate_programs
     resources :inscriptions do
       collection do

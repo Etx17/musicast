@@ -950,6 +950,15 @@ fr:
       reminder: "Rappel: Finissez de constituer votre dossier s'il n'est pas terminé. Les dossiers incomplets sont automatiquement rejetés et ne sont pas remboursables."
       view_application: "Voir ma candidature"
   inscriptions:
+    pianist_accompanist:
+      scores_section: "Partitions"
+      upload_scores: "Télécharger les partitions"
+      upload_hint:
+        one: "Vous pouvez encore ajouter 1 fichier"
+        other: "Vous pouvez encore ajouter %{count} fichiers"
+      max_files_reached: "Nombre maximum de fichiers atteint (10)"
+      download: "Télécharger"
+      delete: "Supprimer"
     steps:
       item_requirements:
         title: "Documents requis"

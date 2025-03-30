@@ -4,10 +4,10 @@ class Candidat < ApplicationRecord
   has_many :experiences, dependent: :destroy
   has_many :educations, dependent: :destroy
 
-  has_one_attached :portrait
-  has_one_attached :artistic_photo
-  has_one_attached :banner
-  has_one_attached :cv_english
+  has_one_attached :portrait, dependent: :destroy
+  has_one_attached :artistic_photo, dependent: :destroy
+  has_one_attached :banner, dependent: :destroy
+  has_one_attached :cv_english, dependent: :destroy
 
   has_many_attached :diplomas
 

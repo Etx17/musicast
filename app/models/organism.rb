@@ -13,7 +13,7 @@ class Organism < ApplicationRecord
 
   before_save :should_generate_new_friendly_id?
   before_update :should_generate_new_friendly_id?
-  has_one_attached :logo
+  has_one_attached :logo, dependent: :destroy
 
   validates :nom, :description, presence: true
   validates :nom, length: { minimum: 2, maximum: 50 }

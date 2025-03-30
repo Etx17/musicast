@@ -986,6 +986,15 @@ en:
       view_application: "View my application"
 
   inscriptions:
+    pianist_accompanist:
+      scores_section: "Scores"
+      upload_scores: "Upload scores"
+      upload_hint:
+        one: "You can still add 1 file"
+        other: "You can still add %{count} files"
+      max_files_reached: "Maximum number of files reached (10)"
+      download: "Download"
+      delete: "Delete"
     steps:
       item_requirements:
         title: "Required documents"

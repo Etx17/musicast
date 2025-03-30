@@ -1,5 +1,5 @@
 class Competition < ApplicationRecord
-  has_one_attached :photo
+  has_one_attached :photo, dependent: :destroy
   has_many :edition_competitions, dependent: :destroy
   belongs_to :organism
   has_many :documents, as: :parent, dependent: :destroy

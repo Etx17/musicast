@@ -64,7 +64,22 @@ class PerformancesController < ApplicationController
     end
   end
 
+  def upload_scores
+    @performance = Performance.find(params[:id])
+    if params[:scores].present?
+      @performance.scores.attach(params[:scores])
+      redirect_to @performance.inscription
+    else
+      redirect_to @performance.inscription
+    end
+  end
 
+  def delete_score
+    @performance = Performance.find(params[:id])
+    score = @performance.scores.find(params[:score_id])
+    score.purge
+    redirect_to @performance.inscription
+  end
 
 
 
@@ -81,6 +96,7 @@ class PerformancesController < ApplicationController
       :inscription_id,
       :pianist_accompagnateur_id,
       :id,
+      scores: [],
       ordered_air_selection: [],
       air_selection: []).tap do |whitelisted|
         whitelisted[:air_selection] = whitelisted[:air_selection]&.reject(&:blank?)

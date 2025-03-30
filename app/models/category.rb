@@ -18,7 +18,7 @@ class Category < ApplicationRecord
   has_many :categories_juries, dependent: :destroy
   has_many :juries, through: :categories_juries
 
-  has_one_attached :photo
+  has_one_attached :photo, dependent: :destroy
   before_save :should_generate_new_friendly_id?, if: :name_changed?
   delegate :competition, to: :edition_competition
 
