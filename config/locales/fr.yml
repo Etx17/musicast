@@ -950,7 +950,8 @@ fr:
       reminder: "Rappel: Finissez de constituer votre dossier s'il n'est pas terminé. Les dossiers incomplets sont automatiquement rejetés et ne sont pas remboursables."
       view_application: "Voir ma candidature"
   inscriptions:
-    pianist_accompanist:
+    scores:
+      scores_info: "Votre espace pour déposer vos partitions. L'organisme du concours peut également vous envoyer des partitions sur cet espace."
       scores_section: "Partitions"
       upload_scores: "Télécharger les partitions"
       upload_hint:
@@ -959,6 +960,7 @@ fr:
       max_files_reached: "Nombre maximum de fichiers atteint (10)"
       download: "Télécharger"
       delete: "Supprimer"
+    pianist_accompanist:
     steps:
       item_requirements:
         title: "Documents requis"

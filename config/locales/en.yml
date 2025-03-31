@@ -986,7 +986,8 @@ en:
       view_application: "View my application"
 
   inscriptions:
-    pianist_accompanist:
+    scores:
+      scores_info: "Your space to upload your scores. The competition organization can also send you scores through this area."
       scores_section: "Scores"
       upload_scores: "Upload scores"
       upload_hint:

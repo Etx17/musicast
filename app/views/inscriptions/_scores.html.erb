@@ -1,0 +1,80 @@
+<% if performance.present? %>
+  <div class="card shadow-sm mb-3">
+    <div class="card-body">
+      <h5 class="card-title mb-3"> <i class="fas fa-music me-2"></i> <%= t('.scores_section') %> </h5>
+      <%# Info of the scores %>
+      <div class="mb-3">
+        <small class="p-3 rounded text-secondary">
+          <i class="fas fa-info-circle text-secondary px-1"></i>
+          <%= t('.scores_info')%>
+        </small>
+      </div>
+      <% if performance.present? && performance&.scores&.attached? %>
+        <div class="row g-3 mb-4">
+          <% performance&.scores&.each do |score| %>
+            <div class="col-md-3 col-sm-4 col-6">
+              <div class="position-relative" style="height: 150px;">
+                <div class="border rounded h-100 bg-light overflow-hidden">
+                  <%= button_to delete_score_performance_path(performance, score_id: score),
+                              method: :delete,
+                              class: "position-absolute top-0 end-0 btn btn-sm btn-light m-1 z-1",
+                              title: t('.delete'),
+                              data: { turbo_confirm: t('global.confirmations.are_you_sure') } do %>
+                    <i class="fas fa-times"></i>
+                  <% end %>
+
+                  <div class="d-flex align-items-center justify-content-center h-100">
+                    <% if score.content_type.include?('pdf') %>
+                      <i class="fas fa-file-pdf fa-2x text-danger"></i>
+                    <% else %>
+                      <%= image_tag score,
+                                  class: "w-100 h-100",
+                                  style: "object-fit: cover;" %>
+                    <% end %>
+                  </div>
+
+                  <div class="position-absolute top-50 start-50 translate-middle text-center w-100 px-2">
+                    <span class="badge bg-dark bg-opacity-75 text-white text-truncate" style="max-width: 90%;">
+                      <%= score.filename.to_s %>
+                    </span>
+                  </div>
+
+                  <%= link_to rails_blob_path(score, disposition: 'attachment'),
+                              class: "position-absolute bottom-0 start-50 translate-middle-x mb-1",
+                              title: t('.download') do %>
+                    <i class="fas fa-download text-primary"></i>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+
+      <% if performance.present? && performance&.scores&.count < performance.tour_requirement.max_number_of_works %>
+        <%= form_with url: upload_scores_performance_path(performance),
+                      method: :post,
+                      class: "dropzone-form",
+                      html: { multipart: true } do |form| %>
+          <div class="upload-zone p-4 border rounded text-center">
+            <i class="fas fa-cloud-upload-alt fa-2x text-muted mb-2"></i>
+            <div class="mb-3">
+              <%= form.file_field :scores,
+                                multiple: true,
+                                class: "form-control",
+                                accept: ".pdf,.jpg,.jpeg,.png",
+                                data: {
+                                  max_files: performance.tour_requirement.max_number_of_works - performance&.scores&.count,
+                                },
+                                onchange: "this.form.querySelector('input[type=submit]').disabled = !this.files.length" %>
+            </div>
+            <small class="text-muted d-block mb-3">
+              <%= t('.upload_hint', count: performance.tour_requirement.max_number_of_works - performance&.scores&.count) %>
+            </small>
+            <%= form.submit t('.upload_scores'), class: "btn btn-primary",  disabled: true %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+<% end %>
