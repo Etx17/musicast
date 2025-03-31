@@ -71,43 +71,36 @@
         </div>
       </div>
     </div>
-      <div class="card shadow-sm mb-3">
+    <div class="card shadow-sm mb-3">
       <div class="card-body">
         <h5 class="card-title mb-3">
           <i class="fas fa-music me-2"></i>
-          Partitions du tour
-          <small class="text-muted ms-2">
-            (<%= @tour.scores.count %>/10)
-          </small>
+          <%= t('.tour_scores') %>
         </h5>
-
-        <%# Affichage des scores existants %>
+        <small class="text-muted mb-3"><i class="fas fa-info-circle me-2"></i> <%= t('.info') %></small>
         <div class="row g-3 mb-4">
           <% @tour.scores.each do |score| %>
             <div class="col-md-3 col-sm-4 col-6" id="score_<%= score.id %>">
               <div class="position-relative" style="height: 150px;">
                 <div class="border rounded h-100 bg-light overflow-hidden">
-                  <%# Bouton de suppression %>
-               <%= button_to delete_score_organism_competition_edition_competition_category_tour_path(
-                             @organism,
-                             @competition,
-                             @edition_competition,
-                             @category,
-                             tour,
-                             score_id: score),
-                           method: :delete,
-                           class: "position-absolute top-0 end-0 btn btn-sm btn-light m-1 z-1",
-                           form: {
-                             data: {
-                               turbo_confirm: "Êtes-vous sûr ?",
-                               turbo_method: :delete,
-                               turbo_frame: "_top"
-                             }
-                           } do %>
-                 <i class="fas fa-times"></i>
-               <% end %>
+                  <%= button_to delete_score_organism_competition_edition_competition_category_tour_path(
+                                @organism,
+                                @competition,
+                                @edition_competition,
+                                @category,
+                                tour,
+                                score_id: score),
+                              method: :delete,
+                              class: "position-absolute top-0 end-0 btn btn-sm btn-light m-1 z-1",
+                              form: {
+                                data: {
+                                  turbo_confirm: t('global.confirmations.are_you_sure'),
+                                  turbo_method: :delete,
+                                }
+                              } do %>
+                    <i class="fas fa-times"></i>
+                  <% end %>
 
-                  <%# Preview %>
                   <div class="d-flex align-items-center justify-content-center h-100">
                     <% if score.content_type.include?('pdf') %>
                       <i class="fas fa-file-pdf fa-2x text-danger"></i>
@@ -118,17 +111,15 @@
                     <% end %>
                   </div>
 
-                  <%# Nom du fichier avec fond semi-transparent %>
                   <div class="position-absolute top-50 start-50 translate-middle text-center w-100 px-2">
                     <span class="badge bg-dark bg-opacity-75 text-white text-truncate" style="max-width: 90%;">
                       <%= score.filename.to_s %>
                     </span>
                   </div>
 
-                  <%# Bouton de téléchargement %>
                   <%= link_to rails_blob_path(score, disposition: 'attachment'),
                               class: "position-absolute bottom-0 start-50 translate-middle-x mb-1",
-                              title: "Télécharger" do %>
+                              title: t('.download') do %>
                     <i class="fas fa-download text-primary"></i>
                   <% end %>
                 </div>
@@ -137,7 +128,6 @@
           <% end %>
         </div>
 
-        <%# Formulaire d'upload seulement si la limite n'est pas atteinte %>
         <% if @tour.scores.count < 10 %>
           <div class="upload-zone p-4 border rounded text-center">
             <%= f.file_field :scores,
@@ -145,13 +135,13 @@
                             class: "form-control",
                             accept: ".pdf,.jpg,.jpeg,.png" %>
             <small class="text-muted d-block mt-2">
-              Formats acceptés : PDF, JPG, PNG (max 10 fichiers)
+              <%= t('.accepted_formats') %>
             </small>
           </div>
         <% else %>
           <div class="alert alert-info">
             <i class="fas fa-info-circle me-2"></i>
-            Nombre maximum de fichiers atteint (10)
+            <%= t('.max_files_reached') %>
           </div>
         <% end %>
       </div>

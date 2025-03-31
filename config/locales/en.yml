@@ -1731,6 +1731,11 @@ en:
       break: "Break"
 
     form:
+      info: "You can upload scores here to send to candidates (for example for an imposed work of composition). Candidates also have a space to upload their scores, in their folder."
+      tour_scores: "Tour Scores (optional)"
+      download: "Download"
+      accepted_formats: "Accepted formats: PDF, JPG, PNG (max 10 files)"
+      max_files_reached: "Maximum number of files reached (10)"
       requires_orchestra: "Requires orchestra accompaniment ?"
       requires_orchestra_hint: "Check if this round requires an orchestra accompaniment"
       title_placeholder: "e.g.: Preliminaries, Semi-finals, Finals..."

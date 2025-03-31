@@ -1627,6 +1627,11 @@ fr:
       see_more: "voir plus"
       candidates_have_been_notified: "Les candidats ont été notifiés des résultats."
     form:
+      info: "Vous pouvez déposer ici des partitions pour les transmettre aux candidats (par exemple pour une oeuvre imposée de composition). Les candidats ont également un espace pour déposer leurs partitions, dans leur dossier."
+      tour_scores: "Partitions (facultatif)"
+      download: "Télécharger"
+      accepted_formats: "Formats acceptés : PDF, JPG, PNG (max 10 fichiers)"
+      max_files_reached: "Nombre maximum de fichiers atteint (10)"
       requires_orchestra: "Requiert un accompagnement orchestre ?"
       requires_orchestra_hint: "Cochez si votre tours requiert un accompagnement par un orchestre"
       title_placeholder: "ex: Éliminatoires, Demi-finale, Finale..."
