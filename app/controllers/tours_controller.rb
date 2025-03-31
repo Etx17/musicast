@@ -231,6 +231,17 @@ class ToursController < ApplicationController
     # redirect_to [@organism, @competition, @edition_competition, @category], notice: "Ordre des tours mis à jour"
   end
 
+  def delete_score
+    @tour = Tour.find(params[:id])
+    @score = @tour.scores.find(params[:score_id])
+    @score.purge
+
+    respond_to do |format|
+      format.turbo_stream { render turbo_stream: turbo_stream.remove("score_#{params[:score_id]}") }
+      format.html { redirect_to request.referrer }
+    end
+  end
+
   private
 
   def set_tour
@@ -278,7 +289,8 @@ class ToursController < ApplicationController
         :max_duration_minute,
         :organiser_creates_program
       ],
-      :imposed_air_selection => [],
+      scores: [],
+      imposed_air_selection: [],
     ).tap do |whitelisted|
       whitelisted[:imposed_air_selection] = whitelisted[:imposed_air_selection]&.reject(&:blank?)
     end

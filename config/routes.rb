@@ -52,6 +52,9 @@ Rails.application.routes.draw do
           resources :categories do
             resources :prizes
             resources :tours do
+              member do
+                delete 'scores/:score_id', to: 'tours#delete_score', as: 'delete_score'
+              end
               patch :reorder_tours, on: :collection
               post 'update_order', on: :member
               get 'schedule', on: :member

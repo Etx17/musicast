@@ -24,6 +24,7 @@ class Tour < ApplicationRecord
 
   accepts_nested_attributes_for :tour_requirement
   accepts_nested_attributes_for :address
+  has_many_attached :scores, dependent: :destroy
   has_many :pauses, dependent: :destroy
 
   def candidates_performances_that_passed_selections
