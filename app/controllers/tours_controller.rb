@@ -42,6 +42,7 @@ class ToursController < ApplicationController
     creating_schedule = params.fetch(:tour, {}).delete(:creating_schedule) { false }
     session[:active_tab] = "tours-tab"
     if @tour.update(tour_params)
+
       if creating_schedule == "true"
         if @tour.pauses.any? || @tour.performances.any? { |p| p.start_time.present? }
           @tour.pauses.destroy_all

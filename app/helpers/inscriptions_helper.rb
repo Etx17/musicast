@@ -20,7 +20,7 @@
 module InscriptionsHelper
   def buttons_for_inscription(inscription)
     buttons = []
-    view_button = link_to 'Voir dossier', organism_competition_edition_competition_category_inscription_path(inscription.organism, inscription.competition, inscription.edition_competition, inscription.category, inscription), class: 'btn btn-outline-dark btn-sm  ', target: '_blank'
+    view_button = link_to I18n.t('global.actions.view'), organism_competition_edition_competition_category_inscription_path(inscription.organism, inscription.competition, inscription.edition_competition, inscription.category, inscription), class: 'btn btn-outline-dark btn-sm  ', target: '_blank'
     buttons << view_button
 
     case inscription.status

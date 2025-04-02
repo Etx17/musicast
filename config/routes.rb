@@ -141,6 +141,9 @@ Rails.application.routes.draw do
     resources :inscription_orders, only: [:new, :show, :create] do
       resources :payments, only: :new
     end
+
+    get 'category/:category_id/scores', to: 'scores#show', as: :category_scores
+
   end
 
   # Redirect root to default locale

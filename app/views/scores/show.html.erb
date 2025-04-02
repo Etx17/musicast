@@ -1,0 +1,86 @@
+<div class="container my-4">
+  <h1 class="mb-4">Competition Category: <%= @category.name %></h1>
+
+  <%# Tabs for rounds %>
+  <ul class="nav nav-tabs mb-4">
+    <% @tours.each_with_index do |tour, index| %>
+      <li class="nav-item">
+        <a class="nav-link <%= 'active' if index.zero? %>"
+           data-bs-toggle="tab"
+           href="#round<%= tour.id %>">
+          Round <%= index + 1 %>
+        </a>
+      </li>
+    <% end %>
+  </ul>
+
+  <%# Tab content %>
+  <div class="tab-content">
+    <% @tours.each_with_index do |tour, index| %>
+      <div class="tab-pane fade <%= 'show active' if index.zero? %>"
+           id="round<%= tour.id %>">
+
+        <%# Group performances by pianist %>
+        <% tour.performances.group_by { |p| p.pianist_accompagnateur }.each do |pianist, performances| %>
+          <div class="card mb-4">
+            <div class="card-header">
+              <h3 class="h5 mb-0">
+                <%= pianist&.full_name || "No pianist assigned" %>
+              </h3>
+            </div>
+
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Participant Name</th>
+                      <th>Score</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% performances.each do |performance| %>
+                      <tr>
+                        <td><%= performance.inscription.candidat.full_name %></td>
+                        <td>
+                          <% if performance.scores.attached? %>
+                            <%= performance.scores.count %> files
+                          <% else %>
+                            No scores
+                          <% end %>
+                        </td>
+                        <td>
+                          <% if performance.scores.attached? %>
+                            <% performance.scores.each do |score| %>
+                              <%= link_to "Download",
+                                        rails_blob_path(score, disposition: 'attachment'),
+                                        class: "btn btn-sm btn-outline-primary" %>
+                            <% end %>
+                          <% end %>
+                        </td>
+                      </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        <% end %>
+
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<%# Add Bootstrap JavaScript if not already included in your layout %>
+<% content_for :javascript do %>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var triggerTabList = [].slice.call(document.querySelectorAll('a[data-bs-toggle="tab"]'))
+      triggerTabList.forEach(function(triggerEl) {
+        new bootstrap.Tab(triggerEl)
+      })
+    })
+  </script>
+<% end %>

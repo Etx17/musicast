@@ -9,8 +9,45 @@
           <%= t('.scores_info')%>
         </small>
       </div>
+
+      <% if performance.present? && performance&.tour.scores.attached? %>
+         <div class="row g-3 mb-4">
+        <% performance&.tour.scores&.each do |score| %>
+          <div class="col-md-3 col-sm-4 col-6">
+            <div class="position-relative" style="height: 150px;">
+              <div class="border rounded h-100 bg-light overflow-hidden">
+
+                <div class="d-flex align-items-center justify-content-center h-100">
+                  <% if score.content_type.include?('pdf') %>
+                    <i class="fas fa-file-pdf fa-2x text-danger"></i>
+                  <% else %>
+                    <%= image_tag score,
+                                class: "w-100 h-100",
+                                style: "object-fit: cover;" %>
+                  <% end %>
+                </div>
+
+                <div class="position-absolute top-50 start-50 translate-middle text-center w-100 px-2">
+                  <span class="badge bg-dark bg-opacity-75 text-white text-truncate" style="max-width: 90%;">
+                    <%= score.filename.to_s %>
+                  </span>
+                </div>
+
+                <%= link_to rails_blob_path(score, disposition: 'attachment'),
+                            class: "position-absolute bottom-0 start-50 translate-middle-x mb-1",
+                            title: t('.download') do %>
+                  <i class="fas fa-download text-primary"></i>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+        </div>
+      <% end %>
+
       <% if performance.present? && performance&.scores&.attached? %>
         <div class="row g-3 mb-4">
+
           <% performance&.scores&.each do |score| %>
             <div class="col-md-3 col-sm-4 col-6">
               <div class="position-relative" style="height: 150px;">
@@ -50,6 +87,7 @@
           <% end %>
         </div>
       <% end %>
+
 
       <% if performance.present? && performance&.scores&.count < performance.tour_requirement.max_number_of_works %>
         <%= form_with url: upload_scores_performance_path(performance),

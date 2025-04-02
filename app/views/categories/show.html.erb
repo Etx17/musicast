@@ -11,6 +11,10 @@
         <%= link_to edit_organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category), class: 'btn btn-primary' do %>
           <i class="fas fa-edit"></i> <%= t('categories.show.edit_category') %>
         <% end %>
+        <%# Pianist scores %>
+        <%= link_to category_scores_path(@category), class: "btn btn-primary" do %>
+          <i class="fas fa-eye"></i> Partitions (a traduire)
+        <% end %>
         <%= link_to organism_competition_edition_competition_category_inscriptions_path(@organism, @competition, @edition_competition, @category), class: "btn btn-primary" do %>
           <i class="fas fa-eye"></i> <%= t('categories.show.view_applications') %> (<%= @category.inscriptions.where(status: 'in_review').count %>)
         <% end %>
