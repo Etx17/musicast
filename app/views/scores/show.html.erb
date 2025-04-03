@@ -1,14 +1,19 @@
 <div class="container my-4">
-  <h1 class="mb-4">Competition Category: <%= @category.name %></h1>
+  <h1 class="my-4">Competition Category: <%= @category.name %></h1>
+
+  <div class="alert alert-info">
+    <i class="fas fa-sync-alt me-2"></i>
+    Reload the page to see the latest scores
+  </div>
 
   <%# Tabs for rounds %>
   <ul class="nav nav-tabs mb-4">
-    <% @tours.each_with_index do |tour, index| %>
+    <% @tours.reverse.each_with_index do |tour, index| %>
       <li class="nav-item">
         <a class="nav-link <%= 'active' if index.zero? %>"
            data-bs-toggle="tab"
            href="#round<%= tour.id %>">
-          Round <%= index + 1 %>
+          <%= tour.title.upcase %>
         </a>
       </li>
     <% end %>
@@ -20,54 +25,125 @@
       <div class="tab-pane fade <%= 'show active' if index.zero? %>"
            id="round<%= tour.id %>">
 
-        <%# Group performances by pianist %>
-        <% tour.performances.group_by { |p| p.pianist_accompagnateur }.each do |pianist, performances| %>
-          <div class="card mb-4">
-            <div class="card-header">
-              <h3 class="h5 mb-0">
-                <%= pianist&.full_name || "No pianist assigned" %>
-              </h3>
+        <%# Tour scores from organism %>
+        <% if tour.scores.attached? %>
+          <div class="p-3">
+            <div class="d-flex justify-content-between align-items-center pb-2">
+              <h3 class="h5 mb-0">Scores from Organization</h3>
+              <%= link_to "Download All", "#", class: "btn btn-sm btn-outline-primary" %>
             </div>
 
-            <div class="card-body">
-              <div class="table-responsive">
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th>Participant Name</th>
-                      <th>Score</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <% performances.each do |performance| %>
-                      <tr>
-                        <td><%= performance.inscription.candidat.full_name %></td>
-                        <td>
-                          <% if performance.scores.attached? %>
-                            <%= performance.scores.count %> files
-                          <% else %>
-                            No scores
-                          <% end %>
-                        </td>
-                        <td>
-                          <% if performance.scores.attached? %>
-                            <% performance.scores.each do |score| %>
-                              <%= link_to "Download",
-                                        rails_blob_path(score, disposition: 'attachment'),
-                                        class: "btn btn-sm btn-outline-primary" %>
-                            <% end %>
-                          <% end %>
-                        </td>
-                      </tr>
-                    <% end %>
-                  </tbody>
-                </table>
-              </div>
+
+              <%= render Table::BaseComponent.new(
+                rows: tour.scores,
+                # no_action: true,
+                columns: [
+                  {
+                    label: "File Name",
+                    value: ->(score) { score.filename.to_s }
+                  },
+                  {
+                    label: "Added",
+                    value: ->(score) { l(score.created_at, format: :short) }
+                  }
+                ],
+                # links: [
+                #   {
+                #     text: "Download",
+                #     path: ->(score) { score.attached? ? rails_blob_path(score, disposition: 'attachment') : nil },
+                #     icon: "fas fa-download",
+                #     show_item: ->(score) { score.attached? }
+                #   }
+                # ],
+                client: nil
+              ) %>
             </div>
-          </div>
         <% end %>
 
+        <%# Unassigned scores %>
+        <% unassigned_performances = tour.performances.select { |p| p.pianist_accompagnateur.nil? } %>
+        <% if unassigned_performances.any? %>
+            <div class="p-3">
+              <div class="d-flex justify-content-between align-items-center pb-2">
+                <h3 class="h5 mb-0">Unassigned Scores</h3>
+                <%= link_to "Download All", "#", class: "btn btn-sm btn-outline-primary" %>
+              </div>
+
+
+              <%= render Table::BaseComponent.new(
+                rows: unassigned_performances,
+                columns: [
+                  {
+                    label: "Participant",
+                    value: ->(performance) { performance.inscription.candidat.full_name }
+                  },
+                  {
+                    label: "Scores",
+                    value: ->(performance) do
+                      [
+                        performance.scores.map(&:filename).join(", "),
+                        performance.tour.scores.map(&:filename).join(", ")
+                      ].reject(&:blank?).join(" + ")
+                    end
+                  }
+                ],
+                # links: [
+                #   {
+                #     text: "Download",
+                #     path: ->(performance) { rails_blob_path(performance.scores.first, disposition: 'attachment') },
+                #     icon: "fas fa-download",
+                #     show_item: ->(performance) { performance.scores.attached? }
+                #   }
+                # ],
+                client: nil
+              ) %>
+  </div>
+
+        <% end %>
+
+        <%# Assigned scores grouped by pianist %>
+        <% tour.performances.group_by(&:pianist_accompagnateur).each do |pianist, performances| %>
+          <% next if pianist.nil? %>
+            <div class="p-3">
+              <div class="d-flex justify-content-between align-items-center pb-2">
+                <h3 class="h5 mb-0"><%= pianist.full_name %></h3>
+                <%= link_to "Download All", "#", class: "btn btn-sm btn-outline-primary" %>
+              </div>
+
+
+              <%= render Table::BaseComponent.new(
+                rows: performances,
+                columns: [
+                  {
+                    label: "Participant",
+                    value: ->(performance) { performance.inscription.candidat.full_name }
+                  },
+                  {
+                    label: "Scores",
+                    value: ->(performance) do
+                      [
+                        performance.scores.attached? ? performance.scores.map(&:filename).join(", ") : nil,
+                        performance.tour.scores.attached? ? performance.tour.scores.map(&:filename).join(", ") : nil
+                      ].compact.reject(&:blank?).join(" + ")
+                    end
+                  }
+                ],
+                # links: [
+                #   {
+                #     text: "Download",
+                #     path: ->(performance) {
+                #       if performance.scores.attached? && performance.scores.first
+                #         rails_blob_path(performance.scores.first, disposition: 'attachment')
+                #       end
+                #     },
+                #     icon: "fas fa-download",
+                #     show_item: ->(performance) { performance.scores.attached? && performance.scores.first.present? }
+                #   }
+                # ],
+                client: nil
+              ) %>
+            </div>
+        <% end %>
       </div>
     <% end %>
   </div>

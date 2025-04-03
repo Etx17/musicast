@@ -904,6 +904,7 @@ en:
       back: "Back to free choices"
       destroy: "Destroy this free choice"
   global:
+    action: "Action"
     back_to_var: "Back to %{var}"
     terms: "Terms"
     semi_imposed_works: "Semi-imposed works"

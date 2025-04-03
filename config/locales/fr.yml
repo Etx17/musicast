@@ -879,6 +879,7 @@ fr:
     years: "ans"
     round: "tour"
     rounds: "tours"
+    action: "Action"
     actions:
       next: "Suivant"
       previous: "Précédent"

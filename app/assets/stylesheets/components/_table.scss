@@ -1,0 +1,145 @@
+
+table.table-borders {
+	width: 100%;
+	th {
+		padding: 20px 0;
+	}
+	tr {
+		td {
+			padding-top: 5px;
+			padding-bottom: 5px;
+		}
+	}
+}
+
+.highlighted-row {
+  background-color: #4bbe5b;
+}
+
+.table-component {
+	width: 100%;
+  overflow: auto;
+  background: white;
+  border-radius: 8px;
+}
+
+#profiles_search .table-component {
+  min-height: 400px;
+  background-color: #EEEFEA;
+}
+
+.table-base {
+	width: 100%;
+	border-collapse: collapse;
+  background: white;
+	th, td {
+		padding: 1rem;
+		text-align: left;
+	}
+  thead tr:first-child {
+    th:first-child {
+      border-top-left-radius: 8px;
+    }
+    th:last-child {
+      border-top-right-radius: 8px;
+    }
+  }
+}
+
+.table-header {
+	height: 80px;
+	background-color: rgb(243, 243, 243);
+	border-bottom: 1px solid rgba(214, 214, 214, 1);
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.table-row {
+	height: 4rem;
+	border-top: 1px solid rgba(214, 214, 214, 1);
+
+	&:hover {
+		background-color: #f9f9f9;
+	}
+}
+
+.table-cell {
+	vertical-align: middle;
+
+	&--checkbox {
+    width: 20px;
+  }
+
+	&--image {
+		width: 60px;
+	}
+
+	&--primary {
+		min-width: 40px;
+	}
+
+	&--actions {
+		width: 60px;
+		text-align: right;
+	}
+
+
+	&--timestamp {
+		width: 100px;
+		min-width: 100px;
+		white-space: nowrap;
+	}
+}
+
+.table-image {
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	background-size: cover;
+	background-position: center;
+}
+
+.table-primary-content {
+	max-height: 3rem;
+	overflow: hidden;
+}
+
+.table-primary-text {
+	font-weight: 500;
+}
+
+.table-secondary-text {
+	color: #666;
+	font-size: 0.875rem;
+}
+
+.sort-indicator {
+	margin-left: 0.5rem;
+	color: #999;
+}
+
+.table-checkbox {
+  margin: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 1px solid rgba(214, 214, 214, 1);
+  border-radius: 0.5rem;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+  position: relative;
+
+  &:checked {
+    &:after {
+      content: '';
+      position: absolute;
+      left: 0.4375rem;
+      top: 0.25rem;
+      width: 0.375rem;
+      height: 0.75rem;
+      border: solid white;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+  }
+}
