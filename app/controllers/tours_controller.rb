@@ -1,7 +1,6 @@
-require 'zip' # Make sure zip is required
-
+require 'zip'
 class ToursController < ApplicationController
-  before_action :set_tour, only: %i[download_all_scores download_score assign_pianist_to_performance_manually assign_pianist store_form_data move_to_next_tour qualify_performance shuffle show edit update destroy update_order update_day_of_performance_and_subsequent_performances]
+  before_action :set_tour, only: %i[download_pianist_scores download_all_scores download_score assign_pianist_to_performance_manually assign_pianist store_form_data move_to_next_tour qualify_performance shuffle show edit update destroy update_order update_day_of_performance_and_subsequent_performances]
   before_action :set_context, only: %i[reorder_tours assign_pianist_to_performance_manually assign_pianist store_form_data move_to_next_tour qualify_performance shuffle new create show edit update destroy update_order update_day_of_performance_and_subsequent_performances]
 
   def index
@@ -245,26 +244,41 @@ class ToursController < ApplicationController
     end
   end
 
-  # Action to download ALL scores attached directly to the Tour
-  def download_all_scores
+  def download_pianist_scores
     # @tour is set by before_action
-    scores_to_zip = @tour.scores.attached? ? @tour.scores.to_a : []
+    begin
+      # Assuming the model name is PianistAccompagnateur, adjust if different (e.g., User)
+      @pianist = PianistAccompagnateur.find(params[:pianist_id])
+    rescue ActiveRecord::RecordNotFound
+      redirect_back fallback_location: root_path, alert: "Pianist not found."
+      return
+    end
+
+    # Find performances for this tour and pianist, eager load attachments/blobs
+    performances = @tour.performances
+                          .where(pianist_accompagnateur: @pianist)
+                          .includes(scores_attachments: :blob)
+
+    # Collect all attached scores from these performances
+    scores_to_zip = performances.flat_map { |p| p.scores.attached? ? p.scores.to_a : [] }.compact
 
     if scores_to_zip.empty?
-      redirect_back fallback_location: root_path, alert: "No organization scores found for this tour."
+      redirect_back fallback_location: root_path, alert: "No scores found for performances assigned to #{@pianist.full_name} in this tour."
       return
     end
 
     # Generate a filename for the zip
-    zip_filename = "#{(@tour.title + @tour.category.name)}_organization_scores.zip"
-    temp_file = Tempfile.new(["tour_#{@tour.id}_org_scores", '.zip'])
+    zip_filename = "#{@pianist.full_name}_#{@tour.title}_#{@tour.category.name}_scores.zip"
+    temp_file = Tempfile.new(["pianist_#{@pianist.id}_tour_#{@tour.id}_scores", '.zip'])
 
     begin
       Zip::File.open(temp_file.path, Zip::File::CREATE) do |zipfile|
         scores_to_zip.each do |score_attachment|
           blob_data = score_attachment.blob.download
-          # Use the attachment's filename within the zip
-          zipfile.get_output_stream(score_attachment.filename.to_s) do |f|
+          # Consider prefixing with participant name if filenames might clash
+          # filename_in_zip = "#{score_attachment.record.inscription.candidat.slug}_#{score_attachment.filename.to_s}"
+          filename_in_zip = score_attachment.filename.to_s # Or just the filename
+          zipfile.get_output_stream(filename_in_zip) do |f|
             f.write(blob_data)
           end
         end

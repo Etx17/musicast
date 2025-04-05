@@ -25,18 +25,15 @@
       <div class="tab-pane fade <%= 'show active' if index.zero? %>"
            id="round<%= tour.id %>">
 
-        <%# Tour scores from organism %>
         <% if tour.scores.attached? %>
           <div class="p-3">
             <div class="d-flex justify-content-between align-items-center pb-2">
               <h3 class="h5 mb-0">Scores from Organization for the tour</h3>
-              <%= link_to "Download All", "#", class: "btn btn-sm btn-outline-primary" %>
             </div>
 
 
               <%= render Table::BaseComponent.new(
                 rows: tour.scores,
-                # no_action: true,
                 columns: [
                   {
                     label: "File Name",
@@ -59,13 +56,11 @@
             </div>
         <% end %>
 
-        <%# Unassigned scores %>
-        <% unassigned_performances = tour.performances.select { |p| p.pianist_accompagnateur.nil? } %>
-        <% if unassigned_performances.any? %>
+        <% if false #unassigned_performances.any? %>
+          <% unassigned_performances = tour.performances.select { |p| p.pianist_accompagnateur.nil? } %>
             <div class="p-3">
               <div class="d-flex justify-content-between align-items-center pb-2">
                 <h3 class="h5 mb-0">Unassigned Scores</h3>
-                <%= link_to "Download All", "#", class: "btn btn-sm btn-outline-primary" %>
               </div>
 
 
@@ -102,9 +97,20 @@
         <% tour.performances.group_by(&:pianist_accompagnateur).each do |pianist, performances| %>
           <% next if pianist.nil? %>
             <div class="p-3">
-              <div class="d-flex justify-content-between align-items-center pb-2">
+                <div class="d-flex justify-content-between align-items-center pb-2">
                 <h3 class="h5 mb-0">Scores for <%= pianist.full_name %></h3>
-                <%= link_to "Download All", "#", class: "btn btn-sm btn-outline-primary" %>
+                <% has_scores = performances.any? { |p| p.scores.attached? } %>
+                <% if has_scores %>
+                  <%= link_to "Download All",
+                        download_category_tour_pianist_scores_path(
+                          @category,
+                          tour,
+                          pianist_id: pianist.id,
+                        ),
+                        class: "btn btn-sm btn-outline-primary" %>
+                <% else %>
+                  <span class="btn btn-sm btn-outline-secondary disabled">Download All</span>
+                <% end %>
               </div>
 
               <%= render Table::BaseComponent.new(
@@ -117,10 +123,43 @@
                   {
                     label: "Scores",
                     value: ->(performance) do
-                      [
-                        performance.scores.attached? ? performance.scores.map(&:filename).join(", ") : nil,
-                        performance.tour.scores.attached? ? performance.tour.scores.map(&:filename).join(", ") : nil
-                      ].compact.reject(&:blank?).join(" + ")
+                      score_pills = []
+
+                      # Add pills for scores attached directly to the performance (bg-primary)
+                      if performance.scores.attached?
+                        performance.scores.each do |score_attachment|
+                          link = link_to(
+                            score_attachment.filename.to_s,
+                            rails_blob_path(score_attachment.blob, disposition: "attachment"),
+                            class: "text-white text-decoration-none",
+                            title: "Download #{score_attachment.filename} (Performance Score)"
+                          )
+                          score_pills << content_tag(:span, link, class: "badge bg-primary me-1 mb-1")
+                        end
+                      end
+
+                      # Add pills for scores attached to the tour (bg-secondary)
+                      if performance.tour.scores.attached?
+                        performance.tour.scores.each do |tour_score_attachment|
+                          # Generate link using rails_blob_path for direct download of tour score
+                          tour_link = link_to(
+                            tour_score_attachment.filename.to_s,
+                            rails_blob_path(tour_score_attachment.blob, disposition: "attachment"),
+                            class: "text-white text-decoration-none", # Style link inside pill
+                            title: "Download #{tour_score_attachment.filename} (Tour Score)" # Tooltip clarifying origin
+                          )
+                          # Create the pill HTML with bg-secondary
+                          score_pills << content_tag(:span, tour_link, class: "badge bg-secondary me-1 mb-1")
+                        end
+                      end
+
+                      # Join all generated pills; mark as HTML safe for rendering
+                      # Add a message if no scores are found at all
+                      if score_pills.empty?
+                        content_tag(:span, "No scores available", class: "text-muted small")
+                      else
+                        score_pills.join.html_safe
+                      end
                     end
                   }
                 ],
@@ -140,7 +179,6 @@
   </div>
 </div>
 
-<%# Add Bootstrap JavaScript if not already included in your layout %>
 <% content_for :javascript do %>
   <script>
     document.addEventListener('DOMContentLoaded', function() {

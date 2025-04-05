@@ -55,6 +55,7 @@ Rails.application.routes.draw do
             resources :tours do
               member do
                 delete 'scores/:score_id', to: 'tours#delete_score', as: 'delete_score'
+                get 'download_pianist_scores/:pianist_id', to: 'tours#download_pianist_scores', as: :download_pianist_scores
               end
               patch :reorder_tours, on: :collection
               post 'update_order', on: :member
@@ -144,7 +145,7 @@ Rails.application.routes.draw do
     end
 
     get 'category/:category_id/scores', to: 'scores#show', as: :category_scores
-
+    get 'category/:category_id/tours/:tour_id/pianist_scores/:pianist_id/download', to: 'scores#download_pianist_scores', as: :download_category_tour_pianist_scores
   end
 
   # Redirect root to default locale
