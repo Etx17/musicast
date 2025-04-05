@@ -922,6 +922,7 @@ en:
     profile: "Profile"
     home: "Home"
     offer: "Offer"
+    not_available_abbr: "N/A"
     recommendation_letter: "Recommendation letter"
     parental_authorization: "Parental authorization"
     motivation_essay: "Motivation essay"
@@ -949,6 +950,9 @@ en:
       tuba: "Tuba"
       violin: "Violin"
     actions:
+      download: "Download"
+      download_all: "Download All"
+      download_file: "Download %{filename}"
       login: "Login"
       logout: "Logout"
       change_password: "Change password"
@@ -1906,3 +1910,20 @@ en:
       music_search_component:
         search_composer: "Search for Composer..."
         loading: "Loading..."
+  scores:
+    show:
+      title: "Competition Category: %{category_name}"
+      reload_notice: "Reload the page to see if new scores have been updated."
+      organisation_scores_title: "Scores from Organization for the tour"
+      no_organisation_scores: "No scores uploaded by the organization for this tour."
+      pianist_scores_title: "Scores for %{pianist_name}"
+      download_performance_score_title: "Download %{filename} (Performance Score)"
+      download_tour_score_title: "Download %{filename} (Tour Score)"
+      no_scores_available: "No scores available"
+      download_participant_scores_action: "Download Scores for %{participant_name}"
+      columns:
+        file_name: "File Name"
+        added: "Added"
+        participant: "Participant"
+        scores: "Scores"
+        last_score_uploaded: "Last Score Uploaded"

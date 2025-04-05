@@ -878,6 +878,7 @@ fr:
     free: "Gratuit"
     years: "ans"
     round: "tour"
+    not_available_abbr: "Indisponible"
     rounds: "tours"
     action: "Action"
     actions:
@@ -900,6 +901,9 @@ fr:
       save: "Enregistrer"
       cancel: "Annuler"
       copy: "Copier"
+      download: "Télécharger"
+      download_all: "Télécharger tout"
+      download_file: "Télécharger %{filename}"
     confirmations:
       are_you_sure: "Êtes-vous sûr ?"
     youtube_link: "Lien YouTube"
@@ -1845,3 +1849,20 @@ fr:
     dashboard: "Tableau de bord"
     sign_in: "Connexion"
     sign_up: "S'inscrire"
+  scores:
+    show:
+      title: "Catégorie de concours: %{category_name}"
+      reload_notice: "Rechargez la page pour voir si de nouvelles notes ont été ajoutées."
+      organisation_scores_title: "Partitions de l'organisation pour le tour"
+      no_organisation_scores: "Aucune note téléchargée par l'organisation pour ce tour."
+      pianist_scores_title: "Partitions pour %{pianist_name}"
+      download_performance_score_title: "Télécharger %{filename} (Note de performance)"
+      download_tour_score_title: "Télécharger %{filename} (Note de tour)"
+      no_scores_available: "Aucune note disponible"
+      download_participant_scores_action: "Télécharger les notes pour %{participant_name}"
+      columns:
+        file_name: "Nom du fichier"
+        added: "Ajouté"
+        participant: "Participant"
+        scores: "Partitions"
+        last_score_uploaded: "Dernière note téléchargée"
