@@ -1,5 +1,7 @@
+require 'zip' # Make sure zip is required
+
 class ToursController < ApplicationController
-  before_action :set_tour, only: %i[assign_pianist_to_performance_manually assign_pianist store_form_data move_to_next_tour qualify_performance shuffle show edit update destroy update_order update_day_of_performance_and_subsequent_performances]
+  before_action :set_tour, only: %i[download_all_scores download_score assign_pianist_to_performance_manually assign_pianist store_form_data move_to_next_tour qualify_performance shuffle show edit update destroy update_order update_day_of_performance_and_subsequent_performances]
   before_action :set_context, only: %i[reorder_tours assign_pianist_to_performance_manually assign_pianist store_form_data move_to_next_tour qualify_performance shuffle new create show edit update destroy update_order update_day_of_performance_and_subsequent_performances]
 
   def index
@@ -240,6 +242,40 @@ class ToursController < ApplicationController
     respond_to do |format|
       format.turbo_stream { render turbo_stream: turbo_stream.remove("score_#{params[:score_id]}") }
       format.html { redirect_to request.referrer }
+    end
+  end
+
+  # Action to download ALL scores attached directly to the Tour
+  def download_all_scores
+    # @tour is set by before_action
+    scores_to_zip = @tour.scores.attached? ? @tour.scores.to_a : []
+
+    if scores_to_zip.empty?
+      redirect_back fallback_location: root_path, alert: "No organization scores found for this tour."
+      return
+    end
+
+    # Generate a filename for the zip
+    zip_filename = "#{(@tour.title + @tour.category.name)}_organization_scores.zip"
+    temp_file = Tempfile.new(["tour_#{@tour.id}_org_scores", '.zip'])
+
+    begin
+      Zip::File.open(temp_file.path, Zip::File::CREATE) do |zipfile|
+        scores_to_zip.each do |score_attachment|
+          blob_data = score_attachment.blob.download
+          # Use the attachment's filename within the zip
+          zipfile.get_output_stream(score_attachment.filename.to_s) do |f|
+            f.write(blob_data)
+          end
+        end
+      end
+
+      zip_data = File.read(temp_file.path)
+      send_data(zip_data, type: 'application/zip', disposition: 'attachment', filename: zip_filename)
+
+    ensure
+      temp_file.close
+      temp_file.unlink
     end
   end
 

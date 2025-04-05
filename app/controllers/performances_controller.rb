@@ -1,3 +1,5 @@
+require 'zip'
+
 class PerformancesController < ApplicationController
 
   def new
@@ -81,10 +83,46 @@ class PerformancesController < ApplicationController
     redirect_to @performance.inscription
   end
 
+  def download_scores
+    @performance = Performance.find(params[:id]) # Find performance by its ID
+    scores_to_zip = @performance.scores.attached? ? @performance.scores.to_a : [] # Get attached scores
 
+    if scores_to_zip.empty?
+      redirect_back fallback_location: root_path, alert: "No scores found attached to this specific performance."
+      return
+    end
+
+    # Use a Tempfile for the zip archive
+    temp_file = Tempfile.new(["performance_#{@performance.id}_scores", '.zip'])
+    # Generate a meaningful filename
+    participant_name = @performance.inscription&.candidat&.full_name || "performance_#{@performance.id}"
+    zip_filename = "#{participant_name}_scores.zip"
+
+    begin
+      # Create the zip file
+      Zip::File.open(temp_file.path, Zip::File::CREATE) do |zipfile|
+        scores_to_zip.each do |score|
+          # Add each score blob to the zip
+          blob_data = score.blob.download
+          zipfile.get_output_stream(score.filename.to_s) do |f|
+            f.write(blob_data)
+          end
+        end
+      end
+
+      # Read the zip file's data
+      zip_data = File.read(temp_file.path)
+      # Send the data to the browser
+      send_data(zip_data, type: 'application/zip', disposition: 'attachment', filename: zip_filename)
+
+    ensure
+      # Clean up the temp file
+      temp_file.close
+      temp_file.unlink
+    end
+  end
 
   private
-
 
   def performance_params
     params.require(:performance).permit(
@@ -101,5 +139,9 @@ class PerformancesController < ApplicationController
       air_selection: []).tap do |whitelisted|
         whitelisted[:air_selection] = whitelisted[:air_selection]&.reject(&:blank?)
       end
+  end
+
+  def helpers
+    ApplicationController.helpers
   end
 end

@@ -22,6 +22,7 @@ Rails.application.routes.draw do
         post 'upload_scores'
         delete 'scores/:score_id', to: 'performances#delete_score', as: 'delete_score'
         get 'scores/:score_id/download', to: 'performances#download_score', as: 'download_score'
+        get 'download_scores'
       end
     end
     resources :candidate_programs
