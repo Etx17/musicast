@@ -3,7 +3,12 @@ class ScoresController < ApplicationController
 
   def show
     @category = Category.friendly.find(params[:category_id])
-    @tours = @category.tours.includes(performances: [:inscription, scores_attachments: :blob])
+    @tours = @category.tours.includes(performances: [:inscription, scores_attachments: :blob]).order(tour_number: :asc)
+    @edition_competition = @category.edition_competition
+    @competition = @edition_competition.competition
+    @organism = @competition.organism
+    @assigned_pianists = @tours.flat_map { |tour| tour.performances.map(&:pianist_accompagnateur) }.compact.uniq
+    @pianist_emails = @assigned_pianists.map(&:email).compact.uniq
   end
 
   def download_pianist_scores

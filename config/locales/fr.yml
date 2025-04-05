@@ -1860,6 +1860,11 @@ fr:
       download_tour_score_title: "Télécharger %{filename} (Note de tour)"
       no_scores_available: "Aucune note disponible"
       download_participant_scores_action: "Télécharger les notes pour %{participant_name}"
+      title: "Partitions: %{category_name}"
+      reload_notice: "Rechargez la page pour voir les dernières notes."
+      send_link_button: "Envoyer le lien aux pianistes"
+      email_subject: "Partitions disponibles pour la catégorie: %{category_name}"
+      email_body: "Vous pouvez voir les partitions pour cette catégorie ici:\n%{url}".
       columns:
         file_name: "Nom du fichier"
         added: "Ajouté"

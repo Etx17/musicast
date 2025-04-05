@@ -1,5 +1,20 @@
 <div class="container my-4">
-  <h1 class="my-4"><%= t('.title', category_name: @category.name) %></h1>
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="my-0"><%= t('.title', category_name: @category.name) %></h1>
+    <% if @pianist_emails.present? %>
+      <%
+        mailto_recipient = @pianist_emails.join(',')
+        mailto_subject = t('.email_subject', category_name: @category.name)
+        mailto_body = t('.email_body', url: request.original_url) + "\n\n"
+      %>
+      <%= mail_to mailto_recipient,
+            raw("<i class='fas fa-envelope me-2'></i>") + t('.send_link_button'),
+            subject: mailto_subject,
+            body: mailto_body,
+            class: "btn btn-outline-secondary"
+      %>
+    <% end %>
+  </div>
 
   <div class=" alert-info">
     <i class="fas fa-sync-alt me-2"></i>
