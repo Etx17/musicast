@@ -33,19 +33,17 @@
 
 
               <%= render Table::BaseComponent.new(
-                rows: tour.scores, # Rows are ActiveStorage::Attachment objects
+                rows: tour.scores,
                 columns: [
                   {
-                    label: "File Name", # Updated value lambda for this column
+                    label: "File Name",
                     value: ->(score_attachment) do
-                      # Create a link for direct download
                       link = link_to(
                         score_attachment.filename.to_s,
                         rails_blob_path(score_attachment.blob, disposition: "attachment"),
-                        class: "text-white text-decoration-none", # Style link inside pill
-                        title: "Download #{score_attachment.filename}" # Tooltip
+                        class: "text-white text-decoration-none",
+                        title: "Download #{score_attachment.filename}"
                       )
-                      # Wrap in a pill span (using bg-info for differentiation)
                       content_tag(:span, link, class: "badge bg-primary me-1 mb-1").html_safe
                     end
                   },
@@ -54,7 +52,6 @@
                     value: ->(score_attachment) { l(score_attachment.created_at, format: :short) }
                   }
                 ],
-                # Keep the existing links array for the separate action column download
                 links: [
                   {
                     text: "Download",
@@ -172,13 +169,25 @@
                         score_pills.join.html_safe
                       end
                     end
+                  },
+                  {
+                    label: "Last Score Uploaded",
+                    value: ->(performance) do
+                      if performance.scores.attached? && performance.scores.any?
+                        latest_timestamp = performance.scores.map(&:created_at).max
+                        l(latest_timestamp, format: :short) if latest_timestamp
+                      else
+                        "N/A"
+                      end
+                    end
                   }
                 ],
               links: [
                 {
-                  text: ->(performance) {"Download Scores of #{performance.inscription.candidat.full_name}"},
+                  text: ->(performance) {"Download All Scores for #{performance.inscription.candidat.first_name}"},
                   path: ->(performance) { download_scores_performance_path(performance) },
                   icon: "fas fa-download",
+                  show_item: ->(performance) { performance.scores.attached? && performance.scores.any? }
                 }
               ],
                 client: nil
