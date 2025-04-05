@@ -1,6 +1,6 @@
 <div class="container my-4">
   <div class="d-flex justify-content-between align-items-center mb-4">
-    <h1 class="my-0"><%= t('.title', category_name: @category.name) %></h1>
+      <h1 class="my-0"><%= t('.title', category_name: @category.name) %></h1>
     <% if @pianist_emails.present? %>
       <%
         mailto_recipient = @pianist_emails.join(',')
@@ -15,15 +15,11 @@
       %>
     <% end %>
   </div>
-
-  <div class=" alert-info">
-    <i class="fas fa-sync-alt me-2"></i>
-    <%= t('.reload_notice') %>
-  </div>
+  <%= render InfoboxComponent.new(text: t('scores.show.reload_notice')) %>
 
   <%# Tabs for rounds %>
   <ul class="nav nav-tabs mb-4">
-    <% @tours.reverse.each_with_index do |tour, index| %>
+    <% @tours.each_with_index do |tour, index| %>
       <li class="nav-item">
         <a class="nav-link <%= 'active' if index.zero? %>"
            data-bs-toggle="tab"
@@ -36,7 +32,7 @@
 
   <%# Tab content %>
   <div class="tab-content">
-    <% @tours.reverse.each_with_index do |tour, index| %>
+    <% @tours.each_with_index do |tour, index| %>
       <div class="tab-pane fade <%= 'show active' if index.zero? %>"
            id="round<%= tour.id %>">
 

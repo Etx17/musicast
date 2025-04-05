@@ -1,7 +1,20 @@
-<div class="p-3 border rounded-3 bg-infobox-light text-secondary">
-  <i class="<%= @icon %> me-2"></i>
-  <% if @title %>
-    <h5><%= @title %></h4>
+
+
+<div class="p-3 border rounded-3 bg-infobox-light text-secondary mb-3" style="width: fit-content;">
+  <% if @title.present? %>
+    <h5 class="mb-0">
+      <% if @icon.present? %>
+        <i class="<%= @icon %> fa-sm"></i>
+      <% end %>
+      <%= @title %>
+    </h5>
+    <p class="mb-0"><%= @text %></p>
+  <% else %>
+    <p class="mb-0">
+      <% if @icon.present? %>
+        <i class="<%= @icon %> me-1"></i>
+      <% end %>
+      <%= @text %>
+    </p>
   <% end %>
-  <p class="mb-0"><%= @text %></p>
 </div>

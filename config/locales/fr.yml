@@ -1852,7 +1852,7 @@ fr:
   scores:
     show:
       title: "Catégorie de concours: %{category_name}"
-      reload_notice: "Rechargez la page pour voir si de nouvelles notes ont été ajoutées."
+      reload_notice: "Rechargez la page pour voir si de nouvelles partitions ont été ajoutées."
       organisation_scores_title: "Partitions de l'organisation pour le tour"
       no_organisation_scores: "Aucune note téléchargée par l'organisation pour ce tour."
       pianist_scores_title: "Partitions pour %{pianist_name}"
@@ -1860,11 +1860,10 @@ fr:
       download_tour_score_title: "Télécharger %{filename} (Note de tour)"
       no_scores_available: "Aucune note disponible"
       download_participant_scores_action: "Télécharger les notes pour %{participant_name}"
-      title: "Partitions: %{category_name}"
-      reload_notice: "Rechargez la page pour voir les dernières notes."
+      scores_title: "Partitions: %{category_name}"
       send_link_button: "Envoyer le lien aux pianistes"
       email_subject: "Partitions disponibles pour la catégorie: %{category_name}"
-      email_body: "Vous pouvez voir les partitions pour cette catégorie ici:\n%{url}".
+      email_body: "Vous pouvez voir les partitions pour cette catégorie ici:\n%{url}"
       columns:
         file_name: "Nom du fichier"
         added: "Ajouté"
