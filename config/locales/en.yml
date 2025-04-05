@@ -904,6 +904,7 @@ en:
       back: "Back to free choices"
       destroy: "Destroy this free choice"
   global:
+    scores: "Scores"
     action: "Action"
     back_to_var: "Back to %{var}"
     terms: "Terms"
