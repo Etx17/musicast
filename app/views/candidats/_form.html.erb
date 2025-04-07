@@ -139,19 +139,21 @@
     <hr>
 
     <h3><%= t('candidats.form.experiences_title') %></h3>
-    <div data-controller="nested-form" data-nested-form-wrapper-selector-value=".nested-fields">
-      <template data-nested-form-target="template">
+    <div data-controller="experiences">
+      <template data-experiences-target="template">
         <%= f.simple_fields_for :experiences, Experience.new, child_index: 'NEW_RECORD' do |experience| %>
           <%= render "experience_fields", f: experience %>
         <% end %>
       </template>
 
-      <%= f.simple_fields_for :experiences do |experience| %>
-        <%= render "experience_fields", f: experience %>
-      <% end %>
+      <div data-experiences-target="container">
+        <%= f.simple_fields_for :experiences do |experience| %>
+          <%= render "experience_fields", f: experience %>
+        <% end %>
+      </div>
 
-      <div data-nested-form-target="add_item">
-        <button type="button" data-action="nested-form#add" class="btn btn-success">
+      <div>
+        <button type="button" data-action="experiences#addExperience" class="btn btn-success">
           <i class="fas fa-plus"></i> <%= t('candidats.experiences_section.add_experience') %>
         </button>
       </div>
@@ -160,19 +162,21 @@
     <hr>
 
     <h3><%= t('candidats.form.education_title') %></h3>
-    <div data-controller="nested-form" data-nested-form-wrapper-selector-value=".nested-fields">
-      <template data-nested-form-target="template">
+    <div data-controller="educations">
+      <template data-educations-target="template">
         <%= f.simple_fields_for :educations, Education.new, child_index: 'NEW_RECORD' do |education| %>
           <%= render "education_fields", f: education %>
         <% end %>
       </template>
 
-      <%= f.simple_fields_for :educations do |education| %>
-        <%= render "education_fields", f: education %>
-      <% end %>
+      <div data-educations-target="container">
+        <%= f.simple_fields_for :educations do |education| %>
+          <%= render "education_fields", f: education %>
+        <% end %>
+      </div>
 
-      <div data-nested-form-target="add_item">
-        <button type="button" data-action="nested-form#add" class="btn btn-success">
+      <div>
+        <button type="button" data-action="educations#addEducation" class="btn btn-success">
           <i class="fas fa-plus"></i> <%= t('candidats.education_section.add_education') %>
         </button>
       </div>
