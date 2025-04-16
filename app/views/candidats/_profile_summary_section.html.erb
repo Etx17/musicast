@@ -1,83 +1,139 @@
-<div class="rounded-4 shadow bg-white my-3">
-  <div class="position-relative" style="border-top-left-radius: 12px; border-top-right-radius: 12px; width: 100%; height: 300px; background-color: <%= @candidat.banner_color.present? ? @candidat.banner_color : "#" + "%06x" % (rand * 0xffffff) %>; background-size: cover; loading: lazy;">
-    <%= image_tag(@candidat.portrait.attached? ? @candidat.portrait : "https://source.unsplash.com/random/?portrait/200x200", class: "position-absolute shadow rounded-circle align-items-center p-0 m-0 border border-3 shadow border-light", style: "width: 200px; height: 200px; bottom: 10px; left: 20px;", loading: "lazy") %>
-  </div>
-
-  <div class="p-3 border d-flex">
-    <div class="d-flex flex-column w-100 pe-3">
-      <div class="d-flex justify-content-between gap-3 align-items-center">
-        <div class="d-flex align-items-center gap-3">
-          <h1 class="mb-0"><%= @candidat.first_name %> <%= @candidat.last_name %></h1>
-          <p class="m-0"><%= ISO3166::Country[@candidat&.nationality]&.translation %></p>
-          <% if @candidat.nationality.present? %>
-            <p class="m-0" style="font-size: 3em"><%= flag_emoji(@candidat&.nationality) %></p>
-          <% end %>
-
-          <p class="m-0"><%= t('candidats.profile_summary_section.teacher') %>: <%= @candidat&.last_teacher %></p>
-        </div>
-        <%= link_to edit_candidat_path, class:"btn btn-light rounded-circle p-0" do %>
-          <i class="fas fa-pencil rounded-circle shadow text-secondary p-3" ></i>
-        <% end %>
-      </div>
-      <div class="d-flex gap-3">
+<div class="rounded-4 bg-white my-3">
+  <div class="position-relative banner-container" style="border-top-left-radius: 6px; border-top-right-radius: 6px; width: 100%; height: 300px; background-color: <%= @candidat.banner_color.present? ? @candidat.banner_color : "#" + "%06x" % (rand * 0xffffff) %>; background-size: cover; loading: lazy;">
+    <%= image_tag(@candidat.portrait.attached? ? @candidat.portrait : "https://placeholder.co/200x200", class: "position-absolute rounded-circle align-items-center p-0 m-0 border border-3  border-light profile-portrait", style: "width: 200px; height: 200px; bottom: 60px; left: 40px;", loading: "lazy") %>
+    <div class="position-absolute bottom-0 start-0 p-3 banner-buttons-container" style="left: 260px; bottom: 10px;">
+      <div class="d-flex gap-2">
         <% if @candidat.cv_english.attached? %>
-          <a href="<%= url_for(@candidat.cv_english) %>" class="btn btn-primary rounded my-3 btn-sm align-self-start" target="_blank"><%= t('candidats.profile_summary_section.view_cv') %></a>
+          <a href="<%= url_for(@candidat.cv_english) %>" class="btn btn-light btn-sm" target="_blank" style="--bs-btn-padding-y: .2rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
+             <i class="fas fa-file-alt me-1"></i> <%= t('candidats.profile_summary_section.view_cv', default: 'CV') %>
+          </a>
         <% end %>
-        <%= link_to t('candidats.profile_summary_section.view_artistic_photo'), url_for(@candidat.artistic_photo) , class: "btn btn-primary btn-sm rounded my-3  align-self-start", target: "_blank", rel: "noopener" if @candidat.artistic_photo.attached?%>
+        <% if @candidat.artistic_photo.attached? %>
+          <%= link_to url_for(@candidat.artistic_photo), class: "btn btn-light btn-sm", target: "_blank", rel: "noopener", style: "--bs-btn-padding-y: .2rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;" do %>
+             <i class="fas fa-image me-1"></i> <%= t('candidats.profile_summary_section.view_artistic_photo', default: 'Photo') %>
+          <% end %>
+        <% end %>
       </div>
     </div>
   </div>
-  <ul class="nav nav-pills text-center" id="myTab" role="tablist">
-    <li class="nav-item" role="presentation">
-      <button class="nav-link " id="short-bio-tab" data-bs-toggle="tab" data-bs-target="#short-bio" type="button" role="tab" aria-controls="short-bio" aria-selected="true"><%= t('candidats.profile_summary_section.short_bio') %></button>
-    </li>
-    <li class="nav-item" role="presentation">
-      <button class="nav-link active" id="medium-bio-tab" data-bs-toggle="tab" data-bs-target="#medium-bio" type="button" role="tab" aria-controls="medium-bio" aria-selected="false"><%= t('candidats.profile_summary_section.medium_bio') %></button>
-    </li>
-    <li class="nav-item" role="presentation">
-      <button class="nav-link" id="long-bio-tab" data-bs-toggle="tab" data-bs-target="#long-bio" type="button" role="tab" aria-controls="long-bio" aria-selected="false"><%= t('candidats.profile_summary_section.long_bio') %></button>
-    </li>
-    <li class="nav-item" role="presentation">
-      <button class="nav-link " id="short-bio-en-tab" data-bs-toggle="tab" data-bs-target="#short-bio-en" type="button" role="tab" aria-controls="short-bio-en" aria-selected="true"><%= t('candidats.profile_summary_section.short_bio_en') %></button>
-    </li>
-    <li class="nav-item" role="presentation">
-      <button class="nav-link" id="medium-bio-en-tab" data-bs-toggle="tab" data-bs-target="#medium-bio-en" type="button" role="tab" aria-controls="medium-bio-en" aria-selected="false"><%= t('candidats.profile_summary_section.medium_bio_en') %></button>
-    </li>
-    <li class="nav-item" role="presentation">
-      <button class="nav-link" id="long-bio-en-tab" data-bs-toggle="tab" data-bs-target="#long-bio-en" type="button" role="tab" aria-controls="long-bio-en" aria-selected="false"><%= t('candidats.profile_summary_section.long_bio_en') %></button>
-    </li>
 
-  </ul>
-
-  <div class="tab-content" id="myTabContent">
-
-    <div class="tab-pane fade p-3" id="short-bio" role="tabpanel" aria-labelledby="short-bio-tab">
-      <p class="text-dark"><%= @candidat.short_bio || t('candidats.profile_summary_section.not_provided_short') %></p>
+  <div class="p-4 d-flex justify-content-between align-items-end" style="padding-left: 260px; min-height: 40px;">
+    <div class="d-flex flex-column">
+      <div class="d-flex align-items-center gap-3 mb-1">
+        <h1 class="mb-0"><%= @candidat.first_name %> <%= @candidat.last_name %></h1>
+        <% if @candidat.nationality.present? %>
+          <span class="text-muted"><%= ISO3166::Country[@candidat.nationality]&.translation %></span>
+          <span style="font-size: 1.5em"><%= flag_emoji(@candidat.nationality) %></span>
+        <% end %>
+      </div>
+      <p class="m-0 text-muted"><%= t('candidats.profile_summary_section.teacher') %>: <%= @candidat&.last_teacher %></p>
     </div>
 
-    <div class="tab-pane fade show active p-3" id="medium-bio" role="tabpanel" aria-labelledby="medium-bio-tab">
-      <p class="text-dark"><%= @candidat.medium_bio || t('candidats.profile_summary_section.not_provided_medium') %></p>
+    <div class="ms-auto">
+      <%= link_to edit_candidat_path(@candidat), class: 'text-primary' do %>
+        <i class="fas fa-edit fa-lg"></i>
+      <% end %>
     </div>
+  </div>
 
-    <div class="tab-pane fade p-3" id="long-bio" role="tabpanel" aria-labelledby="long-bio-tab">
-      <p class="text-dark"><%= @candidat.long_bio || t('candidats.profile_summary_section.not_provided_long') %></p>
-    </div>
+  <div class="p-3">
+    <ul class="nav nav-tabs mb-3" id="bioTab" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="medium-bio-tab" data-bs-toggle="tab" data-bs-target="#medium-bio" type="button" role="tab" aria-controls="medium-bio" aria-selected="true"><%= t('candidats.profile_summary_section.medium_bio') %></button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="short-bio-tab" data-bs-toggle="tab" data-bs-target="#short-bio" type="button" role="tab" aria-controls="short-bio" aria-selected="false"><%= t('candidats.profile_summary_section.short_bio') %></button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="long-bio-tab" data-bs-toggle="tab" data-bs-target="#long-bio" type="button" role="tab" aria-controls="long-bio" aria-selected="false"><%= t('candidats.profile_summary_section.long_bio') %></button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="medium-bio-en-tab" data-bs-toggle="tab" data-bs-target="#medium-bio-en" type="button" role="tab" aria-controls="medium-bio-en" aria-selected="false"><%= t('candidats.profile_summary_section.medium_bio_en') %></button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="short-bio-en-tab" data-bs-toggle="tab" data-bs-target="#short-bio-en" type="button" role="tab" aria-controls="short-bio-en" aria-selected="false"><%= t('candidats.profile_summary_section.short_bio_en') %></button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="long-bio-en-tab" data-bs-toggle="tab" data-bs-target="#long-bio-en" type="button" role="tab" aria-controls="long-bio-en" aria-selected="false"><%= t('candidats.profile_summary_section.long_bio_en') %></button>
+      </li>
+    </ul>
 
-    <div class="tab-pane fade p-3" id="short-bio-en" role="tabpanel" aria-labelledby="short-bio-en-tab">
-      <p class="text-dark"><%= @candidat.short_bio_en || t('candidats.profile_summary_section.not_provided_short') %></p>
-    </div>
-
-    <div class="tab-pane fade show p-3" id="medium-bio-en" role="tabpanel" aria-labelledby="medium-bio-en-tab">
-      <p class="text-dark"><%= @candidat.medium_bio_en || t('candidats.profile_summary_section.not_provided_medium') %></p>
-    </div>
-
-    <div class="tab-pane fade p-3" id="long-bio-en" role="tabpanel" aria-labelledby="long-bio-en-tab">
-      <p class="text-dark"><%= @candidat.long_bio_en || t('candidats.profile_summary_section.not_provided_long') %></p>
+    <div class="tab-content" id="bioTabContent">
+      <div class="tab-pane fade" id="short-bio" role="tabpanel" aria-labelledby="short-bio-tab">
+        <p class="text-dark"><%= @candidat.short_bio || t('candidats.profile_summary_section.not_provided_short') %></p>
+      </div>
+      <div class="tab-pane fade show active" id="medium-bio" role="tabpanel" aria-labelledby="medium-bio-tab">
+        <p class="text-dark"><%= @candidat.medium_bio || t('candidats.profile_summary_section.not_provided_medium') %></p>
+      </div>
+      <div class="tab-pane fade" id="long-bio" role="tabpanel" aria-labelledby="long-bio-tab">
+        <p class="text-dark"><%= @candidat.long_bio || t('candidats.profile_summary_section.not_provided_long') %></p>
+      </div>
+      <div class="tab-pane fade" id="short-bio-en" role="tabpanel" aria-labelledby="short-bio-en-tab">
+        <p class="text-dark"><%= @candidat.short_bio_en || t('candidats.profile_summary_section.not_provided_short') %></p>
+      </div>
+      <div class="tab-pane fade" id="medium-bio-en" role="tabpanel" aria-labelledby="medium-bio-en-tab">
+        <p class="text-dark"><%= @candidat.medium_bio_en || t('candidats.profile_summary_section.not_provided_medium') %></p>
+      </div>
+      <div class="tab-pane fade" id="long-bio-en" role="tabpanel" aria-labelledby="long-bio-en-tab">
+        <p class="text-dark"><%= @candidat.long_bio_en || t('candidats.profile_summary_section.not_provided_long') %></p>
+      </div>
     </div>
   </div>
 
   <div class="p-3">
     <h3><%= t('candidats.profile_summary_section.repertoire') %></h3>
-    <p class="text-dark"><%= @candidat.repertoire %></p>
+    <p class="text-dark"><%= simple_format(@candidat.repertoire) %></p>
   </div>
 </div>
+
+<% content_for :page_specific_styles do %>
+<style>
+  .banner-container {
+    position: relative;
+  }
+  .profile-portrait {
+    --portrait-size: 200px;
+    width: var(--portrait-size);
+    height: var(--portrait-size);
+    bottom: -50px;
+    left: 40px;
+  }
+  .banner-buttons-container {
+    position: absolute;
+    bottom: 15px;
+    left: calc(40px + var(--portrait-size) + 15px);
+    z-index: 2;
+  }
+
+  @media (max-width: 767.98px) {
+    .profile-portrait {
+       --portrait-size: 120px;
+       left: 20px;
+       bottom: -40px;
+    }
+    .banner-buttons-container {
+       left: calc(20px + var(--portrait-size) + 10px);
+       bottom: 10px;
+    }
+    .profile-header-info {
+        padding-left: calc(20px + var(--portrait-size) + 10px) !important;
+        min-height: 50px !important;
+    }
+  }
+  @media (max-width: 575.98px) {
+     .profile-portrait {
+       --portrait-size: 100px;
+       left: 15px;
+       bottom: -30px;
+     }
+     .banner-buttons-container {
+       left: calc(15px + var(--portrait-size) + 10px);
+       bottom: 5px;
+     }
+     .profile-header-info {
+        padding-left: calc(15px + var(--portrait-size) + 10px) !important;
+        min-height: 40px !important;
+    }
+  }
+</style>
+<% end %>
