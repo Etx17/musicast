@@ -870,6 +870,7 @@ fr:
       destroy: "Supprimer ce choix libre"
   global:
     scores: "Partitions"
+    competition: "Concours"
     inscription: inscription
     back_to_var: "Retour à %{var}"
     terms: "Conditions"

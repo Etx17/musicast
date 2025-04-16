@@ -4,33 +4,49 @@ module SidebarHelper
 
     if user_signed_in?
       if current_user.candidat.present?
-        links << { label: I18n.t('sidebar.home'), url: candidat_dashboard_path() }
-        links << { label: I18n.t('sidebar.profile'), url: candidat_path(current_user.candidat, ) }
-        links << { label: I18n.t('sidebar.applications'), url: inscriptions_path() }
-        # Toutes les inscriptions du candidat  dont le edition_competition.end_of_registration est pas encore passé
+        links << { label: content_tag(:i, '', class: 'fas fa-home pe-2') + I18n.t('sidebar.home'), url: candidat_dashboard_path() }
+        links << { label: content_tag(:i, '', class: 'fas fa-user pe-2') + I18n.t('sidebar.profile'), url: candidat_path(current_user.candidat) }
+        links << { label: content_tag(:i, '', class: 'fas fa-file-alt pe-2') + I18n.t('sidebar.applications'), url: inscriptions_path() }
         current_user.candidat&.inscriptions&.each do |inscription|
-          links << { label: inscription.category.name, url: inscription_path(inscription, ), status: inscription.status }
+          links << { label: content_tag(:i, '', class: 'fi fi-rs-music-alt pe-2') + inscription.category.name, url: inscription_path(inscription) }
         end
       elsif current_user.organisateur.present?
-        links << { label: content_tag(:i, '', class: 'fas fa-home pe-2') + I18n.t('sidebar.dashboard'), url: organisateur_dashboard_path() }
+        links << { label: content_tag(:i, '', class: 'fi fi-rs-dashboard pe-2') + I18n.t('sidebar.dashboard'), url: organisateur_dashboard_path() }
 
         current_user.organisateur.competitions.each do |competition|
-          last_edition_competition = competition.edition_competitions.last
+          last_edition_competition = competition.edition_competitions.order(annee: :desc).first
 
-          if competition.edition_competitions.present?
+          if last_edition_competition
+            base_label = content_tag(:i, '', class: 'fi fi-rs-trophy pe-2') + "#{competition.nom_concours} #{last_edition_competition.annee}"
+
+
+            edition_status_color = last_edition_competition.status == 'published' ? 'text-success' : 'text-warning'
+            edition_status_dot = content_tag(:i, '', class: "fas fa-circle fa-xs #{edition_status_color} ms-2")
+            edition_label_with_status = base_label + edition_status_dot
+
+
             edition_link = {
-              label: content_tag(:i, '', class: 'fas fa-trophy text-white pe-2') + "#{competition.nom_concours} #{last_edition_competition.annee}",
-              url: organism_competition_edition_competition_path(competition.organism_id, competition.id, last_edition_competition ),
-              status: last_edition_competition.status,
+              label: edition_label_with_status,
+              url: organism_competition_edition_competition_path(competition.organism_id, competition.id, last_edition_competition),
               children: []
             }
 
             categories = last_edition_competition.categories
             if categories.present?
               categories.each do |category|
+
+
+                category_status_color = category.status == 'published' ? 'text-success' : 'text-warning'
+                category_status_dot = content_tag(:i, '', class: "fas fa-circle fa-xs #{category_status_color} ms-2")
+
+                category_base_label = content_tag(:i, '', class: 'fi fi-rs-music-alt  pe-2') + "#{category.name}"
+
+                category_label_with_status = category_base_label + category_status_dot
+
                 edition_link[:children] << {
-                  label: content_tag(:i, '', class: 'fas fa-music text-white pe-2') + "#{category.name}",
-                  url: organism_competition_edition_competition_category_path(last_edition_competition.competition.organism_id, last_edition_competition.competition_id, last_edition_competition, category )
+                  label: category_label_with_status,
+                  url: organism_competition_edition_competition_category_path(last_edition_competition.competition.organism_id, last_edition_competition.competition_id, last_edition_competition, category)
+
                 }
               end
             end
@@ -40,16 +56,15 @@ module SidebarHelper
         end
 
       elsif current_user.jury
-        links << { label: I18n.t('sidebar.profile'), url: edit_jury_path(current_user.jury ), dropdown: false }
-        links << { label: I18n.t('sidebar.home'), url: jury_dashboard_path(), dropdown: false }
-        # links << { label: "Candidatures", url: inscriptions_path }
+        links << { label: content_tag(:i, '', class: 'fas fa-user pe-2') + I18n.t('sidebar.profile'), url: edit_jury_path(current_user.jury), dropdown: false }
+        links << { label: content_tag(:i, '', class: 'fas fa-gavel pe-2') + I18n.t('sidebar.home'), url: jury_dashboard_path(), dropdown: false }
       else
-        # links << { label: "General Link 1", url: general_link1_path }
-        # links << { label: "General Link 2", url: general_link2_path }
+
+
       end
     else
-      links << { label: I18n.t('sidebar.sign_in'), url: new_user_session_path() }
-      links << { label: I18n.t('sidebar.sign_up'), url: new_user_registration_path() }
+      links << { label: content_tag(:i, '', class: 'fas fa-sign-in-alt pe-2') + I18n.t('sidebar.sign_in'), url: new_user_session_path() }
+      links << { label: content_tag(:i, '', class: 'fas fa-user-plus pe-2') + I18n.t('sidebar.sign_up'), url: new_user_registration_path() }
     end
 
     links
