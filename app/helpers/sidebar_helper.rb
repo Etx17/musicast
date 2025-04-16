@@ -4,8 +4,8 @@ module SidebarHelper
 
     if user_signed_in?
       if current_user.candidat.present?
-        links << { label: content_tag(:i, '', class: 'fas fa-home pe-2') + I18n.t('sidebar.home'), url: candidat_dashboard_path() }
-        links << { label: content_tag(:i, '', class: 'fas fa-user pe-2') + I18n.t('sidebar.profile'), url: candidat_path(current_user.candidat) }
+        links << { label: content_tag(:i, '', class: 'fis fi-rs-home pe-2') + I18n.t('sidebar.home'), url: candidat_dashboard_path() }
+        links << { label: content_tag(:i, '', class: 'fis fi-rs-user pe-2') + I18n.t('sidebar.profile'), url: candidat_path(current_user.candidat) }
         links << { label: content_tag(:i, '', class: 'fas fa-file-alt pe-2') + I18n.t('sidebar.applications'), url: inscriptions_path() }
         current_user.candidat&.inscriptions&.each do |inscription|
           links << { label: content_tag(:i, '', class: 'fi fi-rs-music-alt pe-2') + inscription.category.name, url: inscription_path(inscription) }
