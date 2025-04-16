@@ -1,15 +1,6 @@
-<div class="p-3"><h1 class="mt-3"><%= t('candidats.edit.title') %></h1>
+<h1 class="mt-3"><%= t('candidats.edit.title') %></h1>
 <%= render Navigation::BackLinkComponent.new(link_path: candidat_path(@candidat), link_text: t('global.profile')) %>
-<p class="lead"><%= t('candidats.edit.subtitle') %>
-  <br>
-  <strong><%= t('candidats.edit.warning_prefix') %></strong> : <%= t('candidats.edit.warning') %>
-</p>
-<%= render "form", candidat: @candidat %>
-
-<br>
-
-<div>
-  <%= link_to t('candidats.edit.show'), @candidat %> |
-  <%= link_to t('candidats.edit.back_to_list'), candidats_path %>
-</div>
+<%= render InfoboxComponent.new(text: t('candidats.edit.subtitle') + ' ' + t('candidats.edit.warning')) %>
+<div class="container">
+  <%= render "form", candidat: @candidat %>
 </div>
