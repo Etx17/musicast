@@ -904,6 +904,7 @@ en:
       back: "Back to free choices"
       destroy: "Destroy this free choice"
   global:
+    profile: "Profile"
     scores: "Scores"
     competition: "Competition"
     action: "Action"
