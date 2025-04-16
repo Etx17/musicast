@@ -1,16 +1,20 @@
 <div class="px-3">
   <p style="color: green"><%= notice %></p>
-  <%= link_to t('global.actions.back'), :back, class:"btn btn-outline-dark" %>
   <h1> <%= t('inscriptions.index.applications') %>
-    <span class="badge rounded-pill bg-secondary">
-      <%= link_to @category.name, organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category), class:"text-decoration-none text-white"%>
-    </span>
+    <%= link_to @category.name, organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category), class:"text-decoration-none"%>
   </h1>
+  <div class="d-flex justify-content-between">
+
+    <%= render Navigation::BackLinkComponent.new(
+      link_path: organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category),
+      link_text: @category.name)
+    %>
 
 
-  <%= link_to t('inscriptions.index.view_first_round_order'), organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour), class:"btn btn-success my-3" if @tour %>
+    <%= link_to t('inscriptions.index.view_first_round_order'), organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour), class:"btn btn-primary", style: "font-size: 16px; margin-top: auto;" if @tour %>
 
-  <%= link_to t('inscriptions.index.add_late_registration'), "#", class:"btn btn-success my-3", data: { bs_toggle: "modal", bs_target: "#myModal" } %>
+    <%# <%= link_to t('inscriptions.index.add_late_registration'), "#", class:" text-primary text-decoration-none py-3 px-0", style: "font-size: 16px", data: { bs_toggle: "modal", bs_target: "#myModal" } %>
+  </div>
     <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -38,6 +42,7 @@
         </div>
       </div>
     </div>
+
   <p><%= t('inscriptions.index.late_invitations_sent') %>: <span class="bg-info p-1"><%= @category.inscriptions.where(is_late_inscription: true).count %> </span></p>
 
 
@@ -46,24 +51,29 @@
 
     <%# <% Inscription.statuses.keys.reject { |status| status == 'draft' }.each do |status| %>
     <% Inscription.statuses.keys.each do |status| %>
-        <div class="col bg-light shadow-sm mb-1" style="border-radius: 0.25rem;" id="<%= t("inscriptions.statuses.#{status}") %>">
-          <h5 class="text-center"><%= t("inscriptions.statuses.#{status}") %> (<%= @inscriptions&.select { |inscription| inscription.status == status }&.count %>)</h5>
+        <div class="col bg-light shadow-sm mb-1" style="border-radius: 0.25rem; min-width: 215px;" id="<%= t("inscriptions.statuses.#{status}") %>">
+          <div class="d-flex justify-content-between align-items-center py-3 px-3 border-bottom" style="height: 60px;">
+            <h5 class="mb-0 text-dark fw-bold">
+              <%= t("inscriptions.statuses.#{status}") %>
+            </h5>
+            <span class="badge bg-light text-secondary border border-secondary rounded-pill">
+              <%= @inscriptions&.select { |inscription| inscription.status == status }&.count %>
+            </span>
+          </div>
           <% @inscriptions&.select { |inscription| inscription.status == status }&.each do |inscription| %>
-            <div class="card p-3 mb-2 ">
-
-                <div class="d-flex justify-content-between align-items-start">
-                  <h6 class="card-title"><%= inscription_status_icon(inscription) %> <%= inscription.candidat.first_name %></h6>
+            <div class="card p-2 mt-2 border-0 shadow-sm">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                  <h6 class="card-title mb-0"><%= inscription_status_icon(inscription) %> <%= inscription.candidat.first_name %></h6>
                   <% if @category.hundred_points? %>
-                    <span><%= inscription.average_score %>/100</span>
+                    <span class="badge bg-primary rounded-pill"><%= inscription.average_score %>/100</span>
                   <% end %>
-
-                  <p class="card-text mb-0">
-                  </p>
                 </div>
 
-              <div class="d-flex justify-content-between">
-                <%= buttons_for_inscription(inscription).html_safe %>
-              </div>
+                <div class="d-flex justify-content-between border-top pt-2 mt-2">
+                  <% buttons_html = buttons_for_inscription(inscription) %>
+
+                  <%= buttons_html.html_safe %>
+                </div>
             </div>
           <% end %>
         </div>
