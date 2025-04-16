@@ -16,66 +16,90 @@
   </head>
 
   <body style="background-color: #e7eaf0">
-    <div class="d-flex align-items-stretch">
-      <% if current_user.present? %>
-        <!-- Mobile sidebar toggle button -->
-        <button class="btn btn-primary d-md-none position-fixed top-0 start-0 mt-2 ms-2 z-index-1050" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar" aria-controls="mobileSidebar">
-          <i class="fas fa-bars"></i>
-        </button>
 
-        <!-- Desktop sidebar -->
-        <div class="col-md-2 p-0 d-none d-md-block bg-light vh-100 position-fixed sidebar-container">
+
+    <% if current_user.present? %>
+
+      <!-- Mobile sidebar toggle button (Position fixed relative to viewport) -->
+      <button class="btn btn-primary d-md-none position-fixed top-0 start-0 mt-2 ms-2 z-index-1050" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar" aria-controls="mobileSidebar">
+        <i class="fas fa-bars"></i>
+      </button>
+
+      <!-- Main Flex Container for Sidebar + Content -->
+      <div class="app-layout-container">
+
+        <!-- Desktop Sidebar -->
+
+        <aside class="desktop-sidebar d-none d-md-block bg-light">
+
+          <%= render "shared/sidebar" %>
+        </aside>
+
+        <!-- Main Content Area -->
+
+        <main class="main-content-area flex-grow-1">
+
+          <!-- Inner Container for Content -->
+
+          <div class="container-fluid p-3">
+
+
+            <% if current_user&.organisateur.present? %>
+              <div class="breadcrumbs-container mb-3">
+                <%= render_breadcrumbs separator: '  |    | ' %>
+              </div>
+            <% end %>
+
+
+            <%= render "shared/flashes" %>
+
+
+            <%= yield %>
+
+          </div>
+
+        </main>
+
+      </div>
+
+      <!-- Mobile sidebar (offcanvas - outside the flex layout) -->
+      <div class="offcanvas offcanvas-start" tabindex="-1" id="mobileSidebar" aria-labelledby="mobileSidebarLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="mobileSidebarLabel">Menu</h5>
+          <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body p-0">
           <%= render "shared/sidebar" %>
         </div>
-        <div class="col-md-2 d-none d-md-block">
-          <!-- Spacer to match sidebar width -->
-        </div>
-
-        <!-- Mobile sidebar (offcanvas) -->
-        <div class="offcanvas offcanvas-start" tabindex="-1" id="mobileSidebar" aria-labelledby="mobileSidebarLabel">
-          <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="mobileSidebarLabel">Menu</h5>
-            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-          </div>
-          <div class="offcanvas-body p-0">
-            <%= render "shared/sidebar" %>
-          </div>
-        </div>
-      <% end %>
-
-      <div class="p-0 col-12 col-md-<%= current_user.present? ? '10' : '12'%>">
-        <!-- navbar if no user -->
-        <% unless current_user.present? %>
-          <%= render "shared/navbar" %>
-        <% end %>
-        <!-- Breadcrumbs at the top -->
-          <% if current_user&.organisateur.present? %>
-            <div class="breadcrumbs-container p-3 ms-5 <%= current_user.present? ? 'ms-md-2' : '' %>">
-                <%= render_breadcrumbs separator: '  |    | ' %>
-            </div>
-          <% end %>
-
-        <!-- Flash messages -->
-        <%= render "shared/flashes" %>
-
-        <!-- Main content -->
-        <div class="content-container">
-          <%= yield %>
-        </div>
       </div>
-    </div>
+
+
+    <% else %>
+
+      <%= render "shared/navbar" %>
+
+
+      <div class="p-3">
+        <%= render "shared/flashes" %>
+        <%= yield %>
+      </div>
+
+    <% end %>
+
 
     <script>
       document.addEventListener('DOMContentLoaded', function() {
-        // Auto-close mobile sidebar when a link is clicked
-        const mobileLinks = document.querySelectorAll('#mobileSidebar .nav-link');
-        const bsOffcanvas = new bootstrap.Offcanvas(document.getElementById('mobileSidebar'));
+        const mobileSidebarElement = document.getElementById('mobileSidebar');
+        if (mobileSidebarElement) { // Check if element exists before attaching events
+          const mobileLinks = mobileSidebarElement.querySelectorAll('.nav-link');
+          const bsOffcanvas = new bootstrap.Offcanvas(mobileSidebarElement);
 
-        mobileLinks.forEach(link => {
-          link.addEventListener('click', function() {
-            bsOffcanvas.hide();
+          mobileLinks.forEach(link => {
+            link.addEventListener('click', function() {
+              bsOffcanvas.hide();
+            });
           });
-        });
+        }
       });
     </script>
   </body>
