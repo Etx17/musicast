@@ -7,8 +7,22 @@ module SidebarHelper
         links << { label: content_tag(:i, '', class: 'fis fi-rs-home pe-2') + I18n.t('sidebar.home'), url: candidat_dashboard_path() }
         links << { label: content_tag(:i, '', class: 'fis fi-rs-user pe-2') + I18n.t('sidebar.profile'), url: candidat_path(current_user.candidat) }
         links << { label: content_tag(:i, '', class: 'fas fa-file-alt pe-2') + I18n.t('sidebar.applications'), url: inscriptions_path() }
-        current_user.candidat&.inscriptions&.each do |inscription|
-          links << { label: content_tag(:i, '', class: 'fi fi-rs-music-alt pe-2') + inscription.category.name, url: inscription_path(inscription) }
+        user_inscriptions = current_user.candidat.inscriptions.includes(:category)
+        user_inscriptions.each do |inscription|
+          status_indicator = case inscription.status
+                             when 'accepted'
+                               content_tag(:i, '', class: "fas fa-circle fa-xs text-success ms-2", title: inscription.status.humanize)
+                             when 'in_review'
+                               content_tag(:i, '', class: "fas fa-circle text-info fa-xs ms-2", title: inscription.status.humanize)
+                             else
+                               content_tag(:i, '', class: "fas fa-circle fa-xs text-warning fa-xs ms-2", title: inscription.status.humanize)
+                             end
+          base_label = content_tag(:i, '', class: 'fi fi-rs-music-alt pe-2') + inscription.category.name
+          label_with_status = base_label + status_indicator
+          links << {
+            label: label_with_status,
+            url: inscription_path(inscription)
+          }
         end
       elsif current_user.organisateur.present?
         links << { label: content_tag(:i, '', class: 'fi fi-rs-dashboard pe-2') + I18n.t('sidebar.dashboard'), url: organisateur_dashboard_path() }
