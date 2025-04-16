@@ -136,9 +136,8 @@
       <%= f.input :repertoire, label: false, placeholder: t('candidats.form.repertoire_placeholder'), input_html: { class:"border border-0", data: { action: "input->character-counter#update", character_counter_target: "input", class:"border border-0 "} } %>
     </div>
 
-    <hr>
 
-    <h3><%= t('candidats.form.experiences_title') %></h3>
+    <h3 id="experiences-form-section"><%= t('candidats.form.experiences_title') %></h3>
     <div data-controller="experiences">
       <template data-experiences-target="template">
         <%= f.simple_fields_for :experiences, Experience.new, child_index: 'NEW_RECORD' do |experience| %>
@@ -159,9 +158,8 @@
       </div>
     </div>
 
-    <hr>
 
-    <h3><%= t('candidats.form.education_title') %></h3>
+    <h3 id="education-form-section" class="mt-3"><%= t('candidats.form.education_title') %></h3>
     <div data-controller="educations">
       <template data-educations-target="template">
         <%= f.simple_fields_for :educations, Education.new, child_index: 'NEW_RECORD' do |education| %>

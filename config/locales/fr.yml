@@ -885,6 +885,7 @@ fr:
     action: "Action"
     actions:
       next: "Suivant"
+      remove: "Supprimer"
       previous: "Précédent"
       login: "Connexion"
       create_account: "Créer un compte"

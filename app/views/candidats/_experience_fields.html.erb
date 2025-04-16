@@ -1,29 +1,53 @@
-<div class="nested-fields border-top row my-3 px-3 pt-2" data-new-record="<%= f.object.new_record? %>">
-  <div class="col-12">
-    <div class="d-flex justify-content-between w-100 align-items-center">
-      <small class="text-secondary"><i class="fas fa-text "></i> <%= f.index.is_a?(Integer) ? f.index + 1 : t('candidats.form.new_record') %> </small>
-      <% if f.object.new_record? %>
-        <%= link_to '#', data: { action: 'removeExperience' }, class: 'btn btn-success' do %>
-          <i class="fas fa-trash pe-2"></i><%= t('candidats.form.delete') %>
-        <% end %>
+<div class="nested-fields experience-fields mb-3 p-3 border rounded bg-light position-relative shadow-sm" data-new-record="<%= f.object.new_record? %>">
+  <div class="d-flex justify-content-between align-items-start">
+    <div class="col-md-8">
+      <%= f.input :title,
+            label: 'Title',
+            placeholder: 'Job title or role',
+            input_html: { class: 'form-control form-control-sm' } %>
+    </div>
+    <div class="col-auto pt-4 mt-2">
+      <button type="button" data-action="click->experiences#removeExperience" class="text-primary btn btn-light rounded-circle p-2 text-primary" title="<%= t('global.actions.remove') %>">
+        <i class="fas fa-trash-alt"></i>
+      </button>
+      <%= f.hidden_field :_destroy %>
+    </div>
+  </div>
+  <div class="row g-3 mb-2">
+    <div class="col-md-6 col-12">
+      <%= f.input :start_date,
+            as: :date,
+            html5: true,
+            label: 'Start Date',
+            required: true,
+            input_html: { class: 'form-control form-control-sm' } %>
+    </div>
+    <div class="col-md-6 col-12">
+      <%= f.input :end_date,
+            as: :date,
+            html5: true,
+            label: 'End Date ',
+            input_html: { class: 'form-control form-control-sm' } %>
+    </div>
+  </div>
+  <div class="row g-3 mb-2">
+    <div class="col-12">
+      <%= f.input :logo,
+            as: :file,
+            label: 'Logo (Optional)',
+            input_html: { class: 'form-control form-control-sm' } %>
+      <% if f.object.logo.attached? %>
+        <small class="text-muted d-block mt-1">Current: <%= f.object.logo.filename %></small>
       <% end %>
     </div>
   </div>
-  <div class="d-flex align-items-start flex-column flex-md-row gap-1" >
-    <div class="d-flex  align-items-center gap-2">
-      <p class=""><%= t('candidats.experiences_section.title_label') %></p>
-      <%= f.input :title, label: false, input_html: {class:"border border-0 "} %>
-    </div>
-    <div class="d-flex  align-items-center gap-2">
-      <p class=""><%= t('candidats.experiences_section.from') %>: </p>
-      <%= f.input :start_date, label: false, input_html: {class:"border border-0 "}  %>
-    </div>
-    <div class="d-flex  align-items-center gap-2">
-      <p class=""><%= t('candidats.experiences_section.to') %>: </p>
-      <%= f.input :end_date, label: false, input_html: {class:"border border-0 "}%>
+  <div class="row g-3">
+    <div class="col-12">
+      <%= f.input :description,
+            label: 'Description',
+            placeholder: 'Describe your responsibilities and achievements...',
+            as: :text,
+            input_html: { rows: 3, class: 'form-control form-control-sm' } %>
     </div>
   </div>
-
-
-  <%= f.input :description, input_html: {class:"border border-0 "}, label: false, placeholder: t('candidats.experiences_section.description_placeholder') %>
 </div>

@@ -952,6 +952,7 @@ en:
       tuba: "Tuba"
       violin: "Violin"
     actions:
+      remove: "Remove"
       download: "Download"
       download_all: "Download All"
       download_file: "Download %{filename}"
