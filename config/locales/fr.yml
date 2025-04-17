@@ -10,6 +10,16 @@ fr:
         new:
           annee: "Entrez une année pour la nouvelle édition"
         annee: "Entrez une année"
+      experience:
+        title: "Titre ou rôle du poste"
+        english_title: "Titre en anglais"
+        description: "Décrivez vos responsabilités et réalisations..."
+        english_description: "Description en anglais"
+      education:
+        title: "Institution ou diplôme obtenu"
+        english_title: "Institution en anglais"
+        description: "Décrivez le programme, le diplôme ou les détails pertinents..."
+        english_description: "Formation en anglais"
     hints:
       defaults:
         annee: "Année de l'édition"
@@ -64,20 +74,27 @@ fr:
         status: "Statut"
       education:
         title: "Titre"
+        english_title: "Titre en anglais"
         start_date: "Date de début"
-        end_date: "Date de fin"
+        end_date: "Date de fin (ou prévue)"
         description: "Description"
+        english_description: "Description en anglais"
+        logo: "Logo de l'institution (Optionnel)"
         candidat_id: "ID du candidat"
         created_at: "Créé le"
         updated_at: "Mis à jour le"
+        current_logo: "Actuel"
       experience:
         title: "Titre"
+        english_title: "Titre en anglais"
         start_date: "Date de début"
         end_date: "Date de fin"
         description: "Description"
+        english_description: "Description en anglais"
         candidat_id: "ID du candidat"
         created_at: "Créé le"
         updated_at: "Mis à jour le"
+        logo: "Logo (Optionnel)"
     errors:
       models:
         competition:

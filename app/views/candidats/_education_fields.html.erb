@@ -2,8 +2,12 @@
   <div class="d-flex justify-content-between align-items-start">
     <div class="col-md-8">
       <%= f.input :title,
-            label: 'Institution / Degree',
-            placeholder: 'Name of school or degree obtained',
+            label: t('activerecord.attributes.education.title'),
+            placeholder: t('simple_form.placeholders.education.title'),
+            input_html: { class: 'form-control form-control-sm' } %>
+      <%= f.input :english_title,
+            label: t('activerecord.attributes.education.english_title'),
+            placeholder: t('simple_form.placeholders.education.english_title'),
             input_html: { class: 'form-control form-control-sm' } %>
     </div>
     <div class="col-auto pt-4 mt-2">
@@ -22,14 +26,14 @@
       <%= f.input :start_date,
             as: :date,
             html5: true,
-            label: 'Start Date',
+            label: t('activerecord.attributes.education.start_date'),
             input_html: { class: 'form-control form-control-sm' } %>
     </div>
     <div class="col-md-6 col-12">
       <%= f.input :end_date,
             as: :date,
             html5: true,
-            label: 'End Date (or expected)',
+            label: t('activerecord.attributes.education.end_date'),
             input_html: { class: 'form-control form-control-sm' } %>
     </div>
   </div>
@@ -38,11 +42,11 @@
     <div class="col-12">
       <%= f.input :logo,
             as: :file,
-            label: 'Institution Logo (Optional)', # Add label
+            label: t('activerecord.attributes.education.logo'), # Add label
             input_html: { class: 'form-control form-control-sm' } %>
       <%# Display current logo filename if editing and logo exists %>
       <% if f.object.persisted? && f.object.logo.attached? %>
-         <small class="text-muted d-block mt-1">Current: <%= f.object.logo.filename %></small>
+         <small class="text-muted d-block mt-1"><%= t('activerecord.attributes.education.current_logo') %>: <%= f.object.logo.filename %></small>
       <% end %>
     </div>
   </div>
@@ -50,8 +54,13 @@
   <div class="row g-3">
     <div class="col-12">
       <%= f.input :description,
-            label: 'Description / Details',
-            placeholder: 'Describe the program, degree, or relevant details...',
+            label: t('activerecord.attributes.education.description'),
+            placeholder: t('simple_form.placeholders.education.description'),
+            as: :text,
+            input_html: { rows: 2, class: 'form-control form-control-sm' } %>
+      <%= f.input :english_description,
+            label: t('activerecord.attributes.education.english_description'),
+            placeholder: t('simple_form.placeholders.education.english_description'),
             as: :text,
             input_html: { rows: 2, class: 'form-control form-control-sm' } %>
     </div>

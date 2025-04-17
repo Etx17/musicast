@@ -10,6 +10,16 @@ en:
         new:
           annee: "Enter a year for the new edition"
         annee: "Enter a year"
+      experience:
+        title: "Job title or role"
+        english_title: "English Title"
+        description: "Describe your responsibilities and achievements..."
+        english_description: "English Description"
+      education:
+        title: "Institution or Degree"
+        english_title: "English Institution"
+        description: "Describe the program, degree, or relevant details..."
+        english_description: "English Education"
     hints:
       defaults:
         annee: "Year of the edition"
@@ -64,20 +74,28 @@ en:
         status: "Status"
       education:
         title: "Title"
+        english_title: "English Institution"
         start_date: "Start date"
-        end_date: "End date"
+        end_date: "End Date (or expected)"
         description: "Description"
+        english_description: "Description in English"
+        logo: "Institution Logo (Optional)"
         candidat_id: "ID of the candidate"
         created_at: "Created at"
         updated_at: "Updated at"
+        current_logo: "Current"
       experience:
         title: "Title"
+        english_title: "English Title"
         start_date: "Start date"
         end_date: "End date"
         description: "Description"
+        english_description: "English Description"
+        logo: "Logo (Optional)"
         candidat_id: "ID of the candidate"
         created_at: "Created at"
         updated_at: "Updated at"
+        current_logo: "Current"
     errors:
       models:
         competition:

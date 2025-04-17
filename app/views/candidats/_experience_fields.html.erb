@@ -2,13 +2,21 @@
   <div class="d-flex justify-content-between align-items-start">
     <div class="col-md-8">
       <%= f.input :title,
-            label: 'Title',
-            placeholder: 'Job title or role',
+            label: t('activerecord.attributes.experience.title'),
+            placeholder: t('simple_form.placeholders.experience.title'),
+            input_html: { class: 'form-control form-control-sm' } %>
+      <%= f.input :english_title,
+            label: false,
+            placeholder: t('simple_form.placeholders.experience.english_title'),
             input_html: { class: 'form-control form-control-sm' } %>
     </div>
     <div class="col-auto pt-4 mt-2">
-      <button type="button" data-action="click->experiences#removeExperience" class="text-primary btn btn-light  p-2 text-primary" title="<%= t('global.actions.remove') %>">
-        <i class="fas fa-trash-alt"></i>
+      <button type="button"
+              data-action="click->experiences#removeExperience"
+              data-confirm-message="<%= t('candidats.form.confirm_remove_experience', default: 'Are you sure you want to remove this experience? It will be deleted when you save.') %>"
+              class="btn btn-sm btn-outline-danger"
+              title="<%= t('global.actions.remove') %>">
+        <i class="fas fa-times"></i>
       </button>
       <%= f.hidden_field :_destroy %>
     </div>
@@ -18,7 +26,7 @@
       <%= f.input :start_date,
             as: :date,
             html5: true,
-            label: 'Start Date',
+            label: t('activerecord.attributes.experience.start_date'),
             required: true,
             input_html: { class: 'form-control form-control-sm' } %>
     </div>
@@ -26,7 +34,7 @@
       <%= f.input :end_date,
             as: :date,
             html5: true,
-            label: 'End Date ',
+            label: t('activerecord.attributes.experience.end_date'),
             input_html: { class: 'form-control form-control-sm' } %>
     </div>
   </div>
@@ -34,18 +42,23 @@
     <div class="col-12">
       <%= f.input :logo,
             as: :file,
-            label: 'Logo (Optional)',
+            label: t('activerecord.attributes.experience.logo'),
             input_html: { class: 'form-control form-control-sm' } %>
       <% if f.object.logo.attached? %>
-        <small class="text-muted d-block mt-1">Current: <%= f.object.logo.filename %></small>
+        <small class="text-muted d-block mt-1"><%= t('activerecord.attributes.experience.current_logo') %>: <%= f.object.logo.filename %></small>
       <% end %>
     </div>
   </div>
   <div class="row g-3">
     <div class="col-12">
       <%= f.input :description,
-            label: 'Description',
-            placeholder: 'Describe your responsibilities and achievements...',
+            label: t('activerecord.attributes.experience.description'),
+            placeholder: t('simple_form.placeholders.experience.description'),
+            as: :text,
+            input_html: { rows: 3, class: 'form-control form-control-sm' } %>
+      <%= f.input :english_description,
+            label: false,
+            placeholder: t('simple_form.placeholders.experience.english_description'),
             as: :text,
             input_html: { rows: 3, class: 'form-control form-control-sm' } %>
     </div>
