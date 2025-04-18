@@ -4,13 +4,13 @@
   links: @links,
   redirect: @redirect,
   bottom_button_links: @bottom_button_links,
-  bottom_left_label: @bottom_left_label,
-  top_left_pill: {label: "#{@edition_competition.days_remaining} #{t('pages.edition_competition_card.days_remaining')}", class: "badge border bg-primary rounded-pill position-absolute "},
+  bottom_left_label: {icon: "fi fi-rs-brand", label: "#{@edition_competition.days_remaining} #{t('pages.edition_competition_card.days_remaining')}"},
+  top_left_pill: {label: "#{@edition_competition.days_remaining} #{t('pages.edition_competition_card.days_remaining')}", class: "border bg-primary rounded-pill position-absolute "},
   bottom_left_pill: @bottom_left_pill,
   rounded_image: true,
   image_style: "height: 300px;"
 )) do %>
-  <div class="p-3 d-flex flex-column justify-content-start align-items-start gap-1">
+  <div class="p-3 d-flex flex-column justify-content-start align-items-start gap-1" style="height: 270px">
     <h4 class=""><%= @edition_competition.competition.nom_concours %></h4>
 
     <% if @edition_competition.address.present? %>
@@ -23,15 +23,22 @@
     <% end %>
 
 
-    <div class="d-flex flex-wrap gap-1 justify-content-start overflow-scroll">
-      <% @edition_competition.categories.each do |category| %>
-        <span class="badge bg-light-grey px-2 text-secondary rounded-pill p-1"><%= category.name %></span>
-        <span class="badge bg-light-grey px-2 text-secondary rounded-pill p-1"><%= category.name %></span>
-        <span class="badge bg-light-grey px-2 text-secondary rounded-pill p-1"><%= category.name %></span>
-        <span class="badge bg-light-grey px-2 text-secondary rounded-pill p-1"><%= category.name %></span>
-        <span class="badge bg-light-grey px-2 text-secondary rounded-pill p-1"><%= category.name %></span>
-        <span class="badge bg-light-grey px-2 text-secondary rounded-pill p-1"><%= category.name %></span>
-      <% end %>
-    </div>
+
+    <% if @edition_competition.categories.count > 1 %>
+      <div class="overflow-x-scroll" style="height: 90px">
+        <% @edition_competition.categories.each do |category| %>
+          <span class="bg-light-grey px-2 text-secondary rounded-pill p-1"><%= category.name %></span>
+          <span class="bg-light-grey px-2 text-secondary rounded-pill p-1"><%= category.name %></span>
+          <span class="bg-light-grey px-2 text-secondary rounded-pill p-1"><%= category.name %></span>
+          <span class="bg-light-grey px-2 text-secondary rounded-pill p-1"><%= category.name %></span>
+          <span class="bg-light-grey px-2 text-secondary rounded-pill p-1"><%= category.name %></span>
+          <span class="bg-light-grey px-2 text-secondary rounded-pill p-1"><%= category.name %></span>
+          <span class="bg-light-grey px-2 text-secondary rounded-pill p-1"><%= category.name %></span>
+          <span class="bg-light-grey px-2 text-secondary rounded-pill p-1"><%= category.name %></span>
+        <% end %>
+      </div>
+    <% else %>
+      <span class="bg-light-grey px-2 text-secondary rounded-pill p-1"><%= @edition_competition.categories.first.name %></span>
+    <% end %>
   </div>
 <% end %>

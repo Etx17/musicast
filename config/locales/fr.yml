@@ -891,6 +891,7 @@ fr:
       back: "Retour aux choix libres"
       destroy: "Supprimer ce choix libre"
   global:
+    category: "Catégorie"
     profile: "Profil"
     scores: "Partitions"
     competition: "Concours"

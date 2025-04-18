@@ -927,6 +927,7 @@ en:
       back: "Back to free choices"
       destroy: "Destroy this free choice"
   global:
+    category: "Category"
     profile: "Profile"
     scores: "Scores"
     competition: "Competition"
