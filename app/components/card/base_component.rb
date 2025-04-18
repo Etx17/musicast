@@ -5,6 +5,7 @@ class Card::BaseComponent < ViewComponent::Base
     image: nil,
     links: nil,
     redirect: nil,
+    rounded_image: false,
     bottom_left_label: nil,
     bottom_button_links: [],
     ratio: "350/235",
@@ -16,6 +17,7 @@ class Card::BaseComponent < ViewComponent::Base
   )
     @height = height
     @image = image
+    @rounded_image = rounded_image
     @has_shadow = has_shadow
     @links = links
     @redirect = redirect

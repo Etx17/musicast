@@ -26,3 +26,8 @@
   justify-content: center;
   gap: 1.5rem;
 }
+
+
+.curved-bottom-image {
+  clip-path: path('M 0 0 H 425 V 205 Q 326 416 -486 146 Z');
+}
