@@ -2,7 +2,7 @@
   height: @height,
   image: @edition_competition.competition.image_or_default,
   links: @links,
-  redirect: @redirect,
+  redirect: organism_competition_edition_competition_path(@edition_competition.organism, @edition_competition.competition, @edition_competition),
   bottom_button_links: @bottom_button_links,
   bottom_left_label: @edition_competition.max_prize_amount_label_for_card,
   top_left_pill: {label: "#{@edition_competition.days_remaining} #{t('pages.edition_competition_card.days_remaining')}", class: "border bg-primary-light text-primary px-2 rounded-pill position-absolute "},

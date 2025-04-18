@@ -55,7 +55,7 @@ class Card::CategoryComponent < ViewComponent::Base
 
     if @discipline.present?
       @pills << {
-        label: @discipline,
+        label: I18n.t("discipline.#{@discipline}"),
         class: "badge rounded-pill bg-light text-dark"
       }
     end
