@@ -68,7 +68,15 @@ class EditionCompetition < ApplicationRecord
   end
 
   def max_prize_amount
-    categories.map(&:prizes).flatten.map(&:amount).max
+    "#{categories.map(&:prizes).flatten.map(&:amount).max}€"
+  end
+
+  def max_prize_amount_label_for_card
+    if categories.map(&:prizes).flatten.map(&:amount).max.positive?
+      {icon: "fi fi-rs-trophy", label: "#{max_prize_amount} ", class: "text-primary h3"}
+    else
+      nil
+    end
   end
 
   def has_same_organisateur_as?(organisateur_id)
