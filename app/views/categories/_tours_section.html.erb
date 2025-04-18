@@ -37,16 +37,20 @@
             <div class="card h-100">
               <div class="card-header bg-light-grey d-flex justify-content-between align-items-start">
                 <h4 class=" text-dark font-weight-bold m-0"> <%= tour.tour_number %> - <%= tour.title %> </h4>
-                <div class="d-flex">
-                  <%= button_to "Supprimer", organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, category, tour), method: :delete, data: { turbo_confirm: 'Are you sure?' }, class: 'btn btn-outline-dark btn-sm ms-2 border-0' %>
-                </div>
+                <%
+                  kebab_items = [
+                    { icon: 'fas fa-edit', text: t('global.actions.edit'), path: edit_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, category, tour) },
+                    { icon: 'fas fa-trash-alt', text: t('global.actions.delete'), path: organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, category, tour), method: :delete, data: { turbo_confirm: t('global.confirmations.are_you_sure', default: 'Are you sure?') } }
+                  ]
+                %>
+                <%= render Dropdown::KebabComponent.new(items: kebab_items, align: :right, only_vertical_dots: true) %>
               </div>
               <div class="card-body bg-white">
                 <div class="d-flex justify-content-between align-items-end py-2">
                     <%= link_to "Planning", organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, category, tour), class:"btn btn-success " %>
 
                 <%= image_tag 'icons/winner.png', width: 70, height: 70, class:"" %>
-                  <%= link_to  "Modifier", edit_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, category, tour), class: 'btn btn-outline-primary  border border-primary' %>
+                  <%# Removed the Modifier link from here %>
 
                 </div>
 

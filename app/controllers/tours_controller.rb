@@ -276,7 +276,8 @@ class ToursController < ApplicationController
         scores_to_zip.each do |score_attachment|
           blob_data = score_attachment.blob.download
           # Consider prefixing with participant name if filenames might clash
-          # filename_in_zip = "#{score_attachment.record.inscription.candidat.slug}_#{score_attachment.filename.to_s}"
+          # filename_in_zip = "#{score_attachment.record.inscript
+          # ion.candidat.slug}_#{score_attachment.filename.to_s}"
           filename_in_zip = score_attachment.filename.to_s # Or just the filename
           zipfile.get_output_stream(filename_in_zip) do |f|
             f.write(blob_data)
