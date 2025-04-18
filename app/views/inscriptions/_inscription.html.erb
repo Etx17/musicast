@@ -377,27 +377,41 @@
                   <%= render Pill::StatusComponent.new(text: t('inscriptions.inscription.imposed_airs_in_round', count: tour.imposed_air_selection.count), color: 'warning') %>
                 <% end %>
               <% if performance.present? %>
-
-                <%= simple_form_for(performance, url: performance_path(performance), method: :patch, data: { controller: "reorder" }) do |f| %>
-                  <ul data-reorder-target="list" class="list-unstyled" >
+                <%# Standard form for updating the performance %>
+                <%= simple_form_for(performance, url: performance_path(performance), method: :patch) do |f| %>
+                  <ul class="list-unstyled">
+                    <% airs_count = performance.ordered_air_selection&.count || 0 %>
                     <% performance.ordered_air_selection&.each_with_index do |air_id, index| %>
-                      <% air = Air.find(air_id) %>
+                      <% air = Air.find_by(id: air_id) %>
+                      <% next unless air %> <%# Skip if air not found %>
                       <% imposed = performance.tour.imposed_air_selection&.include?(air_id.to_s) %>
-                      <li data-id="<%= air_id %>"
-                          data-action="dragstart->reorder#dragStart dragover->reorder#dragOver drop->reorder#drop dragend->reorder#dragEnd"
-                          draggable="true"
-                          class="draggable-item"
-                          style="cursor: move; border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; border-radius: 8px;"
-                          >
-                        <%= index + 1 %> - <%= air.title %>, <%= air.length_minutes %> min<%= t('inscriptions.inscription.imposed') if imposed %>
+
+                      <li class="d-flex align-items-center justify-content-between border p-2 mb-2 rounded" style="border: 1px solid #ccc; border-radius: 8px;">
+                        <div class="flex-grow-1 me-3">
+                          <%= index + 1 %> - <%= air.title %>, <%= air.length_minutes %> min<%= t('inscriptions.inscription.imposed') if imposed %>
+                        </div>
+                        <div class="d-flex flex-column">
+                          <%# Move Up Button - Submits the form %>
+                          <button type="submit" name="move_up" value="<%= air_id %>" class="btn btn-sm btn-light p-0 mb-1 <%= 'invisible' if index == 0 %>" title="Move Up">
+                            <i class="fas fa-chevron-up text-secondary"></i>
+                          </button>
+
+                          <%# Move Down Button - Submits the form %>
+                          <button type="submit" name="move_down" value="<%= air_id %>" class="btn btn-sm btn-light p-0 <%= 'invisible' if index == airs_count - 1 %>" title="Move Down">
+                            <i class="fas fa-chevron-down text-secondary"></i>
+                          </button>
+                        </div>
                       </li>
                     <% end %>
                   </ul>
-                  <%= f.hidden_field :ordered_air_selection, data: { reorder_target: "orderedSelection" } %>
-                  <% if Date.today < tour.final_performance_submission_deadline || current_user.organisateur.present? %>
-                    <%= f.button :submit, t('inscriptions.inscription.update_order'), data: { action: "reorder#submit", reorder_target: "submit" }, disabled: true, class: "btn btn-success" %>
-                    <%= link_to t('inscriptions.inscription.edit_program'), edit_inscription_performance_path(inscription, performance, tour_id: tour.id), class: 'btn btn-success ' %>
-                  <% end %>
+
+                  <%# Note: There's no explicit "Save Order" button now, moving submits %>
+
+                <% end %> <%# End Form %>
+
+                <%# Keep the Edit Program link if applicable %>
+                <% if (Date.today < tour.final_performance_submission_deadline || current_user.organisateur.present?) && performance.persisted? %>
+                  <%= link_to t('inscriptions.inscription.edit_program'), edit_inscription_performance_path(inscription, performance, tour_id: tour.id), class: 'btn btn-success mt-2' %>
                 <% end %>
               <% else %>
                 <div class="d-flex flex-column rounded">
