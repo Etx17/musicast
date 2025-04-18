@@ -15,7 +15,7 @@
 
   <%= simple_form_for @inscription, url: wizard_path(:preferences, action: "update"), method: :put do |f| %>
     <% if @inscription.category.allow_own_pianist_accompagnateur %>
-      <div class="card shadow-sm mb-4">
+      <div class="card bg-light mb-4">
         <div class="card-body">
           <h4 class="card-title mb-3"><%= t('inscriptions.form.pianist_preferences') %></h4>
 
@@ -45,7 +45,7 @@
       </div>
     <% end %>
 
-    <div class="card shadow-sm mb-4">
+    <div class="card bg-light mb-4">
       <div class="card-body">
         <h4 class="card-title mb-3"><%= t('inscriptions.steps.preferences.time_preferences') %></h4>
         <%= f.input :time_preference,
@@ -62,7 +62,7 @@
       </div>
     </div>
 
-    <div class="card shadow-sm mb-4">
+    <div class="card bg-light mb-4">
       <div class="card-body">
         <h4 class="card-title mb-3"><%= t('global.terms') %></h4>
 
@@ -86,7 +86,7 @@
       </div>
     </div>
 
-    <div class="card shadow-sm mb-4">
+    <div class="card bg-light mb-4">
       <div class="card-body">
         <h4 class="card-title mb-3"><%= t('inscriptions.steps.preferences.payment') %></h4>
 
