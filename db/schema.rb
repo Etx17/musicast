@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_17_193152) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_18_143840) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -132,6 +132,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_17_193152) do
     t.boolean "includes_free_choices", default: false
     t.boolean "includes_choice_imposed_works", default: false
     t.text "description_english"
+    t.text "payment_guidelines"
+    t.text "payment_guidelines_english"
     t.index ["edition_competition_id"], name: "index_categories_on_edition_competition_id"
     t.index ["slug"], name: "index_categories_on_slug", unique: true
   end

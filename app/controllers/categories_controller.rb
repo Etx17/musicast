@@ -89,6 +89,8 @@ class CategoriesController < ApplicationController
       :min_age, :max_age, :discipline,
       :price_cents,
       :allow_own_pianist_accompagnateur,
+      :payment_guidelines,
+      :payment_guidelines_english,
       :photo,
       tours_attributes: %i[id tour_number _destroy],
       ).tap do |whitelisted|

@@ -454,6 +454,10 @@ fr:
         edit: "Modifier cette œuvre à choix imposé"
         destroy: "Supprimer cette œuvre à choix imposé"
     form:
+      enter_payment_guidelines: "Entrez les consignes pour le paiement"
+      enter_payment_guidelines_english: "Entrez les consignes pour le paiement (Anglais)"
+      payment_guidelines: "Consignes pour le paiement"
+      payment_guidelines_english: "Consignes pour le paiement (Anglais)"
       information: "Informations de la catégorie"
       name: "Nom de la catégorie"
       discipline: "Discipline"

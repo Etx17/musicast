@@ -421,6 +421,10 @@ en:
         edit: "Edit this imposed choice work"
         destroy: "Destroy this imposed choice work"
     form:
+      enter_payment_guidelines: "Enter payment guidelines"
+      enter_payment_guidelines_english: "Enter payment guidelines (English)"
+      payment_guidelines: "Guidelines for payment"
+      payment_guidelines_english: "Guidelines for payment (English)"
       information: "Category Information"
       name: "Category Name"
       discipline: "Discipline"
