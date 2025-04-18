@@ -9,7 +9,7 @@
   end
 %>
 
-<div class="bg-white rounded-4 mb-3 mb-md-3 position-relative <%= @has_shadow ? "shadow-sm" : "" %> <%= @highlight_card ? "highlight-card" : "" %>" style="height: <%= adjusted_height %>px; <%= @has_shadow ? "border: 0.7px solid lightgray;" : "" %>; width: 350px;" >
+<div class="bg-white rounded-4 mb-3 mb-md-3 position-relative <%= @has_shadow ? "shadow-sm" : "" %> <%= @highlight_card ? "highlight-card" : "" %>" style="height: <%= adjusted_height %>px; <%= @has_shadow ? "border: 0.7px solid lightgray;" : "" %>; width: 330px;" >
   <!-- Top left pill (label, class-->
   <% if @top_left_pill.present? %>
     <div class="position-absolute <%= @top_left_pill[:class] %>" style="top: 10px; left: 10px;z-index:2">

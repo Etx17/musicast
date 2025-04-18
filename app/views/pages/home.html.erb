@@ -13,11 +13,11 @@
   <h2 class="text-center fw-bold mb-4">
     <%= t('pages.home.competitions') %> (<%= @edition_competitions.count %>) <%= flag_emoji(session["country"]) if session["country"]%>
   </h2>
-  <div class="d-flex flex-wrap gap-4">
+  <div class="d-flex flex-wrap gap-4 justify-content-center">
 
     <% if @edition_competitions.any? %>
       <% @edition_competitions.each do |edition_competition| %>
-        <%= render "edition_competition_card", edition_competition: edition_competition %>
+        <%# <%= render "edition_competition_card", edition_competition: edition_competition %>
         <%= render Card::EditionCompetitionComponent.new(edition_competition: edition_competition)%>
       <% end %>
     <% else %>
