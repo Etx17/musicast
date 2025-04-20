@@ -73,7 +73,7 @@ class EditionCompetition < ApplicationRecord
 
   def max_prize_amount_label_for_card
     if categories.map(&:prizes).flatten.map(&:amount).max.positive?
-      {icon: "fi fi-rs-trophy", label: "#{max_prize_amount} ", class: "text-primary h3"}
+      {icon: "fi fi-rs-trophy", label: "#{max_prize_amount} ", class: "text-primary h3 mb-0"}
     else
       nil
     end
