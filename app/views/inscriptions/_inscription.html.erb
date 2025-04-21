@@ -256,7 +256,7 @@
               <div class="d-flex justify-content-between align-items-center mb-2">
               <h5 class="card-title text-muted"><%= item.requirement_item&.title %></h5>
               <% if item.item_type == "youtube_link"  %>
-                <% if item.submitted_content.empty? %>
+                <% if item&.submitted_content&.empty? || item&.submitted_content&.nil? %>
                   <%= render Pill::StatusComponent.new(text: t('inscriptions.inscription.to_complete'), color: "danger") %>
                 <% else %>
                   <%= render Pill::StatusComponent.new(text: "Ok", color: "primary") %>
@@ -311,13 +311,11 @@
               <% end %>
             </div>
             <div class="card-body">
-
               <% if tour.tour_requirement.present? %>
                 <% if I18n.locale == :en && tour.tour_requirement&.description_english.present? %>
-                    <p class="card-text text-secondary bg-infobox-light rounded p-2 mb-0">
-                      <i class="fas fa-info-circle text-secondary px-1"></i> <%= tour.tour_requirement&.description_english %>
-                    </p>
-                  </div>
+                  <p class="card-text text-secondary bg-infobox-light rounded p-2 mb-0">
+                    <i class="fas fa-info-circle text-secondary px-1"></i> <%= tour.tour_requirement&.description_english %>
+                  </p>
                 <% else %>
                   <p class="card-text text-secondary bg-infobox-light rounded p-2 mb-0">
                     <i class="fas fa-info-circle text-secondary px-1"></i><%= tour.tour_requirement&.description %>
@@ -325,19 +323,23 @@
                 <% end %>
 
                 <div class="d-flex justify-content-start gap-3 pb-2">
-                  <span class="me-2"><strong><i class="fas fa-book p-3 rounded-pill text-secondary border bg-white"></i></strong>
+                  <span class="me-2">
+                    <strong><i class="fas fa-book p-3 rounded-pill text-secondary border bg-white"></i></strong>
                     <% if tour.tour_requirement&.min_number_of_works == tour.tour_requirement&.max_number_of_works %>
                       <%= t('inscriptions.inscription.works_count', count: tour.tour_requirement&.min_number_of_works) %>
                     <% else %>
-                      <%= t('inscriptions.inscription.works_range', min: tour.tour_requirement&.min_number_of_works, max: tour.tour_requirement&.max_number_of_works) %></span>
+                      <%= t('inscriptions.inscription.works_range', min: tour.tour_requirement&.min_number_of_works, max: tour.tour_requirement&.max_number_of_works) %>
                     <% end %>
+                  </span>
 
-                  <span><strong><i class="fas fa-clock p-3 rounded-pill text-secondary border bg-white"></i></strong> <%= t('inscriptions.inscription.duration_range', min: tour.tour_requirement&.min_duration_minute, max: tour.tour_requirement&.max_duration_minute) %></span>
+                  <span>
+                    <strong><i class="fas fa-clock p-3 rounded-pill text-secondary border bg-white"></i></strong>
+                    <%= t('inscriptions.inscription.duration_range', min: tour.tour_requirement&.min_duration_minute, max: tour.tour_requirement&.max_duration_minute) %>
+                  </span>
                 </div>
               <% end %>
 
               <%# accompaniment section  %>
-
               <%= render 'pianist_accompanist', performance: performance if tour.requires_pianist_accompanist %>
               <% if tour.requires_orchestra %>
                 <div class="d-flex justify-content-start gap-3 pb-2 mt-2">
@@ -347,7 +349,6 @@
                   </span>
                 </div>
               <% end %>
-
 
               <%# Upload scores %>
               <%= render 'scores', performance: performance %>
@@ -360,22 +361,21 @@
                     <%= t('inscriptions.inscription.days_remaining_to_edit', count: tour.remaining_days) %>
                   </span>
                 <% end %>
-
-
-
                 <% if performance.present? && performance.has_incorrect_duration? %>
                   <span class=" badge rounded-pill text-danger bg-danger-secondary">
                     <i class="fas fa-exclamation-triangle"></i> <%= t('inscriptions.inscription.invalid_program_duration', minutes: performance.minutes) %>
                   </span>
                 <% elsif performance.present? %>
-                   <span class=" badge rounded-pill text-success bg-primary-light">
+                  <span class=" badge rounded-pill text-success bg-primary-light">
                     <i class="fas fa-check-circle"></i> <%= t('inscriptions.inscription.valid_program_duration', minutes: performance.minutes) %>
-                  </small>
+                  </span>
                 <% end %>
               </div>
-               <% if tour.imposed_air_selection.present? %>
-                  <%= render Pill::StatusComponent.new(text: t('inscriptions.inscription.imposed_airs_in_round', count: tour.imposed_air_selection.count), color: 'warning') %>
-                <% end %>
+
+              <% if tour.imposed_air_selection.present? %>
+                <%= render Pill::StatusComponent.new(text: t('inscriptions.inscription.imposed_airs_in_round', count: tour.imposed_air_selection.count), color: 'warning') %>
+              <% end %>
+
               <% if performance.present? %>
                 <%# Standard form for updating the performance %>
                 <%= simple_form_for(performance, url: performance_path(performance), method: :patch) do |f| %>
@@ -391,12 +391,9 @@
                           <%= index + 1 %> - <%= air.title %>, <%= air.length_minutes %> min<%= t('inscriptions.inscription.imposed') if imposed %>
                         </div>
                         <div class="d-flex flex-column">
-                          <%# Move Up Button - Submits the form %>
                           <button type="submit" name="move_up" value="<%= air_id %>" class="btn btn-sm btn-light p-0 mb-1 <%= 'invisible' if index == 0 %>" title="Move Up">
                             <i class="fas fa-chevron-up text-secondary"></i>
                           </button>
-
-                          <%# Move Down Button - Submits the form %>
                           <button type="submit" name="move_down" value="<%= air_id %>" class="btn btn-sm btn-light p-0 <%= 'invisible' if index == airs_count - 1 %>" title="Move Down">
                             <i class="fas fa-chevron-down text-secondary"></i>
                           </button>
@@ -404,12 +401,8 @@
                       </li>
                     <% end %>
                   </ul>
+                <% end %>
 
-                  <%# Note: There's no explicit "Save Order" button now, moving submits %>
-
-                <% end %> <%# End Form %>
-
-                <%# Keep the Edit Program link if applicable %>
                 <% if (Date.today < tour.final_performance_submission_deadline || current_user.organisateur.present?) && performance.persisted? %>
                   <%= link_to t('inscriptions.inscription.edit_program'), edit_inscription_performance_path(inscription, performance, tour_id: tour.id), class: 'btn btn-success mt-2' %>
                 <% end %>
@@ -419,11 +412,10 @@
                     <span class="badge rounded-pill text-danger border-danger border"><%= t('inscriptions.inscription.days_remaining', count: tour.remaining_days) %></span>
                     <i class="fas fa-info-circle text-secondary px-1"></i><%= t('inscriptions.inscription.no_program_yet_html', deadline: tour.final_performance_submission_deadline.strftime("%d/%m/%Y")) %>
                   </small>
-
                 </div>
-                  <%= link_to new_inscription_performance_path(inscription, tour_id: tour.id), class: 'btn btn-primary mt-3 text-white' do %>
-                    <span><i class="fas fa-plus me-2"></i> <%= t('inscriptions.inscription.create_my_program') %></span>
-                  <% end %>
+                <%= link_to new_inscription_performance_path(inscription, tour_id: tour.id), class: 'btn btn-primary mt-3 text-white' do %>
+                  <span><i class="fas fa-plus me-2"></i> <%= t('inscriptions.inscription.create_my_program') %></span>
+                <% end %>
               <% end %>
             </div>
           </div>
