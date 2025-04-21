@@ -65,6 +65,7 @@ class PrizesController < ApplicationController
         :title, :title_english,
         :other_reward, :other_reward_english,
         :amount,
+        :prize_type,
         :description, :description_english,
         :category_id
       )

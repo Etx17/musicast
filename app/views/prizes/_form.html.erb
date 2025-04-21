@@ -8,6 +8,7 @@
     <div class="col-sm-6">
 
       <%= f.input :title, label: t('prizes.form.title'), placeholder: t('prizes.form.title_placeholder') %>
+      <%= f.input :prize_type, label: t('prizes.form.prize_type'), collection: Prize.prize_types.keys.map { |type| [t("prizes.form.prize_types.#{type}"), type] } %>
       <%= f.input :other_reward, label: t('prizes.form.other_reward'), placeholder: t('prizes.form.other_reward_placeholder'), hint: t('prizes.form.other_reward_hint') %>
       <%= f.input :description, placeholder: t('prizes.form.description_placeholder') %>
       <%= f.input :title_english, label: t('prizes.form.title_english'), placeholder: t('prizes.form.title_english_placeholder') %>

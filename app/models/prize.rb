@@ -7,6 +7,7 @@ class Prize < ApplicationRecord
   validates :title, length: { minimum: 2, maximum: 100 }
   validates :description, length: { minimum: 2, maximum: 500 }
 
-  # Les prix peuvent avoir un prix en argent, en nature, ou rien (reconnaissance)
+  enum :prize_type, { monetary: 0, non_monetary: 1, recognition: 2 }
+
 
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_18_143840) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_21_152931) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -460,6 +460,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_18_143840) do
     t.string "title_english"
     t.text "description_english"
     t.string "other_reward_english"
+    t.integer "prize_type", default: 0
     t.index ["category_id"], name: "index_prizes_on_category_id"
   end
 

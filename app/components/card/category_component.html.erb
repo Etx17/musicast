@@ -5,40 +5,72 @@
   redirect: @redirect,
   bottom_button_links: @bottom_button_links,
   bottom_left_label: @bottom_left_label,
-  top_left_pill: @top_left_pill,
   bottom_left_pill: @bottom_left_pill,
+  rounded_image: true,
+  image_style: "height: 300px;"
 )) do %>
   <div class="p-3">
     <h5 class="h4 mb-3"><%= category.name %></h5>
 
-    <% if @category_description.present? %>
-      <p class="card-text small mb-2"><%= truncate(@category_description, length: 230) %></p>
+    <% if I18n.locale == :en && @category.description_english.present? %>
+      <p class="card-text small mb-2">
+        <%= @category.description_english.truncate(230) %>
+      </p>
+    <% else %>
+      <p class="card-text small mb-2">
+        <%= @category.description.truncate(230) %>
+      </p>
     <% end %>
 
 
     <div class="d-flex flex-wrap gap-2 mt-3 mb-2">
       <% if @discipline.present? %>
-        <span class="badge bg-primary text-white">
-          <i class="fas fa-music me-1"></i> <%= I18n.t("discipline.#{@discipline}") %>
+        <span class="badge bg-light text-secondary">
+          <i class="fas fa-music me-1"></i> <%= I18n.t("discipline.#{@discipline}").truncate(30) %>
         </span>
       <% end %>
 
       <% if category.tours.any? %>
-        <span class="badge bg-light text-dark">
-          <i class="fas fa-trophy me-1"></i> <%= category.tours.count %> <%= category.tours.count > 1 ? I18n.t('global.rounds') : I18n.t('global.round') %>
+        <span class="badge bg-light text-secondary">
+          <i class="fas fa-flag-checkered me-1"></i> <%= category.tours.count %> <%= category.tours.count > 1 ? I18n.t('global.rounds') : I18n.t('global.round') %>
         </span>
       <% end %>
 
 
     </div>
-
+    <div class="d-flex flex-wrap gap-2">
     <% if @biggest_prize_amount.present? %>
-      <div class="mt-3 d-flex align-items-center">
-        <span class="badge bg-success-secondary text-success me-2">
-          <i class="fas fa-award me-1"></i> <%= I18n.t('categories.card.first_prize') %>:
+      <div class=" d-flex align-items-center">
+        <span class="badge bg-light text-secondary me-2">
+          <i class="fas fa-trophy me-1"></i> <%= I18n.t('categories.card.first_prize') %>:
+        <strong><%= @biggest_prize_amount %>€</strong>
         </span>
-        <strong><%= @biggest_prize_amount %></strong>
       </div>
     <% end %>
+
+    <% if @monetary_prizes.any? %>
+      <div class=" d-flex align-items-center">
+        <span class="badge bg-light text-secondary me-2">
+          <i class="fas fa-money-bill me-1"></i> <%= I18n.t('prizes.form.prize_type_monetary') %>: <%= @monetary_prizes.count %>
+        </span>
+      </div>
+    <% end %>
+
+    <% if @non_monetary_prizes.any? %>
+      <div class=" d-flex align-items-center">
+        <span class="badge bg-light text-secondary me-2">
+          <i class="fas fa-gift me-1"></i> <%= I18n.t('prizes.form.prize_type_non_monetary') %>: <%= @non_monetary_prizes.count %>
+        </span>
+      </div>
+    <% end %>
+
+    <% if @recognition_prizes.any? %>
+      <div class=" d-flex align-items-center">
+        <span class="badge bg-light text-secondary me-2">
+          <i class="fas fa-award me-1"></i> <%= I18n.t('prizes.form.prize_type_recognition') %>: <%= @recognition_prizes.count %>
+        </span>
+      </div>
+    <% end %>
+    </div>
   </div>
 <% end %>

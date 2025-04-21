@@ -28,20 +28,15 @@ class Card::CategoryComponent < ViewComponent::Base
       @image = helpers.url_for(@photo)
     end
 
-    @category_description = if I18n.locale == :en && @category.description_english.present?
-      @category.description_english
-    else
-      @category.description
-    end
+
 
     price_text = @price_cents > 0 ?
       helpers.humanized_money_with_symbol(Money.new(@price_cents, @price_currency)) :
       I18n.t('global.free')
 
     @bottom_left_label = {
-      icon: "fas fa-coins",
       label: price_text,
-      class: "h5 text-primary"
+      class: "h4 text-secondary"
     }
 
     @pills = []
@@ -68,6 +63,10 @@ class Card::CategoryComponent < ViewComponent::Base
         class: "badge rounded-pill bg-success text-white"
       }
     end
+
+    @monetary_prizes = @category.prizes.where(prize_type: "monetary")
+    @non_monetary_prizes = @category.prizes.where(prize_type: "non_monetary")
+    @recognition_prizes = @category.prizes.where(prize_type: "recognition")
 
     @formatted_prize_pool = if @prize_pool_total_amount.present? && @prize_pool_total_amount > 0
       helpers.humanized_money_with_symbol(@prize_pool_total_amount)

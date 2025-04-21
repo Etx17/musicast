@@ -1459,6 +1459,11 @@ fr:
     form:
       create_prize: "Créer un Prix"
       title: "Titre"
+      prize_type: "Type de prix"
+      prize_type_hint: "Choisissez le type de prix"
+      prize_type_monetary: "Prix monétaires"
+      prize_type_non_monetary: "Prix en nature"
+      prize_type_recognition: "Prix de reconnaissance"
       title_english: "Titre (Anglais)"
       title_placeholder: "Entrez le titre du prix..."
       title_english_placeholder: "Entrez le titre du prix en anglais..."

@@ -1506,6 +1506,11 @@ en:
     form:
       create_prize: "Create Prize"
       title: "Title"
+      prize_type: "Prize type"
+      prize_type_hint: "Choose the type of prize"
+      prize_type_monetary: "Monetary prizes"
+      prize_type_non_monetary: "Non-monetary prizes"
+      prize_type_recognition: "Recognition prizes"
       title_english: "Title (English)"
       title_placeholder: "Enter prize title..."
       title_english_placeholder: "Enter prize title in English..."
