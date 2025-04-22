@@ -12,6 +12,7 @@
     <div class="modal-content">
       <%# 1. Header Section %>
       <div class="modal-header">
+        <h1 class="section-title text-center"><%= category.name %></h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
 
@@ -24,6 +25,9 @@
             <% end %>
             <% if category.edition_competition.rule_document_english.attached? %>
               <%= link_to t('edition_competitions.category_modal_infos.view_rules_english'), rails_blob_path(category.edition_competition.rule_document_english), target: 'blank', class: "btn btn-outline-dark rounded-4" %>
+            <% end %>
+            <% if !category.edition_competition.rule_document_english.attached? && !category.edition_competition.rule_document.attached? %>
+              <p>No rule document available</p>
             <% end %>
           </div>
 
