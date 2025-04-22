@@ -803,6 +803,7 @@ en:
       jury: "Jury"
       jury_members: "Jury Members"
       required_documents_summary: "Required Documents Summary"
+      no_rules_available: "No rules available"
     edition_competition:
       edit: "Edit"
       delete: "Delete this edition"
