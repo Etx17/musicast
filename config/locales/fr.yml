@@ -783,6 +783,7 @@ fr:
       jury: "Jury"
       jury_members: "Membres du jury"
       required_documents_summary: "Résumé des pièces requises"
+      create_application: "Créer mon dossier d'inscription"
       no_rules_available: "Aucun règlement disponible"
     edition_competition:
       edit: "Modifier"

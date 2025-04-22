@@ -163,7 +163,7 @@
 
         <%# 6. Required Documents %>
         <% if category.requirement_items.any? %>
-          <div class="required-documents">
+          <div class="required-documents mb-5">
             <h3 class="section-title mb-3"><%= t('edition_competitions.category_modal_infos.required_documents') %></h3>
             <div class="ms-3">
               <% category.requirement_items.each do |item| %>
@@ -176,6 +176,22 @@
             </div>
           </div>
         <% end %>
+
+        <%# Bottom Action Button %>
+        <div class="text-center mt-4">
+          <% if current_user&.candidat&.has_minimum_informations_for_inscription? == false %>
+            <%= link_to t('edition_competitions.category_modal_infos.create_application'), edit_candidat_path(current_user.candidat), class: "btn btn-primary btn-lg" %>
+          <% elsif current_user %>
+            <% if inscription = current_user.candidat.inscriptions.find_by(category_id: category.id) %>
+              <%= link_to t('edition_competitions.category_modal_infos.create_application'), edit_inscription_step_path(inscription, :program), class: "btn btn-primary btn-lg" %>
+            <% else %>
+              <%= link_to t('edition_competitions.category_modal_infos.create_application'), start_inscription_inscriptions_path(category_id: category.id), class: "btn btn-primary btn-lg" %>
+            <% end %>
+          <% else %>
+            <% session[:category_id] = category.id %>
+            <%= link_to t('edition_competitions.category_modal_infos.create_application'), new_user_registration_path, class: "btn btn-primary btn-lg" %>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>

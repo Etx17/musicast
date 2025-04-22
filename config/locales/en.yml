@@ -782,6 +782,7 @@ en:
       delete: "Delete"
 
     category_modal_infos:
+      create_application: "Create my application"
       view_rules: "View competition rules"
       view_rules_english: "View competition rules in English"
       selection_instructions: "Selection instructions"
@@ -804,6 +805,7 @@ en:
       jury_members: "Jury Members"
       required_documents_summary: "Required Documents Summary"
       no_rules_available: "No rules available"
+      create_application: "Create my application"
     edition_competition:
       edit: "Edit"
       delete: "Delete this edition"
