@@ -4,22 +4,22 @@ class Tour < ApplicationRecord
   has_one :address, as: :addressable, dependent: :destroy
   has_one :tour_requirement, dependent: :destroy
 
-  validate :new_day_start_time_before_max_end_of_day_time
+  # validate :new_day_start_time_before_max_end_of_day_time
   attr_accessor :creating_schedule
 
-  validates :title, :description, :start_date, :final_performance_submission_deadline, presence: true
-  validates :title, uniqueness: { scope: :category_id, message: "should be unique per category" }
-  validates :max_end_of_day_time, :new_day_start_time, presence: true, if: :creating_schedule
-  validates :max_end_of_day_time, :comparison => { :greater_than => :new_day_start_time, message: "Doit finir après le début " }, if: :creating_schedule
-  validates :max_end_of_day_time, :comparison => { :greater_than => :start_time, message: "Doit finir après le début " }, if: :creating_schedule
-  validates :new_day_start_time, :comparison => { :less_than => :max_end_of_day_time, message: "Doit commencer avant la fin " }, if: :creating_schedule
-  validates :title, length: { maximum: 50 }
-  validates :description, length: { maximum: 500 }
-  validates :final_performance_submission_deadline, comparison: { less_than: :start_date, message: "must be before the start date" }
-  validates :tour_number, numericality: { only_integer: true }
+  # validates :title, :description, :start_date, :final_performance_submission_deadline, presence: true
+  # validates :title, uniqueness: { scope: :category_id, message: "should be unique per category" }
+  # validates :max_end_of_day_time, :new_day_start_time, presence: true, if: :creating_schedule
+  # validates :max_end_of_day_time, :comparison => { :greater_than => :new_day_start_time, message: "Doit finir après le début " }, if: :creating_schedule
+  # validates :max_end_of_day_time, :comparison => { :greater_than => :start_time, message: "Doit finir après le début " }, if: :creating_schedule
+  # validates :new_day_start_time, :comparison => { :less_than => :max_end_of_day_time, message: "Doit commencer avant la fin " }, if: :creating_schedule
+  # validates :title, length: { maximum: 50 }
+  # validates :description, length: { maximum: 500 }
+  # validates :final_performance_submission_deadline, comparison: { less_than: :start_date, message: "must be before the start date" }
+  # validates :tour_number, numericality: { only_integer: true }
 
-  validates :start_date, :comparison => { greater_than_or_equal_to: Date.today, message: "Ne peux pas être dans le passé!" }
-  validates :final_performance_submission_deadline, :comparison => { greater_than_or_equal_to: Date.today, message: "Ne peux pas être dans le passé!" }
+  # validates :start_date, :comparison => { greater_than_or_equal_to: Date.today, message: "Ne peux pas être dans le passé!" }
+  # validates :final_performance_submission_deadline, :comparison => { greater_than_or_equal_to: Date.today, message: "Ne peux pas être dans le passé!" }
 
 
   accepts_nested_attributes_for :tour_requirement
@@ -38,14 +38,12 @@ class Tour < ApplicationRecord
 
     performances.each_with_index do |performance, index|
       if performance.is_qualified
-        # Lanelle je lui ai pas crée de performance, et du coup ca l'a pas trouvée
           next_tour_perf = Performance.find_or_create_by(tour: tour_next, inscription: performance.inscription)
           total_air_selection = performance.air_selection + next_tour.imposed_air_selection
 
           next_tour_perf.update(air_selection: total_air_selection, order: index + 1)
       end
     end
-    # Il devrait y avoir le même nombre de performances dans le tour suivant que de qualifiées dans le tour actuel.
     raise "Not the same number of performances in the next tour than in the current tour" if tour_next.performances.count != performances.select(&:is_qualified).count
   end
 
@@ -56,34 +54,23 @@ class Tour < ApplicationRecord
   end
 
   def generate_initial_performance_order
-    # Separate performances with no airs
     performances_with_airs, performances_without_airs = performances.partition { |performance| performance.airs.any? }
-
-    # Group performances by air names
     performances_by_air = performances_with_airs.group_by { |performance| performance.airs.map(&:title) }
 
-    # Create an empty list to hold the final order of performances
     final_order = []
 
-    # While there are still groups left
     while performances_by_air.values.flatten.any?
-      # Randomly select a group that doesn't contain the same air as the last performance in the final order list
       possible_groups = performances_by_air.keys - [final_order.last&.airs&.map(&:title)]
       possible_groups = performances_by_air.keys if possible_groups.empty? # fallback to all groups if no possible group found
       selected_group = possible_groups.sample
 
-      # Remove a performance from this group and add it to the final order list
       performance = performances_by_air[selected_group].shift
       final_order << performance
-
-      # If the group is now empty, remove it
       performances_by_air.delete(selected_group) if performances_by_air[selected_group].empty?
     end
 
-    # Add performances without airs to the end of the final order
     final_order.concat(performances_without_airs)
 
-    # Update the order of each performance
     final_order.each_with_index do |performance, index|
       performance.update(order: index)
     end

@@ -1,4 +1,4 @@
-<%= simple_form_for([@organism, @competition, @edition_competition, @category, @tour]) do |f| %>
+<%= simple_form_for([@organism, @competition, @edition_competition, @category, @tour], html: { id: "tour-form-#{@tour&.id}" }) do |f| %>
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors.present? %>
   <div class="form-inputs">
@@ -83,24 +83,20 @@
             <div class="col-md-3 col-sm-4 col-6" id="score_<%= score.id %>">
               <div class="position-relative" style="height: 150px;">
                 <div class="border rounded h-100 bg-light overflow-hidden">
-                  <%= button_to delete_score_organism_competition_edition_competition_category_tour_path(
+                  <%= link_to delete_score_organism_competition_edition_competition_category_tour_path(
                                 @organism,
                                 @competition,
                                 @edition_competition,
                                 @category,
-                                tour,
-                                score_id: score),
-                              method: :delete,
+                                @tour,
+                                score_id: score.id),
                               class: "position-absolute top-0 end-0 btn btn-sm btn-light m-1 z-1",
-                              form: {
-                                data: {
-                                  turbo_confirm: t('global.confirmations.are_you_sure'),
-                                  turbo_method: :delete,
-                                }
+                              data: {
+                                turbo_confirm: t('global.confirmations.are_you_sure'),
+                                turbo_method: :delete,
                               } do %>
                     <i class="fas fa-times"></i>
                   <% end %>
-
                   <div class="d-flex align-items-center justify-content-center h-100">
                     <% if score.content_type.include?('pdf') %>
                       <i class="fas fa-file-pdf fa-2x text-danger"></i>
@@ -116,7 +112,6 @@
                       <%= score.filename.to_s %>
                     </span>
                   </div>
-
                   <%= link_to rails_blob_path(score, disposition: 'attachment'),
                               class: "position-absolute bottom-0 start-50 translate-middle-x mb-1",
                               title: t('.download') do %>
@@ -182,10 +177,10 @@
       </div>
     <% end %>
 
-
+  <div class="form-actions text-center pb-3">
+    <%= f.button :submit, t('global.actions.save'), class:"btn btn-primary btn-lg px-5" %>
   </div>
 
-  <div class="form-actions">
-    <%= f.button :submit, t('global.actions.save'), class:"btn btn-primary" %>
-  </div>
+</div>
+
 <% end %>
