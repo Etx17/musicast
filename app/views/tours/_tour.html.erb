@@ -3,16 +3,16 @@
 
 
   <div class="d-flex justify-content-between align-items-center mb-3">
-    <div>
+    <div class=>
       <% if @tour.previous_tour.present? %>
-        <%= link_to organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour.previous_tour), class: "btn btn-outline-primary border mt-0" do %>
+        <%= link_to organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour.previous_tour), class: "btn btn-outline-primary border mt-2" do %>
           <i class="fas fa-arrow-left me-1"></i> <%= t('tours.tour.previous_tour') %>
         <% end %>
       <% end %>
     </div>
 
     <% if @tour.next_tour.present? %>
-      <%= link_to organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour.next_tour), class: "btn btn-primary border mt-0" do %>
+      <%= link_to organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour.next_tour), class: "btn btn-primary border mt-2" do %>
         <%= t('tours.tour.next_tour') %> <i class="fas fa-arrow-right ms-1"></i>
       <% end %>
     <% end %>
@@ -41,7 +41,7 @@
   </div>
 
   <!-- tabs -->
-  <ul class="nav nav-pills mb-3 justify-content-center border" id="myTab" role="tablist">
+  <ul class="nav nav-pills mb-3 justify-content-center" id="myTab" role="tablist">
     <li class="nav-item w-25 text-center" role="presentation">
       <a class="h-100 nav-link <%= 'active' unless @tour.has_planning? %>" id="order-tab" data-bs-toggle="tab" href="#order" role="tab" aria-controls="order" aria-selected="<%= !@tour.has_planning? %>" style="font-size: 1.1em;"><i class="fas fa-list pe-2"></i><%= t('tours.tour.order_of_passage') %></a>
     </li>

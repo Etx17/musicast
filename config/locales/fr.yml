@@ -1802,6 +1802,12 @@ fr:
       order: "Ordre"
       break: "Pause"
       delete_break_confirm: "Êtes-vous sûr de vouloir supprimer cette pause ?"
+      management_and_exports: "Gestion du planning & Exports"
+      you_can_now_manage: "Vous pouvez maintenant gérer le planning ou exporter des documents."
+      manage_planning: "Gérer le Planning"
+      exports_and_documents: "Exports & Documents"
+      planning_not_generated_yet: "Le planning n'a pas encore été généré."
+      download_schedule: "Télécharger le Planning"
 
     planning_jury_form:
       detailed_program: "Programme détaillé"
