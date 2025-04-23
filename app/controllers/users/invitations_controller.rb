@@ -58,16 +58,16 @@ class Users::InvitationsController < Devise::InvitationsController
 
   def configure_permitted_parameters
     super
-    devise_parameter_sanitizer.permit(:invite, keys: [:email, :inscription_role, jury_attributes: [:first_name, :last_name], candidat_attributes: [:first_name, :last_name]])
-    devise_parameter_sanitizer.permit(:accept_invitation, keys: [:email, :inscription_role, jury_attributes: [:first_name, :last_name], candidat_attributes: [:first_name, :last_name]])
+    devise_parameter_sanitizer.permit(:invite, keys: [:email, :inscription_role, jury_attributes: [:first_name, :last_name, :avatar], candidat_attributes: [:first_name, :last_name]])
+    devise_parameter_sanitizer.permit(:accept_invitation, keys: [:email, :inscription_role, jury_attributes: [:first_name, :last_name, :avatar], candidat_attributes: [:first_name, :last_name]])
   end
 
   def jury_params
-    params.require(:user).permit(:inscription_role, :email, jury_attributes: [:first_name, :last_name, :email])
+    params.require(:user).permit(:inscription_role, :email, jury_attributes: [:first_name, :last_name, :short_bio, :email, :avatar])
   end
 
   def candidat_params
-    params.require(:user).permit(:inscription_role, :email, candidat_attributes: [:first_name, :last_name])
+    params.require(:user).permit(:inscription_role, :email, candidat_attributes: [:first_name, :last_name, :avatar])
   end
 
 
