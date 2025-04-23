@@ -1,24 +1,13 @@
 <%# Refactored Top Section for Planning Management & Exports %>
 <h2 class=" text-center my-3"><%= t('tours.planning.tour_planning') %></h2>
-<div class="card shadow-sm mb-4">
-  <div class="card-header bg-light">
+<div class="card border-0 mb-4">
+  <div class="card-header ">
 
     <h4 class="mb-0"><i class="fas fa-cogs me-2 text-primary"></i> <%= t('tours.planning.management_and_exports') %></h4>
   </div>
   <div class="card-body">
 
     <% if @tour.has_planning? %>
-      <%# Actions available ONLY when planning exists - Added Stimulus for fade out %>
-      <div class="alert alert-success d-flex align-items-center mb-3" role="alert"
-           data-controller="fade-alert"
-           data-fade-alert-delay-value="5000">
-        <i class="fas fa-check-circle me-2"></i>
-        <div>
-          <%= t('tours.planning.planning_generated_success') %>
-          <small class="d-block text-muted"><%= t('tours.planning.you_can_now_manage') %></small>
-        </div>
-      </div>
-
       <div class="mb-4 pb-3 border-bottom">
         <h5 class="text-dark"><%= t('tours.planning.manage_planning') %></h5>
         <div class="d-flex flex-wrap gap-2">
@@ -95,8 +84,8 @@
   </div>
 </div>
 <% @tour.days_of_performances.each do |day| %>
-  <div class="col shadow-sm mx-2 bg-grey" data-controller="start-time" data-day="<%= day.strftime('%Y-%m-%d') %>">
-    <h2 class="text-center"><%= day.strftime('%a %d %B %Y') %></h2>
+  <div data-controller="start-time" data-day="<%= day.strftime('%Y-%m-%d') %>">
+    <h5 class="text-center"><%= day.strftime('%a %d %B %Y') %></h2>
     <%= simple_form_for :update_day, url: update_day_of_performance_and_subsequent_performances_organism_competition_edition_competition_category_tour_path(organism_id: @organism.id, competition_id: @competition.id, edition_competition_id: @edition_competition.id, category_id: @category.id, tour_id: @tour.id), method: :put, html: { class: 'edit-day-form', data: { controller: "date", action: "submit->date#validateDateFormat" } } do |f| %>
       <div class="d-flex w-100 justify-content-between align-items-start">
         <div class="d-flex" style="max-height: 40px;">
@@ -137,48 +126,65 @@
     </div>
 
     <!-- planning -->
-    <table class="table ">
-      <thead>
-        <tr>
-          <th scope="col"><%= t('tours.planning.candidate') %></th>
-          <th scope="col"><%= t('tours.planning.passage_time') %></th>
-          <th scope="col"><%= t('tours.planning.order') %></th>
-        </tr>
-      </thead>
-      <tbody>
-        <% unless @tour.performances.any?{|p| p.start_time.nil?} %>
-          <% items = (@tour.performances.to_a + @tour.pauses.to_a).sort_by { |item| item.start_time.strftime('%H:%M') } %>
+    <div class="table-component">
+      <table class="table-base" style="border-radius: 8px;">
+        <thead>
+          <tr class="table-header">
+            <th scope="col" class="table-cell"><%= t('tours.planning.candidate') %></th>
+            <th scope="col" class="table-cell"><%= t('tours.planning.passage_time') %></th>
+            <th scope="col" class="table-cell"><%= t('tours.planning.order') %></th>
+            <th scope="col" class="table-cell table-cell--actions"><%= t('global.action').pluralize %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% unless @tour.performances.any?{|p| p.start_time.nil?} %>
+            <% items = (@tour.performances.to_a + @tour.pauses.to_a).sort_by { |item| item.start_time.strftime('%H:%M') } %>
 
-          <% items.each_with_index do |item, index| %>
-            <% if item.is_a?(Performance) && item.start_date == day %>
-              <%= form_with(model: item, url: performance_path(item), method: :patch, local: true) do |f| %>
-                <tr>
-                  <td><%= link_to item.candidat.first_name, item.inscription  %></td>
-                  <td><%= f.time_field :start_time, value: item&.start_time.strftime('%H:%M'), id: "start_time_#{day}_#{index}", disabled: true %></td>
-                  <td><%= item.order  %></td>
+            <% items.each_with_index do |item, index| %>
+              <% if item.is_a?(Performance) && item.start_date == day %>
+                <%= form_with(model: item, url: performance_path(item), method: :patch, local: true) do |f| %>
+                  <tr class="table-row">
+                    <td class="table-cell"><%= link_to item.candidat.first_name, item.inscription %></td>
+                    <td class="table-cell"><%= f.time_field :start_time, value: item&.start_time.strftime('%H:%M'), id: "start_time_#{day}_#{index}", disabled: true %></td>
+                    <td class="table-cell"><%= item.order %></td>
+                    <td class="table-cell table-cell--actions">
+                      <%# No actions for performances %>
+                    </td>
+                  </tr>
+                <% end %>
+              <% elsif item.is_a?(Pause) && item.date == day %>
+                <tr class="table-row">
+                  <td class="table-cell"><%= t('tours.planning.break') %></td>
+                  <td class="table-cell" id="pause_time_<%= day %>_<%= index %>"><%= item.start_time.strftime('%H:%M') %> - <%= item.end_time.strftime('%H:%M') %></td>
+                  <td class="table-cell">-</td>
+                  <td class="table-cell table-cell--actions">
+                    <% last_pause_of_the_day = items.reverse.find { |i| i.is_a?(Pause) && i.date == day } %>
+                    <% if last_pause_of_the_day == item %>
+                      <%= render Dropdown::KebabComponent.new(
+                        items: [
+                          {
+                            icon: "fas fa-trash-alt",
+                            text: t('global.actions.delete'),
+                            path: organism_competition_edition_competition_category_tour_pause_path(@organism, @competition, @edition_competition, @category, @tour, item),
+                            method: :delete,
+                            data: { turbo_confirm: t('tours.planning.delete_break_confirm') }
+                          }
+                        ]
+                      ) %>
+                    <% end %>
+                  </td>
                 </tr>
               <% end %>
-            <% elsif item.is_a?(Pause) && item.date == day %>
-              <tr>
-                <td><%= t('tours.planning.break') %></td>
-                  <td id="pause_time_<%= day %>_<%= index %>"><%= item.start_time.strftime('%H:%M') %> - <%= item.end_time.strftime('%H:%M') %></td>
-                <td>
-                  <% last_pause_of_the_day = items.reverse.find { |i| i.is_a?(Pause) && i.date == day } %>
-
-                  <% if last_pause_of_the_day == item %>
-                    <%= button_to t('global.actions.delete'), organism_competition_edition_competition_category_tour_pause_path(@organism, @competition, @edition_competition, @category, @tour, item), method: :delete, data: { turbo_confirm: t('tours.planning.delete_break_confirm') }, class: 'btn btn-outline-danger' %>
-                  <% else %>
-                    <div class="btn btn-outline-danger disabled">
-                      <%= t('global.actions.delete') %>
-                    </div>
-                  <% end %>
-                </td>
-              </tr>
             <% end %>
           <% end %>
-        <% end %>
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+    </div>
   </div>
 
 <% end %>
+ <script>
+  setTimeout(function() {
+    document.getElementById('success-alert').style.display = 'none';
+  }, 5000);
+</script>
