@@ -58,21 +58,7 @@
   </div>
 </div>
 
-<%# Modals can remain here or at the end of the main file %>
-<!-- Modal for Jury Planning Config -->
-<div class="modal fade" id="planningJuryFormModal" tabindex="-1" aria-labelledby="planningJuryFormModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="planningJuryFormModalLabel"><%= t('tours.planning.jury_planning_configuration') %></h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="<%= t('global.actions.close') %>"></button>
-      </div>
-      <div class="modal-body">
-        <%= render "planning_jury_form" %>
-      </div>
-    </div>
-  </div>
-</div>
+<div class="container">
 <% @tour.days_of_performances.each do |day| %>
   <div data-controller="start-time" data-day="<%= day.strftime('%Y-%m-%d') %>">
     <h5 class="text-center"><%= day.strftime('%a %d %B %Y') %></h2>
@@ -132,16 +118,16 @@
 
             <% items.each_with_index do |item, index| %>
               <% if item.is_a?(Performance) && item.start_date == day %>
-                <%= form_with(model: item, url: performance_path(item), method: :patch, local: true) do |f| %>
-                  <tr class="table-row">
+                <%# <%= form_with(model: item, url: performance_path(item), method: :patch, local: true) do |f| %>
+                  <tr class=border-top >
                     <td class="table-cell"><%= link_to item.candidat.first_name, item.inscription %></td>
-                    <td class="table-cell"><%= f.time_field :start_time, value: item&.start_time.strftime('%H:%M'), id: "start_time_#{day}_#{index}", disabled: true %></td>
+                    <td class="table-cell"><%= item.start_time.strftime('%H:%M') %></td>
                     <td class="table-cell"><%= item.order %></td>
                     <td class="table-cell table-cell--actions">
                       <%# No actions for performances %>
                     </td>
                   </tr>
-                <% end %>
+                <%# <% end %>
               <% elsif item.is_a?(Pause) && item.date == day %>
                 <tr class="table-row">
                   <td class="table-cell"><%= t('tours.planning.break') %></td>
@@ -171,10 +157,25 @@
       </table>
     </div>
   </div>
-
+</div>
 <% end %>
  <script>
   setTimeout(function() {
     document.getElementById('success-alert').style.display = 'none';
   }, 5000);
 </script>
+
+<!-- Modal for Jury Planning Config -->
+<div class="modal fade" id="planningJuryFormModal" tabindex="-1" aria-labelledby="planningJuryFormModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="planningJuryFormModalLabel"><%= t('tours.planning.jury_planning_configuration') %></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="<%= t('global.actions.close') %>"></button>
+      </div>
+      <div class="modal-body">
+        <%= render "planning_jury_form" %>
+      </div>
+    </div>
+  </div>
+</div>
