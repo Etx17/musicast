@@ -1,5 +1,12 @@
-<%# <p style="color: green"><%= notice %>
-<div class="p-3">
-<%= link_to content_tag(:i, '', class: 'fas fa-arrow-left'), :back, class: "btn btn-outline-dark border-0 mb-3" %>
-<%= render @tour if current_user.organisateur %>
+<h1 class="">
+  <% if I18n.locale != :en %>
+    <%= @tour.title.upcase %>
+  <% else %>
+    <%= @tour.title_english.upcase %>
+  <% end %>
+</h1>
+
+<div class="pb-2">
+  <%= render Navigation::BackLinkComponent.new(link_path: organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category), link_text: @tour.category.name) %>
 </div>
+<%= render @tour if current_user.organisateur %>
