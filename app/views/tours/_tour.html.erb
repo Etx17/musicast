@@ -43,13 +43,13 @@
   <!-- tabs -->
   <ul class="nav nav-pills mb-3 justify-content-center" id="myTab" role="tablist">
     <li class="nav-item w-25 text-center" role="presentation">
-      <a class="h-100 nav-link <%= 'active' unless @tour.has_planning? %>" id="order-tab" data-bs-toggle="tab" href="#order" role="tab" aria-controls="order" aria-selected="<%= !@tour.has_planning? %>" style="font-size: 1.1em;"><i class="fas fa-list pe-2"></i><%= t('tours.tour.order_of_passage') %></a>
+      <a class="h-100 nav-link <%= 'active' unless @tour.has_planning? %>" id="order-tab" data-bs-toggle="tab" href="#order" role="tab" aria-controls="order" aria-selected="<%= !@tour.has_planning? %>" style="font-size: 1.1em;"><i class="fas fa-list pe-2"></i><%= t('tours.tour.order_of_passage').upcase %></a>
     </li>
     <li class="nav-item w-25 text-center" role="presentation">
-      <a class=" h-100 nav-link <%= 'active' if @tour.has_planning? && @tour.performances.none?{|p| p.is_qualified } %>" id="planning-tab" data-bs-toggle="tab" href="#planning" role="tab" aria-controls="planning" aria-selected="<%= @tour.has_planning? %>" style="font-size: 1.1em;"><i class="fas fa-calendar-alt pe-2"></i><%= t('tours.tour.planning') %></a>
+      <a class=" h-100 nav-link <%= 'active' if @tour.has_planning? && @tour.performances.none?{|p| p.is_qualified } %>" id="planning-tab" data-bs-toggle="tab" href="#planning" role="tab" aria-controls="planning" aria-selected="<%= @tour.has_planning? %>" style="font-size: 1.1em;"><i class="fas fa-calendar-alt pe-2"></i><%= t('tours.tour.planning').upcase %></a>
     </li>
     <li class="nav-item w-25 text-center" role="presentation">
-      <a class=" h-100 nav-link <%= 'active' if @tour.performances.any?{|p| p.is_qualified }  %>" id="results-tab" data-bs-toggle="tab" href="#results" role="tab" aria-controls="results" aria-selected="" style="font-size: 1.1em;"><i class="fas fa-trophy pe-2"></i><%= t('tours.tour.results') %></a>
+      <a class=" h-100 nav-link <%= 'active' if @tour.performances.any?{|p| p.is_qualified }  %>" id="results-tab" data-bs-toggle="tab" href="#results" role="tab" aria-controls="results" aria-selected="" style="font-size: 1.1em;"><i class="fas fa-trophy pe-2"></i><%= t('tours.tour.results').upcase %></a>
     </li>
   </ul>
 
