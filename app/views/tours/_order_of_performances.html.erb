@@ -55,13 +55,13 @@
       <p class="text-center text-secondary"><%= t('tours.order_of_performances.change_order_instructions') %> <i class="fas fa-check"></i> <%= t('tours.order_of_performances.or_shuffle') %> <i class="fas fa-random"></i></p>
 
 
-      <div class="overflow-scroll">
+      <div class="overflow-scroll rounded-8">
       <table class="table table-bordered caption-top">
         <thead>
           <tr>
             <th class="p-2 text-center bg-grey "><%= t('tours.order_of_performances.candidate') %></th>
             <th class="p-2 text-center bg-grey "><%= t('tours.order_of_performances.order') %></th>
-            <th class="p-2 text-center bg-grey "><%= t('tours.order_of_performances.presented_airs') %></th>
+            <th class="p-2 text-center bg-grey " style="min-width: 450px;"><%= t('tours.order_of_performances.presented_airs') %></th>
             <% if @category.is_accompagnated_by_pianist? %>
               <th class="p-2 text-center bg-grey "><%= t('tours.order_of_performances.pianist_accompanist') %></th>
             <% end %>
@@ -90,7 +90,7 @@
                 </td>
                 <td class="p-2 text-center bg-light" style="min-width: 130px;">
                   <%= form_with url: update_order_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour, performance_id: performance.id), method: :post do %>
-                    <div class="d-flex">
+                    <div class="d-flex gap-2">
                     <%= number_field_tag "new_order", performance.order, class: "form-control", min: 1, max: @tour.performances.count %>
                     <%= button_tag(type: 'submit', class: "btn btn-outline-dark", data: { turbo_confirm: t('tours.order_of_performances.change_order_confirm') }) do %>
                       <i class="fas fa-check"></i> <!-- for check -->
@@ -98,14 +98,18 @@
                     </div>
                   <% end %>
                 <td class="p-2 text-center bg-light text-secondary w-75">
-                  <div class="accordion" id="accordionExample">
+                  <div class="accordion" id="accordion<%= performance.id %>">
                     <div class="accordion-item">
-                      <h2 class="accordion-header" id="headingOne">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                          <%= truncate(performance&.airs&.first&.title, length: 50) %> <% if performance.airs.count > 1 %> <%= t('tours.order_of_performances.and_others', count: performance.airs.count - 1) %> <% end %> - <%= t('tours.order_of_performances.see_more') %>
+                      <h2 class="accordion-header" id="heading<%= performance.id %>">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapse<%= performance.id %>"
+                                aria-expanded="false" aria-controls="collapse<%= performance.id %>">
+                          <%= truncate(performance&.airs&.first&.title, length: 30) %> <% if performance.airs.count > 1 %> <%= t('tours.order_of_performances.and_others', count: performance.airs.count - 1) %> <% end %> - <%= t('tours.order_of_performances.see_more') %>
                         </button>
                       </h2>
-                      <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                      <div id="collapse<%= performance.id %>" class="accordion-collapse collapse"
+                           aria-labelledby="heading<%= performance.id %>"
+                           data-bs-parent="#accordion<%= performance.id %>">
                         <div class="accordion-body">
                           <% performance&.airs&.each do |air| %>
                             <div class="border border-secondary p-1">
@@ -137,7 +141,7 @@
                   </td>
                 <% end %>
                 <td class="p-2 pt-4 text-center bg-light <%= performance.minutes == 0 ? 'text-danger' : 'text-secondary' %>">
-                  <%= performance.minutes %>
+                  <%= performance.minutes %>'
                 </td>
                 <td class="p-2 pt-4 text-center bg-light text-secondary">
                   <%= render Pill::StatusComponent.new(text: performance.inscription.time_preference, color: time_preference_color(performance.inscription.time_preference)) %>
