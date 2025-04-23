@@ -56,6 +56,7 @@ Rails.application.routes.draw do
               member do
                 delete 'scores/:score_id', to: 'tours#delete_score', as: 'delete_score'
                 get 'download_pianist_scores/:pianist_id', to: 'tours#download_pianist_scores', as: :download_pianist_scores
+                get 'download_schedule_pdf'
               end
               patch :reorder_tours, on: :collection
               post 'update_order', on: :member

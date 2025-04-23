@@ -1,6 +1,6 @@
 require 'zip'
 class ToursController < ApplicationController
-  before_action :set_tour, only: %i[download_pianist_scores download_all_scores download_score assign_pianist_to_performance_manually assign_pianist store_form_data move_to_next_tour qualify_performance shuffle show edit update destroy update_order update_day_of_performance_and_subsequent_performances]
+  before_action :set_tour, only: %i[download_schedule_pdf download_pianist_scores download_all_scores download_score assign_pianist_to_performance_manually assign_pianist store_form_data move_to_next_tour qualify_performance shuffle show edit update destroy update_order update_day_of_performance_and_subsequent_performances]
   before_action :set_context, only: %i[reorder_tours assign_pianist_to_performance_manually assign_pianist store_form_data move_to_next_tour qualify_performance shuffle new create show edit update destroy update_order update_day_of_performance_and_subsequent_performances]
 
   def index
@@ -297,6 +297,35 @@ class ToursController < ApplicationController
     ensure
       temp_file.close
       temp_file.unlink
+    end
+  end
+
+  def download_schedule_pdf
+    # @tour is set by before_action :set_tour
+    @performances = @tour.performances.order(:start_date, :start_time)
+    @pauses = @tour.pauses.order(:date, :start_time)
+    all_items = (@performances.to_a + @pauses.to_a)
+
+    grouped_by_day = all_items.group_by { |item| item.respond_to?(:start_date) ? item.start_date : item.date }
+
+    sorted_items_within_day = grouped_by_day.transform_values do |items_on_day|
+      items_on_day.sort_by(&:start_time)
+    end
+
+    @schedule_items_by_day = sorted_items_within_day.sort_by { |day, _| day }.to_h
+
+    respond_to do |format|
+      format.pdf do
+        render pdf: "schedule_#{@tour.title.parameterize}_#{@tour.category.name.parameterize}",
+               template: "tours/download_schedule_pdf",
+               layout: 'pdf',
+               formats: [:html],
+               page_size: 'A4',
+               orientation: 'Portrait',
+               margin: { top: 10, bottom: 10, left: 10, right: 10 },
+               footer: { right: '[page] / [topage]' },
+               disposition: 'attachment'
+      end
     end
   end
 
