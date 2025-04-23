@@ -13,7 +13,6 @@
     </div>
 
   </div>
-
   <div class="container bg-light card-body">
     <div class="row g-4 pb-3">
       <% if category.tours.none? %>
@@ -74,7 +73,7 @@
 
 
     <!-- Modal New Tour-->
-    <div class="modal fade" id="addTourModal" tabindex="-1" aria-labelledby="addTourModalLabel" aria-hidden="true">
+    <div class="modal fade modal-lg" id="addTourModal" tabindex="-1" aria-labelledby="addTourModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -83,9 +82,6 @@
           </div>
           <div class="modal-body">
             <%= render "tours/form", tour: @tour %>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><%= t("global.actions.close") %></button>
           </div>
         </div>
       </div>

@@ -42,7 +42,13 @@ class ToursController < ApplicationController
     authorize @tour
     creating_schedule = params.fetch(:tour, {}).delete(:creating_schedule) { false }
     session[:active_tab] = "tours-tab"
-    if @tour.update(tour_params)
+
+    update_params = tour_params
+    if update_params.key?(:scores) && (update_params[:scores].blank? || update_params[:scores].all?(&:blank?))
+      update_params.delete(:scores)
+    end
+
+    if @tour.update(update_params)
 
       if creating_schedule == "true"
         if @tour.pauses.any? || @tour.performances.any? { |p| p.start_time.present? }
@@ -234,12 +240,12 @@ class ToursController < ApplicationController
   end
 
   def delete_score
+
     @tour = Tour.find(params[:id])
     @score = @tour.scores.find(params[:score_id])
     @score.purge
-
     respond_to do |format|
-      format.turbo_stream { render turbo_stream: turbo_stream.remove("score_#{params[:score_id]}") }
+      # format.turbo_stream { render turbo_stream: turbo_stream.remove("score_#{params[:score_id]}") }
       format.html { redirect_to request.referrer }
     end
   end

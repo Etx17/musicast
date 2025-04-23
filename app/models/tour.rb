@@ -38,14 +38,12 @@ class Tour < ApplicationRecord
 
     performances.each_with_index do |performance, index|
       if performance.is_qualified
-        # Lanelle je lui ai pas crée de performance, et du coup ca l'a pas trouvée
           next_tour_perf = Performance.find_or_create_by(tour: tour_next, inscription: performance.inscription)
           total_air_selection = performance.air_selection + next_tour.imposed_air_selection
 
           next_tour_perf.update(air_selection: total_air_selection, order: index + 1)
       end
     end
-    # Il devrait y avoir le même nombre de performances dans le tour suivant que de qualifiées dans le tour actuel.
     raise "Not the same number of performances in the next tour than in the current tour" if tour_next.performances.count != performances.select(&:is_qualified).count
   end
 
@@ -56,34 +54,23 @@ class Tour < ApplicationRecord
   end
 
   def generate_initial_performance_order
-    # Separate performances with no airs
     performances_with_airs, performances_without_airs = performances.partition { |performance| performance.airs.any? }
-
-    # Group performances by air names
     performances_by_air = performances_with_airs.group_by { |performance| performance.airs.map(&:title) }
 
-    # Create an empty list to hold the final order of performances
     final_order = []
 
-    # While there are still groups left
     while performances_by_air.values.flatten.any?
-      # Randomly select a group that doesn't contain the same air as the last performance in the final order list
       possible_groups = performances_by_air.keys - [final_order.last&.airs&.map(&:title)]
       possible_groups = performances_by_air.keys if possible_groups.empty? # fallback to all groups if no possible group found
       selected_group = possible_groups.sample
 
-      # Remove a performance from this group and add it to the final order list
       performance = performances_by_air[selected_group].shift
       final_order << performance
-
-      # If the group is now empty, remove it
       performances_by_air.delete(selected_group) if performances_by_air[selected_group].empty?
     end
 
-    # Add performances without airs to the end of the final order
     final_order.concat(performances_without_airs)
 
-    # Update the order of each performance
     final_order.each_with_index do |performance, index|
       performance.update(order: index)
     end
