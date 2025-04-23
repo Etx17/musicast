@@ -1,72 +1,62 @@
 <%# Refactored Top Section for Planning Management & Exports %>
 <h2 class=" text-center my-3"><%= t('tours.planning.tour_planning') %></h2>
 <div class="card border-0 mb-4">
-  <div class="card-header ">
-
-    <h4 class="mb-0"><i class="fas fa-cogs me-2 text-primary"></i> <%= t('tours.planning.management_and_exports') %></h4>
+  <div class="card-header">
+    <h4 class="mb-0 text-secondary"><i class="fi fi-rs-settings me-2 text-secondary"></i> <%= t('tours.planning.management_and_exports') %></h4>
   </div>
   <div class="card-body">
-
     <% if @tour.has_planning? %>
-      <div class="mb-4 pb-3 border-bottom">
-        <h5 class="text-dark"><%= t('tours.planning.manage_planning') %></h5>
-        <div class="d-flex flex-wrap gap-2">
-          <%# Reconfigure Button - Now btn-primary %>
-          <button class="btn btn-primary" data-bs-target="#tourConfirmationModal" data-bs-toggle="modal" data-bs-dismiss="modal" aria-label="<%= t('global.actions.close') %>">
-            <i class="fas fa-sync-alt me-1"></i>
-            <%= t('tours.planning.reconfigure_planning') %>
-            <small class="d-block text-muted opacity-75"><%= t('tours.planning.modify_constraints') %></small>
-          </button>
+      <%# All buttons in one row with proper wrapping %>
+      <div class="d-flex flex-wrap gap-3 align-items-center mb-3">
+        <%# Reconfigure Button %>
+        <button type="button" class="btn btn-primary btn-md" data-bs-target="#tourConfirmationModal" data-bs-toggle="modal" data-bs-dismiss="modal">
+          <i class="fas fa-sync-alt me-2"></i>
+          <span><%= t('tours.planning.reconfigure_planning') %></span>
+        </button>
 
-          <%# Email Candidates Button - Now btn-primary %>
-          <% email_list = @performances.map { |p| p.candidat.user.email }.join(',') %>
-          <a href="mailto:<%= email_list %>?subject=<%= t('tours.planning.email_subject') %>&body=<%= t('tours.planning.email_body') %>" class="btn btn-primary">
-            <i class="fas fa-envelope me-1"></i>
-            <%= t('tours.planning.send_email_to_all_candidates') %>
-            <small class="d-block text-muted opacity-75">(<%= email_list.split(',').count %> <%= t('tours.planning.recipients') %>)</small>
-          </a>
-        </div>
+        <%# Email Candidates Button %>
+        <% email_list = @performances.map { |p| p.candidat.user.email }.join(',') %>
+        <a href="mailto:<%= email_list %>?subject=<%= t('tours.planning.email_subject') %>&body=<%= t('tours.planning.email_body') %>" class="btn btn-primary btn-md">
+          <i class="fas fa-envelope me-2"></i>
+          <span><%= t('tours.planning.send_email_to_all_candidates') %></span>
+          <span class="badge bg-light text-dark ms-2"><%= email_list.split(',').count %></span>
+        </a>
+
+        <%# Download Schedule Button %>
+        <%= link_to download_schedule_pdf_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour, format: :pdf),
+                    class: "btn btn-primary btn-md #{'disabled' unless @tour.has_planning?}",
+                    aria_disabled: ('true' unless @tour.has_planning?),
+                    tabindex: ('-1' unless @tour.has_planning?) do %>
+          <i class="fas fa-file-pdf me-2"></i>
+          <span><%= t('tours.planning.download_schedule') %></span>
+        <% end %>
+
+        <%# Jury Folder Configure Button %>
+        <button type="button" class="btn btn-primary btn-md" data-bs-toggle="modal" data-bs-target="#planningJuryFormModal">
+          <i class="fas fa-cog me-2"></i>
+          <span><%= t('tours.planning.configure_jury_folder') %></span>
+        </button>
+
+        <%# Jury Folder Download Button - Only if configured %>
+        <% unless session[:detailed_program].nil? %>
+          <%= link_to show_jury_pdf_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour),
+                      class: "btn btn-primary btn-md",
+                      target: '_blank' do %>
+            <i class="fas fa-download me-2"></i>
+            <span><%= t('tours.planning.download_jury_folder_pdf') %></span>
+          <% end %>
+        <% end %>
       </div>
     <% else %>
       <div class="alert alert-warning d-flex align-items-center mb-3" role="alert">
-         <i class="fas fa-exclamation-triangle me-2"></i>
-         <div>
-           <%= t('tours.planning.planning_not_generated_yet') %>
-           <%# Consider adding a link/button here to trigger generation if appropriate %>
-         </div>
-      </div>
-    <% end %>
-
-    <%# Exports Section - Always visible, but download links might be disabled %>
-    <div>
-      <h5 class="text-dark"><%= t('tours.planning.exports_and_documents') %></h5>
-      <div class="d-flex flex-wrap gap-2">
-        <%# Download Schedule Button - Now btn-primary %>
-        <%= link_to download_schedule_pdf_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour, format: :pdf),
-                    class: "btn btn-primary #{'disabled' unless @tour.has_planning?}", # Disable if no planning
-                    aria_disabled: ('true' unless @tour.has_planning?),
-                    tabindex: ('-1' unless @tour.has_planning?) do %>
-          <i class="fas fa-file-pdf me-1"></i> <%= t('tours.planning.download_schedule') %>
-        <% end %>
-
-        <%# Jury Folder Button Group - Configure is now btn-primary %>
-        <div class="btn-group">
-           <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#planningJuryFormModal">
-             <i class="fas fa-cog me-1"></i> <%= t('tours.planning.configure_jury_folder') %>
-           </button>
-           <% unless session[:detailed_program].nil? %>
-             <%= link_to show_jury_pdf_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour),
-                         class: "btn btn-primary mx-2",
-                         target: '_blank' do %>
-                <i class="fas fa-download me-1"></i> <%= t('tours.planning.download_jury_folder_pdf') %>
-             <% end %>
-           <% end %>
+        <i class="fas fa-exclamation-triangle me-2"></i>
+        <div>
+          <%= t('tours.planning.planning_not_generated_yet') %>
         </div>
       </div>
-    </div>
-
-  </div> <%# End card-body %>
-</div> <%# End card %>
+    <% end %>
+  </div>
+</div>
 
 <%# Modals can remain here or at the end of the main file %>
 <!-- Modal for Jury Planning Config -->

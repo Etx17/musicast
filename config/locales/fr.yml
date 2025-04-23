@@ -1802,7 +1802,7 @@ fr:
       order: "Ordre"
       break: "Pause"
       delete_break_confirm: "Êtes-vous sûr de vouloir supprimer cette pause ?"
-      management_and_exports: "Gestion du planning & Exports"
+      management_and_exports: "Configuration du planning, du dossier jury & documents"
       you_can_now_manage: "Vous pouvez maintenant gérer le planning ou exporter des documents."
       manage_planning: "Gérer le Planning"
       exports_and_documents: "Exports & Documents"
