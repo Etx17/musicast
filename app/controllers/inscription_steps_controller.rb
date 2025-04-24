@@ -44,18 +44,7 @@ class InscriptionStepsController < ApplicationController
 
       item_requirement.submitted_file.attach(params[:image])
 
-      # S'assurer que les valeurs DPI sont enregistrées APRÈS avoir attaché le fichier
-      # et AVANT de sauvegarder l'enregistrement
-      if metadata && metadata[:resolution].present?
-        item_requirement.dpi_x = metadata[:resolution][0]
-        item_requirement.dpi_y = metadata[:resolution][1]
-
-        # Ajouter les métadonnées complètes dans un attribut metadata
-        item_requirement.metadata = metadata if item_requirement.respond_to?(:metadata=)
-      end
-
-      # S'assurer que l'enregistrement est sauvegardé avec force
-      item_requirement.save!
+      item_requirement.save
 
       if item_requirement.submitted_file.attached?
         item_requirement.reload
