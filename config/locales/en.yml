@@ -967,6 +967,7 @@ en:
     offer: "Offer"
     not_available_abbr: "N/A"
     recommendation_letter: "Recommendation letter"
+    photo: "Photo"
     parental_authorization: "Parental authorization"
     motivation_essay: "Motivation essay"
     instruments:
@@ -1523,6 +1524,10 @@ en:
     form:
       create_prize: "Create Prize"
       title: "Title"
+      prize_types:
+        monetary: "Monetary prizes"
+        non_monetary: "Non-monetary prizes (roles, concerts, etc.)"
+        recognition: "Recognition prizes"
       prize_type: "Prize type"
       prize_type_hint: "Choose the type of prize"
       prize_type_monetary: "Monetary prizes"

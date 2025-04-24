@@ -1,4 +1,5 @@
- <div class="card mb-5 border-0 pb-3">
+<div class="card mb-5 border-0 pb-3">
+
   <div class="bg-light-grey card-header d-flex justify-content-between align-items-center">
     <div>
       <div class="d-flex gap-3 align-items-center">
@@ -31,10 +32,25 @@
          <div class="modal-body" data-controller="requirement" data-action="click->requirement#changeIdOfInput">
             <%= simple_form_for([@organism, @competition, @edition_competition, @category, RequirementItem.new]) do |f| %>
               <%= f.input :title, placeholder: t('categories.requirement_items_section.title_placeholder'), label: t('categories.requirement_items_section.item_title'), input_html: { id: "requirement-#{@category.name}-#{Time.now.to_i}" }, data: { requirement_target: "title" } %>
-              <%= f.input :type_item, label: t('categories.requirement_items_section.item_type'),
-                         collection: RequirementItem.type_items.keys,
-                         prompt: t('categories.requirement_items_section.select_type'),
-                         input_html: { data: { action: "change->requirement#toggleRatioField" } } %>
+
+              <div class="form-group mb-3">
+                <label class="form-label"><%= t('categories.requirement_items_section.item_type') %></label>
+                <div class="type-items-grid" data-requirement-target="typeItemsGrid">
+                  <% RequirementItem.type_items.keys.each do |type| %>
+                    <div class="type-item-tile"
+                         data-type="<%= type %>"
+                         data-action="click->requirement#selectTypeItem">
+                      <div class="tile-icon">
+                        <%= image_tag icon_for(type), alt: type, class: "img-fluid", style: "max-width: 40px; max-height: 40px;" %>
+                      </div>
+                      <div class="tile-label">
+                        <%= t("global.#{type}") %>
+                      </div>
+                    </div>
+                  <% end %>
+                </div>
+                <%= f.hidden_field :type_item, data: { requirement_target: "selectedTypeItem" } %>
+              </div>
 
               <div id="ratio-field" class="d-none">
                 <%= f.input :ratio,
@@ -82,17 +98,15 @@
               <%= image_tag icon_for(item.type_item), alt: item.type_item, class: "img-fluid w-100 d-block ", style: "object-fit: cover; aspect-ratio: 1 / 1; overflow: hidden; ", loading: 'lazy' %>
             </div>
 
-            <!-- French description -->
             <p class="card-text text-secondary mb-0"><%= item.description_item %></p>
 
-            <!-- English description (if available) -->
             <% if item.description_item_english.present? %>
               <div class="mt-1">
                 <p class="small card-text text-secondary" style="font-style: italic;"><%= item.description_item_english %></p>
               </div>
             <% end %>
 
-            <span class="badge bg-secondary-secondary text-secondary rounded-pill border border-secondary" style="width: fit-content;"><%= t("type_item.#{item.type_item}") %></span>
+            <span class="badge bg-secondary-secondary text-secondary rounded-pill border border-secondary" style="width: fit-content;"><%= t("global.#{item.type_item}") %></span>
 
             <% if item.is_photo? && item.ratio.present? %>
               <span class="badge bg-info text-dark rounded-pill border border-info mt-1" style="width: fit-content;">
@@ -114,38 +128,3 @@
     </div>
   </div>
 </div>
-
-<% content_for :javascript do %>
-  <script>
-    document.addEventListener('turbo:load', function() {
-      if (typeof requirement !== 'undefined') {
-        requirement.toggleRatioField = function(event) {
-          const typeValue = event.target.value;
-          const ratioField = document.getElementById('ratio-field');
-
-          if (typeValue === 'photo') {
-            ratioField.classList.remove('d-none');
-          } else {
-            ratioField.classList.add('d-none');
-          }
-        };
-
-        requirement.updateRatioPreview = function(event) {
-          const ratioValue = parseFloat(event.target.value);
-          const previewEl = document.getElementById('ratio-preview');
-
-          if (!isNaN(ratioValue) && previewEl) {
-            const previewWidth = 200;
-            const previewHeight = previewWidth / ratioValue;
-
-            const maxHeight = 300;
-            const finalHeight = Math.min(previewHeight, maxHeight);
-
-            previewEl.style.width = previewWidth + 'px';
-            previewEl.style.height = finalHeight + 'px';
-          }
-        };
-      }
-    });
-  </script>
-<% end %>

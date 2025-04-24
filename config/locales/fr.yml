@@ -952,6 +952,7 @@ fr:
     youtube_link: "Lien YouTube"
     recommendation_letter: "Lettre de recommandation"
     parental_authorization: "Autorisation parentale"
+    photo: "Photo"
     motivation_essay: "Lettre de motivation"
     profile: "Profil"
     program: "Programme"
@@ -1475,6 +1476,10 @@ fr:
     form:
       create_prize: "Créer un Prix"
       title: "Titre"
+      prize_types:
+        monetary: "Prix monétaires"
+        non_monetary: "Prix en nature (rôles, concerts, etc.)"
+        recognition: "Prix de reconnaissance"
       prize_type: "Type de prix"
       prize_type_hint: "Choisissez le type de prix"
       prize_type_monetary: "Prix monétaires"
