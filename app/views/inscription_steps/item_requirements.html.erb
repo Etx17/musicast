@@ -1,4 +1,6 @@
 <div class="container mt-4">
+
+
   <!-- Application file button - only displayed when complete -->
   <% if @inscription.has_complete_requirement_items? && @inscription.is_payed? && @inscription.has_complete_airs? %>
     <div class="d-flex justify-content-end mb-3">
@@ -27,7 +29,13 @@
         </div>
       <% end %>
 
-      <%= form_for @inscription, url: wizard_path(:item_requirements, action: "update"), method: :put, html: { id: "item-requirements-form" } do |f| %>
+      <% if flash[:alert] %>
+        <div class="alert alert-danger">
+          <%= flash[:alert] %>
+        </div>
+      <% end %>
+
+      <%= form_for @inscription, url: wizard_path(:item_requirements, action: "update"), method: :put, html: { id: "item-requirements-form", multipart: true } do |f| %>
         <div class="d-flex flex-wrap gap-2">
           <% @inscription.inscription_item_requirements.each do |item_requirement| %>
             <div class="card m-2" style="width: calc(50% - 24px); max-height: 500px; overflow-y: auto;">
@@ -84,75 +92,56 @@
                                   },
                                   required: true %>
                   <% when 'photo' %>
-                    <div data-controller="image-cropper"
-                         data-image-cropper-aspect-ratio-value="<%= item_requirement.requirement_item.ratio.present? ? item_requirement.requirement_item.ratio : 1.0 %>">
+                    <div>
+                      <div class="mb-3">
+                        <label class="form-label"><%= t('inscriptions.steps.item_requirements.photo') %></label>
 
-                      <!-- Champ de fichier caché -->
-                      <%= irf.input :submitted_file, as: :file,
-                                    label: t('inscriptions.steps.item_requirements.photo'),
-                                    input_html: {
-                                      class: "file-input",
-                                      data: {
-                                        action: "change->image-cropper#onFileSelect change->file-validator#validateFile",
-                                        image_cropper_target: "input"
-                                      },
-                                      accept: "image/*"
-                                    } %>
+                        <!-- Prévisualisation qui agit comme bouton d'upload -->
+                        <div class="text-center mb-3">
+                          <% if irf.object.submitted_file.attached? && irf.object.submitted_file.persisted? %>
+                            <div class="position-relative">
+                              <%= image_tag url_for(irf.object.submitted_file), class: "img-fluid rounded", style: "max-height: 200px;", id: "upload_submitted_file_" + item_requirement.id.to_s + "_file_preview" %>
+                              <%= link_to purge_item_image_inscription_steps_path(@inscription, item_id: item_requirement.id),
+                                    class: "btn btn-sm btn-danger position-absolute top-0 end-0 m-2",
+                                    data: { confirm: "Êtes-vous sûr de vouloir supprimer cette image ?" } do %>
+                                <i class="fas fa-trash"></i>
+                              <% end %>
+                            </div>
+                            <%# DPI information %>
+                            <% if irf.object.submitted_file.record.dpi_x.present? && irf.object.submitted_file.record.dpi_y.present? %>
+                              DPI: <%= irf.object.submitted_file.record.dpi_x %>x<%= irf.object.submitted_file.record.dpi_y %>
+                            <% end %>
+                            <div class="mt-2" id="upload-status-<%= item_requirement.id %>">
+                              <small class="text-success"><i class="fas fa-check-circle"></i> Image enregistrée</small>
+                            </div>
 
-                      <!-- Aperçu de l'image recadrée -->
-                      <div class="mt-3">
-                        <% if irf.object.submitted_file.attached? && irf.object.submitted_file.persisted? %>
-                          <div class="preview-container">
-                            <%= image_tag url_for(irf.object.submitted_file),
-                                        class: "img-fluid rounded mb-3",
-                                        style: "max-height: 200px;",
-                                        data: { image_cropper_target: "croppedResult" } %>
-                          </div>
-                        <% else %>
-                          <div class="preview-container">
-                            <img src="" class="img-fluid rounded mb-3 d-none"
-                                style="max-height: 200px;"
-                                data-image-cropper-target="croppedResult">
-                          </div>
-                        <% end %>
-                      </div>
+                          <% else %>
+                            <div class="upload-placeholder p-3 border rounded d-flex flex-column align-items-center justify-content-center"
+                                 style="height: 200px; cursor: pointer;"
+                                 id="upload_submitted_file_<%= item_requirement.id %>_file_preview">
+                              <i class="fas fa-upload fa-3x mb-3 text-muted"></i>
+                              <p class="text-muted"><%= t('inscriptions.steps.item_requirements.select_photo') || "Cliquez pour sélectionner une photo" %></p>
+                            </div>
+                          <% end %>
+                        </div>
 
-                      <!-- Modal pour le recadrage -->
-                      <div class="modal fade" tabindex="-1" data-image-cropper-target="modal">
-                        <div class="modal-dialog modal-dialog-centered modal-lg">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title"><%= t('inscriptions.steps.item_requirements.crop_image') || "Recadrer l'image" %></h5>
-                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-                                      data-action="click->image-cropper#closeModal"></button>
-                            </div>
-                            <div class="modal-body">
-                              <div class="text-center">
-                                <% if item_requirement.requirement_item.ratio.present? %>
-                                  <p class="text-muted mb-3">
-                                    <%= t('inscriptions.steps.item_requirements.crop_ratio_message', ratio: display_ratio(item_requirement.requirement_item.ratio)) ||
-                                        "Veuillez recadrer l'image avec un ratio de #{display_ratio(item_requirement.requirement_item.ratio)}" %>
-                                  </p>
-                                <% end %>
-                                <div data-image-cropper-target="cropperContainer" style="max-height: 500px;">
-                                  <img src="" data-image-cropper-target="preview" style="max-width: 100%;">
-                                </div>
-                              </div>
-                            </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-                                      data-action="click->image-cropper#closeModal">
-                                <%= t('global.actions.cancel') || "Annuler" %>
-                              </button>
-                              <button type="button" class="btn btn-primary"
-                                      data-image-cropper-target="cropButton"
-                                      data-action="click->image-cropper#applyCrop">
-                                <%= t('inscriptions.steps.item_requirements.apply_crop') || "Appliquer le recadrage" %>
-                              </button>
-                            </div>
-                          </div>
+                        <% model_name = "inscription[inscription_item_requirements_attributes][#{item_requirement.id}]" %>
+
+                        <!-- Ajouter un attribut data pour l'ID de l'inscription -->
+                        <div data-inscription-id="<%= @inscription.id %>">
+                          <%= render "common/image_cropper",
+                              model: model_name,
+                              field: "submitted_file",
+                              aspect_ratio: item_requirement.requirement_item.ratio.present? ? item_requirement.requirement_item.ratio : 1.0,
+                              display_width: 500,
+                              item_count: item_requirement.id %>
                         </div>
                       </div>
+                      <%= irf.input :submitted_file, as: :hidden,
+                                   input_html: {
+                                     class: "image-hidden-input",
+                                     id: "inscription_inscription_item_requirements_attributes_#{item_requirement.id}_submitted_file"
+                                   } %>
                     </div>
                   <% else %>
                     <div class="row">
@@ -219,6 +208,32 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
+    // Gérer la soumission du formulaire pour éviter les problèmes avec ActiveStorage
+    const form = document.getElementById('item-requirements-form');
+    if (form) {
+      form.addEventListener('submit', function(event) {
+        // Trouver tous les champs d'image qui ont été téléchargés via AJAX
+        document.querySelectorAll('[data-uploaded="true"]').forEach(function(input) {
+          // Désactiver ces champs pour qu'ils ne soient pas envoyés dans le formulaire
+          input.disabled = true;
+
+          // S'assurer que l'ID reste inclus dans la soumission
+          const itemId = input.dataset.itemId;
+          if (itemId) {
+            // Créer un champ caché pour conserver l'ID
+            const idField = document.createElement('input');
+            idField.type = 'hidden';
+            idField.name = 'uploaded_items[]';
+            idField.value = itemId;
+            form.appendChild(idField);
+          }
+        });
+
+        // Continuer la soumission
+        return true;
+      });
+    }
+
     const fileValidator = {
       init() {
         document.querySelectorAll('.file-input').forEach(input => {
@@ -302,6 +317,34 @@
       validateFormSubmission(event) {
         let isValid = true;
 
+        // Désactiver les champs de fichier téléchargés via AJAX
+        document.querySelectorAll('.image-hidden-input[data-uploaded="true"]').forEach(function(input) {
+          input.disabled = true;
+        });
+
+        // Vérifier si des images ont été croppées mais pas correctement attachées
+        document.querySelectorAll('[id^="cropped_image_flag_"]').forEach(flag => {
+          if (flag.value === "true") {
+            const itemId = flag.id.replace("cropped_image_flag_", "");
+            const fileInput = document.getElementById(`inscription_inscription_item_requirements_attributes_${itemId}_submitted_file`);
+
+            if (fileInput && (!fileInput.files || fileInput.files.length === 0)) {
+              console.error(`Image croppée non attachée pour l'élément ${itemId}`);
+              isValid = false;
+
+              // Afficher un message d'erreur
+              let errorMsg = document.createElement('div');
+              errorMsg.className = 'alert alert-danger mt-2';
+              errorMsg.textContent = "L'image a été croppée mais n'a pas été correctement attachée. Veuillez réessayer.";
+
+              const container = fileInput.closest('.form-group') || fileInput.parentElement;
+              if (container) {
+                container.appendChild(errorMsg);
+              }
+            }
+          }
+        });
+
         document.querySelectorAll('.file-input').forEach(input => {
           const requirementItemId = input.dataset.requirementItemId;
           const isRequired = input.hasAttribute('required');
@@ -319,7 +362,7 @@
 
         if (!isValid) {
           event.preventDefault();
-          const firstError = document.querySelector('.is-invalid');
+          const firstError = document.querySelector('.is-invalid, .alert-danger');
           if (firstError) {
             firstError.scrollIntoView({behavior: 'smooth', block: 'center'});
           }
@@ -363,5 +406,98 @@
     });
 
     fileValidator.init();
+
+    // Ajouter un écouteur d'événements pour marquer quand une image a été croppée
+    document.addEventListener('imageCropped', function(e) {
+      if (e.detail && e.detail.itemId) {
+        const flag = document.getElementById(`cropped_image_flag_${e.detail.itemId}`);
+        if (flag) {
+          flag.value = "true";
+          console.log(`Image croppée pour l'élément ${e.detail.itemId} marquée`);
+        }
+      }
+    });
+  });
+
+  // Script pour le cropper d'image
+  document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM loaded - initializing cropper connections');
+
+    // Éviter d'attacher plusieurs gestionnaires d'événements
+    let initialized = false;
+    if (initialized) return;
+    initialized = true;
+
+    // Connecter UNIQUEMENT les prévisualisations avec les sélecteurs de fichier
+    // Filtrer pour inclure seulement les éléments de prévisualisation, pas les autres éléments du cropper
+    document.querySelectorAll('.upload-placeholder, [id$="_file_preview"]').forEach(function(preview) {
+      const id = preview.id;
+      console.log('Found clickable preview element:', id);
+
+      // Ne pas connecter des éléments qui sont déjà des inputs
+      if (preview.tagName === 'INPUT') {
+        console.log('Skipping input element:', id);
+        return;
+      }
+
+      // Ne pas connecter plusieurs fois le même élément
+      if (preview.dataset.initialized === "true") {
+        console.log('Element already initialized:', id);
+        return;
+      }
+      preview.dataset.initialized = "true";
+
+      // Format correct: upload_submitted_file_99_file_preview
+      let itemId;
+
+      // Essayer d'extraire l'ID normalement
+      try {
+        const match = id.match(/upload_submitted_file_(\d+)_file_preview/);
+        if (match && match[1]) {
+          itemId = match[1];
+        } else {
+          // Si pas de correspondance, essayer de trouver un numérique dans l'ID
+          const numericMatch = id.match(/\d+/);
+          itemId = numericMatch ? numericMatch[0] : 'unknown';
+        }
+      } catch (e) {
+        console.error('Error extracting ID:', e);
+        itemId = 'fallback';
+      }
+
+      const fileInputId = 'upload_submitted_file_' + itemId + '_file_field';
+      console.log('Connecting preview to file input:', fileInputId);
+
+      // Utiliser un seul gestionnaire d'événements
+      preview.addEventListener('click', function handlePreviewClick(e) {
+        console.log('Preview clicked:', id);
+        e.preventDefault();
+        e.stopPropagation();
+
+        // Déclencher le clic sur l'input file correspondant une seule fois
+        const fileInput = document.getElementById(fileInputId);
+        if (fileInput) {
+          console.log('Triggering click on file input');
+          // Supprimer les gestionnaires d'événements existants pour éviter les doubles déclenchements
+          fileInput.onchange = null;
+
+          // Configurer un nouveau gestionnaire d'événements unique
+          fileInput.onchange = function(event) {
+            console.log('File input changed');
+            // Le gestionnaire d'événements du cropper dans _image_cropper.html.erb prendra le relais
+          };
+
+          fileInput.click();
+        } else {
+          console.error('Input file not found:', fileInputId);
+          // Méthode alternative pour trouver l'élément
+          const fileInputs = document.querySelectorAll('input[type="file"].custom-file-input');
+          if (fileInputs.length > 0) {
+            console.log('Found file input using alternative method');
+            fileInputs[0].click();
+          }
+        }
+      });
+    });
   });
 </script>

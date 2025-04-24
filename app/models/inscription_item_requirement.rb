@@ -4,6 +4,8 @@ class InscriptionItemRequirement < ApplicationRecord
 
   has_one_attached :submitted_file
 
+  serialize :metadata, Hash
+
   validate :submitted_content_is_youtube_url, if: :requirement_item_is_youtube_url?
   validate :submitted_file_is_correct_mime_type, if: :requirement_item_is_pdf?
 

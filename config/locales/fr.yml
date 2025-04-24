@@ -1031,6 +1031,7 @@ fr:
         crop_image: "Recadrer l'image"
         apply_crop: "Appliquer le recadrage"
         crop_ratio_message: "Veuillez recadrer l'image avec un ratio de %{ratio}"
+        select_photo: "Cliquez pour sélectionner une photo"
       preferences:
         title: "Préférences"
         time_preferences: "Préférences horaires"

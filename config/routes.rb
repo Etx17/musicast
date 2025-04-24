@@ -30,7 +30,10 @@ Rails.application.routes.draw do
       collection do
         get :start_inscription
       end
-      resources :steps, controller: 'inscription_steps'
+      resources :steps, controller: 'inscription_steps' do
+        post :upload_item_image, on: :collection
+        match :purge_item_image, on: :collection, via: [:get, :post]
+      end
       resources :inscription_orders, only: [:new, :create]
       resources :performances, only: [:new, :create, :edit, :update]
       member do

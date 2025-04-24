@@ -1068,6 +1068,7 @@ en:
         crop_image: "Crop image"
         apply_crop: "Apply cropping"
         crop_ratio_message: "Please crop the image with a ratio of %{ratio}"
+        select_photo: "Click to select a photo"
       preferences:
         time_justification: "Time justification"
         time_justification_info: "Please justify your time preference"

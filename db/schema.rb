@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_24_115432) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_24_162919) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -281,6 +281,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_24_115432) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "verification_status", default: 0
+    t.integer "dpi_x"
+    t.integer "dpi_y"
     t.index ["inscription_id"], name: "index_inscription_item_requirements_on_inscription_id"
     t.index ["requirement_item_id"], name: "index_inscription_item_requirements_on_requirement_item_id"
   end

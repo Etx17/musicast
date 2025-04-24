@@ -120,3 +120,5 @@ gem "view_component", "~> 3.13"
 gem 'i18n-debug'
 gem 'rails-i18n', '~> 8.0.0'
 
+# Gestion des images et métadonnées
+gem 'mini_magick'
