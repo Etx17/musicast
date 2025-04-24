@@ -83,6 +83,18 @@
                                     data: { action: "input->file-validator#validateYouTubeUrl" }
                                   },
                                   required: true %>
+                  <% when 'photo' %>
+                    <%# ["16:9 (Paysage widescreen)", 1.778], display the ratio as string like that
+                             ["4:3 (Paysage standard)", 1.333],
+                             ["1:1 (Carré)", 1.0],
+                             ["3:4 (Portrait standard)", 0.75],
+                             ["9:16 (Portrait mobile)", 0.5625] %>
+                    <%= irf.input :submitted_file, as: :file,
+                                  label: "Photo ahah",
+                                  input_html: {
+                                    class: "file-input",
+                                    data: { action: "change->file-validator#validateFile" }
+                                  } %>
                   <% else %>
                     <div class="row">
                       <div class="col">
