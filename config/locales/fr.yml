@@ -530,6 +530,8 @@ fr:
       select_type: "Sélectionnez un type"
       details: "Détails"
       details_placeholder: "Spécifiez les exigences ici, par exemple la longueur pour une lettre de recommandation, la durée pour une vidéo YouTube, ou autre..."
+      ratio: "Ratio de recadrage"
+      ratio_preview: "Aperçu du ratio"
     semi_imposed_works_section:
       title: "Œuvres semi-imposées"
       what_is_it: "Qu'est ce que c'est?"

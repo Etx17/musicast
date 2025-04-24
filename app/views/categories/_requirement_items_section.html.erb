@@ -31,7 +31,30 @@
          <div class="modal-body" data-controller="requirement" data-action="click->requirement#changeIdOfInput">
             <%= simple_form_for([@organism, @competition, @edition_competition, @category, RequirementItem.new]) do |f| %>
               <%= f.input :title, placeholder: t('categories.requirement_items_section.title_placeholder'), label: t('categories.requirement_items_section.item_title'), input_html: { id: "requirement-#{@category.name}-#{Time.now.to_i}" }, data: { requirement_target: "title" } %>
-              <%= f.input :type_item, label: t('categories.requirement_items_section.item_type'), collection: RequirementItem.type_items.keys, prompt: t('categories.requirement_items_section.select_type') %>
+              <%= f.input :type_item, label: t('categories.requirement_items_section.item_type'),
+                         collection: RequirementItem.type_items.keys,
+                         prompt: t('categories.requirement_items_section.select_type'),
+                         input_html: { data: { action: "change->requirement#toggleRatioField" } } %>
+
+              <div id="ratio-field" class="d-none">
+                <%= f.input :ratio,
+                           label: t('categories.requirement_items_section.ratio', default: 'Ratio'),
+                           collection: [
+                             ["16:9 (Paysage widescreen)", 1.778],
+                             ["4:3 (Paysage standard)", 1.333],
+                             ["1:1 (Carré)", 1.0],
+                             ["3:4 (Portrait standard)", 0.75],
+                             ["9:16 (Portrait mobile)", 0.5625]
+                           ],
+                           include_blank: false,
+                           input_html: { data: { action: "change->requirement#updateRatioPreview" } } %>
+
+                <div class="ratio-preview-container mt-2 mb-4">
+                  <label class="form-label"><%= t('categories.requirement_items_section.ratio_preview', default: 'Aperçu du ratio') %></label>
+                  <div id="ratio-preview" class="bg-secondary" style="width: 200px; height: 150px; border: 2px solid #ccc;"></div>
+                </div>
+              </div>
+
               <%= f.input :description_item, label: t('categories.requirement_items_section.details'), placeholder: t('categories.requirement_items_section.details_placeholder') %>
               <%= f.input :description_item_english, label: t('categories.requirement_items_section.details_english'), placeholder: t('categories.requirement_items_section.details_english_placeholder') %>
 
@@ -70,9 +93,59 @@
             <% end %>
 
             <span class="badge bg-secondary-secondary text-secondary rounded-pill border border-secondary" style="width: fit-content;"><%= t("type_item.#{item.type_item}") %></span>
+
+            <% if item.is_photo? && item.ratio.present? %>
+              <span class="badge bg-info text-dark rounded-pill border border-info mt-1" style="width: fit-content;">
+                Ratio: <%=
+                  case item.ratio.to_f
+                  when 1.778 then '16:9'
+                  when 1.333 then '4:3'
+                  when 1.0 then '1:1'
+                  when 0.75 then '3:4'
+                  when 0.5625 then '9:16'
+                  else item.ratio
+                  end
+                %>
+              </span>
+            <% end %>
           </div>
         </div>
       <% end %>
     </div>
   </div>
 </div>
+
+<% content_for :javascript do %>
+  <script>
+    document.addEventListener('turbo:load', function() {
+      if (typeof requirement !== 'undefined') {
+        requirement.toggleRatioField = function(event) {
+          const typeValue = event.target.value;
+          const ratioField = document.getElementById('ratio-field');
+
+          if (typeValue === 'photo') {
+            ratioField.classList.remove('d-none');
+          } else {
+            ratioField.classList.add('d-none');
+          }
+        };
+
+        requirement.updateRatioPreview = function(event) {
+          const ratioValue = parseFloat(event.target.value);
+          const previewEl = document.getElementById('ratio-preview');
+
+          if (!isNaN(ratioValue) && previewEl) {
+            const previewWidth = 200;
+            const previewHeight = previewWidth / ratioValue;
+
+            const maxHeight = 300;
+            const finalHeight = Math.min(previewHeight, maxHeight);
+
+            previewEl.style.width = previewWidth + 'px';
+            previewEl.style.height = finalHeight + 'px';
+          }
+        };
+      }
+    });
+  </script>
+<% end %>

@@ -497,6 +497,8 @@ en:
       select_type: "Select a type"
       details: "Details"
       details_placeholder: "Specify requirements here, for example length for a cover letter, duration for a YouTube video, or other..."
+      ratio: "Cropping ratio"
+      ratio_preview: "Ratio preview"
     semi_imposed_works_section:
       title: "Semi-imposed Works"
       what_is_it: "What is this?"
