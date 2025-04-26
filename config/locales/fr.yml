@@ -1017,6 +1017,7 @@ fr:
       item_requirements:
         title: "Documents requis"
         current_document: "Document actuel"
+        use_artistic_photo: "Utiliser ma photo artistique"
         uploaded: "Téléchargé"
         pdf_file_error: "Veuillez télécharger un fichier PDF"
         file_too_large: "Le fichier est trop lourd. Maximum: %{max}MB. Actuel: %{current}MB"

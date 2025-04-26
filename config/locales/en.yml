@@ -1054,6 +1054,7 @@ en:
       item_requirements:
         title: "Required documents"
         current_document: "Current document"
+        use_artistic_photo: "Use my artistic photo"
         uploaded: "Uploaded"
         pdf_file_error: "Please upload a valid PDF file"
         file_too_large: "The file is too large. Maximum: %{max}MB. Current: %{current}MB"

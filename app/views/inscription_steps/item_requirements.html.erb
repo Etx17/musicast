@@ -120,6 +120,17 @@
                               <i class="fas fa-upload fa-3x mb-3 text-muted"></i>
                               <p class="text-muted"><%= t('inscriptions.steps.item_requirements.select_photo') || "Cliquez pour sélectionner une photo" %></p>
                             </div>
+
+                            <% if @inscription.candidat.artistic_photo.attached? %>
+                              <div class="text-center mt-2">
+                                <button type="button" class="btn btn-outline-primary btn-sm"
+                                       id="use-artistic-photo-<%= item_requirement.id %>"
+                                       data-photo-url="<%= url_for(@inscription.candidat.artistic_photo) %>"
+                                       data-item-id="<%= item_requirement.id %>">
+                                  <i class="fas fa-image me-1"></i> <%= t('inscriptions.steps.item_requirements.use_artistic_photo') || "Utiliser ma photo artistique" %>
+                                </button>
+                              </div>
+                            <% end %>
                           <% end %>
                         </div>
 
@@ -226,6 +237,46 @@
       });
     }
 
+    // Gestion des boutons "Utiliser ma photo artistique"
+    document.querySelectorAll('[id^="use-artistic-photo-"]').forEach(function(button) {
+      button.addEventListener('click', function() {
+        const itemId = this.dataset.itemId;
+        const photoUrl = this.dataset.photoUrl;
+
+        if (photoUrl) {
+          console.log('Utilisation de la photo artistique pour item_id', itemId);
+
+          // Récupérer l'élément de la modal du cropper
+          const cropperModal = document.getElementById(`upload-submitted_file-${itemId}-modal`);
+
+          if (cropperModal) {
+            console.log('Modal trouvée, ouverture...');
+
+            // Récupérer l'image du cropper
+            const cropperImage = cropperModal.querySelector('img');
+
+            if (cropperImage) {
+              // Précharger l'image artistique
+              cropperImage.src = photoUrl;
+
+              // Ouvrir la modal directement avec Bootstrap
+              const modal = new bootstrap.Modal(cropperModal);
+              modal.show();
+
+              // Pas besoin de réinitialiser le cropper, car il sera initialisé automatiquement
+              // lors de l'événement shown.bs.modal
+            } else {
+              console.error('Image du cropper non trouvée dans la modal');
+            }
+          } else {
+            console.error('Modal du cropper non trouvée pour item_id', itemId);
+          }
+        } else {
+          console.error('URL de la photo artistique non trouvée');
+        }
+      });
+    });
+
     const fileValidator = {
       init() {
         document.querySelectorAll('.file-input').forEach(input => {
@@ -282,7 +333,37 @@
         }
       },
 
+      validateYouTubeUrlEvent(event) {
+        const input = event.target;
+        const url = input.value;
+        const errorElement = input.parentElement.nextElementSibling;
+        const formGroup = input.closest('.form-group');
 
+        if (!url) {
+          input.classList.remove('is-valid');
+          input.classList.remove('is-invalid');
+          if (errorElement) errorElement.style.display = 'none';
+          return true;
+        }
+
+        const youtubeRegex = /^(https?:\/\/)?(www\.)?youtube\.com\/watch\?v=[a-zA-Z0-9_-]{11}$/;
+        const isValid = youtubeRegex.test(url);
+
+        if (!isValid) {
+          input.classList.add('is-invalid');
+          input.classList.remove('is-valid');
+          if (errorElement) {
+            errorElement.style.display = 'block';
+            errorElement.textContent = t('inscriptions.form.invalid_youtube_url');
+          }
+          return false;
+        } else {
+          input.classList.add('is-valid');
+          input.classList.remove('is-invalid');
+          if (errorElement) errorElement.style.display = 'none';
+          return true;
+        }
+      },
 
       validateFormSubmission(event) {
         let isValid = true;
