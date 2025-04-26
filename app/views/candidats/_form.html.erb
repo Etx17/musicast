@@ -20,38 +20,78 @@
       <div class="col-md-4">
         <div class="form-group">
           <%= f.label t('candidats.form.portrait'), class: 'form-label' %>
-          <%= f.file_field :portrait, class: 'form-control form-control-sm' %>
           <% if @candidat.portrait.attached? %>
-            <small class="text-success d-block mt-1"> <%= @candidat.portrait.filename %></small>
+            <div class="mb-2">
+              <div id="portrait-preview-container" class="preview-container">
+                <%= image_tag @candidat.portrait.variant(resize_to_limit: [200, 200]), class: "img-thumbnail", id: "portrait-preview" %>
+                <div class="mt-1">
+                  <span id="portrait-filename"><%= @candidat.portrait.filename %></span>
+                </div>
+              </div>
+            </div>
+            <small class="text-muted mb-2 d-block"><%= t('global.actions.replace_image_hint') || "Pour remplacer cette image, téléchargez une nouvelle photo ci-dessous" %></small>
+          <% else %>
+            <div id="portrait-preview-container" class="preview-container d-none">
+              <img src="" id="portrait-preview" class="img-thumbnail" style="max-height: 200px;">
+              <div class="mt-1">
+                <span id="portrait-filename"></span>
+              </div>
+            </div>
           <% end %>
-          <% if @candidat.errors[:portrait].any? %>
-            <small class="error-message text-danger d-block mt-1">
-              <%= @candidat.errors[:portrait].to_sentence %>
-            </small>
-          <% end %>
+          <%= f.file_field :portrait, class: "form-control",
+                          accept: "image/png, image/jpeg",
+                          onchange: "previewImage(this, 'portrait-preview', 'portrait-preview-container', 'portrait-filename')" %>
         </div>
       </div>
       <div class="col-md-4">
         <div class="form-group">
           <%= f.label t('candidats.form.artistic_photo'), class: 'form-label' %>
-          <%= f.file_field :artistic_photo, class: 'form-control form-control-sm' %>
           <% if @candidat.artistic_photo.attached? %>
-            <small class="text-success d-block mt-1"> <%= @candidat.artistic_photo.filename %></small>
+            <div class="mb-2">
+              <div id="artistic-photo-preview-container" class="preview-container">
+                <%= image_tag @candidat.artistic_photo.variant(resize_to_limit: [200, 200]), class: "img-thumbnail", id: "artistic-photo-preview" %>
+                <div class="mt-1">
+                  <span id="artistic-photo-filename"><%= @candidat.artistic_photo.filename %></span>
+                </div>
+              </div>
+            </div>
+            <small class="text-muted mb-2 d-block"><%= t('global.actions.replace_image_hint') || "Pour remplacer cette image, téléchargez une nouvelle photo ci-dessous" %></small>
+          <% else %>
+            <div id="artistic-photo-preview-container" class="preview-container d-none">
+              <img src="" id="artistic-photo-preview" class="img-thumbnail" style="max-height: 200px;">
+              <div class="mt-1">
+                <span id="artistic-photo-filename"></span>
+              </div>
+            </div>
           <% end %>
-          <% if @candidat.errors[:artistic_photo].any? %>
-            <small class="error-message text-danger d-block mt-1">
-              <%= @candidat.errors[:artistic_photo].to_sentence %>
-            </small>
-          <% end %>
+          <%= f.file_field :artistic_photo, class: "form-control",
+                           accept: "image/png, image/jpeg",
+                           onchange: "previewImage(this, 'artistic-photo-preview', 'artistic-photo-preview-container', 'artistic-photo-filename')" %>
         </div>
       </div>
       <div class="col-md-4">
         <div class="form-group">
           <%= f.label t('candidats.form.cv_english'), class: 'form-label' %>
-          <%= f.file_field :cv_english, class: 'form-control form-control-sm' %>
-          <% if @candidat.cv_english.attached? %>
-            <small class="text-success d-block mt-1"> <%= @candidat.cv_english.filename %></small>
-          <% end %>
+          <div class="file-upload-wrapper">
+            <% if @candidat.cv_english.attached? %>
+              <div class="d-flex align-items-center mb-2">
+                <i class="fas fa-file-pdf text-danger me-2" style="font-size: 1.5rem;"></i>
+                <div class="flex-grow-1">
+                  <small class="text-success d-block"><%= @candidat.cv_english.filename %></small>
+                </div>
+              </div>
+              <small class="text-muted mb-2 d-block"><%= t('global.actions.replace_file_hint') || "Pour remplacer ce fichier, téléchargez un nouveau document ci-dessous" %></small>
+            <% else %>
+              <div id="cv-english-preview-container" class="d-flex align-items-center mb-2 d-none">
+                <i class="fas fa-file-pdf text-danger me-2" style="font-size: 1.5rem;"></i>
+                <div class="flex-grow-1">
+                  <small id="cv-english-filename" class="text-success d-block"></small>
+                </div>
+              </div>
+            <% end %>
+            <%= f.file_field :cv_english, class: 'form-control form-control-sm',
+                  onchange: "previewFile(this, 'cv-english-preview-container', 'cv-english-filename')" %>
+          </div>
           <% if @candidat.errors[:cv_english].any? %>
             <small class="error-message text-danger d-block mt-1">
               <%= @candidat.errors[:cv_english].to_sentence %>
@@ -198,4 +238,31 @@
   <div class="form-actions text-center mt-4">
     <%= f.button :submit, t('candidats.form.save'), class: "btn btn-success" %>
   </div>
+<% end %>
+
+<% content_for :page_scripts do %>
+  <script>
+    function previewImage(input, previewId, containerId, filenameId) {
+      const file = input.files[0];
+      if (file) {
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+          document.getElementById(previewId).src = e.target.result;
+          document.getElementById(containerId).classList.remove('d-none');
+          document.getElementById(filenameId).textContent = file.name;
+        }
+
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function previewFile(input, containerId, filenameId) {
+      const file = input.files[0];
+      if (file) {
+        document.getElementById(containerId).classList.remove('d-none');
+        document.getElementById(filenameId).textContent = file.name;
+      }
+    }
+  </script>
 <% end %>

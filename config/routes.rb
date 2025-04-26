@@ -105,6 +105,7 @@ Rails.application.routes.draw do
       member do
         post :add_diploma
         delete :delete_diploma
+        delete :purge_attachment
       end
     end
     resources :organisateurs

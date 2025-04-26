@@ -49,14 +49,10 @@ class CandidatsController < ApplicationController
     #   end
     # end
 
-    respond_to do |format|
-      if @candidat.update(candidat_params)
-        format.html { redirect_to candidat_url(@candidat), notice: "Candidat was successfully updated." }
-        format.json { render :show, status: :ok, location: @candidat }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @candidat.errors, status: :unprocessable_entity }
-      end
+    if @candidat.update(candidat_params)
+      redirect_to candidat_url(@candidat), notice: "Candidat was successfully updated."
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -81,6 +77,28 @@ class CandidatsController < ApplicationController
     diploma = @candidat.diplomas.find(params[:diploma_id])
     diploma.purge
     redirect_to candidat_path(@candidat), notice: "Diplôme supprimé"
+  end
+
+  def purge_attachment
+    @candidat = Candidat.find(params[:id])
+
+    # Find the specific attachment to purge
+    attachment_type = params[:attachment_type]
+
+    # Only purge attachments that belong to the candidat model
+    if %w[portrait artistic_photo cv_english].include?(attachment_type) && @candidat.send(attachment_type).attached?
+      @candidat.send(attachment_type).purge
+
+      respond_to do |format|
+        format.html { redirect_to edit_candidat_path(@candidat), notice: "Fichier supprimé avec succès" }
+        format.json { head :no_content }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to edit_candidat_path(@candidat), alert: "Impossible de supprimer ce fichier" }
+        format.json { render json: { error: "Attachment not found" }, status: :not_found }
+      end
+    end
   end
 
   private

@@ -322,7 +322,7 @@ fr:
       cv_english: "CV (Anglais)"
       last_teacher: "Nom du professeur"
       last_teacher_hint: "Entrez le nom de votre professeur actuel ou dernier professeur"
-      banner_color: "Couleur du bannière"
+      banner_color: "Couleur de votre bannière"
       translation_info: "Vous pouvez traduire vos biographies en utilisant l'intelligence artificielle avec"
       short_bio: "Biographie courte*"
       short_bio_placeholder: "Une version très courte de votre parcours, pour les jurys de compétition"
@@ -925,6 +925,9 @@ fr:
     action: "Action"
     actions:
       next: "Suivant"
+      upload: "Télécharger"
+      replace_file_hint: "Pour remplacer ce fichier, téléchargez un nouveau document ci-dessous"
+      replace_image_hint: "Pour remplacer cette image, téléchargez une nouvelle photo ci-dessous"
       remove: "Supprimer"
       previous: "Précédent"
       login: "Connexion"

@@ -995,8 +995,11 @@ en:
       violin: "Violin"
     actions:
       create: "Create"
+      replace_file_hint: "To replace this file, download a new document below"
+      replace_image_hint: "To replace this image, download a new photo below"
       remove: "Remove"
       download: "Download"
+      upload: "Upload"
       download_all: "Download All"
       download_file: "Download %{filename}"
       login: "Login"
