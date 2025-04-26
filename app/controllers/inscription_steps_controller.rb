@@ -25,9 +25,13 @@ class InscriptionStepsController < ApplicationController
             dpi_x = metadata[:resolution][0]
             dpi_y = metadata[:resolution][1]
 
+            Rails.logger.info "DPI AVANT ASSIGNATION: #{dpi_x}x#{dpi_y}"
+
             # Stocker le DPI dans un attribut, si vous souhaitez le conserver
             item_requirement.dpi_x = dpi_x
             item_requirement.dpi_y = dpi_y
+
+            Rails.logger.info "DPI APRÈS ASSIGNATION: item_requirement.dpi_x=#{item_requirement.dpi_x}, item_requirement.dpi_y=#{item_requirement.dpi_y}"
 
             # Exemple: Vérifier si le DPI est suffisant (par exemple, au moins 300 DPI)
             min_dpi = 72 # Valeur minimale courante pour le web
@@ -44,13 +48,33 @@ class InscriptionStepsController < ApplicationController
 
       item_requirement.submitted_file.attach(params[:image])
 
-      item_requirement.save
+      # Forcer le processus de sauvegarde à enregistrer les valeurs
+      if metadata && metadata[:resolution].present?
+        Rails.logger.info "FORÇAGE DPI APRÈS ATTACHEMENT: #{metadata[:resolution][0]}x#{metadata[:resolution][1]}"
+        item_requirement.dpi_x = metadata[:resolution][0]
+        item_requirement.dpi_y = metadata[:resolution][1]
+        Rails.logger.info "DPI APRÈS FORÇAGE: item_requirement.dpi_x=#{item_requirement.dpi_x}, item_requirement.dpi_y=#{item_requirement.dpi_y}"
+      end
+
+      # Utiliser save! pour forcer la sauvegarde et lever une exception en cas d'erreur
+      item_requirement.save!
+      Rails.logger.info "APRÈS SAUVEGARDE: item_requirement.dpi_x=#{item_requirement.dpi_x}, item_requirement.dpi_y=#{item_requirement.dpi_y}"
+
+      # Recharger l'objet pour vérifier les valeurs enregistrées
+      item_requirement.reload
+      Rails.logger.info "APRÈS RELOAD: item_requirement.dpi_x=#{item_requirement.dpi_x}, item_requirement.dpi_y=#{item_requirement.dpi_y}"
 
       if item_requirement.submitted_file.attached?
         item_requirement.reload
         begin
           image_url = url_for(item_requirement.submitted_file)
-
+          if metadata && metadata[:resolution].present?
+            item_requirement.dpi_x = metadata[:resolution][0]
+            item_requirement.dpi_y = metadata[:resolution][1]
+            Rails.logger.info "DPI AVANT RENDER JSON: item_requirement.dpi_x=#{item_requirement.dpi_x}, item_requirement.dpi_y=#{item_requirement.dpi_y}"
+            item_requirement.save!
+            Rails.logger.info "DPI APRÈS SAVE AVANT RENDER: item_requirement.dpi_x=#{item_requirement.dpi_x}, item_requirement.dpi_y=#{item_requirement.dpi_y}"
+          end
           render json: {
             success: true,
             message: "Image téléchargée avec succès",
