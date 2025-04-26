@@ -944,6 +944,8 @@ en:
       back: "Back to free choices"
       destroy: "Destroy this free choice"
   global:
+    prize: "prize"
+    prizes: "prizes"
     required_program: "Required program"
     category: "Category"
     profile: "Profile"
@@ -1985,3 +1987,9 @@ en:
         participant: "Participant"
         scores: "Scores"
         last_score_uploaded: "Last Score Uploaded"
+  time:
+    formats:
+      short_month_day: "%d %B"
+  date:
+    formats:
+      short_month_day: "%d %B"

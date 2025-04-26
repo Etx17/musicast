@@ -907,6 +907,8 @@ fr:
       back: "Retour aux choix libres"
       destroy: "Supprimer ce choix libre"
   global:
+    prize: "prix"
+    prizes: "prix"
     required_program: "Programme requis"
     category: "Catégorie"
     profile: "Profil"
@@ -1939,3 +1941,9 @@ fr:
         participant: "Participant"
         scores: "Partitions"
         last_score_uploaded: "Dernière note téléchargée"
+  time:
+    formats:
+      short_month_day: "%d %B"
+  date:
+    formats:
+      short_month_day: "%d %B"

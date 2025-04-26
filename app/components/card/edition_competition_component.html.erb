@@ -4,7 +4,7 @@
   links: @links,
   redirect: organism_competition_edition_competition_path(@edition_competition.organism, @edition_competition.competition, @edition_competition),
   bottom_button_links: @bottom_button_links,
-  bottom_left_label: @edition_competition.max_prize_amount_label_for_card,
+  bottom_left_label: prizes_count_bottom_left_label,
   top_left_pill: {label: "#{@edition_competition.days_remaining} #{t('pages.edition_competition_card.days_remaining')}", class: "border bg-primary-light text-primary px-2 rounded-pill position-absolute "},
   bottom_left_pill: @bottom_left_pill,
   rounded_image: true,
@@ -17,9 +17,7 @@
       <span class="card-text text-secondary border-end border-light "><i class="fi fi-rs-map-marker text-dark me-2"></i><%= @edition_competition.address.city %>, <%= @edition_competition.address.country %> </span>
     <% end %>
 
-    <span class=" text-secondary "><i class="fi fi-rs-calendar-day text-dark me-2"></i><%= t('pages.edition_competition_card.from') %> <span class="text-dark" style="font-size: 1.2em"><strong><%= @edition_competition.start_date.strftime("%d %B") %></strong></span> <%= t('pages.edition_competition_card.to') %> <span style="font-size: 1.2em" class="text-dark "><strong><%= @edition_competition.end_date.strftime("%d %B %Y") %></strong></span></span>
-
-
+    <span class=" text-secondary "><i class="fi fi-rs-calendar-day text-dark me-2"></i><%= t('pages.edition_competition_card.from') %> <span class="text-dark" style="font-size: 1.2em"><strong><%= l(@edition_competition.start_date, format: :short_month_day) %></strong></span> <%= t('pages.edition_competition_card.to') %> <span style="font-size: 1.2em" class="text-dark "><strong><%= l(@edition_competition.end_date, format: :long) %></strong></span></span>
 
     <small class="text-secondary my-2">CATEGORIES (<%= @edition_competition.categories.count %>)</small>
     <% if @edition_competition.categories.count > 1 %>
