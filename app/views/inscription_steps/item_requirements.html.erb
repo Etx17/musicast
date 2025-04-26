@@ -212,15 +212,10 @@
     const form = document.getElementById('item-requirements-form');
     if (form) {
       form.addEventListener('submit', function(event) {
-        // Trouver tous les champs d'image qui ont été téléchargés via AJAX
         document.querySelectorAll('[data-uploaded="true"]').forEach(function(input) {
-          // Désactiver ces champs pour qu'ils ne soient pas envoyés dans le formulaire
           input.disabled = true;
-
-          // S'assurer que l'ID reste inclus dans la soumission
           const itemId = input.dataset.itemId;
           if (itemId) {
-            // Créer un champ caché pour conserver l'ID
             const idField = document.createElement('input');
             idField.type = 'hidden';
             idField.name = 'uploaded_items[]';
@@ -229,7 +224,6 @@
           }
         });
 
-        // Continuer la soumission
         return true;
       });
     }
@@ -290,29 +284,7 @@
         }
       },
 
-      validateYouTubeUrlEvent(event) {
-        const input = event.target;
-        const url = input.value.trim();
-
-        if (!url) {
-          input.classList.remove('is-valid');
-          input.classList.remove('is-invalid');
-          return true;
-        }
-
-        const youtubeRegex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+$/;
-        const isValid = youtubeRegex.test(url);
-
-        if (isValid) {
-          input.classList.add('is-valid');
-          input.classList.remove('is-invalid');
-          return true;
-        } else {
-          input.classList.add('is-invalid');
-          input.classList.remove('is-valid');
-          return false;
-        }
-      },
+      
 
       validateFormSubmission(event) {
         let isValid = true;

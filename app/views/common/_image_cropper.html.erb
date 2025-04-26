@@ -178,13 +178,34 @@
 										success: function(response) {
 											console.log("Image uploaded successfully via AJAX");
 
-											// Mettre à jour la prévisualisation avec l'URL réelle de l'image
+											// Mettre à jour la prévisualisation
 											$('#upload_<%= field %>_<%= item_count %>_file_preview').attr('src', response.image_url);
 
-											// Mettre à jour le statut et afficher les métadonnées
+											// Récupérer le conteneur parent
+											var previewContainer = $('#upload_<%= field %>_<%= item_count %>_file_preview').closest('.text-center');
+											var inscriptionId = $('[data-inscription-id]').data('inscription-id');
+											var locale = document.documentElement.lang || 'fr';
+											var purgeUrl = '/' + locale + '/inscriptions/' + inscriptionId + '/steps/purge_item_image?item_id=<%= item_count %>';
+
+											// Si c'est un placeholder, le transformer en image réelle avec bouton de suppression
+											if (previewContainer.find('.upload-placeholder').length) {
+												var imageHTML = '<div class="position-relative">' +
+													'<img src="' + response.image_url + '" class="img-fluid rounded" style="max-height: 200px;" id="upload_<%= field %>_<%= item_count %>_file_preview">' +
+													'<a href="' + purgeUrl + '" class="btn btn-sm btn-danger position-absolute top-0 end-0 m-2" data-confirm="Êtes-vous sûr de vouloir supprimer cette image ?">' +
+													'<i class="fas fa-trash"></i>' +
+													'</a>' +
+													'</div>';
+
+												previewContainer.html(imageHTML);
+
+												// Ajouter les infos DPI si disponibles
+												if (response.metadata && response.metadata.resolution) {
+													previewContainer.append('<div>DPI: ' + response.metadata.resolution[0] + 'x' + response.metadata.resolution[1] + '</div>');
+												}
+											}
+
 											var statusMessage = '<small class="text-success"><i class="fas fa-check-circle"></i> Image téléchargée avec succès</small>';
 
-											// Ajouter les métadonnées si disponibles
 											if (response.metadata) {
 												var meta = response.metadata;
 												if (meta.dimensions && meta.resolution) {
