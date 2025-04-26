@@ -94,23 +94,21 @@
                   <% when 'photo' %>
                     <div>
                       <div class="mb-3">
-                        <label class="form-label"><%= t('inscriptions.steps.item_requirements.photo') %></label>
 
                         <!-- Prévisualisation qui agit comme bouton d'upload -->
                         <div class="text-center mb-3">
                           <% if irf.object.submitted_file.attached? && irf.object.submitted_file.persisted? %>
-                            <div class="position-relative">
+                            <div class="position-relative d-inline-block">
                               <%= image_tag url_for(irf.object.submitted_file), class: "img-fluid rounded", style: "max-height: 200px;", id: "upload_submitted_file_" + item_requirement.id.to_s + "_file_preview" %>
                               <%= link_to purge_item_image_inscription_steps_path(@inscription, item_id: item_requirement.id),
-                                    class: "btn btn-sm btn-danger position-absolute top-0 end-0 m-2",
+                                    class: "btn btn-sm btn-outline-secondary rounded-circle position-absolute",
+                                    style: "width: 28px; height: 28px; padding: 0; display: flex; align-items: center; justify-content: center; background-color: rgba(255,255,255,0.8); top: 5px; right: 5px;",
                                     data: { confirm: "Êtes-vous sûr de vouloir supprimer cette image ?" } do %>
-                                <i class="fas fa-trash"></i>
+                                <i class="fas fa-times" style="font-size: 14px;"></i>
                               <% end %>
                             </div>
                             <%# DPI information %>
-                            <% if irf.object.submitted_file.record.dpi_x.present? && irf.object.submitted_file.record.dpi_y.present? %>
-                              DPI: <%= irf.object.submitted_file.record.dpi_x %>x<%= irf.object.submitted_file.record.dpi_y %>
-                            <% end %>
+
                             <div class="mt-2" id="upload-status-<%= item_requirement.id %>">
                               <small class="text-success"><i class="fas fa-check-circle"></i> Image enregistrée</small>
                             </div>
@@ -284,7 +282,7 @@
         }
       },
 
-      
+
 
       validateFormSubmission(event) {
         let isValid = true;

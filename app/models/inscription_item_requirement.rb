@@ -62,6 +62,7 @@ class InscriptionItemRequirement < ApplicationRecord
   end
 
   def has_submitted_content?
+    return true if requirement_item.is_photo? && submitted_file.attached?
     return true if requirement_item.is_pdf? && submitted_file.attached?
     return true if requirement_item.is_text? && submitted_content.present?
     return false
