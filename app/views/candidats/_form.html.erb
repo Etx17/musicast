@@ -23,7 +23,7 @@
           <% if @candidat.portrait.attached? %>
             <div class="mb-2">
               <div id="portrait-preview-container" class="preview-container">
-                <%= image_tag @candidat.portrait.variant(resize_to_limit: [200, 200]), class: "img-thumbnail", id: "portrait-preview" %>
+                <%= image_tag @candidat.portrait, class: "w-100", id: "portrait-preview" %>
                 <div class="mt-1">
                   <span id="portrait-filename"><%= @candidat.portrait.filename %></span>
                 </div>
@@ -46,10 +46,11 @@
       <div class="col-md-4">
         <div class="form-group">
           <%= f.label t('candidats.form.artistic_photo'), class: 'form-label' %>
+          <%= render InfoboxComponent.new( title: t('candidats.form.artistic_photo'), text: t('candidats.form.artistic_photo_hint'), icon: 'fas fa-info-circle' ) %>
           <% if @candidat.artistic_photo.attached? %>
             <div class="mb-2">
               <div id="artistic-photo-preview-container" class="preview-container">
-                <%= image_tag @candidat.artistic_photo.variant(resize_to_limit: [200, 200]), class: "img-thumbnail", id: "artistic-photo-preview" %>
+                <%= image_tag @candidat.artistic_photo, class: "w-100", id: "artistic-photo-preview" %>
                 <div class="mt-1">
                   <span id="artistic-photo-filename"><%= @candidat.artistic_photo.filename %></span>
                 </div>
@@ -80,6 +81,12 @@
                   <small class="text-success d-block"><%= @candidat.cv_english.filename %></small>
                 </div>
               </div>
+
+              <!-- Prévisualisation du PDF -->
+              <div class="mb-3 border rounded">
+                <embed src="<%= url_for(@candidat.cv_english) %>" type="application/pdf" width="100%" height="300px" />
+              </div>
+
               <small class="text-muted mb-2 d-block"><%= t('global.actions.replace_file_hint') || "Pour remplacer ce fichier, téléchargez un nouveau document ci-dessous" %></small>
             <% else %>
               <div id="cv-english-preview-container" class="d-flex align-items-center mb-2 d-none">

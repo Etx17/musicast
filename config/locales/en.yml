@@ -312,13 +312,15 @@ en:
       delete_confirm: "Are you sure?"
       add: "Add"
     form:
+
       first_name: "First Name"
       last_name: "Last Name"
       birthdate: "Birth Date"
       birthdate_hint: "Your identity will be verified on the day of the competition, please enter your exact birth date!"
       nationality: "Nationality"
       portrait: "Portrait (HD photo of your face)"
-      artistic_photo: "Artistic Photo (HD)"
+      artistic_photo: "Artistic Photo (300dpi+)"
+      artistic_photo_hint: "A high-quality artistic photo, for competition juries"
       cv_english: "CV (English)"
       last_teacher: "Teacher's Name"
       last_teacher_hint: "Enter the name of your current or last teacher"
