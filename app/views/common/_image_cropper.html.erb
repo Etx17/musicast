@@ -189,10 +189,10 @@
 
 											// Si c'est un placeholder, le transformer en image réelle avec bouton de suppression
 											if (previewContainer.find('.upload-placeholder').length) {
-												var imageHTML = '<div class="position-relative">' +
+												var imageHTML = '<div class="position-relative d-inline-block">' +
 													'<img src="' + response.image_url + '" class="img-fluid rounded" style="max-height: 200px;" id="upload_<%= field %>_<%= item_count %>_file_preview">' +
-													'<a href="' + purgeUrl + '" class="btn btn-sm btn-danger position-absolute top-0 end-0 m-2" data-confirm="Êtes-vous sûr de vouloir supprimer cette image ?">' +
-													'<i class="fas fa-trash"></i>' +
+													'<a href="' + purgeUrl + '" class="btn btn-sm btn-outline-secondary rounded-circle position-absolute" style="width: 28px; height: 28px; padding: 0; display: flex; align-items: center; justify-content: center; background-color: rgba(255,255,255,0.8); top: 5px; right: 5px;" data-confirm="Êtes-vous sûr de vouloir supprimer cette image ?">' +
+													'<i class="fas fa-times" style="font-size: 14px;"></i>' +
 													'</a>' +
 													'</div>';
 
