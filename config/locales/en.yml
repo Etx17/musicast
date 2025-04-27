@@ -1000,6 +1000,10 @@ en:
       tuba: "Tuba"
       violin: "Violin"
     actions:
+      accept: "Accept"
+      reject: "Reject"
+      accept_wait_payment: "Approve and wait for payment"
+      payment_error: "Indicate a payment error"
       click_to_view_pdf: "Click to view PDF"
       click_to_enlarge: "Click to enlarge"
       open_in_new_tab: "Open in new tab"

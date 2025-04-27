@@ -929,6 +929,10 @@ fr:
     rounds: "tours"
     action: "Action"
     actions:
+      reject: "Rejeter"
+      accept: "Accepter"
+      accept_wait_payment: "Accepter et attendre le paiement"
+      payment_error: "Indiquer une erreur de paiement"
       click_to_view_pdf: "Cliquez pour voir le PDF"
       click_to_enlarge: "Cliquez pour agrandir"
       open_in_new_tab: "Ouvrir dans un nouvel onglet"

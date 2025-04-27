@@ -28,31 +28,31 @@ module InscriptionsHelper
       when 'in_review'
         buttons << button_to(update_status_organism_competition_edition_competition_category_inscription_path(inscription.organism, inscription.competition, inscription.edition_competition, inscription.category, inscription, status: 'approved_waiting_payment'), method: :patch, class: 'btn btn-success border border-0  btn-sm') do
           concat content_tag(:i, '', class: 'fa fa-check accept-inscription')
-          concat ' Accept (wait for payment)'
+          concat ' ' + I18n.t('global.actions.accept_wait_payment')
         end
         buttons << button_to(update_status_organism_competition_edition_competition_category_inscription_path(inscription.organism, inscription.competition, inscription.edition_competition, inscription.category, inscription, status: 'rejected'), method: :patch, class: 'btn btn-outline-secondary border border-0  btn-sm') do
           concat content_tag(:i, '', class: 'fa fa-times')
-          concat ' Reject'
+          concat ' ' + I18n.t('global.actions.reject')
         end
       when 'approved_waiting_payment'
         buttons << button_to(update_status_organism_competition_edition_competition_category_inscription_path(inscription.organism, inscription.competition, inscription.edition_competition, inscription.category, inscription, status: 'accepted', payment_status: 'paid'), method: :patch, class: 'btn btn-success border border-0  btn-sm') do
           concat content_tag(:i, '', class: 'fa fa-check accept-inscription')
-          concat 'Accept'
+          concat ' ' + I18n.t('global.actions.accept')
         end
         buttons << button_to(update_status_organism_competition_edition_competition_category_inscription_path(inscription.organism, inscription.competition, inscription.edition_competition, inscription.category, inscription, status: 'payment_error_waiting_payment', payment_status: 'payment_error'), method: :patch, class: 'btn btn-outline-danger border border-0  btn-sm') do
           concat content_tag(:i, '', class: 'fa fa-exclamation-triangle')
-          concat 'Payment error'
+          concat ' ' + I18n.t('global.actions.payment_error')
         end
       when 'payment_error_waiting_payment'
       when 'new_payment_submitted'
         buttons << button_to(update_status_organism_competition_edition_competition_category_inscription_path(inscription.organism, inscription.competition, inscription.edition_competition, inscription.category, inscription, status: 'accepted', payment_status: 'paid'), method: :patch, class: 'btn btn-success border border-0  btn-sm') do
           concat content_tag(:i, '', class: 'fa fa-check accept-inscription')
-          concat 'Accept'
+          concat ' ' + I18n.t('global.actions.accept')
         end
 
         buttons << button_to(update_status_organism_competition_edition_competition_category_inscription_path(inscription.organism, inscription.competition, inscription.edition_competition, inscription.category, inscription, status: 'payment_error_waiting_payment', payment_status: 'payment_error'), method: :patch, class: 'btn btn-outline-danger border border-0  btn-sm') do
           concat content_tag(:i, '', class: 'fa fa-exclamation-triangle')
-          concat 'Payment error'
+          concat ' ' + I18n.t('global.actions.payment_error')
         end
       end
     else
@@ -60,21 +60,21 @@ module InscriptionsHelper
       when 'in_review'
         buttons << button_to(update_status_organism_competition_edition_competition_category_inscription_path(inscription.organism, inscription.competition, inscription.edition_competition, inscription.category, inscription, status: 'accepted'), method: :patch, class: 'btn btn-success border border-0  btn-sm') do
           concat content_tag(:i, '', class: 'fa fa-check accept-inscription')
-          concat ' Accept'
+          concat ' ' + I18n.t('global.actions.accept')
         end
         buttons << button_to(update_status_organism_competition_edition_competition_category_inscription_path(inscription.organism, inscription.competition, inscription.edition_competition, inscription.category, inscription, status: 'rejected'), method: :patch, class: 'btn btn-outline-secondary border border-0  btn-sm') do
           concat content_tag(:i, '', class: 'fa fa-times')
-          concat ' Reject'
+          concat ' ' + I18n.t('global.actions.reject')
         end
       when 'accepted'
         buttons << button_to(update_status_organism_competition_edition_competition_category_inscription_path(inscription.organism, inscription.competition, inscription.edition_competition, inscription.category, inscription, status: 'rejected'), method: :patch, class: 'btn btn-outline-danger border border-0 btn-sm') do
           concat content_tag(:i, '', class: 'fa fa-times')
-          concat ' Reject'
+          concat ' ' + I18n.t('global.actions.reject')
         end
       when 'rejected'
         buttons << button_to(update_status_organism_competition_edition_competition_category_inscription_path(inscription.organism, inscription.competition, inscription.edition_competition, inscription.category, inscription, status: 'accepted'), method: :patch, class: 'btn btn-outline-success btn-sm') do
           concat content_tag(:i, '', class: 'fa fa-check')
-          concat ' Accept'
+          concat ' ' + I18n.t('global.actions.accept')
         end
       end
     end
