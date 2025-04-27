@@ -66,6 +66,50 @@
                   <% if @category.hundred_points? %>
                     <span class="badge bg-primary rounded-pill"><%= inscription.average_score %>/100</span>
                   <% end %>
+
+                  <% if ['approved_waiting_payment', 'new_payment_submitted'].include?(inscription.status) %>
+                    <% if inscription.payment_proof.attached? %>
+                      <div class="preview-container" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#paymentProofModal<%= inscription.id %>">
+                        <% if inscription.payment_proof.content_type.include?('pdf') %>
+                          <div class="pdf-thumbnail d-flex flex-column align-items-center bg-light p-2 rounded border">
+                            <i class="fas fa-file-pdf text-danger mb-1" style="font-size: 1.5rem;"></i>
+                            <small class="text-muted"><%= t('global.actions.click_to_view_pdf') %></small>
+                            <embed src="<%= url_for(inscription.payment_proof) %>" width="70%" height="100" type="application/pdf" style="pointer-events: none;">
+                          </div>
+                        <% else %>
+                          <div class="img-thumbnail">
+                            <%= image_tag url_for(inscription.payment_proof), class: "img-fluid", style: "max-height: 100px;" %>
+                            <div class="overlay text-center p-1 text-white" style="background: rgba(0,0,0,0.5); position: absolute; bottom: 0; left: 0; right: 0;">
+                              <small><%= t('global.actions.click_to_enlarge') %></small>
+                            </div>
+                          </div>
+                        <% end %>
+                      </div>
+
+                      <!-- Modal for payment proof -->
+                      <div class="modal fade" id="paymentProofModal<%= inscription.id %>" tabindex="-1" aria-labelledby="paymentProofModalLabel<%= inscription.id %>" aria-hidden="true">
+                        <div class="modal-dialog modal-xl modal-dialog-centered">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="paymentProofModalLabel<%= inscription.id %>"><%= t('inscriptions.payment_proof') %> - <%= inscription.candidat.full_name %></h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body text-center">
+                              <% if inscription.payment_proof.content_type.include?('pdf') %>
+                                <embed src="<%= url_for(inscription.payment_proof) %>" width="100%" height="650" type="application/pdf">
+                              <% else %>
+                                <%= image_tag url_for(inscription.payment_proof), class: "img-fluid" %>
+                              <% end %>
+                            </div>
+                            <div class="modal-footer">
+                              <a href="<%= url_for(inscription.payment_proof) %>" class="btn btn-primary" target="_blank"><%= t('global.actions.open_in_new_tab') %></a>
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><%= t('global.actions.close') %></button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    <% end %>
+                  <% end %>
                 </div>
 
                 <div class="d-flex justify-content-between border-top pt-2 mt-2">

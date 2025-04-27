@@ -1000,6 +1000,10 @@ en:
       tuba: "Tuba"
       violin: "Violin"
     actions:
+      click_to_view_pdf: "Click to view PDF"
+      click_to_enlarge: "Click to enlarge"
+      open_in_new_tab: "Open in new tab"
+      close: "Close"
       create: "Create"
       replace_file_hint: "To replace this file, download a new document below"
       replace_image_hint: "To replace this image, download a new photo below"
@@ -1046,6 +1050,7 @@ en:
       view_application: "View my application"
 
   inscriptions:
+    payment_proof: "Payment proof"
     scores:
       scores_info: "Your space to upload your scores. The competition organization can also send you scores through this area."
       scores_section: "Scores"

@@ -929,6 +929,10 @@ fr:
     rounds: "tours"
     action: "Action"
     actions:
+      click_to_view_pdf: "Cliquez pour voir le PDF"
+      click_to_enlarge: "Cliquez pour agrandir"
+      open_in_new_tab: "Ouvrir dans un nouvel onglet"
+      close: "Fermer"
       next: "Suivant"
       upload: "Télécharger"
       replace_file_hint: "Pour remplacer ce fichier, téléchargez un nouveau document ci-dessous"
@@ -1007,6 +1011,7 @@ fr:
       reminder: "Rappel: Finissez de constituer votre dossier s'il n'est pas terminé. Les dossiers incomplets sont automatiquement rejetés et ne sont pas remboursables."
       view_application: "Voir ma candidature"
   inscriptions:
+    payment_proof: "Preuve de paiement"
     scores:
       scores_info: "Votre espace pour déposer vos partitions. L'organisme du concours peut également vous envoyer des partitions sur cet espace."
       scores_section: "Partitions"
@@ -1247,7 +1252,7 @@ fr:
       request_changes: "Modifications demandées"
       approved_waiting_payment: "Accepté, en attente de paiement"
       payment_error_waiting_payment: "Erreur de paiement, en attente de paiement"
-      new_payment_submitted: "Nouvelle paiement soumis"
+      new_payment_submitted: "Nouveau paiement soumis"
       accepted: "Accepté"
       rejected: "Rejeté"
       waiting_for_payment: "En attente de paiement"

@@ -24,25 +24,6 @@ module InscriptionsHelper
     buttons << view_button
 
     if inscription.category.payment_after_approval
-      # draft: 0,
-      # in_review: 1,
-      # request_changes: 2,
-      # approved_waiting_payment: 3,
-      # payment_error_waiting_payment: 4,
-      # new_payment_submitted: 5,
-      # accepted: 6,
-      # rejected: 7,
-      #
-      # Quand c'est in review, on peut choisir de 'approve waiting payment' ou 'reject'
-      # Si c'est 'approve waiting payment', on change le status en 'approved_waiting_payment'
-      # Si c'est 'reject', on change le status en 'rejected'
-      #
-      # Quand c'est waiting for payment, on peut choisir 'accepter' ou 'erreur de paiement'
-      # Si c'est 'accepter', on change le status en 'accepted', et on change de payment_status en 'paid'
-      # Si c'est 'erreur de paiement', on change le status en 'payment_error_waiting_payment', et le payent_status: payment_error
-      #
-      # Quand c'est accepted, on peut choisir 'reject'
-      # Si c'est 'reject', on change le status en 'rejected'
       case inscription.status
       when 'in_review'
         buttons << button_to(update_status_organism_competition_edition_competition_category_inscription_path(inscription.organism, inscription.competition, inscription.edition_competition, inscription.category, inscription, status: 'approved_waiting_payment'), method: :patch, class: 'btn btn-success border border-0  btn-sm') do
@@ -75,8 +56,7 @@ module InscriptionsHelper
         end
       end
     else
-
-    case inscription.status
+      case inscription.status
       when 'in_review'
         buttons << button_to(update_status_organism_competition_edition_competition_category_inscription_path(inscription.organism, inscription.competition, inscription.edition_competition, inscription.category, inscription, status: 'accepted'), method: :patch, class: 'btn btn-success border border-0  btn-sm') do
           concat content_tag(:i, '', class: 'fa fa-check accept-inscription')
