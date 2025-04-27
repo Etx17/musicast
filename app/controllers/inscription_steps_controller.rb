@@ -45,7 +45,17 @@ class InscriptionStepsController < ApplicationController
 
         @inscription.payment_proof.purge if @inscription.payment_proof.attached?
         @inscription.payment_proof.attach(params[:inscription][:payment_proof])
-        @inscription.payment_status = "waiting_for_approval"
+
+        # Attention ici on doit faire attention a la logique, celle ci est a tester dans plusieurs scénarios.
+        # On gere la logique du changement de status pour le cas ou le payment se fait apres le dossier accepté
+        if @inscription.category.payment_after_approval
+          if @inscription.status == "payment_error_waiting_payment"
+            @inscription.status = "new_payment_submitted"
+            @inscription.payment_status = "waiting_for_approval"
+          else
+            @inscription.payment_status = "waiting_for_approval"
+          end
+        end
       end
 
       if @inscription.valid?(:preferences)

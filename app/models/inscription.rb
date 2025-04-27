@@ -42,8 +42,9 @@ class Inscription < ApplicationRecord
     request_changes: 2,
     approved_waiting_payment: 3,
     payment_error_waiting_payment: 4,
-    accepted: 5,
-    rejected: 6,
+    new_payment_submitted: 5,
+    accepted: 6,
+    rejected: 7,
   }
 
   # Only relevant for categories with payment_after_approval set to true

@@ -1247,6 +1247,7 @@ fr:
       request_changes: "Modifications demandées"
       approved_waiting_payment: "Accepté, en attente de paiement"
       payment_error_waiting_payment: "Erreur de paiement, en attente de paiement"
+      new_payment_submitted: "Nouvelle paiement soumis"
       accepted: "Accepté"
       rejected: "Rejeté"
       waiting_for_payment: "En attente de paiement"

@@ -29,8 +29,9 @@ module InscriptionsHelper
       # request_changes: 2,
       # approved_waiting_payment: 3,
       # payment_error_waiting_payment: 4,
-      # accepted: 5,
-      # rejected: 6,
+      # new_payment_submitted: 5,
+      # accepted: 6,
+      # rejected: 7,
       #
       # Quand c'est in review, on peut choisir de 'approve waiting payment' ou 'reject'
       # Si c'est 'approve waiting payment', on change le status en 'approved_waiting_payment'
@@ -46,10 +47,33 @@ module InscriptionsHelper
       when 'in_review'
         buttons << button_to(update_status_organism_competition_edition_competition_category_inscription_path(inscription.organism, inscription.competition, inscription.edition_competition, inscription.category, inscription, status: 'approved_waiting_payment'), method: :patch, class: 'btn btn-success border border-0  btn-sm') do
           concat content_tag(:i, '', class: 'fa fa-check accept-inscription')
-          concat ' Accept'
+          concat ' Accept (wait for payment)'
+        end
+        buttons << button_to(update_status_organism_competition_edition_competition_category_inscription_path(inscription.organism, inscription.competition, inscription.edition_competition, inscription.category, inscription, status: 'rejected'), method: :patch, class: 'btn btn-outline-secondary border border-0  btn-sm') do
+          concat content_tag(:i, '', class: 'fa fa-times')
+          concat ' Reject'
+        end
+      when 'approved_waiting_payment'
+        buttons << button_to(update_status_organism_competition_edition_competition_category_inscription_path(inscription.organism, inscription.competition, inscription.edition_competition, inscription.category, inscription, status: 'accepted', payment_status: 'paid'), method: :patch, class: 'btn btn-success border border-0  btn-sm') do
+          concat content_tag(:i, '', class: 'fa fa-check accept-inscription')
+          concat 'Accept'
+        end
+        buttons << button_to(update_status_organism_competition_edition_competition_category_inscription_path(inscription.organism, inscription.competition, inscription.edition_competition, inscription.category, inscription, status: 'payment_error_waiting_payment', payment_status: 'payment_error'), method: :patch, class: 'btn btn-outline-danger border border-0  btn-sm') do
+          concat content_tag(:i, '', class: 'fa fa-exclamation-triangle')
+          concat 'Payment error'
+        end
+      when 'payment_error_waiting_payment'
+      when 'new_payment_submitted'
+        buttons << button_to(update_status_organism_competition_edition_competition_category_inscription_path(inscription.organism, inscription.competition, inscription.edition_competition, inscription.category, inscription, status: 'accepted', payment_status: 'paid'), method: :patch, class: 'btn btn-success border border-0  btn-sm') do
+          concat content_tag(:i, '', class: 'fa fa-check accept-inscription')
+          concat 'Accept'
+        end
+
+        buttons << button_to(update_status_organism_competition_edition_competition_category_inscription_path(inscription.organism, inscription.competition, inscription.edition_competition, inscription.category, inscription, status: 'payment_error_waiting_payment', payment_status: 'payment_error'), method: :patch, class: 'btn btn-outline-danger border border-0  btn-sm') do
+          concat content_tag(:i, '', class: 'fa fa-exclamation-triangle')
+          concat 'Payment error'
         end
       end
-
     else
 
     case inscription.status
@@ -95,12 +119,13 @@ module InscriptionsHelper
     if category.payment_after_approval
       Inscription.statuses.keys
     else
-      Inscription.statuses.keys.reject { |status| status == 'approved_waiting_payment' || status == 'payment_error_waiting_payment' }
+      Inscription.statuses.keys.reject { |status| status == 'approved_waiting_payment' || status == 'payment_error_waiting_payment' || status == 'new_payment_submitted' }
     end
   end
 
   def should_display_payment_section?(inscription)
-    return true if inscription.category.payment_after_approval && ["approved_waiting_payment", "accepted", "payment_error_waiting_payment", "rejected"].include?(inscription.status)
+    return true if inscription.status == "payment_error_waiting_payment"
+    return true if inscription.category.payment_after_approval && ["approved_waiting_payment", "accepted", "payment_error_waiting_payment", "rejected", "new_payment_submitted"].include?(inscription.status)
     return true if !inscription.category.payment_after_approval
     false
   end
@@ -117,6 +142,8 @@ module InscriptionsHelper
       'primary'
     when 'payment_error_waiting_payment'
       'danger'
+    when 'new_payment_submitted'
+      'info'
     when 'accepted'
       'success'
     when 'rejected'

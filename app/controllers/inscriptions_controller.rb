@@ -96,7 +96,12 @@ class InscriptionsController < ApplicationController
     if params[:inscription][:payment_proof].present?
       @inscription.payment_proof.purge
       @inscription.payment_proof.attach(params[:inscription][:payment_proof])
-      @inscription.payment_status = "waiting_for_approval"
+      if @inscription.status == "payment_error_waiting_payment"
+        @inscription.status = "new_payment_submitted"
+        @inscription.payment_status = "waiting_for_approval"
+      else
+        @inscription.payment_status = "waiting_for_approval"
+      end
     end
     if @inscription.valid?
 
@@ -144,10 +149,9 @@ class InscriptionsController < ApplicationController
 
   def update_status
     @inscription = Inscription.find(params[:id])
-    @inscription.update(status: params[:status])
+    @inscription.update(status: params[:status], payment_status: params[:payment_status])
 
     if @inscription.rejected?
-      # Supprimer l'order si jamais il y en avait un
       @inscription.performances.update_all(order: nil)
     end
 

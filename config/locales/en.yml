@@ -1276,6 +1276,7 @@ en:
       accepted: "Accepted"
       accepted_waiting_payment: "Accepted, waiting for payment"
       approved_waiting_payment: "Approved, waiting for payment"
+      new_payment_submitted: "New payment submitted"
       payment_error_waiting_payment: "Payment error, waiting for payment"
       rejected: "Rejected"
       request_changes: "Request changes"
