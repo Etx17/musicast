@@ -23,25 +23,55 @@ module InscriptionsHelper
     view_button = link_to I18n.t('global.actions.view'), organism_competition_edition_competition_category_inscription_path(inscription.organism, inscription.competition, inscription.edition_competition, inscription.category, inscription), class: 'btn btn-outline-dark btn-sm  ', target: '_blank'
     buttons << view_button
 
+    if inscription.category.payment_after_approval
+      # draft: 0,
+      # in_review: 1,
+      # request_changes: 2,
+      # approved_waiting_payment: 3,
+      # payment_error_waiting_payment: 4,
+      # accepted: 5,
+      # rejected: 6,
+      #
+      # Quand c'est in review, on peut choisir de 'approve waiting payment' ou 'reject'
+      # Si c'est 'approve waiting payment', on change le status en 'approved_waiting_payment'
+      # Si c'est 'reject', on change le status en 'rejected'
+      #
+      # Quand c'est waiting for payment, on peut choisir 'accepter' ou 'erreur de paiement'
+      # Si c'est 'accepter', on change le status en 'accepted', et on change de payment_status en 'paid'
+      # Si c'est 'erreur de paiement', on change le status en 'payment_error_waiting_payment', et le payent_status: payment_error
+      #
+      # Quand c'est accepted, on peut choisir 'reject'
+      # Si c'est 'reject', on change le status en 'rejected'
+      case inscription.status
+      when 'in_review'
+        buttons << button_to(update_status_organism_competition_edition_competition_category_inscription_path(inscription.organism, inscription.competition, inscription.edition_competition, inscription.category, inscription, status: 'approved_waiting_payment'), method: :patch, class: 'btn btn-success border border-0  btn-sm') do
+          concat content_tag(:i, '', class: 'fa fa-check accept-inscription')
+          concat ' Accept'
+        end
+      end
+
+    else
+
     case inscription.status
-    when 'in_review'
-      buttons << button_to(update_status_organism_competition_edition_competition_category_inscription_path(inscription.organism, inscription.competition, inscription.edition_competition, inscription.category, inscription, status: 'accepted'), method: :patch, class: 'btn btn-success border border-0  btn-sm') do
-        concat content_tag(:i, '', class: 'fa fa-check accept-inscription')
-        concat ' Accept'
-      end
-      buttons << button_to(update_status_organism_competition_edition_competition_category_inscription_path(inscription.organism, inscription.competition, inscription.edition_competition, inscription.category, inscription, status: 'rejected'), method: :patch, class: 'btn btn-outline-secondary border border-0  btn-sm') do
-        concat content_tag(:i, '', class: 'fa fa-times')
-        concat ' Reject'
-      end
-    when 'accepted'
-      buttons << button_to(update_status_organism_competition_edition_competition_category_inscription_path(inscription.organism, inscription.competition, inscription.edition_competition, inscription.category, inscription, status: 'rejected'), method: :patch, class: 'btn btn-outline-danger border border-0 btn-sm') do
-        concat content_tag(:i, '', class: 'fa fa-times')
-        concat ' Reject'
-      end
-    when 'rejected'
-      buttons << button_to(update_status_organism_competition_edition_competition_category_inscription_path(inscription.organism, inscription.competition, inscription.edition_competition, inscription.category, inscription, status: 'accepted'), method: :patch, class: 'btn btn-outline-success btn-sm') do
-        concat content_tag(:i, '', class: 'fa fa-check')
-        concat ' Accept'
+      when 'in_review'
+        buttons << button_to(update_status_organism_competition_edition_competition_category_inscription_path(inscription.organism, inscription.competition, inscription.edition_competition, inscription.category, inscription, status: 'accepted'), method: :patch, class: 'btn btn-success border border-0  btn-sm') do
+          concat content_tag(:i, '', class: 'fa fa-check accept-inscription')
+          concat ' Accept'
+        end
+        buttons << button_to(update_status_organism_competition_edition_competition_category_inscription_path(inscription.organism, inscription.competition, inscription.edition_competition, inscription.category, inscription, status: 'rejected'), method: :patch, class: 'btn btn-outline-secondary border border-0  btn-sm') do
+          concat content_tag(:i, '', class: 'fa fa-times')
+          concat ' Reject'
+        end
+      when 'accepted'
+        buttons << button_to(update_status_organism_competition_edition_competition_category_inscription_path(inscription.organism, inscription.competition, inscription.edition_competition, inscription.category, inscription, status: 'rejected'), method: :patch, class: 'btn btn-outline-danger border border-0 btn-sm') do
+          concat content_tag(:i, '', class: 'fa fa-times')
+          concat ' Reject'
+        end
+      when 'rejected'
+        buttons << button_to(update_status_organism_competition_edition_competition_category_inscription_path(inscription.organism, inscription.competition, inscription.edition_competition, inscription.category, inscription, status: 'accepted'), method: :patch, class: 'btn btn-outline-success btn-sm') do
+          concat content_tag(:i, '', class: 'fa fa-check')
+          concat ' Accept'
+        end
       end
     end
 
@@ -58,6 +88,56 @@ module InscriptionsHelper
       content_tag(:i, '', class: 'fa fa-check-circle text-success')
     when 'rejected'
       content_tag(:i, '', class: 'fas fa-times-circle text-danger')
+    end
+  end
+
+  def inscriptions_status_keys_for_table(category)
+    if category.payment_after_approval
+      Inscription.statuses.keys
+    else
+      Inscription.statuses.keys.reject { |status| status == 'approved_waiting_payment' || status == 'payment_error_waiting_payment' }
+    end
+  end
+
+  def should_display_payment_section?(inscription)
+    return true if inscription.category.payment_after_approval && ["approved_waiting_payment", "accepted", "payment_error_waiting_payment", "rejected"].include?(inscription.status)
+    return true if !inscription.category.payment_after_approval
+    false
+  end
+
+  def get_status_color(status)
+    case status
+    when 'draft'
+      'secondary'
+    when 'in_review'
+      'info'
+    when 'request_changes'
+      'warning'
+    when 'approved_waiting_payment'
+      'primary'
+    when 'payment_error_waiting_payment'
+      'danger'
+    when 'accepted'
+      'success'
+    when 'rejected'
+      'danger'
+    else
+      'secondary'
+    end
+  end
+
+  def get_payment_status_color(payment_status)
+    case payment_status
+    when 'no_proof_joined_yet'
+      'secondary'
+    when 'waiting_for_approval'
+      'info'
+    when 'paid'
+      'success'
+    when 'payment_error'
+      'danger'
+    else
+      'secondary'
     end
   end
 end

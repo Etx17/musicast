@@ -45,6 +45,9 @@
         </div>
         <%= f.input :price_cents, label: t('categories.form.registration_fee', currency: @category.price_currency), class: "form-control",input_html: { value: @category.price_cents / 100, step: 1, min: 0, class: "form-control", id: "price_euros", placeholder: t('categories.form.enter_price_in_euros') }  %>
         <div class="form-group w-100">
+          <%= f.input :payment_after_approval, as: :boolean, hint: t('categories.form.payment_after_approval_hint'), label: t('categories.form.payment_after_approval'), class: "form-check-input", input_html: { class: "form-check-input", role: "switch" } %>
+        </div>
+        <div class="form-group w-100">
           <%= f.input :payment_guidelines, label: t('categories.form.payment_guidelines'), class: "form-control", input_html: { class: "form-control", id: "payment_guidelines", placeholder: t('categories.form.enter_payment_guidelines') } %>
         </div>
         <div class="form-group w-100">

@@ -96,6 +96,7 @@ class InscriptionsController < ApplicationController
     if params[:inscription][:payment_proof].present?
       @inscription.payment_proof.purge
       @inscription.payment_proof.attach(params[:inscription][:payment_proof])
+      @inscription.payment_status = "waiting_for_approval"
     end
     if @inscription.valid?
 
@@ -259,6 +260,7 @@ class InscriptionsController < ApplicationController
         :candidat_id,
         :category_id,
         :status,
+        :payment_status,
         :air,
         :terms_accepted,
         :payment_proof, :remove_payment_proof,
@@ -275,6 +277,7 @@ class InscriptionsController < ApplicationController
         :candidat_id,
         :category_id,
         :status,
+        :payment_status,
         :terms_accepted,
         :payment_proof, :remove_payment_proof,
         :air,

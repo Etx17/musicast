@@ -27,7 +27,7 @@ class Inscription < ApplicationRecord
 
     with_options on: :preferences do |prefs|
       prefs.validates :terms_accepted, acceptance: { accept: true, message: "must be accepted" }, allow_nil: false
-      prefs.validates :payment_proof, presence: true
+      prefs.validates :payment_proof, presence: true, if: -> { category.payment_after_approval == false }
     end
   attr_accessor :remove_payment_proof
 
@@ -40,9 +40,21 @@ class Inscription < ApplicationRecord
     draft: 0,
     in_review: 1,
     request_changes: 2,
-    accepted: 3,
-    rejected: 4,
+    approved_waiting_payment: 3,
+    payment_error_waiting_payment: 4,
+    accepted: 5,
+    rejected: 6,
   }
+
+  # Only relevant for categories with payment_after_approval set to true
+  # On refait passer de 3 a 0 si la proof de payment nous allait pas. DIsplay interface pour candidat
+  enum :payment_status, {
+    no_proof_joined_yet: 0,
+    waiting_for_approval: 1,
+    paid: 2,
+    payment_error: 3,
+  }
+
   enum :time_preference, {
     no_preference: 0,
     morning: 1,

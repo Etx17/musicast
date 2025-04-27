@@ -4,139 +4,7 @@ class InscriptionStepsController < ApplicationController
   steps :program, :item_requirements, :preferences
   before_action :set_inscription
 
-  # Action pour télécharger une image immédiatement
-  def upload_item_image
-    @inscription = Inscription.find(params[:inscription_id])
-    authorize @inscription if defined?(Pundit)
 
-    if params[:item_id].present? && params[:image].present?
-      item_requirement = @inscription.inscription_item_requirements.find(params[:item_id])
-
-      # Vérifier les métadonnées de l'image avant l'attachement
-      if params[:image].tempfile.present?
-        # Extraire les métadonnées
-        metadata = ImageMetadataService.get_complete_metadata(params[:image].tempfile.path)
-
-        if metadata
-          Rails.logger.info "Métadonnées de l'image: #{metadata.inspect}"
-
-          # Vous pouvez vérifier le DPI ici et décider si vous voulez continuer
-          if metadata[:resolution].present?
-            dpi_x = metadata[:resolution][0]
-            dpi_y = metadata[:resolution][1]
-
-            Rails.logger.info "DPI AVANT ASSIGNATION: #{dpi_x}x#{dpi_y}"
-
-            # Stocker le DPI dans un attribut, si vous souhaitez le conserver
-            item_requirement.dpi_x = dpi_x
-            item_requirement.dpi_y = dpi_y
-
-            Rails.logger.info "DPI APRÈS ASSIGNATION: item_requirement.dpi_x=#{item_requirement.dpi_x}, item_requirement.dpi_y=#{item_requirement.dpi_y}"
-
-            # Exemple: Vérifier si le DPI est suffisant (par exemple, au moins 300 DPI)
-            min_dpi = 72 # Valeur minimale courante pour le web
-            if dpi_x < min_dpi || dpi_y < min_dpi
-              Rails.logger.warn "DPI trop bas: #{dpi_x} x #{dpi_y}"
-              # Vous pouvez décider de continuer ou d'annuler l'upload
-              # return render json: { success: false, message: "Résolution d'image trop basse (#{dpi_x} DPI). Minimum requis: #{min_dpi} DPI" }, status: :unprocessable_entity
-            end
-          end
-        end
-      end
-
-      item_requirement.submitted_file.purge if item_requirement.submitted_file.attached?
-
-      item_requirement.submitted_file.attach(params[:image])
-
-      # Forcer le processus de sauvegarde à enregistrer les valeurs
-      if metadata && metadata[:resolution].present?
-        Rails.logger.info "FORÇAGE DPI APRÈS ATTACHEMENT: #{metadata[:resolution][0]}x#{metadata[:resolution][1]}"
-        item_requirement.dpi_x = metadata[:resolution][0]
-        item_requirement.dpi_y = metadata[:resolution][1]
-        Rails.logger.info "DPI APRÈS FORÇAGE: item_requirement.dpi_x=#{item_requirement.dpi_x}, item_requirement.dpi_y=#{item_requirement.dpi_y}"
-      end
-
-      # Utiliser save! pour forcer la sauvegarde et lever une exception en cas d'erreur
-      item_requirement.save!
-      Rails.logger.info "APRÈS SAUVEGARDE: item_requirement.dpi_x=#{item_requirement.dpi_x}, item_requirement.dpi_y=#{item_requirement.dpi_y}"
-
-      # Recharger l'objet pour vérifier les valeurs enregistrées
-      item_requirement.reload
-      Rails.logger.info "APRÈS RELOAD: item_requirement.dpi_x=#{item_requirement.dpi_x}, item_requirement.dpi_y=#{item_requirement.dpi_y}"
-
-      if item_requirement.submitted_file.attached?
-        item_requirement.reload
-        begin
-          image_url = url_for(item_requirement.submitted_file)
-          if metadata && metadata[:resolution].present?
-            item_requirement.dpi_x = metadata[:resolution][0]
-            item_requirement.dpi_y = metadata[:resolution][1]
-            Rails.logger.info "DPI AVANT RENDER JSON: item_requirement.dpi_x=#{item_requirement.dpi_x}, item_requirement.dpi_y=#{item_requirement.dpi_y}"
-            item_requirement.save!
-            Rails.logger.info "DPI APRÈS SAVE AVANT RENDER: item_requirement.dpi_x=#{item_requirement.dpi_x}, item_requirement.dpi_y=#{item_requirement.dpi_y}"
-          end
-          render json: {
-            success: true,
-            message: "Image téléchargée avec succès",
-            image_url: image_url,
-            metadata: metadata
-          }
-        rescue => e
-          Rails.logger.error "Erreur lors de la génération de l'URL: #{e.message}"
-
-          blob = item_requirement.submitted_file.blob
-          alt_url = Rails.application.routes.url_helpers.rails_blob_path(blob, only_path: true)
-
-          render json: {
-            success: true,
-            message: "Image téléchargée avec succès (URL alternative)",
-            image_url: alt_url,
-            metadata: metadata
-          }
-        end
-      else
-        render json: {
-          success: false,
-          message: "Impossible d'attacher l'image"
-        }, status: :unprocessable_entity
-      end
-    else
-      render json: {
-        success: false,
-        message: "Paramètres manquants"
-      }, status: :bad_request
-    end
-  rescue => e
-    Rails.logger.error "Erreur lors du téléchargement de l'image: #{e.message}"
-    render json: {
-      success: false,
-      message: "Une erreur s'est produite: #{e.message}"
-    }, status: :internal_server_error
-  end
-
-  def purge_item_image
-    @inscription = Inscription.find(params[:inscription_id])
-    authorize @inscription if defined?(Pundit)
-
-    if params[:item_id].present?
-      item_requirement = @inscription.inscription_item_requirements.find(params[:item_id])
-
-      if item_requirement.submitted_file.attached?
-        item_requirement.submitted_file.purge
-        flash[:notice] = "Image supprimée avec succès"
-      else
-        flash[:alert] = "Aucune image à supprimer"
-      end
-    else
-      flash[:alert] = "Paramètre manquant"
-    end
-
-    redirect_to wizard_path(:item_requirements, action: "edit")
-  rescue => e
-    Rails.logger.error "Erreur lors de la suppression de l'image: #{e.message}"
-    flash[:alert] = "Une erreur s'est produite: #{e.message}"
-    redirect_to wizard_path(:item_requirements, action: "edit")
-  end
 
   def edit
     case step
@@ -174,8 +42,10 @@ class InscriptionStepsController < ApplicationController
       end
     when :preferences
       if params[:inscription][:payment_proof].present?
+
         @inscription.payment_proof.purge if @inscription.payment_proof.attached?
         @inscription.payment_proof.attach(params[:inscription][:payment_proof])
+        @inscription.payment_status = "waiting_for_approval"
       end
 
       if @inscription.valid?(:preferences)
@@ -239,6 +109,105 @@ class InscriptionStepsController < ApplicationController
 
   def finish_wizard_path
     inscription_path(@inscription)
+  end
+
+  # Action pour télécharger une image immédiatement
+  def upload_item_image
+    @inscription = Inscription.find(params[:inscription_id])
+    authorize @inscription if defined?(Pundit)
+    if params[:item_id].present? && params[:image].present?
+      item_requirement = @inscription.inscription_item_requirements.find(params[:item_id])
+      if params[:image].tempfile.present?
+        metadata = ImageMetadataService.get_complete_metadata(params[:image].tempfile.path)
+        if metadata
+          if metadata[:resolution].present?
+            dpi_x = metadata[:resolution][0]
+            dpi_y = metadata[:resolution][1]
+            item_requirement.dpi_x = dpi_x
+            item_requirement.dpi_y = dpi_y
+          end
+        end
+      end
+
+      item_requirement.submitted_file.purge if item_requirement.submitted_file.attached?
+      item_requirement.submitted_file.attach(params[:image])
+
+      if metadata && metadata[:resolution].present?
+        Rails.logger.info "FORÇAGE DPI APRÈS ATTACHEMENT: #{metadata[:resolution][0]}x#{metadata[:resolution][1]}"
+        item_requirement.dpi_x = metadata[:resolution][0]
+        item_requirement.dpi_y = metadata[:resolution][1]
+        Rails.logger.info "DPI APRÈS FORÇAGE: item_requirement.dpi_x=#{item_requirement.dpi_x}, item_requirement.dpi_y=#{item_requirement.dpi_y}"
+      end
+      item_requirement.save!
+      item_requirement.reload
+
+      if item_requirement.submitted_file.attached?
+        item_requirement.reload
+        begin
+          image_url = url_for(item_requirement.submitted_file)
+          if metadata && metadata[:resolution].present?
+            item_requirement.dpi_x = metadata[:resolution][0]
+            item_requirement.dpi_y = metadata[:resolution][1]
+            item_requirement.save!
+          end
+          render json: {
+            success: true,
+            message: "Image téléchargée avec succès",
+            image_url: image_url,
+            metadata: metadata
+          }
+        rescue => e
+          blob = item_requirement.submitted_file.blob
+          alt_url = Rails.application.routes.url_helpers.rails_blob_path(blob, only_path: true)
+          render json: {
+            success: true,
+            message: "Image téléchargée avec succès (URL alternative)",
+            image_url: alt_url,
+            metadata: metadata
+          }
+        end
+      else
+        render json: {
+          success: false,
+          message: "Impossible d'attacher l'image"
+        }, status: :unprocessable_entity
+      end
+    else
+      render json: {
+        success: false,
+        message: "Paramètres manquants"
+      }, status: :bad_request
+    end
+  rescue => e
+    Rails.logger.error "Erreur lors du téléchargement de l'image: #{e.message}"
+    render json: {
+      success: false,
+      message: "Une erreur s'est produite: #{e.message}"
+    }, status: :internal_server_error
+  end
+
+  def purge_item_image
+    @inscription = Inscription.find(params[:inscription_id])
+    authorize @inscription if defined?(Pundit)
+
+    if params[:item_id].present?
+      item_requirement = @inscription.inscription_item_requirements.find(params[:item_id])
+
+      if item_requirement.submitted_file.attached?
+        item_requirement.submitted_file.purge
+        flash[:notice] = "Image supprimée avec succès"
+      else
+        flash[:alert] = "Aucune image à supprimer"
+      end
+    else
+      flash[:alert] = "Paramètre manquant"
+    end
+
+    redirect_to wizard_path(:item_requirements, action: "edit")
+  rescue => e
+    Rails.logger.error "Erreur lors de la suppression de l'image: #{e.message}"
+    flash[:alert] = "Une erreur s'est produite: #{e.message}"
+    redirect_to wizard_path(:item_requirements, action: "edit")
   end
 
   private

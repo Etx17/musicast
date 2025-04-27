@@ -469,6 +469,8 @@ fr:
       allow_own_pianist: "Autoriser les candidats à apporter leur pianiste accompagnateur"
       registration_fee: "Frais d'inscription (en %{currency})"
       enter_price_in_euros: "Entrez le prix en euros"
+      payment_after_approval: "Paiement après approbation "
+      payment_after_approval_hint: "Les candidats devront payer la cotisation après leur inscription"
       preselection_vote_type: "Type de vote pour la présélection"
       no_vote: "Pas de vote"
       hundred_points: "Vote sur 100 points"
@@ -1243,10 +1245,17 @@ fr:
       in_review: "En cours d'examen"
       pending: "En attente de paiement"
       request_changes: "Modifications demandées"
+      approved_waiting_payment: "Accepté, en attente de paiement"
+      payment_error_waiting_payment: "Erreur de paiement, en attente de paiement"
       accepted: "Accepté"
       rejected: "Rejeté"
       waiting_for_payment: "En attente de paiement"
       waiting_for_jury: "En attente de jury"
+    payment_statuses:
+      no_proof_joined_yet: "Aucune preuve de paiement"
+      waiting_for_approval: "En attente de validation"
+      paid: "Payé"
+      payment_error: "Erreur de paiement"
   juries:
     form:
       update: "Mettre à jour"

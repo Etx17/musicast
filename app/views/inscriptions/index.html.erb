@@ -46,12 +46,11 @@
   <p><%= t('inscriptions.index.late_invitations_sent') %>: <span class="bg-info p-1"><%= @category.inscriptions.where(is_late_inscription: true).count %> </span></p>
 
 
-  <div id="inscriptions" class="row px-2">
+  <div id="inscriptions" class="overflow-scroll d-flex  px-2">
     <% @category ||= inscriptions.first.category%>
 
-    <%# <% Inscription.statuses.keys.reject { |status| status == 'draft' }.each do |status| %>
-    <% Inscription.statuses.keys.each do |status| %>
-        <div class="col bg-light shadow-sm mb-1" style="border-radius: 0.25rem; min-width: 215px;" id="<%= t("inscriptions.statuses.#{status}") %>">
+    <% inscriptions_status_keys_for_table(@category).each do |status| %>
+        <div class="col bg-light shadow-sm mb-1" style="border-radius: 0.25rem; min-width: 300px;" id="<%= t("inscriptions.statuses.#{status}") %>">
           <div class="d-flex justify-content-between align-items-center py-3 px-3 border-bottom" style="height: 60px;">
             <h5 class="mb-0 text-dark fw-bold">
               <%= t("inscriptions.statuses.#{status}") %>

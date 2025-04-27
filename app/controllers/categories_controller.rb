@@ -91,6 +91,7 @@ class CategoriesController < ApplicationController
       :allow_own_pianist_accompagnateur,
       :payment_guidelines,
       :payment_guidelines_english,
+      :payment_after_approval,
       :photo,
       tours_attributes: %i[id tour_number _destroy],
       ).tap do |whitelisted|

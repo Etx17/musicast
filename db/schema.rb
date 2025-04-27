@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_24_162919) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_26_152806) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -134,6 +134,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_24_162919) do
     t.text "description_english"
     t.text "payment_guidelines"
     t.text "payment_guidelines_english"
+    t.boolean "payment_after_approval", default: false
     t.index ["edition_competition_id"], name: "index_categories_on_edition_competition_id"
     t.index ["slug"], name: "index_categories_on_slug", unique: true
   end
@@ -316,6 +317,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_24_162919) do
     t.string "candidate_brings_pianist_accompagnateur_email"
     t.string "candidate_brings_pianist_accompagnateur_full_name"
     t.text "time_justification"
+    t.integer "payment_status", default: 0
     t.index ["candidat_id"], name: "index_inscriptions_on_candidat_id"
     t.index ["category_id"], name: "index_inscriptions_on_category_id"
   end

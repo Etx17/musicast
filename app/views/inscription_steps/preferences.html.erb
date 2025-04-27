@@ -85,85 +85,86 @@
         <% end %>
       </div>
     </div>
+    <% unless @inscription.category.payment_after_approval %>
+      <div class="card bg-light mb-4">
+        <div class="card-body">
+          <h4 class="card-title mb-3"><%= t('inscriptions.steps.preferences.payment') %></h4>
 
-    <div class="card bg-light mb-4">
-      <div class="card-body">
-        <h4 class="card-title mb-3"><%= t('inscriptions.steps.preferences.payment') %></h4>
+          <!-- Price and IBAN Information - No alerts -->
+          <div class="mb-4" style="width: fit-content;">
+            <!-- Price display -->
+            <div class="d-flex align-items-center mb-3">
+              <i class="fas fa-money-bill-wave text-success me-2"></i>
+              <span class="fw-bold"><%= t('inscriptions.steps.preferences.registration_fee') %>:</span>
+              <span class="ms-2 fs-5 fw-bold text-success">
+                <%= humanized_money_with_symbol(@inscription.category.price).gsub('.', '') %>
+              </span>
+            </div>
 
-        <!-- Price and IBAN Information - No alerts -->
-        <div class="mb-4" style="width: fit-content;">
-          <!-- Price display -->
-          <div class="d-flex align-items-center mb-3">
-            <i class="fas fa-money-bill-wave text-success me-2"></i>
-            <span class="fw-bold"><%= t('inscriptions.steps.preferences.registration_fee') %>:</span>
-            <span class="ms-2 fs-5 fw-bold text-success">
-              <%= humanized_money_with_symbol(@inscription.category.price).gsub('.', '') %>
-            </span>
+            <!-- IBAN with copy button -->
+            <% if @inscription.category.competition.organism.iban.present? %>
+              <div class="d-flex align-items-center">
+                <i class="fas fa-university me-2"></i>
+                <span class="fw-bold"><%= t('inscriptions.inscription.payment_iban_label') %>:</span>
+                <code class="ms-2 p-1 bg-white border rounded"><%= @inscription.category.competition.organism.iban %></code>
+                <button type="button" class="btn btn-sm btn-outline-secondary ms-2 copy-btn" data-clipboard-text="<%= @inscription.category.competition.organism.iban %>">
+                  <i class="fas fa-copy"></i> <%= t('global.actions.copy') %>
+                </button>
+                <span class="ms-2 text-success copy-success" style="display: none;">
+                  <i class="fas fa-check"></i> <%= t('global.messages.copied_to_clipboard') %>
+                </span>
+              </div>
+            <% end %>
+
+            <!-- Payment guidelines -->
+            <div class="mt-3">
+              <% if I18n.locale != :en %>
+                <% if @inscription.category.payment_guidelines.present? %>
+                  <%= render InfoboxComponent.new(title: t('categories.form.payment_guidelines'), text: @inscription.category.payment_guidelines) %>
+                <% end %>
+              <% else %>
+                <% if @inscription.category.payment_guidelines_english.present? %>
+                  <%= render InfoboxComponent.new(title: t('categories.form.payment_guidelines_english'), text: @inscription.category.payment_guidelines_english) %>
+                <% end %>
+              <% end %>
+            </div>
           </div>
 
-          <!-- IBAN with copy button -->
-          <% if @inscription.category.competition.organism.iban.present? %>
-            <div class="d-flex align-items-center">
-              <i class="fas fa-university me-2"></i>
-              <span class="fw-bold"><%= t('inscriptions.inscription.payment_iban_label') %>:</span>
-              <code class="ms-2 p-1 bg-white border rounded"><%= @inscription.category.competition.organism.iban %></code>
-              <button type="button" class="btn btn-sm btn-outline-secondary ms-2 copy-btn" data-clipboard-text="<%= @inscription.category.competition.organism.iban %>">
-                <i class="fas fa-copy"></i> <%= t('global.actions.copy') %>
-              </button>
-              <span class="ms-2 text-success copy-success" style="display: none;">
-                <i class="fas fa-check"></i> <%= t('global.messages.copied_to_clipboard') %>
-              </span>
+          <% if @inscription.errors[:payment_proof].any? %>
+            <div class="text-danger mb-3">
+              <%= @inscription.errors[:payment_proof].join(", ") %>
             </div>
           <% end %>
 
-          <!-- Payment guidelines -->
-          <div class="mt-3">
-            <% if I18n.locale != :en %>
-              <% if @inscription.category.payment_guidelines.present? %>
-                <%= render InfoboxComponent.new(title: t('categories.form.payment_guidelines'), text: @inscription.category.payment_guidelines) %>
+          <% if @inscription.payment_proof.attached? && @inscription.payment_proof.persisted? %>
+            <div class="mb-3">
+              <label class="form-label small text-muted"><%= t('inscriptions.inscription.current_payment_proof') %></label>
+              <div class="d-flex align-items-center mb-2">
+                <span class="badge bg-success me-2"><i class="fas fa-check"></i> <%= t('inscriptions.steps.item_requirements.uploaded') %></span>
+              </div>
+
+              <% if @inscription.payment_proof.content_type.include?('pdf') %>
+                <embed src="<%= url_for(@inscription.payment_proof) %>" width="100%" height="300" type="application/pdf" class="mt-2">
+              <% else %>
+                <%= image_tag url_for(@inscription.payment_proof), class: "img-fluid mb-2", style: "max-height: 300px;" %>
               <% end %>
-            <% else %>
-              <% if @inscription.category.payment_guidelines_english.present? %>
-                <%= render InfoboxComponent.new(title: t('categories.form.payment_guidelines_english'), text: @inscription.category.payment_guidelines_english) %>
-              <% end %>
-            <% end %>
-          </div>
+
+              <div class="mt-2">
+                <%= f.input :payment_proof,
+                          as: :file,
+                          label: t('inscriptions.inscription.replace_payment_proof'),
+                          hint: t('inscriptions.inscription.upload_payment_proof_instruction') %>
+              </div>
+            </div>
+          <% else %>
+            <%= f.input :payment_proof,
+                      as: :file,
+                      label: t('inscriptions.inscription.payment_proof'),
+                      hint: t('inscriptions.inscription.upload_payment_proof_instruction') %>
+          <% end %>
         </div>
-
-        <% if @inscription.errors[:payment_proof].any? %>
-          <div class="text-danger mb-3">
-            <%= @inscription.errors[:payment_proof].join(", ") %>
-          </div>
-        <% end %>
-
-        <% if @inscription.payment_proof.attached? && @inscription.payment_proof.persisted? %>
-          <div class="mb-3">
-            <label class="form-label small text-muted"><%= t('inscriptions.inscription.current_payment_proof') %></label>
-            <div class="d-flex align-items-center mb-2">
-              <span class="badge bg-success me-2"><i class="fas fa-check"></i> <%= t('inscriptions.steps.item_requirements.uploaded') %></span>
-            </div>
-
-            <% if @inscription.payment_proof.content_type.include?('pdf') %>
-              <embed src="<%= url_for(@inscription.payment_proof) %>" width="100%" height="300" type="application/pdf" class="mt-2">
-            <% else %>
-              <%= image_tag url_for(@inscription.payment_proof), class: "img-fluid mb-2", style: "max-height: 300px;" %>
-            <% end %>
-
-            <div class="mt-2">
-              <%= f.input :payment_proof,
-                         as: :file,
-                         label: t('inscriptions.inscription.replace_payment_proof'),
-                         hint: t('inscriptions.inscription.upload_payment_proof_instruction') %>
-            </div>
-          </div>
-        <% else %>
-          <%= f.input :payment_proof,
-                     as: :file,
-                     label: t('inscriptions.inscription.payment_proof'),
-                     hint: t('inscriptions.inscription.upload_payment_proof_instruction') %>
-        <% end %>
       </div>
-    </div>
+    <% end %>
 
     <div class="d-flex justify-content-between mt-4">
       <%= link_to t('global.actions.previous'), previous_wizard_path, class: "btn btn-outline-secondary" %>
