@@ -25,6 +25,7 @@
           <span class="text-muted"><%= ISO3166::Country[@candidat.nationality]&.translation %></span>
           <span style="font-size: 1.5em"><%= flag_emoji(@candidat.nationality) %></span>
         <% end %>
+        <span class="text-capitalize"><%= I18n.t("candidats.form.voice_types.#{@candidat.voice_type}") %></span>
       </div>
       <p class="m-0 text-muted"><%= t('candidats.profile_summary_section.teacher') %>: <%= @candidat&.last_teacher %></p>
     </div>
