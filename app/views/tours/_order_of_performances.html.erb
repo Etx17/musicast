@@ -56,54 +56,35 @@
       <p class="text-center text-secondary"><%= t('tours.order_of_performances.change_order_instructions') %> <i class="fas fa-check"></i> <%= t('tours.order_of_performances.or_shuffle') %> <i class="fas fa-random"></i></p>
 
       <% if @category.is_accompagnated_by_pianist? && @tour.performances.any? %>
-        <div class="mb-4">
-          <h5 class="text-center mb-3">Répartition des performances par pianiste</h5>
-          <div class="table-responsive">
-            <table class="table table-sm table-bordered">
-              <thead>
-                <tr>
-                  <th class="text-center bg-light">Pianiste</th>
-                  <th class="text-center bg-light">Nombre de performances</th>
-                </tr>
-              </thead>
-              <tbody>
+
+          <!-- Légende des couleurs -->
+          <% if @organism.pianist_accompagnateurs.any? %>
+
+            <div class="mt-3 mb-4">
+              <div class="d-flex flex-wrap justify-content-center gap-3">
                 <% pianist_counts = {} %>
                 <% @organism.pianist_accompagnateurs.each do |pianist| %>
                   <% count = @tour.performances.count { |p| p.pianist_accompagnateur_id == pianist.id } %>
                   <% pianist_counts[pianist.id] = count %>
-                  <tr>
-                    <td><%= pianist.full_name %></td>
-                    <td class="text-center"><%= count %></td>
-                  </tr>
+                  <div class="d-inline-block pianist-cell px-3 py-2 shadow-sm" data-pianist-id="<%= pianist.id %>">
+                    <strong><%= pianist.full_name %></strong> <span class="badge bg-light text-dark ms-1"><%= count %></span>
+                  </div>
                 <% end %>
 
                 <% if @tour.performances.any? { |p| p.inscription.candidate_brings_pianist_accompagnateur } %>
-                  <tr>
-                    <td>Pianistes apportés par les candidats</td>
-                    <td class="text-center"><%= @tour.performances.count { |p| p.inscription.candidate_brings_pianist_accompagnateur } %></td>
-                  </tr>
+                  <div class="d-inline-block px-3 py-2 bg-secondary bg-opacity-10 rounded shadow-sm">
+                    <strong>Pianistes externes</strong>
+                    <span class="badge bg-secondary ms-1">
+                      <%= @tour.performances.count { |p| p.inscription.candidate_brings_pianist_accompagnateur } %>
+                    </span>
+                  </div>
                 <% end %>
-
-                <% if @tour.performances.any? { |p| !p.inscription.candidate_brings_pianist_accompagnateur && p.pianist_accompagnateur_id.nil? } %>
-                  <tr class="table-warning">
-                    <td>Performances sans pianiste assigné</td>
-                    <td class="text-center"><%= @tour.performances.count { |p| !p.inscription.candidate_brings_pianist_accompagnateur && p.pianist_accompagnateur_id.nil? } %></td>
-                  </tr>
-                <% end %>
-              </tbody>
-              <tfoot>
-                <tr class="table-secondary">
-                  <th>Total</th>
-                  <th class="text-center"><%= @tour.performances.count %></th>
-                </tr>
-              </tfoot>
-            </table>
-          </div>
-
-          <% if pianist_counts.values.any? { |count| count > 0 } %>
-            <% min_count = pianist_counts.values.select { |count| count > 0 }.min || 0 %>
-            <% max_count = pianist_counts.values.max || 0 %>
+              </div>
+            </div>
           <% end %>
+              <div class="text-secondary">
+                <%= @tour.performances.count %> <%= t('global.performance').pluralize(@tour.performances.count) %>
+              </div>
         </div>
       <% end %>
 
@@ -111,15 +92,15 @@
       <table class="table table-bordered caption-top">
         <thead>
           <tr>
-            <th class="p-2 text-center bg-grey "><%= t('tours.order_of_performances.candidate') %></th>
-            <th class="p-2 text-center bg-grey "><%= t('tours.order_of_performances.order') %></th>
-            <th class="p-2 text-center bg-grey " style="min-width: 450px;"><%= t('tours.order_of_performances.presented_airs') %></th>
+            <th class="p-2 text-center bg-grey align-middle"><%= t('tours.order_of_performances.candidate') %></th>
+            <th class="p-2 text-center bg-grey align-middle"><%= t('tours.order_of_performances.order') %></th>
+            <th class="p-2 text-center bg-grey align-middle" style="min-width: 450px;"><%= t('tours.order_of_performances.presented_airs') %></th>
             <% if @category.is_accompagnated_by_pianist? %>
-              <th class="p-2 text-center bg-grey "><%= t('tours.order_of_performances.pianist_accompanist') %></th>
+              <th class="p-2 text-center bg-grey align-middle " style="min-width: 200px;"><%= t('tours.order_of_performances.pianist_accompanist') %></th>
             <% end %>
-            <th class="p-2 text-center bg-grey "><%= t('tours.order_of_performances.timing') %></th>
-            <th class="p-2 text-center bg-grey "><%= t('tours.order_of_performances.passage_preference') %></th>
-            <th class="p-2 text-center bg-grey "><%= t('tours.order_of_performances.actions') %></th>
+            <th class="p-2 text-center bg-grey align-middle"><%= t('tours.order_of_performances.timing') %></th>
+            <th class="p-2 text-center bg-grey align-middle" style="min-width: 150px;"><%= t('tours.order_of_performances.passage_preference') %></th>
+            <th class="p-2 text-center bg-grey align-middle"><%= t('tours.order_of_performances.actions') %></th>
           </tr>
         </thead>
         <tbody>
@@ -181,15 +162,28 @@
                   </div>
                 </td>
                 <% if @category.is_accompagnated_by_pianist? %>
-                  <td class="p-2 pt-4 text-center bg-light text-secondary"  >
+                  <td class="p-2 text-center bg-light text-secondary align-middle"  >
                     <% if !performance.inscription.candidate_brings_pianist_accompagnateur %>
                       <%= form_with url: assign_pianist_to_performance_manually_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour, performance_id: performance.id), method: :post, html: { id: "pianist-form-#{performance.id}" } do |form| %>
                         <%= form.hidden_field :performance_id, value: performance.id %>
-                        <%= form.select :pianist_accompagnateur_id, @organism.pianist_accompagnateurs.map { |p| [p.full_name, p.id] }, { selected: performance.pianist_accompagnateur_id, prompt: t('tours.order_of_performances.select_pianist') }, { onchange: "document.getElementById('pianist-form-#{performance.id}').submit();" } %>
-                        <%# <%= form.submit "Update", class: "btn btn-success mt-2" %>
+
+                        <div class="input-group">
+                          <%= form.select :pianist_accompagnateur_id,
+                            @organism.pianist_accompagnateurs.map { |p| [p.full_name, p.id] },
+                            { selected: performance.pianist_accompagnateur_id, prompt: t('tours.order_of_performances.select_pianist') },
+                            {
+                              class: "form-select pianist-select colored-select",
+                              onchange: "document.getElementById('pianist-form-#{performance.id}').submit();",
+                              data: { pianist_id: performance.pianist_accompagnateur_id }
+                            }
+                          %>
+                        </div>
                       <% end %>
                     <% else %>
-                      <p><%= t('tours.order_of_performances.brings_own_pianist') %></p>
+                      <p class="mb-0 p-2 rounded align-middle" style="background-color: #f8f9fa;">
+                        <i class="fas fa-user-check me-1"></i>
+                        <%= t('tours.order_of_performances.brings_own_pianist').truncate(20) %>
+                      </p>
                     <% end %>
                   </td>
                 <% end %>
@@ -232,5 +226,78 @@
       var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         return new bootstrap.Tooltip(tooltipTriggerEl)
       })
+    });
+  </script>
+
+  <!-- Script pour les couleurs des pianistes -->
+  <script>
+    document.addEventListener("turbo:load", function() {
+      // Palette de couleurs prédéfinies distinctives
+      const colorPalette = [
+        '#4285F4', // Bleu Google
+        '#34A853', // Vert Google
+        '#EA4335', // Rouge Google
+        '#FBBC05', // Jaune Google
+        '#8E24AA', // Violet
+        '#00ACC1', // Cyan
+        '#FB8C00', // Orange
+        '#607D8B', // Bleu gris
+        '#E91E63', // Rose
+        '#9C27B0', // Pourpre
+        '#3F51B5', // Indigo
+        '#009688', // Teal
+        '#FF5722', // Orange profond
+        '#795548', // Marron
+        '#673AB7', // Violet profond
+      ];
+
+      // Récupérer tous les pianistes uniques
+      const pianistIds = Array.from(document.querySelectorAll('[data-pianist-id]')).map(el =>
+        el.getAttribute('data-pianist-id')
+      ).filter((v, i, a) => a.indexOf(v) === i && v); // Unique non-null values
+
+      // Assigner des couleurs aux pianistes
+      const pianistColors = {};
+      pianistIds.forEach((id, index) => {
+        pianistColors[id] = colorPalette[index % colorPalette.length];
+      });
+
+      // Appliquer les couleurs aux sélecteurs et aux cellules de pianiste
+      document.querySelectorAll('[data-pianist-id]').forEach(el => {
+        const pianistId = el.getAttribute('data-pianist-id');
+        if (pianistId && pianistColors[pianistId]) {
+          el.style.backgroundColor = pianistColors[pianistId] + '20'; // Ajoute transparence
+          el.style.borderLeft = `4px solid ${pianistColors[pianistId]}`;
+        }
+      });
+
+      // Colorier les options des sélecteurs
+      document.querySelectorAll('.pianist-select').forEach(select => {
+        Array.from(select.options).forEach(option => {
+          if (option.value && pianistColors[option.value]) {
+            option.style.backgroundColor = pianistColors[option.value] + '20';
+            option.style.borderLeft = `4px solid ${pianistColors[option.value]}`;
+          }
+        });
+      });
+
+      // Ajouter un style aux sélecteurs Bootstrap pour préserver les couleurs
+      const style = document.createElement('style');
+      style.textContent = `
+        .colored-select option {
+          padding: 8px;
+          margin: 3px;
+          border-radius: 4px;
+        }
+        .pianist-cell {
+          padding: 8px !important;
+          border-radius: 4px;
+          transition: all 0.2s;
+        }
+        .pianist-cell:hover {
+          filter: brightness(0.95);
+        }
+      `;
+      document.head.appendChild(style);
     });
   </script>

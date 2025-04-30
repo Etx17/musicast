@@ -956,6 +956,7 @@ en:
       back: "Back to free choices"
       destroy: "Destroy this free choice"
   global:
+    performance: "performance"
     prize: "prize"
     prizes: "prizes"
     required_program: "Required program"

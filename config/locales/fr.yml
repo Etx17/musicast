@@ -919,6 +919,7 @@ fr:
       back: "Retour aux choix libres"
       destroy: "Supprimer ce choix libre"
   global:
+    performance: performance
     prize: "prix"
     prizes: "prix"
     required_program: "Programme requis"
