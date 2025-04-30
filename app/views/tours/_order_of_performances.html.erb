@@ -92,7 +92,7 @@
       <table class="table table-bordered caption-top">
         <thead>
           <tr>
-            <th class="p-2 text-center bg-grey align-middle"><%= t('tours.order_of_performances.candidate') %></th>
+            <th class="p-2 text-center bg-grey align-middle" style="min-width: 200px;"><%= t('tours.order_of_performances.candidate') %></th>
             <th class="p-2 text-center bg-grey align-middle"><%= t('tours.order_of_performances.order') %></th>
             <th class="p-2 text-center bg-grey align-middle" style="min-width: 450px;"><%= t('tours.order_of_performances.presented_airs') %></th>
             <% if @category.is_accompagnated_by_pianist? %>
@@ -116,6 +116,7 @@
             <% @tour.performances.order(:order).each do |performance| %>
               <tr>
                 <td class="p-2 bg-light align-middle">
+                  <%= image_tag performance.candidat.portrait_or_default, class: "rounded-circle me-2", style: "width: 40px; height: 40px; object-fit: cover;" %>
                   <%= link_to "#{performance.candidat.first_name} #{performance.candidat.last_name}", inscription_path(performance.inscription), target: '_blank', class: performance.minutes == 0 ? "text-danger" : ''%>
                   <% if performance.minutes == 0 %>
                     <i class="text-danger fas fa-circle-exclamation ms-2"></i>
