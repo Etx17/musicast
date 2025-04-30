@@ -43,11 +43,11 @@
     <% inscriptions_status_keys_for_table(@category).each do |status| %>
       <div class="kanban-column" style="min-width: 320px; max-width: 320px;">
         <!-- Column Header -->
-        <div class="d-flex justify-content-between align-items-center bg-primary-light p-3 rounded-top border-bottom">
+        <div class="d-flex justify-content-between align-items-center bg-secondary-secondary p-3 rounded-top border-bottom">
           <h6 class="mb-0 fw-bold text-dark">
             <%= t("inscriptions.statuses.#{status}").truncate(40) %>
           </h6>
-          <span class="badge bg-primary rounded-pill">
+          <span class="badge bg-primary-light text-primary border border-primary rounded-pill">
             <%= @inscriptions&.select { |inscription| inscription.status == status }&.count %>
           </span>
         </div>
@@ -88,19 +88,19 @@
                 </div>
 
                 <!-- Actions Section -->
-                <div class="d-flex flex-wrap gap-2 mt-3 align-items-center">
+                <div class="d-flex flex-wrap gap-1 mt-3 align-items-center">
+
+                  <!-- Other Action Buttons -->
+                  <%= buttons_for_inscription(inscription).html_safe %>
                   <!-- Payment Proof Button -->
                   <% if ['approved_waiting_payment', 'new_payment_submitted'].include?(inscription.status) && inscription.payment_proof.attached? %>
-                    <button class="btn btn-outline-primary btn-sm"
+                    <button class="btn bg-warning-secondary btn-sm w-100"
                             data-bs-toggle="modal"
                             data-bs-target="#paymentProofModal<%= inscription.id %>">
                       <i class="fas <%= inscription.payment_proof.content_type.include?('pdf') ? 'fa-file-pdf' : 'fa-image' %> me-1"></i>
                       <%= t('global.actions.view_payment') %>
                     </button>
                   <% end %>
-
-                  <!-- Other Action Buttons -->
-                  <%= buttons_for_inscription(inscription).html_safe %>
                 </div>
               </div>
             </div>
