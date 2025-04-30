@@ -76,13 +76,13 @@
                             <span class="ms-2"><%= flag_emoji(inscription.candidat.nationality) %></span>
                           </h6>
                         </div>
-                        <small class="text-muted d-block">
+                        <small class="text-muted d-flex align-items-center gap-2">
                           <span class="text-capitalize"><%= I18n.t("candidats.form.voice_types.#{inscription.candidat.voice_type}") %></span>
+                          <% if @category.hundred_points? %>
+                            <%= score_badge(inscription.average_score) %>
+                          <% end %>
                         </small>
                       </div>
-                      <% if @category.hundred_points? %>
-                        <span class="badge bg-primary"><%= inscription.average_score %>/100</span>
-                      <% end %>
                     </div>
                   </div>
                 </div>

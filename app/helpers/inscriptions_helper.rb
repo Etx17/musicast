@@ -164,4 +164,19 @@ end
       'secondary'
     end
   end
+
+  def score_badge(score)
+    return if score.nil? || score.zero? || score.is_a?(String)
+
+    badge_class = case score
+                  when 0..50
+                    "bg-danger-secondary text-danger"
+                  when 51..75
+                    "bg-warning-secondary text-warning"
+                  else
+                    "bg-success-secondary text-success"
+                  end
+
+    content_tag(:span, "#{score}/100", class: "badge #{badge_class} rounded-pill")
+  end
 end
