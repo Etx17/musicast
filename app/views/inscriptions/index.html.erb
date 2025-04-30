@@ -50,7 +50,7 @@
     <% @category ||= inscriptions.first.category%>
 
     <% inscriptions_status_keys_for_table(@category).each do |status| %>
-        <div class="col bg-light shadow-sm mb-1" style="border-radius: 0.25rem; min-width: 300px;" id="<%= t("inscriptions.statuses.#{status}") %>">
+        <div class="col p-2 bg-light shadow-sm mb-2" style="border-radius: 0.25rem; min-width: 300px;" id="<%= t("inscriptions.statuses.#{status}") %>">
           <div class="d-flex justify-content-between align-items-center py-3 px-3 border-bottom" style="height: 60px;">
             <h5 class="mb-0 text-dark fw-bold">
               <%= t("inscriptions.statuses.#{status}") %>
@@ -62,6 +62,7 @@
           <% @inscriptions&.select { |inscription| inscription.status == status }&.each do |inscription| %>
             <div class="card p-2 mt-2 border-0 shadow-sm">
                 <div class="d-flex justify-content-between align-items-start mb-2">
+                  <%= image_tag inscription.candidat.portrait_or_default, class: " rounded-circle", style: "max-height: 50px;" %>
                   <h6 class="card-title mb-0"><%= inscription_status_icon(inscription) %> <%= inscription.candidat.first_name %></h6>
                   <% if @category.hundred_points? %>
                     <span class="badge bg-primary rounded-pill"><%= inscription.average_score %>/100</span>

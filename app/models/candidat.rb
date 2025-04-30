@@ -44,6 +44,15 @@ class Candidat < ApplicationRecord
     errors.add(:artistic_photo, "Artistic photo must be attached") unless artistic_photo.attached?
   end
 
+  def portrait_or_default
+    if portrait.attached?
+      return portrait
+    else
+      raise
+      return Rails.root.join('app', 'assets', 'images', 'default_portrait.jpg').open
+    end
+  end
+
   def has_minimum_informations_for_inscription?
     self.first_name.present? &&
     self.last_name.present? &&
