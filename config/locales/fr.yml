@@ -1761,6 +1761,7 @@ fr:
       min_duration_minute: "Durée minimale (minutes)"
       max_duration_minute: "Durée maximale (minutes)"
     order_of_performances:
+      min_consecutive_performances: "Nombre minimum de performances consécutives par pianiste"
       current_order: "Ordre actuel"
       shuffle_confirm: "Êtes-vous sûr de vouloir mélanger aléatoirement l'ordre des performances ?"
       shuffle_randomly: "Mélanger aléatoirement"

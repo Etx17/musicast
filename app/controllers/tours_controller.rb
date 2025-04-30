@@ -143,12 +143,14 @@ class ToursController < ApplicationController
     @tour = Tour.find(params[:id])
     pianists = params[:pianist_accompagnateur_ids].reject(&:blank?).map { |id| PianistAccompagnateur.find(id) }
     if pianists.count > 1
-    max_consecutive_performances_per_pianist = params[:max_consecutive_performances_per_pianist].presence&.to_i || 2
+      max_consecutive_performances_per_pianist = params[:max_consecutive_performances_per_pianist].presence&.to_i || 2
+      min_consecutive_performances_per_pianist = params[:min_consecutive_performances_per_pianist].presence&.to_i || 1
     else
       max_consecutive_performances_per_pianist = params[:max_consecutive_performances_per_pianist].presence&.to_i || 255
+      min_consecutive_performances_per_pianist = params[:min_consecutive_performances_per_pianist].presence&.to_i || 1
     end
 
-    @tour.assign_pianist_to_each_performance(pianists, max_consecutive_performances_per_pianist)
+    @tour.assign_pianist_to_each_performance(pianists, max_consecutive_performances_per_pianist, min_consecutive_performances_per_pianist)
     redirect_to [@organism, @competition, @edition_competition, @category, @tour], notice: "Pianistes assignés avec succès."
   end
 

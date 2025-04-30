@@ -1852,6 +1852,7 @@ en:
       tour_requirement_description_placeholder: "Enter requirements description"
       tour_requirement_description_english_placeholder: "Enter requirements description in English"
     order_of_performances:
+      min_consecutive_performances: "Minimum number of consecutive performances per pianist"
       current_order: "Current order"
       shuffle_confirm: "Are you sure you want to randomly shuffle the order of performances?"
       shuffle_randomly: "Shuffle randomly"

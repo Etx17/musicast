@@ -128,13 +128,69 @@ class Tour < ApplicationRecord
     days.reject(&:blank?).sort
   end
 
-  def assign_pianist_to_each_performance(pianists, max_consecutive_performances_per_pianist = 255)
-    performances.where.not(order: nil).order(:order).each_with_index do |performance, index|
-      next if performance.inscription.candidate_brings_pianist_accompagnateur == true
-      group_number = (index / max_consecutive_performances_per_pianist.to_f).floor
-      pianist = pianists[group_number % pianists.size]
-      performance.update(pianist_accompagnateur: pianist)
+  def assign_pianist_to_each_performance(pianists, max_consecutive_performances_per_pianist = 255, min_consecutive_performances_per_pianist = 1)
+    return if pianists.empty?
+
+    # Get only performances that need an assigned pianist
+    ordered_performances = performances.where.not(order: nil).order(:order)
+
+    # Filter performances where the candidate does not bring their own pianist
+    performances_needing_pianist = ordered_performances.select do |performance|
+      !performance.inscription.candidate_brings_pianist_accompagnateur
     end
+
+    return if performances_needing_pianist.empty?
+
+    # Ensure minimum doesn't exceed maximum and have valid values
+    min_consecutive = [min_consecutive_performances_per_pianist.to_i, 1].max
+    max_consecutive = [max_consecutive_performances_per_pianist.to_i, min_consecutive].max
+
+    # Calculate ideal distribution
+    total_performances = performances_needing_pianist.count
+    ideal_per_pianist = total_performances.to_f / pianists.size
+
+    # Initialize tracking variables
+    pianist_total_counts = Hash.new(0)
+    pianist_indexes = (0...pianists.size).to_a
+    current_pianist_index = pianist_indexes.first
+    consecutive_count = 0
+
+    # Process performances in order
+    performances_needing_pianist.each do |performance|
+      # Decision logic for selecting pianist
+      if consecutive_count >= max_consecutive
+        # Must change pianist because we hit maximum consecutive limit
+        consecutive_count = 0
+        # Find pianist with lowest count
+        current_pianist_index = pianist_indexes.min_by { |idx| pianist_total_counts[idx] }
+      elsif consecutive_count >= min_consecutive
+        # Can optionally change pianist for balancing
+        min_count = pianist_total_counts.values.min
+        max_count = pianist_total_counts.values.max
+
+        # If current pianist has significantly more performances than others, switch
+        if pianist_total_counts[current_pianist_index] > min_count + 1
+          consecutive_count = 0
+          current_pianist_index = pianist_indexes.min_by { |idx| pianist_total_counts[idx] }
+        end
+      end
+
+      # Assign pianist to performance
+      pianist = pianists[current_pianist_index]
+      performance.update(pianist_accompagnateur: pianist)
+
+      # Update counts
+      pianist_total_counts[current_pianist_index] += 1
+      consecutive_count += 1
+    end
+
+    # Log final distribution for debugging
+    Rails.logger.info "Pianist assignment distribution: #{pianist_total_counts.inspect}"
+    # Calculate variance to measure balance
+    counts = pianist_total_counts.values
+    avg = counts.sum.to_f / counts.size
+    variance = counts.map { |c| (c - avg)**2 }.sum / counts.size
+    Rails.logger.info "Pianist assignment variance: #{variance} (lower is better balanced)"
   end
 
   def has_planning?
