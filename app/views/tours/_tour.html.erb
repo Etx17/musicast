@@ -1,7 +1,7 @@
 <div id="<%= dom_id tour %>" class="bg-light rounded-8">
-  <main class="flex flex-col gap-2 px-2">
+  <main class="flex flex-col gap-2">
 
-
+    <% if false %>
   <div class="d-flex justify-content-between align-items-center mb-3">
     <div class=>
       <% if @tour.previous_tour.present? %>
@@ -17,7 +17,7 @@
       <% end %>
     <% end %>
   </div>
-
+  <% end %>
   <!--  Section planning s'il existe-->
 
   <div class="text-center">
@@ -40,18 +40,116 @@
     </div>
   </div>
 
-  <!-- tabs -->
-  <ul class="nav nav-pills mb-3 justify-content-center" id="myTab" role="tablist">
-    <li class="nav-item w-25 text-center" role="presentation">
-      <a class="h-100 nav-link <%= 'active' unless @tour.has_planning? %>" id="order-tab" data-bs-toggle="tab" href="#order" role="tab" aria-controls="order" aria-selected="<%= !@tour.has_planning? %>" style="font-size: 1.1em;"><i class="fas fa-list pe-2"></i><%= t('tours.tour.order_of_passage').upcase %></a>
-    </li>
-    <li class="nav-item w-25 text-center" role="presentation">
-      <a class=" h-100 nav-link <%= 'active' if @tour.has_planning? && @tour.performances.none?{|p| p.is_qualified } %>" id="planning-tab" data-bs-toggle="tab" href="#planning" role="tab" aria-controls="planning" aria-selected="<%= @tour.has_planning? %>" style="font-size: 1.1em;"><i class="fas fa-calendar-alt pe-2"></i><%= t('tours.tour.planning').upcase %></a>
-    </li>
-    <li class="nav-item w-25 text-center" role="presentation">
-      <a class=" h-100 nav-link <%= 'active' if @tour.performances.any?{|p| p.is_qualified }  %>" id="results-tab" data-bs-toggle="tab" href="#results" role="tab" aria-controls="results" aria-selected="" style="font-size: 1.1em;"><i class="fas fa-trophy pe-2"></i><%= t('tours.tour.results').upcase %></a>
-    </li>
-  </ul>
+  <!-- Onglets redessinés -->
+  <div class="border-bottom mb-4 mt-3">
+    <div class="container-fluid px-0">
+      <ul class="nav nav-tabs row g-0" id="myTab" role="tablist">
+        <li class="nav-item col-md-4" role="presentation">
+          <div class="nav-tab-wrapper position-relative">
+            <a class="d-block nav-tab-link text-center py-3 px-2 text-decoration-none position-relative <%= 'active' unless @tour.has_planning? %>"
+               id="order-tab"
+               data-bs-toggle="tab"
+               href="#order"
+               role="tab"
+               aria-controls="order"
+               aria-selected="<%= !@tour.has_planning? %>">
+              <div class="d-flex flex-column align-items-center">
+                <div class="mb-1 fs-4">
+                  <i class="fas fa-list"></i>
+                </div>
+                <div class="fw-bold"><%= t('tours.tour.order_of_passage') %></div>
+                <small class="text-muted d-block mt-1">Configuration de l'ordre</small>
+              </div>
+            </a>
+          </div>
+        </li>
+        <li class="nav-item col-md-4" role="presentation">
+          <div class="nav-tab-wrapper position-relative">
+            <a class="d-block nav-tab-link text-center py-3 px-2 text-decoration-none position-relative <%= 'active' if @tour.has_planning? && @tour.performances.none?{|p| p.is_qualified } %>"
+               id="planning-tab"
+               data-bs-toggle="tab"
+               href="#planning"
+               role="tab"
+               aria-controls="planning"
+               aria-selected="<%= @tour.has_planning? %>">
+              <div class="d-flex flex-column align-items-center">
+                <div class="mb-1 fs-4">
+                  <i class="fas fa-calendar-alt"></i>
+                </div>
+                <div class="fw-bold"><%= t('tours.tour.planning') %></div>
+                <small class="text-muted d-block mt-1">Horaires des passages</small>
+              </div>
+            </a>
+          </div>
+        </li>
+        <li class="nav-item col-md-4" role="presentation">
+          <div class="nav-tab-wrapper position-relative">
+            <a class="d-block nav-tab-link text-center py-3 px-2 text-decoration-none position-relative <%= 'active' if @tour.performances.any?{|p| p.is_qualified } %>"
+               id="results-tab"
+               data-bs-toggle="tab"
+               href="#results"
+               role="tab"
+               aria-controls="results">
+              <div class="d-flex flex-column align-items-center">
+                <div class="mb-1 fs-4">
+                  <i class="fas fa-trophy"></i>
+                </div>
+                <div class="fw-bold"><%= t('tours.tour.results') %></div>
+                <small class="text-muted d-block mt-1">Candidats qualifiés</small>
+              </div>
+            </a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Style pour les nouveaux onglets -->
+  <style>
+    .nav-tab-wrapper {
+      height: 100%;
+    }
+
+    .nav-tab-link {
+      height: 100%;
+      color: #6c757d;
+      border: 1px solid transparent;
+      border-bottom: none;
+      transition: all 0.3s ease;
+    }
+
+    .nav-tab-link:hover {
+      color: #495057;
+      background-color: rgba(0,0,0,0.03);
+    }
+
+    .nav-tab-link.active {
+      color: var(--bs-primary);
+      background-color: rgba(var(--bs-primary-rgb), 0.1);
+      border-color: #dee2e6;
+      border-top: 3px solid var(--bs-primary);
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+    }
+
+    /* Ajout d'une petite flèche sous l'onglet actif */
+
+    /* Assurer que les nav-tabs fonctionnent avec notre design */
+    .nav-tabs {
+      border-bottom: none;
+    }
+
+    .nav-tabs .nav-link {
+      margin-bottom: 0;
+      border: none;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+    }
+
+    .nav-tabs .nav-link.active {
+      background-color: transparent;
+      border-color: transparent;
+    }
+  </style>
 
   <div class="tab-content" id="myTabContent">
     <!-- tab ordre -->
