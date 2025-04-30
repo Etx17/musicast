@@ -63,6 +63,123 @@ Address.create(
   zipcode: "75017",
   country: "France"
 )
+# Creating Category2
+categ2 = Category.create(
+  edition_competition: ec,
+  name: "Excellence",
+  description: "Le Concours d'Honneur des Maîtres du Chant est un concours public. Concours ou le paiement se fait après approbation.",
+  min_age: 18,
+  max_age: 40,
+  discipline: "lyrical_singing",
+  price: 60,
+  allow_own_pianist_accompagnateur: true,
+  payment_after_approval: true
+)
+
+Tour.create!(
+  imposed_air_selection: [],
+  final_performance_submission_deadline: Date.today + 29,
+  tour_number: 1,
+  category_id: categ2.id,
+  start_date: Date.today + 30,
+  start_time: Time.now,
+  end_date: Date.today + 32,
+  end_time: Time.now + 6.hours,
+  is_online: false,
+  title: "Tour éliminatoire",
+  title_english: "Preliminary Round",
+  description: "Premier tour du concours avec sélection par le jury",
+  description_english: "First round with jury selection",
+  tour_requirement_attributes: {
+    description: "Exigences du premier tour: présentation d'un programme varié",
+    description_english: "First round requirements: presentation of a varied program",
+    min_number_of_works: 1,
+    max_number_of_works: 3,
+    min_duration_minute: 3,
+    max_duration_minute: 9,
+    organiser_creates_program: false
+  }
+)
+
+Tour.create!(
+  imposed_air_selection: ["1", "2"],
+  final_performance_submission_deadline: Date.today + 55,
+  tour_number: 2,
+  category_id: categ2.id,
+  start_date: Date.today + 60,
+  start_time: Time.now,
+  end_date: Date.today + 90,
+  end_time: Time.now + 6.hours,
+  is_online: false,
+  title: "Demi finale où l'orga crée le programme (config)",
+  title_english: "Semi-final where the organizer creates the program (config)",
+  description: "Deuxième tour avec programme imposé par l'organisateur",
+  description_english: "Second round with program created by the organizer",
+  tour_requirement_attributes: {
+    description: "Liste des exigences du second tour: programme créé par l'organisateur",
+    description_english: "List of requirements for the second round: program created by the organizer",
+    min_number_of_works: 2,
+    max_number_of_works: 4,
+    min_duration_minute: 4.5,
+    max_duration_minute: 12,
+    organiser_creates_program: true
+  }
+)
+
+# Creating RequirementItem
+RequirementItem.create(
+  category: categ2,
+  type_item: "photo",
+  title: "Photo de vous meme ",
+  description_item: "Veuillez fournir une photo de vous meme",
+  description_item_english: "Please provide a photo of yourself",
+  title_english: "Photo of yourself",
+  ratio: 1.0
+)
+
+SemiImposedWork.create(
+  category: categ2,
+  title: "1 air et 1 mélodie",
+  title_english: "1 aria and 1 melody",
+  guidelines: "1 air d'opéra, d'operette ou d'oratorio et 1 mélodie. L'un des deux doit impérativement être en français. Le tout ne doit pas dépasser 8 minutes",
+  guidelines_english: "1 opera aria, operetta or oratorio and 1 melody. One of the two must be in French. The total duration must not exceed 8 minutes",
+  number: 2,
+  max_length_minutes: 8
+)
+
+SemiImposedWork.create(
+  category: categ,
+  title: "3 mélodies allemandes",
+  title_english: "3 German melodies",
+  guidelines: "3 melodies en Allemand de compositeurs du XIXe siècle",
+  guidelines_english: "3 melodies in German of composers of the 19th century",
+  number: 3,
+  max_length_minutes: 13
+)
+
+# Create prizes for the category
+Prize.create!(
+  category_id: categ2.id,
+  title: "Grand Prix d'Honneur",
+  title_english: "Grand Honor Prize",
+  amount: 3000,
+  other_reward: "Concert à l'Ecole Normale de Musique",
+  other_reward_english: "Concert at the Ecole Normale de Musique",
+  description: "Le lauréat du Grand Prix d'Honneur recevra une récompense en espèces et l'opportunité de se produire lors d'un concert à l'Ecole Normale de Musique.",
+  description_english: "The Grand Honor Prize winner will receive a cash award and the opportunity to perform at a concert at the Ecole Normale de Musique."
+)
+
+Prize.create!(
+  category_id: categ2.id,
+  title: "Prix du Jury",
+  title_english: "Jury Prize",
+  amount: 1500,
+  other_reward: "Masterclass avec un artiste renommé",
+  other_reward_english: "Masterclass with a renowned artist",
+  description: "Le lauréat du Prix du Jury recevra une récompense en espèces et participera à une masterclass exclusive.",
+  description_english: "The Jury Prize winner will receive a cash award and will participate in an exclusive masterclass."
+)
+# END OF CATEG 2
 
 # Creating Category
 categ = Category.create(

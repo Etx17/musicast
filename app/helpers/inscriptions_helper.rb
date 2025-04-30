@@ -102,7 +102,7 @@ end
   def inscription_status_icon(inscription)
     case inscription.status
     when 'draft'
-      content_tag(:i, '', class: 'fa fa-file')
+      content_tag(:i, '', class: 'fi fi-rs-document text-secondary')
     when 'in_review'
       content_tag(:i, '', class: 'fas fa-spinner text-secondary')
     when 'accepted'
