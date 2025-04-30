@@ -14,7 +14,7 @@ class Candidat < ApplicationRecord
   accepts_nested_attributes_for :experiences, allow_destroy: true, reject_if: :all_blank
   accepts_nested_attributes_for :educations, allow_destroy: true, reject_if: :all_blank
 
-
+  enum :voice_type, { non_singer: 0, soprano: 1, mezzo: 2, alto: 3, countertenor: 4, tenor: 5, baritone: 6, bass: 7 }
   # Validations to comment for seed
   # validate :correct_document_mime_type
   # validate :correct_portrait_mime_type

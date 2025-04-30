@@ -234,6 +234,7 @@ en:
       education: "Education"
       diplomas: "Diplomas"
       actions:
+        view_payment: "View payment"
         edit: "Edit"
         back: "Back"
         save: "Save"
@@ -312,7 +313,16 @@ en:
       delete_confirm: "Are you sure?"
       add: "Add"
     form:
-
+      voice_type: "Voice Type"
+      voice_types:
+        non_singer: "Non-singer"
+        soprano: "Soprano"
+        mezzo: "Mezzo"
+        alto: "Alto"
+        countertenor: "Countertenor"
+        tenor: "Tenor"
+        baritone: "Baritone"
+        bass: "Bass"
       first_name: "First Name"
       last_name: "Last Name"
       birthdate: "Birth Date"
@@ -1000,6 +1010,7 @@ en:
       tuba: "Tuba"
       violin: "Violin"
     actions:
+      view_payment: "View payment"
       accept: "Accept"
       reject: "Reject"
       accept_wait_payment: "Approve and wait for payment"

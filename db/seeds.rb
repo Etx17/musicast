@@ -346,4 +346,16 @@ Organism.all.each do |organism|
   Jury.create(user: user, email: user.email, first_name: Faker::Name.first_name, last_name: Faker::Name.last_name)
 end
 
+
+# asigner les tessiture homogenes
+voice_types = Candidat.voice_types.keys - ["non_singer"]
+candidates = Candidat.all.shuffle
+voice_cycle = voice_types.cycle
+current_voice = voice_cycle.next
+candidates.each do |candidate|
+  candidate.update(voice_type: current_voice)
+  current_voice = voice_cycle.next
+end
+
+
 load Rails.root.join('db', 'seed_concours_honneur.rb')

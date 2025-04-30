@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_26_152806) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_30_085847) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -109,6 +109,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_26_152806) do
     t.text "long_bio_en"
     t.string "banner_color"
     t.string "last_teacher"
+    t.integer "voice_type", default: 0
     t.index ["user_id"], name: "index_candidats_on_user_id"
   end
 

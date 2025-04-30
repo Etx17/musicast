@@ -9,6 +9,7 @@
       <%= f.input :first_name, label: t('candidats.form.first_name'), input_html: {class:"border border-0  mb-0"} %>
       <%= f.input :last_name, label: t('candidats.form.last_name'), input_html: {class:"border border-0  mb-0 "}  %>
       <%= f.input :birthdate, as: :date, html5: true, label: t('candidats.form.birthdate'), input_html: {class:"border border-0  mb-0"}, hint: t('candidats.form.birthdate_hint') %>
+      <%= f.input :voice_type, as: :select, label: t('candidats.form.voice_type'), input_html: {class:"border border-0  mb-0"}, collection: Candidat.voice_types.keys.map { |type| [I18n.t("candidats.voice_types.#{type}"), type] } %>
     </div>
     <div class="d-flex align-items-start gap-2">
       <p class="mb-0"><%= t('candidats.form.nationality') %>: </p>

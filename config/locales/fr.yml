@@ -312,6 +312,16 @@ fr:
       delete_confirm: "Êtes-vous sûr ?"
       add: "Ajouter"
     form:
+      voice_type: "Tessiture"
+      voice_types:
+        non_singer: "Non-chanteur"
+        soprano: "Soprano"
+        mezzo: "Mezzo"
+        alto: "Alto"
+        countertenor: "Countertenor"
+        tenor: "Tenor"
+        baritone: "Baritone"
+        bass: "Bass"
       artistic_photo_hint: "Téléchargez une photo de haute qualité. Cette photo sera utilisée et redimensionnée par vos soins lors de l'inscription en fonction des besoins du concours."
       artistic_photo: "Photo artistique (300dpi+)"
       first_name: "Prénom"
@@ -929,6 +939,7 @@ fr:
     rounds: "tours"
     action: "Action"
     actions:
+      view_payment: "Voir le paiement"
       reject: "Rejeter"
       accept: "Accepter"
       accept_wait_payment: "Accepter et attendre le paiement"
