@@ -116,11 +116,15 @@
             <% @tour.performances.order(:order).each do |performance| %>
               <tr>
                 <td class="p-2 bg-light align-middle">
-                  <%= image_tag performance.candidat.portrait_or_default, class: "rounded-circle me-2", style: "width: 40px; height: 40px; object-fit: cover;" %>
-                  <%= link_to "#{performance.candidat.first_name} #{performance.candidat.last_name}", inscription_path(performance.inscription), target: '_blank', class: performance.minutes == 0 ? "text-danger" : ''%>
-                  <% if performance.minutes == 0 %>
-                    <i class="text-danger fas fa-circle-exclamation ms-2"></i>
-                  <% end %>
+                  <div class="d-flex align-items-center">
+                    <%= image_tag performance.candidat.portrait_or_default, class: "rounded-circle me-2", style: "width: 40px; height: 40px; object-fit: cover;" %>
+                    <div>
+                      <%= link_to "#{performance.candidat.first_name} #{performance.candidat.last_name}", inscription_path(performance.inscription), target: '_blank', class: performance.minutes == 0 ? "text-danger" : ''%>
+                      <% if performance.minutes == 0 %>
+                        <i class="text-danger fas fa-circle-exclamation ms-2"></i>
+                      <% end %>
+                    </div>
+                  </div>
                 </td>
                 <td class="p-2 text-center bg-light align-middle" style="min-width: 130px;">
                   <%= form_with url: update_order_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour, performance_id: performance.id), method: :post do %>
@@ -146,15 +150,29 @@
                            aria-labelledby="heading<%= performance.id %>"
                            data-bs-parent="#accordion<%= performance.id %>">
                         <div class="accordion-body">
-                          <% performance&.airs&.each do |air| %>
-                            <div class="border border-secondary p-1">
-                            <span class="text-warning"><%= air.title %></span> -
-                            <%= air.composer %> -
-                            <%= air.length_minutes %> -
-                            <%= air.oeuvre %> -
-                            <%= air.character + '-' if air.character.present? %> -
-                            <%= air.tonality %>
-                            <%= '-' + air.infos if air.infos.present? %>
+                          <% performance&.airs&.each_with_index do |air, index| %>
+                            <div class="border p-2 mb-2 rounded">
+                              <div class="d-flex justify-content-between align-items-center mb-1">
+                                <strong class="text-primary"><%= air.title %></strong>
+                                <span class="badge bg-secondary"><%= air.length_minutes %> min</span>
+                              </div>
+                              <div class="small">
+                                <% if air.composer.present? %>
+                                  <div><strong>Compositeur:</strong> <%= air.composer %></div>
+                                <% end %>
+                                <% if air.oeuvre.present? %>
+                                  <div><strong>Œuvre:</strong> <%= air.oeuvre %></div>
+                                <% end %>
+                                <% if air.character.present? %>
+                                  <div><strong>Personnage:</strong> <%= air.character %></div>
+                                <% end %>
+                                <% if air.tonality.present? %>
+                                  <div><strong>Tonalité:</strong> <%= air.tonality %></div>
+                                <% end %>
+                                <% if air.infos.present? %>
+                                  <div class="text-muted mt-1 fst-italic"><%= air.infos %></div>
+                                <% end %>
+                              </div>
                             </div>
                           <% end %>
                         </div>
@@ -297,6 +315,49 @@
         }
         .pianist-cell:hover {
           filter: brightness(0.95);
+        }
+
+        /* Amélioration des accordéons */
+        .accordion-button {
+          text-align: left;
+          background-color: #f8f9fa;
+          border: none !important;
+          box-shadow: none !important;
+          padding: 0.75rem 1.25rem;
+          font-weight: 500;
+          color: #495057;
+          transition: all 0.2s;
+        }
+
+        .accordion-button:not(.collapsed) {
+          background-color: #e9ecef;
+          color: #212529;
+        }
+
+        .accordion-button::after {
+          background-size: 1rem;
+        }
+
+        .accordion-button:hover {
+          background-color: #e9ecef;
+        }
+
+        .accordion-body {
+          padding: 0.75rem;
+          background-color: #fff;
+        }
+
+        .accordion-body .border {
+          border-radius: 4px;
+          margin-bottom: 0.5rem;
+          background-color: #f8f9fa;
+          border-color: #dee2e6 !important;
+          padding: 0.75rem !important;
+          transition: all 0.2s;
+        }
+
+        .accordion-body .border:hover {
+          background-color: #e9ecef;
         }
       `;
       document.head.appendChild(style);
