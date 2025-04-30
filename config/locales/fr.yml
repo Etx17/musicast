@@ -1788,7 +1788,6 @@ fr:
       change_order_confirm: "Êtes-vous sûr de vouloir changer l'ordre ?"
       select_pianist: "Sélectionner un pianiste"
       brings_own_pianist: "Amène son propre pianiste"
-
     planning:
       jury_form_description: "Sélectionnez les champs que vous souhaitez inclure dans le document du jury"
       program_options: "Options de programme"
@@ -1877,6 +1876,9 @@ fr:
       order_of_passage: "Ordre de passage"
 
     tour:
+      order_of_passage_description: "Configurer l'ordre de passage et les accompagnements"
+      schedule_of_performances: "Planning des performances"
+      qualified_candidates: "Candidats qualifiés"
       next_tour: "Prochain tour"
       previous_tour: "Tour précédent"
       tour: "Tour"

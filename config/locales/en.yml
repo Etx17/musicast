@@ -1758,6 +1758,9 @@ en:
       new_day_start_time_hint: "If the tour extends to another day due to the number of candidates, you can indicate a different start time for this new day."
       confirm_and_generate: "Confirm configuration and generate schedule"
     tour:
+      order_of_passage_description: "Configure the order of passage and accompaniments"
+      schedule_of_performances: "Schedule of performances"
+      qualified_candidates: "Qualified candidates"
       tour: "Round"
       next_tour: "Next round"
       previous_tour: "Previous round"
