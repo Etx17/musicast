@@ -1823,6 +1823,8 @@ en:
       break: "Break"
 
     form:
+      needs_rehearsal: "Do you need to configure a rehearsal planning for this tour?"
+      needs_rehearsal_hint: "If yes, you can configure a rehearsal planning for this tour in the 'Planning' section of the tour."
       info: "You can upload scores here to send to candidates (for example for an imposed work of composition). Candidates also have a space to upload their scores, in their folder."
       tour_scores: "Tour Scores (optional)"
       download: "Download"
@@ -1842,7 +1844,7 @@ en:
       create_imposed_work_first: "You must first create an imposed work for this category before you can select imposed airs."
       requires_pianist_accompanist: "Requires a pianist accompanist"
       requires_pianist_accompanist_hint: "Check if <span class='text-primary'>either you or the candidate</span> brings a pianist accompanist for this round"
-      accompaniment_settings: "Accompaniment settings"
+      accompaniment_settings: "Accompaniment settings & Rehearsals"
       configurations: "Configurations"
       tour_requirement_description_placeholder: "Describe the specific requirements for this round..."
       min_number_of_works: "Minimum number of works"

@@ -14,6 +14,8 @@
 
     <%= f.input :start_date, label: t('tours.form.start_date') %>
     <%= f.input :final_performance_submission_deadline, label: t('tours.form.final_performance_submission_deadline') %>
+
+
     <% if false%>
       <%= f.label :imposed_air_selection, t('tours.form.imposed_air_selection_label'), class: 'form-label' %>
       <%= f.collection_check_boxes :imposed_air_selection, @category.imposed_work.airs, :id, :title, selected: @tour.imposed_air_selection.map(&:to_i) do |b| %>
@@ -55,20 +57,35 @@
         </small>
 
         <div class="form-check form-switch">
-            <%= f.check_box :requires_orchestra,
-                            class: "form-check-input",
-                            role: "switch",
-                            id: "flexSwitchOrchestra",
-                            checked: f.object.requires_orchestra.nil? ? true : f.object.requires_orchestra %>
-            <%= f.label :requires_orchestra,
-                        t('tours.form.requires_orchestra'),
-                        class: "form-check-label",
-                        for: "flexSwitchOrchestra" %>
-          </div>
-          <small class="form-text text-muted mt-2">
-            <%= raw(t('tours.form.requires_orchestra_hint')).html_safe %>
-          </small>
+          <%= f.check_box :requires_orchestra,
+                          class: "form-check-input",
+                          role: "switch",
+                          id: "flexSwitchOrchestra",
+                          checked: f.object.requires_orchestra.nil? ? true : f.object.requires_orchestra %>
+          <%= f.label :requires_orchestra,
+                      t('tours.form.requires_orchestra'),
+                      class: "form-check-label",
+                      for: "flexSwitchOrchestra" %>
         </div>
+        <small class="form-text text-muted mt-2">
+          <%= raw(t('tours.form.requires_orchestra_hint')).html_safe %>
+        </small>
+        <div class="form-check form-switch">
+          <%= f.check_box :needs_rehearsal,
+                          class: "form-check-input",
+                          role: "switch",
+                          id: "flexSwitchNeedsRehearsal",
+                          checked: f.object.needs_rehearsal %>
+          <%= f.label :needs_rehearsal,
+                      t('tours.form.needs_rehearsal'),
+                      class: "form-check-label",
+                      for: "flexSwitchNeedsRehearsal" %>
+        </div>
+        <small class="form-text text-muted mt-2">
+          <%= raw(t('tours.form.needs_rehearsal_hint')).html_safe %>
+        </small>
+      </div>
+
       </div>
     </div>
     <div class="card shadow-sm mb-3">

@@ -351,6 +351,7 @@ class ToursController < ApplicationController
       :start_date, :start_time,
       :end_date, :end_time,
       :is_online,
+      :needs_rehearsal,
       :tour_number, :requires_pianist_accompanist,
       :requires_orchestra,
       :title, :description,

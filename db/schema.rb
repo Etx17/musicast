@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_30_085847) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_01_074853) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -549,6 +549,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_30_085847) do
     t.string "title_english"
     t.text "description_english"
     t.boolean "requires_orchestra", default: false
+    t.boolean "needs_rehearsal", default: false
     t.index ["category_id"], name: "index_tours_on_category_id"
   end
 
