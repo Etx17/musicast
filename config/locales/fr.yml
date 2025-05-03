@@ -377,6 +377,7 @@ fr:
       years: "ans"
       application_fee: "Frais de dossier"
     show:
+      view_first_tour: "Voir le premier tour"
       years: "ans"
       edit: "Modifier"
       back: "Retour"
