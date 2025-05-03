@@ -1,7 +1,7 @@
 <div id="<%= dom_id tour %>" class="bg-light rounded-8">
   <main class="flex flex-col gap-2">
 
-    <% if false %>
+  <% if false %>
   <div class="d-flex justify-content-between align-items-center mb-3">
     <div class=>
       <% if @tour.previous_tour.present? %>
@@ -44,7 +44,7 @@
   <div class="border-bottom mb-4 mt-3">
     <div class="container-fluid px-0">
       <ul class="nav nav-tabs row g-0" id="myTab" role="tablist">
-        <li class="nav-item col-md-4" role="presentation">
+        <li class="nav-item <%= @tour.needs_rehearsal? ? 'col-md-3' : 'col-md-4' %>" role="presentation">
           <div class="nav-tab-wrapper position-relative">
             <a class="d-block nav-tab-link text-center py-3 px-2 text-decoration-none position-relative <%= 'active' unless @tour.has_planning? %>"
               id="order-tab"
@@ -63,7 +63,7 @@
             </a>
           </div>
         </li>
-        <li class="nav-item col-md-4" role="presentation">
+        <li class="nav-item <%= @tour.needs_rehearsal? ? 'col-md-3' : 'col-md-4' %>" role="presentation">
           <div class="nav-tab-wrapper position-relative">
             <a class="d-block nav-tab-link text-center py-3 px-2 text-decoration-none position-relative <%= 'active' if @tour.has_planning? && @tour.performances.none?{|p| p.is_qualified } %>"
                id="planning-tab"
@@ -82,7 +82,31 @@
             </a>
           </div>
         </li>
-        <li class="nav-item col-md-4" role="presentation">
+        <% if @tour.needs_rehearsal? %>
+        <li class="nav-item col-md-3" role="presentation">
+          <div class="nav-tab-wrapper position-relative">
+            <a class="d-block nav-tab-link text-center py-3 px-2 text-decoration-none position-relative"
+               id="rehearsal-tab"
+               data-bs-toggle="tab"
+               href="#rehearsal"
+               role="tab"
+               aria-controls="rehearsal">
+              <div class="d-flex flex-column align-items-center">
+                <div class="mb-1 fs-4">
+                  <i class="fas fa-music"></i>
+                </div>
+                <div class="fw-bold">
+                  <%= t("tours.rehearsal_types.#{@tour.rehearsal_type}") %>
+                </div>
+                <small class="text-muted d-block mt-1">
+                  <%= t("tours.rehearsal_types.description.#{@tour.rehearsal_type}") %>
+                </small>
+              </div>
+            </a>
+          </div>
+        </li>
+        <% end %>
+        <li class="nav-item <%= @tour.needs_rehearsal? ? 'col-md-3' : 'col-md-4' %>" role="presentation">
           <div class="nav-tab-wrapper position-relative">
             <a class="d-block nav-tab-link text-center py-3 px-2 text-decoration-none position-relative <%= 'active' if @tour.performances.any?{|p| p.is_qualified } %>"
                id="results-tab"
@@ -165,6 +189,13 @@
       <%= render 'order_of_performances' %>
       <% end %>
     </div>
+
+    <% if @tour.needs_rehearsal? %>
+      <!-- tab répétitions -->
+      <div class="tab-pane fade" id="rehearsal" role="tabpanel" aria-labelledby="rehearsal-tab">
+        <%= render @tour.rehearsal_type, tour: @tour %>
+      </div>
+    <% end %>
 
     <!-- tab planning -->
     <div class="tab-pane fade <%= 'show active' if @tour.has_planning? && @tour.performances.none?{|p| p.is_qualified } %>" id="planning" role="tabpanel" aria-labelledby="planning-tab">

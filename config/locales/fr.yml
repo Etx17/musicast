@@ -1884,6 +1884,13 @@ fr:
       pianist_warmup: "Mise en place rapide avec pianiste (le jour du concours, avant sa performance)"
       pianist_rehearsal: "Répétition musicale avec pianiste (pas le même jour que la performance)"
       orchestra_rehearsal: "Répétition orchestre (pas le même jour que la performance)"
+      default: "Répétitions"
+      description:
+        solo_warmup: "Salle de chauffe sans accompagnement"
+        pianist_warmup: "Courte mise en place avec pianiste"
+        pianist_rehearsal: "Répétition complète avec pianiste"
+        orchestra_rehearsal: "Répétition avec orchestre"
+        default: "Planning de répétition"
     tour:
       order_of_passage_description: "Configurer l'ordre de passage et les accompagnements"
       schedule_of_performances: "Planning des performances"

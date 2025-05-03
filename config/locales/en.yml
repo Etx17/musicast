@@ -1828,6 +1828,13 @@ en:
       pianist_warmup: "Short rehearsal with pianist"
       pianist_rehearsal: "Pianist rehearsal (not the same day than performance)"
       orchestra_rehearsal: "Orchestra rehearsal (not the same day than performance)"
+      default: "Rehearsal schedule"
+      description:
+        solo_warmup: "Solo warm-up room"
+        pianist_warmup: "Short rehearsal with pianist"
+        pianist_rehearsal: "Full rehearsal with pianist"
+        orchestra_rehearsal: "Rehearsal with orchestra"
+        default: "Rehearsal schedule"
     form:
       rehearsal_type: "Rehearsal type"
       needs_rehearsal: "Do you need to configure a rehearsal planning for this tour?"
