@@ -1730,6 +1730,7 @@ fr:
       see_more: "voir plus"
       candidates_have_been_notified: "Les candidats ont été notifiés des résultats."
     form:
+      rehearse_time_slot_per_candidate: "Durée du créneau de répétition par candidat en minutes"
       rehearsal_type: "Type de répétition"
       info: "Vous pouvez déposer ici des partitions pour les transmettre aux candidats (par exemple pour une oeuvre imposée de composition). Les candidats ont également un espace pour déposer leurs partitions, dans leur dossier."
       tour_scores: "Partitions (facultatif)"

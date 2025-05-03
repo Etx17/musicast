@@ -352,6 +352,7 @@ class ToursController < ApplicationController
       :end_date, :end_time,
       :is_online,
       :needs_rehearsal,
+      :rehearse_time_slot_per_candidate,
       :rehearsal_type,
       :tour_number, :requires_pianist_accompanist,
       :requires_orchestra,

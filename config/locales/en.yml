@@ -1836,6 +1836,7 @@ en:
         orchestra_rehearsal: "Rehearsal with orchestra"
         default: "Rehearsal schedule"
     form:
+      rehearse_time_slot_per_candidate: "Rehearsal duration per candidate (in minutes)"
       rehearsal_type: "Rehearsal type"
       needs_rehearsal: "Do you need to configure a rehearsal planning for this tour?"
       needs_rehearsal_hint: "If yes, you can configure a rehearsal planning for this tour in the 'Planning' section of the tour."

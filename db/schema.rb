@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_01_074853) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_03_150949) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -489,6 +489,19 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_01_074853) do
     t.index ["category_id"], name: "index_requirement_items_on_category_id"
   end
 
+  create_table "rooms", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "name"
+    t.string "notes"
+    t.bigint "organism_id", null: false
+    t.time "start_time"
+    t.time "end_time"
+    t.text "description"
+    t.text "description_english"
+    t.index ["organism_id"], name: "index_rooms_on_organism_id"
+  end
+
   create_table "semi_imposed_work_airs", force: :cascade do |t|
     t.bigint "semi_imposed_work_id", null: false
     t.bigint "air_id", null: false
@@ -551,6 +564,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_01_074853) do
     t.boolean "requires_orchestra", default: false
     t.boolean "needs_rehearsal", default: false
     t.integer "rehearsal_type", default: 0
+    t.integer "rehearse_time_slot_per_candidate"
     t.index ["category_id"], name: "index_tours_on_category_id"
   end
 
@@ -628,6 +642,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_01_074853) do
   add_foreign_key "prizes", "categories"
   add_foreign_key "programme_requirements", "categories"
   add_foreign_key "requirement_items", "categories"
+  add_foreign_key "rooms", "organisms"
   add_foreign_key "semi_imposed_work_airs", "airs"
   add_foreign_key "semi_imposed_work_airs", "inscriptions"
   add_foreign_key "semi_imposed_work_airs", "semi_imposed_works"

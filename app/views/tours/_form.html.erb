@@ -90,6 +90,7 @@
               collection: Tour.rehearsal_types.map { |type, _| [t("tours.rehearsal_types.#{type}"), type] },
               include_blank: false,
               label: t('tours.form.rehearsal_type') %>
+          <%= f.input :rehearse_time_slot_per_candidate, numeric: true, label: t('tours.form.rehearse_time_slot_per_candidate') %>
         </div>
 
         <script>

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :rooms
   get '/language/switch', to: 'language#switch', as: 'switch_language'
   mount StripeEvent::Engine, at: '/stripe-webhooks'
 
