@@ -1821,8 +1821,15 @@ en:
       passage_time: "Passage time"
       order: "Order"
       break: "Break"
-
+    rehearsal_type: "Rehearsal type"
+    rehearsal_types:
+      nothing: "No rehearsal or warmup"
+      solo_warmup: "Solo warmup"
+      pianist_warmup: "Short rehearsal with pianist"
+      pianist_rehearsal: "Pianist rehearsal (not the same day than performance)"
+      orchestra_rehearsal: "Orchestra rehearsal (not the same day than performance)"
     form:
+      rehearsal_type: "Rehearsal type"
       needs_rehearsal: "Do you need to configure a rehearsal planning for this tour?"
       needs_rehearsal_hint: "If yes, you can configure a rehearsal planning for this tour in the 'Planning' section of the tour."
       info: "You can upload scores here to send to candidates (for example for an imposed work of composition). Candidates also have a space to upload their scores, in their folder."

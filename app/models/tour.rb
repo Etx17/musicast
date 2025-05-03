@@ -17,7 +17,6 @@ class Tour < ApplicationRecord
   validates :description, length: { maximum: 500 }
   validates :final_performance_submission_deadline, comparison: { less_than: :start_date, message: "must be before the start date" }
   validates :tour_number, numericality: { only_integer: true }
-
   validates :start_date, :comparison => { greater_than_or_equal_to: Date.today, message: "Ne peux pas être dans le passé!" }
   validates :final_performance_submission_deadline, :comparison => { greater_than_or_equal_to: Date.today, message: "Ne peux pas être dans le passé!" }
 
@@ -26,6 +25,13 @@ class Tour < ApplicationRecord
   accepts_nested_attributes_for :address
   has_many_attached :scores, dependent: :destroy
   has_many :pauses, dependent: :destroy
+
+  enum :rehearsal_type, {
+    solo_warmup: 0,
+    pianist_warmup: 1,
+    pianist_rehearsal: 2,
+    orchestra_rehearsal: 3
+  }
 
   def candidates_performances_that_passed_selections
     performances.filter{|p| p.inscription.accepted?}

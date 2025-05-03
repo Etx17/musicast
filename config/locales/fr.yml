@@ -1730,6 +1730,7 @@ fr:
       see_more: "voir plus"
       candidates_have_been_notified: "Les candidats ont été notifiés des résultats."
     form:
+      rehearsal_type: "Type de répétition"
       info: "Vous pouvez déposer ici des partitions pour les transmettre aux candidats (par exemple pour une oeuvre imposée de composition). Les candidats ont également un espace pour déposer leurs partitions, dans leur dossier."
       tour_scores: "Partitions (facultatif)"
       needs_rehearsal: "Souhaitez vous configurer un planning de répétition pour ce tour ?"
@@ -1876,7 +1877,13 @@ fr:
       medium_bio_en: "Biographie moyenne (EN)"
       long_bio_en: "Biographie longue (EN)"
       order_of_passage: "Ordre de passage"
-
+    rehearsal_type: "Type de répétition"
+    rehearsal_types:
+      nothing: "Aucune répétition ou chauffe"
+      solo_warmup: "Chauffe soliste (le jour du concours, avant sa performance)"
+      pianist_warmup: "Mise en place rapide avec pianiste (le jour du concours, avant sa performance)"
+      pianist_rehearsal: "Répétition musicale avec pianiste (pas le même jour que la performance)"
+      orchestra_rehearsal: "Répétition orchestre (pas le même jour que la performance)"
     tour:
       order_of_passage_description: "Configurer l'ordre de passage et les accompagnements"
       schedule_of_performances: "Planning des performances"

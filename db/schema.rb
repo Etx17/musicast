@@ -550,6 +550,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_01_074853) do
     t.text "description_english"
     t.boolean "requires_orchestra", default: false
     t.boolean "needs_rehearsal", default: false
+    t.integer "rehearsal_type", default: 0
     t.index ["category_id"], name: "index_tours_on_category_id"
   end
 
