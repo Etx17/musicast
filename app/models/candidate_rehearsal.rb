@@ -4,7 +4,7 @@ class CandidateRehearsal < ApplicationRecord
   belongs_to :tour
   belongs_to :candidat
   belongs_to :pianist_accompagnateur, optional: true
-
+  belongs_to :performance, optional: true
   validates :start_time, :end_time, presence: true
   validate :end_time_after_start_time
   # validate :within_room_availability

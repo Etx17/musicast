@@ -1,6 +1,5 @@
 <div class="solo-warmup-planning mb-4">
   <div class="d-flex justify-content-between align-items-center mb-3">
-    <h3 class="h5 mb-0"><%= t('tours.planning.rehearsal_schedule') %></h3>
   </div>
 
   <% if @tour.candidate_rehearsals.any? %>
@@ -70,6 +69,7 @@
     %>
 
     <%= render Table::BaseComponent.new(
+      no_action: true,
       rows: @tour.candidate_rehearsals.order(:start_time),
       columns: [
         {
@@ -127,7 +127,7 @@
           label: t('tours.planning.pianist'),
           value: ->(rehearsal) do
             content_tag(:div, class: "pianist-column-cell") do
-              rehearsal.pianist_accompagnateur ? rehearsal.pianist_accompagnateur.full_name : "-"
+              rehearsal.performance&.pianist_accompagnateur ? rehearsal.performance&.pianist_accompagnateur.full_name : "-"
             end
           end
         }

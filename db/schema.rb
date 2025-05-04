@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_04_122058) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_04_145456) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -103,8 +103,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_04_122058) do
     t.text "notes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "performance_id"
     t.index ["candidat_id", "tour_id"], name: "index_candidate_rehearsals_on_candidate_and_tour", unique: true
     t.index ["candidat_id"], name: "index_candidate_rehearsals_on_candidat_id"
+    t.index ["performance_id"], name: "index_candidate_rehearsals_on_performance_id"
     t.index ["pianist_accompagnateur_id"], name: "index_candidate_rehearsals_on_pianist_accompagnateur_id"
     t.index ["room_id", "start_time", "end_time"], name: "index_candidate_rehearsals_on_room_and_time", unique: true
     t.index ["room_id"], name: "index_candidate_rehearsals_on_room_id"
@@ -632,6 +634,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_04_122058) do
   add_foreign_key "candidate_program_airs", "candidate_programs"
   add_foreign_key "candidate_programs", "inscriptions"
   add_foreign_key "candidate_rehearsals", "candidats"
+  add_foreign_key "candidate_rehearsals", "performances"
   add_foreign_key "candidate_rehearsals", "pianist_accompagnateurs"
   add_foreign_key "candidate_rehearsals", "rooms"
   add_foreign_key "candidate_rehearsals", "tours"

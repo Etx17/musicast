@@ -9,7 +9,6 @@ class Tour < ApplicationRecord
 
   validate :new_day_start_time_before_max_end_of_day_time
   attr_accessor :creating_schedule
-  attr_accessor :rehearse_time_slot_per_candidate
 
 
   validates :title, :description, :start_date, :final_performance_submission_deadline, presence: true
@@ -42,10 +41,6 @@ class Tour < ApplicationRecord
     performances.filter{|p| p.inscription.accepted?}
   end
 
-  def rehearse_time_slot_per_candidate
-    return 30 unless self[:rehearse_time_slot_per_candidate]
-    self[:rehearse_time_slot_per_candidate]
-  end
 
   def move_qualified_candidates_to_next_tour
 
@@ -167,14 +162,14 @@ class Tour < ApplicationRecord
 
       # Trouver une salle disponible pour cette plage horaire
       available_room = find_available_room(room_schedules, start_datetime, end_datetime)
-
       # Créer la répétition
       rehearsal = candidate_rehearsals.create!(
+        performance: performance,
         room: available_room,
         candidat: candidat,
         start_time: start_datetime,
         end_time: end_datetime,
-        # pianist_accompagnateur_id: performance.pianist_accompagnateur_id
+        pianist_accompagnateur_id: performance.pianist_accompagnateur_id
       )
 
       # Mettre à jour les horaires occupés pour cette salle

@@ -1,6 +1,8 @@
 <div class="container">
   <div class="row">
     <div class="col-12">
+
+
       <!-- Bouton pour ouvrir la modale de configuration -->
       <div class="d-flex mb-4">
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#configModal">
@@ -30,12 +32,18 @@
                           method: :patch do |f| %>
           <div class="bg-light p-3 rounded mb-3">
             <%= f.input :rehearse_time_slot_per_candidate,
-                       input_html: { style: "width: fit-content;" },
+                       input_html: {
+                         style: "width: fit-content;",
+                         value: @tour.rehearse_time_slot_per_candidate || 15
+                       },
                        label: "Durée d'un créneau (en minutes)",
                        hint: "Définit la durée de chaque créneau de répétition" %>
 
             <%= f.input :buffer_time_minutes,
-                       input_html: { style: "width: fit-content;" },
+                       input_html: {
+                         style: "width: fit-content;",
+                         value: @tour.buffer_time_minutes || 30
+                       },
                        label: "Temps tampon avant performance (minutes)",
                        hint: "Temps nécessaire entre la fin de la répétition et le début de la performance" %>
 
