@@ -1,23 +1,44 @@
-<div class="container py-4">
+<div class="container">
   <div class="row">
     <div class="col-12">
+      <!-- Bouton pour ouvrir la modale de configuration -->
+      <div class="d-flex mb-4">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#configModal">
+          <i class="fas fa-cog me-2"></i>Configurer le planning de répétition
+        </button>
+      </div>
 
-      <%= simple_form_for [@organism, @competition, @edition_competition, @category, @tour],
+      <!-- Espace réservé pour afficher le planning (à implémenter par l'utilisateur) -->
+      <div id="rehearsal-schedule">
+        <!-- Le planning de répétition généré sera affiché ici -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal pour la configuration du planning -->
+<div class="modal fade" id="configModal" tabindex="-1" aria-labelledby="configModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="configModalLabel">Configuration du planning de répétition</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <%= simple_form_for [@organism, @competition, @edition_competition, @category, @tour],
                           url: update_solo_warmup_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour),
                           method: :patch do |f| %>
-
-        <h3 class="mb-4">Configuration des répétitions (Salle de chauffe)</h3>
-        <div class="card mb-4 bg-light">
-          <div class="card-body">
+          <div class="bg-light p-3 rounded mb-3">
             <%= f.input :rehearse_time_slot_per_candidate,
-                      input_html: { style: "width: fit-content;" },
-                      label: "Durée d'un créneau (en minutes)",
-                      hint: "Définit la durée de chaque créneau de répétition" %>
+                       input_html: { style: "width: fit-content;" },
+                       label: "Durée d'un créneau (en minutes)",
+                       hint: "Définit la durée de chaque créneau de répétition" %>
 
             <%= f.input :buffer_time_minutes,
-                      input_html: { style: "width: fit-content;" },
-                      label: "Temps tampon avant performance (minutes)",
-                      hint: "Temps nécessaire entre la fin de la répétition et le début de la performance" %>
+                       input_html: { style: "width: fit-content;" },
+                       label: "Temps tampon avant performance (minutes)",
+                       hint: "Temps nécessaire entre la fin de la répétition et le début de la performance" %>
+
             <% if @organism.rooms.exists? %>
               <div class="d-flex align-items-center mb-3">
                 <div class="flex-grow-1">
@@ -45,11 +66,13 @@
                 </button>
               </div>
             <% end %>
-        <%= f.submit "Enregistrer la configuration et générer le planning de répétition", class: "btn btn-primary ", style: "width: fit-content;" %>
           </div>
-        </div>
 
-      <% end %>
+          <div class="text-center mt-3">
+            <%= f.submit "Enregistrer la configuration et générer le planning de répétition", class: "btn btn-primary", style: "width: fit-content;" %>
+          </div>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>
@@ -93,6 +116,16 @@
           </div>
         <% end %>
       </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <h3 class="mb-4">Planning de répétition</h3>
+      <%= render "tours/solo_warmup_planning", tour: @tour %>
     </div>
   </div>
 </div>

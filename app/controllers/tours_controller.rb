@@ -339,7 +339,7 @@ class ToursController < ApplicationController
     @tour = @category.tours.find(params[:id])
 
     if @tour.update(solo_warmup_params)
-      # @tour.generate_solo_warmup_schedule
+      @tour.generate_solo_warmup_schedule
       redirect_to organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour),
                   notice: "Configuration des répétitions mise à jour avec succès."
     else
