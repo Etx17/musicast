@@ -107,6 +107,11 @@ class Tour < ApplicationRecord
     end
   end
 
+  def generate_solo_warmup_schedule
+    # TODO
+    raise
+  end
+
   def assign_pianist_manually_to_performance(performance, pianist_accompagnateur_id)
     performance.update!(pianist_accompagnateur_id: pianist_accompagnateur_id)
   end

@@ -339,12 +339,15 @@ class ToursController < ApplicationController
     @tour = @category.tours.find(params[:id])
 
     if @tour.update(solo_warmup_params)
+      @tour.generate_solo_warmup_schedule
       redirect_to organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour, anchor: "rehearsal"),
                   notice: "Configuration des répétitions mise à jour avec succès."
     else
       render :show, status: :unprocessable_entity
     end
   end
+
+
 
   private
 
@@ -384,6 +387,7 @@ class ToursController < ApplicationController
       :afternoon_pause_time,
       :morning_pause_duration_minutes,
       :afternoon_pause_duration_minutes,
+      :buffer_time_minutes,
       :creating_schedule,
       :final_performance_submission_deadline,
       tour_requirement_attributes: [
@@ -404,6 +408,6 @@ class ToursController < ApplicationController
   end
 
   def solo_warmup_params
-    params.require(:tour).permit(:rehearse_time_slot_per_candidate, room_ids: [])
+    params.require(:tour).permit(:rehearse_time_slot_per_candidate, :buffer_time_minutes, room_ids: [])
   end
 end

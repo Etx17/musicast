@@ -1,43 +1,31 @@
-<%# Render le tour_solo_warmup_form %>
-<h1>Solo Warmup</h1>
-<%# Cjamps du formulaire: les rooms ( on peut en selectionner plusieurs) %>
-<%# la duree par candidat de rehearsal %>
-
 <div class="container py-4">
   <div class="row">
     <div class="col-12">
       <h3 class="mb-4">Configuration des répétitions (Salle de chauffe)</h3>
 
-      <%= form_with(model: [@organism, @competition, @edition_competition, @category, @tour], url: update_solo_warmup_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour), method: :patch) do |f| %>
+      <%= simple_form_for [@organism, @competition, @edition_competition, @category, @tour],
+                          url: update_solo_warmup_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour),
+                          method: :patch do |f| %>
 
-        <!-- Durée par candidat -->
         <div class="card mb-4">
-          <div class="card-header">
-            <h4 class="mb-0">1. Durée par candidat</h4>
-          </div>
           <div class="card-body">
-            <div class="mb-3">
-              <%= f.label :rehearse_time_slot_per_candidate, "Durée d'un créneau (en minutes)", class: "form-label" %>
-              <%= f.number_field :rehearse_time_slot_per_candidate, class: "form-control", value: @tour.rehearse_time_slot_per_candidate, min: 15, step: 15 %>
-              <small class="text-muted">Définit la durée de chaque créneau de répétition</small>
-            </div>
-          </div>
-        </div>
+            <h4 class="mb-3">Configuration de base</h4>
 
-        <!-- Sélection des salles -->
-        <div class="card mb-4">
-          <div class="card-header">
-            <h4 class="mb-0">2. Sélection des salles</h4>
-          </div>
-          <div class="card-body">
+            <%= f.input :rehearse_time_slot_per_candidate,
+                       label: "Durée d'un créneau (en minutes)",
+                       input_html: { min: 15, step: 15 },
+                       hint: "Définit la durée de chaque créneau de répétition" %>
+
+            <%= f.input :buffer_time_minutes,
+                       label: "Temps tampon avant performance (minutes)",
+                       hint: "Temps nécessaire entre la fin de la répétition et le début de la performance" %>
+
             <% if @organism.rooms.exists? %>
-              <div class="mb-3">
-                <%= f.label :room_ids, "Sélectionnez les salles disponibles", class: "form-label" %>
-                <%= f.collection_select :room_ids, @organism.rooms, :id, :name,
-                                    { selected: @tour.rooms.pluck(:id) },
-                                    { multiple: true, class: "form-select", data: { controller: "tom-select" } } %>
-                <small class="text-muted">Sélectionnez une ou plusieurs salles pour les répétitions</small>
-              </div>
+              <%= f.association :rooms,
+                              collection: @organism.rooms,
+                              label: "Sélectionnez les salles disponibles",
+                              input_html: { data: { controller: "tom-select" } },
+                              hint: "Sélectionnez une ou plusieurs salles pour les répétitions" %>
             <% else %>
               <div class="alert alert-info">
                 <i class="fas fa-info-circle me-2"></i>
@@ -48,10 +36,7 @@
           </div>
         </div>
 
-        <!-- Soumettre -->
-        <div class="d-grid gap-2">
-          <%= f.submit "Enregistrer la configuration", class: "btn btn-primary btn-lg" %>
-        </div>
+        <%= f.submit "Enregistrer la configuration", class: "btn btn-primary btn-lg w-100" %>
       <% end %>
     </div>
   </div>
