@@ -44,7 +44,7 @@ class RoomsController < ApplicationController
   # PATCH/PUT /rooms/1 or /rooms/1.json
   def update
     if @room.update(room_params)
-      redirect_to dashboard_organiser_path, notice: "Salle mise à jour avec succès."
+      redirect_to organisateur_dashboard_path, notice: "Salle mise à jour avec succès."
     else
       render :edit, status: :unprocessable_entity
     end
@@ -53,7 +53,7 @@ class RoomsController < ApplicationController
   # DELETE /rooms/1 or /rooms/1.json
   def destroy
     @room.destroy
-    redirect_to dashboard_organiser_path, notice: "Salle supprimée avec succès."
+    redirect_to organisateur_dashboard_path, notice: "Salle supprimée avec succès."
   end
 
   private
