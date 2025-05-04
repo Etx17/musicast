@@ -10,6 +10,7 @@ class ToursController < ApplicationController
   def show;
     authorize @tour
     @performances = @tour.performances
+    @room = Room.build
     @tour.generate_initial_performance_order if @performances.any? { |p| p.order.nil? }
   end
 

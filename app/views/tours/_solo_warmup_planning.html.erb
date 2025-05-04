@@ -1,0 +1,10 @@
+<ul>
+<% @tour.candidate_rehearsals.each do |rehearsal| %>
+<li>
+  <%= rehearsal.candidat.full_name %>
+  <%= rehearsal.room.name %>
+  <%= rehearsal.start_time %>
+  <%= rehearsal.end_time %>
+  </li>
+<% end %>
+</ul>

@@ -7,11 +7,11 @@ class CandidateRehearsal < ApplicationRecord
 
   validates :start_time, :end_time, presence: true
   validate :end_time_after_start_time
-  validate :within_room_availability
-  validate :no_overlapping_rehearsals
-  validate :no_pianist_conflicts
+  # validate :within_room_availability
+  # validate :no_overlapping_rehearsals
+  # validate :no_pianist_conflicts
 
-  before_validation :set_end_time_from_duration, if: -> { end_time.nil? && start_time.present? && tour.present? }
+  # before_validation :set_end_time_from_duration, if: -> { end_time.nil? && start_time.present? && tour.present? }
 
   private
 
@@ -21,14 +21,14 @@ class CandidateRehearsal < ApplicationRecord
     end
   end
 
-  def within_room_availability
-    if room && start_time && end_time
-      unless start_time.strftime("%H:%M") >= room.start_time.strftime("%H:%M") &&
-             end_time.strftime("%H:%M") <= room.end_time.strftime("%H:%M")
-        errors.add(:base, "La répétition doit être dans les heures d'ouverture de la salle")
-      end
-    end
-  end
+  # def within_room_availability
+  #   if room && start_time && end_time
+  #     unless start_time.strftime("%H:%M") >= room.start_time.strftime("%H:%M") &&
+  #            end_time.strftime("%H:%M") <= room.end_time.strftime("%H:%M")
+  #       errors.add(:base, "La répétition doit être dans les heures d'ouverture de la salle")
+  #     end
+  #   end
+  # end
 
   def no_overlapping_rehearsals
     # Vérifie qu'il n'y a pas de chevauchement avec d'autres répétitions dans la même salle
