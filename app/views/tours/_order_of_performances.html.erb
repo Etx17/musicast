@@ -5,7 +5,16 @@
       <div class="d-flex justify-content-center gap-3">
         <h2 class="text-center"><%= t('tours.order_of_performances.current_order') %></h2>
 
-        <%= button_to shuffle_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour), method: :post, class: "btn btn-primary rounded-8", data: { turbo_confirm: t('tours.order_of_performances.shuffle_confirm') }, disabled: @tour.performances.count <= 1 do %>
+        <%= button_to shuffle_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour),
+          method: :post,
+          class: "btn btn-primary rounded-8",
+          data: {
+            bs_toggle: "tooltip",
+            bs_placement: "bottom",
+            bs_title: "Mélanger aléatoirement l'ordre de passage"
+          },
+          onclick: "if(confirm('⚠️ ATTENTION:\\n\\nSi vous mélangez l\\'ordre de passage, vous devrez regénérer le planning de performance et le planning de répétition dans les onglets suivants.\\n\\nContinuer?')) { return true; } else { return false; }",
+          disabled: @tour.performances.count <= 1 do %>
           <i class="fas fa-random pe-1"></i>
           <%= t('tours.order_of_performances.shuffle_randomly') %>
         <% end %>
@@ -241,6 +250,7 @@
 
   <script>
     document.addEventListener("turbo:load", function() {
+      // Initialiser les tooltips Bootstrap
       var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
       var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         return new bootstrap.Tooltip(tooltipTriggerEl)
