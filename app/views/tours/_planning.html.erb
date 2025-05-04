@@ -60,8 +60,8 @@
 
 <div class="container">
 <% @tour.days_of_performances.each do |day| %>
-  <div data-controller="start-time" data-day="<%= day.strftime('%Y-%m-%d') %>">
-    <h5 class="text-center"><%= day.strftime('%a %d %B %Y') %></h2>
+  <div data-controller="start-time" data-day="<%= day.strftime('%Y-%m-%d') %>" class="mb-5 planning-day-container">
+    <h5 class="text-center"><%= day.strftime('%a %d %B %Y') %></h5>
     <%= simple_form_for :update_day, url: update_day_of_performance_and_subsequent_performances_organism_competition_edition_competition_category_tour_path(organism_id: @organism.id, competition_id: @competition.id, edition_competition_id: @edition_competition.id, category_id: @category.id, tour_id: @tour.id), method: :put, html: { class: 'edit-day-form', data: { controller: "date", action: "submit->date#validateDateFormat" } } do |f| %>
       <div class="d-flex w-100 justify-content-between align-items-start">
         <div class="d-flex" style="max-height: 40px;">
@@ -87,9 +87,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="<%= t('global.actions.close') %>"></button>
           </div>
           <div class="modal-body">
-
             <p class="text-warning" ><%= t('tours.planning.breaks_chronological_order') %></p>
-
             <%= simple_form_for [@organism, @competition, @edition_competition, @category, @tour, Pause.new] do |f| %>
               <%= f.input :date, as: :hidden, input_html: { class: "pause_day" } %>
               <%= f.input :start_time, collection: @tour.performances.where(start_date: day).map { |p| p.start_time.strftime("%H:%M") }, label: t('tours.planning.start_time'), input_html: { class: 'form-control' } %>
@@ -102,64 +100,98 @@
     </div>
 
     <!-- planning -->
-    <div class="table-component">
-      <table class="table-base" style="border-radius: 8px;">
-        <thead>
-          <tr class="table-header">
-            <th scope="col" class="table-cell"><%= t('tours.planning.candidate') %></th>
-            <th scope="col" class="table-cell"><%= t('tours.planning.passage_time') %></th>
-            <th scope="col" class="table-cell"><%= t('tours.planning.order') %></th>
-            <th scope="col" class="table-cell table-cell--actions"><%= t('global.action').pluralize %></th>
-          </tr>
-        </thead>
-        <tbody>
-          <% unless @tour.performances.any?{|p| p.start_time.nil?} %>
-            <% items = (@tour.performances.to_a + @tour.pauses.to_a).sort_by { |item| item.start_time.strftime('%H:%M') } %>
+    <div class="table-responsive planning-table-container">
+      <div class="table-component">
+        <table class="table-base" style="border-radius: 8px;">
+          <thead>
+            <tr class="table-header">
+              <th scope="col" class="table-cell"><%= t('tours.planning.candidate') %></th>
+              <th scope="col" class="table-cell"><%= t('tours.planning.passage_time') %></th>
+              <th scope="col" class="table-cell"><%= t('tours.planning.order') %></th>
+              <th scope="col" class="table-cell table-cell--actions"><%= t('global.action').pluralize %></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% unless @tour.performances.any?{|p| p.start_time.nil?} %>
+              <% items = (@tour.performances.to_a + @tour.pauses.to_a).select { |item|
+                (item.is_a?(Performance) && item.start_date == day) ||
+                (item.is_a?(Pause) && item.date == day)
+              }.sort_by { |item| item.start_time.strftime('%H:%M') } %>
 
-            <% items.each_with_index do |item, index| %>
-              <% if item.is_a?(Performance) && item.start_date == day %>
-                <%# <%= form_with(model: item, url: performance_path(item), method: :patch, local: true) do |f| %>
+              <% items.each_with_index do |item, index| %>
+                <% if item.is_a?(Performance) %>
                   <tr class=border-top >
                     <td class="table-cell"><%= link_to item.candidat.first_name, item.inscription %></td>
-                    <td class="table-cell"><%= item.start_time.strftime('%H:%M') %></td>
+                    <td class="table-cell" data-date="<%= item.start_date.strftime('%Y-%m-%d') %>"><%= item.start_time.strftime('%H:%M') %></td>
                     <td class="table-cell"><%= item.order %></td>
                     <td class="table-cell table-cell--actions">
                       <%# No actions for performances %>
                     </td>
                   </tr>
-                <%# <% end %>
-              <% elsif item.is_a?(Pause) && item.date == day %>
-                <tr class="table-row">
-                  <td class="table-cell"><%= t('tours.planning.break') %></td>
-                  <td class="table-cell" id="pause_time_<%= day %>_<%= index %>"><%= item.start_time.strftime('%H:%M') %> - <%= item.end_time.strftime('%H:%M') %></td>
-                  <td class="table-cell">-</td>
-                  <td class="table-cell table-cell--actions">
-                    <% last_pause_of_the_day = items.reverse.find { |i| i.is_a?(Pause) && i.date == day } %>
-                    <% if last_pause_of_the_day == item %>
-                      <%= render Dropdown::KebabComponent.new(
-                        items: [
-                          {
-                            icon: "fas fa-trash-alt",
-                            text: t('global.actions.delete'),
-                            path: organism_competition_edition_competition_category_tour_pause_path(@organism, @competition, @edition_competition, @category, @tour, item),
-                            method: :delete,
-                            data: { turbo_confirm: t('tours.planning.delete_break_confirm') }
-                          }
-                        ]
-                      ) %>
-                    <% end %>
-                  </td>
-                </tr>
+                <% elsif item.is_a?(Pause) %>
+                  <tr class="table-row">
+                    <td class="table-cell"><%= t('tours.planning.break') %></td>
+                    <td class="table-cell" id="pause_time_<%= day %>_<%= index %>"><%= item.start_time.strftime('%H:%M') %> - <%= item.end_time.strftime('%H:%M') %></td>
+                    <td class="table-cell">-</td>
+                    <td class="table-cell table-cell--actions">
+                      <% last_pause_of_the_day = items.reverse.find { |i| i.is_a?(Pause) } %>
+                      <% if last_pause_of_the_day == item %>
+                        <%= render Dropdown::KebabComponent.new(
+                          items: [
+                            {
+                              icon: "fas fa-trash-alt",
+                              text: t('global.actions.delete'),
+                              path: organism_competition_edition_competition_category_tour_pause_path(@organism, @competition, @edition_competition, @category, @tour, item),
+                              method: :delete,
+                              data: { turbo_confirm: t('tours.planning.delete_break_confirm') }
+                            }
+                          ]
+                        ) %>
+                      <% end %>
+                    </td>
+                  </tr>
+                <% end %>
               <% end %>
             <% end %>
-          <% end %>
-        </tbody>
-      </table>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
-</div>
 <% end %>
- <script>
+</div>
+
+<!-- Ajout de styles pour garantir la bonne présentation du planning sur plusieurs jours -->
+<style>
+  .planning-day-container {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    position: relative;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 20px;
+  }
+
+  .planning-table-container {
+    overflow-x: auto;
+    max-width: 100%;
+    margin-bottom: 20px;
+  }
+
+  /* Assurez-vous que les tableaux ne dépassent pas et s'adaptent bien */
+  .table-component {
+    width: 100%;
+    min-width: 650px; /* Largeur minimale pour éviter un écrasement excessif */
+  }
+
+  /* Pour les écrans plus petits */
+  @media (max-width: 768px) {
+    .planning-day-container {
+      margin-bottom: 30px;
+    }
+  }
+</style>
+
+<script>
   setTimeout(function() {
     document.getElementById('success-alert').style.display = 'none';
   }, 5000);
