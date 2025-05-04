@@ -50,11 +50,11 @@ class ToursController < ApplicationController
     end
 
     if @tour.update(update_params)
-
       if creating_schedule == "true"
         if @tour.pauses.any? || @tour.performances.any? { |p| p.start_time.present? }
           @tour.pauses.destroy_all
           @tour.performances.update_all(start_time: nil)
+          @tour.candidate_rehearsals.destroy_all
         end
 
         @tour.generate_performance_schedule

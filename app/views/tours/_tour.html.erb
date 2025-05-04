@@ -197,13 +197,6 @@
       <% end %>
     </div>
 
-    <% if @tour.needs_rehearsal? %>
-      <!-- tab répétitions -->
-      <div class="tab-pane fade" id="rehearsal" role="tabpanel" aria-labelledby="rehearsal-tab">
-        <%= render @tour.rehearsal_type, tour: @tour %>
-      </div>
-    <% end %>
-
     <!-- tab planning -->
     <div class="tab-pane fade <%= 'show active' if @tour.has_planning? && @tour.performances.none?{|p| p.is_qualified } %>" id="planning" role="tabpanel" aria-labelledby="planning-tab">
       <% if !@tour.has_planning? %>
@@ -245,6 +238,13 @@
           <% end %>
       <% end %>
     </div>
+
+     <% if @tour.needs_rehearsal? %>
+      <!-- tab répétitions -->
+      <div class="tab-pane fade" id="rehearsal" role="tabpanel" aria-labelledby="rehearsal-tab">
+        <%= render @tour.rehearsal_type, tour: @tour %>
+      </div>
+    <% end %>
 
     <!-- tab resultats -->
     <div class="tab-pane fade <%= 'show active' if @tour.performances.any?{|p| p.is_qualified } %>" id="results" role="tabpanel" aria-labelledby="order-tab">

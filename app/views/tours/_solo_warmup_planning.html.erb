@@ -1,7 +1,6 @@
 <div class="solo-warmup-planning mb-4">
   <div class="d-flex justify-content-between align-items-center mb-3">
   </div>
-
   <% if @tour.candidate_rehearsals.any? %>
     <style>
       /* Style pour assurer que chaque cellule reste dans sa colonne */
@@ -67,7 +66,6 @@
         room_colors[room.id] = color_palette[index % color_palette.length]
       end
     %>
-
     <%= render Table::BaseComponent.new(
       no_action: true,
       rows: @tour.candidate_rehearsals.order(:start_time),
