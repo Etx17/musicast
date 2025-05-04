@@ -34,7 +34,7 @@ class RoomsController < ApplicationController
     @room = @organism.rooms.build(room_params)
 
     if @room.save
-      redirect_to organisateur_dashboard_path, notice: "Salle créée avec succès."
+      redirect_to params[:redirect_path] || organism_rooms_path(@organism), notice: "Salle créée avec succès."
     else
       # Rendre le formulaire avec erreurs
       render :new, status: :unprocessable_entity
