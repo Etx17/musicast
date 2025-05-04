@@ -647,7 +647,6 @@ en:
     common:
       close: "Close"
       confirm_delete: "Are you sure you want to delete this item?"
-
     jury_section:
       title: "Jury"
       associated_jury_members: "Associated jury members"
@@ -665,15 +664,16 @@ en:
       existing_account: "If the person you wanted to invite already has an account but doesn't have a Jury account, you can assign them this role. Enter their email and then associate them with your organization."
       email_label: "Email"
       assign_jury_role: "Assign Jury Role"
-
     admin:
       title: "Admin Dashboard"
-
     jury:
       files_to_evaluate: "Your files to evaluate (grouped by categories)"
       view_applications: "View %{count} applications"
-
     organiser:
+      rehearsal_rooms: "Salles de répétition"
+      add_room: "Ajouter une salle"
+      edit_room: "Modifier la salle"
+      confirm_delete_room: "Êtes-vous sûr de vouloir supprimer cette salle ?"
       jury_members: Jury members
       add_jury: Add jury
       confirm_delete_pianist: "Delete pianist ?"

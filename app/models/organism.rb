@@ -7,7 +7,7 @@ class Organism < ApplicationRecord
   has_many :edition_competitions, through: :competitions
   has_many :organism_juries
   has_many :juries, through: :organism_juries
-
+  has_many :rooms, dependent: :destroy
   extend FriendlyId
   friendly_id :nom, use: :slugged
 

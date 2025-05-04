@@ -1,5 +1,7 @@
 class RoomsController < ApplicationController
-  before_action :set_room, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!
+  before_action :set_organism
+  before_action :set_room, only: [:edit, :update, :destroy]
 
   # GET /rooms or /rooms.json
   def index
@@ -12,59 +14,60 @@ class RoomsController < ApplicationController
 
   # GET /rooms/new
   def new
-    @room = Room.new
+    @room = @organism.rooms.build
+    respond_to do |format|
+      format.html
+      format.turbo_stream
+    end
   end
 
   # GET /rooms/1/edit
   def edit
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   # POST /rooms or /rooms.json
   def create
-    @room = Room.new(room_params)
+    @room = @organism.rooms.build(room_params)
 
-    respond_to do |format|
-      if @room.save
-        format.html { redirect_to @room, notice: "Room was successfully created." }
-        format.json { render :show, status: :created, location: @room }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @room.errors, status: :unprocessable_entity }
-      end
+    if @room.save
+      redirect_to organisateur_dashboard_path, notice: "Salle créée avec succès."
+    else
+      # Rendre le formulaire avec erreurs
+      render :new, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /rooms/1 or /rooms/1.json
   def update
-    respond_to do |format|
-      if @room.update(room_params)
-        format.html { redirect_to @room, notice: "Room was successfully updated." }
-        format.json { render :show, status: :ok, location: @room }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @room.errors, status: :unprocessable_entity }
-      end
+    if @room.update(room_params)
+      redirect_to dashboard_organiser_path, notice: "Salle mise à jour avec succès."
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
   # DELETE /rooms/1 or /rooms/1.json
   def destroy
-    @room.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to rooms_path, status: :see_other, notice: "Room was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    @room.destroy
+    redirect_to dashboard_organiser_path, notice: "Salle supprimée avec succès."
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
+    def set_organism
+      @organism = Organism.friendly.find(params[:organism_id])
+    end
+
     def set_room
-      @room = Room.find(params.expect(:id))
+      @room = @organism.rooms.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
     def room_params
-      params.fetch(:room, {})
+      params.require(:room).permit(:name, :notes, :organism_id, :start_time, :end_time, :description, :description_english)
     end
 end

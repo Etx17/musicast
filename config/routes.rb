@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :rooms
+
   get '/language/switch', to: 'language#switch', as: 'switch_language'
   mount StripeEvent::Engine, at: '/stripe-webhooks'
 
@@ -46,6 +46,7 @@ Rails.application.routes.draw do
     resources :airs
     resources :programme_requirements
     resources :organisms do
+      resources :rooms
       member do
         post 'build_and_assign_jury', to: 'juries#build_and_assign_jury'
       end
@@ -61,6 +62,7 @@ Rails.application.routes.draw do
                 delete 'scores/:score_id', to: 'tours#delete_score', as: 'delete_score'
                 get 'download_pianist_scores/:pianist_id', to: 'tours#download_pianist_scores', as: :download_pianist_scores
                 get 'download_schedule_pdf'
+                patch :update_solo_warmup
               end
               patch :reorder_tours, on: :collection
               post 'update_order', on: :member

@@ -83,10 +83,57 @@
         </div>
       </div>
 
+      <!-- Section Rooms -->
+      <div class="card border-0 shadow-sm rounded mb-4" style="background: #EEEEEE;">
+        <div class="card-header border border-transparent">
+          <i class="fas fa-door-open"></i> <%= t('dashboard.organiser.rehearsal_rooms') %>
+        </div>
+        <div class="card-body bg-light">
+          <button type="button" class="btn btn-outline-dark mb-3" data-bs-toggle="modal" data-bs-target="#newRoomModal">
+            <i class="fas fa-plus"></i> <%= t('dashboard.organiser.add_room') %>
+          </button>
+          <ul class="list-unstyled" id="rooms-list">
+            <% @organism.rooms.each do |room| %>
+              <%= render 'rooms/room', room: room %>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+
       <!-- jury card partial -->
       <%= render "jury_section", organism: @organism %>
 
 
+    </div>
+  </div>
+</div>
+
+<!-- Modal pour créer une salle -->
+<div class="modal fade" id="newRoomModal" tabindex="-1" aria-labelledby="newRoomModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="newRoomModalLabel"><%= t('dashboard.organiser.add_room') %></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <%= render 'rooms/form', room: Room.new %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal pour éditer une salle -->
+<div class="modal fade" id="editRoomModal" tabindex="-1" aria-labelledby="editRoomModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editRoomModalLabel"><%= t('dashboard.organiser.edit_room') %></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="edit-room-container">
+        <!-- Le formulaire sera chargé ici par JavaScript -->
+      </div>
     </div>
   </div>
 </div>

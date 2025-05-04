@@ -1,11 +1,16 @@
 class Tour < ApplicationRecord
   has_many :performances, dependent: :destroy
+  has_many :candidate_rehearsals, dependent: :destroy
+  has_and_belongs_to_many :rooms
+
   belongs_to :category
   has_one :address, as: :addressable, dependent: :destroy
   has_one :tour_requirement, dependent: :destroy
 
   validate :new_day_start_time_before_max_end_of_day_time
   attr_accessor :creating_schedule
+  attr_accessor :rehearse_time_slot_per_candidate
+
 
   validates :title, :description, :start_date, :final_performance_submission_deadline, presence: true
   validates :title, uniqueness: { scope: :category_id, message: "should be unique per category" }
@@ -35,6 +40,11 @@ class Tour < ApplicationRecord
 
   def candidates_performances_that_passed_selections
     performances.filter{|p| p.inscription.accepted?}
+  end
+
+  def rehearse_time_slot_per_candidate
+    return 30 unless self[:rehearse_time_slot_per_candidate]
+    self[:rehearse_time_slot_per_candidate]
   end
 
   def move_qualified_candidates_to_next_tour

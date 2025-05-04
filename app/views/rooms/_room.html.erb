@@ -1,2 +1,37 @@
-<div id="<%= dom_id room %>">
-</div>
+<%= turbo_frame_tag "edit_room_frame_#{room.id}" do %>
+ <!-- app/views/pianist_accompagnateurs/_pianist.html.erb -->
+  <li class="d-flex justify-content-between align-items-center mb-2" id="room_<%= room.id %>">
+    <div>
+      <strong><%= room.name %></strong>
+      <% if room.notes.present? %>
+        <span class="badge bg-secondary ms-2"><%= room.notes %></span>
+      <% end %>
+      <small class="d-block text-muted">
+        <%= room.start_time.strftime("%H:%M") %> - <%= room.end_time.strftime("%H:%M") %>
+      </small>
+    </div>
+
+    <div>
+      <div class="dropdown">
+        <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton<%= room.id %>" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="fas fa-ellipsis-v"></i>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton<%= room.id %>">
+          <li>
+            <a class="dropdown-item edit-room-btn" href="#" data-room-id="<%= room.id %>" data-bs-toggle="modal" data-bs-target="#editRoomModal">
+              <i class="fas fa-edit"></i> Modifier
+            </a>
+          </li>
+          <li>
+            <%= link_to organism_room_path(room.organism, room),
+                        method: :delete,
+                        class: "dropdown-item text-danger",
+                        data: { confirm: "Êtes-vous sûr de vouloir supprimer cette salle ?" } do %>
+              <i class="fas fa-trash"></i> Supprimer
+            <% end %>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </li>
+  <% end %>

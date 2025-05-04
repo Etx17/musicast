@@ -1,5 +1,9 @@
 class PianistAccompagnateur < ApplicationRecord
   has_many :performances
+  has_many :candidate_rehearsals, dependent: :nullify
+  has_many :rehearsing_candidates, through: :candidate_rehearsals, source: :candidate
+
+
   belongs_to :organism, optional: true
   VALID_PHONE_REGEX = /\A(\+?\d{1,3}\s?)?(\()?(\d{3})(?(2)\))[-.\s]?\d{3}[-.\s]?\d{4}\z|\A(\+?\d{1,3})?[-.\s]?\d{2}[-.\s]?\d{2}[-.\s]?\d{2}[-.\s]?\d{2}[-.\s]?\d{2}\z/
   validates :full_name, :email, :phone_number, presence: true

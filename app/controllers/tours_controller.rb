@@ -331,6 +331,21 @@ class ToursController < ApplicationController
     end
   end
 
+  def update_solo_warmup
+    @organism = Organism.friendly.find(params[:organism_id])
+    @category = Category.friendly.find(params[:category_id])
+    @edition_competition = @category.edition_competition
+    @competition = @edition_competition.competition
+    @tour = @category.tours.find(params[:id])
+
+    if @tour.update(solo_warmup_params)
+      redirect_to organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour, anchor: "rehearsal"),
+                  notice: "Configuration des répétitions mise à jour avec succès."
+    else
+      render :show, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def set_tour
@@ -386,5 +401,9 @@ class ToursController < ApplicationController
     ).tap do |whitelisted|
       whitelisted[:imposed_air_selection] = whitelisted[:imposed_air_selection]&.reject(&:blank?)
     end
+  end
+
+  def solo_warmup_params
+    params.require(:tour).permit(:rehearse_time_slot_per_candidate, room_ids: [])
   end
 end

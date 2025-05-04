@@ -661,6 +661,10 @@ fr:
       files_to_evaluate: "Vos dossiers à évaluer (groupées par catégories)"
       view_applications: "Voir %{count} inscriptions"
     organiser:
+      rehearsal_rooms: "Salles de répétition"
+      add_room: "Ajouter une salle"
+      edit_room: "Modifier la salle"
+      confirm_delete_room: "Êtes-vous sûr de vouloir supprimer cette salle ?"
       jury_members: Membres du jury
       add_jury: Ajouter un membre du jury
       confirm_delete_pianist: "Confirmez la suppression du pianiste"
