@@ -2004,3 +2004,21 @@ fr:
   date:
     formats:
       short_month_day: "%d %B"
+  tours:
+    planning:
+      rehearsal_schedule: "Planning des répétitions"
+      rehearsal_start: "Début de répétition"
+      rehearsal_end: "Fin de répétition"
+      performance_time: "Heure de passage"
+      room: "Salle"
+      pianist: "Pianiste accompagnateur"
+      no_rehearsals_scheduled: "Aucune répétition planifiée."
+
+  global:
+    candidate: "Candidat"
+    action: "Action"
+    not_available_abbr: "N/A"
+    actions:
+      download: "Télécharger"
+      download_all: "Tout télécharger"
+      download_file: "Télécharger %{filename}"

@@ -11,6 +11,13 @@ Rails.application.routes.draw do
       get 'make_me_admin/:user_id', to: 'application#make_me_admin', as: :make_me_admin
     end
 
+    # Candidate rehearsals routes
+    resources :candidate_rehearsals, only: [] do
+      member do
+        post :update_room
+      end
+    end
+
     get 'tour_requirements/new'
     get 'tour_requirements/create'
     get 'tour_requirements/update'
