@@ -195,7 +195,7 @@ class Tour < ApplicationRecord
     current_start_time = start_time
     current_start_date = start_date
 
-    # raise "empty durations"if performances.any?{|p| p.air_selection.any?{|air| air.blank?}}
+    raise "empty durations"if performances.any?{|p| p.air_selection.any?{|air| air.blank?}}
 
     performances.each do |performance|
       # Si la performance actuelle n'a pas renseignée sa durée, lui assigner le temps max du tour.
