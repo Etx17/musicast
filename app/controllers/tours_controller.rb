@@ -101,10 +101,11 @@ class ToursController < ApplicationController
       subsequent_pauses.each do |i|
         i.update!(date: i.date + days_difference)
       end
+      tour.candidate_rehearsals.destroy_all
     end
 
     # Redirect to the tour page
-    redirect_to organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour), notice: 'Le jour de la performance et des performances suivantes ont été mis à jour.'
+    redirect_to organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour), notice: 'Le jour de la performance et des performances suivantes ont été mis à jour. Veuillez régénerer le planning de répétition si vous en aviez configuré un.'
   end
 
   def destroy

@@ -20,21 +20,19 @@
   <% end %>
   <!--  Section planning s'il existe-->
 
-  <div class="text-center">
-    <!-- Modale ouverte par les tabs dans le bouton générer le planning ou régénérer-->
-    <div class="modal fade" id="tourConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="tourConfirmationModalLabel" aria-hidden="true">
+  <!-- Modale ouverte par les tabs dans le bouton générer le planning ou régénérer-->
+  <div class="modal fade" id="tourConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="tourConfirmationModalLabel" aria-hidden="true">
 
-        <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">X</button>
-            <h5 class="modal-title" id="tourConfirmationModalLabel"><%= t('tours.tour.tour_configuration') %></h5>
-          </div>
-          <div class="modal-body">
-            <%= render 'tour_configuration_form', tour: @tour %>
-          </div>
-          <div class="modal-footer">
-          </div>
+      <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header d-flex justify-content-between">
+          <h5 class="modal-title" id="tourConfirmationModalLabel"><%= t('tours.tour.tour_configuration') %></h5>
+          <button type="button" class="btn btn-outline-dark border border-0" data-bs-dismiss="modal">X</button>
+        </div>
+        <div class="modal-body">
+          <%= render 'tour_configuration_form', tour: @tour %>
+        </div>
+        <div class="modal-footer">
         </div>
       </div>
     </div>

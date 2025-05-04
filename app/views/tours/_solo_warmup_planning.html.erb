@@ -1,6 +1,5 @@
 <div class="solo-warmup-planning mb-4">
-  <div class="d-flex justify-content-between align-items-center mb-3">
-  </div>
+
   <% if @tour.candidate_rehearsals.any? %>
     <style>
       /* Style pour assurer que chaque cellule reste dans sa colonne */
@@ -9,13 +8,17 @@
         vertical-align: middle !important;
         white-space: normal;
       }
+      /* Largeurs minimales pour les colonnes importantes */
+      .candidate-column-cell {
+        min-width: 200px;
+      }
       /* Limiter la largeur de la colonne salle pour éviter de pousser le pianiste */
       .room-column-cell {
-        max-width: 200px;
+        min-width: 200px;
       }
       /* Assurer que la colonne du pianiste a une largeur minimale */
       .pianist-column-cell {
-        min-width: 150px;
+        min-width: 200px;
       }
       /* Styles pour la coloration des salles */
       .room-badge {
@@ -37,6 +40,12 @@
         padding: 8px;
         margin: 3px;
         border-radius: 4px;
+      }
+      /* Style pour les en-têtes de section par jour */
+
+      /* Séparation entre les jours de répétition */
+      .rehearsal-day-container {
+        margin-bottom: 30px;
       }
     </style>
 
@@ -65,74 +74,95 @@
       Room.all.each_with_index do |room, index|
         room_colors[room.id] = color_palette[index % color_palette.length]
       end
-    %>
-    <%= render Table::BaseComponent.new(
-      no_action: true,
-      rows: @tour.candidate_rehearsals.order(:start_time),
-      columns: [
-        {
-          label: t('global.candidate'),
-          min_width: 180,
-          value: ->(rehearsal) do
-            content_tag(:div, class: "d-flex align-items-center") do
-              image_tag(
-                rehearsal.candidat.portrait_or_default,
-                class: "rounded-circle me-2",
-                style: "width: 32px; height: 32px; object-fit: cover;"
-              ) +
-              content_tag(:span, rehearsal.candidat.full_name)
-            end
-          end
-        },
-        {
-          label: t('tours.planning.rehearsal_start'),
-          value: ->(rehearsal) do
-            l(rehearsal.start_time, format: "%H:%M") if rehearsal.start_time
-          end
-        },
-        {
-          label: t('tours.planning.rehearsal_end'),
-          value: ->(rehearsal) do
-            l(rehearsal.end_time, format: "%H:%M") if rehearsal.end_time
-          end
-        },
-        {
-          label: t('tours.planning.room'),
-          value: ->(rehearsal) do
-            content_tag(:div, class: "room-column-cell") do
-              room_color = room_colors[rehearsal.room_id] || '#6c757d'
 
-              concat(
-                form_with(url: update_room_candidate_rehearsal_path(rehearsal), method: :post, class: "d-inline-block") do
-                  select_tag(
-                    "room_id",
-                    options_from_collection_for_select(Room.all, :id, :name, rehearsal.room_id),
-                    class: "form-select form-select-sm rehearsal-room-selector room-select",
-                    style: "width: auto; min-width: 120px; border-left-color: #{room_color}; background-color: #{room_color}20;",
-                    data: {
-                      rehearsal_id: rehearsal.id,
-                      room_id: rehearsal.room_id
-                    },
-                    title: "Changer de salle",
-                    onchange: "this.form.submit();"
+      # Regrouper les répétitions par jour
+      rehearsals_by_day = @tour.candidate_rehearsals.order(:start_time).group_by do |rehearsal|
+        rehearsal.start_time.to_date
+      end
+    %>
+
+    <% rehearsals_by_day.each do |day, day_rehearsals| %>
+      <div class="rehearsal-day-container">
+        <div class="d-flex gap-2 align-items-center">
+          <h5 class="rehearsal-day-header">
+            <%= l(day, format: "%A %d %B %Y") %>
+          </h5>
+          <small class="small text-secondary ms-2"><%= day_rehearsals.count %> rehearsals </small>
+        </div>
+        <%= render Table::BaseComponent.new(
+          no_action: true,
+          rows: day_rehearsals,
+          columns: [
+            {
+              label: t('global.candidate'),
+              min_width: 200,
+              value: ->(rehearsal) do
+                content_tag(:div, class: "candidate-column-cell") do
+                  content_tag(:div, class: "d-flex align-items-center") do
+                    image_tag(
+                      rehearsal.candidat.portrait_or_default,
+                      class: "rounded-circle me-2",
+                      style: "width: 32px; height: 32px; object-fit: cover;"
+                    ) +
+                    content_tag(:span, rehearsal.candidat.full_name)
+                  end
+                end
+              end
+            },
+            {
+              min_width: 200,
+              label: t('tours.planning.rehearsal_start'),
+              value: ->(rehearsal) do
+                l(rehearsal.start_time, format: "%H:%M") if rehearsal.start_time
+              end
+            },
+            {
+              min_width: 200,
+              label: t('tours.planning.rehearsal_end'),
+              value: ->(rehearsal) do
+                l(rehearsal.end_time, format: "%H:%M") if rehearsal.end_time
+              end
+            },
+            {
+              min_width: 200,
+              label: t('tours.planning.room'),
+              value: ->(rehearsal) do
+                content_tag(:div, class: "room-column-cell") do
+                  room_color = room_colors[rehearsal.room_id] || '#6c757d'
+
+                  concat(
+                    form_with(url: update_room_candidate_rehearsal_path(rehearsal), method: :post, class: "d-inline-block") do
+                      select_tag(
+                        "room_id",
+                        options_from_collection_for_select(Room.all, :id, :name, rehearsal.room_id),
+                        class: "form-select form-select-sm rehearsal-room-selector room-select",
+                        style: "width: auto; min-width: 120px; border-left-color: #{room_color}; background-color: #{room_color}20;",
+                        data: {
+                          rehearsal_id: rehearsal.id,
+                          room_id: rehearsal.room_id
+                        },
+                        title: "Changer de salle",
+                        onchange: "this.form.submit();"
+                      )
+                    end
                   )
                 end
-              )
-            end
-          end
-        },
-        {
-          label: t('tours.planning.pianist'),
-          value: ->(rehearsal) do
-            content_tag(:div, class: "pianist-column-cell") do
-              rehearsal.performance&.pianist_accompagnateur ? rehearsal.performance&.pianist_accompagnateur.full_name : "-"
-            end
-          end
-        }
-      ],
-      links: [],
-      client: nil
-    ) %>
+              end
+            },
+            {
+              label: t('tours.planning.pianist'),
+              value: ->(rehearsal) do
+                content_tag(:div, class: "pianist-column-cell") do
+                  rehearsal.performance&.pianist_accompagnateur ? rehearsal.performance&.pianist_accompagnateur.full_name : "-"
+                end
+              end
+            }
+          ],
+          links: [],
+          client: nil
+        ) %>
+      </div>
+    <% end %>
 
     <% content_for :javascript do %>
       <script>
