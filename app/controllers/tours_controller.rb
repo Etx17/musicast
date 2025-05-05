@@ -139,7 +139,7 @@ class ToursController < ApplicationController
     end
 
     @tour.generate_initial_performance_order
-    redirect_to [@organism, @competition, @edition_competition, @category, @tour], notice: "Ordre de passage mélangé avec succès."
+    redirect_to [@organism, @competition, @edition_competition, @category, @tour], notice: t('tours.shuffle.success')
   end
 
   def assign_pianist
@@ -166,7 +166,7 @@ class ToursController < ApplicationController
   def qualify_performance
     performance = Performance.find(params[:performance_id])
     if performance.update(is_qualified: !performance.is_qualified)
-      redirect_to [@organism, @competition, @edition_competition, @category, @tour], notice: "Performance qualifiée avec succès."
+      redirect_to [@organism, @competition, @edition_competition, @category, @tour], notice: "Performance qualified successfully."
     end
   end
 
