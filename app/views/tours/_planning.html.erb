@@ -1,10 +1,6 @@
 <%# Refactored Top Section for Planning Management & Exports %>
 <h2 class=" text-center my-3"><%= t('tours.planning.tour_planning') %></h2>
-<div class="card border-0 mb-4 mx-2">
-  <div class="card-header">
-    <h4 class="mb-0 text-secondary"><i class="fi fi-rs-settings me-2 text-secondary"></i> <%= t('tours.planning.management_and_exports') %></h4>
-  </div>
-  <div class="card-body bg-light">
+
     <% if @tour.has_planning? %>
       <%# All buttons in one row with proper wrapping %>
       <div class="d-flex flex-wrap gap-3 align-items-center mb-3">
@@ -55,8 +51,6 @@
         </div>
       </div>
     <% end %>
-  </div>
-</div>
 
 <div class="container">
 <% @tour.days_of_performances.each do |day| %>
