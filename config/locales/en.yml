@@ -1785,15 +1785,12 @@ en:
     edit:
       editing_tour: "Editing tour"
       edit_tour: "Edit tour"
-
     index:
       tours: "Tours"
       show_this_tour: "Show this tour"
       new_tour: "New tour"
-
     new:
       new_tour: "New tour"
-
     show:
       tour_details: "Tour details"
       description: "Description"
@@ -1806,16 +1803,13 @@ en:
       start_time: "Start time"
       time_between_performances: "Time between performances (minutes)"
       performances_per_day: "Performances per day"
-
     schedule:
       your_planning: "Your schedule (You can modify it as long as you haven't sent the invitations)"
       can_modify_later: "You can modify it later of course, but you will have to notify the candidates yourself."
-
     show_jury_pdf:
       required_item_photo: "Required item photo"
       years_old: "years old"
       notes: "NOTES"
-
     show_pdf:
       candidate: "Candidate"
       passage_time: "Passage time"
@@ -1899,8 +1893,9 @@ en:
       change_order_confirm: "Are you sure you want to change the order?"
       select_pianist: "Select pianist"
       brings_own_pianist: "Brings own pianist"
-
     planning:
+      pianist: "Pianist accompanist"
+      no_rehearsals_scheduled: "No rehearsals scheduled"
       jury_form_description: "Select the fields you want to include in the jury document"
       candidate_information: "Candidate Information"
       candidate_number: "Candidate number"

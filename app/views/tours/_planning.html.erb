@@ -87,7 +87,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="<%= t('global.actions.close') %>"></button>
           </div>
           <div class="modal-body">
-            <p class="text-warning" ><%= t('tours.planning.breaks_chronological_order') %></p>
+            <%= render InfoboxComponent.new(text: t('tours.planning.breaks_chronological_order')) %>
             <%= simple_form_for [@organism, @competition, @edition_competition, @category, @tour, Pause.new] do |f| %>
               <%= f.input :date, as: :hidden, input_html: { class: "pause_day" } %>
               <%= f.input :start_time, collection: @tour.performances.where(start_date: day).map { |p| p.start_time.strftime("%H:%M") }, label: t('tours.planning.start_time'), input_html: { class: 'form-control' } %>
@@ -105,9 +105,12 @@
         <table class="table-base" style="border-radius: 8px;">
           <thead>
             <tr class="table-header">
-              <th scope="col" class="table-cell"><%= t('tours.planning.candidate') %></th>
+              <th scope="col" class="table-cell" style="min-width: 200px;"><%= t('tours.planning.candidate') %></th>
               <th scope="col" class="table-cell"><%= t('tours.planning.passage_time') %></th>
               <th scope="col" class="table-cell"><%= t('tours.planning.order') %></th>
+              <% if @tour.requires_pianist_accompanist %>
+                <th scope="col" class="table-cell" style="min-width: 200px;"><%= t('tours.planning.pianist') %></th>
+              <% end %>
               <th scope="col" class="table-cell table-cell--actions"><%= t('global.action').pluralize %></th>
             </tr>
           </thead>
@@ -121,18 +124,42 @@
               <% items.each_with_index do |item, index| %>
                 <% if item.is_a?(Performance) %>
                   <tr class=border-top >
-                    <td class="table-cell"><%= link_to item.candidat.first_name, item.inscription %></td>
+                    <td class="table-cell">
+                      <div class="d-flex align-items-center">
+                        <%= image_tag item.candidat.portrait_or_default, class: "rounded-circle me-2", style: "width: 32px; height: 32px; object-fit: cover;" %>
+                        <%= link_to item.candidat.full_name, item.inscription %>
+                      </div>
+                    </td>
                     <td class="table-cell" data-date="<%= item.start_date.strftime('%Y-%m-%d') %>"><%= item.start_time.strftime('%H:%M') %></td>
                     <td class="table-cell"><%= item.order %></td>
+                    <% if @tour.requires_pianist_accompanist %>
+                      <td class="table-cell">
+                        <% if item.pianist_accompagnateur %>
+                          <div class="d-flex align-items-center">
+                            <%= item.pianist_accompagnateur.full_name %>
+                          </div>
+                        <% else %>
+                          -
+                        <% end %>
+                      </td>
+                    <% end %>
                     <td class="table-cell table-cell--actions">
                       <%# No actions for performances %>
                     </td>
                   </tr>
                 <% elsif item.is_a?(Pause) %>
                   <tr class="table-row">
-                    <td class="table-cell"><%= t('tours.planning.break') %></td>
+                    <td class="table-cell">
+                      <div class="d-flex align-items-center">
+                        <span class="badge bg-secondary me-2"><i class="fas fa-coffee"></i></span>
+                        <span class="fst-italic"><%= t('tours.planning.break') %></span>
+                      </div>
+                    </td>
                     <td class="table-cell" id="pause_time_<%= day %>_<%= index %>"><%= item.start_time.strftime('%H:%M') %> - <%= item.end_time.strftime('%H:%M') %></td>
                     <td class="table-cell">-</td>
+                    <% if @tour.requires_pianist_accompanist %>
+                      <td class="table-cell">-</td>
+                    <% end %>
                     <td class="table-cell table-cell--actions">
                       <% last_pause_of_the_day = items.reverse.find { |i| i.is_a?(Pause) } %>
                       <% if last_pause_of_the_day == item %>
