@@ -125,18 +125,6 @@
             },
             {
               min_width: 200,
-              label: t('tours.planning.passage_time'),
-              value: ->(rehearsal) do
-                performance = rehearsal.performance
-                if performance&.performance_time
-                  l(performance.performance_time, format: "%H:%M")
-                else
-                  "-"
-                end
-              end
-            },
-            {
-              min_width: 200,
               label: t('tours.planning.room'),
               value: ->(rehearsal) do
                 content_tag(:div, class: "room-column-cell") do

@@ -4,7 +4,6 @@
     <div class="overflow-auto p-3">
       <div class="d-flex justify-content-center gap-3">
         <h2 class="text-center"><%= t('tours.order_of_performances.current_order') %></h2>
-
         <%= button_to shuffle_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour),
           method: :post,
           class: "btn btn-primary rounded-8",
