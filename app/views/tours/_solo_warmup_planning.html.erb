@@ -87,7 +87,7 @@
           <h5 class="rehearsal-day-header">
             <%= l(day, format: "%A %d %B %Y") %>
           </h5>
-          <small class="small text-secondary ms-2"><%= day_rehearsals.count %> rehearsals </small>
+          <small class="small text-secondary ms-2"><%= day_rehearsals.count %> <%= t('tours.planning.rehearsals') %></small>
         </div>
         <%= render Table::BaseComponent.new(
           no_action: true,
@@ -121,6 +121,18 @@
               label: t('tours.planning.rehearsal_end'),
               value: ->(rehearsal) do
                 l(rehearsal.end_time, format: "%H:%M") if rehearsal.end_time
+              end
+            },
+            {
+              min_width: 200,
+              label: t('tours.planning.passage_time'),
+              value: ->(rehearsal) do
+                performance = rehearsal.performance
+                if performance&.performance_time
+                  l(performance.performance_time, format: "%H:%M")
+                else
+                  "-"
+                end
               end
             },
             {

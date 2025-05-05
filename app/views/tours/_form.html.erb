@@ -1,4 +1,4 @@
-<%= simple_form_for([@organism, @competition, @edition_competition, @category, @tour], html: { id: "tour-form-#{@tour&.id}" }) do |f| %>
+<%= simple_form_for([@organism, @competition, @edition_competition, @category, @tour], html: { id: "tour-form-#{@tour&.id}", data: { controller: "tour-form" } }) do |f| %>
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors.present? %>
   <div class="form-inputs">
@@ -75,34 +75,35 @@
                           class: "form-check-input",
                           role: "switch",
                           id: "flexSwitchNeedsRehearsal",
+                          data: { action: "change->tour-form#toggleRehearsal" },
                           checked: f.object.needs_rehearsal %>
           <%= f.label :needs_rehearsal,
-                      t('tours.form.needs_rehearsal'),
+                      t('tours.form.needs_rehearsal') ,
                       class: "form-check-label",
-                      for: "flexSwitchNeedsRehearsal" %>
+                      for: "flexSwitchNeedsRehearsal" do %>
+            <%= t('tours.form.needs_rehearsal') %>
+            <%= render Pill::StatusComponent.new(border: true, color: "info", text: "beta") %>
+          <% end %>
         </div>
         <small class="form-text text-muted mt-2">
           <%= raw(t('tours.form.needs_rehearsal_hint')).html_safe %>
         </small>
 
-        <div id="rehearsal_type_container" class="mt-3 ms-4 ps-2 border-start" style="<%= f.object.needs_rehearsal ? '' : 'display: none;' %>">
+        <div id="rehearsal_type_container" class="mt-3 ms-4 ps-2 border-start" data-tour-form-target="rehearsalTypeContainer">
           <%= f.input :rehearsal_type,
-              collection: Tour.rehearsal_types.map { |type, _| [t("tours.rehearsal_types.#{type}"), type] },
+              collection: Tour.rehearsal_types.map { |type, _|
+                option_disabled = type != 'solo_warmup'
+                [
+                  "#{t("tours.rehearsal_types.#{type}")}#{option_disabled ? ' (Coming soon)' : ''}",
+                  type,
+                  { disabled: option_disabled }
+                ]
+              },
               include_blank: false,
+              input_html: { data: { tour_form_target: "rehearsalType" } },
               label: t('tours.form.rehearsal_type') %>
           <%= f.input :rehearse_time_slot_per_candidate, numeric: true, label: t('tours.form.rehearse_time_slot_per_candidate') %>
         </div>
-
-        <script>
-          document.addEventListener('DOMContentLoaded', function() {
-            const needsRehearsalCheckbox = document.getElementById('flexSwitchNeedsRehearsal');
-            const rehearsalTypeContainer = document.getElementById('rehearsal_type_container');
-
-            needsRehearsalCheckbox.addEventListener('change', function() {
-              rehearsalTypeContainer.style.display = this.checked ? 'block' : 'none';
-            });
-          });
-        </script>
       </div>
 
       </div>
