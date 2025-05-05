@@ -6,7 +6,7 @@
       <!-- Bouton pour ouvrir la modale de configuration -->
       <div class="d-flex mb-4">
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#configModal">
-          <i class="fas fa-cog me-2"></i>Configurer le planning de répétition
+          <i class="fas fa-cog me-2"></i><%= t('tours.solo_warmup.configure_rehearsal_schedule') %>
         </button>
       </div>
 
@@ -23,8 +23,8 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="configModalLabel">Configuration du planning de répétition</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <h5 class="modal-title" id="configModalLabel"><%= t('tours.solo_warmup.rehearsal_schedule_configuration') %></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="<%= t('global.actions.close') %>"></button>
       </div>
       <div class="modal-body">
         <%= simple_form_for [@organism, @competition, @edition_competition, @category, @tour],
@@ -36,48 +36,48 @@
                          style: "width: fit-content;",
                          value: @tour.rehearse_time_slot_per_candidate || 15
                        },
-                       label: "Durée d'un créneau (en minutes)",
-                       hint: "Définit la durée de chaque créneau de répétition" %>
+                       label: t('tours.solo_warmup.time_slot_duration'),
+                       hint: t('tours.solo_warmup.time_slot_hint') %>
 
             <%= f.input :buffer_time_minutes,
                        input_html: {
                          style: "width: fit-content;",
                          value: @tour.buffer_time_minutes || 30
                        },
-                       label: "Temps tampon avant performance (minutes)",
-                       hint: "Temps nécessaire entre la fin de la répétition et le début de la performance" %>
+                       label: t('tours.solo_warmup.buffer_time'),
+                       hint: t('tours.solo_warmup.buffer_time_hint') %>
 
             <% if @organism.rooms.exists? %>
               <div class="d-flex align-items-center mb-3">
                 <div class="flex-grow-1">
                   <%= f.association :rooms,
                                   collection: @organism.rooms,
-                                  label: "Sélectionnez les salles disponibles",
+                                  label: t('tours.solo_warmup.select_available_rooms'),
                                   input_html: { data: { controller: "tom-select" } },
-                                  hint: "Sélectionnez une ou plusieurs salles de répétitions pour dispatcher les candidats avant leur performance" %>
+                                  hint: t('tours.solo_warmup.select_rooms_hint') %>
                 </div>
                 <div class="ms-3 mt-4">
                   <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#newRoomModal">
-                    <i class="fas fa-plus"></i> Créer une salle
+                    <i class="fas fa-plus"></i> <%= t('tours.solo_warmup.create_room') %>
                   </button>
                 </div>
               </div>
             <% else %>
               <div class="alert alert-info">
                 <i class="fas fa-info-circle me-2"></i>
-                Vous n'avez pas encore enregistré de salles.
-                <%= link_to "Ajoutez des salles dans votre espace organisation", organisateur_dashboard_path, class: "alert-link" %> pour commencer.
+                <%= t('tours.solo_warmup.no_rooms_registered') %>
+                <%= link_to t('tours.solo_warmup.add_rooms_in_organization'), organisateur_dashboard_path, class: "alert-link" %> <%= t('tours.solo_warmup.to_start') %>.
               </div>
               <div class="text-center mb-3">
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newRoomModal">
-                  <i class="fas fa-plus"></i> Créer une salle
+                  <i class="fas fa-plus"></i> <%= t('tours.solo_warmup.create_room') %>
                 </button>
               </div>
             <% end %>
           </div>
 
           <div class="text-center mt-3">
-            <%= f.submit "Enregistrer la configuration et générer le planning de répétition", class: "btn btn-primary", style: "width: fit-content;" %>
+            <%= f.submit t('tours.solo_warmup.save_config_and_generate'), class: "btn btn-primary", style: "width: fit-content;" %>
           </div>
         <% end %>
       </div>
@@ -90,16 +90,16 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="newRoomModalLabel">Ajouter une salle</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <h5 class="modal-title" id="newRoomModalLabel"><%= t('tours.solo_warmup.add_room') %></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="<%= t('global.actions.close') %>"></button>
       </div>
       <div class="modal-body">
         <%= simple_form_for([@organism, Room.new]) do |f| %>
           <%= f.error_notification %>
 
           <div class="form-inputs">
-            <%= f.input :name, label: "Nom de la salle" %>
-            <%= f.input :notes, label: "Notes" %>
+            <%= f.input :name, label: t('tours.solo_warmup.room_name') %>
+            <%= f.input :notes, label: t('tours.solo_warmup.notes') %>
             <%= f.input :organism_id, as: :hidden, input_html: { value: @organism.id } %>
 
             <!-- Hidden field for redirect path back to current page -->
@@ -107,20 +107,20 @@
 
             <div class="row">
               <div class="col">
-                <%= f.input :start_time, label: "Heure d'ouverture" %>
+                <%= f.input :start_time, label: t('tours.solo_warmup.opening_time') %>
               </div>
               <div class="col">
-                <%= f.input :end_time, label: "Heure de fermeture" %>
+                <%= f.input :end_time, label: t('tours.solo_warmup.closing_time') %>
               </div>
             </div>
 
-            <%= f.input :description, label: "Description" %>
-            <%= f.input :description_english, label: "Description (Anglais)" %>
+            <%= f.input :description, label: t('tours.solo_warmup.description') %>
+            <%= f.input :description_english, label: t('tours.solo_warmup.description_english') %>
           </div>
 
           <div class="form-actions text-center">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-            <%= f.button :submit, "Créer", class: "btn btn-primary" %>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><%= t('global.actions.cancel') %></button>
+            <%= f.button :submit, t('global.actions.create'), class: "btn btn-primary" %>
           </div>
         <% end %>
       </div>
@@ -132,7 +132,7 @@
 <div class="container">
   <div class="row">
     <div class="col-12">
-      <h3 class="mb-4">Planning de répétition</h3>
+      <h3 class="mb-4"><%= t('tours.planning.rehearsal_schedule') %></h3>
       <%= render "tours/solo_warmup_planning", tour: @tour %>
     </div>
   </div>
