@@ -83,13 +83,18 @@
         <% if @tour.needs_rehearsal? %>
         <li class="nav-item col-md-3" role="presentation">
           <div class="nav-tab-wrapper position-relative">
+
             <a class="d-block nav-tab-link text-center py-3 px-2 text-decoration-none position-relative"
                id="rehearsal-tab"
                data-bs-toggle="tab"
                href="#rehearsal"
                role="tab"
                aria-controls="rehearsal">
+
               <div class="d-flex flex-column align-items-center">
+                <span class="align-self-start">
+                <%= render Pill::StatusComponent.new(border: true, color: "info", text: "beta") %>
+                </span>
                 <div class="mb-1 fs-4">
                   <i class="fas fa-music"></i>
                 </div>
