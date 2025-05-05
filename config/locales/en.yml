@@ -1992,6 +1992,7 @@ en:
       description_english: "Description (English)"
       rehearsal_start: "Rehearsal start"
       rehearsal_end: "Rehearsal end"
+      download_warmup_schedule: "Download warmup schedule (PDF)"
     planning_jury_form:
       detailed_program: "Detailed program"
       simple_air: "Simple air"

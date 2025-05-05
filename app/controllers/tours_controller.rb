@@ -350,7 +350,30 @@ class ToursController < ApplicationController
     end
   end
 
+  def download_warmup_schedule
+    @tour = Tour.find(params[:id])
+    authorize @tour
 
+    # Regrouper les répétitions par jour
+    @rehearsals_by_day = @tour.candidate_rehearsals.order(:start_time).group_by do |rehearsal|
+      rehearsal.start_time.to_date
+    end
+
+    respond_to do |format|
+      format.pdf do
+        render pdf: "planning_chauffe_#{@tour.title.parameterize}",
+               template: "tours/warmup_schedule",
+               layout: "pdf",
+               orientation: "Portrait",
+               page_size: "A4",
+               encoding: "UTF-8",
+               footer: {
+                 center: "Planning de chauffe - #{@tour.title}",
+                 left: Date.today.strftime("%d/%m/%Y")
+               }
+      end
+    end
+  end
 
   private
 

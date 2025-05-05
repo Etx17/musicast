@@ -70,6 +70,7 @@ Rails.application.routes.draw do
                 get 'download_pianist_scores/:pianist_id', to: 'tours#download_pianist_scores', as: :download_pianist_scores
                 get 'download_schedule_pdf'
                 patch :update_solo_warmup
+                get :download_warmup_schedule
               end
               patch :reorder_tours, on: :collection
               post 'update_order', on: :member

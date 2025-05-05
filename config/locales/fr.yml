@@ -1903,6 +1903,7 @@ fr:
       description_english: "Description (Anglais)"
       rehearsal_start: "Début de répétition"
       rehearsal_end: "Fin de répétition"
+      download_warmup_schedule: "Télécharger le planning de chauffe (PDF)"
     planning_jury_form:
       detailed_program: "Programme détaillé"
       simple_air: "Air simple"

@@ -8,6 +8,11 @@
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#configModal">
           <i class="fas fa-cog me-2"></i><%= t('tours.solo_warmup.configure_rehearsal_schedule') %>
         </button>
+        <% if @tour.candidate_rehearsals.any? %>
+          <%= link_to download_warmup_schedule_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour, format: :pdf), class: "btn btn-outline-primary ms-2", target: "_blank" do %>
+            <i class="fas fa-download me-2"></i><%= t('tours.solo_warmup.download_warmup_schedule') %>
+          <% end %>
+        <% end %>
       </div>
 
       <!-- Espace réservé pour afficher le planning (à implémenter par l'utilisateur) -->

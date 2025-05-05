@@ -23,6 +23,10 @@ class TourPolicy < ApplicationPolicy
     allowed_to_edit?
   end
 
+  def download_warmup_schedule?
+    edit?
+  end
+
   private
 
   def allowed_to_edit?
