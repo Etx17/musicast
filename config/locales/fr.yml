@@ -2053,3 +2053,27 @@ fr:
       download: "Télécharger"
       download_all: "Tout télécharger"
       download_file: "Télécharger %{filename}"
+  rooms:
+    create:
+      success: "Salle créée avec succès."
+    update:
+      success: "Salle mise à jour avec succès."
+    destroy:
+      success: "Salle supprimée avec succès."
+    index:
+      title: "Salles"
+      new: "Nouvelle salle"
+    new:
+      title: "Nouvelle salle"
+      back: "Retour"
+    edit:
+      title: "Modifier la salle"
+      back: "Retour"
+    form:
+      name: "Nom de la salle"
+      notes: "Notes"
+      opening_time: "Heure d'ouverture"
+      closing_time: "Heure de fermeture"
+      description: "Description"
+      description_english: "Description (Anglais)"
+      save: "Enregistrer"

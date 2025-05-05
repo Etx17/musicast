@@ -2073,3 +2073,27 @@ en:
   date:
     formats:
       short_month_day: "%d %B"
+  rooms:
+    create:
+      success: "Room successfully created."
+    update:
+      success: "Room successfully updated."
+    destroy:
+      success: "Room successfully deleted."
+    index:
+      title: "Rooms"
+      new: "New room"
+    new:
+      title: "New room"
+      back: "Back"
+    edit:
+      title: "Edit room"
+      back: "Back"
+    form:
+      name: "Room name"
+      notes: "Notes"
+      opening_time: "Opening time"
+      closing_time: "Closing time"
+      description: "Description"
+      description_english: "Description (English)"
+      save: "Save"

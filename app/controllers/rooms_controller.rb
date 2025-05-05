@@ -34,7 +34,7 @@ class RoomsController < ApplicationController
     @room = @organism.rooms.build(room_params)
 
     if @room.save
-      redirect_to params[:redirect_path] || organism_rooms_path(@organism), notice: "Salle créée avec succès."
+      redirect_to params[:redirect_path] || organism_rooms_path(@organism), notice: t('rooms.create.success')
     else
       # Rendre le formulaire avec erreurs
       render :new, status: :unprocessable_entity
@@ -44,7 +44,7 @@ class RoomsController < ApplicationController
   # PATCH/PUT /rooms/1 or /rooms/1.json
   def update
     if @room.update(room_params)
-      redirect_to organisateur_dashboard_path, notice: "Salle mise à jour avec succès."
+      redirect_to organisateur_dashboard_path, notice: t('rooms.update.success')
     else
       render :edit, status: :unprocessable_entity
     end
@@ -53,7 +53,7 @@ class RoomsController < ApplicationController
   # DELETE /rooms/1 or /rooms/1.json
   def destroy
     @room.destroy
-    redirect_to organisateur_dashboard_path, notice: "Salle supprimée avec succès."
+    redirect_to organisateur_dashboard_path, notice: t('rooms.destroy.success')
   end
 
   private
