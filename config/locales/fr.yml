@@ -662,6 +662,10 @@ fr:
       files_to_evaluate: "Vos dossiers à évaluer (groupées par catégories)"
       view_applications: "Voir %{count} inscriptions"
     organiser:
+      rehearsal_rooms: "Salles de répétition"
+      add_room: "Ajouter une salle"
+      edit_room: "Modifier la salle"
+      confirm_delete_room: "Êtes-vous sûr de vouloir supprimer cette salle ?"
       jury_members: Membres du jury
       add_jury: Ajouter un membre du jury
       confirm_delete_pianist: "Confirmez la suppression du pianiste"
@@ -920,6 +924,9 @@ fr:
       back: "Retour aux choix libres"
       destroy: "Supprimer ce choix libre"
   global:
+    candidate: "Candidat"
+    action: "Action"
+    not_available_abbr: "N/A"
     performance: performance
     prize: "prix"
     prizes: "prix"
@@ -941,6 +948,9 @@ fr:
     rounds: "tours"
     action: "Action"
     actions:
+      download: "Télécharger"
+      download_all: "Tout télécharger"
+      download_file: "Télécharger %{filename}"
       view_payment: "Voir le paiement"
       reject: "Rejeter"
       accept: "Accepter"
@@ -975,9 +985,6 @@ fr:
       save: "Enregistrer"
       cancel: "Annuler"
       copy: "Copier"
-      download: "Télécharger"
-      download_all: "Télécharger tout"
-      download_file: "Télécharger %{filename}"
     confirmations:
       are_you_sure: "Êtes-vous sûr ?"
     youtube_link: "Lien YouTube"
@@ -1710,6 +1717,8 @@ fr:
       search_composer: "Rechercher un compositeur..."
       loading: "Chargement..."
   tours:
+    shuffle:
+      success: "Ordre de passage mélangé avec succès."
     results:
       save_results_and_finish_tour: "Enregistrer les résultats et terminer le tour"
       finish_tour_confirm: "Êtes-vous sûr de vouloir terminer ce tour ? Cette action est irréversible et les candidats seront notifiés des résultats."
@@ -1731,15 +1740,19 @@ fr:
       see_more: "voir plus"
       candidates_have_been_notified: "Les candidats ont été notifiés des résultats."
     form:
+      rehearse_time_slot_per_candidate: "Durée du créneau de répétition par candidat en minutes"
+      rehearsal_type: "Type de répétition"
       info: "Vous pouvez déposer ici des partitions pour les transmettre aux candidats (par exemple pour une oeuvre imposée de composition). Les candidats ont également un espace pour déposer leurs partitions, dans leur dossier."
       tour_scores: "Partitions (facultatif)"
+      needs_rehearsal: "Souhaitez vous configurer un planning de répétition pour ce tour ?"
+      needs_rehearsal_hint: "Si oui, vous pourrez configurer un planning de répétition pour ce tour dans la section 'Planning' du tour."
       download: "Télécharger"
       accepted_formats: "Formats acceptés : PDF, JPG, PNG (max 10 fichiers)"
       max_files_reached: "Nombre maximum de fichiers atteint (10)"
       requires_orchestra: "Requiert un accompagnement orchestre ?"
       requires_orchestra_hint: "Cochez si votre tours requiert un accompagnement par un orchestre"
       title_placeholder: "ex: Éliminatoires, Demi-finale, Finale..."
-      accompaniment_settings: "Configuration des accompagnements"
+      accompaniment_settings: "Configuration des accompagnements & Répétitions"
       description_placeholder: "Décrivez les règles spécifiques à ce tour..."
       title_english_placeholder: "ex: Preliminaries, Semi-finals, Finals..."
       description_placeholder: "Entrez la description du tour"
@@ -1861,7 +1874,37 @@ fr:
       exports_and_documents: "Exports & Documents"
       planning_not_generated_yet: "Le planning n'a pas encore été généré."
       download_schedule: "Télécharger le Planning"
-
+      rehearsal_schedule: "Planning de répétition"
+      pianist: "Pianiste"
+      room: "Salle"
+      no_rehearsals_scheduled: "Aucune répétition programmée"
+      rehearsals: "répétitions"
+      rehearsal_start: "Début de répétition"
+      rehearsal_end: "Fin de répétition"
+    solo_warmup:
+      configure_rehearsal_schedule: "Configurer le planning de répétition"
+      rehearsal_schedule_configuration: "Configuration du planning de répétition"
+      time_slot_duration: "Durée d'un créneau (en minutes)"
+      time_slot_hint: "Définit la durée de chaque créneau de répétition"
+      buffer_time: "Temps tampon avant performance (minutes)"
+      buffer_time_hint: "Temps nécessaire entre la fin de la répétition et le début de la performance"
+      select_available_rooms: "Sélectionnez les salles disponibles"
+      select_rooms_hint: "Sélectionnez une ou plusieurs salles de répétitions pour dispatcher les candidats avant leur performance"
+      create_room: "Créer une salle"
+      no_rooms_registered: "Vous n'avez pas encore enregistré de salles."
+      add_rooms_in_organization: "Ajoutez des salles dans votre espace organisation"
+      to_start: "pour commencer"
+      save_config_and_generate: "Enregistrer la configuration et générer le planning de répétition"
+      add_room: "Ajouter une salle"
+      room_name: "Nom de la salle"
+      notes: "Notes"
+      opening_time: "Heure d'ouverture"
+      closing_time: "Heure de fermeture"
+      description: "Description"
+      description_english: "Description (Anglais)"
+      rehearsal_start: "Début de répétition"
+      rehearsal_end: "Fin de répétition"
+      download_warmup_schedule: "Télécharger le planning de chauffe (PDF)"
     planning_jury_form:
       detailed_program: "Programme détaillé"
       simple_air: "Air simple"
@@ -1875,7 +1918,20 @@ fr:
       medium_bio_en: "Biographie moyenne (EN)"
       long_bio_en: "Biographie longue (EN)"
       order_of_passage: "Ordre de passage"
-
+    rehearsal_type: "Type de répétition"
+    rehearsal_types:
+      nothing: "Aucune répétition ou chauffe"
+      solo_warmup: "Chauffe soliste (le jour du concours, avant sa performance)"
+      pianist_warmup: "Mise en place rapide avec pianiste (le jour du concours, avant sa performance)"
+      pianist_rehearsal: "Répétition musicale avec pianiste (pas le même jour que la performance)"
+      orchestra_rehearsal: "Répétition orchestre (pas le même jour que la performance)"
+      default: "Répétitions"
+      description:
+        solo_warmup: "Salle de chauffe sans accompagnement"
+        pianist_warmup: "Courte mise en place avec pianiste"
+        pianist_rehearsal: "Répétition complète avec pianiste"
+        orchestra_rehearsal: "Répétition avec orchestre"
+        default: "Planning de répétition"
     tour:
       order_of_passage_description: "Configurer l'ordre de passage et les accompagnements"
       schedule_of_performances: "Planning des performances"
@@ -1984,3 +2040,35 @@ fr:
   date:
     formats:
       short_month_day: "%d %B"
+  global:
+    candidate: "Candidat"
+    action: "Action"
+    not_available_abbr: "N/A"
+    actions:
+      download: "Télécharger"
+      download_all: "Tout télécharger"
+      download_file: "Télécharger %{filename}"
+  rooms:
+    create:
+      success: "Salle créée avec succès."
+    update:
+      success: "Salle mise à jour avec succès."
+    destroy:
+      success: "Salle supprimée avec succès."
+    index:
+      title: "Salles"
+      new: "Nouvelle salle"
+    new:
+      title: "Nouvelle salle"
+      back: "Retour"
+    edit:
+      title: "Modifier la salle"
+      back: "Retour"
+    form:
+      name: "Nom de la salle"
+      notes: "Notes"
+      opening_time: "Heure d'ouverture"
+      closing_time: "Heure de fermeture"
+      description: "Description"
+      description_english: "Description (Anglais)"
+      save: "Enregistrer"

@@ -1,0 +1,217 @@
+<div class="solo-warmup-planning mb-4">
+
+  <% if @tour.candidate_rehearsals.any? %>
+    <style>
+      /* Style pour assurer que chaque cellule reste dans sa colonne */
+      .table-base .table-cell {
+        word-break: break-word;
+        vertical-align: middle !important;
+        white-space: normal;
+      }
+      /* Largeurs minimales pour les colonnes importantes */
+      .candidate-column-cell {
+        min-width: 200px;
+      }
+      /* Limiter la largeur de la colonne salle pour éviter de pousser le pianiste */
+      .room-column-cell {
+        min-width: 200px;
+      }
+      /* Assurer que la colonne du pianiste a une largeur minimale */
+      .pianist-column-cell {
+        min-width: 200px;
+      }
+      /* Styles pour la coloration des salles */
+      .room-badge {
+        padding: 6px 10px;
+        margin-right: 8px;
+        border-radius: 4px;
+        color: white;
+        font-weight: 500;
+        display: inline-block;
+        min-width: 80px;
+        text-align: center;
+      }
+      .room-select {
+        border-left-width: 4px !important;
+        border-left-style: solid !important;
+        padding-left: 8px !important;
+      }
+      .room-select option {
+        padding: 8px;
+        margin: 3px;
+        border-radius: 4px;
+      }
+      /* Style pour les en-têtes de section par jour */
+
+      /* Séparation entre les jours de répétition */
+      .rehearsal-day-container {
+        margin-bottom: 30px;
+      }
+    </style>
+
+    <%
+      # Palette de couleurs prédéfinies pour les salles
+      color_palette = [
+        '#4285F4', # Bleu Google
+        '#34A853', # Vert Google
+        '#EA4335', # Rouge Google
+        '#FBBC05', # Jaune Google
+        '#8E24AA', # Violet
+        '#00ACC1', # Cyan
+        '#FB8C00', # Orange
+        '#607D8B', # Bleu gris
+        '#E91E63', # Rose
+        '#9C27B0', # Pourpre
+        '#3F51B5', # Indigo
+        '#009688', # Teal
+        '#FF5722', # Orange profond
+        '#795548', # Marron
+        '#673AB7'  # Violet profond
+      ]
+
+      # Créer un mapping des IDs de salles aux couleurs
+      room_colors = {}
+      Room.all.each_with_index do |room, index|
+        room_colors[room.id] = color_palette[index % color_palette.length]
+      end
+
+      # Regrouper les répétitions par jour
+      rehearsals_by_day = @tour.candidate_rehearsals.order(:start_time).group_by do |rehearsal|
+        rehearsal.start_time.to_date
+      end
+    %>
+
+    <% rehearsals_by_day.each do |day, day_rehearsals| %>
+      <div class="rehearsal-day-container">
+        <div class="d-flex gap-2 align-items-center">
+          <h5 class="rehearsal-day-header">
+            <%= l(day, format: "%A %d %B %Y") %>
+          </h5>
+          <small class="small text-secondary ms-2"><%= day_rehearsals.count %> <%= t('tours.planning.rehearsals') %></small>
+        </div>
+        <%= render Table::BaseComponent.new(
+          no_action: true,
+          rows: day_rehearsals,
+          columns: [
+            {
+              label: t('global.candidate'),
+              min_width: 200,
+              value: ->(rehearsal) do
+                content_tag(:div, class: "candidate-column-cell") do
+                  content_tag(:div, class: "d-flex align-items-center") do
+                    image_tag(
+                      rehearsal.candidat.portrait_or_default,
+                      class: "rounded-circle me-2",
+                      style: "width: 32px; height: 32px; object-fit: cover;"
+                    ) +
+                    content_tag(:span, rehearsal.candidat.full_name)
+                  end
+                end
+              end
+            },
+            {
+              min_width: 200,
+              label: t('tours.planning.rehearsal_start'),
+              value: ->(rehearsal) do
+                l(rehearsal.start_time, format: "%H:%M") if rehearsal.start_time
+              end
+            },
+            {
+              min_width: 200,
+              label: t('tours.planning.rehearsal_end'),
+              value: ->(rehearsal) do
+                l(rehearsal.end_time, format: "%H:%M") if rehearsal.end_time
+              end
+            },
+            {
+              min_width: 200,
+              label: t('tours.planning.room'),
+              value: ->(rehearsal) do
+                content_tag(:div, class: "room-column-cell") do
+                  room_color = room_colors[rehearsal.room_id] || '#6c757d'
+
+                  concat(
+                    form_with(url: update_room_candidate_rehearsal_path(rehearsal), method: :post, class: "d-inline-block") do
+                      select_tag(
+                        "room_id",
+                        options_from_collection_for_select(Room.all, :id, :name, rehearsal.room_id),
+                        class: "form-select form-select-sm rehearsal-room-selector room-select",
+                        style: "width: auto; min-width: 120px; border-left-color: #{room_color}; background-color: #{room_color}20;",
+                        data: {
+                          rehearsal_id: rehearsal.id,
+                          room_id: rehearsal.room_id
+                        },
+                        title: "Changer de salle",
+                        onchange: "this.form.submit();"
+                      )
+                    end
+                  )
+                end
+              end
+            },
+            {
+              label: t('tours.planning.pianist'),
+              value: ->(rehearsal) do
+                content_tag(:div, class: "pianist-column-cell") do
+                  rehearsal.performance&.pianist_accompagnateur ? rehearsal.performance&.pianist_accompagnateur.full_name : "-"
+                end
+              end
+            }
+          ],
+          links: [],
+          client: nil
+        ) %>
+      </div>
+    <% end %>
+
+    <% content_for :javascript do %>
+      <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          // Palette de couleurs prédéfinies pour les salles
+          const colorPalette = [
+            '#FBBC05', // Jaune Google
+            '#8E24AA', // Violet
+            '#4285F4', // Bleu Google
+            '#34A853', // Vert Google
+            '#EA4335', // Rouge Google
+            '#00ACC1', // Cyan
+            '#FB8C00', // Orange
+            '#607D8B', // Bleu gris
+            '#E91E63', // Rose
+            '#9C27B0', // Pourpre
+            '#3F51B5', // Indigo
+            '#009688', // Teal
+            '#FF5722', // Orange profond
+            '#795548', // Marron
+            '#673AB7'  // Violet profond
+          ];
+
+          // Récupérer tous les IDs de salles uniques
+          const roomIds = Array.from(document.querySelectorAll('.rehearsal-room-selector')).map(el =>
+            el.getAttribute('data-room-id')
+          ).filter((v, i, a) => a.indexOf(v) === i && v); // Unique non-null values
+
+          // Assigner des couleurs aux salles
+          const roomColors = {};
+          roomIds.forEach((id, index) => {
+            roomColors[id] = colorPalette[index % colorPalette.length];
+          });
+
+          // Colorier les options des sélecteurs
+          document.querySelectorAll('.rehearsal-room-selector').forEach(select => {
+            Array.from(select.options).forEach(option => {
+              if (option.value && roomColors[option.value]) {
+                option.style.backgroundColor = roomColors[option.value] + '20'; // Ajoute transparence
+                option.style.borderLeft = `4px solid ${roomColors[option.value]}`;
+              }
+            });
+          });
+        });
+      </script>
+    <% end %>
+  <% else %>
+    <div class="alert alert-info">
+      <%= t('tours.planning.no_rehearsals_scheduled') %>
+    </div>
+  <% end %>
+</div>

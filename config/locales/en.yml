@@ -648,7 +648,6 @@ en:
     common:
       close: "Close"
       confirm_delete: "Are you sure you want to delete this item?"
-
     jury_section:
       title: "Jury"
       associated_jury_members: "Associated jury members"
@@ -666,15 +665,16 @@ en:
       existing_account: "If the person you wanted to invite already has an account but doesn't have a Jury account, you can assign them this role. Enter their email and then associate them with your organization."
       email_label: "Email"
       assign_jury_role: "Assign Jury Role"
-
     admin:
       title: "Admin Dashboard"
-
     jury:
       files_to_evaluate: "Your files to evaluate (grouped by categories)"
       view_applications: "View %{count} applications"
-
     organiser:
+      rehearsal_rooms: "Salles de répétition"
+      add_room: "Ajouter une salle"
+      edit_room: "Modifier la salle"
+      confirm_delete_room: "Êtes-vous sûr de vouloir supprimer cette salle ?"
       jury_members: Jury members
       add_jury: Add jury
       confirm_delete_pianist: "Delete pianist ?"
@@ -957,6 +957,7 @@ en:
       back: "Back to free choices"
       destroy: "Destroy this free choice"
   global:
+    candidate: "Candidate"
     performance: "performance"
     prize: "prize"
     prizes: "prizes"
@@ -1730,6 +1731,8 @@ en:
       back_to_semi_imposed_works: "Back to semi-imposed works"
       destroy_semi_imposed_work: "Destroy this semi-imposed work"
   tours:
+    shuffle:
+      success: "Order of passage shuffled successfully."
     results:
       save_results_and_finish_tour: "Save results and finish tour"
       finish_tour_confirm: "Are you sure you want to finish this tour? This action is irreversible and candidates will be notified of the results."
@@ -1786,15 +1789,12 @@ en:
     edit:
       editing_tour: "Editing tour"
       edit_tour: "Edit tour"
-
     index:
       tours: "Tours"
       show_this_tour: "Show this tour"
       new_tour: "New tour"
-
     new:
       new_tour: "New tour"
-
     show:
       tour_details: "Tour details"
       description: "Description"
@@ -1807,23 +1807,37 @@ en:
       start_time: "Start time"
       time_between_performances: "Time between performances (minutes)"
       performances_per_day: "Performances per day"
-
     schedule:
       your_planning: "Your schedule (You can modify it as long as you haven't sent the invitations)"
       can_modify_later: "You can modify it later of course, but you will have to notify the candidates yourself."
-
     show_jury_pdf:
       required_item_photo: "Required item photo"
       years_old: "years old"
       notes: "NOTES"
-
     show_pdf:
       candidate: "Candidate"
       passage_time: "Passage time"
       order: "Order"
       break: "Break"
-
+    rehearsal_type: "Rehearsal type"
+    rehearsal_types:
+      nothing: "No rehearsal or warmup"
+      solo_warmup: "Solo warmup"
+      pianist_warmup: "Short rehearsal with pianist"
+      pianist_rehearsal: "Pianist rehearsal (not the same day than performance)"
+      orchestra_rehearsal: "Orchestra rehearsal (not the same day than performance)"
+      default: "Rehearsal schedule"
+      description:
+        solo_warmup: "Solo warm-up room"
+        pianist_warmup: "Short rehearsal with pianist"
+        pianist_rehearsal: "Full rehearsal with pianist"
+        orchestra_rehearsal: "Rehearsal with orchestra"
+        default: "Rehearsal schedule"
     form:
+      rehearse_time_slot_per_candidate: "Rehearsal duration per candidate (in minutes)"
+      rehearsal_type: "Rehearsal type"
+      needs_rehearsal: "Do you need to configure a rehearsal planning for this tour?"
+      needs_rehearsal_hint: "If yes, you can configure a rehearsal planning for this tour in the 'Planning' section of the tour."
       info: "You can upload scores here to send to candidates (for example for an imposed work of composition). Candidates also have a space to upload their scores, in their folder."
       tour_scores: "Tour Scores (optional)"
       download: "Download"
@@ -1843,7 +1857,7 @@ en:
       create_imposed_work_first: "You must first create an imposed work for this category before you can select imposed airs."
       requires_pianist_accompanist: "Requires a pianist accompanist"
       requires_pianist_accompanist_hint: "Check if <span class='text-primary'>either you or the candidate</span> brings a pianist accompanist for this round"
-      accompaniment_settings: "Accompaniment settings"
+      accompaniment_settings: "Accompaniment settings & Rehearsals"
       configurations: "Configurations"
       tour_requirement_description_placeholder: "Describe the specific requirements for this round..."
       min_number_of_works: "Minimum number of works"
@@ -1883,8 +1897,11 @@ en:
       change_order_confirm: "Are you sure you want to change the order?"
       select_pianist: "Select pianist"
       brings_own_pianist: "Brings own pianist"
-
     planning:
+      rehearsal_start: "Rehearsal start"
+      rehearsal_end: "Rehearsal end"
+      pianist: "Pianist accompanist"
+      no_rehearsals_scheduled: "No rehearsals scheduled"
       jury_form_description: "Select the fields you want to include in the jury document"
       candidate_information: "Candidate Information"
       candidate_number: "Candidate number"
@@ -1949,6 +1966,34 @@ en:
       exports_and_documents: "Exports and documents"
       planning_not_generated_yet: "Planning has not been generated yet."
       download_schedule: "Download schedule"
+      rehearsal_schedule: "Rehearsal schedule"
+      room: "Room"
+      rehearsals: "rehearsals"
+
+    solo_warmup:
+      configure_rehearsal_schedule: "Configure rehearsal schedule"
+      rehearsal_schedule_configuration: "Rehearsal schedule configuration"
+      time_slot_duration: "Time slot duration (in minutes)"
+      time_slot_hint: "Defines the duration of each rehearsal slot"
+      buffer_time: "Buffer time before performance (minutes)"
+      buffer_time_hint: "Time needed between the end of the rehearsal and the start of the performance"
+      select_available_rooms: "Select available rooms"
+      select_rooms_hint: "Select one or more rehearsal rooms to distribute candidates before their performance"
+      create_room: "Create a room"
+      no_rooms_registered: "You have not registered any rooms yet."
+      add_rooms_in_organization: "Add rooms in your organization space"
+      to_start: "to get started"
+      save_config_and_generate: "Save configuration and generate rehearsal schedule"
+      add_room: "Add a room"
+      room_name: "Room name"
+      notes: "Notes"
+      opening_time: "Opening time"
+      closing_time: "Closing time"
+      description: "Description"
+      description_english: "Description (English)"
+      rehearsal_start: "Rehearsal start"
+      rehearsal_end: "Rehearsal end"
+      download_warmup_schedule: "Download warmup schedule (PDF)"
     planning_jury_form:
       detailed_program: "Detailed program"
       simple_air: "Simple air"
@@ -2032,3 +2077,27 @@ en:
   date:
     formats:
       short_month_day: "%d %B"
+  rooms:
+    create:
+      success: "Room successfully created."
+    update:
+      success: "Room successfully updated."
+    destroy:
+      success: "Room successfully deleted."
+    index:
+      title: "Rooms"
+      new: "New room"
+    new:
+      title: "New room"
+      back: "Back"
+    edit:
+      title: "Edit room"
+      back: "Back"
+    form:
+      name: "Room name"
+      notes: "Notes"
+      opening_time: "Opening time"
+      closing_time: "Closing time"
+      description: "Description"
+      description_english: "Description (English)"
+      save: "Save"

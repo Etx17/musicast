@@ -67,13 +67,24 @@ Address.create(
 categ2 = Category.create(
   edition_competition: ec,
   name: "Excellence",
-  description: "Le Concours d'Honneur des Maîtres du Chant est un concours public. Concours ou le paiement se fait après approbation.",
+  description: "Le Concours d'Excellence des Maîtres du Chant est un concours public. Concours ou le paiement se fait après approbation.",
   min_age: 18,
   max_age: 40,
   discipline: "lyrical_singing",
   price: 60,
   allow_own_pianist_accompagnateur: true,
   payment_after_approval: true
+)
+categ = Category.create(
+  edition_competition: ec,
+  name: "Honneur",
+  description: "Le Concours d'Honneur des Maîtres du Chant est un concours public. Concours ou le paiement se fait après approbation.",
+  min_age: 18,
+  max_age: 40,
+  discipline: "lyrical_singing",
+  price: 60,
+  allow_own_pianist_accompagnateur: true,
+  payment_after_approval: false
 )
 
 Tour.create!(

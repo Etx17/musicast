@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   get '/language/switch', to: 'language#switch', as: 'switch_language'
   mount StripeEvent::Engine, at: '/stripe-webhooks'
 
@@ -8,6 +9,13 @@ Rails.application.routes.draw do
   scope "(:locale)", locale: /#{I18n.available_locales.join("|")}/ do
     if Rails.env.development?
       get 'make_me_admin/:user_id', to: 'application#make_me_admin', as: :make_me_admin
+    end
+
+    # Candidate rehearsals routes
+    resources :candidate_rehearsals, only: [] do
+      member do
+        post :update_room
+      end
     end
 
     get 'tour_requirements/new'
@@ -45,6 +53,7 @@ Rails.application.routes.draw do
     resources :airs
     resources :programme_requirements
     resources :organisms do
+      resources :rooms
       member do
         post 'build_and_assign_jury', to: 'juries#build_and_assign_jury'
       end
@@ -60,6 +69,8 @@ Rails.application.routes.draw do
                 delete 'scores/:score_id', to: 'tours#delete_score', as: 'delete_score'
                 get 'download_pianist_scores/:pianist_id', to: 'tours#download_pianist_scores', as: :download_pianist_scores
                 get 'download_schedule_pdf'
+                patch :update_solo_warmup
+                get :download_warmup_schedule
               end
               patch :reorder_tours, on: :collection
               post 'update_order', on: :member

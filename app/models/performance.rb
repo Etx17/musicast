@@ -3,7 +3,7 @@ class Performance < ApplicationRecord
   belongs_to :tour
   belongs_to :pianist_accompagnateur, optional: true
   has_one :tour_requirement, through: :tour
-
+  has_one :candidate_rehearsal, dependent: :destroy
   # validate :performance_has_correct_duration
   has_many_attached :scores, dependent: :destroy
   delegate :candidat, to: :inscription

@@ -45,6 +45,8 @@ class PausesController < ApplicationController
         pause.tour.performances.where(start_date: pause.date).where('"order" >= ?', performance_order).each do |performance|
           performance.update!(start_time: performance.start_time + pause.duration)
         end
+        # Since we modified the performance start time, we need to destroy the candidate_rehearsals for the tour.
+        pause.tour.candidate_rehearsals.destroy_all
       end
     end
   end
@@ -59,6 +61,8 @@ class PausesController < ApplicationController
       performances_after_pause.each do |performance|
         performance.update!(start_time: performance.start_time - pause.duration)
       end
+      # Since we modified the performance start time, we need to destroy the candidate_rehearsals for the tour.
+      pause.tour.candidate_rehearsals.destroy_all
     end
   end
 

@@ -1,29 +1,45 @@
-
 <%= simple_form_for [@organism, @competition, @edition_competition, @category, @tour], html: { novalidate: false } do |f| %>
   <%= f.hidden_field :creating_schedule, value: "true" %>
-  <div class="d-flex flex-column gap-3">
-  <div class="card bg-grey shadow-sm">
-    <div class="p-1 bg-light">
-      <%= f.input :start_time, label: t('tours.tour_configuration_form.start_time'), as: :time, hint: t('tours.tour_configuration_form.start_time_hint') %>
-    </div>
-  </div>
 
-  <div class="card bg-grey shadow-sm">
-    <div class="p-1 bg-light">
-      <%= f.input :max_end_of_day_time, as: :time, label: t('tours.tour_configuration_form.max_end_of_day_time'),  hint: t('tours.tour_configuration_form.max_end_of_day_time_hint') %>
-    </div>
-  </div>
+  <div class="bg-light p-4 rounded-8 mb-4 shadow-sm">
+    <h4 class="text-secondary mb-3"><%= t('tours.planning.modify_constraints') %></h4>
 
-  <div class="card bg-grey shadow-sm">
-    <div class="p-1 bg-light">
-      <%= f.input :new_day_start_time, as: :time, label: t('tours.tour_configuration_form.new_day_start_time'), hint: t('tours.tour_configuration_form.new_day_start_time_hint') %>
+    <div class="mb-4">
+      <%= f.input :start_time,
+                  label: t('tours.tour_configuration_form.start_time'),
+                  as: :time,
+                  hint: t('tours.tour_configuration_form.start_time_hint'),
+                  input_html: { class: "form-control rounded-6" } %>
     </div>
-  </div>
 
-  <div class="card bg-grey shadow-sm">
-    <div class="p-1 bg-light">
-      <%= f.button :submit, t('tours.tour_configuration_form.confirm_and_generate') %>
+    <div class="mb-4">
+      <%= f.input :max_end_of_day_time,
+                  as: :time,
+                  label: t('tours.tour_configuration_form.max_end_of_day_time'),
+                  hint: t('tours.tour_configuration_form.max_end_of_day_time_hint'),
+                  input_html: { class: "form-control rounded-6" } %>
     </div>
-  </div>
+
+    <div class="mb-4">
+      <%= f.input :new_day_start_time,
+                  as: :time,
+                  label: t('tours.tour_configuration_form.new_day_start_time'),
+                  hint: t('tours.tour_configuration_form.new_day_start_time_hint'),
+                  input_html: { class: "form-control rounded-6" } %>
+    </div>
+
+    <% # Ajouter une alerte si un planning de répétition existe déjà %>
+    <% if @tour.candidate_rehearsals.any? %>
+      <%= render InfoboxComponent.new(title: "Attention", icon: "fas fa-exclamation-triangle", text: "La reconfiguration du planning nécessitera de recréer le planning de répétition existant.") %>
+    <% end %>
+
+    <div class="text-center">
+      <%= f.button :submit,
+                   t('tours.tour_configuration_form.confirm_and_generate'),
+                   class: "btn btn-primary btn-lg px-4",
+                   data: {
+                     turbo_confirm: "⚠️ Attention ! La reconfiguration du planning effacera tous les horaires existants. Si un planning de répétition existe, il devra être recréé après cette opération. Voulez-vous continuer ?"
+                   } %>
+    </div>
   </div>
 <% end %>

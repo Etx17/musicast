@@ -10,6 +10,7 @@ class ToursController < ApplicationController
   def show;
     authorize @tour
     @performances = @tour.performances
+    @room = Room.build
     @tour.generate_initial_performance_order if @performances.any? { |p| p.order.nil? }
   end
 
@@ -49,11 +50,11 @@ class ToursController < ApplicationController
     end
 
     if @tour.update(update_params)
-
       if creating_schedule == "true"
         if @tour.pauses.any? || @tour.performances.any? { |p| p.start_time.present? }
           @tour.pauses.destroy_all
           @tour.performances.update_all(start_time: nil)
+          @tour.candidate_rehearsals.destroy_all
         end
 
         @tour.generate_performance_schedule
@@ -100,10 +101,11 @@ class ToursController < ApplicationController
       subsequent_pauses.each do |i|
         i.update!(date: i.date + days_difference)
       end
+      tour.candidate_rehearsals.destroy_all
     end
 
     # Redirect to the tour page
-    redirect_to organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour), notice: 'Le jour de la performance et des performances suivantes ont été mis à jour.'
+    redirect_to organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour), notice: 'Le jour de la performance et des performances suivantes ont été mis à jour. Veuillez régénerer le planning de répétition si vous en aviez configuré un.'
   end
 
   def destroy
@@ -133,10 +135,11 @@ class ToursController < ApplicationController
     if @tour.pauses.any? || @tour.performances.any? { |p| p.start_time.present? }
       @tour.pauses.destroy_all
       @tour.performances.update_all(start_time: nil)
+      @tour.candidate_rehearsals.destroy_all
     end
 
     @tour.generate_initial_performance_order
-    redirect_to [@organism, @competition, @edition_competition, @category, @tour], notice: "Ordre de passage mélangé avec succès."
+    redirect_to [@organism, @competition, @edition_competition, @category, @tour], notice: t('tours.shuffle.success')
   end
 
   def assign_pianist
@@ -163,7 +166,7 @@ class ToursController < ApplicationController
   def qualify_performance
     performance = Performance.find(params[:performance_id])
     if performance.update(is_qualified: !performance.is_qualified)
-      redirect_to [@organism, @competition, @edition_competition, @category, @tour], notice: "Performance qualifiée avec succès."
+      redirect_to [@organism, @competition, @edition_competition, @category, @tour], notice: "Performance qualified successfully."
     end
   end
 
@@ -331,6 +334,47 @@ class ToursController < ApplicationController
     end
   end
 
+  def update_solo_warmup
+    @organism = Organism.friendly.find(params[:organism_id])
+    @category = Category.friendly.find(params[:category_id])
+    @edition_competition = @category.edition_competition
+    @competition = @edition_competition.competition
+    @tour = @category.tours.find(params[:id])
+
+    if @tour.update(solo_warmup_params)
+      @tour.generate_solo_warmup_schedule
+      redirect_to organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour),
+                  notice: "Configuration des répétitions mise à jour avec succès."
+    else
+      render :show, status: :unprocessable_entity
+    end
+  end
+
+  def download_warmup_schedule
+    @tour = Tour.find(params[:id])
+    authorize @tour
+
+    # Regrouper les répétitions par jour
+    @rehearsals_by_day = @tour.candidate_rehearsals.order(:start_time).group_by do |rehearsal|
+      rehearsal.start_time.to_date
+    end
+
+    respond_to do |format|
+      format.pdf do
+        render pdf: "planning_chauffe_#{@tour.title.parameterize}",
+               template: "tours/warmup_schedule",
+               layout: "pdf",
+               orientation: "Portrait",
+               page_size: "A4",
+               encoding: "UTF-8",
+               footer: {
+                 center: "Planning de chauffe - #{@tour.title}",
+                 left: Date.today.strftime("%d/%m/%Y")
+               }
+      end
+    end
+  end
+
   private
 
   def set_tour
@@ -351,6 +395,9 @@ class ToursController < ApplicationController
       :start_date, :start_time,
       :end_date, :end_time,
       :is_online,
+      :needs_rehearsal,
+      :rehearse_time_slot_per_candidate,
+      :rehearsal_type,
       :tour_number, :requires_pianist_accompanist,
       :requires_orchestra,
       :title, :description,
@@ -366,6 +413,7 @@ class ToursController < ApplicationController
       :afternoon_pause_time,
       :morning_pause_duration_minutes,
       :afternoon_pause_duration_minutes,
+      :buffer_time_minutes,
       :creating_schedule,
       :final_performance_submission_deadline,
       tour_requirement_attributes: [
@@ -383,5 +431,9 @@ class ToursController < ApplicationController
     ).tap do |whitelisted|
       whitelisted[:imposed_air_selection] = whitelisted[:imposed_air_selection]&.reject(&:blank?)
     end
+  end
+
+  def solo_warmup_params
+    params.require(:tour).permit(:rehearse_time_slot_per_candidate, :buffer_time_minutes, room_ids: [])
   end
 end

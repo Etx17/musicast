@@ -1,11 +1,15 @@
 class Tour < ApplicationRecord
   has_many :performances, dependent: :destroy
+  has_many :candidate_rehearsals, dependent: :destroy
+  has_and_belongs_to_many :rooms
+
   belongs_to :category
   has_one :address, as: :addressable, dependent: :destroy
   has_one :tour_requirement, dependent: :destroy
 
   validate :new_day_start_time_before_max_end_of_day_time
   attr_accessor :creating_schedule
+
 
   validates :title, :description, :start_date, :final_performance_submission_deadline, presence: true
   validates :title, uniqueness: { scope: :category_id, message: "should be unique per category" }
@@ -17,7 +21,6 @@ class Tour < ApplicationRecord
   validates :description, length: { maximum: 500 }
   validates :final_performance_submission_deadline, comparison: { less_than: :start_date, message: "must be before the start date" }
   validates :tour_number, numericality: { only_integer: true }
-
   validates :start_date, :comparison => { greater_than_or_equal_to: Date.today, message: "Ne peux pas être dans le passé!" }
   validates :final_performance_submission_deadline, :comparison => { greater_than_or_equal_to: Date.today, message: "Ne peux pas être dans le passé!" }
 
@@ -27,9 +30,17 @@ class Tour < ApplicationRecord
   has_many_attached :scores, dependent: :destroy
   has_many :pauses, dependent: :destroy
 
+  enum :rehearsal_type, {
+    solo_warmup: 0,
+    pianist_warmup: 1,
+    pianist_rehearsal: 2,
+    orchestra_rehearsal: 3
+  }
+
   def candidates_performances_that_passed_selections
     performances.filter{|p| p.inscription.accepted?}
   end
+
 
   def move_qualified_candidates_to_next_tour
 
@@ -91,6 +102,86 @@ class Tour < ApplicationRecord
     end
   end
 
+  def generate_solo_warmup_schedule
+    # On supprime les répétitions existantes pour éviter les doublons
+    candidate_rehearsals.destroy_all
+
+    # Vérifier que des salles sont assignées
+    if rooms.empty?
+      return { success: false, message: "Aucune salle de répétition n'a été sélectionnée" }
+    end
+
+    # S'assurer que les paramètres nécessaires sont disponibles
+    unless rehearse_time_slot_per_candidate.present? && buffer_time_minutes.present?
+      return { success: false, message: "Durée de répétition ou temps tampon non configurés" }
+    end
+
+    # Récupérer toutes les performances ordonnées par horaire de passage
+    sorted_performances = performances.where.not(start_time: nil).order(start_date: :asc, start_time: :asc)
+    puts "sorted_performances: #{sorted_performances.count}"
+    if sorted_performances.empty?
+      return { success: false, message: "Aucune performance avec des horaires de passage programmés" }
+    end
+
+    # Créer un itérateur cyclique pour les salles
+    rooms_cycle = rooms.to_a.cycle
+
+    # Stocker les salles utilisées et leurs plages horaires occupées
+    room_schedules = rooms.map { |room| { room: room, busy_times: [] } }
+
+    # Pour chaque performance, créer une répétition
+    sorted_performances.each do |performance|
+      candidat = performance.inscription&.candidat
+      next unless candidat
+
+      # Calculer l'heure de début et de fin de la répétition
+      rehearsal_end_time = performance.start_time - buffer_time_minutes.minutes
+      rehearsal_start_time = rehearsal_end_time - rehearse_time_slot_per_candidate.minutes
+
+      # Combiner la date avec l'heure pour obtenir les DateTime complets
+      rehearsal_date = performance.start_date
+
+      # Créer des objets DateTime pour les heures de répétition
+      start_datetime = DateTime.new(
+        rehearsal_date.year,
+        rehearsal_date.month,
+        rehearsal_date.day,
+        rehearsal_start_time.hour,
+        rehearsal_start_time.min,
+        0
+      )
+
+      end_datetime = DateTime.new(
+        rehearsal_date.year,
+        rehearsal_date.month,
+        rehearsal_date.day,
+        rehearsal_end_time.hour,
+        rehearsal_end_time.min,
+        0
+      )
+
+      # Trouver une salle disponible pour cette plage horaire
+      available_room = find_available_room(room_schedules, start_datetime, end_datetime)
+      # Créer la répétition
+      rehearsal = candidate_rehearsals.create!(
+        performance: performance,
+        room: available_room,
+        candidat: candidat,
+        start_time: start_datetime,
+        end_time: end_datetime,
+        pianist_accompagnateur_id: performance.pianist_accompagnateur_id
+      )
+
+      # Mettre à jour les horaires occupés pour cette salle
+      room_schedule = room_schedules.find { |rs| rs[:room].id == available_room.id }
+      room_schedule[:busy_times] << { start: start_datetime, end: end_datetime }
+    end
+
+    { success: true, message: "Planning de répétition généré avec succès", count: candidate_rehearsals.count }
+  rescue => e
+    { success: false, message: "Erreur lors de la génération du planning: #{e.message}" }
+  end
+
   def assign_pianist_manually_to_performance(performance, pianist_accompagnateur_id)
     performance.update!(pianist_accompagnateur_id: pianist_accompagnateur_id)
   end
@@ -116,7 +207,7 @@ class Tour < ApplicationRecord
         current_start_time = next_performance_end_time
       else
         # Move to the next day
-        current_start_time = new_day_start_time
+        current_start_time = new_day_start_time + 1.day
         current_start_date += 1.day
         redo unless current_start_time.strftime("%H:%M").to_time >= max_end_of_day_time.strftime("%H:%M")
       end
@@ -220,6 +311,39 @@ class Tour < ApplicationRecord
     if new_day_start_time && new_day_start_time >= max_end_of_day_time
       errors.add(:new_day_start_time, "must be before max end of day time")
     end
+  end
+
+  # Trouve une salle disponible pour la plage horaire demandée
+  def find_available_room(room_schedules, start_time, end_time)
+    # Essayer de trouver une salle disponible
+    room_schedules.each do |room_schedule|
+      room = room_schedule[:room]
+      busy_times = room_schedule[:busy_times]
+
+      # Vérifier si les heures de la salle sont compatibles
+      room_start_time = room.start_time
+      room_end_time = room.end_time
+
+      # Convertir en minutes depuis minuit pour faciliter la comparaison
+      start_minutes = start_time.hour * 60 + start_time.min
+      end_minutes = end_time.hour * 60 + end_time.min
+      room_start_minutes = room_start_time.hour * 60 + room_start_time.min
+      room_end_minutes = room_end_time.hour * 60 + room_end_time.min
+
+      # Vérifier que la répétition est pendant les heures d'ouverture de la salle
+      next unless start_minutes >= room_start_minutes && end_minutes <= room_end_minutes
+
+      # Vérifier les conflits avec d'autres répétitions
+      conflict = busy_times.any? do |busy|
+        (start_time < busy[:end] && end_time > busy[:start])
+      end
+
+      # Si pas de conflit, retourner cette salle
+      return room unless conflict
+    end
+
+    # Si toutes les salles ont des conflits, prendre celle avec le moins de répétitions
+    room_schedules.min_by { |rs| rs[:busy_times].length }[:room]
   end
 
 end

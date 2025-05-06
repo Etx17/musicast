@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_30_085847) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_04_145456) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -90,6 +90,27 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_30_085847) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["inscription_id"], name: "index_candidate_programs_on_inscription_id"
+  end
+
+  create_table "candidate_rehearsals", force: :cascade do |t|
+    t.bigint "room_id", null: false
+    t.bigint "tour_id", null: false
+    t.bigint "candidat_id", null: false
+    t.bigint "pianist_accompagnateur_id"
+    t.datetime "start_time", null: false
+    t.datetime "end_time", null: false
+    t.boolean "confirmed", default: false
+    t.text "notes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "performance_id"
+    t.index ["candidat_id", "tour_id"], name: "index_candidate_rehearsals_on_candidate_and_tour", unique: true
+    t.index ["candidat_id"], name: "index_candidate_rehearsals_on_candidat_id"
+    t.index ["performance_id"], name: "index_candidate_rehearsals_on_performance_id"
+    t.index ["pianist_accompagnateur_id"], name: "index_candidate_rehearsals_on_pianist_accompagnateur_id"
+    t.index ["room_id", "start_time", "end_time"], name: "index_candidate_rehearsals_on_room_and_time", unique: true
+    t.index ["room_id"], name: "index_candidate_rehearsals_on_room_id"
+    t.index ["tour_id"], name: "index_candidate_rehearsals_on_tour_id"
   end
 
   create_table "candidats", force: :cascade do |t|
@@ -489,6 +510,26 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_30_085847) do
     t.index ["category_id"], name: "index_requirement_items_on_category_id"
   end
 
+  create_table "rooms", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "name"
+    t.string "notes"
+    t.bigint "organism_id", null: false
+    t.time "start_time"
+    t.time "end_time"
+    t.text "description"
+    t.text "description_english"
+    t.index ["organism_id"], name: "index_rooms_on_organism_id"
+  end
+
+  create_table "rooms_tours", id: false, force: :cascade do |t|
+    t.bigint "room_id", null: false
+    t.bigint "tour_id", null: false
+    t.index ["room_id", "tour_id"], name: "index_rooms_tours_on_room_id_and_tour_id"
+    t.index ["tour_id", "room_id"], name: "index_rooms_tours_on_tour_id_and_room_id"
+  end
+
   create_table "semi_imposed_work_airs", force: :cascade do |t|
     t.bigint "semi_imposed_work_id", null: false
     t.bigint "air_id", null: false
@@ -549,6 +590,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_30_085847) do
     t.string "title_english"
     t.text "description_english"
     t.boolean "requires_orchestra", default: false
+    t.boolean "needs_rehearsal", default: false
+    t.integer "rehearsal_type", default: 0
+    t.integer "rehearse_time_slot_per_candidate"
+    t.integer "buffer_time_minutes", default: 0
     t.index ["category_id"], name: "index_tours_on_category_id"
   end
 
@@ -588,6 +633,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_30_085847) do
   add_foreign_key "candidate_program_airs", "airs"
   add_foreign_key "candidate_program_airs", "candidate_programs"
   add_foreign_key "candidate_programs", "inscriptions"
+  add_foreign_key "candidate_rehearsals", "candidats"
+  add_foreign_key "candidate_rehearsals", "performances"
+  add_foreign_key "candidate_rehearsals", "pianist_accompagnateurs"
+  add_foreign_key "candidate_rehearsals", "rooms"
+  add_foreign_key "candidate_rehearsals", "tours"
   add_foreign_key "candidats", "users"
   add_foreign_key "categories", "edition_competitions"
   add_foreign_key "categories_juries", "categories"
@@ -626,6 +676,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_30_085847) do
   add_foreign_key "prizes", "categories"
   add_foreign_key "programme_requirements", "categories"
   add_foreign_key "requirement_items", "categories"
+  add_foreign_key "rooms", "organisms"
   add_foreign_key "semi_imposed_work_airs", "airs"
   add_foreign_key "semi_imposed_work_airs", "inscriptions"
   add_foreign_key "semi_imposed_work_airs", "semi_imposed_works"
