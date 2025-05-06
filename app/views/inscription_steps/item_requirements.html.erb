@@ -129,7 +129,14 @@
                                        data-item-id="<%= item_requirement.id %>">
                                   <i class="fas fa-image me-1"></i> <%= t('inscriptions.steps.item_requirements.use_artistic_photo') || "Utiliser ma photo artistique" %>
                                 </button>
+                                <%# Link to js reload page if portrait use button doesn't respond %>
                               </div>
+                                <%= link_to "#", class: "small text-decoration-none", style: "font-size: 10px; color: 'gray'",onclick: "window.location.reload();" do %>
+                                  <small>
+                                    <i class="fas fa-redo-alt"></i>
+                                    <%= t('inscriptions.steps.item_requirements.click_here_to_reload') %>
+                                  </small>
+                                <% end %>
                             <% end %>
                           <% end %>
                         </div>
