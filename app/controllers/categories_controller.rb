@@ -1,4 +1,5 @@
 require 'music_categories'
+require 'kaminari'
 
 class CategoriesController < ApplicationController
   before_action :set_category, only: %i[show edit update destroy]
@@ -66,9 +67,9 @@ class CategoriesController < ApplicationController
 
   def candidates
     @category = Category.friendly.find(params[:id])
-    return unless current_user.organises_category?(@category)
-    @inscriptions = Inscription.by_category(@category.id)
-    authorize @inscriptions
+    @inscriptions = Kaminari.paginate_array(
+      Inscription.by_category(@category.id).includes(:candidat).to_a
+    ).page(params[:page]).per(20)
   end
 
 

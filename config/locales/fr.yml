@@ -32,6 +32,8 @@ fr:
       mark: "*"
       html: "<span class='required'>*</span>"
   date:
+    formats:
+      short_month_day: "%d %B"
     month_names: [nil, "Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"]
     abbr_month_names: [nil, "Janv", "Févr", "Mars", "Avr", "Mai", "Juin", "Juil", "Août", "Sept", "Oct", "Nov", "Déc"]
     order:
@@ -932,7 +934,6 @@ fr:
   global:
     candidate: "Candidat"
     action: "Action"
-    not_available_abbr: "N/A"
     performance: performance
     prize: "prix"
     prizes: "prix"
@@ -952,7 +953,6 @@ fr:
     round: "tour"
     not_available_abbr: "Indisponible"
     rounds: "tours"
-    action: "Action"
     actions:
       download: "Télécharger"
       download_all: "Tout télécharger"
@@ -967,7 +967,6 @@ fr:
       click_to_view_pdf: "Cliquez pour voir le PDF"
       click_to_enlarge: "Cliquez pour agrandir"
       open_in_new_tab: "Ouvrir dans un nouvel onglet"
-      close: "Fermer"
       next: "Suivant"
       upload: "Télécharger"
       replace_file_hint: "Pour remplacer ce fichier, téléchargez un nouveau document ci-dessous"
@@ -998,7 +997,6 @@ fr:
     parental_authorization: "Autorisation parentale"
     photo: "Photo"
     motivation_essay: "Lettre de motivation"
-    profile: "Profil"
     program: "Programme"
     home: "Accueil"
     offer: "Offre"
@@ -1069,10 +1067,7 @@ fr:
         youtube_link: "Lien YouTube"
         youtube_link_hint: "Lien vers votre vidéo YouTube"
         motivation_letter: "Lettre de motivation"
-        youtube_link: "Lien YouTube"
         youtube_hint: "Lien vers votre vidéo YouTube"
-        replace_document: "Remplacer le document"
-        upload_pdf: "Télécharger un PDF"
         photo: "Photo"
         crop_image: "Recadrer l'image"
         apply_crop: "Appliquer le recadrage"
@@ -1163,8 +1158,6 @@ fr:
       payment_date: "Date du paiement"
       payment_amount: "Montant du paiement"
       payment_reference: "Référence du paiement"
-      payment_method: "Méthode de paiement"
-      payment_status: "Statut du paiement"
       preferences_and_terms: "Préférences et conditions"
       candidate_brings_pianist_accompagnateur_email: "Email du pianiste accompagnateur"
       candidate_brings_pianist_accompagnateur_full_name: "Nom du pianiste accompagnateur"
@@ -1500,12 +1493,6 @@ fr:
       change_airs: "Changer d'airs (rechoisir les airs de votre inscription)"
       save: "Enregistrer"
       description_english: "Description (English)"
-      selected_works: "Œuvres Actuellement Sélectionnées"
-      keep: "Conserver"
-      imposed: "Imposé"
-      no_works_selected: "Aucune œuvre sélectionnée"
-      works_used_in_other_rounds: "Œuvres Utilisées dans d'Autres Tours"
-      current_duration: "Durée Actuelle du Programme"
       duration_warning: "Attention : Cette durée ne respecte pas les exigences pour ce tour"
     performance:
       inscription: "Inscription"
@@ -1767,9 +1754,7 @@ fr:
       accompaniment_settings: "Configuration des accompagnements & Répétitions"
       description_placeholder: "Décrivez les règles spécifiques à ce tour..."
       title_english_placeholder: "ex: Preliminaries, Semi-finals, Finals..."
-      description_placeholder: "Entrez la description du tour"
       description_english_placeholder: "Entrez la description du tour en anglais"
-      tour_requirement_description_placeholder: "Entrez la description des exigences"
       tour_requirement_description_english_placeholder: "Entrez la description des exigences en anglais"
       start_date: "Date de début"
       start_time: "Heure de début"
@@ -1840,20 +1825,7 @@ fr:
       performance_information: "Informations sur la performance"
       performance_time: "Heure de passage"
       program: "Programme"
-      detailed_program: "Programme détaillé"
-      simple_air: "Air simple"
       accompanist: "Accompagnateur"
-      biography_options: "Options de biographie"
-      short_bio: "Biographie courte"
-      medium_bio: "Biographie moyenne"
-      long_bio: "Biographie longue"
-      short_bio_en: "Biographie courte (EN)"
-      medium_bio_en: "Biographie moyenne (EN)"
-      long_bio_en: "Biographie longue (EN)"
-      photo_options: "Options de photo"
-      profile_photo: "Photo de profil"
-      artistic_photo: "Photo artistique"
-      additional_options: "Options supplémentaires"
       include_scoring_grid: "Inclure une grille de notation"
       include_notes_section: "Inclure une section pour les notes"
       reconfigure_planning: "Reconfigurer le planning"
@@ -2049,17 +2021,6 @@ fr:
   time:
     formats:
       short_month_day: "%d %B"
-  date:
-    formats:
-      short_month_day: "%d %B"
-  global:
-    candidate: "Candidat"
-    action: "Action"
-    not_available_abbr: "N/A"
-    actions:
-      download: "Télécharger"
-      download_all: "Tout télécharger"
-      download_file: "Télécharger %{filename}"
   rooms:
     create:
       success: "Salle créée avec succès."
@@ -2084,3 +2045,10 @@ fr:
       description: "Description"
       description_english: "Description (Anglais)"
       save: "Enregistrer"
+  views:
+    pagination:
+      first: "&laquo; Premier"
+      last: "Dernier &raquo;"
+      previous: "&lsaquo; Précédent"
+      next: "Suivant &rsaquo;"
+      truncate: "&hellip;"

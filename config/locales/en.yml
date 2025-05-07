@@ -2115,3 +2115,10 @@ en:
       description: "Description"
       description_english: "Description (English)"
       save: "Save"
+  views:
+    pagination:
+      first: "&laquo; First"
+      last: "Last &raquo;"
+      previous: "&lsaquo; Previous"
+      next: "Next &rsaquo;"
+      truncate: "&hellip;"

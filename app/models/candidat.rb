@@ -12,7 +12,7 @@ class Candidat < ApplicationRecord
   has_many_attached :diplomas
   has_many :candidate_rehearsals, dependent: :destroy
   has_many :rehearsal_rooms, through: :candidate_rehearsals, source: :room
-  
+
   accepts_nested_attributes_for :experiences, allow_destroy: true, reject_if: :all_blank
   accepts_nested_attributes_for :educations, allow_destroy: true, reject_if: :all_blank
 
