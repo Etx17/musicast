@@ -93,6 +93,7 @@ Rails.application.routes.draw do
             resources :inscriptions do
               member do
                 patch :update_status
+                delete :cancel_performance
               end
             end
             resources :categories_juries

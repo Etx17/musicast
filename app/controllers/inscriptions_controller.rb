@@ -139,12 +139,39 @@ class InscriptionsController < ApplicationController
     end
   end
 
+  def cancel_performance
+
+    @inscription = Inscription.find(params[:id])
+    @inscription.cancelled!
+    order_of_destroyed_performance = @inscription.performances.find_by(tour: params["tour_id"]).order
+    # # update the order of the performances for the current tour.
+    Performance.where(tour: params["tour_id"])
+      .where.not(order: nil)
+      .where("\"order\" > ?", order_of_destroyed_performance)
+      .update_all("\"order\" = \"order\" - 1")
+
+    # Supprimer la performance dont l'inscription a été cancel et les suivante spotentielles
+
+    Inscription.find(params[:id]).performances.destroy_all
+    # Et du coup supprimer le planning et planning de répétition (voir tours controller, o delete les pause, set les performance start time à nil et delete les rehearsals)
+    @tour = Tour.find(params["tour_id"])
+    category = @tour.category
+    @tour.pauses&.destroy_all if @tour.pauses.any?
+    @tour.performances&.update_all(start_time: nil)
+    @tour.candidate_rehearsals&.destroy_all if @tour.candidate_rehearsals.any?
+
+    redirect_to organism_competition_edition_competition_category_tour_path(category.edition_competition.competition.organism, category.edition_competition.competition, category.edition_competition, @tour.category, params["tour_id"]),
+      notice: "La performance du candidat a été annulée avec succès. Veuillez regénerer le planning du tour et de ses répétitions "
+
+  end
+
   def destroy
     authorize @inscription
     category = @inscription.category
+
     @inscription.destroy
 
-   redirect_to organism_competition_edition_competition_category_tour_path(category.edition_competition.competition.organism, category.edition_competition.competition, category.edition_competition, category, params["tour_id"]), notice: "L'inscription a été supprimée avec succès."
+    redirect_to organism_competition_edition_competition_category_tour_path(category.edition_competition.competition.organism, category.edition_competition.competition, category.edition_competition, category, params["tour_id"]), notice: "L'inscription a été supprimée avec succès."
 
   end
 

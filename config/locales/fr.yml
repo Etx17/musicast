@@ -996,6 +996,7 @@ fr:
       copy: "Copier"
     confirmations:
       are_you_sure: "Êtes-vous sûr ?"
+      are_you_sure_delete_performance: "Êtes-vous sûr de vouloir supprimer cette performance ? Cette action est irréversible. Le planning du tour et des répétitions devra être regénéré et renvoyé aux candidats."
     youtube_link: "Lien YouTube"
     recommendation_letter: "Lettre de recommandation"
     parental_authorization: "Autorisation parentale"
@@ -1304,6 +1305,7 @@ fr:
       rejected: "Rejeté"
       waiting_for_payment: "En attente de paiement"
       waiting_for_jury: "En attente de jury"
+      cancelled: "Annulé"
     payment_statuses:
       no_proof_joined_yet: "Aucune preuve de paiement"
       waiting_for_approval: "En attente de validation"
@@ -1736,7 +1738,7 @@ fr:
       success: "Ordre de passage mélangé avec succès."
     results:
       save_results_and_finish_tour: "Enregistrer les résultats et terminer le tour"
-      finish_tour_confirm: "Êtes-vous sûr de vouloir terminer ce tour ? Cette action est irréversible et les candidats seront notifiés des résultats."
+      finish_tour_confirm: "Êtes-vous sûr de vouloir terminer ce tour ? Cette action est irréversible."
       candidates_will_be_notified: "Les candidats seront notifiés des résultats."
       tour_finished_title: "Tour terminé."
       tour_finished: "Tour terminé"

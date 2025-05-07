@@ -46,6 +46,7 @@ class Inscription < ApplicationRecord
     new_payment_submitted: 5,
     accepted: 6,
     rejected: 7,
+    cancelled: 8
   }
 
   # Only relevant for categories with payment_after_approval set to true
