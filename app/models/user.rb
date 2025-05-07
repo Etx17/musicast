@@ -30,7 +30,7 @@ class User < ApplicationRecord
       admin_dashboard_path
     elsif current_user.role == "organisateur"
       organisateur_dashboard_path
-    elsif current_user.role == "candidat"
+    elsif current_user.role == "candidate"
       candidat_dashboard_path
     elsif current_user.role == "jury"
       jury_dashboard_path
@@ -55,7 +55,7 @@ class User < ApplicationRecord
   end
 
   def is_candidat?
-    inscription_role == "candidat" || Candidat.exists?(user: self)
+    inscription_role == "candidate" || Candidat.exists?(user: self)
   end
 
   def is_jury?
@@ -103,7 +103,7 @@ class User < ApplicationRecord
     case inscription_role
     when "organisateur"
       organisateur&.last_name || "Utilisateur (nom à modifier)"
-    when "candidat"
+    when "candidate"
       candidat&.last_name || "Utilisateur (nom à modifier)"
     when "jury"
       jury&.last_name || "Utilisateur (nom à modifier)"

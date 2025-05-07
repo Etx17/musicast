@@ -11,8 +11,10 @@
         <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
           <% if current_user.inscription_role == "organiser" %>
             <%= image_tag current_user.organisateur.organism.logo_or_default, class: "rounded-circle border border-light", style: "width: 66px; height: 66px; object-fit: contain; background-color: white;" %>
+          <% elsif current_user.inscription_role == "candidate" %>
+            <%= image_tag current_user.candidat.portrait_or_default, class: "rounded-circle border border-light", style: "width: 66px; height: 66px; object-fit: cover;" %>
           <% else %>
-            <%= image_tag current_user.portrait_or_default, class: "rounded-circle border border-light", style: "width: 66px; height: 66px; object-fit: cover;" %>
+            <%= image_tag "https://placehold.co/66x66", class: "rounded-circle border border-light", style: "width: 66px; height: 66px; object-fit: cover;" %>
           <% end %>
         </a>
         <ul class="dropdown-menu dropdown-menu-end text-small shadow" aria-labelledby="userDropdown">

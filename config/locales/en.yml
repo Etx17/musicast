@@ -838,7 +838,9 @@ en:
       confirm_delete_document: "Delete the document?"
       no_document: "No rule document attached."
       share_link: "Share link"
+      share_link_english: "Share link in English"
       qr_code: "QR code"
+      qr_code_english: "QR code in English"
 
     form:
       create_edition: "Create an edition"
@@ -886,6 +888,7 @@ en:
       no_registrations: "No registrations yet"
       amount: "Amount"
       paid_registrations: "Paid registrations"
+      platform_fee: "Platform fee total"
       total: "Total"
       publish_confirmation: "Publication confirmation"
       publish_warning: "Warning, once published, the edition can no longer be modified. Check that all categories are correctly configured:"

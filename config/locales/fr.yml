@@ -820,7 +820,9 @@ fr:
       confirm_delete_document: "Supprimer le document?"
       no_document: "Aucun document de règlement attaché."
       share_link: "Lien de partage"
+      share_link_english: "Lien de partage en anglais"
       qr_code: "QR code"
+      qr_code_english: "QR code (anglais)"
     form:
       create_edition: "Créer une édition"
       edit_edition: "Modifier l'édition"
@@ -862,6 +864,7 @@ fr:
       no_registrations: "Aucune inscription pour le moment"
       amount: "Montant"
       paid_registrations: "Inscriptions payées"
+      platform_fee: "Frais de plateforme total"
       total: "Total"
       publish_confirmation: "Confirmation de publication"
       publish_warning: "Attention, une fois publiée, l'édition ne pourra plus être modifiée. Vérifiez que toutes les catégories sont correctement configurées :"
