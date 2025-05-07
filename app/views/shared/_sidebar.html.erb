@@ -10,9 +10,11 @@
       <div class="dropdown">
         <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
           <% if current_user.inscription_role == "organiser" %>
-            <%= image_tag "https://placehold.co/50x50", class: "rounded-circle" %>
+            <%= image_tag current_user.organisateur.organism.logo_or_default, class: "rounded-circle border border-light", style: "width: 66px; height: 66px; object-fit: contain; background-color: white;" %>
+          <% elsif current_user.inscription_role == "candidate" %>
+            <%= image_tag current_user.candidat.portrait_or_default, class: "rounded-circle border border-light", style: "width: 66px; height: 66px; object-fit: cover;" %>
           <% else %>
-            <%= image_tag "https://placehold.co/50x50", class: "rounded-circle" %>
+            <%= image_tag "https://placehold.co/66x66", class: "rounded-circle border border-light", style: "width: 66px; height: 66px; object-fit: cover;" %>
           <% end %>
         </a>
         <ul class="dropdown-menu dropdown-menu-end text-small shadow" aria-labelledby="userDropdown">
@@ -26,7 +28,9 @@
         </ul>
       </div>
       <% if current_user&.inscription_role == "organiser" %>
-        <span class="text-center mt-2 text-white"><%= current_user.organisateur&.organism&.nom %></span>
+        <%= link_to edit_organism_path(current_user.organisateur.organism), class: "text-decoration-none mt-2" do %>
+          <span class="text-center mt-3 text-white"><%= current_user.organisateur&.organism&.nom %></span>
+        <% end %>
       <% else %>
          <span class="text-center mt-2 text-white"><%= current_user.first_name %> <%= current_user.last_name %></span>
       <% end %>

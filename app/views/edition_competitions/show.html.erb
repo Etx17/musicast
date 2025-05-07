@@ -23,6 +23,7 @@
         </div>
       </div>
 
+
       <div class="card border-0 shadow-sm rounded bg-grey">
         <div class="card-body">
           <p class="text-success"><%= notice %></p>
@@ -52,6 +53,10 @@
                     <tr>
                       <td><%= t('edition_competitions.show.total') %></td>
                       <td><%= humanized_money_with_symbol(number_of_inscriptions * (category.price - Money.new(500, 'EUR'))).gsub('.', '') %></td>                  </tr>
+                    <tr>
+                      <td><%= t('edition_competitions.show.platform_fee') %></td>
+                      <td><%= humanized_money_with_symbol(number_of_inscriptions * Money.new(500, 'EUR')).gsub('.', '') %></td>
+                    </tr>
                   </tbody>
                 </table>
               <% end %>
@@ -59,6 +64,7 @@
 
         </div>
       </div>
+
 
       <div class="modal fade" id="publishModal" tabindex="-1" aria-labelledby="publishModalLabel" aria-hidden="true">
         <div class="modal-dialog">

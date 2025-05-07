@@ -15,6 +15,9 @@
       <p class="mb-0"><%= t('candidats.form.nationality') %>: </p>
       <%= f.country_select :nationality, {only: ["AM", "AT", "BY", "BE", "BA", "BG", "CH", "CZ", "DE", "DK", "EE", "ES", "FI", "FR", "GB", "GE", "GI", "GR", "HU", "IE", "IS", "IT", "LT", "LU", "LV", "NO", "NL", "PO", "PL", "PT", "RO", "SE", "SI", "SK", "TR", "UA"], selected: "FR"}, { class: "mb-3 p-2 bg-light border rounded" }  %>
     </div>
+    <div class="d-flex flex-column flex-sm-row gap-3 mt-3">
+      <%= f.input :iban, label: t('candidats.form.iban'), input_html: {class:"border border-0 mb-0"}, hint: t('candidats.form.iban_hint') %>
+    </div>
 
     <%# --- File Inputs Row --- %>
     <div class="row g-3 mb-3">

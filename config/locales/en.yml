@@ -32,6 +32,8 @@ en:
       mark: "*"
       html: "<span class='required'>*</span>"
   date:
+    formats:
+      short_month_day: "%d %B"
     month_names: [nil, "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
     abbr_month_names: [nil, "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
     order:
@@ -355,6 +357,8 @@ en:
       save: "Save"
       new_record: "NEW"
       delete: "Delete"
+      iban: "IBAN"
+      iban_hint: "Your IBAN number for prize payments"
     edit:
       title: "Edit your information"
       subtitle: "This information is necessary to register for a competition."
@@ -520,6 +524,7 @@ en:
       create_instruction: "Create criteria for the works that candidates must present."
       add_new_list: "Add a new list of semi-imposed works"
     show:
+      view_candidates: "View all candidates"
       view_first_tour: "View the first tour"
       confirm_delete: "Delete category ?"
       years: "years"
@@ -799,7 +804,6 @@ en:
       delete: "Delete"
 
     category_modal_infos:
-      create_application: "Create my application"
       view_rules: "View competition rules"
       view_rules_english: "View competition rules in English"
       selection_instructions: "Selection instructions"
@@ -838,14 +842,16 @@ en:
       confirm_delete_document: "Delete the document?"
       no_document: "No rule document attached."
       share_link: "Share link"
+      share_link_english: "Share link in English"
       qr_code: "QR code"
+      qr_code_english: "QR code in English"
 
     form:
       create_edition: "Create an edition"
       edit_edition: "Edit edition"
       year: "Year"
       registration_closing: "Registration closing"
-      registration_closing_hint: "Date until which you accept applications"
+      registration_closing_hint: "Date until which you accept applications. You will later be able to configure the date until which candidates can modify their program for each round."
       event_start_date: "Event start date"
       event_end_date: "Event end date"
       street: "Street number and name"
@@ -886,6 +892,7 @@ en:
       no_registrations: "No registrations yet"
       amount: "Amount"
       paid_registrations: "Paid registrations"
+      platform_fee: "Platform fee total"
       total: "Total"
       publish_confirmation: "Publication confirmation"
       publish_warning: "Warning, once published, the edition can no longer be modified. Check that all categories are correctly configured:"
@@ -981,7 +988,6 @@ en:
     confirmations:
       are_you_sure: "Are you sure ?"
     youtube_link: "YouTube link"
-    profile: "Profile"
     home: "Home"
     offer: "Offer"
     not_available_abbr: "N/A"
@@ -1013,6 +1019,10 @@ en:
       tuba: "Tuba"
       violin: "Violin"
     actions:
+      clear: "Clear"
+      search: "Search"
+      search_by_keywords: "Search by keywords"
+      filter_by: "Filter by"
       view_payment: "View payment"
       accept: "Accept"
       reject: "Reject"
@@ -1039,7 +1049,6 @@ en:
       back: "Back"
       edit: "Edit"
       show: "View"
-      close: "Close"
       delete: "Delete"
       destroy: "Delete"
       continue: "Continue"
@@ -1072,7 +1081,7 @@ en:
   inscriptions:
     payment_proof: "Payment proof"
     scores:
-      scores_info: "Your space to upload your scores. The competition organization can also send you scores through this area."
+      scores_info: "Upload imperatively the scores of the pieces you will perform for this round. They will be accessible to the jury and your assigned accompanist, if there is one. The competition organization can also send you scores through this area."
       scores_section: "Scores"
       upload_scores: "Upload scores"
       upload_hint:
@@ -1096,10 +1105,7 @@ en:
         youtube_link: "YouTube link"
         youtube_link_hint: "Link to your YouTube video"
         motivation_letter: "Motivation letter"
-        youtube_link: "YouTube link"
         youtube_hint: "Link to your YouTube video"
-        replace_document: "Replace document"
-        upload_pdf: "Upload PDF"
         photo: "Photo"
         crop_image: "Crop image"
         apply_crop: "Apply cropping"
@@ -1280,11 +1286,22 @@ en:
     note_card:
       view_video_and_vote: "View video & vote"
     candidate_index:
+      email: "Email"
+      send_email: "Send email"
+      no_candidates_found: "No candidates found"
+      search_placeholder: "Search by candidate name"
       your_applications: "YOUR APPLICATIONS"
       start_date: "Start Date"
+      title: "Candidates for category %{category}"
+      back: "Back to category"
+      portrait: "Photo"
+      name: "Name"
+      status: "Status"
+      payment_status: "Payment status"
+      created_at: "Registration date"
+      view: "View"
     jury_index:
       applications_to_rate: "Applications to rate"
-    payment_proof: "Payment Proof"
     upload_payment_proof_instruction: "Please upload a proof of your payment (bank transfer receipt, screenshot, etc.)"
     payment_proof_file: "Payment proof file"
     payment_proof_formats: "Accepted formats: PDF, PNG, JPEG"
@@ -1306,7 +1323,6 @@ en:
       payment_error_waiting_payment: "Payment error, waiting for payment"
       rejected: "Rejected"
       request_changes: "Request changes"
-      waiting_for_payment: "Waiting for payment"
       waiting_for_jury: "Waiting for jury"
       waiting_for_payment: "Waiting for payment"
     payment_statuses:
@@ -1865,11 +1881,8 @@ en:
       max_number_of_works: "Maximum number of works"
       min_duration_minute: "Minimum duration (minutes)"
       max_duration_minute: "Maximum duration (minutes)"
-      title_placeholder: "Enter tour title"
       title_english_placeholder: "Enter tour title in English"
-      description_placeholder: "Enter tour description"
       description_english_placeholder: "Enter tour description in English"
-      tour_requirement_description_placeholder: "Enter requirements description"
       tour_requirement_description_english_placeholder: "Enter requirements description in English"
     order_of_performances:
       min_consecutive_performances: "Minimum number of consecutive performances per pianist"
@@ -1927,13 +1940,7 @@ en:
       profile_photo: "Profile photo"
       artistic_photo: "Artistic photo"
       additional_options: "Additional Options"
-      include_scoring_grid: "Include scoring grid"
       notes_space: "Space for notes"
-      performance_information: "Performance Information"
-      performance_time: "Performance time"
-      program: "Program"
-      accompanist: "Accompanist"
-      additional_options: "Additional Options"
       include_scoring_grid: "Include scoring grid"
       include_notes_section: "Include notes section"
       reconfigure_planning: "Reconfigure planning"
@@ -1970,7 +1977,6 @@ en:
       rehearsal_schedule: "Rehearsal schedule"
       room: "Room"
       rehearsals: "rehearsals"
-
     solo_warmup:
       configure_rehearsal_schedule: "Configure rehearsal schedule"
       rehearsal_schedule_configuration: "Rehearsal schedule configuration"
@@ -2047,10 +2053,6 @@ en:
       work_placeholder: "e.g.: Rigoletto"
     navbar:
       dropdown_menu: "dropdown menu"
-    components:
-      music_search_component:
-        search_composer: "Search for Composer..."
-        loading: "Loading..."
   scores:
     show:
       title: "Competition Category: %{category_name}"
@@ -2073,9 +2075,6 @@ en:
         scores: "Scores"
         last_score_uploaded: "Last Score Uploaded"
   time:
-    formats:
-      short_month_day: "%d %B"
-  date:
     formats:
       short_month_day: "%d %B"
   rooms:
@@ -2102,3 +2101,10 @@ en:
       description: "Description"
       description_english: "Description (English)"
       save: "Save"
+  views:
+    pagination:
+      first: "&laquo; First"
+      last: "Last &raquo;"
+      previous: "&lsaquo; Previous"
+      next: "Next &rsaquo;"
+      truncate: "&hellip;"

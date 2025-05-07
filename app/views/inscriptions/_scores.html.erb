@@ -4,10 +4,7 @@
       <h5 class="card-title mb-3"> <i class="fas fa-music me-2"></i> <%= t('.scores_section') %> </h5>
       <%# Info of the scores %>
       <div class="mb-3">
-        <small class="p-3 rounded text-secondary">
-          <i class="fas fa-info-circle text-secondary px-1"></i>
-          <%= t('.scores_info')%>
-        </small>
+        <%= render InfoboxComponent.new(title: "Important", text: t('.scores_info'), icon: "fas fa-info-circle") %>
       </div>
 
       <% if performance.present? && performance&.tour.scores.attached? %>

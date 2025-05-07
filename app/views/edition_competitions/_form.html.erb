@@ -2,6 +2,9 @@
 <div class="p-3 bg-light">
 <% edition_competition ||= @edition_competition  %>
 <h1 class="text-center mt-3"><%= action_name == "new" ? t('edition_competitions.form.create_edition') : t('edition_competitions.form.edit_edition') %></h1>
+<%# edition_competition.published? ? "disabled" : "enabled" %>
+
+
 <%= simple_form_for([@organism, @competition, edition_competition]) do |f| %>
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
@@ -11,6 +14,7 @@
       <%= f.input :annee, input_html: { style:"border: none;", value: Date.today.year }, label: t('edition_competitions.form.year') %>
       <%= f.input :end_of_registration, as: :date, label: t('edition_competitions.form.registration_closing'), input_html: { value: Date.today }, hint: t('edition_competitions.form.registration_closing_hint') %>
       <%= f.input :start_date, as: :date, input_html: { value: Date.today }, label: t('edition_competitions.form.event_start_date') %>
+      <%# Si les candidats sont convoqués un jour avant le début pour une réunion, indiquer cette date. Sinon indiquer la date de début du premier tour le plus proche parmis les tours des catégories. En fait on s'en fout de ca %>
       <%= f.input :end_date, as: :date, input_html: { value: Date.today }, label: t('edition_competitions.form.event_end_date') %>
        <%= f.simple_fields_for :address do |address_fields| %>
         <%= address_fields.input :line1, label: t('edition_competitions.form.street'), placeholder: t('edition_competitions.form.street_placeholder') %>

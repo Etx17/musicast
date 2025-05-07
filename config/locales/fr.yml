@@ -32,6 +32,8 @@ fr:
       mark: "*"
       html: "<span class='required'>*</span>"
   date:
+    formats:
+      short_month_day: "%d %B"
     month_names: [nil, "Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"]
     abbr_month_names: [nil, "Janv", "Févr", "Mars", "Avr", "Mai", "Juin", "Juil", "Août", "Sept", "Oct", "Nov", "Déc"]
     order:
@@ -312,6 +314,8 @@ fr:
       delete_confirm: "Êtes-vous sûr ?"
       add: "Ajouter"
     form:
+      iban: "IBAN"
+      iban_hint: "Votre numéro IBAN pour le versement des prix"
       voice_type: "Tessiture"
       voice_types:
         non_singer: "Non-chanteur"
@@ -377,6 +381,7 @@ fr:
       years: "ans"
       application_fee: "Frais de dossier"
     show:
+      view_candidates: "Voir tous les candidats"
       view_first_tour: "Voir le premier tour"
       years: "ans"
       edit: "Modifier"
@@ -820,13 +825,15 @@ fr:
       confirm_delete_document: "Supprimer le document?"
       no_document: "Aucun document de règlement attaché."
       share_link: "Lien de partage"
+      share_link_english: "Lien de partage en anglais"
       qr_code: "QR code"
+      qr_code_english: "QR code (anglais)"
     form:
       create_edition: "Créer une édition"
       edit_edition: "Modifier l'édition"
       year: "Année"
       registration_closing: "Clôture des inscriptions"
-      registration_closing_hint: "Date jusqu'à laquelle vous acceptez de recevoir des candidatures"
+      registration_closing_hint: "Date jusqu'à laquelle vous acceptez de recevoir des candidatures. Vous pourrez configurer la date jusqu'a laquelle les candidats pourront modifier les pieces de leur programme pour chaque tour ultérieurement"
       event_start_date: "Date de début de l'évènement"
       event_end_date: "Date de fin de l'évènement"
       street: "Numéro et rue"
@@ -862,6 +869,7 @@ fr:
       no_registrations: "Aucune inscription pour le moment"
       amount: "Montant"
       paid_registrations: "Inscriptions payées"
+      platform_fee: "Frais de plateforme total"
       total: "Total"
       publish_confirmation: "Confirmation de publication"
       publish_warning: "Attention, une fois publiée, l'édition ne pourra plus être modifiée. Vérifiez que toutes les catégories sont correctement configurées :"
@@ -926,7 +934,6 @@ fr:
   global:
     candidate: "Candidat"
     action: "Action"
-    not_available_abbr: "N/A"
     performance: performance
     prize: "prix"
     prizes: "prix"
@@ -946,8 +953,11 @@ fr:
     round: "tour"
     not_available_abbr: "Indisponible"
     rounds: "tours"
-    action: "Action"
     actions:
+      clear: "Effacer"
+      search: "Rechercher"
+      search_by_keywords: "Rechercher par mots clés"
+      filter_by: "Filtrer par"
       download: "Télécharger"
       download_all: "Tout télécharger"
       download_file: "Télécharger %{filename}"
@@ -961,7 +971,6 @@ fr:
       click_to_view_pdf: "Cliquez pour voir le PDF"
       click_to_enlarge: "Cliquez pour agrandir"
       open_in_new_tab: "Ouvrir dans un nouvel onglet"
-      close: "Fermer"
       next: "Suivant"
       upload: "Télécharger"
       replace_file_hint: "Pour remplacer ce fichier, téléchargez un nouveau document ci-dessous"
@@ -992,7 +1001,6 @@ fr:
     parental_authorization: "Autorisation parentale"
     photo: "Photo"
     motivation_essay: "Lettre de motivation"
-    profile: "Profil"
     program: "Programme"
     home: "Accueil"
     offer: "Offre"
@@ -1039,7 +1047,7 @@ fr:
   inscriptions:
     payment_proof: "Preuve de paiement"
     scores:
-      scores_info: "Votre espace pour déposer vos partitions. L'organisme du concours peut également vous envoyer des partitions sur cet espace."
+      scores_info: "Déposez impérativement les partitions des pièces que vous interprêtez pour ce tour. Elles seront accessibles aux jurys et à votre pianiste accompagnateur assigné, s'il y en a un. L'organisme du concours peut également vous envoyer des partitions sur cet espace."
       scores_section: "Partitions"
       upload_scores: "Télécharger les partitions"
       upload_hint:
@@ -1064,10 +1072,7 @@ fr:
         youtube_link: "Lien YouTube"
         youtube_link_hint: "Lien vers votre vidéo YouTube"
         motivation_letter: "Lettre de motivation"
-        youtube_link: "Lien YouTube"
         youtube_hint: "Lien vers votre vidéo YouTube"
-        replace_document: "Remplacer le document"
-        upload_pdf: "Télécharger un PDF"
         photo: "Photo"
         crop_image: "Recadrer l'image"
         apply_crop: "Appliquer le recadrage"
@@ -1158,8 +1163,6 @@ fr:
       payment_date: "Date du paiement"
       payment_amount: "Montant du paiement"
       payment_reference: "Référence du paiement"
-      payment_method: "Méthode de paiement"
-      payment_status: "Statut du paiement"
       preferences_and_terms: "Préférences et conditions"
       candidate_brings_pianist_accompagnateur_email: "Email du pianiste accompagnateur"
       candidate_brings_pianist_accompagnateur_full_name: "Nom du pianiste accompagnateur"
@@ -1265,11 +1268,21 @@ fr:
     note_card:
       view_video_and_vote: "Consulter vidéo & vote"
       to_evaluate: "À évaluer"
-
     candidate_index:
+      email: "Email"
+      send_email: "Envoyer un email"
+      no_candidates_found: "Aucun candidat trouvé"
+      search_placeholder: "Rechercher un candidat"
       your_applications: "VOS CANDIDATURES"
       start_date: "Date de début"
-
+      title: "Candidats de la catégorie %{category}"
+      back: "Retour à la catégorie"
+      portrait: "Photo"
+      name: "Nom"
+      status: "Statut"
+      payment_status: "Statut du paiement"
+      created_at: "Date d'inscription"
+      view: "Voir"
     jury_index:
       applications_to_rate: "Candidatures à noter"
     statuses:
@@ -1351,10 +1364,10 @@ fr:
       iban_hint: "Entrez votre IBAN pour recevoir les paiements des candidats"
       description: "Description"
 
-    edit:
-      back: "Retour"
+      edit:
+        back: "Retour"
 
-    index:
+      index:
       organisms: "Organismes"
       show_organism: "Voir cet organisme"
       new_organism: "Nouvel organisme"
@@ -1363,7 +1376,7 @@ fr:
       welcome: "Bienvenue sur Musicast."
       create_organism_prompt: "Pour commencer, créez votre organisme"
 
-    show:
+      show:
       modify: "Modifier"
   pages:
     dropdown_inputs:
@@ -1489,12 +1502,6 @@ fr:
       change_airs: "Changer d'airs (rechoisir les airs de votre inscription)"
       save: "Enregistrer"
       description_english: "Description (English)"
-      selected_works: "Œuvres Actuellement Sélectionnées"
-      keep: "Conserver"
-      imposed: "Imposé"
-      no_works_selected: "Aucune œuvre sélectionnée"
-      works_used_in_other_rounds: "Œuvres Utilisées dans d'Autres Tours"
-      current_duration: "Durée Actuelle du Programme"
       duration_warning: "Attention : Cette durée ne respecte pas les exigences pour ce tour"
     performance:
       inscription: "Inscription"
@@ -1573,7 +1580,7 @@ fr:
       new_prize: "Nouveau prix"
 
     new:
-      back: "Retour"
+        back: "Retour"
   programme_requirements:
     form:
       category: "Catégorie"
@@ -1732,14 +1739,14 @@ fr:
       next_tour: "Tour suivant"
       no_next_tour: "Il n'y a pas de tour suivant. Félicitations aux finalistes!"
       send_qualified_to_next_tour: "Envoyer les qualifiés dans le tour suivant"
-      candidate: "Candidat"
-      order: "Ordre"
-      presented_airs: "Airs présentés"
-      result: "Résultat"
-      no_performances_yet: "Aucune performance n'a encore été ajoutée à ce tour."
-      and_others: "et %{count} autres"
-      see_more: "voir plus"
-      candidates_have_been_notified: "Les candidats ont été notifiés des résultats."
+    candidate: "Candidat"
+    order: "Ordre"
+    presented_airs: "Airs présentés"
+    result: "Résultat"
+    no_performances_yet: "Aucune performance n'a encore été ajoutée à ce tour."
+    and_others: "et %{count} autres"
+    see_more: "voir plus"
+    candidates_have_been_notified: "Les candidats ont été notifiés des résultats."
     form:
       rehearse_time_slot_per_candidate: "Durée du créneau de répétition par candidat en minutes"
       rehearsal_type: "Type de répétition"
@@ -1756,9 +1763,7 @@ fr:
       accompaniment_settings: "Configuration des accompagnements & Répétitions"
       description_placeholder: "Décrivez les règles spécifiques à ce tour..."
       title_english_placeholder: "ex: Preliminaries, Semi-finals, Finals..."
-      description_placeholder: "Entrez la description du tour"
       description_english_placeholder: "Entrez la description du tour en anglais"
-      tour_requirement_description_placeholder: "Entrez la description des exigences"
       tour_requirement_description_english_placeholder: "Entrez la description des exigences en anglais"
       start_date: "Date de début"
       start_time: "Heure de début"
@@ -1829,20 +1834,7 @@ fr:
       performance_information: "Informations sur la performance"
       performance_time: "Heure de passage"
       program: "Programme"
-      detailed_program: "Programme détaillé"
-      simple_air: "Air simple"
       accompanist: "Accompagnateur"
-      biography_options: "Options de biographie"
-      short_bio: "Biographie courte"
-      medium_bio: "Biographie moyenne"
-      long_bio: "Biographie longue"
-      short_bio_en: "Biographie courte (EN)"
-      medium_bio_en: "Biographie moyenne (EN)"
-      long_bio_en: "Biographie longue (EN)"
-      photo_options: "Options de photo"
-      profile_photo: "Photo de profil"
-      artistic_photo: "Photo artistique"
-      additional_options: "Options supplémentaires"
       include_scoring_grid: "Inclure une grille de notation"
       include_notes_section: "Inclure une section pour les notes"
       reconfigure_planning: "Reconfigurer le planning"
@@ -1946,7 +1938,6 @@ fr:
       description: "Description"
       start_date: "Date de début"
       final_performance_submission_deadline: "Date limite de soumission finale des performances"
-      category: "Catégorie"
       tour_configuration: "Configuration du tour"
       order_of_passage: "Ordre de passage"
       planning: "Planning"
@@ -2019,12 +2010,12 @@ fr:
       title: "Catégorie de concours: %{category_name}"
       reload_notice: "Rechargez la page pour voir si de nouvelles partitions ont été ajoutées."
       organisation_scores_title: "Partitions de l'organisation pour le tour"
-      no_organisation_scores: "Aucune note téléchargée par l'organisation pour ce tour."
+      no_organisation_scores: "Aucune partition téléchargée par l'organisation pour ce tour."
       pianist_scores_title: "Partitions pour %{pianist_name}"
-      download_performance_score_title: "Télécharger %{filename} (Note de performance)"
-      download_tour_score_title: "Télécharger %{filename} (Note de tour)"
-      no_scores_available: "Aucune note disponible"
-      download_participant_scores_action: "Télécharger les notes pour %{participant_name}"
+      download_performance_score_title: "Télécharger %{filename} (partition)"
+      download_tour_score_title: "Télécharger %{filename}"
+      no_scores_available: "Aucune partition disponible"
+      download_participant_scores_action: "Télécharger les partitions pour %{participant_name}"
       scores_title: "Partitions: %{category_name}"
       send_link_button: "Envoyer le lien aux pianistes"
       email_subject: "Partitions disponibles pour la catégorie: %{category_name}"
@@ -2033,22 +2024,11 @@ fr:
         file_name: "Nom du fichier"
         added: "Ajouté"
         participant: "Participant"
-        scores: "Partitions"
-        last_score_uploaded: "Dernière note téléchargée"
+    scores: "Partitions"
+    last_score_uploaded: "Dernière partition téléchargée"
   time:
     formats:
       short_month_day: "%d %B"
-  date:
-    formats:
-      short_month_day: "%d %B"
-  global:
-    candidate: "Candidat"
-    action: "Action"
-    not_available_abbr: "N/A"
-    actions:
-      download: "Télécharger"
-      download_all: "Tout télécharger"
-      download_file: "Télécharger %{filename}"
   rooms:
     create:
       success: "Salle créée avec succès."
@@ -2073,3 +2053,10 @@ fr:
       description: "Description"
       description_english: "Description (Anglais)"
       save: "Enregistrer"
+  views:
+    pagination:
+      first: "&laquo; Premier"
+      last: "Dernier &raquo;"
+      previous: "&lsaquo; Précédent"
+      next: "Suivant &rsaquo;"
+      truncate: "&hellip;"

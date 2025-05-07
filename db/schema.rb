@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_04_145456) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_07_084757) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -131,6 +131,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_04_145456) do
     t.string "banner_color"
     t.string "last_teacher"
     t.integer "voice_type", default: 0
+    t.string "iban"
     t.index ["user_id"], name: "index_candidats_on_user_id"
   end
 

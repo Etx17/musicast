@@ -7,7 +7,6 @@
           text: t('edition_competitions.edition_competition.edit'),
           path: edit_organism_competition_edition_competition_path(@organism, @competition, edition_competition),
           method: :get,
-          state: edition_competition.published? ? "disabled" : "enabled"
         },
         {
           icon: "fas fa-trash",
@@ -53,8 +52,8 @@
       <% end %>
     </dd>
     <% if edition_competition.rule_document.attached? %>
-      <div class="d-flex flex-column">
-        <embed src="<%= url_for(edition_competition.rule_document) %>"  height="375" type="application/pdf">
+      <div class="d-flex flex-column my-3">
+        <embed src="<%= url_for(edition_competition.rule_document) %>"  height="200" width="200" type="application/pdf">
       </div>
     <% end %>
 
@@ -70,8 +69,8 @@
       <% end %>
     </dd>
     <% if edition_competition.rule_document.attached? %>
-      <div class="d-flex flex-column">
-        <embed src="<%= url_for(edition_competition.rule_document) %>"  height="375" type="application/pdf">
+      <div class="d-flex flex-column  my-3">
+        <embed src="<%= url_for(edition_competition.rule_document) %>"  height="200" width="200" type="application/pdf">
       </div>
     <% end %>
 
@@ -79,10 +78,13 @@
     <% if edition_competition.published? %>
       <dt class="col-sm-4"><%= t('edition_competitions.edition_competition.share_link') %>:</dt>
       <dd class="col-sm-8"><span class="text-primary"><%= edition_competition.sharable_link %></span></dd>
-
+      <dt class="col-sm-4"><%= t('edition_competitions.edition_competition.share_link_english') %>:</dt>
+      <dd class="col-sm-8"><span class="text-primary"><%= edition_competition.sharable_link_english %></span></dd>
       <%# qr code %>
       <dt class="col-sm-4"><%= t('edition_competitions.edition_competition.qr_code') %>:</dt>
       <dd class="col-sm-8"><%= raw edition_competition.qr_code %></dd>
+      <dt class="col-sm-4"><%= t('edition_competitions.edition_competition.qr_code_english') %>:</dt>
+      <dd class="col-sm-8"><%= raw edition_competition.qr_code_english %></dd>
     <% end %>
   </dl>
 

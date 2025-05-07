@@ -1,4 +1,5 @@
 require 'music_categories'
+require 'kaminari'
 
 class CategoriesController < ApplicationController
   before_action :set_category, only: %i[show edit update destroy]
@@ -62,6 +63,30 @@ class CategoriesController < ApplicationController
     else
       redirect_to organism_competition_edition_competition_path(@organism, @competition, @edition_competition), alert: "Category could not be destroyed."
     end
+  end
+
+  def candidates
+    @category = Category.friendly.find(params[:id])
+
+    # Base query with includes
+    inscriptions_query = Inscription.by_category(@category.id).includes(:candidat)
+
+    # Apply search if provided
+    if params[:q].present?
+      search_term = "%#{params[:q]}%"
+      inscriptions_query = inscriptions_query.joins(:candidat)
+                           .where("candidats.first_name ILIKE ? OR candidats.last_name ILIKE ?",
+                                 search_term, search_term)
+    end
+
+    # Apply status filter if provided
+    if params[:status].present?
+      inscriptions_query = inscriptions_query.where(status: params[:status])
+    end
+
+    # Paginate results
+    @inscriptions = Kaminari.paginate_array(inscriptions_query.to_a)
+                           .page(params[:page]).per(30)
   end
 
 

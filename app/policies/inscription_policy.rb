@@ -33,6 +33,10 @@ class InscriptionPolicy < ApplicationPolicy
     allowed_to_edit?
   end
 
+  def candidates?
+    user.organises_category?(record.first.category)
+  end
+
   def purge_item_image?
     allowed_to_edit?
   end

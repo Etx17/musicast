@@ -86,15 +86,9 @@
 
 
     <% else %>
-
       <%= render "shared/navbar" %>
-
-
-      <div class="p-3">
-        <%= render "shared/flashes" %>
-        <%= yield %>
-      </div>
-
+      <%= render "shared/flashes" %>
+      <%= yield %>
     <% end %>
 
 
