@@ -52,6 +52,15 @@
         value: ->(inscription) { inscription.candidat.full_name }
       },
       {
+        label: t('inscriptions.candidate_index.email'),
+        value: ->(inscription) {
+          mail_to inscription.candidat.user.email,
+                  inscription.candidat.user.email,
+                  class: "text-primary text-decoration-none",
+                  title: t('inscriptions.candidate_index.send_email')
+              }
+      },
+      {
         label: t('inscriptions.candidate_index.status'),
         value: ->(inscription) {
           status_class = inscription.status == 'accepted' ? 'bg-success' : 'bg-warning'

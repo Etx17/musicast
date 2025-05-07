@@ -1268,6 +1268,8 @@ fr:
       view_video_and_vote: "Consulter vidéo & vote"
       to_evaluate: "À évaluer"
     candidate_index:
+      email: "Email"
+      send_email: "Envoyer un email"
       no_candidates_found: "Aucun candidat trouvé"
       search_placeholder: "Rechercher un candidat"
       your_applications: "VOS CANDIDATURES"
