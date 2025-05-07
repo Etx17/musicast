@@ -6,7 +6,7 @@
           <%= f.input :is_finished, as: :hidden, input_html: { value: true } %>
           <div class="d-flex flex-column justify-content-center align-items-center gap-2">
             <%= f.button :submit, t('tours.results.save_results_and_finish_tour'), class: 'btn btn-success mx-3 rounded-16', disabled: !@tour.has_planning?, data: { turbo_confirm: t('tours.results.finish_tour_confirm')} %>
-            <small><%= t('tours.results.candidates_will_be_notified') %></small>
+            <%# <small><%= t('tours.results.candidates_will_be_notified') %>
           </div>
         <% end %>
       <% end %>
@@ -45,7 +45,7 @@
     <% @tour.performances.where(is_qualified: false).order(:order).each do |performance| %>
       <div class="d-flex justify-content-between align-items-center p-1 bg-light-grey w-100 mt-1 ">
         <div class="d-flex align-items-center">
-        <%= image_tag "https://source.unsplash.com/random/?#{performance.candidat.first_name}/300/200", alt: "Photo of candidate", class: "rounded-circle", style: "object-fit: cover; aspect-ratio: 1 / 1; overflow: hidden;", loading: 'lazy', width: 50, height: 50 %>
+        <%= image_tag performance.candidat.portrait_or_default, alt: "Photo of candidate", class: "rounded-circle", style: "object-fit: cover; aspect-ratio: 1 / 1; overflow: hidden;", loading: 'lazy', width: 50, height: 50 %>
           <div class="d-flex flex-column align-items-start ps-3">
             <p class="mb-0"> <%= link_to performance.candidat.full_name, inscription_path(performance.inscription) %></p>
             <p class="mb-0">Ordre: <%= performance.order %></p>
@@ -77,7 +77,7 @@
     <% @tour.performances.where(is_qualified: true).each do |performance| %>
       <div class="d-flex justify-content-between align-items-center p-1 bg-light-grey w-100 mt-2">
         <div class="d-flex align-items-center">
-        <%= image_tag "https://source.unsplash.com/random/?#{performance.candidat.full_name}/300/200", alt: "Photo of candidate", class: "rounded-circle", style: "object-fit: cover; aspect-ratio: 1 / 1; overflow: hidden;", loading: 'lazy', width: 50, height: 50 %>
+        <%= image_tag performance.candidat.portrait_or_default, alt: "Photo of candidate", class: "rounded-circle", style: "object-fit: cover; aspect-ratio: 1 / 1; overflow: hidden;", loading: 'lazy', width: 50, height: 50 %>
           <div class="d-flex flex-column align-items-start ps-3">
             <p class="mb-0"><%= link_to performance.candidat.full_name, inscription_path(performance.inscription), target: '_blank', rel: "noopener" %></p>
             <p class="mb-0">Ordre: <%= performance.order %></p>
