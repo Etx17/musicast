@@ -10,6 +10,11 @@
   <%= render 'progress_bar' %>
 
   <h2 class="mb-4"><%= t('inscriptions.progress.program') %></h2>
+  <%= render InfoboxComponent.new(
+    title: t('inscriptions.steps.program.important'),
+    text: t('inscriptions.steps.program.important_text'),
+    icon: "fas fa-exclamation-triangle"
+  ) %>
   <%= form_for @inscription, url: wizard_path(:program, action: "update"), method: :put do |f| %>
     <div class="card bg-light mb-4">
       <div class="card-body">

@@ -1058,6 +1058,9 @@ fr:
       delete: "Supprimer"
     pianist_accompanist:
     steps:
+      program:
+        important: "Important"
+        important_text: "Choisissez les morceaux pour dans un second temps construire le programme de chaque tour. Vous pouvez modifiez les choix de cette étape jusqu'a la date limite de dépot de dossiers pour le concours. Une fois la date limite passée, vous pourrez toujours modifier le programme de chaque tour, jusqu'a la date limite de modification du programme de chaque tour."
       item_requirements:
         click_here_to_reload: "Cliquez ICI pour rafraîchir si le bouton ne répond pas"
         title: "Documents requis"

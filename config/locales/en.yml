@@ -1091,6 +1091,9 @@ en:
       download: "Download"
       delete: "Delete"
     steps:
+      program:
+        important: "Important"
+        important_text: "Choose the pieces for each round in a second time to build the program. You can modify the choices of this step until the application deadline. Once the deadline has passed, you can still modify the program of each round, until the modification deadline of the program of each round."
       item_requirements:
         click_here_to_reload: "Click HERE to reload if portrait use button doesn't respond"
         title: "Required documents"
