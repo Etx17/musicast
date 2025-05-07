@@ -826,7 +826,7 @@ fr:
       edit_edition: "Modifier l'édition"
       year: "Année"
       registration_closing: "Clôture des inscriptions"
-      registration_closing_hint: "Date jusqu'à laquelle vous acceptez de recevoir des candidatures"
+      registration_closing_hint: "Date jusqu'à laquelle vous acceptez de recevoir des candidatures. Vous pourrez configurer la date jusqu'a laquelle les candidats pourront modifier les pieces de leur programme pour chaque tour ultérieurement"
       event_start_date: "Date de début de l'évènement"
       event_end_date: "Date de fin de l'évènement"
       street: "Numéro et rue"

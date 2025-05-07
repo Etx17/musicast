@@ -845,7 +845,7 @@ en:
       edit_edition: "Edit edition"
       year: "Year"
       registration_closing: "Registration closing"
-      registration_closing_hint: "Date until which you accept applications"
+      registration_closing_hint: "Date until which you accept applications. You will later be able to configure the date until which candidates can modify their program for each round."
       event_start_date: "Event start date"
       event_end_date: "Event end date"
       street: "Street number and name"
