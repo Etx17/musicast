@@ -1187,6 +1187,8 @@ en:
       afternoon: "Afternoon"
     form:
       pianist_preferences: "Pianist preferences"
+      platform_terms_acceptance: "I accept the general conditions of the platform"
+      terms_acceptance_html: "I accept the terms and conditions of the competition"
       candidate_brings_pianist_accompagnateur_email: "Email of the accompanying pianist"
       candidate_brings_pianist_accompagnateur_full_name: "Full name of the accompanying pianist"
       imposed_airs: "Imposed airs"
@@ -1194,7 +1196,6 @@ en:
       time_preference: "Time preference"
       time_preference_info: "It's not guaranted that your time of passage will be matching your preference, but we will do our best to accomodate you."
       select_time_preference: "Select a time preference"
-      terms_acceptance_html: "I accept the <a href='#' target='_blank'>terms and conditions</a> of the competition"
     items_form_section:
       required_documents: "Required documents"
       motivation_letter: "Motivation letter"

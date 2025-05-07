@@ -165,6 +165,7 @@ Rails.application.routes.draw do
 
     get 'category/:category_id/scores', to: 'scores#show', as: :category_scores
     get 'category/:category_id/tours/:tour_id/pianist_scores/:pianist_id/download', to: 'scores#download_pianist_scores', as: :download_category_tour_pianist_scores
+    get 'platform_terms', to: 'pages#platform_terms'
   end
 
   # Redirect root to default locale

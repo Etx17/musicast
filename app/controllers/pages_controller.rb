@@ -13,6 +13,8 @@ class PagesController < ApplicationController
   def terms_of_use
   end
 
+  def platform_terms
+  end
 
   def home
     # change the params country "France" to it's short country code equivalent if there is a params country. Then make it session
