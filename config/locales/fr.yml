@@ -1079,6 +1079,9 @@ fr:
         crop_ratio_message: "Veuillez recadrer l'image avec un ratio de %{ratio}"
         select_photo: "Cliquez pour sélectionner une photo"
       preferences:
+        i_accept: "J'accepte"
+        rule_document: "le règlement du concours"
+        rule_document_english: "le règlement du concours (en anglais)"
         title: "Préférences"
         time_preferences: "Préférences horaires"
         time_justification: "Justification"

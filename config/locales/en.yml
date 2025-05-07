@@ -1112,6 +1112,9 @@ en:
         crop_ratio_message: "Please crop the image with a ratio of %{ratio}"
         select_photo: "Click to select a photo"
       preferences:
+        i_accept: "I accept"
+        rule_document_english: "the competition rules (in English)"
+        rule_document: "the competition rules"
         time_justification: "Time justification"
         time_justification_info: "Please justify your time preference"
         title: "Preferences"

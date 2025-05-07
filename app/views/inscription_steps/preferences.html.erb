@@ -75,15 +75,15 @@
                             id: "terms-switch" %>
             <%= f.label :terms_accepted, class: "form-check-label text-secondary" do %>
               <span class="text-danger">*</span>
-              J'accepte
+              <%= t('inscriptions.steps.preferences.i_accept') %>
               <% if @inscription.category.edition_competition.rule_document.attached? %>
-                <%= link_to "le règlement du concours", url_for(@inscription.category.edition_competition.rule_document), target: "_blank", class: "text-primary" %>
+                <%= link_to t('inscriptions.steps.preferences.rule_document'), url_for(@inscription.category.edition_competition.rule_document), target: "_blank", class: "text-primary" %>
               <% end %>
               <% if @inscription.category.edition_competition.rule_document.attached? && @inscription.category.edition_competition.rule_document_english.attached? %>
                 /
               <% end %>
               <% if @inscription.category.edition_competition.rule_document_english.attached? %>
-                <%= link_to "règlement du concours en anglais", url_for(@inscription.category.edition_competition.rule_document_english), target: "_blank", class: "text-primary" %>
+                <%= link_to t('inscriptions.steps.preferences.rule_document_english'), url_for(@inscription.category.edition_competition.rule_document_english), target: "_blank", class: "text-primary" %>
               <% end %>
             <% end %>
           </div>
