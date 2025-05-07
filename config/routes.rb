@@ -63,6 +63,9 @@ Rails.application.routes.draw do
         resources :edition_competitions do
           delete :remove_document, on: :member
           resources :categories do
+            member do
+              get :candidates
+            end
             resources :prizes
             resources :tours do
               member do

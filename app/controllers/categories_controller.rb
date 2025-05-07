@@ -64,6 +64,13 @@ class CategoriesController < ApplicationController
     end
   end
 
+  def candidates
+    @category = Category.friendly.find(params[:id])
+    return unless current_user.organises_category?(@category)
+    @inscriptions = Inscription.by_category(@category.id)
+    authorize @inscriptions
+  end
+
 
 
   private

@@ -312,6 +312,8 @@ fr:
       delete_confirm: "Êtes-vous sûr ?"
       add: "Ajouter"
     form:
+      iban: "IBAN"
+      iban_hint: "Votre numéro IBAN pour le versement des prix"
       voice_type: "Tessiture"
       voice_types:
         non_singer: "Non-chanteur"

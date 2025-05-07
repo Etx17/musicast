@@ -355,6 +355,8 @@ en:
       save: "Save"
       new_record: "NEW"
       delete: "Delete"
+      iban: "IBAN"
+      iban_hint: "Your IBAN number for prize payments"
     edit:
       title: "Edit your information"
       subtitle: "This information is necessary to register for a competition."

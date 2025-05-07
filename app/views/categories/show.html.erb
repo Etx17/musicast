@@ -18,6 +18,10 @@
         <%= link_to organism_competition_edition_competition_category_inscriptions_path(@organism, @competition, @edition_competition, @category), class: "btn btn-primary" do %>
           <i class="fas fa-eye"></i> <%= t('categories.show.view_applications') %> (<%= @category.inscriptions.where(status: 'in_review').count %>)
         <% end %>
+        <%# Lien vers candidates (tous) %>
+        <%= link_to candidates_organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category), class: "btn btn-primary" do %>
+          <i class="fas fa-eye"></i> voir candidate
+        <% end %>
         <%# Lien vers le premier tour %>
         <%= link_to organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @category.tours.first), class: "btn btn-primary" do %>
           <i class="fas fa-eye"></i> <%= t('categories.show.view_first_tour') %>
