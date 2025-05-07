@@ -1,0 +1,53 @@
+<%# Title and back button %>
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1><%= t('inscriptions.candidate_index.title', category: @category.name) %></h1>
+    <%= link_to t('inscriptions.candidate_index.back'), organism_competition_edition_competition_category_path(@category.edition_competition.competition.organism, @category.edition_competition.competition, @category.edition_competition, @category), class: 'btn btn-outline-primary' %>
+  </div>
+
+  <%# Table component %>
+  <%= render Table::BaseComponent.new(
+    rows: @inscriptions,
+    client: nil,
+    columns: [
+      {
+        label: t('inscriptions.candidate_index.portrait'),
+        value: ->(inscription) {
+          if inscription.candidat.portrait.attached?
+            image_tag(inscription.candidat.portrait, class: "rounded-circle", style: "width: 50px; height: 50px; object-fit: cover;")
+          else
+            content_tag(:div, "", class: "rounded-circle bg-secondary", style: "width: 50px; height: 50px;")
+          end
+        }
+      },
+      {
+        label: t('inscriptions.candidate_index.name'),
+        value: ->(inscription) { inscription.candidat.full_name }
+      },
+      {
+        label: t('inscriptions.candidate_index.status'),
+        value: ->(inscription) {
+          status_class = inscription.status == 'accepted' ? 'bg-success' : 'bg-warning'
+          content_tag(:span, t("inscriptions.statuses.#{inscription.status}"), class: "badge #{status_class}")
+        }
+      },
+      {
+        label: t('inscriptions.candidate_index.payment_status'),
+        value: ->(inscription) {
+          content_tag(:span, t("inscriptions.payment_statuses.#{inscription.payment_status}"))
+        }
+      },
+      {
+        label: t('inscriptions.candidate_index.created_at'),
+        value: ->(inscription) { l(inscription.created_at, format: :short) }
+      }
+    ],
+    links: [
+      {
+        text: t('inscriptions.candidate_index.view'),
+        path: ->(inscription) { inscription_path(inscription) },
+        icon: 'eye'
+      }
+    ]
+  ) %>
+</div>

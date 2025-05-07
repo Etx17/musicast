@@ -522,6 +522,7 @@ en:
       create_instruction: "Create criteria for the works that candidates must present."
       add_new_list: "Add a new list of semi-imposed works"
     show:
+      view_candidates: "View all candidates"
       view_first_tour: "View the first tour"
       confirm_delete: "Delete category ?"
       years: "years"
@@ -1286,6 +1287,14 @@ en:
     candidate_index:
       your_applications: "YOUR APPLICATIONS"
       start_date: "Start Date"
+      title: "Candidates for category %{category}"
+      back: "Back to category"
+      portrait: "Photo"
+      name: "Name"
+      status: "Status"
+      payment_status: "Payment status"
+      created_at: "Registration date"
+      view: "View"
     jury_index:
       applications_to_rate: "Applications to rate"
     payment_proof: "Payment Proof"

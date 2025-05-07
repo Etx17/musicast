@@ -379,6 +379,7 @@ fr:
       years: "ans"
       application_fee: "Frais de dossier"
     show:
+      view_candidates: "Voir tous les candidats"
       view_first_tour: "Voir le premier tour"
       years: "ans"
       edit: "Modifier"
@@ -1269,11 +1270,17 @@ fr:
     note_card:
       view_video_and_vote: "Consulter vidéo & vote"
       to_evaluate: "À évaluer"
-
     candidate_index:
       your_applications: "VOS CANDIDATURES"
       start_date: "Date de début"
-
+      title: "Candidats de la catégorie %{category}"
+      back: "Retour à la catégorie"
+      portrait: "Photo"
+      name: "Nom"
+      status: "Statut"
+      payment_status: "Statut du paiement"
+      created_at: "Date d'inscription"
+      view: "Voir"
     jury_index:
       applications_to_rate: "Candidatures à noter"
     statuses:
