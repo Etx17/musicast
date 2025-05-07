@@ -1,11 +1,12 @@
 <%# Title and back button %>
 <div class="container mt-4">
-  <div class="d-flex justify-content-between align-items-center mb-4">
-    <h1><%= t('inscriptions.candidate_index.title', category: @category.name) %></h1>
-    <%= link_to t('inscriptions.candidate_index.back'), organism_competition_edition_competition_category_path(@category.edition_competition.competition.organism, @category.edition_competition.competition, @category.edition_competition, @category), class: 'btn btn-outline-primary' %>
-  </div>
+  <h1><%= t('inscriptions.candidate_index.title', category: @category.name) %></h1>
+  <%= render Navigation::BackLinkComponent.new(
+    link_path: organism_competition_edition_competition_category_path(@category.edition_competition.competition.organism, @category.edition_competition.competition, @category.edition_competition, @category),
+    link_text: @category.name
+  ) %>
 
-  <div class="d-flex justify-content-between gap-3">
+  <div class="d-flex flex-column flex-md-row justify-content-md-between gap-3 my-4">
     <%# Search bar component %>
     <div style="width: 300px;">
       <%= render SearchBarComponent.new(
@@ -34,6 +35,7 @@
   <%= render Table::BaseComponent.new(
     rows: @inscriptions,
     client: nil,
+    empty_message: t('inscriptions.candidate_index.no_candidates_found'),
     columns: [
       {
         label: t('inscriptions.candidate_index.portrait'),

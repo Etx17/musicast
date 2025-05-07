@@ -1285,6 +1285,7 @@ en:
     note_card:
       view_video_and_vote: "View video & vote"
     candidate_index:
+      no_candidates_found: "No candidates found"
       search_placeholder: "Search by candidate name"
       your_applications: "YOUR APPLICATIONS"
       start_date: "Start Date"
