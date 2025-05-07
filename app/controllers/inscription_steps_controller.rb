@@ -237,6 +237,7 @@ class InscriptionStepsController < ApplicationController
       :candidate_brings_pianist_accompagnateur,
       :candidate_brings_pianist_accompagnateur_email,
       :candidate_brings_pianist_accompagnateur_full_name,
+      :accept_platform_terms,
       :time_preference,
       :time_justification,
       inscription_item_requirements_attributes: %i[id submitted_file submitted_content document_id requirement_item_id _destroy],

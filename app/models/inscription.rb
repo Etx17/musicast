@@ -26,7 +26,7 @@ class Inscription < ApplicationRecord
     end
 
     with_options on: :preferences do |prefs|
-      prefs.validates :accept_platform_terms, acceptance: { accept: true, message: "must be accepted" }, allow_nil: false
+      # prefs.validates :accept_platform_terms, acceptance: { accept: true, message: "must be accepted" }, allow_nil: false
       prefs.validates :terms_accepted, acceptance: { accept: true, message: "must be accepted" }, allow_nil: false
       prefs.validates :payment_proof, presence: true, if: -> { category.payment_after_approval == false }
     end

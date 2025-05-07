@@ -66,29 +66,7 @@
       <div class="card-body">
         <h4 class="card-title mb-3"><%= t('global.terms') %></h4>
 
-        <!-- Competition Rules Documents -->
-        <div class="mb-4">
-          <% if @inscription.category.edition_competition.rule_document.persisted? %>
-            <div class="mb-2">
-              <%= link_to url_for(@inscription.category.edition_competition.rule_document),
-                          class: "btn btn-outline-primary",
-                          target: "_blank" do %>
-                <i class="fas fa-file-pdf me-2"></i> <%= t('edition_competitions.category_modal_infos.view_rules') %>
-              <% end %>
-            </div>
-          <% end %>
-          <% if @inscription.category.edition_competition.rule_document_english.persisted? %>
-            <div class="mb-3">
-              <%= link_to url_for(@inscription.category.edition_competition.rule_document_english),
-                          class: "btn btn-outline-info",
-                          target: "_blank" do %>
-                <i class="fas fa-file-pdf me-2"></i> <%= t('edition_competitions.category_modal_infos.view_rules_english') %>
-              <% end %>
-            </div>
-          <% end %>
-        </div>
-
-        <!-- Competition Terms Acceptance -->
+        <!-- Competition Terms Acceptance with integrated links -->
         <div class="d-flex align-items-center justify-content-between mb-3">
           <div class="form-check form-switch">
             <%= f.check_box :terms_accepted,
@@ -96,7 +74,17 @@
                             role: "switch",
                             id: "terms-switch" %>
             <%= f.label :terms_accepted, class: "form-check-label text-secondary" do %>
-              <span class="text-danger">*</span> <%= t('inscriptions.form.terms_acceptance_html') %>
+              <span class="text-danger">*</span>
+              J'accepte
+              <% if @inscription.category.edition_competition.rule_document.attached? %>
+                <%= link_to "le règlement du concours", url_for(@inscription.category.edition_competition.rule_document), target: "_blank", class: "text-primary" %>
+              <% end %>
+              <% if @inscription.category.edition_competition.rule_document.attached? && @inscription.category.edition_competition.rule_document_english.attached? %>
+                /
+              <% end %>
+              <% if @inscription.category.edition_competition.rule_document_english.attached? %>
+                <%= link_to "règlement du concours en anglais", url_for(@inscription.category.edition_competition.rule_document_english), target: "_blank", class: "text-primary" %>
+              <% end %>
             <% end %>
           </div>
         </div>
@@ -107,23 +95,25 @@
           </div>
         <% end %>
 
-        <!-- Platform Terms Acceptance -->
-        <div class="d-flex align-items-center justify-content-between mb-3 mt-4">
-          <div class="form-check form-switch">
-            <%= f.check_box :accept_platform_terms,
-                            class: "form-check-input",
-                            role: "switch",
-                            id: "platform-terms-switch" %>
-            <%= f.label :accept_platform_terms, class: "form-check-label text-secondary" do %>
-              <span class="text-danger">*</span> <%= link_to raw(t('inscriptions.form.platform_terms_acceptance')), platform_terms_path, target: "_blank" %>
-            <% end %>
+        <% if false %>
+          <!-- Platform Terms Acceptance -->
+          <div class="d-flex align-items-center justify-content-between mb-3 mt-4">
+            <div class="form-check form-switch">
+              <%= f.check_box :accept_platform_terms,
+                              class: "form-check-input",
+                              role: "switch",
+                              id: "platform-terms-switch" %>
+              <%= f.label :accept_platform_terms, class: "form-check-label text-secondary" do %>
+                <span class="text-danger">*</span> <%= link_to t('inscriptions.form.platform_terms_acceptance'), platform_terms_path, target: "_blank" %>
+              <% end %>
+            </div>
           </div>
-        </div>
 
-        <% if @inscription.errors[:accept_platform_terms].any? %>
-          <div class="text-danger">
-            <%= @inscription.errors[:accept_platform_terms].join(", ") %>
-          </div>
+          <% if @inscription.errors[:accept_platform_terms].any? %>
+            <div class="text-danger">
+              <%= @inscription.errors[:accept_platform_terms].join(", ") %>
+            </div>
+          <% end %>
         <% end %>
       </div>
     </div>
