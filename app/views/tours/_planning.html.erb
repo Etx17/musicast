@@ -3,7 +3,7 @@
 
     <% if @tour.has_planning? %>
       <%# All buttons in one row with proper wrapping %>
-      <div class="d-flex flex-wrap gap-3 align-items-center mb-3">
+      <div class="d-flex flex-wrap gap-3 align-items-center justify-content-center mb-3">
         <%# Reconfigure Button %>
         <button type="button" class="btn btn-primary btn-md" data-bs-target="#tourConfirmationModal" data-bs-toggle="modal" data-bs-dismiss="modal">
           <i class="fas fa-sync-alt me-2"></i>
