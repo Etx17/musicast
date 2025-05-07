@@ -67,9 +67,21 @@ class CategoriesController < ApplicationController
 
   def candidates
     @category = Category.friendly.find(params[:id])
-    @inscriptions = Kaminari.paginate_array(
-      Inscription.by_category(@category.id).includes(:candidat).to_a
-    ).page(params[:page]).per(20)
+
+    # Base query with includes
+    inscriptions_query = Inscription.by_category(@category.id).includes(:candidat)
+
+    # Apply search if provided
+    if params[:q].present?
+      search_term = "%#{params[:q]}%"
+      inscriptions_query = inscriptions_query.joins(:candidat)
+                           .where("candidats.first_name ILIKE ? OR candidats.last_name ILIKE ?",
+                                 search_term, search_term)
+    end
+
+    # Paginate results
+    @inscriptions = Kaminari.paginate_array(inscriptions_query.to_a)
+                           .page(params[:page]).per(30)
   end
 
 

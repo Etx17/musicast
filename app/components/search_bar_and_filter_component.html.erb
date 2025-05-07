@@ -28,12 +28,7 @@
   <!-- Filters and action buttons on the right -->
   <div class="d-flex">
     <div class="btn-group dropstart filter-options">
-      <!-- Button mobile -->
-      <% if @show_filter_mobile %>
-        <button type="button" class="btn small-btn yes-mobile" data-bs-toggle="dropdown" id="<%= @filter_id %>" aria-haspopup="true" aria-expanded="false">
-          <i class="fas fa-sliders-h"></i>
-        </button>
-      <% end %>
+
 
       <!-- Button no mobile -->
       <% unless @filters_options.blank? %>

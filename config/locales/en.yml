@@ -1019,6 +1019,10 @@ en:
       tuba: "Tuba"
       violin: "Violin"
     actions:
+      clear: "Clear"
+      search: "Search"
+      search_by_keywords: "Search by keywords"
+      filter_by: "Filter by"
       view_payment: "View payment"
       accept: "Accept"
       reject: "Reject"
@@ -1281,6 +1285,7 @@ en:
     note_card:
       view_video_and_vote: "View video & vote"
     candidate_index:
+      search_placeholder: "Search by candidate name"
       your_applications: "YOUR APPLICATIONS"
       start_date: "Start Date"
       title: "Candidates for category %{category}"

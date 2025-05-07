@@ -954,6 +954,10 @@ fr:
     not_available_abbr: "Indisponible"
     rounds: "tours"
     actions:
+      clear: "Effacer"
+      search: "Rechercher"
+      search_by_keywords: "Rechercher par mots clés"
+      filter_by: "Filtrer par"
       download: "Télécharger"
       download_all: "Tout télécharger"
       download_file: "Télécharger %{filename}"
@@ -1264,6 +1268,7 @@ fr:
       view_video_and_vote: "Consulter vidéo & vote"
       to_evaluate: "À évaluer"
     candidate_index:
+      search_placeholder: "Rechercher un candidat"
       your_applications: "VOS CANDIDATURES"
       start_date: "Date de début"
       title: "Candidats de la catégorie %{category}"
@@ -1355,10 +1360,10 @@ fr:
       iban_hint: "Entrez votre IBAN pour recevoir les paiements des candidats"
       description: "Description"
 
-    edit:
-      back: "Retour"
+      edit:
+        back: "Retour"
 
-    index:
+      index:
       organisms: "Organismes"
       show_organism: "Voir cet organisme"
       new_organism: "Nouvel organisme"
@@ -1367,7 +1372,7 @@ fr:
       welcome: "Bienvenue sur Musicast."
       create_organism_prompt: "Pour commencer, créez votre organisme"
 
-    show:
+      show:
       modify: "Modifier"
   pages:
     dropdown_inputs:
@@ -1571,7 +1576,7 @@ fr:
       new_prize: "Nouveau prix"
 
     new:
-      back: "Retour"
+        back: "Retour"
   programme_requirements:
     form:
       category: "Catégorie"
@@ -1730,14 +1735,14 @@ fr:
       next_tour: "Tour suivant"
       no_next_tour: "Il n'y a pas de tour suivant. Félicitations aux finalistes!"
       send_qualified_to_next_tour: "Envoyer les qualifiés dans le tour suivant"
-      candidate: "Candidat"
-      order: "Ordre"
-      presented_airs: "Airs présentés"
-      result: "Résultat"
-      no_performances_yet: "Aucune performance n'a encore été ajoutée à ce tour."
-      and_others: "et %{count} autres"
-      see_more: "voir plus"
-      candidates_have_been_notified: "Les candidats ont été notifiés des résultats."
+    candidate: "Candidat"
+    order: "Ordre"
+    presented_airs: "Airs présentés"
+    result: "Résultat"
+    no_performances_yet: "Aucune performance n'a encore été ajoutée à ce tour."
+    and_others: "et %{count} autres"
+    see_more: "voir plus"
+    candidates_have_been_notified: "Les candidats ont été notifiés des résultats."
     form:
       rehearse_time_slot_per_candidate: "Durée du créneau de répétition par candidat en minutes"
       rehearsal_type: "Type de répétition"
@@ -1929,7 +1934,6 @@ fr:
       description: "Description"
       start_date: "Date de début"
       final_performance_submission_deadline: "Date limite de soumission finale des performances"
-      category: "Catégorie"
       tour_configuration: "Configuration du tour"
       order_of_passage: "Ordre de passage"
       planning: "Planning"
@@ -2016,8 +2020,8 @@ fr:
         file_name: "Nom du fichier"
         added: "Ajouté"
         participant: "Participant"
-        scores: "Partitions"
-        last_score_uploaded: "Dernière note téléchargée"
+    scores: "Partitions"
+    last_score_uploaded: "Dernière partition téléchargée"
   time:
     formats:
       short_month_day: "%d %B"

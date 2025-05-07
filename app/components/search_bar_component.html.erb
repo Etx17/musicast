@@ -1,0 +1,25 @@
+<div class="search-bar-container mb-4" style="width: 300px;">
+  <%= form_tag search_path, method: :get, class: "d-flex" do %>
+    <div class="input-group">
+      <input
+        type="text"
+        name="<%= search_param %>"
+        id="search-input"
+        value="<%= current_search_term %>"
+        placeholder="<%= placeholder %>"
+        class="form-control"
+        aria-label="<%= placeholder %>"
+      >
+
+      <% if search_active? %>
+        <%= link_to clear_path, class: "btn btn-outline-secondary", title: t('global.actions.clear') do %>
+          <i class="fas fa-times"></i>
+        <% end %>
+      <% end %>
+
+      <button type="submit" class="btn btn-primary" title="<%= t('global.actions.search') %>">
+        <i class="fas fa-search"></i>
+      </button>
+    </div>
+  <% end %>
+</div>

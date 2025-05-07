@@ -5,6 +5,15 @@
     <%= link_to t('inscriptions.candidate_index.back'), organism_competition_edition_competition_category_path(@category.edition_competition.competition.organism, @category.edition_competition.competition, @category.edition_competition, @category), class: 'btn btn-outline-primary' %>
   </div>
 
+  <%# Search bar component %>
+  <%= render SearchBarComponent.new(
+    search_path: candidates_organism_competition_edition_competition_category_path( @category.edition_competition.competition.organism, @category.edition_competition.competition, @category.edition_competition, @category ),
+    clear_path: candidates_organism_competition_edition_competition_category_path( @category.edition_competition.competition.organism, @category.edition_competition.competition, @category.edition_competition, @category ),
+    search_param: 'q',
+    placeholder: t('inscriptions.candidate_index.search_placeholder'),
+    current_search_term: params[:q]
+  ) %>
+
   <%# Table component %>
   <%= render Table::BaseComponent.new(
     rows: @inscriptions,
