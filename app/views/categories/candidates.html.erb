@@ -31,17 +31,17 @@
           content_tag(:span, t("inscriptions.statuses.#{inscription.status}"), class: "badge #{status_class}")
         }
       },
-      {
+      (@category.payment_after_approval ? {
         label: t('inscriptions.candidate_index.payment_status'),
         value: ->(inscription) {
           content_tag(:span, t("inscriptions.payment_statuses.#{inscription.payment_status}"))
         }
-      },
+      } : nil),
       {
         label: t('inscriptions.candidate_index.created_at'),
         value: ->(inscription) { l(inscription.created_at, format: :short) }
       }
-    ],
+    ].compact,
     links: [
       {
         text: t('inscriptions.candidate_index.view'),

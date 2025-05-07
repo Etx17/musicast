@@ -74,6 +74,7 @@ class InscriptionsController < ApplicationController
 
   def create
     @inscription = Inscription.new(inscription_params)
+    @inscription.payment_status = "no_proof_joined_yet" if @inscription.category.payment_after_approval
     @inscription.candidat = current_user.candidat
     air_ids = params[:inscription][:choice_imposed_work_airs_attributes]&.values&.map{|c| c["air_id"]} || []
     if air_ids.uniq.length != air_ids.length
