@@ -40,9 +40,9 @@
             <% end %>
           </div>
         <% end %>
-        <% if edition_competition.rule_document.attached? %>
+        <% if edition_competition.rule_document.persisted? %>
           <div class="d-flex flex-column">
-            <embed src="<%= url_for(edition_competition.rule_document) %>"  height="375" type="application/pdf">
+            <embed src="<%= rails_blob_path(edition_competition.rule_document, disposition: "inline") %>"  height="375" type="application/pdf">
           </div>
         <% end %>
       </div>
@@ -57,7 +57,7 @@
             <% end %>
           </div>
         <% end %>
-        <% if edition_competition.rule_document_english.attached? %>
+        <% if edition_competition.rule_document_english.persisted? %>
           <div class="d-flex flex-column">
             <embed src="<%= url_for(edition_competition.rule_document_english) %>"  height="375" type="application/pdf">
           </div>
