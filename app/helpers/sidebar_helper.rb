@@ -6,7 +6,6 @@ module SidebarHelper
       if current_user.candidat.present?
         links << { label: content_tag(:i, '', class: 'fis fi-rs-home pe-2') + I18n.t('sidebar.home'), url: candidat_dashboard_path() }
         links << { label: content_tag(:i, '', class: 'fis fi-rs-user pe-2') + I18n.t('sidebar.profile'), url: candidat_path(current_user.candidat) }
-        links << { label: content_tag(:i, '', class: 'fas fa-file-alt pe-2') + I18n.t('sidebar.applications'), url: inscriptions_path() }
         user_inscriptions = current_user.candidat.inscriptions.includes(:category)
         user_inscriptions.each do |inscription|
           status_indicator = case inscription.status

@@ -1081,7 +1081,7 @@ en:
   inscriptions:
     payment_proof: "Payment proof"
     scores:
-      scores_info: "Your space to upload your scores. The competition organization can also send you scores through this area."
+      scores_info: "Upload imperatively the scores of the pieces you will perform for this round. They will be accessible to the jury and your assigned accompanist, if there is one. The competition organization can also send you scores through this area."
       scores_section: "Scores"
       upload_scores: "Upload scores"
       upload_hint:

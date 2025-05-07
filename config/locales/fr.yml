@@ -1047,7 +1047,7 @@ fr:
   inscriptions:
     payment_proof: "Preuve de paiement"
     scores:
-      scores_info: "Votre espace pour déposer vos partitions. L'organisme du concours peut également vous envoyer des partitions sur cet espace."
+      scores_info: "Déposez impérativement les partitions des pièces que vous interprêtez pour ce tour. Elles seront accessibles aux jurys et à votre pianiste accompagnateur assigné, s'il y en a un. L'organisme du concours peut également vous envoyer des partitions sur cet espace."
       scores_section: "Partitions"
       upload_scores: "Télécharger les partitions"
       upload_hint:
@@ -2009,12 +2009,12 @@ fr:
       title: "Catégorie de concours: %{category_name}"
       reload_notice: "Rechargez la page pour voir si de nouvelles partitions ont été ajoutées."
       organisation_scores_title: "Partitions de l'organisation pour le tour"
-      no_organisation_scores: "Aucune note téléchargée par l'organisation pour ce tour."
+      no_organisation_scores: "Aucune partition téléchargée par l'organisation pour ce tour."
       pianist_scores_title: "Partitions pour %{pianist_name}"
-      download_performance_score_title: "Télécharger %{filename} (Note de performance)"
-      download_tour_score_title: "Télécharger %{filename} (Note de tour)"
-      no_scores_available: "Aucune note disponible"
-      download_participant_scores_action: "Télécharger les notes pour %{participant_name}"
+      download_performance_score_title: "Télécharger %{filename} (partition)"
+      download_tour_score_title: "Télécharger %{filename}"
+      no_scores_available: "Aucune partition disponible"
+      download_participant_scores_action: "Télécharger les partitions pour %{participant_name}"
       scores_title: "Partitions: %{category_name}"
       send_link_button: "Envoyer le lien aux pianistes"
       email_subject: "Partitions disponibles pour la catégorie: %{category_name}"
