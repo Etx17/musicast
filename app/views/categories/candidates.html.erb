@@ -5,14 +5,30 @@
     <%= link_to t('inscriptions.candidate_index.back'), organism_competition_edition_competition_category_path(@category.edition_competition.competition.organism, @category.edition_competition.competition, @category.edition_competition, @category), class: 'btn btn-outline-primary' %>
   </div>
 
-  <%# Search bar component %>
-  <%= render SearchBarComponent.new(
-    search_path: candidates_organism_competition_edition_competition_category_path( @category.edition_competition.competition.organism, @category.edition_competition.competition, @category.edition_competition, @category ),
-    clear_path: candidates_organism_competition_edition_competition_category_path( @category.edition_competition.competition.organism, @category.edition_competition.competition, @category.edition_competition, @category ),
-    search_param: 'q',
-    placeholder: t('inscriptions.candidate_index.search_placeholder'),
-    current_search_term: params[:q]
-  ) %>
+  <div class="d-flex justify-content-between gap-3">
+    <%# Search bar component %>
+    <div style="width: 300px;">
+      <%= render SearchBarComponent.new(
+        search_path: candidates_organism_competition_edition_competition_category_path(@category.edition_competition.competition.organism, @category.edition_competition.competition, @category.edition_competition, @category),
+        clear_path: candidates_organism_competition_edition_competition_category_path(@category.edition_competition.competition.organism, @category.edition_competition.competition, @category.edition_competition, @category),
+        search_param: 'q',
+        placeholder: t('inscriptions.candidate_index.search_placeholder'),
+        current_search_term: params[:q]
+      ) %>
+    </div>
+
+    <%# Status filter component %>
+    <div style="width: 250px;">
+      <%= render SingleFilterComponent.new(
+        filter_path: candidates_organism_competition_edition_competition_category_path(@category.edition_competition.competition.organism, @category.edition_competition.competition, @category.edition_competition, @category),
+        clear_path: candidates_organism_competition_edition_competition_category_path(@category.edition_competition.competition.organism, @category.edition_competition.competition, @category.edition_competition, @category, q: params[:q]),
+        filter_param: 'status',
+        options: Inscription.statuses.map { |key, _value| [t("inscriptions.statuses.#{key}"), key] },
+        selected_value: params[:status],
+        label: t('inscriptions.candidate_index.filter_by_status')
+      ) %>
+    </div>
+  </div>
 
   <%# Table component %>
   <%= render Table::BaseComponent.new(

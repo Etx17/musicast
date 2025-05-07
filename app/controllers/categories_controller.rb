@@ -79,6 +79,11 @@ class CategoriesController < ApplicationController
                                  search_term, search_term)
     end
 
+    # Apply status filter if provided
+    if params[:status].present?
+      inscriptions_query = inscriptions_query.where(status: params[:status])
+    end
+
     # Paginate results
     @inscriptions = Kaminari.paginate_array(inscriptions_query.to_a)
                            .page(params[:page]).per(30)
