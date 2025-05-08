@@ -798,6 +798,7 @@ en:
         resend_instructions: "Resend unlock instructions"
 
   edition_competitions:
+    registration_deadline: "Inscriptions until %{var}"
     common:
       continue: "Continue"
       view: "View"

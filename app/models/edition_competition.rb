@@ -32,6 +32,15 @@ class EditionCompetition < ApplicationRecord
                       .order(:end_of_registration)
   end
 
+
+  def photo_or_default
+    if photo.attached?
+      Rails.application.routes.url_helpers.rails_blob_path(photo, only_path: true)
+    else
+      ActionController::Base.helpers.asset_path('garnier.jpeg')
+    end
+  end
+
   def correct_mime_type_of_rule_document
     if rule_document.attached? && !rule_document.content_type.in?(%w(application/pdf))
       errors.add(:rule_document, 'Doit être un fichier PDF')

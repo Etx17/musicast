@@ -1,6 +1,6 @@
 <%= render(Card::BaseComponent.new(
   height: @height,
-  image: @edition_competition.competition.image_or_default,
+  image: @edition_competition.photo_or_default,
   links: @links,
   redirect: organism_competition_edition_competition_path(@edition_competition.organism, @edition_competition.competition, @edition_competition),
   bottom_button_links: @bottom_button_links,
@@ -31,5 +31,6 @@
     <% else %>
       <span class="bg-light-grey px-2 text-secondary rounded-pill p-1"><%= @edition_competition.categories.first.name %></span>
     <% end %>
+  <small class="align-self-end position-absolute bottom-0 text-secondary"><%= t('edition_competitions.registration_deadline', var: @edition_competition.end_of_registration.strftime("%d/%m/%Y")) %></small>
   </div>
 <% end %>

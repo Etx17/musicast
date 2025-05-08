@@ -782,6 +782,7 @@ fr:
     flashes:
       close: "Fermer"
   edition_competitions:
+    registration_deadline: "Inscriptions jusqu'au %{var}"
     common:
       continue: "Continuer"
       view: "Voir"
