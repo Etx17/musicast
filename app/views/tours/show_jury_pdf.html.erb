@@ -15,10 +15,10 @@ candidates_per_page = 2
   page_performances.each_with_index do |performance, page_index|
 %>
   <div style="position: relative; height: <%= 100.0 / candidates_per_page %>%; page-break-inside: avoid;">
-    <table style="width: 100%; border-collapse: collapse;">
+    <table style="width: 100%; border-collapse: collapse; margin-bottom: 3px;">
       <tr>
           <% if @profile_photo %>
-        <td style="width: 30%; background: #F7F7F7; vertical-align: top; padding: 8px;" class="text-center">
+        <td style="width: 30%; background: #F7F7F7; vertical-align: top; padding: 6px;" class="text-center">
           <%
             begin
               # Determine which image to display
@@ -38,19 +38,19 @@ candidates_per_page = 2
            %>
               <% if base64_image %>
                 <!-- Improved image display with preserved aspect ratio -->
-                <div style="width: 100%; min-height: 180px; max-height: 240px; display: flex; justify-content: center; align-items: center; margin: 0 auto;">
+                <div style="width: 100%; min-height: 150px; max-height: 200px; display: flex; justify-content: center; align-items: flex-start; margin: 0 auto; padding-top: 0;">
                   <img src="data:<%= mime_type %>;base64,<%= base64_image %>" alt="Candidate Photo"
-                      style="max-width: 100%; max-height: 240px; object-fit: contain; display: block;" />
+                      style="max-width: 100%; max-height: 200px; object-fit: contain; display: block;" />
                 </div>
               <% else %>
                 <!-- Simple placeholder -->
-                <div style="height: 150px; display: flex; align-items: center; justify-content: center; background: #f0f0f0;">
+                <div style="height: 120px; display: flex; align-items: center; justify-content: center; background: #f0f0f0;">
                   <p style="font-size: 12px; color: #999;">No image</p>
                 </div>
               <% end %>
           <% rescue => e %>
             <!-- Simple error placeholder -->
-            <div style="height: 150px; display: flex; align-items: center; justify-content: center; background: #f0f0f0;">
+            <div style="height: 120px; display: flex; align-items: center; justify-content: center; background: #f0f0f0;">
               <p style="font-size: 10px; color: #999;">Image error: <%= e.message %></p>
               <% if request.format.html? %>
                 <div style="font-size: 9px; color: #ff6b6b; position: absolute; bottom: 5px; left: 5px;">
@@ -62,7 +62,7 @@ candidates_per_page = 2
         </td>
         <% end %>
 
-        <td style="<%= (@profile_photo) ? 'width: 70%;' : 'width: 100%;' %> background: #F7F7F7; padding: 8px;" class="text-left">
+        <td style="<%= (@profile_photo) ? 'width: 70%;' : 'width: 100%;' %> background: #F7F7F7; padding: 6px; vertical-align: top;" class="text-left">
           <h2 style="margin: 0; padding: 0; border-bottom: 1px solid #ddd; padding-bottom: 3px; font-size: 16px;">
             <% if @order_of_passage %>
               <strong><%= performance.order %>.</strong>
@@ -82,7 +82,7 @@ candidates_per_page = 2
           </h2>
 
           <% if @short_bio && performance.candidat.short_bio.present? %>
-            <p style="font-size: 10px; margin-top: 8px; margin-bottom: 2px;"><%= performance.candidat.short_bio %></p>
+            <p style="font-size: 10px; margin-top: 5px; margin-bottom: 2px;"><%= performance.candidat.short_bio %></p>
           <% end %>
 
           <% if @short_bio_en && performance.candidat.short_bio_en.present? %>
@@ -96,7 +96,7 @@ candidates_per_page = 2
       </tr>
     </table>
 
-    <table style="width: 100%; margin-top: 5px; border-collapse: collapse;">
+    <table style="width: 100%; margin-top: 3px; border-collapse: collapse;">
       <tr>
         <% if @detailed_program || @simple_air %>
         <td style="width: 40%; padding: 8px; background: #F7F7F7; vertical-align: top; border-top: 1px solid #ddd;">
