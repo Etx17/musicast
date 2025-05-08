@@ -14,7 +14,7 @@
 
     <%= render "inscriptions/inscription_header", inscription: inscription %>
     <!-- left column -->
-    <div class="col p-0">
+    <div class="col-md-6 p-0">
       <div class=" p-3  bg-transparent rounded-8">
         <div>
           <div class="card-header d-flex justify-content-between align-items-center w-100">
@@ -213,7 +213,7 @@
     </div>
 
     <!-- right column -->
-    <div class="col pe-0">
+    <div class="col-md-6 pe-0">
       <div class="bg-transparent p-3">
         <h2 class="text-secondary "><%= t('inscriptions.inscription.round_by_round_program').upcase %></h2>
         <% inscription.category.tours.order(:tour_number).each do |tour| %>
@@ -334,6 +334,7 @@
                   <span><i class="fas fa-plus me-2"></i> <%= t('inscriptions.inscription.create_my_program') %></span>
                 <% end %>
               <% end %>
+              <%# If organiser, add a button request changes, to add some text on the performance of changes requested %>
             </div>
           </div>
         <% end %>

@@ -13,7 +13,8 @@ class Performance < ApplicationRecord
     draft: 0,
     in_review: 1,
     accepted: 2,
-    rejected: 3
+    rejected: 3,
+    changes_requested: 4
   }
   before_save :update_ordered_air_selection
 
