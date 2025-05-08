@@ -41,7 +41,7 @@ module SidebarHelper
               url: organism_competition_edition_competition_path(competition.organism_id, competition.id, last_edition_competition),
               children: [],
               collapsible: true,
-              collapsed: true
+              collapsed: false
             }
 
             categories = last_edition_competition.categories
@@ -58,7 +58,7 @@ module SidebarHelper
                   label: category_label_with_status,
                   url: organism_competition_edition_competition_category_path(last_edition_competition.competition.organism_id, last_edition_competition.competition_id, last_edition_competition, category),
                   collapsible: true,
-                  collapsed: true,
+                  collapsed: false,
                   children: []
                 }
 
@@ -76,7 +76,7 @@ module SidebarHelper
                 # Add rounds (tours) if they exist
                 category.tours.each do |round|
                   category_link[:children] << {
-                    label: content_tag(:i, '', class: 'fas fa-medal pe-2') + "#{round.title}",
+                    label: content_tag(:i, '', class: 'fas fa-medal pe-2') + "#{round.title.truncate(17)}",
                     url: organism_competition_edition_competition_category_tour_path(last_edition_competition.competition.organism_id, last_edition_competition.competition_id, last_edition_competition, category, round)
                   }
                 end
@@ -102,7 +102,7 @@ module SidebarHelper
             label: content_tag(:i, '', class: 'fas fa-list pe-2') + I18n.t('sidebar.categories'),
             url: admin_categories_path(),
             collapsible: true,
-            collapsed: true,
+            collapsed: false,
             children: []
           }
 
@@ -111,7 +111,7 @@ module SidebarHelper
               label: content_tag(:i, '', class: 'fi fi-rs-music-alt pe-2') + "#{category.name}",
               url: admin_category_path(category),
               collapsible: true,
-              collapsed: true,
+              collapsed: false,
               children: []
             }
 
