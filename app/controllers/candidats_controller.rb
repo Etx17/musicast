@@ -101,6 +101,103 @@ class CandidatsController < ApplicationController
     end
   end
 
+  def purge_portrait
+    @candidat = Candidat.find(params[:id])
+
+    if @candidat.portrait.attached?
+      @candidat.portrait.purge
+
+      respond_to do |format|
+        format.html { redirect_to edit_candidat_path(@candidat), notice: "Photo de portrait supprimée avec succès" }
+        format.json { head :no_content }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to edit_candidat_path(@candidat), alert: "Aucun portrait à supprimer" }
+        format.json { render json: { error: "No portrait attached" }, status: :not_found }
+      end
+    end
+  end
+
+  def upload_portrait
+    @candidat = Candidat.find(params[:id])
+
+    if params[:image].present?
+      # Store metadata if available
+      metadata = nil
+      if params[:image].tempfile.present?
+        begin
+          require 'mini_magick'
+          image = MiniMagick::Image.open(params[:image].tempfile.path)
+          metadata = {
+            dimensions: {
+              width: image.width,
+              height: image.height
+            },
+            size: params[:image].size,
+            format: image.type
+          }
+
+          # Try to get DPI information
+          if image.exif.present? && (image.exif["Resolution"] || image.exif["XResolution"])
+            resolution_x = image.exif["XResolution"] || image.exif["Resolution"]
+            resolution_y = image.exif["YResolution"] || resolution_x
+            metadata[:resolution] = [resolution_x.to_i, resolution_y.to_i]
+          else
+            # Default to 72 DPI if not specified
+            metadata[:resolution] = [72, 72]
+          end
+        rescue => e
+          Rails.logger.error "Error extracting image metadata: #{e.message}"
+        end
+      end
+
+      # Purge existing portrait if present
+      @candidat.portrait.purge if @candidat.portrait.attached?
+
+      # Attach new portrait
+      @candidat.portrait.attach(params[:image])
+      @candidat.save
+
+      if @candidat.portrait.attached?
+        begin
+          image_url = url_for(@candidat.portrait)
+          render json: {
+            success: true,
+            message: "Image téléchargée avec succès",
+            image_url: image_url,
+            metadata: metadata
+          }
+        rescue => e
+          blob = @candidat.portrait.blob
+          alt_url = Rails.application.routes.url_helpers.rails_blob_path(blob, only_path: true)
+          render json: {
+            success: true,
+            message: "Image téléchargée avec succès (URL alternative)",
+            image_url: alt_url,
+            metadata: metadata
+          }
+        end
+      else
+        render json: {
+          success: false,
+          message: "Impossible d'attacher l'image"
+        }, status: :unprocessable_entity
+      end
+    else
+      render json: {
+        success: false,
+        message: "Paramètres manquants"
+      }, status: :bad_request
+    end
+  rescue => e
+    Rails.logger.error "Erreur lors du téléchargement de l'image: #{e.message}"
+    render json: {
+      success: false,
+      message: "Une erreur s'est produite: #{e.message}"
+    }, status: :internal_server_error
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

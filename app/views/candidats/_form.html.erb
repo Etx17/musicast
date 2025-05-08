@@ -43,27 +43,47 @@
         <div class="form-group">
           <%= f.label t('candidats.form.portrait'), required: true, class: 'form-label' %>
           <%= render InfoboxComponent.new(title: t('candidats.form.portrait'), text: t('candidats.form.portrait_required_hint'), icon: 'fas fa-exclamation-circle') %>
-          <% if @candidat.portrait.attached? %>
-            <div class="mb-2">
-              <div id="portrait-preview-container" class="preview-container">
-                <%= image_tag @candidat.portrait, class: "w-100", id: "portrait-preview" %>
-                <div class="mt-1">
-                  <span id="portrait-filename"><%= @candidat.portrait.filename %></span>
-                </div>
+
+          <!-- Prévisualisation qui agit comme bouton d'upload -->
+          <div class="text-center mb-3">
+            <% if @candidat.portrait.attached? %>
+              <div class="position-relative d-inline-block">
+                <%= image_tag url_for(@candidat.portrait), class: "img-fluid rounded", style: "max-height: 200px;", id: "upload_portrait_portrait_file_preview" %>
+                <%= link_to purge_portrait_candidat_path(@candidat),
+                      class: "btn btn-sm btn-outline-secondary rounded-circle position-absolute",
+                      style: "width: 28px; height: 28px; padding: 0; display: flex; align-items: center; justify-content: center; background-color: rgba(255,255,255,0.8); top: 5px; right: 5px;",
+                      data: { turbo_method: :delete, turbo_confirm: "Êtes-vous sûr de vouloir supprimer cette image ?" } do %>
+                  <i class="fas fa-times" style="font-size: 14px;"></i>
+                <% end %>
               </div>
-            </div>
-            <small class="text-muted mb-2 d-block"><%= t('global.actions.replace_image_hint') || "Pour remplacer cette image, téléchargez une nouvelle photo ci-dessous" %></small>
-          <% else %>
-            <div id="portrait-preview-container" class="preview-container d-none">
-              <img src="" id="portrait-preview" class="img-thumbnail" style="max-height: 200px;">
-              <div class="mt-1">
-                <span id="portrait-filename"></span>
+              <div class="mt-2" id="upload-status-portrait">
+                <small class="text-success"><i class="fas fa-check-circle"></i> Image enregistrée</small>
               </div>
-            </div>
-          <% end %>
-          <%= f.file_field :portrait, class: "form-control",
-                          accept: "image/png, image/jpeg",
-                          onchange: "previewImage(this, 'portrait-preview', 'portrait-preview-container', 'portrait-filename')" %>
+            <% else %>
+              <div class="upload-placeholder p-3 border rounded d-flex flex-column align-items-center justify-content-center"
+                   style="height: 200px; cursor: pointer;"
+                   id="upload_portrait_portrait_file_preview">
+                <i class="fas fa-upload fa-3x mb-3 text-muted"></i>
+                <p class="text-muted">Cliquez pour sélectionner une photo</p>
+              </div>
+            <% end %>
+          </div>
+
+          <!-- Ajouter un attribut data pour l'ID du candidat -->
+          <div data-candidat-id="<%= @candidat.id %>">
+            <%= render "common/image_cropper",
+                model: "candidat",
+                field: "portrait",
+                aspect_ratio: 0.75, # 3:4 vertical portrait ratio
+                display_width: 500,
+                item_count: "portrait" %>
+          </div>
+
+          <%= f.input :portrait, as: :hidden,
+                     input_html: {
+                       class: "image-hidden-input",
+                       id: "candidat_portrait"
+                     } %>
         </div>
       </div>
       <div class="col-md-4">
@@ -294,5 +314,220 @@
         document.getElementById(filenameId).textContent = file.name;
       }
     }
+
+    // Direct override of the AJAX upload function for portrait
+    document.addEventListener('DOMContentLoaded', function() {
+      // Make the placeholder clickable to trigger the file input
+      const portraitPlaceholder = document.getElementById('upload_portrait_portrait_file_preview');
+      if (portraitPlaceholder && portraitPlaceholder.classList.contains('upload-placeholder')) {
+        portraitPlaceholder.addEventListener('click', function() {
+          document.getElementById('upload_portrait_portrait_file_field').click();
+        });
+      }
+
+      // Get the candidate ID
+      const candidatId = document.querySelector('[data-candidat-id]')?.dataset?.candidatId;
+      if (!candidatId) return;
+
+      // Override the AJAX call completely
+      const originalAjax = $.ajax;
+      $.ajax = function(options) {
+        // Check if this is the image upload AJAX call
+        if (options.url && options.url.includes('upload_item_image')) {
+          console.log('Intercepting AJAX call to upload_item_image');
+
+          // Replace with our candidat upload endpoint
+          const locale = document.documentElement.lang || 'fr';
+          options.url = `/${locale}/candidats/${candidatId}/upload_portrait`;
+          console.log('Redirecting to:', options.url);
+
+          // Make sure we're sending the image correctly
+          if (options.data instanceof FormData) {
+            // Keep only the image data and remove item_id
+            const image = options.data.get('image');
+            options.data = new FormData();
+            options.data.append('image', image);
+          }
+        }
+
+        // Call the original AJAX function with our modified options
+        return originalAjax.apply(this, arguments);
+      };
+
+      // Also handle the delete button to use turbo correctly
+      document.querySelectorAll('a[href*="purge_portrait"]').forEach(function(link) {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+
+          if (confirm(this.dataset.turboConfirm || "Êtes-vous sûr de vouloir supprimer cette image ?")) {
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+            fetch(this.href, {
+              method: 'DELETE',
+              headers: {
+                'X-CSRF-Token': csrfToken,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+              },
+              credentials: 'same-origin'
+            }).then(response => {
+              if (response.ok) {
+                // Reload the page to show the updated state
+                window.location.reload();
+              } else {
+                console.error('Error deleting portrait:', response.statusText);
+                alert('Une erreur est survenue lors de la suppression de l\'image');
+              }
+            }).catch(error => {
+              console.error('Error deleting portrait:', error);
+              alert('Une erreur est survenue lors de la suppression de l\'image');
+            });
+          }
+        });
+      });
+    });
+
+    // Direct patch for the image cropper
+    document.addEventListener('DOMContentLoaded', function() {
+      // Wait for the cropper script to be fully loaded
+      setTimeout(function() {
+        // Check if we're on a candidat form
+        const candidatId = document.querySelector('[data-candidat-id]')?.dataset?.candidatId;
+        if (candidatId) {
+          console.log('Detected candidat form with ID:', candidatId);
+
+          // Find the button element that triggers the AJAX upload
+          const cropButton = document.getElementById('button_portrait_portrait');
+          if (cropButton) {
+            // Store the original click handler
+            const originalClickHandler = cropButton.onclick;
+
+            // Replace with our custom handler
+            cropButton.onclick = function(event) {
+              console.log('Intercepting crop button click');
+
+              // Get the cropper instance
+              const image = document.getElementById('upload_portrait_portrait_image');
+              if (!image || !image.cropper) {
+                console.error('Cropper not initialized');
+                return originalClickHandler.call(this, event);
+              }
+
+              // Get the cropped canvas - using 3:4 aspect ratio for portrait
+              const croppedCanvas = image.cropper.getCroppedCanvas({
+                maxWidth: 2000,
+                maxHeight: 2000,
+                aspectRatio: 0.75 // 3:4 vertical portrait ratio
+              });
+
+              if (!croppedCanvas) {
+                console.error('Failed to get cropped canvas');
+                return originalClickHandler.call(this, event);
+              }
+
+              // Convert to blob
+              croppedCanvas.toBlob(function(blob) {
+                // Create a new file object
+                const fileName = "portrait.jpg";
+                const newFile = new File([blob], fileName, {type: "image/jpeg"});
+
+                // Update preview
+                const preview = document.getElementById('upload_portrait_portrait_file_preview');
+                if (preview) {
+                  preview.src = croppedCanvas.toDataURL('image/jpeg');
+                  if (preview.classList.contains('upload-placeholder')) {
+                    preview.classList.remove('upload-placeholder');
+                    preview.innerHTML = '';
+                    preview.className = 'img-fluid rounded';
+                    preview.style.maxHeight = '200px';
+                  }
+                }
+
+                // Create FormData
+                const formData = new FormData();
+                formData.append('image', newFile);
+
+                // Get CSRF token
+                const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+                // Construct the upload URL for candidat
+                const locale = document.documentElement.lang || 'fr';
+                const uploadUrl = `/${locale}/candidats/${candidatId}/upload_portrait`;
+
+                console.log('Uploading to candidat endpoint:', uploadUrl);
+
+                // Show loading indicator
+                const statusDiv = document.getElementById('upload-status-portrait') ||
+                                 document.createElement('div');
+                statusDiv.id = 'upload-status-portrait';
+                statusDiv.className = 'mt-2';
+                statusDiv.innerHTML = '<div class="spinner-border spinner-border-sm text-primary" role="status"></div> <small>Téléchargement en cours...</small>';
+
+                if (!document.getElementById('upload-status-portrait')) {
+                  const container = preview.parentNode;
+                  container.parentNode.appendChild(statusDiv);
+                }
+
+                // Send AJAX request
+                fetch(uploadUrl, {
+                  method: 'POST',
+                  body: formData,
+                  headers: {
+                    'X-CSRF-Token': csrfToken
+                  },
+                  credentials: 'same-origin'
+                })
+                .then(response => response.json())
+                .then(data => {
+                  console.log('Upload successful:', data);
+                  statusDiv.innerHTML = '<small class="text-success"><i class="fas fa-check-circle"></i> Image téléchargée avec succès</small>';
+
+                  // Update hidden input
+                  const hiddenInput = document.getElementById('candidat_portrait');
+                  if (hiddenInput) {
+                    // Create a new FileList-like object
+                    const dataTransfer = new DataTransfer();
+                    dataTransfer.items.add(newFile);
+
+                    // Set the file to the hidden input
+                    hiddenInput.files = dataTransfer.files;
+
+                    // Trigger change event
+                    const event = new Event('change', { bubbles: true });
+                    hiddenInput.dispatchEvent(event);
+                  }
+
+                  // Close the modal
+                  const modalElement = document.getElementById('upload-portrait-portrait-modal');
+                  if (modalElement) {
+                    const modalInstance = bootstrap.Modal.getInstance(modalElement);
+                    if (modalInstance) {
+                      modalInstance.hide();
+                    }
+                  }
+                })
+                .catch(error => {
+                  console.error('Upload failed:', error);
+                  statusDiv.innerHTML = '<small class="text-danger"><i class="fas fa-exclamation-circle"></i> Erreur: ' + error.message + '</small>';
+                });
+
+                // Prevent the original handler from executing
+                event.stopPropagation();
+                return false;
+              }, 'image/jpeg', 0.9);
+
+              // Prevent the original handler from executing
+              event.preventDefault();
+              event.stopPropagation();
+              return false;
+            };
+
+            console.log('Successfully patched crop button click handler');
+          } else {
+            console.error('Could not find crop button');
+          }
+        }
+      }, 1000); // Wait for everything to be loaded
+    });
   </script>
 <% end %>

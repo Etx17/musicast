@@ -121,6 +121,8 @@ Rails.application.routes.draw do
         post :add_diploma
         delete :delete_diploma
         delete :purge_attachment
+        delete :purge_portrait
+        post :upload_portrait
       end
     end
     resources :organisateurs

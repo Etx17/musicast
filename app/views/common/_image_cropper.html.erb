@@ -1,4 +1,5 @@
 		<% item_count ||= 0 %>
+		<% aspect_ratio = local_assigns[:aspect_ratio].present? ? local_assigns[:aspect_ratio] : 1.0 %>
 		<script>
 				$(function () {
 
@@ -44,7 +45,7 @@
 									preview: '#upload_<%= field %>_<%= item_count %>_preview',
 									viewMode: 1,
 									dragMode: 'move',
-									<%= "aspectRatio: #{aspect_ratio}," if local_assigns[:aspect_ratio].present? %>
+									aspectRatio: <%= aspect_ratio %>,
 									restore: false,
 									guides: false,
 									highlight: false,
@@ -146,21 +147,32 @@
 
 									// Construire l'URL d'upload manuellement car nous n'avons pas accès aux helpers de route
 									var inscriptionId = $('[data-inscription-id]').data('inscription-id');
-									if (!inscriptionId) {
-										inscriptionId = window.location.pathname.match(/\/inscriptions\/(\d+)/);
-										inscriptionId = inscriptionId ? inscriptionId[1] : null;
-									}
-
-									console.log("Uploading image for inscription ID:", inscriptionId);
-
-									// Construire l'URL en utilisant le locale actuel
+									var candidatId = $('[data-candidat-id]').data('candidat-id');
+									var uploadUrl;
 									var locale = document.documentElement.lang || 'fr';
-									var uploadUrl = '/' + locale + '/inscriptions/' + inscriptionId + '/steps/upload_item_image';
+
+									// Check if we're on a candidat form
+									if (candidatId) {
+										console.log("Detected candidat form with ID:", candidatId);
+										uploadUrl = '/' + locale + '/candidats/' + candidatId + '/upload_portrait';
+									} else {
+										// Default to inscription path
+										if (!inscriptionId) {
+											inscriptionId = window.location.pathname.match(/\/inscriptions\/(\d+)/);
+											inscriptionId = inscriptionId ? inscriptionId[1] : null;
+										}
+										console.log("Uploading image for inscription ID:", inscriptionId);
+										uploadUrl = '/' + locale + '/inscriptions/' + inscriptionId + '/steps/upload_item_image';
+									}
 
 									// Soumettre l'image via AJAX
 									var formData = new FormData();
 									formData.append('image', newFile);
-									formData.append('item_id', '<%= item_count %>');
+
+									// Only add item_id for inscriptions, not for candidats
+									if (!candidatId) {
+										formData.append('item_id', '<%= item_count %>');
+									}
 
 									// Afficher un indicateur de chargement
 									$('#upload_<%= field %>_<%= item_count %>_file_preview').after('<div id="upload-status-<%= item_count %>" class="mt-2"><div class="spinner-border spinner-border-sm text-primary" role="status"></div> <small>Téléchargement en cours...</small></div>');
@@ -420,7 +432,7 @@
 																context.drawImage(img, 0, 0);
 
 																var cropper = canvas.cropper({
-																		<%= "aspectRatio: #{aspect_ratio}," if local_assigns[:aspect_ratio].present? %>
+																		aspectRatio: <%= aspect_ratio %>,
 																		cropBoxResizable: true,
 																		scalable: false,
 																		zoomable: false,
@@ -576,7 +588,15 @@
             <span class="text-gray">
               Your original image should be at least <%= local_assigns[:display_width].present? ? local_assigns[:display_width] : 500 %> pixels wide.
               <% if local_assigns[:aspect_ratio].present? %>
-                The final image will be resized to <%= local_assigns[:aspect_ratio].to_i == 1 ? "be square" : "a ratio of #{display_ratio(local_assigns[:aspect_ratio]).split("/").join(" wide by ")} high" %>.
+                <% if local_assigns[:aspect_ratio] == 1.0 %>
+                  The final image will be resized to be square.
+                <% elsif local_assigns[:aspect_ratio] == 0.75 %>
+                  The final image will be resized to a vertical portrait format (3:4).
+                <% elsif local_assigns[:aspect_ratio] == 1.33 %>
+                  The final image will be resized to a horizontal landscape format (4:3).
+                <% else %>
+                  The final image will be resized to a ratio of <%= local_assigns[:aspect_ratio] %>.
+                <% end %>
               <% end %>
               The best image format for upload is .png.
               Only the following file types are accepted: PNG JPEG JPG.
