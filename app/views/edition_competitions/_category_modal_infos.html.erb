@@ -148,11 +148,7 @@
             <div class="d-flex flex-wrap gap-4">
               <% category.juries.each do |jury| %>
                 <div class="jury-member" style="min-width: 200px;">
-                  <% if jury.avatar.attached? %>
-                    <%= image_tag jury.avatar, class: "rounded-circle mb-2", style: "width: 100px; height: 100px; object-fit: cover;" %>
-                  <% else %>
-                    <div class="rounded-circle bg-secondary mb-2" style="width: 100px; height: 100px;"></div>
-                  <% end %>
+                  <%= image_tag jury.avatar_or_default, class: "rounded-circle mb-2", style: "width: 100px; height: 100px; object-fit: cover;" %>
                   <div><strong><%= jury.full_name %></strong></div>
                   <div class="text-muted small"><%= jury.short_bio %></div>
                 </div>
