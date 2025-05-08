@@ -86,7 +86,7 @@
         <div class="d-flex justify-content-between gap-2 align-items-center mb-2">
           <div class="d-flex justify-content-start align-items-center gap-2">
             <h3 class=mb-0><%= t('inscriptions.inscription.air_list') %></h3>
-            <% if current_user.candidat && inscription.category.edition_competition.end_of_registration > Date.today %>
+            <% if current_user.candidat && inscription.category.edition_competition.end_of_registration > Time.now %>
               <%= link_to edit_inscription_step_path(inscription, :program), class: 'text-primary' do %>
                   <i class="fas fa-edit fa-lg"></i>
               <% end %>
@@ -153,13 +153,13 @@
               <% end %>
 
             <% end %>
-            <% if current_user.candidat && inscription.is_late_inscription && Date.today < inscription.category.tours.first.final_performance_submission_deadline %>
+            <% if current_user.candidat && inscription.is_late_inscription && Time.now < inscription.category.tours.first.final_performance_submission_deadline %>
               <%= link_to edit_inscription_step_path(inscription, :item_requirements), class: "text-primary" do %>
                   <i class="fas fa-edit fa-lg"></i>
               <% end %>
             <% end %>
 
-            <% if current_user.candidat && inscription.category.edition_competition.end_of_registration > Date.today %>
+            <% if current_user.candidat && inscription.category.edition_competition.end_of_registration > Time.now %>
               <%= link_to edit_inscription_step_path(inscription, :item_requirements), class: "text-primary" do %>
                   <i class="fas fa-edit fa-lg"></i>
               <% end %>
