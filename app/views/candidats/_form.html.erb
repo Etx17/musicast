@@ -52,19 +52,19 @@
                 <%= link_to purge_portrait_candidat_path(@candidat),
                       class: "btn btn-sm btn-outline-secondary rounded-circle position-absolute",
                       style: "width: 28px; height: 28px; padding: 0; display: flex; align-items: center; justify-content: center; background-color: rgba(255,255,255,0.8); top: 5px; right: 5px;",
-                      data: { turbo_method: :delete, turbo_confirm: "Êtes-vous sûr de vouloir supprimer cette image ?" } do %>
+                      data: { turbo_method: :delete, turbo_confirm: t('image_cropper.delete_confirm') } do %>
                   <i class="fas fa-times" style="font-size: 14px;"></i>
                 <% end %>
               </div>
               <div class="mt-2" id="upload-status-portrait">
-                <small class="text-success"><i class="fas fa-check-circle"></i> Image enregistrée</small>
+                <small class="text-success"><i class="fas fa-check-circle"></i> <%= t('image_cropper.image_saved') %></small>
               </div>
             <% else %>
               <div class="upload-placeholder p-3 border rounded d-flex flex-column align-items-center justify-content-center"
                    style="height: 200px; cursor: pointer;"
                    id="upload_portrait_portrait_file_preview">
                 <i class="fas fa-upload fa-3x mb-3 text-muted"></i>
-                <p class="text-muted">Cliquez pour sélectionner une photo</p>
+                <p class="text-muted"><%= t('image_cropper.click_to_select_photo') %></p>
               </div>
             <% end %>
           </div>
@@ -359,7 +359,7 @@
         link.addEventListener('click', function(e) {
           e.preventDefault();
 
-          if (confirm(this.dataset.turboConfirm || "Êtes-vous sûr de vouloir supprimer cette image ?")) {
+          if (confirm(this.dataset.turboConfirm || "<%= t('image_cropper.delete_confirm') %>")) {
             const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
             fetch(this.href, {
@@ -376,11 +376,11 @@
                 window.location.reload();
               } else {
                 console.error('Error deleting portrait:', response.statusText);
-                alert('Une erreur est survenue lors de la suppression de l\'image');
+                alert("<%= t('image_cropper.upload_error', message: '') %>" + response.statusText);
               }
             }).catch(error => {
               console.error('Error deleting portrait:', error);
-              alert('Une erreur est survenue lors de la suppression de l\'image');
+              alert("<%= t('image_cropper.upload_error', message: '') %>" + error);
             });
           }
         });
@@ -461,7 +461,7 @@
                                  document.createElement('div');
                 statusDiv.id = 'upload-status-portrait';
                 statusDiv.className = 'mt-2';
-                statusDiv.innerHTML = '<div class="spinner-border spinner-border-sm text-primary" role="status"></div> <small>Téléchargement en cours...</small>';
+                statusDiv.innerHTML = '<div class="spinner-border spinner-border-sm text-primary" role="status"></div> <small><%= t("image_cropper.uploading") %></small>';
 
                 if (!document.getElementById('upload-status-portrait')) {
                   const container = preview.parentNode;
@@ -480,7 +480,42 @@
                 .then(response => response.json())
                 .then(data => {
                   console.log('Upload successful:', data);
-                  statusDiv.innerHTML = '<small class="text-success"><i class="fas fa-check-circle"></i> Image téléchargée avec succès</small>';
+                  var statusMessage = '<small class="text-success"><i class="fas fa-check-circle"></i> <%= t("image_cropper.upload_success") %></small>';
+
+                  if (data.metadata) {
+                    var meta = data.metadata;
+                    if (meta.dimensions && meta.resolution) {
+                      // Créer une section dédiée pour les métadonnées avec un style plus visible
+                      statusMessage += '<div class="metadata-info mt-2 p-2 border rounded bg-light">';
+                      statusMessage += '<h6 class="mb-1"><i class="fas fa-info-circle"></i> <%= t("image_cropper.image_info") %></h6>';
+                      statusMessage += '<div class="d-flex flex-column">';
+
+                      // Dimensions avec icône
+                      statusMessage += '<div class="mb-1"><i class="fas fa-ruler-combined text-primary me-1"></i> <strong><%= t("image_cropper.dimensions") %>:</strong> ' + meta.dimensions.width + ' × ' + meta.dimensions.height + ' <%= t("image_cropper.px") %></div>';
+
+                      // DPI avec icône et mise en évidence
+                      var dpiX = meta.resolution[0];
+                      var dpiY = meta.resolution[1];
+
+                      // Ajouter une classe de couleur en fonction de la valeur du DPI
+                      var dpiClass = 'text-success';
+                      if (dpiX < 300) dpiClass = 'text-warning';
+                      if (dpiX < 150) dpiClass = 'text-danger';
+
+                      statusMessage += '<div class="' + dpiClass + '"><i class="fas fa-compress-arrows-alt me-1"></i> <strong><%= t("image_cropper.resolution") %>:</strong> ' +
+                        dpiX + ' × ' + dpiY + ' <%= t("image_cropper.dpi") %></div>';
+
+                      // Taille du fichier si disponible
+                      if (meta.size) {
+                        var fileSizeKB = Math.round(meta.size / 1024);
+                        var fileSizeMB = (fileSizeKB / 1024).toFixed(2);
+                        var sizeText = fileSizeKB > 1024 ? fileSizeMB + ' MB' : fileSizeKB + ' KB';
+                        statusMessage += '<div><i class="fas fa-file-alt text-secondary me-1"></i> <strong><%= t("image_cropper.size") %>:</strong> ' + sizeText + '</div>';
+                      }
+
+                      statusMessage += '</div></div>';
+                    }
+                  }
 
                   // Update hidden input
                   const hiddenInput = document.getElementById('candidat_portrait');
@@ -505,10 +540,13 @@
                       modalInstance.hide();
                     }
                   }
+
+                  // Update the status div with our message
+                  statusDiv.innerHTML = statusMessage;
                 })
                 .catch(error => {
                   console.error('Upload failed:', error);
-                  statusDiv.innerHTML = '<small class="text-danger"><i class="fas fa-exclamation-circle"></i> Erreur: ' + error.message + '</small>';
+                  statusDiv.innerHTML = '<small class="text-danger"><i class="fas fa-exclamation-circle"></i> <%= t("image_cropper.upload_error", message: "") %>' + error.message + '</small>';
                 });
 
                 // Prevent the original handler from executing

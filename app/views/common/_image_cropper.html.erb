@@ -1,5 +1,6 @@
 		<% item_count ||= 0 %>
 		<% aspect_ratio = local_assigns[:aspect_ratio].present? ? local_assigns[:aspect_ratio] : 1.0 %>
+		<% display_width = local_assigns[:display_width].present? ? local_assigns[:display_width].to_i+2 : 502 %>
 		<script>
 				$(function () {
 
@@ -203,7 +204,7 @@
 											if (previewContainer.find('.upload-placeholder').length) {
 												var imageHTML = '<div class="position-relative d-inline-block">' +
 													'<img src="' + response.image_url + '" class="img-fluid rounded" style="max-height: 200px;" id="upload_<%= field %>_<%= item_count %>_file_preview">' +
-													'<a href="' + purgeUrl + '" class="btn btn-sm btn-outline-secondary rounded-circle position-absolute" style="width: 28px; height: 28px; padding: 0; display: flex; align-items: center; justify-content: center; background-color: rgba(255,255,255,0.8); top: 5px; right: 5px;" data-confirm="Êtes-vous sûr de vouloir supprimer cette image ?">' +
+													'<a href="' + purgeUrl + '" class="btn btn-sm btn-outline-secondary rounded-circle position-absolute" style="width: 28px; height: 28px; padding: 0; display: flex; align-items: center; justify-content: center; background-color: rgba(255,255,255,0.8); top: 5px; right: 5px;" data-confirm="<%= I18n.t("image_cropper.delete_confirm") %>">' +
 													'<i class="fas fa-times" style="font-size: 14px;"></i>' +
 													'</a>' +
 													'</div>';
@@ -216,18 +217,18 @@
 												}
 											}
 
-											var statusMessage = '<small class="text-success"><i class="fas fa-check-circle"></i> Image téléchargée avec succès</small>';
+											var statusMessage = '<small class="text-success"><i class="fas fa-check-circle"></i> <%= I18n.t("image_cropper.upload_success") %></small>';
 
 											if (response.metadata) {
 												var meta = response.metadata;
 												if (meta.dimensions && meta.resolution) {
 													// Créer une section dédiée pour les métadonnées avec un style plus visible
 													statusMessage += '<div class="metadata-info mt-2 p-2 border rounded bg-light">';
-													statusMessage += '<h6 class="mb-1"><i class="fas fa-info-circle"></i> Informations sur l\'image</h6>';
+													statusMessage += '<h6 class="mb-1"><i class="fas fa-info-circle"></i> <%= I18n.t("image_cropper.image_info") %></h6>';
 													statusMessage += '<div class="d-flex flex-column">';
 
 													// Dimensions avec icône
-													statusMessage += '<div class="mb-1"><i class="fas fa-ruler-combined text-primary me-1"></i> <strong>Dimensions:</strong> ' + meta.dimensions.width + ' × ' + meta.dimensions.height + ' pixels</div>';
+													statusMessage += '<div class="mb-1"><i class="fas fa-ruler-combined text-primary me-1"></i> <strong><%= I18n.t("image_cropper.dimensions") %>:</strong> ' + meta.dimensions.width + ' × ' + meta.dimensions.height + ' <%= I18n.t("image_cropper.px") %></div>';
 
 													// DPI avec icône et mise en évidence
 													var dpiX = meta.resolution[0];
@@ -238,15 +239,15 @@
 													if (dpiX < 300) dpiClass = 'text-warning';
 													if (dpiX < 150) dpiClass = 'text-danger';
 
-													statusMessage += '<div class="' + dpiClass + '"><i class="fas fa-compress-arrows-alt me-1"></i> <strong>Résolution:</strong> ' +
-														dpiX + ' × ' + dpiY + ' DPI</div>';
+													statusMessage += '<div class="' + dpiClass + '"><i class="fas fa-compress-arrows-alt me-1"></i> <strong><%= I18n.t("image_cropper.resolution") %>:</strong> ' +
+														dpiX + ' × ' + dpiY + ' <%= I18n.t("image_cropper.dpi") %></div>';
 
 													// Taille du fichier si disponible
 													if (meta.size) {
 														var fileSizeKB = Math.round(meta.size / 1024);
 														var fileSizeMB = (fileSizeKB / 1024).toFixed(2);
 														var sizeText = fileSizeKB > 1024 ? fileSizeMB + ' MB' : fileSizeKB + ' KB';
-														statusMessage += '<div><i class="fas fa-file-alt text-secondary me-1"></i> <strong>Taille:</strong> ' + sizeText + '</div>';
+														statusMessage += '<div><i class="fas fa-file-alt text-secondary me-1"></i> <strong><%= I18n.t("image_cropper.size") %>:</strong> ' + sizeText + '</div>';
 													}
 
 													statusMessage += '</div></div>';
@@ -280,7 +281,7 @@
 										},
 										error: function(xhr, status, error) {
 											console.error("Error uploading image:", error);
-											$('#upload-status-<%= item_count %>').html('<small class="text-danger"><i class="fas fa-exclamation-circle"></i> Erreur: ' + (xhr.responseJSON?.message || error) + '</small>');
+											$('#upload-status-<%= item_count %>').html('<small class="text-danger"><i class="fas fa-exclamation-circle"></i> <%= I18n.t("image_cropper.upload_error", message: "") %>' + (xhr.responseJSON?.message || error) + '</small>');
 										}
 									});
 
@@ -502,7 +503,7 @@
 
 					// Afficher immédiatement le panneau avec un message de chargement
 					metadataPanel.style.display = 'block';
-					metadataContent.innerHTML = 'Analyzing image...';
+					metadataContent.innerHTML = '<%= I18n.t("image_cropper.analyzing_image") %>';
 
 					// Créer un FileReader pour lire l'image
 					var reader = new FileReader();
@@ -523,14 +524,14 @@
 
 							// Récupérer les DPI depuis la réponse AJAX après le téléchargement
 							// Pour l'instant, afficher que les dimensions et la taille sont disponibles
-							var html = '<i class="fas fa-expand-arrows-alt"></i> Dimensions: ' + width + 'x' + height + ' px<br>' +
-									   '<i class="fas fa-file-image"></i> Format: ' + format + '<br>' +
-									   '<i class="fas fa-weight-hanging"></i> Size: ' + fileSize;
+							var html = '<i class="fas fa-expand-arrows-alt"></i> <%= I18n.t("image_cropper.dimensions") %>: ' + width + 'x' + height + ' <%= I18n.t("image_cropper.px") %><br>' +
+									   '<i class="fas fa-file-image"></i> <%= I18n.t("image_cropper.format") %>: ' + format + '<br>' +
+									   '<i class="fas fa-weight-hanging"></i> <%= I18n.t("image_cropper.size") %>: ' + fileSize;
 
 							metadataContent.innerHTML = html;
 
 							// Par défaut, utiliser DPI estimé basé sur dimensions (considérer 300 DPI comme référence)
-							dpiBadge.textContent = "Waiting for DPI data...";
+							dpiBadge.textContent = "<%= I18n.t("image_cropper.waiting_for_dpi") %>";
 							dpiBadge.className = "badge badge-secondary";
 						};
 						img.src = e.target.result;
@@ -563,20 +564,13 @@
 		<% %w[x y w h].each do |attribute| %>
 			<input type="hidden" name="<%= model %>[upload_<%= field %>_crop_<%= attribute %>]" id="upload_<%= field %>_<%= item_count %>_crop_<%= attribute %>">
 		<% end %>
-		<% if local_assigns[:display_width].present? %>
-			<% display_width = local_assigns[:display_width].to_i+2  %>
-		<% else %>
-			<% display_width = 502 %>
-		<% end %>
 
 		<!-- Modal -->
-
-	    <!-- Modal -->
     <div class="modal fade bg-gray modal-cropper" id="upload-<%= field %>-<%= item_count %>-modal" aria-labelledby="modalLabel" role="dialog" tabindex="-1">
       <div class="modal-dialog" role="document" style="width:<%= display_width+2 %>px;max-width:<%= display_width+2 %>px;">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Adjust the image</h5>
+            <h5 class="modal-title"><%= t('image_cropper.adjust_image') %></h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
 
@@ -586,29 +580,28 @@
           </div>
           <div style="margin:5px;text-align:center;">
             <span class="text-gray">
-              Your original image should be at least <%= local_assigns[:display_width].present? ? local_assigns[:display_width] : 500 %> pixels wide.
+              <%= t('image_cropper.image_requirements', width: local_assigns[:display_width].present? ? local_assigns[:display_width] : 500) %>
               <% if local_assigns[:aspect_ratio].present? %>
                 <% if local_assigns[:aspect_ratio] == 1.0 %>
-                  The final image will be resized to be square.
+                  <%= t('image_cropper.square_format') %>
                 <% elsif local_assigns[:aspect_ratio] == 0.75 %>
-                  The final image will be resized to a vertical portrait format (3:4).
+                  <%= t('image_cropper.portrait_format') %>
                 <% elsif local_assigns[:aspect_ratio] == 1.33 %>
-                  The final image will be resized to a horizontal landscape format (4:3).
+                  <%= t('image_cropper.landscape_format') %>
                 <% else %>
-                  The final image will be resized to a ratio of <%= local_assigns[:aspect_ratio] %>.
+                  <%= t('image_cropper.custom_ratio_format', ratio: local_assigns[:aspect_ratio]) %>
                 <% end %>
               <% end %>
-              The best image format for upload is .png.
-              Only the following file types are accepted: PNG JPEG JPG.
-              <br><span class="text-primary">For best quality, we recommend a resolution of at least 300 DPI.</span>
+              <%= t('image_cropper.best_format') %>
+              <br><span class="text-primary"><%= t('image_cropper.dpi_recommendation') %></span>
             </span>
           </div>
 
           <!-- Info panel pour les métadonnées de l'image -->
           <div id="image-metadata-<%= item_count %>" class="p-2 border-top border-bottom my-2" style="display: none;">
             <div class="d-flex justify-content-between">
-              <strong>Image Metadata</strong>
-              <span class="badge" id="dpi-badge-<%= item_count %>">0 DPI</span>
+              <strong><%= t('image_cropper.image_metadata') %></strong>
+              <span class="badge" id="dpi-badge-<%= item_count %>">0 <%= t('image_cropper.dpi') %></span>
             </div>
             <div class="small" id="metadata-content-<%= item_count %>"></div>
           </div>
@@ -623,7 +616,7 @@
         </div>
           <div class="modal-footer">
             <div class="d-flex justify-content-center w-100">
-              <input type="button" class="btn btn-primary" id="button_<%= field %>_<%= item_count %>" value="Save" data-bs-dismiss="modal">
+              <input type="button" class="btn btn-primary" id="button_<%= field %>_<%= item_count %>" value="<%= t('image_cropper.save') %>" data-bs-dismiss="modal">
 	          </div>
         	</div>
         </div>
