@@ -1051,6 +1051,13 @@ fr:
       reminder: "Rappel: Finissez de constituer votre dossier s'il n'est pas terminé. Les dossiers incomplets sont automatiquement rejetés et ne sont pas remboursables."
       view_application: "Voir ma candidature"
   inscriptions:
+    modals:
+      payment_required:
+        title_accepted: "Félicitations ! Votre candidature a été acceptée"
+        title_payment_error: "Attention : Problème de paiement"
+        accepted_message: "Votre dossier a été approuvé par les organisateurs du concours. Pour finaliser votre inscription, veuillez procéder au paiement des frais d'inscription dans la rubrique 'DETAILS' de cette page (télécharger une preuve de paiement)."
+        payment_error_message: "Une erreur a été détectée dans votre précédent paiement. Pour finaliser votre inscription, veuillez procéder à un nouveau paiement des frais d'inscription dans la rubrique 'DETAILS' de cette page (télécharger une nouvelle preuve de paiement)."
+        close: "Fermer"
     payment_proof: "Preuve de paiement"
     scores:
       scores_info: "Déposez impérativement les partitions des pièces que vous interprêtez pour ce tour. Elles seront accessibles aux jurys et à votre pianiste accompagnateur assigné, s'il y en a un. L'organisme du concours peut également vous envoyer des partitions sur cet espace."

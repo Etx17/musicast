@@ -348,3 +348,62 @@
     </div>
   </div>
 </div>
+
+  <% if inscription.approved_waiting_payment? || inscription.payment_error_waiting_payment? %>
+    <!-- Modal pour le paiement -->
+    <div class="modal" id="paymentRequiredModal" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header bg-success text-white">
+            <h5 class="modal-title" id="paymentRequiredModalLabel">
+              <% if inscription.approved_waiting_payment? %>
+                <%= t('inscriptions.modals.payment_required.title_accepted') %>
+              <% else %>
+                <%= t('inscriptions.modals.payment_required.title_payment_error') %>
+              <% end %>
+            </h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="<%= t('inscriptions.modals.payment_required.close') %>"></button>
+          </div>
+          <div class="modal-body">
+            <% if inscription.approved_waiting_payment? %>
+              <p><%= t('inscriptions.modals.payment_required.accepted_message') %></p>
+            <% elsif inscription.payment_error_waiting_payment? %>
+              <p class="text-danger"><%= t('inscriptions.modals.payment_required.payment_error_message') %></p>
+            <% end %>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><%= t('inscriptions.modals.payment_required.close') %></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        var modal = document.getElementById('paymentRequiredModal');
+        modal.style.display = 'block';
+        modal.classList.add('show');
+        document.body.classList.add('modal-open');
+
+        // Ajouter un backdrop manuellement
+        var backdrop = document.createElement('div');
+        backdrop.className = 'modal-backdrop fade show';
+        document.body.appendChild(backdrop);
+
+        // Gérer la fermeture de la modale
+        document.querySelectorAll('[data-bs-dismiss="modal"]').forEach(function(button) {
+          button.addEventListener('click', function() {
+            modal.style.display = 'none';
+            modal.classList.remove('show');
+            document.body.classList.remove('modal-open');
+
+            // Supprimer le backdrop
+            var backdrop = document.querySelector('.modal-backdrop');
+            if (backdrop) {
+              backdrop.parentNode.removeChild(backdrop);
+            }
+          });
+        });
+      });
+    </script>
+  <% end %>

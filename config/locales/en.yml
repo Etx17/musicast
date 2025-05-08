@@ -1085,6 +1085,13 @@ en:
       view_application: "View my application"
 
   inscriptions:
+    modals:
+      payment_required:
+        title_accepted: "Congratulations! Your application has been accepted"
+        title_payment_error: "Warning: Payment Issue"
+        accepted_message: "Your application has been approved by the competition organizers. To complete your registration, please proceed with the payment of the registration fee in the 'DETAILS' section of this page (upload a proof of payment)."
+        payment_error_message: "An error was detected in your previous payment. To complete your registration, please proceed with a new payment of the registration fee in the 'DETAILS' section of this page (upload a new proof of payment)."
+        close: "Close"
     payment_proof: "Payment proof"
     scores:
       scores_info: "Upload imperatively the scores of the pieces you will perform for this round. They will be accessible to the jury and your assigned accompanist, if there is one. The competition organization can also send you scores through this area."
