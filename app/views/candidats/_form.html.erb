@@ -23,7 +23,8 @@
     <div class="row g-3 mb-3">
       <div class="col-md-4">
         <div class="form-group">
-          <%= f.label t('candidats.form.portrait'), class: 'form-label' %>
+          <%= f.label t('candidats.form.portrait'), required: true, class: 'form-label' %>
+          <%= render InfoboxComponent.new(title: t('candidats.form.portrait'), text: t('candidats.form.portrait_required_hint'), icon: 'fas fa-exclamation-circle') %>
           <% if @candidat.portrait.attached? %>
             <div class="mb-2">
               <div id="portrait-preview-container" class="preview-container">
@@ -49,8 +50,8 @@
       </div>
       <div class="col-md-4">
         <div class="form-group">
-          <%= f.label t('candidats.form.artistic_photo'), class: 'form-label' %>
-          <%= render InfoboxComponent.new( title: t('candidats.form.artistic_photo'), text: t('candidats.form.artistic_photo_hint'), icon: 'fas fa-info-circle' ) %>
+          <%= f.label t('candidats.form.artistic_photo'), class: 'form-label', required: true %>
+          <%= render InfoboxComponent.new(title: t('candidats.form.artistic_photo'), text: t('candidats.form.artistic_photo_required_hint'), icon: 'fas fa-exclamation-circle') %>
           <% if @candidat.artistic_photo.attached? %>
             <div class="mb-2">
               <div id="artistic-photo-preview-container" class="preview-container">

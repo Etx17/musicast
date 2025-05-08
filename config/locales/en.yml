@@ -315,6 +315,8 @@ en:
       delete_confirm: "Are you sure?"
       add: "Add"
     form:
+      portrait_required_hint: "The portrait is essential for your application. Please ensure your portrait is of high quality (DPI > 300) as it will be printed by the competition organizers."
+      artistic_photo_required_hint: "The artistic photo is essential for your application. Please ensure your artistic photo is of high quality (DPI > 300) as it will be printed by the competition organizers."
       voice_type: "Voice Type"
       voice_types:
         non_singer: "Non-singer"

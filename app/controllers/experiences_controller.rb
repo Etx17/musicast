@@ -1,7 +1,6 @@
 class ExperiencesController < ApplicationController
 
   def destroy
-    raise
     @experience = Experience.find(params[:id])
     @candidat = @experience.candidat
     if @experience.destroy

@@ -24,8 +24,6 @@ class Performance < ApplicationRecord
   end
 
   def airs
-    # raise
-    # TOFIX
     air_ids = air_selection
     if air_ids.empty?
       air_ids = ordered_air_selection

@@ -314,6 +314,8 @@ fr:
       delete_confirm: "Êtes-vous sûr ?"
       add: "Ajouter"
     form:
+      portrait_required_hint: "Le portrait est essentiel pour votre candidature. Assurez-vous que votre portrait est de haute qualité (DPI > 300) car il sera imprimé par les organisateurs du concours."
+      artistic_photo_required_hint: "La photo artistique est essentielle pour votre candidature. Assurez-vous que votre photo artistique est de haute qualité (DPI > 300) car elle sera imprimée par les organisateurs du concours."
       iban: "IBAN"
       iban_hint: "Votre numéro IBAN pour le versement des prix"
       voice_type: "Tessiture"

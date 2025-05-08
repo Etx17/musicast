@@ -48,10 +48,9 @@ class Candidat < ApplicationRecord
 
   def portrait_or_default
     if portrait.attached?
-      return portrait
+      Rails.application.routes.url_helpers.rails_blob_path(portrait, only_path: true)
     else
-      raise
-      return Rails.root.join('app', 'assets', 'images', 'default_portrait.jpg').open
+      ActionController::Base.helpers.asset_path('default_portrait.jpg')
     end
   end
 
