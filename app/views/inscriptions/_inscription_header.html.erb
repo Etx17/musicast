@@ -1,4 +1,7 @@
 <div class="d-flex flex-column rounded flex-lg-row align-items-center justify-content-between p-3 " style="background-color:rgb(253, 255, 240);">
+      <%# Ajoute un text en police     font-family: Arial, sans-serif; %>
+    <%# padding: 20px; pour dire "Votre dossier d'inscription, en assez gros, ca doit faire bien titre" %>
+
       <div class="d-flex flex-column align-items-start justify-content-start">
         <%= image_tag inscription.candidat.portrait.attached? ? inscription.candidat.portrait : "https://placehold.co/200x200",
           class: "rounded align-items-center p-0 m-0 border border-primary", style: "width: 200px; height: 200px; object-fit: cover;"

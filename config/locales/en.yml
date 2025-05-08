@@ -1302,6 +1302,8 @@ en:
       modify_application: "Modify your application file"
       can_modify_until: "You can modify your file until %{date}"
       will_be_submitted: "Your file will be submitted to the pre-selection jury on this date if you have paid your registration."
+      edit_application_deadline: "Application file submission deadline"
+      edit_performances_deadline: "Performance submission deadline"
     index:
       title: "Registrations"
       new: "New registration"

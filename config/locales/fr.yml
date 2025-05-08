@@ -1283,6 +1283,8 @@ fr:
       modify_application: "Modifier votre dossier d'inscription"
       can_modify_until: "Vous pouvez modifier votre dossier jusqu'au %{date}"
       will_be_submitted: "Votre dossier sera soumis au jury de préselection à cette date si vous avez réglé votre inscription."
+      edit_application_deadline: "Date limite d'édition du dossier"
+      edit_performances_deadline: "Date limite d'édition des performances"
     index:
       title: "Inscriptions"
       new: "Nouvelle inscription"
