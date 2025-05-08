@@ -91,7 +91,7 @@ class Category < ApplicationRecord
     if photo.attached?
       Rails.application.routes.url_helpers.rails_blob_path(photo, only_path: true)
     else
-      "https://placehold.co/300x300?text=#{CGI.escape(name)}"
+      ActionController::Base.helpers.asset_path('category.jpeg')
     end
   end
 

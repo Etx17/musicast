@@ -6,7 +6,7 @@ class Card::CategoryComponent < ViewComponent::Base
   def initialize(category:)
     @category = category
     @height = 550
-    @image = category.photo.attached? ? nil : "https://placehold.co/300x200"
+    @image = category.image_or_default
     @photo = category.photo if category.photo.attached?
     @redirect = nil
     @bottom_button_links = [{
