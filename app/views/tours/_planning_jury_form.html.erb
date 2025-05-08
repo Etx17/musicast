@@ -44,6 +44,26 @@
   </div>
 
   <div class="mb-3">
+    <h6><%= t('tours.planning.candidate_information') %></h6>
+    <div class="form-check form-switch">
+      <%= f.check_box :full_name, class: "form-check-input", role: "switch", checked: session[:full_name] || true, id: "switchFullName" %>
+      <%= f.label :full_name, t('tours.planning.full_name'), class: "form-check-label", for: "switchFullName" %>
+    </div>
+    <div class="form-check form-switch">
+      <%= f.check_box :nationality, class: "form-check-input", role: "switch", checked: session[:nationality] || true, id: "switchNationality" %>
+      <%= f.label :nationality, t('tours.planning.nationality'), class: "form-check-label", for: "switchNationality" %>
+    </div>
+    <div class="form-check form-switch">
+      <%= f.check_box :birth_date, class: "form-check-input", role: "switch", checked: session[:birth_date], id: "switchBirthDate" %>
+      <%= f.label :birth_date, t('tours.planning.birth_date'), class: "form-check-label", for: "switchBirthDate" %>
+    </div>
+    <div class="form-check form-switch">
+      <%= f.check_box :voice_type, class: "form-check-input", role: "switch", checked: session[:voice_type] || true, id: "switchVoiceType" %>
+      <%= f.label :voice_type, t('tours.planning.voice_type'), class: "form-check-label", for: "switchVoiceType" %>
+    </div>
+  </div>
+
+  <div class="mb-3">
     <h6><%= t('tours.planning.photo_options') %></h6>
     <div class="form-check form-switch">
       <%= f.check_box :profile_photo, class: "form-check-input", role: "switch", checked: session[:profile_photo], id: "switchProfilePhoto" %>
@@ -58,11 +78,11 @@
   <div class="mb-3">
     <h6><%= t('tours.planning.additional_options') %></h6>
     <div class="form-check form-switch">
-      <%= f.check_box :notes_space, class: "form-check-input", role: "switch", checked: session[:notes_space], id: "switchNotesSpace" %>
+      <%= f.check_box :notes_space, class: "form-check-input", role: "switch", checked: session[:notes_space] || true, id: "switchNotesSpace" %>
       <%= f.label :notes_space, t('tours.planning.notes_space'), class: "form-check-label", for: "switchNotesSpace" %>
     </div>
     <div class="form-check form-switch">
-      <%= f.check_box :order_of_passage, class: "form-check-input", role: "switch", checked: session[:order_of_passage], id: "switchOrderOfPassage" %>
+      <%= f.check_box :order_of_passage, class: "form-check-input", role: "switch", checked: session[:order_of_passage] || true, id: "switchOrderOfPassage" %>
       <%= f.label :order_of_passage, t('tours.planning.order_of_passage'), class: "form-check-label", for: "switchOrderOfPassage" %>
     </div>
   </div>

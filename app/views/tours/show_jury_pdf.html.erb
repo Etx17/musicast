@@ -1,62 +1,181 @@
-<h3 class="text-center"><%= @tour.category.edition_competition.competition.nom_concours %></h3>
-<h1 class="text-center" style="font-size: 7em"><%= @tour.category.name %></h1>
-<h1 class="text-center" style="font-size: 5em; color: #333333; margin-bottom: 30px;">
+<h3 class="text-center" style="font-size: 14px; margin-top: 3px; margin-bottom: 3px;"><%= @tour.category.edition_competition.competition.nom_concours %></h3>
+<h1 class="text-center" style="font-size: 18px; margin-top: 0; margin-bottom: 3px;"><%= @tour.category.name %></h1>
+<h1 class="text-center" style="font-size: 16px; color: #333333; margin-top: 0; margin-bottom: 10px;">
   <%= @tour.title %>
   <% if @tour.title_english.present? %>
-    <br><small style="font-size: 0.7em;"><%= @tour.title_english %></small>
+    <small style="font-size: 0.7em;"><%= @tour.title_english %></small>
   <% end %>
 </h1>
 
-<% @tour.performances.order(:order).each do |performance| %>
-  <div style="position: relative; margin-bottom: 30px; page-break-inside: avoid;">
-    <table style="width: 100%;">
+<%
+# Calculate candidates per page (always 2)
+candidates_per_page = 2
+@tour.performances.order(:order).each_slice(candidates_per_page) do |page_performances|
+  # Process each page of candidates
+  page_performances.each_with_index do |performance, page_index|
+%>
+  <div style="position: relative; height: <%= 100.0 / candidates_per_page %>%; page-break-inside: avoid;">
+    <table style="width: 100%; border-collapse: collapse;">
       <tr>
-        <td style="width: 30%; background: #F7F7F7;" class="text-center">
-
           <% if @profile_photo || @artistic_photo %>
-             <div style="width: 100%; height: 0; padding-bottom: 100%; position: relative;">
-              <%= image_tag "https://source.unsplash.com/random/?/300/200", alt: t('tours.show_jury_pdf.required_item_photo'), style: "position: absolute; width: 100%; height: 100%; object-fit: cover;" %>
+        <td style="width: 30%; background: #F7F7F7; vertical-align: top; padding: 8px;" class="text-center">
+          <%
+            begin
+              # Determine which image to display
+              base64_image = nil
+              mime_type = nil
+
+              if @profile_photo && performance.candidat.portrait.attached?
+                begin
+                  # For ActiveStorage attachments, we need to use a data URL approach
+                  blob = performance.candidat.portrait.blob
+                  base64_image = Base64.strict_encode64(blob.download)
+                  mime_type = blob.content_type || 'image/jpeg'
+                rescue => e
+                  Rails.logger.error("Error encoding portrait: #{e.message}")
+                end
+              elsif @artistic_photo && performance.candidat.artistic_photo.attached?
+                begin
+                  blob = performance.candidat.artistic_photo.blob
+                  base64_image = Base64.strict_encode64(blob.download)
+                  mime_type = blob.content_type || 'image/jpeg'
+                rescue => e
+                  Rails.logger.error("Error encoding artistic photo: #{e.message}")
+                end
+              end
+           %>
+              <% if base64_image %>
+                <!-- Improved image display with preserved aspect ratio -->
+                <div style="width: 100%; min-height: 180px; max-height: 240px; display: flex; justify-content: center; align-items: center; margin: 0 auto;">
+                  <img src="data:<%= mime_type %>;base64,<%= base64_image %>" alt="Candidate Photo"
+                      style="max-width: 100%; max-height: 240px; object-fit: contain; display: block;" />
+                </div>
+              <% else %>
+                <!-- Simple placeholder -->
+                <div style="height: 150px; display: flex; align-items: center; justify-content: center; background: #f0f0f0;">
+                  <p style="font-size: 12px; color: #999;">No image</p>
+                </div>
+              <% end %>
+          <% rescue => e %>
+            <!-- Simple error placeholder -->
+            <div style="height: 150px; display: flex; align-items: center; justify-content: center; background: #f0f0f0;">
+              <p style="font-size: 10px; color: #999;">Image error: <%= e.message %></p>
+              <% if request.format.html? %>
+                <div style="font-size: 9px; color: #ff6b6b; position: absolute; bottom: 5px; left: 5px;">
+                  Debug: <%= e.backtrace.first(2).join(' | ') %>
+                </div>
+              <% end %>
             </div>
           <% end %>
-
-
         </td>
-        <td style="width: 70%; background: #F7F7F7; padding: 0px 30px;" class="text-center" >
-          <h3 class="p-1">
-            <%= performance.order %> - <%= performance.candidat.first_name %> - <%= ISO3166::Country[performance.candidat.nationality].iso_short_name %> - <%= performance.candidat.age %><%= t('tours.show_jury_pdf.years_old') %>
-          </h3>
-            <p><%= performance.candidat.short_bio if @short_bio %></p>
-            <p><%= performance.candidat.short_bio_en if @short_bio_en %></p>
-            <p><%= performance.candidat.medium_bio if @medium_bio %></p>
-            <p><%= performance.candidat.medium_bio_en if @medium_bio_en %></p>
-            <p><small><%= performance.candidat.long_bio if @long_bio %></small></p>
-            <p><small><%= performance.candidat.long_bio_en if @long_bio_en %></small></p>
+        <% end %>
+
+        <td style="<%= (@profile_photo || @artistic_photo) ? 'width: 70%;' : 'width: 100%;' %> background: #F7F7F7; padding: 8px;" class="text-left">
+          <h2 style="margin: 0; padding: 0; border-bottom: 1px solid #ddd; padding-bottom: 3px; font-size: 16px;">
+            <% if @order_of_passage %>
+              <strong><%= performance.order %>.</strong>
+            <% end %>
+            <% if @full_name %>
+              <%= performance.candidat.first_name %> <%= performance.candidat.last_name.upcase %>
+            <% else %>
+              <%= performance.candidat.first_name %>
+            <% end %>
+          </h2>
+
+          <div style="display: flex; flex-wrap: wrap; margin-top: 5px; font-size: 12px;">
+            <% if @nationality %>
+              <div style="margin-right: 12px;"><strong>Nationalité:</strong> <%= ISO3166::Country[performance.candidat.nationality].iso_short_name %></div>
+            <% end %>
+
+            <% if @birth_date %>
+              <div style="margin-right: 12px;"><strong>Age:</strong> <%= performance.candidat.age %> <%= t('tours.show_jury_pdf.years_old') %></div>
+            <% end %>
+
+            <% if @voice_type && performance.candidat.voice_type.present? %>
+              <div><strong><%= t('tours.planning.voice_type') %>:</strong> <%= I18n.t("candidats.form.voice_types.#{performance.candidat.voice_type}") %></div>
+            <% end %>
+          </div>
+
+          <% if @short_bio && performance.candidat.short_bio.present? %>
+            <p style="font-size: 10px; margin-top: 5px; margin-bottom: 2px;"><%= performance.candidat.short_bio %></p>
+          <% end %>
+
+          <% if @short_bio_en && performance.candidat.short_bio_en.present? %>
+            <p style="font-size: 10px; margin-top: 2px; margin-bottom: 2px; font-style: italic;"><%= performance.candidat.short_bio_en %></p>
+          <% end %>
+
+          <% if @medium_bio && performance.candidat.medium_bio.present? %>
+            <p style="font-size: 9px; margin-top: 2px; margin-bottom: 2px;"><%= performance.candidat.medium_bio %></p>
+          <% end %>
+
+          <% if @medium_bio_en && performance.candidat.medium_bio_en.present? %>
+            <p style="font-size: 9px; margin-top: 2px; margin-bottom: 2px; font-style: italic;"><%= performance.candidat.medium_bio_en %></p>
+          <% end %>
+
+          <% if @long_bio && performance.candidat.long_bio.present? %>
+            <p style="font-size: 8px; margin-top: 2px; margin-bottom: 2px;"><%= performance.candidat.long_bio %></p>
+          <% end %>
+
+          <% if @long_bio_en && performance.candidat.long_bio_en.present? %>
+            <p style="font-size: 8px; margin-top: 2px; margin-bottom: 2px; font-style: italic;"><%= performance.candidat.long_bio_en %></p>
+          <% end %>
         </td>
       </tr>
     </table>
-    <table style="width: 100%;">
+
+    <table style="width: 100%; margin-top: 5px; border-collapse: collapse;">
       <tr>
-        <td style="padding: 10px; width: 50%; background: #F7F7F7;">
+        <% if @detailed_program || @simple_air %>
+        <td style="width: 40%; padding: 8px; background: #F7F7F7; vertical-align: top; border-top: 1px solid #ddd;">
+          <h4 style="margin-top: 0; margin-bottom: 5px; font-size: 14px;"><%= t('tours.planning.program') %></h4>
           <% if @detailed_program %>
-            <ul style="list-item-type: none;">
-             <% performance.airs.sort_by { |air| performance.ordered_air_selection.index(air.id.to_s) }.each_with_index do |air, index| %>
-                <li style="list-item-type: none;"><%= index + 1 %>. <%= [air.title, air.composer, air.oeuvre, air.tonality, air.character].join(", ") %></li>
+            <ul style="padding-left: 15px; margin-top: 3px; margin-bottom: 3px;">
+              <% performance.airs.sort_by { |air| performance.ordered_air_selection.index(air.id.to_s) || 999 }.each_with_index do |air, index| %>
+                <li style="margin-bottom: 3px; font-size: 11px;">
+                  <strong><%= index + 1 %>.</strong> <%= air.title %>
+                  <div style="margin-left: 12px; font-size: 10px;">
+                    <% if air.composer.present? %><div><em><%= air.composer %></em></div><% end %>
+                    <% if air.oeuvre.present? %><div><%= air.oeuvre %></div><% end %>
+                    <% if air.character.present? %><div><%= air.character %></div><% end %>
+                    <% if air.tonality.present? %><div><%= air.tonality %></div><% end %>
+                  </div>
+                </li>
               <% end %>
             </ul>
           <% elsif @simple_air %>
-            <ul>
-              <% performance.airs.sort_by { |air| performance.ordered_air_selection.index(air.id.to_s) }.each_with_index do |air, index| %>
-                <li><%= index + 1 %>. <%= air.title %> - <%= air.composer %></li>
+            <ul style="padding-left: 15px; margin-top: 3px; margin-bottom: 3px;">
+              <% performance.airs.sort_by { |air| performance.ordered_air_selection.index(air.id.to_s) || 999 }.each_with_index do |air, index| %>
+                <li style="margin-bottom: 2px; font-size: 11px;">
+                  <strong><%= index + 1 %>.</strong> <%= air.title %> - <%= air.composer %>
+                </li>
               <% end %>
             </ul>
           <% end %>
         </td>
-        <td style="width: 50%;" class="text-center">
-          <h1 style="color: #FCFCFC; font-size: 6em;"><%= t('tours.show_jury_pdf.notes') %></h1>
+        <% end %>
+
+        <td style="<%= (@detailed_program || @simple_air) ? 'width: 60%;' : 'width: 100%;' %> vertical-align: top; border-top: 1px solid #ddd;">
+          <% if @notes_space %>
+            <div style="padding: 8px; height: 95%;">
+              <h4 style="margin-top: 0; margin-bottom: 5px; border-bottom: 1px dashed #ddd; padding-bottom: 3px; font-size: 14px;"><%= t('tours.show_jury_pdf.notes') %></h4>
+              <div style="min-height: 200px; height: 100%;">
+                <% notes_lines = candidates_per_page == 2 ? 8 : 5 %>
+                <% notes_lines.times do |i| %>
+                  <div style="border-bottom: 1px solid #eee; height: 22px; margin-bottom: 5px;"></div>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
         </td>
       </tr>
     </table>
 
-
+    <!-- Add a divider between candidates on the same page -->
+    <% unless page_index == page_performances.size - 1 %>
+      <hr style="border-top: 1px dashed #ccc; margin: 10px 0;" />
+    <% end %>
   </div>
+<% end %>
+  <!-- Add page break after each page of candidates -->
+  <div style="page-break-after: always;"></div>
 <% end %>

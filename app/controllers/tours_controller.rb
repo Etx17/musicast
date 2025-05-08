@@ -192,46 +192,75 @@ class ToursController < ApplicationController
     @form_data = session[:form_data]
     @tour = Tour.find(params[:id])
 
+    # Program options
     @detailed_program = session[:detailed_program]
     @simple_air = session[:simple_air]
-    @notes_space = session[:notes_space]
-    @profile_photo = session[:profile_photo]
-    @artistic_photo = session[:artistic_photo]
+
+    # Biography options
     @short_bio = session[:short_bio]
     @medium_bio = session[:medium_bio]
     @long_bio = session[:long_bio]
     @short_bio_en = session[:short_bio_en]
     @medium_bio_en = session[:medium_bio_en]
     @long_bio_en = session[:long_bio_en]
+
+    # Photo options
+    @profile_photo = session[:profile_photo]
+    @artistic_photo = session[:artistic_photo]
+
+    # Additional options
+    @notes_space = session[:notes_space]
     @order_of_passage = session[:order_of_passage]
+
+    # Candidate information
+    @full_name = session[:full_name]
+    @nationality = session[:nationality]
+    @birth_date = session[:birth_date]
+    @voice_type = session[:voice_type]
 
     respond_to do |format|
       format.html
       format.pdf do
         render pdf: "Dossier jury - #{@tour.title}",
-        template: "tours/show_jury_pdf",
-        layout: 'pdf',
-        formats: [:html],
-        footer: { right: '[page] / [topage]' }
+              template: "tours/show_jury_pdf",
+              layout: 'pdf',
+              formats: [:html],
+              orientation: 'Portrait',
+              margin: { top: 15, bottom: 15, left: 15, right: 15 },
+              image_quality: 100,
+              dpi: 300
       end
     end
   end
 
   def store_form_data
-
+    # Program options
     session[:detailed_program] = params[:detailed_program] == "1"
     session[:simple_air] = params[:simple_air] == "1"
-    session[:notes_space] = params[:notes_space] == "1"
-    session[:profile_photo] = params[:profile_photo] == "1"
-    session[:artistic_photo] = params[:artistic_photo] == "1"
+
+    # Biography options
     session[:short_bio] = params[:short_bio] == "1"
     session[:medium_bio] = params[:medium_bio] == "1"
     session[:long_bio] = params[:long_bio] == "1"
     session[:short_bio_en] = params[:short_bio_en] == "1"
     session[:medium_bio_en] = params[:medium_bio_en] == "1"
     session[:long_bio_en] = params[:long_bio_en] == "1"
+
+    # Photo options
+    session[:profile_photo] = params[:profile_photo] == "1"
+    session[:artistic_photo] = params[:artistic_photo] == "1"
+
+    # Additional options
+    session[:notes_space] = params[:notes_space] == "1"
     session[:order_of_passage] = params[:order_of_passage] == "1"
-    redirect_to [@organism, @competition, @edition_competition, @category, @tour], notice: "Données du planning jury sauvegardées."
+
+    # Candidate information
+    session[:full_name] = params[:full_name] == "1"
+    session[:nationality] = params[:nationality] == "1"
+    session[:birth_date] = params[:birth_date] == "1"
+    session[:voice_type] = params[:voice_type] == "1"
+
+    redirect_to show_jury_pdf_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour)
   end
 
   def reorder_tours

@@ -1863,6 +1863,7 @@ fr:
       full_name: "Nom complet"
       nationality: "Nationalité"
       birth_date: "Date de naissance"
+      voice_type: "Tessiture"
       performance_information: "Informations sur la performance"
       performance_time: "Heure de passage"
       program: "Programme"
