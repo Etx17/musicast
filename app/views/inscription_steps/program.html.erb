@@ -16,19 +16,25 @@
     icon: "fas fa-exclamation-triangle"
   ) %>
   <%= form_for @inscription, url: wizard_path(:program, action: "update"), method: :put do |f| %>
+
+    <% if @inscription.category.semi_imposed_works.any? %>
     <div class="card bg-light mb-4">
       <div class="card-body">
         <h4 class="card-title mb-3"><%= t('global.semi_imposed_works') %></h4>
         <%= render "inscriptions/semi_imposed_work_section", inscription: @inscription, f: f %>
       </div>
     </div>
+    <% end %>
 
+
+    <% if @inscription.category.choice_imposed_works.any? %>
     <div class="card bg-light mb-4">
       <div class="card-body">
         <h4 class="card-title mb-3"><%= t('global.choice_imposed_works') %></h4>
         <%= render "inscriptions/choice_imposed_work_section", inscription: @inscription, f: f %>
       </div>
     </div>
+    <% end %>
 
     <% if @inscription.category.imposed_work&.airs&.any? %>
       <div class="card bg-light mb-4">

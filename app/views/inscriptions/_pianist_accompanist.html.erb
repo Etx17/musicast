@@ -1,5 +1,5 @@
 
-<% if performance&.inscription&.candidate_brings_pianist_accompagnateur %>
+<% if @inscription.candidate_brings_pianist_accompagnateur%>
   <div class="card mb-3 border">
     <div class="card-header bg-light">
       <div class="d-flex align-items-center">
@@ -10,14 +10,14 @@
     <div class="card-body py-2">
       <div class="row align-items-center">
         <div class="col-md-6">
-          <p class="mb-1 fw-bold"><%= performance.inscription.candidate_brings_pianist_accompagnateur_full_name %></p>
+          <p class="mb-1 fw-bold"><%= @inscription.candidate_brings_pianist_accompagnateur_full_name %></p>
         </div>
         <div class="col-md-6">
           <div class="d-flex flex-column gap-2">
             <div class="d-flex align-items-center">
               <i class="fas fa-envelope me-2 text-secondary"></i>
-              <a href="mailto:<%= performance.inscription.candidate_brings_pianist_accompagnateur_email %>" class="text-decoration-none text-secondary">
-                <%= performance.inscription.candidate_brings_pianist_accompagnateur_email %>
+              <a href="mailto:<%= @inscription.candidate_brings_pianist_accompagnateur_email %>" class="text-decoration-none text-secondary">
+                <%= @inscription.candidate_brings_pianist_accompagnateur_email %>
               </a>
             </div>
           </div>
@@ -51,7 +51,7 @@
                 <i class="fas fa-phone me-2 text-secondary"></i>
                 <span><%= performance.pianist_accompagnateur.phone_number %></span>
               </div>
-              
+
             </div>
           </div>
         </div>

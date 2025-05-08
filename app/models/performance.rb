@@ -91,13 +91,13 @@ class Performance < ApplicationRecord
   end
 
   def has_incorrect_duration?
+    if minutes > tour.tour_requirement.max_duration_minute
+      return true
+    end
+    if minutes < tour.tour_requirement.min_duration_minute
+      return true
+    end
     false
-    if minutes >= tour.tour_requirement.max_duration_minute
-      return true
-    end
-    if minutes <= tour.tour_requirement.min_duration_minute
-      return true
-    end
   end
 
   # Add this method to ensure air_selection is always an array of strings
