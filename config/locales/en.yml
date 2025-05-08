@@ -1024,6 +1024,7 @@ en:
       tuba: "Tuba"
       violin: "Violin"
     actions:
+      view_with_correct_format: "View with correct format"
       clear: "Clear"
       search: "Search"
       search_by_keywords: "Search by keywords"

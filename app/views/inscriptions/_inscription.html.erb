@@ -209,7 +209,7 @@
               <% if item&.submitted_file.attached? %>
                 <div class="d-flex flex-column">
                 <embed src="<%= url_for(item.submitted_file) %>" width="500" height="375" type="application/pdf">
-                <%= link_to t('global.actions.view'), url_for(item.submitted_file), target: "_blank", rel: "noopener" %>
+                <%= link_to t('global.actions.view_with_correct_format'), url_for(item.submitted_file), target: "_blank", rel: "noopener" %>
                 </div>
               <% end %>
             </div>

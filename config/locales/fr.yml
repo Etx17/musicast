@@ -958,6 +958,7 @@ fr:
     not_available_abbr: "Indisponible"
     rounds: "tours"
     actions:
+      view_with_correct_format: "Voir avec le format correct"
       clear: "Effacer"
       search: "Rechercher"
       search_by_keywords: "Rechercher par mots clés"
