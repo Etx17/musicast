@@ -111,13 +111,17 @@ candidates_per_page = 2
           <% if @detailed_program %>
             <ul style="padding-left: 15px; margin-top: 3px; margin-bottom: 3px;">
               <% performance.airs.sort_by { |air| performance.ordered_air_selection.index(air.id.to_s) || 999 }.each_with_index do |air, index| %>
-                <li style="margin-bottom: 3px; font-size: 11px;">
+                <li style="margin-bottom: 5px; font-size: 11px;">
                   <strong><%= index + 1 %>.</strong> <%= air.title %>
-                  <div style="margin-left: 12px; font-size: 10px;">
-                    <% if air.composer.present? %><div><em><%= air.composer %></em></div><% end %>
-                    <% if air.oeuvre.present? %><div><%= air.oeuvre %></div><% end %>
-                    <% if air.character.present? %><div><%= air.character %></div><% end %>
-                    <% if air.tonality.present? %><div><%= air.tonality %></div><% end %>
+                  <div style="margin-left: 12px; font-size: 10px; margin-top: 1px;">
+                    <%
+                      details = []
+                      details << "#{air.composer}" if air.composer.present?
+                      details << air.oeuvre if air.oeuvre.present?
+                      details << air.character if air.character.present?
+                      details << air.tonality if air.tonality.present?
+                    %>
+                    <%= details.join(" | ") %>
                   </div>
                 </li>
               <% end %>
