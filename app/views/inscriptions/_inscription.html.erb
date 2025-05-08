@@ -79,6 +79,9 @@
 
         </div>
       </div>
+      <div class="px-3">
+        <%= render InfoboxComponent.new(title: t('inscriptions.modals.incorrect_duration.choose_carefully'), text: t('inscriptions.modals.incorrect_duration.deadline_warning'), icon: 'fas fa-exclamation-triangle') %>
+      </div>
       <div class="px-3 card-body bg-transparent rounded-8">
         <div class="d-flex justify-content-between gap-2 align-items-center mb-2">
           <div class="d-flex justify-content-start align-items-center gap-2">
