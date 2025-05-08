@@ -52,7 +52,7 @@ class Tour < ApplicationRecord
           next_tour_perf = Performance.find_or_create_by(tour: tour_next, inscription: performance.inscription)
           total_air_selection = performance.air_selection + next_tour.imposed_air_selection
 
-          next_tour_perf.update(air_selection: total_air_selection, order: index + 1)
+          next_tour_perf.update(air_selection: total_air_selection, order: index + 1, pianist_accompagnateur: performance.pianist_accompagnateur)
       end
     end
     raise "Not the same number of performances in the next tour than in the current tour" if tour_next.performances.count != performances.select(&:is_qualified).count
