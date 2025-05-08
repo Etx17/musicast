@@ -17,7 +17,7 @@ candidates_per_page = 2
   <div style="position: relative; height: <%= 100.0 / candidates_per_page %>%; page-break-inside: avoid;">
     <table style="width: 100%; border-collapse: collapse;">
       <tr>
-          <% if @profile_photo || @artistic_photo %>
+          <% if @profile_photo %>
         <td style="width: 30%; background: #F7F7F7; vertical-align: top; padding: 8px;" class="text-center">
           <%
             begin
@@ -33,14 +33,6 @@ candidates_per_page = 2
                   mime_type = blob.content_type || 'image/jpeg'
                 rescue => e
                   Rails.logger.error("Error encoding portrait: #{e.message}")
-                end
-              elsif @artistic_photo && performance.candidat.artistic_photo.attached?
-                begin
-                  blob = performance.candidat.artistic_photo.blob
-                  base64_image = Base64.strict_encode64(blob.download)
-                  mime_type = blob.content_type || 'image/jpeg'
-                rescue => e
-                  Rails.logger.error("Error encoding artistic photo: #{e.message}")
                 end
               end
            %>
@@ -70,7 +62,7 @@ candidates_per_page = 2
         </td>
         <% end %>
 
-        <td style="<%= (@profile_photo || @artistic_photo) ? 'width: 70%;' : 'width: 100%;' %> background: #F7F7F7; padding: 8px;" class="text-left">
+        <td style="<%= (@profile_photo) ? 'width: 70%;' : 'width: 100%;' %> background: #F7F7F7; padding: 8px;" class="text-left">
           <h2 style="margin: 0; padding: 0; border-bottom: 1px solid #ddd; padding-bottom: 3px; font-size: 16px;">
             <% if @order_of_passage %>
               <strong><%= performance.order %>.</strong>
@@ -106,18 +98,6 @@ candidates_per_page = 2
 
           <% if @medium_bio && performance.candidat.medium_bio.present? %>
             <p style="font-size: 9px; margin-top: 2px; margin-bottom: 2px;"><%= performance.candidat.medium_bio %></p>
-          <% end %>
-
-          <% if @medium_bio_en && performance.candidat.medium_bio_en.present? %>
-            <p style="font-size: 9px; margin-top: 2px; margin-bottom: 2px; font-style: italic;"><%= performance.candidat.medium_bio_en %></p>
-          <% end %>
-
-          <% if @long_bio && performance.candidat.long_bio.present? %>
-            <p style="font-size: 8px; margin-top: 2px; margin-bottom: 2px;"><%= performance.candidat.long_bio %></p>
-          <% end %>
-
-          <% if @long_bio_en && performance.candidat.long_bio_en.present? %>
-            <p style="font-size: 8px; margin-top: 2px; margin-bottom: 2px; font-style: italic;"><%= performance.candidat.long_bio_en %></p>
           <% end %>
         </td>
       </tr>

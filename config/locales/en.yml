@@ -2057,7 +2057,9 @@ en:
     dashboard: "Dashboard"
     sign_in: "Sign In"
     sign_up: "Sign Up"
-
+    candidates_list: "Candidates list"
+    inscriptions: "Inscriptions"
+    rounds: "Rounds"
   shared:
     components:
       music_search_component:

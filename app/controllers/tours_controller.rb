@@ -199,14 +199,11 @@ class ToursController < ApplicationController
     # Biography options
     @short_bio = session[:short_bio]
     @medium_bio = session[:medium_bio]
-    @long_bio = session[:long_bio]
     @short_bio_en = session[:short_bio_en]
     @medium_bio_en = session[:medium_bio_en]
-    @long_bio_en = session[:long_bio_en]
 
     # Photo options
     @profile_photo = session[:profile_photo]
-    @artistic_photo = session[:artistic_photo]
 
     # Additional options
     @notes_space = session[:notes_space]
@@ -238,17 +235,34 @@ class ToursController < ApplicationController
     session[:detailed_program] = params[:detailed_program] == "1"
     session[:simple_air] = params[:simple_air] == "1"
 
-    # Biography options
-    session[:short_bio] = params[:short_bio] == "1"
-    session[:medium_bio] = params[:medium_bio] == "1"
-    session[:long_bio] = params[:long_bio] == "1"
-    session[:short_bio_en] = params[:short_bio_en] == "1"
-    session[:medium_bio_en] = params[:medium_bio_en] == "1"
-    session[:long_bio_en] = params[:long_bio_en] == "1"
+    # Biography options - French
+    case params[:bio_fr_type]
+    when "short"
+      session[:short_bio] = true
+      session[:medium_bio] = false
+    when "medium"
+      session[:short_bio] = false
+      session[:medium_bio] = true
+    when "none"
+      session[:short_bio] = false
+      session[:medium_bio] = false
+    end
+
+    # Biography options - English
+    case params[:bio_en_type]
+    when "short"
+      session[:short_bio_en] = true
+      session[:medium_bio_en] = false
+    when "medium"
+      session[:short_bio_en] = false
+      session[:medium_bio_en] = true
+    when "none"
+      session[:short_bio_en] = false
+      session[:medium_bio_en] = false
+    end
 
     # Photo options
     session[:profile_photo] = params[:profile_photo] == "1"
-    session[:artistic_photo] = params[:artistic_photo] == "1"
 
     # Additional options
     session[:notes_space] = params[:notes_space] == "1"
