@@ -215,7 +215,14 @@
                   </td>
                 <% end %>
                 <td class="p-2 pt-4 text-center bg-light <%= performance.minutes == 0 ? 'text-danger' : 'text-secondary' %>">
-                  <%= performance.minutes %>'
+                  <span class="d-flex align-items-center">
+                    <%= performance.minutes %>'
+                    <% if performance.has_incorrect_duration? %>
+                      <i class="fas fa-circle-exclamation text-danger ms-2"></i>
+                    <% else %>
+                      <i class="fas fa-circle-check text-success ms-2"></i>
+                    <% end %>
+                  </span>
                 </td>
                 <td class="p-2 pt-4 text-center bg-light text-secondary">
                   <%= render Pill::StatusComponent.new(text: performance.inscription.time_preference, color: time_preference_color(performance.inscription.time_preference)) %>
