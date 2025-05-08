@@ -72,24 +72,17 @@ candidates_per_page = 2
             <% else %>
               <%= performance.candidat.first_name %>
             <% end %>
+            <span style="font-size: 12px; font-weight: normal; color: #666; margin-left: 5px;">
+              <% info_parts = [] %>
+              <% info_parts << ISO3166::Country[performance.candidat.nationality].iso_short_name if @nationality && performance.candidat.nationality.present? %>
+              <% info_parts << "#{performance.candidat.age} #{t('tours.show_jury_pdf.years_old')}" if @birth_date && performance.candidat.age.present? %>
+              <% info_parts << I18n.t("candidats.form.voice_types.#{performance.candidat.voice_type}") if @voice_type && performance.candidat.voice_type.present? %>
+              <%= info_parts.join(" • ") %>
+            </span>
           </h2>
 
-          <div style="display: flex; flex-wrap: wrap; margin-top: 5px; font-size: 12px;">
-            <% if @nationality %>
-              <div style="margin-right: 12px;"><strong>Nationalité:</strong> <%= ISO3166::Country[performance.candidat.nationality].iso_short_name %></div>
-            <% end %>
-
-            <% if @birth_date %>
-              <div style="margin-right: 12px;"><strong>Age:</strong> <%= performance.candidat.age %> <%= t('tours.show_jury_pdf.years_old') %></div>
-            <% end %>
-
-            <% if @voice_type && performance.candidat.voice_type.present? %>
-              <div><strong><%= t('tours.planning.voice_type') %>:</strong> <%= I18n.t("candidats.form.voice_types.#{performance.candidat.voice_type}") %></div>
-            <% end %>
-          </div>
-
           <% if @short_bio && performance.candidat.short_bio.present? %>
-            <p style="font-size: 10px; margin-top: 5px; margin-bottom: 2px;"><%= performance.candidat.short_bio %></p>
+            <p style="font-size: 10px; margin-top: 8px; margin-bottom: 2px;"><%= performance.candidat.short_bio %></p>
           <% end %>
 
           <% if @short_bio_en && performance.candidat.short_bio_en.present? %>
