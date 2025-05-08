@@ -12,12 +12,17 @@
 }
 
 .nav-link-sidebar {
+  padding: 0.8rem 1rem;
   font-weight: bold;
   color: #ffffff;
   border-radius: 0.25rem;
-  margin-bottom: 0.2rem;
   transition: all 0.2s ease;
   text-decoration: none;
+}
+
+.nav-link-sidebar:hover {
+  opacity: 0.8;
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .nav-link-sidebar.active {
@@ -39,6 +44,11 @@
   box-shadow: none;
 }
 
+.toggle-collapse:hover {
+  opacity: 1; /* Keep the collapse button fully opaque on hover */
+  background-color: transparent; /* No background change on hover */
+}
+
 .collapse-icon {
   transition: transform 0.2s ease;
 }
@@ -49,6 +59,18 @@
 
 .nav-item-sidebar {
   margin-bottom: 0.5rem;
+}
+
+/* Hover effect for the container of link+arrow */
+.d-flex.align-items-center:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 0.25rem;
+}
+
+/* But keep the arrow button itself unchanged on hover */
+.d-flex.align-items-center:hover .toggle-collapse {
+  background-color: transparent;
+  opacity: 1;
 }
 
 /* Mobile sidebar adjustments */
