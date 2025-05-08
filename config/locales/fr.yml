@@ -935,6 +935,7 @@ fr:
       back: "Retour aux choix libres"
       destroy: "Supprimer ce choix libre"
   global:
+    inscription_status: "Statut de l'inscription"
     candidate: "Candidat"
     action: "Action"
     performance: performance

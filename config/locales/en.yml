@@ -967,6 +967,7 @@ en:
       back: "Back to free choices"
       destroy: "Destroy this free choice"
   global:
+    inscription_status: "Inscription status"
     candidate: "Candidate"
     performance: "performance"
     prize: "prize"
