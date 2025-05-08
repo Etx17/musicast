@@ -2035,6 +2035,9 @@ fr:
     dashboard: "Tableau de bord"
     sign_in: "Connexion"
     sign_up: "S'inscrire"
+    candidates_list: "Liste des candidats"
+    inscriptions: "Inscriptions"
+    rounds: "Tours"
   scores:
     show:
       title: "Catégorie de concours: %{category_name}"

@@ -30,37 +30,58 @@ module SidebarHelper
           last_edition_competition = competition.edition_competitions.order(annee: :desc).first
 
           if last_edition_competition
-            base_label = content_tag(:i, '', class: 'fi fi-rs-trophy pe-2') + "#{competition.nom_concours} #{last_edition_competition.annee}"
-
+            base_label = content_tag(:i, '', class: 'fi fi-rs-trophy pe-2') + "#{competition.nom_concours.truncate(17)} #{last_edition_competition.annee}"
 
             edition_status_color = last_edition_competition.status == 'published' ? 'text-success' : 'text-warning'
             edition_status_dot = content_tag(:i, '', class: "fas fa-circle fa-xs #{edition_status_color} ms-2")
             edition_label_with_status = base_label + edition_status_dot
 
-
             edition_link = {
               label: edition_label_with_status,
               url: organism_competition_edition_competition_path(competition.organism_id, competition.id, last_edition_competition),
-              children: []
+              children: [],
+              collapsible: true,
+              collapsed: true
             }
 
             categories = last_edition_competition.categories
             if categories.present?
               categories.each do |category|
-
-
                 category_status_color = category.status == 'published' ? 'text-success' : 'text-warning'
                 category_status_dot = content_tag(:i, '', class: "fas fa-circle fa-xs #{category_status_color} ms-2")
 
-                category_base_label = content_tag(:i, '', class: 'fi fi-rs-music-alt  pe-2') + "#{category.name}"
-
+                category_base_label = content_tag(:i, '', class: 'fi fi-rs-music-alt pe-2') + "#{category.name}"
                 category_label_with_status = category_base_label + category_status_dot
 
-                edition_link[:children] << {
+                # Add category with its actions as collapsible children
+                category_link = {
                   label: category_label_with_status,
-                  url: organism_competition_edition_competition_category_path(last_edition_competition.competition.organism_id, last_edition_competition.competition_id, last_edition_competition, category)
-
+                  url: organism_competition_edition_competition_category_path(last_edition_competition.competition.organism_id, last_edition_competition.competition_id, last_edition_competition, category),
+                  collapsible: true,
+                  collapsed: true,
+                  children: []
                 }
+
+                # Add category actions
+                category_link[:children] << {
+                  label: content_tag(:i, '', class: 'fas fa-users pe-2') + I18n.t('sidebar.candidates_list'),
+                  url: candidates_organism_competition_edition_competition_category_path(last_edition_competition.competition.organism_id, last_edition_competition.competition_id, last_edition_competition, category)
+                }
+
+                category_link[:children] << {
+                  label: content_tag(:i, '', class: 'fas fa-clipboard-list pe-2') + I18n.t('sidebar.inscriptions'),
+                  url: organism_competition_edition_competition_category_inscriptions_path(last_edition_competition.competition.organism_id, last_edition_competition.competition_id, last_edition_competition, category)
+                }
+
+                # Add rounds (tours) if they exist
+                category.tours.each do |round|
+                  category_link[:children] << {
+                    label: content_tag(:i, '', class: 'fas fa-medal pe-2') + "#{round.title}",
+                    url: organism_competition_edition_competition_category_tour_path(last_edition_competition.competition.organism_id, last_edition_competition.competition_id, last_edition_competition, category, round)
+                  }
+                end
+
+                edition_link[:children] << category_link
               end
             end
 
@@ -71,9 +92,53 @@ module SidebarHelper
       elsif current_user.jury
         links << { label: content_tag(:i, '', class: 'fas fa-user pe-2') + I18n.t('sidebar.profile'), url: edit_jury_path(current_user.jury), dropdown: false }
         links << { label: content_tag(:i, '', class: 'fas fa-gavel pe-2') + I18n.t('sidebar.home'), url: jury_dashboard_path(), dropdown: false }
-      else
+      elsif current_user.admin?
+        links << { label: content_tag(:i, '', class: 'fas fa-tachometer-alt pe-2') + I18n.t('sidebar.admin_dashboard'), url: admin_dashboard_path() }
 
+        # Add admin categories section
+        admin_categories = Category.all.includes(:edition_competition)
+        if admin_categories.present?
+          admin_categories_link = {
+            label: content_tag(:i, '', class: 'fas fa-list pe-2') + I18n.t('sidebar.categories'),
+            url: admin_categories_path(),
+            collapsible: true,
+            collapsed: true,
+            children: []
+          }
 
+          admin_categories.each do |category|
+            category_link = {
+              label: content_tag(:i, '', class: 'fi fi-rs-music-alt pe-2') + "#{category.name}",
+              url: admin_category_path(category),
+              collapsible: true,
+              collapsed: true,
+              children: []
+            }
+
+            # Add category actions for admin
+            category_link[:children] << {
+              label: content_tag(:i, '', class: 'fas fa-users pe-2') + I18n.t('sidebar.candidates_list'),
+              url: admin_category_candidates_path(category)
+            }
+
+            category_link[:children] << {
+              label: content_tag(:i, '', class: 'fas fa-clipboard-list pe-2') + I18n.t('sidebar.inscriptions'),
+              url: admin_category_inscriptions_path(category)
+            }
+
+            # Add rounds (tours) if they exist
+            category.tours.each do |round|
+              category_link[:children] << {
+                label: content_tag(:i, '', class: 'fas fa-medal pe-2') + "#{round.title}",
+                url: admin_category_tour_path(category, round)
+              }
+            end
+
+            admin_categories_link[:children] << category_link
+          end
+
+          links << admin_categories_link
+        end
       end
     else
       links << { label: content_tag(:i, '', class: 'fas fa-sign-in-alt pe-2') + I18n.t('sidebar.sign_in'), url: new_user_session_path() }

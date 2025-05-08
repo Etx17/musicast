@@ -67,22 +67,73 @@
   <ul class="nav gap-3 flex-column mt-2">
     <% sidebar_links.each do |link| %>
       <li class="nav-item-sidebar text-white px-2">
-        <%= link_to link[:url], class: "nav-link-sidebar text-white #{active_link?(link[:url])}" do %>
-          <%= link[:label].html_safe %>
-          <% if link[:status].present? %>
-            <span class="competition-status rounded-pill border border-info <%= link[:status] %>"><%= link[:status].capitalize %></span>
-          <% end %>
-        <% end %>
-        <% if link[:children].present? %>
-          <ul class="nav flex-column gap-3 ms-3">
-            <% link[:children].each do |child_link| %>
-              <li class="d-flex flex-column gap-3 nav-item-sidebar text-white">
-                <%= link_to child_link[:url], class: "nav-link-sidebar text-white #{active_link?(child_link[:url])}" do %>
-                  <%= child_link[:label].html_safe %>
-                <% end %>
-              </li>
+        <% if link[:collapsible] && link[:children].present? %>
+          <div class="d-flex align-items-center">
+            <%= link_to link[:url], class: "nav-link-sidebar text-white flex-grow-1 #{active_link?(link[:url])}" do %>
+              <%= link[:label].html_safe %>
+              <% if link[:status].present? %>
+                <span class="competition-status rounded-pill border border-info <%= link[:status] %>"><%= link[:status].capitalize %></span>
+              <% end %>
             <% end %>
-          </ul>
+            <button class="btn btn-link text-white p-0 toggle-collapse" data-bs-toggle="collapse" data-bs-target="#collapse-<%= link[:url].parameterize %>">
+              <i class="fas fa-chevron-down collapse-icon"></i>
+            </button>
+          </div>
+          <div class="collapse <%= 'show' unless link[:collapsed] %>" id="collapse-<%= link[:url].parameterize %>">
+            <% if link[:children].present? %>
+              <ul class="nav flex-column ms-3">
+                <% link[:children].each do |child_link| %>
+                  <li class="nav-item-sidebar text-white">
+                    <% if child_link[:collapsible] && child_link[:children].present? %>
+                      <div class="d-flex align-items-center">
+                        <%= link_to child_link[:url], class: "nav-link-sidebar text-white flex-grow-1 #{active_link?(child_link[:url])}" do %>
+                          <%= child_link[:label].html_safe %>
+                        <% end %>
+                        <button class="btn btn-link text-white p-0 toggle-collapse" data-bs-toggle="collapse" data-bs-target="#collapse-<%= child_link[:url].parameterize %>">
+                          <i class="fas fa-chevron-down collapse-icon"></i>
+                        </button>
+                      </div>
+                      <div class="collapse <%= 'show' unless child_link[:collapsed] %>" id="collapse-<%= child_link[:url].parameterize %>">
+                        <% if child_link[:children].present? %>
+                          <ul class="nav flex-column gap-2 ms-4 mt-2">
+                            <% child_link[:children].each do |action_link| %>
+                              <li class="nav-item-sidebar text-white">
+                                <%= link_to action_link[:url], class: "nav-link-sidebar text-white #{active_link?(action_link[:url])}" do %>
+                                  <%= action_link[:label].html_safe %>
+                                <% end %>
+                              </li>
+                            <% end %>
+                          </ul>
+                        <% end %>
+                      </div>
+                    <% else %>
+                      <%= link_to child_link[:url], class: "nav-link-sidebar text-white #{active_link?(child_link[:url])}" do %>
+                        <%= child_link[:label].html_safe %>
+                      <% end %>
+                    <% end %>
+                  </li>
+                <% end %>
+              </ul>
+            <% end %>
+          </div>
+        <% else %>
+          <%= link_to link[:url], class: "nav-link-sidebar text-white #{active_link?(link[:url])}" do %>
+            <%= link[:label].html_safe %>
+            <% if link[:status].present? %>
+              <span class="competition-status rounded-pill border border-info <%= link[:status] %>"><%= link[:status].capitalize %></span>
+            <% end %>
+          <% end %>
+          <% if link[:children].present? && !link[:collapsible] %>
+            <ul class="nav flex-column gap-3 ms-3">
+              <% link[:children].each do |child_link| %>
+                <li class="d-flex flex-column gap-3 nav-item-sidebar text-white">
+                  <%= link_to child_link[:url], class: "nav-link-sidebar text-white #{active_link?(child_link[:url])}" do %>
+                    <%= child_link[:label].html_safe %>
+                  <% end %>
+                </li>
+              <% end %>
+            </ul>
+          <% end %>
         <% end %>
       </li>
     <% end %>
@@ -124,6 +175,19 @@
       if (event.target !== notificationIcon) {
         notificationPopup.style.display = 'none';
       }
+    });
+
+    // Add event listeners for collapse toggles
+    const toggleButtons = document.querySelectorAll('.toggle-collapse');
+    toggleButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        const icon = this.querySelector('.collapse-icon');
+        if (icon.classList.contains('fa-chevron-down')) {
+          icon.classList.replace('fa-chevron-down', 'fa-chevron-up');
+        } else {
+          icon.classList.replace('fa-chevron-up', 'fa-chevron-down');
+        }
+      });
     });
   });
 </script>

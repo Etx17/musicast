@@ -11,10 +11,7 @@
   z-index: 1030;
 }
 
-
-
 .nav-link-sidebar {
-  padding: 0.8rem 1rem;
   font-weight: bold;
   color: #ffffff;
   border-radius: 0.25rem;
@@ -23,16 +20,35 @@
   text-decoration: none;
 }
 
-
 .nav-link-sidebar.active {
   font-weight: 500;
   font-weight: bold;
 }
 
-
-
 .z-index-1050 {
   z-index: 1050;
+}
+
+/* Collapsible sidebar styles */
+.toggle-collapse {
+  transition: transform 0.2s ease;
+  padding: 0.5rem !important;
+}
+
+.toggle-collapse:focus {
+  box-shadow: none;
+}
+
+.collapse-icon {
+  transition: transform 0.2s ease;
+}
+
+.collapse.show + .toggle-collapse .collapse-icon {
+  transform: rotate(180deg);
+}
+
+.nav-item-sidebar {
+  margin-bottom: 0.5rem;
 }
 
 /* Mobile sidebar adjustments */
@@ -41,7 +57,6 @@
     width: 80%;
     max-width: 300px;
   }
-
 
   .content-container {
     padding-top: 60px;
