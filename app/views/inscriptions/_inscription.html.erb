@@ -407,3 +407,41 @@
       });
     </script>
   <% end %>
+
+<%# Modale pour durée incorrecte %>
+<% if inscription.performances.any?(&:has_incorrect_duration?) %>
+  <div data-controller="modal" class="modal-container">
+    <div class="modal" id="incorrectDurationModal" data-modal-target="modal" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header bg-danger text-white">
+            <h5 class="modal-title" id="incorrectDurationModalLabel">
+              <%= t('inscriptions.modals.incorrect_duration.title') %>
+            </h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" data-action="click->modal#close" aria-label="<%= t('inscriptions.modals.incorrect_duration.close') %>"></button>
+          </div>
+          <div class="modal-body">
+            <p><%= t('inscriptions.modals.incorrect_duration.message') %></p>
+            <ol>
+              <li><%= t('inscriptions.modals.incorrect_duration.option1') %></li>
+              <li><%= t('inscriptions.modals.incorrect_duration.option2') %></li>
+            </ol>
+            <div class="alert alert-warning">
+              <p><strong><%= t('inscriptions.modals.incorrect_duration.deadline_warning') %></strong></p>
+              <p><%= t('inscriptions.modals.incorrect_duration.choose_carefully') %></p>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-action="click->modal#close"><%= t('inscriptions.modals.incorrect_duration.close') %></button>
+            <% incorrect_performance = inscription.performances.find(&:has_incorrect_duration?) %>
+            <% if incorrect_performance %>
+              <%= link_to t('inscriptions.modals.incorrect_duration.edit_program'),
+                  edit_inscription_performance_path(inscription, incorrect_performance, tour_id: incorrect_performance.tour.id),
+                  class: 'btn btn-danger' %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

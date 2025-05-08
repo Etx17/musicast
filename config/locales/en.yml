@@ -1092,6 +1092,15 @@ en:
         accepted_message: "Your application has been approved by the competition organizers. To complete your registration, please proceed with the payment of the registration fee in the 'DETAILS' section of this page (upload a proof of payment)."
         payment_error_message: "An error was detected in your previous payment. To complete your registration, please proceed with a new payment of the registration fee in the 'DETAILS' section of this page (upload a new proof of payment)."
         close: "Close"
+      incorrect_duration:
+        title: "Warning: Incorrect Program Duration"
+        message: "Your program duration does not meet the requirements for this round. You have two options to fix this issue:"
+        option1: "Choose a different piece from your list of available pieces for this round."
+        option2: "Return to the program selection step to modify your selection, as long as you still have time."
+        deadline_warning: "After the application submission deadline, you will no longer be able to modify the list of pieces available for the competition. After the performance submission deadline, you will no longer be able to modify your program for this round."
+        choose_carefully: "Please choose carefully."
+        edit_program: "Edit my program"
+        close: "Close"
     payment_proof: "Payment proof"
     scores:
       scores_info: "Upload imperatively the scores of the pieces you will perform for this round. They will be accessible to the jury and your assigned accompanist, if there is one. The competition organization can also send you scores through this area."
