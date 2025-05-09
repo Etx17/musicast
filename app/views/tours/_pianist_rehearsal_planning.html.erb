@@ -153,6 +153,9 @@
                 # Calculer le nombre de candidats
                 nb_candidates = group[:rehearsals].count
 
+                # Récupérer la date de la répétition (première répétition)
+                rehearsal_date = group[:rehearsals].first.start_time.to_date if group[:rehearsals].first.start_time
+
                 # Calculer la durée totale des répétitions
                 total_minutes = 0
                 group[:rehearsals].each do |rehearsal|
@@ -169,6 +172,9 @@
               %>
 
               <span class="pianist-stats">
+                <% if rehearsal_date %>
+                  <span class="stats-item"><i class="fas fa-calendar-alt"></i> <%= l(rehearsal_date, format: "%A %d %B %Y") %></span>
+                <% end %>
                 <span class="stats-item"><i class="fas fa-users"></i> <%= nb_candidates %> <%= nb_candidates > 1 ? 'candidates' : 'candidate' %></span>
                 <span class="stats-item"><i class="far fa-clock"></i>
                   <% if hours > 0 %>
