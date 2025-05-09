@@ -56,15 +56,9 @@ class CandidateRehearsalsController < ApplicationController
         @rehearsal.update!(start_time: prev_start, end_time: prev_end)
       end
 
-      respond_to do |format|
-        format.html { redirect_back(fallback_location: root_path, notice: "Ordre des répétitions modifié avec succès.", anchor: "rehearsal") }
-        format.json { render json: { success: true } }
-      end
+      redirect_to "#{request.referrer}#rehearsal", notice: t('candidate_rehearsals.move_up.success')
     else
-      respond_to do |format|
-        format.html { redirect_back(fallback_location: root_path, alert: "Impossible de déplacer cette répétition plus haut.", anchor: "rehearsal") }
-        format.json { render json: { success: false, message: "Impossible de déplacer cette répétition plus haut." }, status: :unprocessable_entity }
-      end
+      redirect_to "#{request.referrer}#rehearsal", alert: t('candidate_rehearsals.move_up.error')
     end
   end
 
@@ -104,15 +98,9 @@ class CandidateRehearsalsController < ApplicationController
         @rehearsal.update!(start_time: next_start, end_time: next_end)
       end
 
-      respond_to do |format|
-        format.html { redirect_back(fallback_location: root_path, notice: "Ordre des répétitions modifié avec succès.", anchor: "#rehearsal") }
-        format.json { render json: { success: true } }
-      end
+      redirect_to "#{request.referrer}#rehearsal", notice: t('candidate_rehearsals.move_down.success')
     else
-      respond_to do |format|
-        format.html { redirect_back(fallback_location: root_path, alert: "Impossible de déplacer cette répétition plus bas.", anchor: "#rehearsal") }
-        format.json { render json: { success: false, message: "Impossible de déplacer cette répétition plus bas." }, status: :unprocessable_entity }
-      end
+      redirect_to "#{request.referrer}#rehearsal", alert: t('candidate_rehearsals.move_down.error')
     end
   end
 

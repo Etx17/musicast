@@ -2049,7 +2049,45 @@ en:
       medium_bio_en: "Medium bio (EN)"
       long_bio_en: "Long bio (EN)"
       order_of_passage: "Order of passage"
-
+    pianist_rehearsal_planning:
+      candidate_column: "Candidate"
+      date_column: "Date"
+      start_time_column: "Start Time"
+      end_time_column: "End Time"
+      room_column: "Room"
+      actions_column: "Actions"
+      no_rehearsals: "No pianist rehearsals scheduled yet. Configure the schedule to generate rehearsals."
+      no_rehearsals_for_pianist: "No rehearsals scheduled for this pianist in this room."
+      move_up_button: "Move this rehearsal up"
+      move_down_button: "Move this rehearsal down"
+      first_position: "First in the list"
+      last_position: "Last in the list"
+      statistics:
+        candidates_singular: "candidate"
+        candidates_plural: "candidates"
+    pianist_rehearsal:
+      configure_button: "Configure Pianist Rehearsal Schedule"
+      download_schedule: "Download Pianist Rehearsal Schedule"
+      configuration_title: "Pianist Rehearsal Schedule Configuration"
+      rehearsal_start_datetime: "Rehearsal Start Date and Time"
+      rehearsal_start_hint: "When pianist rehearsals will begin"
+      time_slot_duration: "Time Slot Duration (minutes)"
+      time_slot_hint: "Duration of each candidate's rehearsal slot"
+      select_available_rooms: "Select Available Rooms"
+      select_rooms_hint: "Select rooms available for rehearsals"
+      create_room: "Create Room"
+      no_rooms_registered: "No rooms registered for this organization"
+      add_rooms: "Add rooms in organization settings"
+      save_config_and_generate: "Save Configuration and Generate Schedule"
+      add_room_modal_title: "Add Room"
+      schedule_title: "Pianist Rehearsal Schedule"
+  candidate_rehearsals:
+    move_up:
+      success: "Rehearsal order successfully modified."
+      error: "Unable to move this rehearsal up."
+    move_down:
+      success: "Rehearsal order successfully modified."
+      error: "Unable to move this rehearsal down."
   sidebar:
     home: "Home"
     profile: "Profile"

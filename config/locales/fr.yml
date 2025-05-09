@@ -1982,19 +1982,15 @@ fr:
       generate_planning: "Générer le planning"
       can_generate_after_deadline: "Vous ne pourrez générer le planning qu'une fois la date limite de soumission des performances pour le tour passée, le :"
       english_description: "Description (Anglais)"
-
     edit:
       editing_tour: "Modification du tour"
       edit_tour: "Modifier le tour"
-
     index:
       tours: "Tours"
       show_this_tour: "Voir ce tour"
       new_tour: "Nouveau tour"
-
     new:
       new_tour: "Nouveau tour"
-
     show:
       tour_details: "Détails du tour"
       description: "Description"
@@ -2007,7 +2003,6 @@ fr:
       start_time: "Heure de début"
       time_between_performances: "Temps entre les performances (minutes)"
       performances_per_day: "Performances par jour"
-
     tour_configuration_form:
       start_time: "Heure de début"
       start_time_hint: "Indiquez l'heure de début du tour."
@@ -2016,21 +2011,62 @@ fr:
       new_day_start_time: "Heure de début du nouveau jour"
       new_day_start_time_hint: "Si le tour s'étend à un autre jour en raison du nombre de candidats, vous pouvez indiquer une heure de début différente pour ce nouveau jour."
       confirm_and_generate: "Confirmer la configuration et générer le planning"
-
     schedule:
       your_planning: "Votre planning (Vous pouvez le modifier tant que vous n'avez pas envoyer les convocations)"
       can_modify_later: "Vous pourrez le modifier ultérieurement bien sur, mais devrez notifier vous même les candidats."
-
     show_jury_pdf:
       required_item_photo: "Photo d'item requis"
       years_old: "ans"
       notes: "NOTES"
-
     show_pdf:
       candidate: "Candidat"
       passage_time: "Heure de passage"
       order: "Ordre"
       break: "Pause"
+    pianist_rehearsal:
+      configure_button: "Configurer le planning de répétition avec pianiste"
+      download_schedule: "Télécharger le planning de répétition"
+      configuration_title: "Configuration du planning de répétition avec pianiste"
+      rehearsal_start_datetime: "Date et heure de début des répétitions"
+      rehearsal_start_hint: "Quand débuteront les répétitions avec pianistes"
+      time_slot_duration: "Durée du créneau (minutes)"
+      time_slot_hint: "Durée de répétition pour chaque candidat"
+      select_available_rooms: "Sélectionnez les salles disponibles"
+      select_rooms_hint: "Sélectionnez les salles disponibles pour les répétitions"
+      create_room: "Créer une salle"
+      no_rooms_registered: "Aucune salle enregistrée pour cet organisme"
+      add_rooms: "Ajouter des salles dans les paramètres de l'organisation"
+      save_config_and_generate: "Enregistrer la configuration et générer le planning"
+      add_room_modal_title: "Ajouter une salle"
+      schedule_title: "Planning de répétition avec pianiste"
+  pianist_rehearsal_planning:
+    rehearsal_schedule_title: "Planning de répétition avec pianiste"
+    no_rehearsals: "Aucune répétition programmée pour le moment. Configurez le planning pour générer des répétitions."
+    candidate_column: "Candidat"
+    date_column: "Date"
+    start_time_column: "Heure de début"
+    end_time_column: "Heure de fin"
+    room_column: "Salle"
+    actions_column: "Actions"
+    no_rehearsals_for_pianist: "Aucune répétition programmée pour ce pianiste dans cette salle."
+    move_up_button: "Monter cette répétition"
+    move_down_button: "Descendre cette répétition"
+    first_position: "Premier de la liste"
+    last_position: "Dernier de la liste"
+    statistics:
+      candidates_singular: "candidat"
+      candidates_plural: "candidats"
+      statistics:
+        candidates_count: "candidat|candidats"
+        total_duration: "Durée totale"
+  candidate_rehearsals:
+    move_up:
+      success: "Ordre des répétitions modifié avec succès."
+      error: "Impossible de déplacer cette répétition plus haut."
+    move_down:
+      success: "Ordre des répétitions modifié avec succès."
+      error: "Impossible de déplacer cette répétition plus bas."
+
   sidebar:
     home: "Accueil"
     profile: "Profil"
