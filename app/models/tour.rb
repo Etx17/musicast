@@ -102,6 +102,10 @@ class Tour < ApplicationRecord
     end
   end
 
+  def pianist_accompagnateurs
+    performances.map(&:pianist_accompagnateur).uniq
+  end
+
   def generate_solo_warmup_schedule
     # On supprime les répétitions existantes pour éviter les doublons
     candidate_rehearsals.destroy_all
@@ -305,6 +309,13 @@ class Tour < ApplicationRecord
              .first
   end
 
+
+  def room_time_conflict?(schedule, start_time, end_time)
+    schedule.any? do |slot|
+      (start_time < slot[:end] && end_time > slot[:start])
+    end
+  end
+
   private
 
   def new_day_start_time_before_max_end_of_day_time
@@ -345,5 +356,6 @@ class Tour < ApplicationRecord
     # Si toutes les salles ont des conflits, prendre celle avec le moins de répétitions
     room_schedules.min_by { |rs| rs[:busy_times].length }[:room]
   end
+
 
 end

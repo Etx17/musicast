@@ -158,11 +158,11 @@
 										uploadUrl = '/' + locale + '/candidats/' + candidatId + '/upload_portrait';
 									} else {
 										// Default to inscription path
-										if (!inscriptionId) {
-											inscriptionId = window.location.pathname.match(/\/inscriptions\/(\d+)/);
-											inscriptionId = inscriptionId ? inscriptionId[1] : null;
-										}
-										console.log("Uploading image for inscription ID:", inscriptionId);
+									if (!inscriptionId) {
+										inscriptionId = window.location.pathname.match(/\/inscriptions\/(\d+)/);
+										inscriptionId = inscriptionId ? inscriptionId[1] : null;
+									}
+									console.log("Uploading image for inscription ID:", inscriptionId);
 										uploadUrl = '/' + locale + '/inscriptions/' + inscriptionId + '/steps/upload_item_image';
 									}
 
@@ -172,7 +172,7 @@
 
 									// Only add item_id for inscriptions, not for candidats
 									if (!candidatId) {
-										formData.append('item_id', '<%= item_count %>');
+									formData.append('item_id', '<%= item_count %>');
 									}
 
 									// Afficher un indicateur de chargement
@@ -565,7 +565,7 @@
 			<input type="hidden" name="<%= model %>[upload_<%= field %>_crop_<%= attribute %>]" id="upload_<%= field %>_<%= item_count %>_crop_<%= attribute %>">
 		<% end %>
 
-		<!-- Modal -->
+	    <!-- Modal -->
     <div class="modal fade bg-gray modal-cropper" id="upload-<%= field %>-<%= item_count %>-modal" aria-labelledby="modalLabel" role="dialog" tabindex="-1">
       <div class="modal-dialog" role="document" style="width:<%= display_width+2 %>px;max-width:<%= display_width+2 %>px;">
         <div class="modal-content">

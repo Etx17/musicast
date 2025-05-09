@@ -1,0 +1,253 @@
+<div class="pianist-rehearsal-planning mb-4">
+  <% if @tour.candidate_rehearsals.any? %>
+    <style>
+      /* Style pour assurer que chaque cellule reste dans sa colonne */
+      .table-base .table-cell {
+        word-break: break-word;
+        vertical-align: middle !important;
+        white-space: normal;
+      }
+      /* Largeurs minimales pour les colonnes importantes */
+      .candidate-column-cell {
+        min-width: 200px;
+      }
+      /* Limiter la largeur de la colonne salle pour éviter de pousser le pianiste */
+      .room-column-cell {
+        min-width: 200px;
+      }
+      /* Assurer que la colonne du pianiste a une largeur minimale */
+      .pianist-column-cell {
+        min-width: 200px;
+      }
+      /* Styles pour la coloration des salles */
+      .room-badge {
+        padding: 6px 10px;
+        margin-right: 8px;
+        border-radius: 4px;
+        color: white;
+        font-weight: 500;
+        display: inline-block;
+        min-width: 80px;
+        text-align: center;
+      }
+      .room-select {
+        border-left-width: 4px !important;
+        border-left-style: solid !important;
+        padding-left: 8px !important;
+      }
+      .room-select option {
+        padding: 8px;
+        margin: 3px;
+        border-radius: 4px;
+      }
+      /* Séparation entre les salles et pianistes */
+      .pianist-room-container {
+        margin-bottom: 30px;
+        padding: 15px;
+        border-radius: 8px;
+        background-color: #f8f9fa;
+        border-left: 5px solid;
+      }
+      .pianist-room-header {
+        margin-bottom: 15px;
+      }
+    </style>
+
+    <%
+      # Palette de couleurs prédéfinies pour les salles et pianistes
+      color_palette = [
+        '#4285F4', # Bleu Google
+        '#34A853', # Vert Google
+        '#EA4335', # Rouge Google
+        '#FBBC05', # Jaune Google
+        '#8E24AA', # Violet
+        '#00ACC1', # Cyan
+        '#FB8C00', # Orange
+        '#607D8B', # Bleu gris
+        '#E91E63', # Rose
+        '#9C27B0', # Pourpre
+        '#3F51B5', # Indigo
+        '#009688', # Teal
+        '#FF5722', # Orange profond
+        '#795548', # Marron
+        '#673AB7'  # Violet profond
+      ]
+
+      # Créer un mapping des IDs de salles aux couleurs
+      room_colors = {}
+      Room.all.each_with_index do |room, index|
+        room_colors[room.id] = color_palette[index % color_palette.length]
+      end
+
+      # Créer un mapping des IDs de pianistes aux couleurs
+      pianist_colors = {}
+      PianistAccompagnateur.all.each_with_index do |pianist, index|
+        pianist_colors[pianist.id] = color_palette[(index + 5) % color_palette.length]
+      end
+
+      # Organiser les répétitions par salle et pianiste
+      rehearsals_by_room_and_pianist = {}
+
+      # Vérifier si nous avons suffisamment de salles pour chaque pianiste
+      if @tour.rooms.count >= @tour.pianist_accompagnateurs.count
+        # Assignation un-à-un: une salle par pianiste
+        @tour.pianist_accompagnateurs.each_with_index do |pianist, index|
+          room = @tour.rooms[index] if index < @tour.rooms.count
+          pianist_id = pianist.id
+          room_id = room&.id
+
+          if room_id
+            key = "#{room_id}_#{pianist_id}"
+            rehearsals_by_room_and_pianist[key] = {
+              room: room,
+              pianist: pianist,
+              rehearsals: @tour.candidate_rehearsals.where(pianist_accompagnateur_id: pianist_id, room_id: room_id).order(:start_time)
+            }
+          end
+        end
+      else
+        # Mode partagé: regrouper par pianiste indépendamment de la salle
+        @tour.pianist_accompagnateurs.each do |pianist|
+          pianist_rehearsals = @tour.candidate_rehearsals.where(pianist_accompagnateur_id: pianist.id).order(:start_time)
+
+          # Regrouper les répétitions de ce pianiste par salle
+          pianist_rehearsals.group_by(&:room_id).each do |room_id, rehearsals|
+            room = Room.find_by(id: room_id)
+            next unless room
+
+            key = "#{room_id}_#{pianist.id}"
+            rehearsals_by_room_and_pianist[key] = {
+              room: room,
+              pianist: pianist,
+              rehearsals: rehearsals
+            }
+          end
+        end
+      end
+    %>
+
+    <% rehearsals_by_room_and_pianist.each do |key, group| %>
+      <div class="pianist-room-container" style="border-left-color: <%= pianist_colors[group[:pianist].id] %>;">
+        <div class="pianist-room-header">
+          <h4>
+            <span class="room-badge" style="background-color: <%= room_colors[group[:room].id] %>;">
+              <%= group[:room].name %>
+            </span>
+            <span style="font-weight: 600;">
+              <%= group[:pianist].full_name %>
+            </span>
+          </h4>
+        </div>
+
+        <% if group[:rehearsals].any? %>
+          <%= render Table::BaseComponent.new(
+            no_action: true,
+            rows: group[:rehearsals],
+            columns: [
+              {
+                label: "Candidate",
+                min_width: 200,
+                value: ->(rehearsal) do
+                  content_tag(:div, class: "candidate-column-cell") do
+                    content_tag(:div, class: "d-flex align-items-center") do
+                      image_tag(
+                        rehearsal.candidat.portrait_or_default,
+                        class: "rounded-circle me-2",
+                        style: "width: 32px; height: 32px; object-fit: cover;"
+                      ) +
+                      content_tag(:span, rehearsal.candidat.full_name)
+                    end
+                  end
+                end
+              },
+              {
+                min_width: 100,
+                label: "Date",
+                value: ->(rehearsal) do
+                  l(rehearsal.start_time.to_date, format: "%A %d %B %Y") if rehearsal.start_time
+                end
+              },
+              {
+                min_width: 100,
+                label: "Start Time",
+                value: ->(rehearsal) do
+                  l(rehearsal.start_time, format: "%H:%M") if rehearsal.start_time
+                end
+              },
+              {
+                min_width: 100,
+                label: "End Time",
+                value: ->(rehearsal) do
+                  l(rehearsal.end_time, format: "%H:%M") if rehearsal.end_time
+                end
+              },
+              {
+                min_width: 200,
+                label: "Room",
+                value: ->(rehearsal) do
+                  rehearsal.room.name
+                end
+              }
+            ],
+            links: [],
+            client: nil
+          ) %>
+        <% else %>
+          <div class="alert alert-info">
+            No rehearsals scheduled for this pianist in this room.
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+
+    <% content_for :javascript do %>
+      <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          // Palette de couleurs prédéfinies
+          const colorPalette = [
+            '#4285F4', // Bleu Google
+            '#34A853', // Vert Google
+            '#EA4335', // Rouge Google
+            '#FBBC05', // Jaune Google
+            '#8E24AA', // Violet
+            '#00ACC1', // Cyan
+            '#FB8C00', // Orange
+            '#607D8B', // Bleu gris
+            '#E91E63', // Rose
+            '#9C27B0', // Pourpre
+            '#3F51B5', // Indigo
+            '#009688', // Teal
+            '#FF5722', // Orange profond
+            '#795548', // Marron
+            '#673AB7'  // Violet profond
+          ];
+
+          // Récupérer tous les IDs de salles uniques
+          const roomIds = Array.from(document.querySelectorAll('.rehearsal-room-selector')).map(el =>
+            el.getAttribute('data-room-id')
+          ).filter((v, i, a) => a.indexOf(v) === i && v); // Unique non-null values
+
+          // Assigner des couleurs aux salles
+          const roomColors = {};
+          roomIds.forEach((id, index) => {
+            roomColors[id] = colorPalette[index % colorPalette.length];
+          });
+
+          // Colorier les options des sélecteurs
+          document.querySelectorAll('.rehearsal-room-selector').forEach(select => {
+            Array.from(select.options).forEach(option => {
+              if (option.value && roomColors[option.value]) {
+                option.style.backgroundColor = roomColors[option.value] + '20'; // Ajoute transparence
+                option.style.borderLeft = `4px solid ${roomColors[option.value]}`;
+              }
+            });
+          });
+        });
+      </script>
+    <% end %>
+  <% else %>
+    <div class="alert alert-info">
+      No pianist rehearsals scheduled yet. Configure the schedule to generate rehearsals.
+    </div>
+  <% end %>
+</div>

@@ -46,7 +46,7 @@
 
           <!-- Prévisualisation qui agit comme bouton d'upload -->
           <div class="text-center mb-3">
-            <% if @candidat.portrait.attached? %>
+          <% if @candidat.portrait.attached? %>
               <div class="position-relative d-inline-block">
                 <%= image_tag url_for(@candidat.portrait), class: "img-fluid rounded", style: "max-height: 200px;", id: "upload_portrait_portrait_file_preview" %>
                 <%= link_to purge_portrait_candidat_path(@candidat),
@@ -58,8 +58,8 @@
               </div>
               <div class="mt-2" id="upload-status-portrait">
                 <small class="text-success"><i class="fas fa-check-circle"></i> <%= t('image_cropper.image_saved') %></small>
-              </div>
-            <% else %>
+            </div>
+          <% else %>
               <div class="upload-placeholder p-3 border rounded d-flex flex-column align-items-center justify-content-center"
                    style="height: 200px; cursor: pointer;"
                    id="upload_portrait_portrait_file_preview">
@@ -77,7 +77,7 @@
                 aspect_ratio: 0.75, # 3:4 vertical portrait ratio
                 display_width: 500,
                 item_count: "portrait" %>
-          </div>
+            </div>
 
           <%= f.input :portrait, as: :hidden,
                      input_html: {

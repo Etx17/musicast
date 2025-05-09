@@ -1,0 +1,143 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <!-- Bouton pour ouvrir la modale de configuration -->
+      <div class="d-flex mb-4">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#pianistConfigModal">
+          <i class="fas fa-cog me-2"></i>Configure Pianist Rehearsal Schedule
+        </button>
+        <% if @tour.candidate_rehearsals.any? %>
+          <%= link_to download_pianist_rehearsal_schedule_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour, format: :pdf), class: "btn btn-outline-primary ms-2", target: "_blank" do %>
+            <i class="fas fa-download me-2"></i>Download Pianist Rehearsal Schedule
+          <% end %>
+        <% end %>
+      </div>
+
+      <!-- Espace réservé pour afficher le planning -->
+      <div id="pianist-rehearsal-schedule">
+        <!-- Le planning de répétition généré sera affiché ici -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal pour la configuration du planning -->
+<div class="modal fade" id="pianistConfigModal" tabindex="-1" aria-labelledby="pianistConfigModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="pianistConfigModalLabel">Pianist Rehearsal Schedule Configuration</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <%= simple_form_for [@organism, @competition, @edition_competition, @category, @tour],
+                          url: update_pianist_rehearsal_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour),
+                          method: :patch do |f| %>
+          <div class="bg-light p-3 rounded mb-3">
+            <%= f.input :pianist_rehearsal_start_datetime,
+                       as: :datetime,
+                       html5: true,
+                       input_html: {
+                         value: @tour.pianist_rehearsal_start_datetime || DateTime.now.beginning_of_hour + 1.hour,
+                         class: "form-control"
+                       },
+                       label: "Rehearsal Start Date and Time",
+                       hint: "When pianist rehearsals will begin" %>
+
+            <%= f.input :rehearse_time_slot_per_candidate,
+                      input_html: {
+                        style: "width: fit-content;",
+                        value: @tour.rehearse_time_slot_per_candidate || 15
+                      },
+                      label: "Time Slot Duration (minutes)",
+                      hint: "Duration of each candidate's rehearsal slot" %>
+
+            <% if @organism.rooms.exists? %>
+              <div class="d-flex align-items-center mb-3">
+                <div class="flex-grow-1">
+                  <%= f.association :rooms,
+                                  collection: @organism.rooms,
+                                  label: "Select Available Rooms",
+                                  input_html: { data: { controller: "tom-select" } },
+                                  hint: "Select rooms available for rehearsals" %>
+                </div>
+                <div class="ms-3 mt-4">
+                  <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#newRoomModal">
+                    <i class="fas fa-plus"></i> Create Room
+                  </button>
+                </div>
+              </div>
+            <% else %>
+              <div class="alert alert-info">
+                <i class="fas fa-info-circle me-2"></i>
+                No rooms registered for this organization.
+                <%= link_to "Add rooms in organization settings", organisateur_dashboard_path, class: "alert-link" %> to start.
+              </div>
+              <div class="text-center mb-3">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newRoomModal">
+                  <i class="fas fa-plus"></i> Create Room
+                </button>
+              </div>
+            <% end %>
+          </div>
+
+          <div class="text-center mt-3">
+            <%= f.submit "Save Configuration and Generate Schedule", class: "btn btn-primary", style: "width: fit-content;" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal pour créer une salle -->
+<div class="modal fade" id="newRoomModal" tabindex="-1" aria-labelledby="newRoomModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="newRoomModalLabel">Add Room</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <%= simple_form_for([@organism, Room.new]) do |f| %>
+          <%= f.error_notification %>
+
+          <div class="form-inputs">
+            <%= f.input :name, label: "Room Name" %>
+            <%= f.input :notes, label: "Notes" %>
+            <%= f.input :organism_id, as: :hidden, input_html: { value: @organism.id } %>
+
+            <!-- Hidden field for redirect path back to current page -->
+            <input type="hidden" name="redirect_path" value="<%= request.fullpath %>" />
+
+            <div class="row">
+              <div class="col">
+                <%= f.input :start_time, label: "Opening Time" %>
+              </div>
+              <div class="col">
+                <%= f.input :end_time, label: "Closing Time" %>
+              </div>
+            </div>
+
+            <%= f.input :description, label: "Description" %>
+            <%= f.input :description_english, label: "Description (English)" %>
+          </div>
+
+          <div class="form-actions text-center">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <%= f.button :submit, "Create", class: "btn btn-primary" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <h3 class="mb-4">Pianist Rehearsal Schedule</h3>
+      <%= render "tours/pianist_rehearsal_planning", tour: @tour %>
+    </div>
+  </div>
+</div>

@@ -92,7 +92,7 @@
         <div id="rehearsal_type_container" class="mt-3 ms-4 ps-2 border-start" data-tour-form-target="rehearsalTypeContainer">
           <%= f.input :rehearsal_type,
               collection: Tour.rehearsal_types.map { |type, _|
-                option_disabled = type != 'solo_warmup'
+                option_disabled = type != 'solo_warmup' && type != 'pianist_rehearsal'
                 [
                   "#{t("tours.rehearsal_types.#{type}")}#{option_disabled ? ' (Coming soon)' : ''}",
                   type,

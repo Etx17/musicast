@@ -1949,7 +1949,7 @@ fr:
       nothing: "Aucune répétition ou chauffe"
       solo_warmup: "Chauffe soliste (le jour du concours, avant sa performance)"
       pianist_warmup: "Mise en place rapide avec pianiste (le jour du concours, avant sa performance)"
-      pianist_rehearsal: "Répétition musicale avec pianiste (pas le même jour que la performance)"
+      pianist_rehearsal: "Répétition musicale avec pianiste"
       orchestra_rehearsal: "Répétition orchestre (pas le même jour que la performance)"
       default: "Répétitions"
       description:

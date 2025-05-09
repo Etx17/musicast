@@ -119,6 +119,7 @@ class ToursController < ApplicationController
     if @tour.pauses.any? || @tour.performances.any? { |p| p.start_time.present? }
       @tour.pauses.destroy_all
       @tour.performances.update_all(start_time: nil)
+      @tour.candidate_rehearsals.destroy_all
     end
 
     @tour.update_performance_order(params[:performance_id], params[:new_order])
@@ -153,6 +154,9 @@ class ToursController < ApplicationController
       min_consecutive_performances_per_pianist = params[:min_consecutive_performances_per_pianist].presence&.to_i || 1
     end
 
+    # Since we change the pianists, we need to regenerate the pianist rehearsal schedule if there was one
+    @tour.candidate_rehearsals&.destroy_all if @tour.pianist_rehearsal?
+
     @tour.assign_pianist_to_each_performance(pianists, max_consecutive_performances_per_pianist, min_consecutive_performances_per_pianist)
     redirect_to [@organism, @competition, @edition_competition, @category, @tour], notice: "Pianistes assignés avec succès."
   end
@@ -160,7 +164,10 @@ class ToursController < ApplicationController
   def assign_pianist_to_performance_manually
     @performance = Performance.find(params[:performance_id])
     @performance.assign_pianist_accompagnateur(params[:pianist_accompagnateur_id])
-    redirect_to [@organism, @competition, @edition_competition, @category, @tour], notice: 'Pianist was successfully updated.'
+
+    # Since we change the pianist, we need to regenerate the pianist rehearsal schedule
+    @tour.candidate_rehearsals&.destroy_all if @tour.pianist_rehearsal?
+    redirect_to [@organism, @competition, @edition_competition, @category, @tour], notice: 'Pianist was successfully updated. Please regenerate the pianist rehearsal schedule if you had one.'
   end
 
   def qualify_performance
@@ -219,9 +226,9 @@ class ToursController < ApplicationController
       format.html
       format.pdf do
         render pdf: "Dossier jury - #{@tour.title}",
-              template: "tours/show_jury_pdf",
-              layout: 'pdf',
-              formats: [:html],
+        template: "tours/show_jury_pdf",
+        layout: 'pdf',
+        formats: [:html],
               orientation: 'Portrait',
               margin: { top: 15, bottom: 15, left: 15, right: 15 },
               image_quality: 100,
@@ -418,6 +425,85 @@ class ToursController < ApplicationController
     end
   end
 
+  def update_pianist_rehearsal
+    @organism = Organism.friendly.find(params[:organism_id])
+    @category = Category.friendly.find(params[:category_id])
+    @edition_competition = @category.edition_competition
+    @competition = @edition_competition.competition
+    @tour = @category.tours.find(params[:id])
+
+    if @tour.update(pianist_rehearsal_params)
+      # @tour.generate_pianist_rehearsal_schedule
+      generate_pianist_rehearsal_schedule
+
+      redirect_to organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour),
+                  notice: "Pianist rehearsal configuration updated successfully."
+    else
+      render :show, status: :unprocessable_entity
+    end
+  end
+
+  def download_pianist_rehearsal_schedule
+    @tour = Tour.find(params[:id])
+    authorize @tour
+
+    # Group rehearsals by room and pianist
+    rehearsals_by_room_and_pianist = {}
+
+    if @tour.rooms.count >= @tour.pianist_accompagnateurs.count
+      # One-to-one assignment: one room per pianist
+      @tour.pianist_accompagnateurs.each_with_index do |pianist, index|
+        room = @tour.rooms[index] if index < @tour.rooms.count
+        pianist_id = pianist.id
+        room_id = room&.id
+
+        if room_id
+          key = "#{room_id}_#{pianist_id}"
+          rehearsals_by_room_and_pianist[key] = {
+            room: room,
+            pianist: pianist,
+            rehearsals: @tour.candidate_rehearsals.where(pianist_accompagnateur_id: pianist_id, room_id: room_id).order(:start_time)
+          }
+        end
+      end
+    else
+      # Shared mode: group by pianist regardless of room
+      @tour.pianist_accompagnateurs.each do |pianist|
+        pianist_rehearsals = @tour.candidate_rehearsals.where(pianist_accompagnateur_id: pianist.id).order(:start_time)
+
+        # Group this pianist's rehearsals by room
+        pianist_rehearsals.group_by(&:room_id).each do |room_id, rehearsals|
+          room = Room.find_by(id: room_id)
+          next unless room
+
+          key = "#{room_id}_#{pianist.id}"
+          rehearsals_by_room_and_pianist[key] = {
+            room: room,
+            pianist: pianist,
+            rehearsals: rehearsals
+          }
+        end
+      end
+    end
+
+    @rehearsals_by_room_and_pianist = rehearsals_by_room_and_pianist
+
+    respond_to do |format|
+      format.pdf do
+        render pdf: "pianist_rehearsal_schedule_#{@tour.title.parameterize}",
+               template: "tours/pianist_rehearsal_schedule",
+               layout: "pdf",
+               orientation: "Portrait",
+               page_size: "A4",
+               encoding: "UTF-8",
+               footer: {
+                 center: "Pianist Rehearsal Schedule - #{@tour.title}",
+                 left: Date.today.strftime("%d/%m/%Y")
+               }
+      end
+    end
+  end
+
   private
 
   def set_tour
@@ -455,6 +541,7 @@ class ToursController < ApplicationController
       :has_afternoon_pause,
       :afternoon_pause_time,
       :morning_pause_duration_minutes,
+      :pianist_rehearsal_start_datetime,
       :afternoon_pause_duration_minutes,
       :buffer_time_minutes,
       :creating_schedule,
@@ -478,5 +565,98 @@ class ToursController < ApplicationController
 
   def solo_warmup_params
     params.require(:tour).permit(:rehearse_time_slot_per_candidate, :buffer_time_minutes, room_ids: [])
+  end
+
+  def pianist_rehearsal_params
+    params.require(:tour).permit(
+      :pianist_rehearsal_start_datetime,
+      :rehearse_time_slot_per_candidate,
+      :buffer_time_minutes,
+      room_ids: [],
+      pianist_accompagnateur_ids: []
+    )
+  end
+
+  def generate_pianist_rehearsal_schedule
+    # Delete existing rehearsals to avoid duplicates
+    @tour.candidate_rehearsals.destroy_all
+    rooms = @tour.rooms
+    pianist_accompagnateurs = @tour.performances.map(&:pianist_accompagnateur).uniq
+    # Get all performances with assigned pianists
+    sorted_performances = @tour.performances.where.not(pianist_accompagnateur_id: nil)
+                                    .order(start_date: :asc, start_time: :asc)
+
+    if sorted_performances.empty?
+      return { success: false, message: "No performances with assigned pianists" }
+    end
+
+    # Create one-to-one mapping between pianists and rooms if possible,
+    # otherwise distribute rooms among pianists
+    pianist_room_map = {}
+
+    if rooms.count >= pianist_accompagnateurs.count
+      # Each pianist gets their own room
+      pianist_accompagnateurs.each_with_index do |pianist, index|
+        pianist_room_map[pianist.id] = rooms[index].id if index < rooms.count
+      end
+    else
+      # Rooms are shared among pianists - assign based on a round-robin approach
+      room_cycle = rooms.cycle
+      pianist_accompagnateurs.each do |pianist|
+        pianist_room_map[pianist.id] = room_cycle.next.id
+      end
+    end
+
+    # Store room schedules to track availability
+    room_schedules = {}
+    rooms.each do |room|
+      room_schedules[room.id] = []
+    end
+
+    # Set starting date and time for each pianist
+    rehearsal_time = @tour.pianist_rehearsal_start_datetime
+    # Group performances by pianist
+    sorted_performances.group_by(&:pianist_accompagnateur_id).each do |pianist_id, pianist_performances|
+      next unless pianist_id.present?
+
+      # Get the room assigned to this pianist
+      room_id = pianist_room_map[pianist_id]
+      next unless room_id.present?
+
+      # Schedule rehearsals for this pianist's performances
+      pianist_performances.each do |performance|
+        candidat = performance.inscription&.candidat
+        next unless candidat
+
+        # Calculate rehearsal end time
+        rehearsal_end_time = rehearsal_time + @tour.rehearse_time_slot_per_candidate.minutes
+
+        # Check for room availability at this time
+        while @tour.room_time_conflict?(room_schedules[room_id], rehearsal_time, rehearsal_end_time)
+          # Move forward by the slot duration to find next available time
+          rehearsal_time += @tour.rehearse_time_slot_per_candidate.minutes
+          rehearsal_end_time = rehearsal_time + @tour.rehearse_time_slot_per_candidate.minutes
+        end
+        # Create the rehearsal
+        @tour.candidate_rehearsals.create!(
+          performance: performance,
+          room_id: room_id,
+          candidat: candidat,
+          start_time: rehearsal_time,
+          end_time: rehearsal_end_time,
+          pianist_accompagnateur_id: pianist_id
+        )
+
+        # Update room schedule with this reservation
+        room_schedules[room_id] << { start: rehearsal_time, end: rehearsal_end_time }
+
+        # Move to next time slot
+        rehearsal_time = rehearsal_end_time + 5.minutes
+      end
+    end
+
+    { success: true, message: "Pianist rehearsal schedule generated successfully", count: @tour.candidate_rehearsals.count }
+  rescue => e
+    { success: false, message: "Error generating pianist rehearsal schedule: #{e.message}" }
   end
 end
