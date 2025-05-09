@@ -309,6 +309,13 @@ class Tour < ApplicationRecord
              .first
   end
 
+  def has_rehearsal?
+    candidate_rehearsals.any?
+  end
+
+  def has_results?
+    performances.any?{|p| p.is_qualified}
+  end
 
   def room_time_conflict?(schedule, start_time, end_time)
     schedule.any? do |slot|

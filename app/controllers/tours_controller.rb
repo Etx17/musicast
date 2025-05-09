@@ -1,8 +1,9 @@
 require 'zip'
 class ToursController < ApplicationController
-  before_action :set_tour, only: %i[download_schedule_pdf download_pianist_scores download_all_scores download_score assign_pianist_to_performance_manually assign_pianist store_form_data move_to_next_tour qualify_performance shuffle show edit update destroy update_order update_day_of_performance_and_subsequent_performances]
+  before_action :set_tour, only: %i[set_current_tab download_schedule_pdf download_pianist_scores download_all_scores download_score assign_pianist_to_performance_manually assign_pianist store_form_data move_to_next_tour qualify_performance shuffle show edit update destroy update_order update_day_of_performance_and_subsequent_performances]
   before_action :set_context, only: %i[reorder_tours assign_pianist_to_performance_manually assign_pianist store_form_data move_to_next_tour qualify_performance shuffle new create show edit update destroy update_order update_day_of_performance_and_subsequent_performances]
 
+  before_action :set_current_tab, only: :show
   def index
     @tours = Tour.all
   end
@@ -665,5 +666,17 @@ class ToursController < ApplicationController
     { success: true, message: "Pianist rehearsal schedule generated successfully", count: @tour.candidate_rehearsals.count }
   rescue => e
     { success: false, message: "Error generating pianist rehearsal schedule: #{e.message}" }
+  end
+
+  def set_current_tab
+    if @tour.has_results?
+      session[:tour_tab] = "results"
+    elsif @tour.has_rehearsal?
+      session[:tour_tab] = "rehearsal"
+    elsif @tour.has_planning? && @tour.performances.none?{|p| p.is_qualified }
+      session[:tour_tab] = "planning"
+    else
+      session[:tour_tab] = "order_of_performances"
+    end
   end
 end

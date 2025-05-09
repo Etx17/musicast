@@ -105,12 +105,12 @@ class CandidateRehearsalsController < ApplicationController
       end
 
       respond_to do |format|
-        format.html { redirect_back(fallback_location: root_path, notice: "Ordre des répétitions modifié avec succès.", anchor: "rehearsal") }
+        format.html { redirect_back(fallback_location: root_path, notice: "Ordre des répétitions modifié avec succès.", anchor: "#rehearsal") }
         format.json { render json: { success: true } }
       end
     else
       respond_to do |format|
-        format.html { redirect_back(fallback_location: root_path, alert: "Impossible de déplacer cette répétition plus bas.", anchor: "rehearsal") }
+        format.html { redirect_back(fallback_location: root_path, alert: "Impossible de déplacer cette répétition plus bas.", anchor: "#rehearsal") }
         format.json { render json: { success: false, message: "Impossible de déplacer cette répétition plus bas." }, status: :unprocessable_entity }
       end
     end

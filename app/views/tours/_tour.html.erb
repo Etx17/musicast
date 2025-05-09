@@ -44,7 +44,7 @@
       <ul class="nav nav-tabs row g-0" id="myTab" role="tablist">
         <li class="nav-item <%= @tour.needs_rehearsal? ? 'col-md-3' : 'col-md-4' %>" role="presentation">
           <div class="nav-tab-wrapper position-relative">
-            <a class="d-block nav-tab-link text-center py-3 px-2 text-decoration-none position-relative <%= 'active' unless @tour.has_planning? %>"
+            <a class="d-block nav-tab-link text-center py-3 px-2 text-decoration-none position-relative <%= 'active' if session[:tour_tab] == "order_of_performances" %>"
               id="order-tab"
               data-bs-toggle="tab"
               href="#order"
@@ -63,7 +63,7 @@
         </li>
         <li class="nav-item <%= @tour.needs_rehearsal? ? 'col-md-3' : 'col-md-4' %>" role="presentation">
           <div class="nav-tab-wrapper position-relative">
-            <a class="d-block nav-tab-link text-center py-3 px-2 text-decoration-none position-relative <%= 'active' if @tour.has_planning? && @tour.performances.none?{|p| p.is_qualified } %>"
+            <a class="d-block nav-tab-link text-center py-3 px-2 text-decoration-none position-relative <%= 'active' if session[:tour_tab] == "planning" %>"
                id="planning-tab"
                data-bs-toggle="tab"
                href="#planning"
@@ -84,7 +84,7 @@
         <li class="nav-item col-md-3" role="presentation">
           <div class="nav-tab-wrapper position-relative">
 
-            <a class="d-block nav-tab-link text-center py-3 px-2 text-decoration-none position-relative"
+            <a class="d-block nav-tab-link text-center py-3 px-2 text-decoration-none position-relative <%= 'active' if session[:tour_tab] == "rehearsal" %>"
                id="rehearsal-tab"
                data-bs-toggle="tab"
                href="#rehearsal"
@@ -111,7 +111,7 @@
         <% end %>
         <li class="nav-item <%= @tour.needs_rehearsal? ? 'col-md-3' : 'col-md-4' %>" role="presentation">
           <div class="nav-tab-wrapper position-relative">
-            <a class="d-block nav-tab-link text-center py-3 px-2 text-decoration-none position-relative <%= 'active' if @tour.performances.any?{|p| p.is_qualified } %>"
+            <a class="d-block nav-tab-link text-center py-3 px-2 text-decoration-none position-relative <%= 'active' if session[:tour_tab] == "results" %>"
                id="results-tab"
                data-bs-toggle="tab"
                href="#results"
@@ -187,7 +187,7 @@
 
   <div class="tab-content" id="myTabContent">
     <!-- tab ordre -->
-    <div class="tab-pane fade <%= 'show active' unless @tour.has_planning? %>" id="order" role="tabpanel" aria-labelledby="order-tab">
+    <div class="tab-pane fade <%= 'show active' if session[:tour_tab] == "order_of_performances" %>" id="order" role="tabpanel" aria-labelledby="order-tab">
       <% if tour.is_finished? %>
            <div class="d-flex justify-content-center">
             <div class="d-flex flex-column justif-content-center align-items-center">
@@ -201,7 +201,7 @@
     </div>
 
     <!-- tab planning -->
-    <div class="tab-pane fade <%= 'show active' if @tour.has_planning? && @tour.performances.none?{|p| p.is_qualified } %>" id="planning" role="tabpanel" aria-labelledby="planning-tab">
+    <div class="tab-pane fade <%= 'show active' if session[:tour_tab] == "planning" %>" id="planning" role="tabpanel" aria-labelledby="planning-tab">
       <% if !@tour.has_planning? %>
         <div class="d-flex justify-content-center">
           <div class="d-flex flex-column justif-content-center align-items-center">
@@ -244,13 +244,13 @@
 
      <% if @tour.needs_rehearsal? %>
       <!-- tab répétitions -->
-      <div class="tab-pane fade" id="rehearsal" role="tabpanel" aria-labelledby="rehearsal-tab">
+      <div class="tab-pane fade <%= 'show active' if session[:tour_tab] == "rehearsal" %>" id="rehearsal" role="tabpanel" aria-labelledby="rehearsal-tab">
         <%= render @tour.rehearsal_type, tour: @tour %>
       </div>
     <% end %>
 
     <!-- tab resultats -->
-    <div class="tab-pane fade <%= 'show active' if @tour.performances.any?{|p| p.is_qualified } %>" id="results" role="tabpanel" aria-labelledby="order-tab">
+    <div class="tab-pane fade <%= 'show active' if session[:tour_tab] == "results" %>" id="results" role="tabpanel" aria-labelledby="order-tab">
       <%= render 'results' %>
     </div>
   </div>
