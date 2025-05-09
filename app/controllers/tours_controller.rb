@@ -433,7 +433,6 @@ class ToursController < ApplicationController
     @tour = @category.tours.find(params[:id])
 
     if @tour.update(pianist_rehearsal_params)
-      # @tour.generate_pianist_rehearsal_schedule
       generate_pianist_rehearsal_schedule
 
       redirect_to organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour),
@@ -581,7 +580,17 @@ class ToursController < ApplicationController
     # Delete existing rehearsals to avoid duplicates
     @tour.candidate_rehearsals.destroy_all
     rooms = @tour.rooms
-    pianist_accompagnateurs = @tour.performances.map(&:pianist_accompagnateur).uniq
+    pianist_accompagnateurs = @tour.performances.map(&:pianist_accompagnateur).uniq.compact
+
+    # Check for required parameters
+    if rooms.empty?
+      return { success: false, message: "No rehearsal rooms have been selected" }
+    end
+
+    unless @tour.pianist_rehearsal_start_datetime.present? && @tour.rehearse_time_slot_per_candidate.present? && @tour.buffer_time_minutes.present?
+      return { success: false, message: "Start time, rehearsal duration, or buffer time not configured" }
+    end
+
     # Get all performances with assigned pianists
     sorted_performances = @tour.performances.where.not(pianist_accompagnateur_id: nil)
                                     .order(start_date: :asc, start_time: :asc)
@@ -607,51 +616,49 @@ class ToursController < ApplicationController
       end
     end
 
-    # Store room schedules to track availability
-    room_schedules = {}
-    rooms.each do |room|
-      room_schedules[room.id] = []
-    end
+    # Group performances by room (via pianist assignment)
+    performances_by_room = {}
 
-    # Set starting date and time for each pianist
-    rehearsal_time = @tour.pianist_rehearsal_start_datetime
-    # Group performances by pianist
-    sorted_performances.group_by(&:pianist_accompagnateur_id).each do |pianist_id, pianist_performances|
+    sorted_performances.each do |performance|
+      pianist_id = performance.pianist_accompagnateur_id
       next unless pianist_id.present?
 
-      # Get the room assigned to this pianist
       room_id = pianist_room_map[pianist_id]
       next unless room_id.present?
 
-      # Schedule rehearsals for this pianist's performances
-      pianist_performances.each do |performance|
+      performances_by_room[room_id] ||= []
+      performances_by_room[room_id] << {
+        performance: performance,
+        pianist_id: pianist_id
+      }
+    end
+
+    # For each room, schedule rehearsals starting at the configured start time
+    performances_by_room.each do |room_id, room_performances|
+      # Start all rooms at the same configured time
+      current_time = @tour.pianist_rehearsal_start_datetime
+
+      room_performances.each do |perf_data|
+        performance = perf_data[:performance]
+        pianist_id = perf_data[:pianist_id]
         candidat = performance.inscription&.candidat
         next unless candidat
 
-        # Calculate rehearsal end time
-        rehearsal_end_time = rehearsal_time + @tour.rehearse_time_slot_per_candidate.minutes
+        # Calculate end time for this rehearsal
+        end_time = current_time + @tour.rehearse_time_slot_per_candidate.minutes
 
-        # Check for room availability at this time
-        while @tour.room_time_conflict?(room_schedules[room_id], rehearsal_time, rehearsal_end_time)
-          # Move forward by the slot duration to find next available time
-          rehearsal_time += @tour.rehearse_time_slot_per_candidate.minutes
-          rehearsal_end_time = rehearsal_time + @tour.rehearse_time_slot_per_candidate.minutes
-        end
         # Create the rehearsal
         @tour.candidate_rehearsals.create!(
           performance: performance,
           room_id: room_id,
           candidat: candidat,
-          start_time: rehearsal_time,
-          end_time: rehearsal_end_time,
+          start_time: current_time,
+          end_time: end_time,
           pianist_accompagnateur_id: pianist_id
         )
 
-        # Update room schedule with this reservation
-        room_schedules[room_id] << { start: rehearsal_time, end: rehearsal_end_time }
-
-        # Move to next time slot
-        rehearsal_time = rehearsal_end_time + 5.minutes
+        # Move to next time slot (5 minutes buffer between rehearsals)
+        current_time = end_time + 5.minutes
       end
     end
 
