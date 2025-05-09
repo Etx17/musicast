@@ -15,6 +15,8 @@ Rails.application.routes.draw do
     resources :candidate_rehearsals, only: [] do
       member do
         post :update_room
+        post :move_up
+        post :move_down
       end
     end
 

@@ -236,6 +236,51 @@
                 value: ->(rehearsal) do
                   rehearsal.room.name
                 end
+              },
+              {
+                label: "Actions",
+                min_width: 100,
+                value: ->(rehearsal) do
+                  content_tag(:div, class: "d-flex justify-content-center") do
+                    # Find if this is the first rehearsal for this pianist/room combination
+                    is_first = !CandidateRehearsal.where(room_id: rehearsal.room_id, pianist_accompagnateur_id: rehearsal.pianist_accompagnateur_id)
+                                         .where("start_time < ?", rehearsal.start_time)
+                                         .exists?
+
+                    # Find if this is the last rehearsal for this pianist/room combination
+                    is_last = !CandidateRehearsal.where(room_id: rehearsal.room_id, pianist_accompagnateur_id: rehearsal.pianist_accompagnateur_id)
+                                         .where("start_time > ?", rehearsal.start_time)
+                                         .exists?
+
+                    # Button for moving the rehearsal up (disabled if first)
+                    concat(
+                      button_to(
+                        move_up_candidate_rehearsal_path(rehearsal),
+                        method: :post,
+                        class: "btn btn-sm btn-outline-secondary me-1 #{is_first ? 'disabled' : ''}",
+                        title: is_first ? "Premier de la liste" : "Monter cette répétition",
+                        disabled: is_first,
+                        form: { style: "display:inline;" }
+                      ) do
+                        content_tag(:i, "", class: "fas fa-arrow-up")
+                      end
+                    )
+
+                    # Button for moving the rehearsal down (disabled if last)
+                    concat(
+                      button_to(
+                        move_down_candidate_rehearsal_path(rehearsal),
+                        method: :post,
+                        class: "btn btn-sm btn-outline-secondary #{is_last ? 'disabled' : ''}",
+                        title: is_last ? "Dernier de la liste" : "Descendre cette répétition",
+                        disabled: is_last,
+                        form: { style: "display:inline;" }
+                      ) do
+                        content_tag(:i, "", class: "fas fa-arrow-down")
+                      end
+                    )
+                  end
+                end
               }
             ],
             links: [],
