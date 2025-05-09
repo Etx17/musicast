@@ -46,10 +46,21 @@
         padding: 15px;
         border-radius: 8px;
         background-color: #f8f9fa;
-        border-left: 5px solid;
       }
       .pianist-room-header {
         margin-bottom: 15px;
+      }
+      .pianist-stats {
+        display: inline-block;
+        margin-left: 15px;
+        font-size: 0.9em;
+        color: #666;
+      }
+      .pianist-stats .stats-item {
+        margin-right: 10px;
+      }
+      .stats-item i {
+        margin-right: 4px;
       }
     </style>
 
@@ -127,7 +138,7 @@
     %>
 
     <% rehearsals_by_room_and_pianist.each do |key, group| %>
-      <div class="pianist-room-container" style="border-left-color: <%= pianist_colors[group[:pianist].id] %>;">
+      <div class="pianist-room-container">
         <div class="pianist-room-header">
           <h4>
             <span class="room-badge" style="background-color: <%= room_colors[group[:room].id] %>;">
@@ -136,6 +147,38 @@
             <span style="font-weight: 600;">
               <%= group[:pianist].full_name %>
             </span>
+
+            <% if group[:rehearsals].any? %>
+              <%
+                # Calculer le nombre de candidats
+                nb_candidates = group[:rehearsals].count
+
+                # Calculer la durée totale des répétitions
+                total_minutes = 0
+                group[:rehearsals].each do |rehearsal|
+                  if rehearsal.start_time && rehearsal.end_time
+                    # Calculer la différence en minutes
+                    minutes = ((rehearsal.end_time - rehearsal.start_time) / 60).to_i
+                    total_minutes += minutes
+                  end
+                end
+
+                # Convertir en heures et minutes
+                hours = total_minutes / 60
+                remaining_minutes = total_minutes % 60
+              %>
+
+              <span class="pianist-stats">
+                <span class="stats-item"><i class="fas fa-users"></i> <%= nb_candidates %> <%= nb_candidates > 1 ? 'candidates' : 'candidate' %></span>
+                <span class="stats-item"><i class="far fa-clock"></i>
+                  <% if hours > 0 %>
+                    <%= hours %>h<%= remaining_minutes > 0 ? " #{remaining_minutes}m" : "" %>
+                  <% else %>
+                    <%= remaining_minutes %>m
+                  <% end %>
+                </span>
+              </span>
+            <% end %>
           </h4>
         </div>
 
