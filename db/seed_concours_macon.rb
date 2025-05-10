@@ -77,6 +77,38 @@ categ = Category.create(
   payment_after_approval: false
 )
 
+ImposedWork.create(
+  category: categ,
+  title: "Mélodie contemporaine",
+  title_english: "Contemporary melody",
+  guidelines: "Mélodie contemporaine imposée pour la demi-finale, composée en 2025 par Régis Campo. Les candidats pourront télécharger les références de la partition directement sur le site internet du concours le 1er juin au plus tard.",
+  guidelines_english: "Contemporary imposed melody for the semi-finals, composed in 2025 by Régis Campo. Candidates will be able to download the references of the score directly on the competition website by June 1st at the latest.",
+  airs: [
+      Air.create(
+        title: "Mélodie contemporaine",
+        composer: "Régis Campo",
+        oeuvre: "Mélodie contemporaine",
+        length_minutes: 4,
+        tonality: "C Major",
+        infos: "Informations supplémentaires sur cette pièce en français. Contexte historique et conseils d'interprétation.",
+        infos_english: "Additional information about this piece in English. Historical context and performance tips."
+      )
+    ]
+  )
+
+SemiImposedWork.create(
+  category: categ,
+  title: "Mélodie contemporaine",
+  title_english: "Contemporary melody",
+  guidelines: "Un air d'opéra et une mélodie française. Le tout ne doit pas dépasser 8 minutes. Les œuvres devront être interprétées sans partitions. Aucune transposition n’est possible.",
+  guidelines_english: "1 opera aria and 1 french melody. The total duration must not exceed 8 minutes. The works must be performed without scores. No transposition is possible.",
+  number: 2,
+  max_length_minutes: 8
+)
+
+
+
+
 # Creating Tours for the Category
 Tour.create!(
   imposed_air_selection: [],
