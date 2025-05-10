@@ -1026,6 +1026,7 @@ en:
     actions:
       view_with_correct_format: "View with correct format"
       clear: "Clear"
+      all: "All"
       search: "Search"
       search_by_keywords: "Search by keywords"
       filter_by: "Filter by"
@@ -1331,6 +1332,7 @@ en:
       status: "Status"
       payment_status: "Payment status"
       created_at: "Registration date"
+      filter_by_status: "Filter by status"
       view: "View"
     jury_index:
       applications_to_rate: "Applications to rate"

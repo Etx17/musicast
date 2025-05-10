@@ -359,3 +359,4 @@ end
 
 
 load Rails.root.join('db', 'seed_concours_honneur.rb')
+load Rails.root.join('db', 'seed_concours_macon.rb')
