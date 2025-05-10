@@ -670,31 +670,56 @@ class ToursController < ApplicationController
     end
 
     # For each room, schedule rehearsals starting at the configured start time
-    performances_by_room.each do |room_id, room_performances|
-      # Start all rooms at the same configured time
+    if rooms.count == 1
+      # Only one room: group by pianist, schedule all candidates for each pianist consecutively
+      room = rooms.first
       current_time = @tour.pianist_rehearsal_start_datetime
+      @tour.pianist_accompagnateurs.each do |pianist|
+        # Get all performances for this pianist
+        pianist_performances = sorted_performances.select { |perf| perf.pianist_accompagnateur_id == pianist.id }
+        pianist_performances.each do |performance|
+          candidat = performance.inscription&.candidat
+          next unless candidat
+          end_time = current_time + @tour.rehearse_time_slot_per_candidate.minutes
+          @tour.candidate_rehearsals.create!(
+            performance: performance,
+            room_id: room.id,
+            candidat: candidat,
+            start_time: current_time,
+            end_time: end_time,
+            pianist_accompagnateur_id: pianist.id
+          )
+          current_time = end_time
+        end
+      end
+    else
+      # Multiple rooms: keep existing logic
+      performances_by_room.each do |room_id, room_performances|
+        # Start all rooms at the same configured time
+        current_time = @tour.pianist_rehearsal_start_datetime
 
-      room_performances.each do |perf_data|
-        performance = perf_data[:performance]
-        pianist_id = perf_data[:pianist_id]
-        candidat = performance.inscription&.candidat
-        next unless candidat
+        room_performances.each do |perf_data|
+          performance = perf_data[:performance]
+          pianist_id = perf_data[:pianist_id]
+          candidat = performance.inscription&.candidat
+          next unless candidat
 
-        # Calculate end time for this rehearsal
-        end_time = current_time + @tour.rehearse_time_slot_per_candidate.minutes
+          # Calculate end time for this rehearsal
+          end_time = current_time + @tour.rehearse_time_slot_per_candidate.minutes
 
-        # Create the rehearsal
-        @tour.candidate_rehearsals.create!(
-          performance: performance,
-          room_id: room_id,
-          candidat: candidat,
-          start_time: current_time,
-          end_time: end_time,
-          pianist_accompagnateur_id: pianist_id
-        )
+          # Create the rehearsal
+          @tour.candidate_rehearsals.create!(
+            performance: performance,
+            room_id: room_id,
+            candidat: candidat,
+            start_time: current_time,
+            end_time: end_time,
+            pianist_accompagnateur_id: pianist_id
+          )
 
-        # Move to next time slot (5 minutes buffer between rehearsals)
-        current_time = end_time
+          # Move to next time slot 
+          current_time = end_time
+        end
       end
     end
 
