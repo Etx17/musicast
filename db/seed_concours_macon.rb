@@ -56,6 +56,8 @@ ec = EditionCompetition.create(
   details_specifiques: "Édition 2025 du Concours international de chant de Mâcon.",
   specific_details_english: "2025 edition of the Mâcon International Singing Competition."
 )
+
+
 Address.create(
   addressable: ec,
   line1: "Théâtre, Scène nationale de Mâcon",
@@ -235,10 +237,10 @@ Tour.create!(
   is_online: false,
   title: "Quarts de finale",
   title_english: "Quarter-finals",
-  description: "Les quarts de finale, ouverts gratuitement au public, auront lieu le mardi 11 novembre 2025, à l’auditorium du Conservatoire Edgar Varèse. Chaque candidat devra interpréter un air d’opéra de son choix d’une durée maximale de 4 minutes et une mélodie française de son choix d’une durée maximale de 4 minutes",
+  description: "Les quarts de finale, ouverts gratuitement au public, auront lieu le mardi 11 novembre 2025, à l'auditorium du Conservatoire Edgar Varèse. Chaque candidat devra interpréter un air d'opéra de son choix d'une durée maximale de 4 minutes et une mélodie française de son choix d'une durée maximale de 4 minutes",
   description_english: "The quarter-finals, which are free and open to the public, will take place on Tuesday, November 11, 2025, at the Edgar Varèse Conservatory Auditorium. Each candidate must perform an opera aria of their choice (maximum duration: 4 minutes) and a French melody of their choice (maximum duration: 4 minutes)",
   tour_requirement_attributes: {
-    description: "Les quarts de finale, ouverts gratuitement au public, auront lieu le mardi 11 novembre 2025, à l’auditorium du Conservatoire Edgar Varèse. Chaque candidat devra interpréter un air d’opéra de son choix d’une durée maximale de 4 minutes et une mélodie française de son choix d’une durée maximale de 4 minutes",
+    description: "Les quarts de finale, ouverts gratuitement au public, auront lieu le mardi 11 novembre 2025, à l'auditorium du Conservatoire Edgar Varèse. Chaque candidat devra interpréter un air d'opéra de son choix d'une durée maximale de 4 minutes et une mélodie française de son choix d'une durée maximale de 4 minutes",
     description_english: "The quarter-finals, which are free and open to the public, will take place on Tuesday, November 11, 2025, at the Edgar Varèse Conservatory Auditorium. Each candidate must perform an opera aria of their choice (maximum duration: 4 minutes) and a French melody of their choice (maximum duration: 4 minutes)",
     min_number_of_works: 2,
     max_number_of_works: 2,

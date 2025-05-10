@@ -14,11 +14,11 @@
 
     <% if I18n.locale == :en && @category.description_english.present? %>
       <p class="card-text small mb-2">
-        <%= @category.description_english.truncate(230) %>
+        <%= @category.description_english.truncate(100) %>
       </p>
     <% else %>
       <p class="card-text small mb-2">
-        <%= @category.description.truncate(230) %>
+        <%= @category.description.truncate(100) %>
       </p>
     <% end %>
 
