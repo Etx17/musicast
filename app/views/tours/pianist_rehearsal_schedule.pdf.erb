@@ -91,7 +91,7 @@
 </head>
 <body>
   <div class="container">
-    <h1>Pianist Rehearsal Schedule</h1>
+    <h1><%= t('tours.pianist_rehearsal.schedule_title') %></h1>
     <div class="header-info">
       <strong><%= @tour.category.edition_competition.competition.nom_concours %></strong> -
       <%= @tour.category.name %> -
@@ -110,10 +110,10 @@
             <table>
               <thead>
                 <tr>
-                  <th class="candidate-cell">Candidate</th>
-                  <th class="date-cell">Date</th>
-                  <th class="time-cell">Start Time</th>
-                  <th class="time-cell">End Time</th>
+                  <th class="candidate-cell"><%= t('pianist_rehearsal_planning.candidate_column') %></th>
+                  <th class="date-cell"><%= t('pianist_rehearsal_planning.date_column') %></th>
+                  <th class="time-cell"><%= t('pianist_rehearsal_planning.start_time_column') %></th>
+                  <th class="time-cell"><%= t('pianist_rehearsal_planning.end_time_column') %></th>
                 </tr>
               </thead>
               <tbody>
@@ -128,14 +128,14 @@
               </tbody>
             </table>
           <% else %>
-            <div class="no-rehearsals">No rehearsals scheduled for this pianist in this room.</div>
+            <div class="no-rehearsals"><%= t('pianist_rehearsal_planning.no_rehearsals_for_pianist') %></div>
           <% end %>
         </div>
       <% end %>
     <% else %>
       <div class="no-rehearsals">
-        <h3>No rehearsals have been scheduled yet.</h3>
-        <p>Configure the pianist rehearsal schedule first.</p>
+        <h3><%= t('pianist_rehearsal_planning.no_rehearsals') %></h3>
+        <p><%= t('tours.pianist_rehearsal.configuration_title') %></p>
       </div>
     <% end %>
   </div>
