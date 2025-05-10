@@ -118,7 +118,7 @@ ChoiceImposedWork.create(
       title: "Che gelida manina",
       composer: "Gioachino Rossini",
       character: "Rodolfo",
-      fach: ""
+      fach: "baritone",
       length_minutes: 3,
       tonality: "C Major",
       oeuvre: "La Bohème",

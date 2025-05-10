@@ -1,5 +1,5 @@
 class Air < ApplicationRecord
-  # has_many :candidate_program_airs, dependent: :destroy (commented to be able to destroy a list of imposed work air)
+
   has_many :choice_imposed_work_airs
   has_many :choice_imposed_works, through: :choice_imposed_work_airs
 
@@ -15,35 +15,41 @@ class Air < ApplicationRecord
   validates :oeuvre, length: { maximum: 50 }
 
   enum :fach, {
-    none: 0,
-    light_soprano_coloratura: 1, # Soprano colorature légère
-    dramatic_soprano_coloratura: 2, # Soprano colorature dramatique
-    light_soprano_lyric: 3, # Soprano lyrique léger
-    lyric_soprano: 4, # Soprano lyrique
-    spinto_soprano: 5, # Soprano spinto
-    dramatic_soprano_lyric: 6, # Soprano lyrique dramatique
-    dramatic_soprano: 7, # Soprano dramatique
-    falcon_soprano: 8, # Soprano falcon
-    soubrette: 9, # Soubrette
-    coloratura_mezzo_soprano: 10, # Mezzo-soprano colorature
-    lyric_mezzo_soprano: 11, # Mezzo-soprano lyrique
-    dramatic_mezzo_soprano: 12, # Mezzo-soprano dramatique
-    alto: 13, # Alto
-    contralto: 14, # Contralto
-    countertenor: 15, # Contre-ténor
-    light_tenor: 16, # Ténor léger
-    lyric_tenor: 17, # Ténor lyrique
-    spinto_tenor: 18, # Ténor spinto
-    dramatic_tenor: 19, # Ténor dramatique
-    heldentenor: 20, # Heldentenor (ténor héroïque)
-    light_baritone: 21, # Baryton léger
-    lyric_baritone: 22, # Baryton lyrique
-    verdi_baritone: 23, # Baryton Verdi
-    dramatic_baritone: 24, # Baryton dramatique
-    bass_baritone: 25, # Baryton-basse
-    chanting_bass: 26, # Basse chantante
-    noble_bass: 27, # Basse noble
-    deep_bass: 28 # Basse profonde
+    not_specified: 0,
+    light_soprano_coloratura: 1,
+    dramatic_soprano_coloratura: 2,
+    light_soprano_lyric: 3,
+    lyric_soprano: 4,
+    soprano: 5,
+    spinto_soprano: 6,
+    dramatic_soprano_lyric: 7,
+    dramatic_soprano: 8,
+    falcon_soprano: 9,
+    soubrette: 10,
+    coloratura_mezzo_soprano: 11,
+    mezzo_soprano: 12,
+    lyric_mezzo_soprano: 13,
+    dramatic_mezzo_soprano: 14,
+    mezzo: 15,
+    alto: 16,
+    contralto: 17,
+    countertenor: 18,
+    light_tenor: 19,
+    tenor: 20,
+    lyric_tenor: 21,
+    spinto_tenor: 22,
+    dramatic_tenor: 23,
+    heldentenor: 24,
+    light_baritone: 25,
+    baritone: 26,
+    lyric_baritone: 27,
+    verdi_baritone: 28,
+    dramatic_baritone: 29,
+    bass_baritone: 30,
+    bass: 31,
+    chanting_bass: 32,
+    noble_bass: 33,
+    deep_bass: 34
   }
 
   def self.tonalities_selection
@@ -74,5 +80,9 @@ class Air < ApplicationRecord
       'B Major / Si majeur / B',
       'B Minor / Si mineur / Bm'
   ]
+  end
+
+  def self.fachs_selection
+    defined_enums["fach"].keys.map { |key| [I18n.t("fachs.#{key}"), key] }
   end
 end

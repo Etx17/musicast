@@ -13,7 +13,7 @@
   </div>
 
   <div class="row g-3 mb-3">
-    <div class="col-md-6">
+    <div class="col-md-5">
       <%= f.input :title,
                   label: false,
                   required: true,
@@ -23,7 +23,7 @@
                     placeholder: t('shared.air_fields.title_placeholder')
                   } %>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-5">
       <%= f.input :composer,
                   label: false,
                   required: true,
@@ -31,6 +31,15 @@
                   input_html: {
                     class: 'form-control form-control border',
                     placeholder: t('shared.air_fields.composer_placeholder')
+                  } %>
+    </div>
+    <div class="col-md-2">
+      <%= f.input :fach,
+                  collection: Air.fachs_selection,
+                  label: false,
+                  required: false,
+                  input_html: {
+                    class: 'form-select'
                   } %>
     </div>
   </div>

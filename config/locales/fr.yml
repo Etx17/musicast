@@ -2161,32 +2161,38 @@ fr:
     resolution: "Résolution"
     px: "px"
   fachs:
-    none: "Non spécifié",
-    light_soprano_coloratura: "Soprano colorature légère",
-    dramatic_soprano_coloratura: "Soprano colorature dramatique",
-    light_soprano_lyric: "Soprano lyrique léger",
-    lyric_soprano: "Soprano lyrique",
-    spinto_soprano: "Soprano spinto",
-    dramatic_soprano_lyric: "Soprano lyrique dramatique",
-    dramatic_soprano: "Soprano dramatique",
-    falcon_soprano: "Soprano falcon",
-    soubrette: "Soubrette",
-    coloratura_mezzo_soprano: "Mezzo-soprano colorature",
-    lyric_mezzo_soprano: "Mezzo-soprano lyrique",
-    dramatic_mezzo_soprano: "Mezzo-soprano dramatique",
-    alto: "Alto",
-    contralto: "Contralto",
-    countertenor: "Contre-ténor",
-    light_tenor: "Ténor léger",
-    lyric_tenor: "Ténor lyrique",
-    spinto_tenor: "Ténor spinto",
-    dramatic_tenor: "Ténor dramatique",
-    heldentenor: "Heldentenor (ténor héroïque)",
-    light_baritone: "Baryton léger",
-    lyric_baritone: "Baryton lyrique",
-    verdi_baritone: "Baryton Verdi",
-    dramatic_baritone: "Baryton dramatique",
-    bass_baritone: "Baryton-basse",
-    chanting_bass: "Basse chantante",
-    noble_bass: "Basse noble",
+    not_specified: "Non spécifié"
+    light_soprano_coloratura: "Soprano colorature légère"
+    dramatic_soprano_coloratura: "Soprano colorature dramatique"
+    light_soprano_lyric: "Soprano lyrique léger"
+    lyric_soprano: "Soprano lyrique"
+    spinto_soprano: "Soprano spinto"
+    dramatic_soprano_lyric: "Soprano lyrique dramatique"
+    dramatic_soprano: "Soprano dramatique"
+    falcon_soprano: "Soprano falcon"
+    soubrette: "Soubrette"
+    coloratura_mezzo_soprano: "Mezzo-soprano colorature"
+    lyric_mezzo_soprano: "Mezzo-soprano lyrique"
+    dramatic_mezzo_soprano: "Mezzo-soprano dramatique"
+    alto: "Alto"
+    contralto: "Contralto"
+    countertenor: "Contre-ténor"
+    light_tenor: "Ténor léger"
+    lyric_tenor: "Ténor lyrique"
+    spinto_tenor: "Ténor spinto"
+    dramatic_tenor: "Ténor dramatique"
+    heldentenor: "Heldentenor (ténor héroïque)"
+    light_baritone: "Baryton léger"
+    lyric_baritone: "Baryton lyrique"
+    verdi_baritone: "Baryton Verdi"
+    dramatic_baritone: "Baryton dramatique"
+    bass_baritone: "Baryton-basse"
+    chanting_bass: "Basse chantante"
+    noble_bass: "Basse noble"
     deep_bass: "Basse profonde"
+    bass: "Basse"
+    baritone: "Baryton"
+    soprano: "Soprano"
+    mezzo_soprano: "Mezzo-soprano"
+    mezzo: "Mezzo"
+    tenor: "Ténor"
