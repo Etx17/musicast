@@ -694,7 +694,7 @@ class ToursController < ApplicationController
         )
 
         # Move to next time slot (5 minutes buffer between rehearsals)
-        current_time = end_time + 5.minutes
+        current_time = end_time
       end
     end
 

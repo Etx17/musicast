@@ -91,6 +91,9 @@
 </head>
 <body>
   <div class="container">
+    <div style="text-align: center; margin-bottom: 20px;">
+      <%= image_tag @tour.category.edition_competition.competition.organism.logo_or_default, style: "max-height: 120px; width: auto; margin: 0 auto; display: block;" %>
+    </div>
     <h1><%= t('tours.pianist_rehearsal.schedule_title') %></h1>
     <div class="header-info">
       <strong><%= @tour.category.edition_competition.competition.nom_concours %></strong> -

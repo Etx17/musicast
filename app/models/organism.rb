@@ -25,7 +25,8 @@ class Organism < ApplicationRecord
 
   def logo_or_default
     if logo.attached?
-      Rails.application.routes.url_helpers.rails_blob_path(logo, only_path: true)
+      # Rails.application.routes.url_helpers.rails_blob_path(logo, only_path: true)
+      Rails.application.routes.url_helpers.rails_blob_url(logo, host: Rails.application.config.action_mailer.default_url_options[:host])
     else
       "https://placehold.co/40x40"
     end
