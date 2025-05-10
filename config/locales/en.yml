@@ -2067,7 +2067,9 @@ en:
         candidates_plural: "candidates"
     pianist_rehearsal:
       configure_button: "Configure Pianist Rehearsal Schedule"
-      download_schedule: "Download Pianist Rehearsal Schedule"
+      download_schedule: "Download Full Schedule"
+      download_room_schedule: "Download Room Schedule"
+      room_label: Room
       configuration_title: "Pianist Rehearsal Schedule Configuration"
       rehearsal_start_datetime: "Rehearsal Start Date and Time"
       rehearsal_start_hint: "When pianist rehearsals will begin"

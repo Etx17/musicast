@@ -2039,6 +2039,8 @@ fr:
       save_config_and_generate: "Enregistrer la configuration et générer le planning"
       add_room_modal_title: "Ajouter une salle"
       schedule_title: "Planning de répétition avec pianiste"
+      download_room_schedule: Télécharger le planning de cette salle
+      room_label: Salle
   pianist_rehearsal_planning:
     rehearsal_schedule_title: "Planning de répétition avec pianiste"
     no_rehearsals: "Aucune répétition programmée pour le moment. Configurez le planning pour générer des répétitions."

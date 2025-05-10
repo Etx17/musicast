@@ -27,6 +27,14 @@ class TourPolicy < ApplicationPolicy
     edit?
   end
 
+  def download_pianist_rehearsal_schedule?
+    edit?
+  end
+
+  def download_room_pianist_rehearsal_schedule?
+    edit?
+  end
+
   private
 
   def allowed_to_edit?

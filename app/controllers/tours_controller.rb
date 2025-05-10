@@ -504,6 +504,41 @@ class ToursController < ApplicationController
     end
   end
 
+  def download_room_pianist_rehearsal_schedule
+    @tour = Tour.find(params[:id])
+    @room = Room.find(params[:room_id])
+    authorize @tour
+
+    # Group rehearsals by pianist for the specific room
+    rehearsals_by_pianist = {}
+    room_rehearsals = @tour.candidate_rehearsals.where(room_id: @room.id).order(:start_time)
+    room_rehearsals.group_by(&:pianist_accompagnateur_id).each do |pianist_id, rehearsals|
+      pianist = PianistAccompagnateur.find_by(id: pianist_id)
+      next unless pianist
+      key = "#{@room.id}_#{pianist_id}"
+      rehearsals_by_pianist[key] = {
+        room: @room,
+        pianist: pianist,
+        rehearsals: rehearsals
+      }
+    end
+    @rehearsals_by_room_and_pianist = rehearsals_by_pianist
+    respond_to do |format|
+      format.pdf do
+        render pdf: "room_#{@room.name.parameterize}_rehearsal_schedule_#{@tour.title.parameterize}",
+               template: "tours/pianist_rehearsal_schedule",
+               layout: "pdf",
+               orientation: "Portrait",
+               page_size: "A4",
+               encoding: "UTF-8",
+               footer: {
+                 center: "Room #{@room.name} - Pianist Rehearsal Schedule - #{@tour.title}",
+                 left: Date.today.strftime("%d/%m/%Y")
+               }
+      end
+    end
+  end
+
   private
 
   def set_tour
