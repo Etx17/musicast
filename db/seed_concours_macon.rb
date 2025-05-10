@@ -77,23 +77,22 @@ categ = Category.create(
   payment_after_approval: false
 )
 
+imposed_air = Air.create(
+  title: "Mélodie contemporaine",
+  composer: "Régis Campo",
+  oeuvre: "Mélodie contemporaine",
+  length_minutes: 4,
+  tonality: "C Major",
+  infos: "Informations supplémentaires sur cette pièce en français. Contexte historique et conseils d'interprétation.",
+  infos_english: "Additional information about this piece in English. Historical context and performance tips."
+)
 ImposedWork.create(
   category: categ,
   title: "Mélodie contemporaine",
   title_english: "Contemporary melody",
   guidelines: "Mélodie contemporaine imposée pour la demi-finale, composée en 2025 par Régis Campo. Les candidats pourront télécharger les références de la partition directement sur le site internet du concours le 1er juin au plus tard.",
   guidelines_english: "Contemporary imposed melody for the semi-finals, composed in 2025 by Régis Campo. Candidates will be able to download the references of the score directly on the competition website by June 1st at the latest.",
-  airs: [
-      Air.create(
-        title: "Mélodie contemporaine",
-        composer: "Régis Campo",
-        oeuvre: "Mélodie contemporaine",
-        length_minutes: 4,
-        tonality: "C Major",
-        infos: "Informations supplémentaires sur cette pièce en français. Contexte historique et conseils d'interprétation.",
-        infos_english: "Additional information about this piece in English. Historical context and performance tips."
-      )
-    ]
+  airs: [ imposed_air ]
   )
 
 SemiImposedWork.create(
@@ -236,21 +235,21 @@ Tour.create!(
   is_online: false,
   title: "Quarts de finale",
   title_english: "Quarter-finals",
-  description: "Premier tour du concours avec sélection par le jury",
-  description_english: "First round with jury selection",
+  description: "Les quarts de finale, ouverts gratuitement au public, auront lieu le mardi 11 novembre 2025, à l’auditorium du Conservatoire Edgar Varèse. Chaque candidat devra interpréter un air d’opéra de son choix d’une durée maximale de 4 minutes et une mélodie française de son choix d’une durée maximale de 4 minutes",
+  description_english: "The quarter-finals, which are free and open to the public, will take place on Tuesday, November 11, 2025, at the Edgar Varèse Conservatory Auditorium. Each candidate must perform an opera aria of their choice (maximum duration: 4 minutes) and a French melody of their choice (maximum duration: 4 minutes)",
   tour_requirement_attributes: {
-    description: "Exigences du premier tour: présentation d'un programme varié",
-    description_english: "First round requirements: presentation of a varied program",
-    min_number_of_works: 1,
-    max_number_of_works: 3,
-    min_duration_minute: 3,
+    description: "Les quarts de finale, ouverts gratuitement au public, auront lieu le mardi 11 novembre 2025, à l’auditorium du Conservatoire Edgar Varèse. Chaque candidat devra interpréter un air d’opéra de son choix d’une durée maximale de 4 minutes et une mélodie française de son choix d’une durée maximale de 4 minutes",
+    description_english: "The quarter-finals, which are free and open to the public, will take place on Tuesday, November 11, 2025, at the Edgar Varèse Conservatory Auditorium. Each candidate must perform an opera aria of their choice (maximum duration: 4 minutes) and a French melody of their choice (maximum duration: 4 minutes)",
+    min_number_of_works: 2,
+    max_number_of_works: 2,
+    min_duration_minute: 4,
     max_duration_minute: 9,
     organiser_creates_program: false
   }
 )
 
 Tour.create!(
-  imposed_air_selection: ["1", "2"],
+  imposed_air_selection: [imposed_air.id.to_s],
   final_performance_submission_deadline: Date.new(2025, 11, 12),
   tour_number: 2,
   category_id: categ.id,
@@ -267,7 +266,7 @@ Tour.create!(
     description: "Liste des exigences du second tour: programme créé par l'organisateur",
     description_english: "List of requirements for the second round: program created by the organizer",
     min_number_of_works: 2,
-    max_number_of_works: 4,
+    max_number_of_works: 2,
     min_duration_minute: 4.5,
     max_duration_minute: 12,
     organiser_creates_program: true
@@ -289,10 +288,10 @@ Tour.create!(
   description: "Finale avec accompagnement orchestre",
   description_english: "Finals with orchestra accompaniment",
   tour_requirement_attributes: {
-    description: "Exigences de la finale: programme imposé avec accompagnement orchestre",
+    description: "Exigences de la finale: programme imposé avec accompagnement orchestre. Ajoutez votre mélodie si vous souhaitez concourir pour la catégorie supplémentaire et que le jury vous désigne pour.",
     description_english: "Finals requirements: imposed program with orchestra accompaniment",
     min_number_of_works: 2,
-    max_number_of_works: 4,
+    max_number_of_works: 3,
     min_duration_minute: 4.5,
     max_duration_minute: 12,
     organiser_creates_program: true
@@ -308,26 +307,17 @@ RequirementItem.create(
   description_item_english: "Please provide a link to a video of yourself performing an aria."
 )
 
-SemiImposedWork.create(
-  category: categ,
-  title: "1 air et 1 mélodie",
-  title_english: "1 aria and 1 melody",
-  guidelines: "1 air d'opéra, d'operette ou d'oratorio et 1 mélodie. L'un des deux doit impérativement être en français. Le tout ne doit pas dépasser 8 minutes",
-  guidelines_english: "1 opera aria, operetta or oratorio and 1 melody. One of the two must be in French. The total duration must not exceed 8 minutes",
-  number: 2,
-  max_length_minutes: 8
-)
+
 
 # Create prizes for the category
 Prize.create!(
   category_id: categ.id,
   title: "1er prix",
   title_english: "1st Prize",
+  prize_type: "monetary",
   amount: 5000,
-  other_reward: "Concert à l'Ecole Normale de Musique",
-  other_reward_english: "Concert at the Ecole Normale de Musique",
-  description: "Le lauréat du 1er prix recevra une récompense de 5 000€ et l'opportunité de se produire lors d'un concert à l'Ecole Normale de Musique.",
-  description_english: "The 1st Prize winner will receive a cash award of 5,000€ and the opportunity to perform at a concert at the Ecole Normale de Musique."
+  description: "Le lauréat du 1er prix recevra une récompense de 5 000€",
+  description_english: "The 1st Prize winner will receive a cash award of 5,000€"
 )
 
 Prize.create!(
@@ -335,8 +325,7 @@ Prize.create!(
   title: "2e prix",
   title_english: "2nd Prize",
   amount: 3000,
-  other_reward: "Masterclass avec un artiste renommé",
-  other_reward_english: "Masterclass with a renowned artist",
+  prize_type: "monetary",
   description: "Le lauréat du 2e prix recevra une récompense de 3 000€ et participera à une masterclass exclusive.",
   description_english: "The 2nd Prize winner will receive a cash award of 3,000€ and will participate in an exclusive masterclass."
 )
@@ -346,10 +335,9 @@ Prize.create!(
   title: "3e prix",
   title_english: "3rd Prize",
   amount: 2000,
-  other_reward: "Concert à l'Ecole Normale de Musique",
-  other_reward_english: "Concert at the Ecole Normale de Musique",
-  description: "Le lauréat du 3e prix recevra une récompense de 2 000€ et l'opportunité de se produire lors d'un concert à l'Ecole Normale de Musique.",
-  description_english: "The 3rd Prize winner will receive a cash award of 2,000€ and the opportunity to perform at a concert at the Ecole Normale de Musique."
+  prize_type: "monetary",
+  description: "Le lauréat du 3e prix recevra une récompense de 2 000€",
+  description_english: "The 3rd Prize winner will receive a cash award of 2,000€"
 )
 
 Prize.create!(
@@ -357,10 +345,9 @@ Prize.create!(
   title: "Prix spécial de la mélodie française",
   title_english: "Special French Melody Prize",
   amount: 3000,
-  other_reward: "Concert à l'Ecole Normale de Musique",
-  other_reward_english: "Concert at the Ecole Normale de Musique",
-  description: "Le lauréat du prix spécial de la mélodie française recevra une récompense de 3 000€ et l'opportunité de se produire lors d'un concert à l'Ecole Normale de Musique.",
-  description_english: "The Special French Melody Prize winner will receive a cash award of 3,000€ and the opportunity to perform at a concert at the Ecole Normale de Musique."
+  prize_type: "monetary",
+  description: "Le lauréat du prix spécial de la mélodie française recevra une récompense de 3 000€",
+  description_english: "The Special French Melody Prize winner will receive a cash award of 3,000€"
 )
 
 Prize.create!(
@@ -368,32 +355,29 @@ Prize.create!(
   title: "Prix jeune talent",
   title_english: "Young Talent Prize",
   amount: 1000,
-  other_reward: "Concert à l'Ecole Normale de Musique",
-  other_reward_english: "Concert at the Ecole Normale de Musique",
-  description: "Le lauréat du prix jeune talent recevra une récompense de 1 000€ et l'opportunité de se produire lors d'un concert à l'Ecole Normale de Musique.",
-  description_english: "The Young Talent Prize winner will receive a cash award of 1,000€ and the opportunity to perform at a concert at the Ecole Normale de Musique."
+  prize_type: "monetary",
+  description: "Le lauréat du prix jeune talent recevra une récompense de 1 000€",
+  description_english: "The Young Talent Prize winner will receive a cash award of 1,000€"
 )
 
 Prize.create!(
   category_id: categ.id,
   title: "Prix du public",
+  prize_type: "monetary",
   title_english: "Audience Prize",
   amount: 500,
-  other_reward: "Concert à l'Ecole Normale de Musique",
-  other_reward_english: "Concert at the Ecole Normale de Musique",
-  description: "Le lauréat du prix du public recevra une récompense de 500€ et l'opportunité de se produire lors d'un concert à l'Ecole Normale de Musique.",
-  description_english: "The Audience Prize winner will receive a cash award of 500€ and the opportunity to perform at a concert at the Ecole Normale de Musique."
+  description: "Le lauréat du prix du public recevra une récompense de 500€",
+  description_english: "The Audience Prize winner will receive a cash award of 500€"
 )
 
 Prize.create!(
   category_id: categ.id,
   title: "Prix de l'orchestre",
   title_english: "Orchestra Prize",
+  prize_type: "monetary",
   amount: 500,
-  other_reward: "Concert à l'Ecole Normale de Musique",
-  other_reward_english: "Concert at the Ecole Normale de Musique",
-  description: "Le lauréat du prix de l'orchestre recevra une récompense de 500€ et l'opportunité de se produire lors d'un concert à l'Ecole Normale de Musique.",
-  description_english: "The Orchestra Prize winner will receive a cash award of 500€ and the opportunity to perform at a concert at the Ecole Normale de Musique."
+  description: "Le lauréat du prix de l'orchestre recevra une récompense de 500€",
+  description_english: "The Orchestra Prize winner will receive a cash award of 500€"
 )
 
 Prize.create!(
@@ -401,10 +385,9 @@ Prize.create!(
   title: "Prix des lycéens",
   title_english: "High School Prize",
   amount: 0,
-  other_reward: "Concert à l'Ecole Normale de Musique",
-  other_reward_english: "Concert at the Ecole Normale de Musique",
-  description: "Le lauréat du prix des lycéens recevra l'opportunité de se produire lors d'un concert à l'Ecole Normale de Musique.",
-  description_english: "The High School Prize winner will receive the opportunity to perform at a concert at the Ecole Normale de Musique."
+  prize_type: "recognition",
+  description: "Le lauréat du prix des lycéens recevra ",
+  description_english: "The High School Prize is an honorary prize"
 )
 
 
