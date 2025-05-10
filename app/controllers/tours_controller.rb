@@ -13,6 +13,11 @@ class ToursController < ApplicationController
     @performances = @tour.performances
     @room = Room.build
     @tour.generate_initial_performance_order if @performances.any? { |p| p.order.nil? }
+
+    @ordered_performances_accepted = @tour.performances
+                                      .joins(:inscription)
+                                      .where(inscriptions: { status: 'accepted' })
+                                      .order(:order)
   end
 
   def edit;
@@ -717,7 +722,7 @@ class ToursController < ApplicationController
             pianist_accompagnateur_id: pianist_id
           )
 
-          # Move to next time slot 
+          # Move to next time slot
           current_time = end_time
         end
       end

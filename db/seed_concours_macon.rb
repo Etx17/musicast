@@ -88,7 +88,7 @@ imposed_air = Air.create(
   infos: "Informations supplémentaires sur cette pièce en français. Contexte historique et conseils d'interprétation.",
   infos_english: "Additional information about this piece in English. Historical context and performance tips."
 )
-ImposedWork.create(
+imposed_work= ImposedWork.create(
   category: categ,
   title: "Mélodie contemporaine",
   title_english: "Contemporary melody",
@@ -393,101 +393,210 @@ Prize.create!(
 )
 
 
-# Seeder les candidats performances
-20.times do
-  u = User.create(
-    email: Faker::Internet.email,
+puts "Fetching existing competition setup for Mâcon..."
+begin
+  macon_edition = EditionCompetition.find_by!(annee: 2025, competition: Competition.find_by!(nom_concours: "Concours international de chant de Mâcon"))
+  macon_category = macon_edition.categories.find_by!(name: "Opéra")
+  raise "Mâcon Opéra Category not found" unless macon_category
+
+  semi_imposed_work_definition = macon_category.semi_imposed_works.first # Assuming there is only one, or be more specific
+  raise "SemiImposedWork definition for Mâcon category not found" unless semi_imposed_work_definition
+
+  choice_imposed_work_for_final = macon_category.choice_imposed_works.find_by(title: "Liste d'airs d'opéra pour la finale")
+  raise "ChoiceImposedWork for Mâcon final (Liste d'airs d'opéra pour la finale) not found" unless choice_imposed_work_for_final
+  raise "No airs found in ChoiceImposedWork for Mâcon final" if choice_imposed_work_for_final.airs.empty?
+
+
+  tour1_quarter_finals = macon_category.tours.find_by!(tour_number: 1)
+  tour2_semi_finals = macon_category.tours.find_by!(tour_number: 2)
+  tour3_finals = macon_category.tours.find_by!(tour_number: 3)
+rescue ActiveRecord::RecordNotFound => e
+  puts "Error fetching Mâcon competition setup: #{e.message}. Please ensure the initial part of the seed ran correctly."
+  exit
+end
+
+puts "All Mâcon setup records found successfully."
+
+# Predefined French melodies as Faker might not be specific enough
+FRENCH_MELODIES_POOL = [
+  { title: "Après un rêve", composer: "Gabriel Fauré", oeuvre: "Trois mélodies, Op. 7" },
+  { title: "Clair de lune", composer: "Claude Debussy", oeuvre: "Suite bergamasque (arr.)" },
+  { title: "Beau soir", composer: "Claude Debussy", oeuvre: "Beau soir" },
+  { title: "L'invitation au voyage", composer: "Henri Duparc", oeuvre: "Mélodies" },
+  { title: "Mandoline", composer: "Gabriel Fauré", oeuvre: "Cinq mélodies 'de Venise', Op. 58" },
+  { title: "Chanson triste", composer: "Henri Duparc", oeuvre: "Mélodies" },
+  { title: "Phidylé", composer: "Henri Duparc", oeuvre: "Mélodies" },
+  { title: "Les berceaux", composer: "Gabriel Fauré", oeuvre: "Trois mélodies, Op. 23" }
+]
+OPERA_COMPOSERS = ["Verdi", "Mozart", "Puccini", "Bizet", "Rossini", "Donizetti", "Bellini", "Handel", "Gounod", "Massenet"]
+OPERA_OEUVRES_SAMPLE = ["La Traviata", "Don Giovanni", "Carmen", "La Bohème", "Le Barbier de Séville", "Lucia di Lammermoor", "Norma", "Rinaldo", "Faust", "Manon"]
+
+
+puts "Seeding 120 candidates, their inscriptions, semi-imposed airs, and performances for Mâcon Opéra category..."
+120.times do |i|
+  puts "Creating candidate #{i+1}/120"
+  user_email = Faker::Internet.unique.email(domain: "example-candidate.com") # Ensure unique emails
+  u = User.create!(
+    email: user_email,
     password: 'password',
     password_confirmation: 'password',
     inscription_role: 'candidate',
     accepted_terms: true
   )
-  u.candidat.update(
+  u.candidat.update!(
     first_name: Faker::Name.first_name,
     last_name: Faker::Name.last_name,
-    birthdate: Faker::Date.birthday(min_age: 18, max_age: 35),
-    nationality: "FR",
+    birthdate: Faker::Date.birthday(min_age: 18, max_age: 34), # Max age 35 means born after Jan 1, 1990 for 2025 competition
+    nationality: ["FR", "IT", "DE", "ES", "GB", "US", "CA", "JP", "KR", "CN"].sample,
     short_bio: Faker::Lorem.paragraph(sentence_count: 2),
     medium_bio: Faker::Lorem.paragraph(sentence_count: 5),
     long_bio: Faker::Lorem.paragraph(sentence_count: 10),
     repertoire: Faker::Lorem.paragraph(sentence_count: 5),
     short_bio_en: Faker::Lorem.paragraph(sentence_count: 2),
     medium_bio_en: Faker::Lorem.paragraph(sentence_count: 5),
-    long_bio_en: Faker::Lorem.paragraph(sentence_count: 10),
+    long_bio_en: Faker::Lorem.paragraph(sentence_count: 10)
   )
-  i=Inscription.new(
-    category: categ,
-    status: 'in_review',
+
+  inscription = Inscription.new(
+    category: macon_category,
+    status: 'in_review', # Or 'submitted'
     candidat: u.candidat,
     terms_accepted: true
   )
-  i.save(validate: false)
+  inscription.save!(validate: false) # Bypassing validations that might require more setup for simplicity
 
-  j=InscriptionItemRequirement.new(
-    inscription_id: i.id,
-    requirement_item: categ.requirement_items.find_by(type_item: "youtube_link"),
-    submitted_content: "https://www.youtube.com/watch?v=FrxSZCLbhSQ"
-  )
-  j.save(validate: false)
+  # InscriptionItemRequirement (YouTube link)
+  youtube_requirement = macon_category.requirement_items.find_by(type_item: "youtube_link")
+  if youtube_requirement
+    InscriptionItemRequirement.create!(
+      inscription_id: inscription.id,
+      requirement_item: youtube_requirement,
+      submitted_content: "https://www.youtube.com/watch?v=#{Faker::Lorem.characters(number: 11)}" # Random YouTube ID like structure
+    )
+  else
+    puts "Warning: YouTube link RequirementItem not found for Mâcon category."
+  end
 
-  # Create airs with English info
-  air1 = Air.create!(
-    title: Faker::Music::Opera.send([:rossini, :verdi, :donizetti, :bellini, :mozart].sample),
-    length_minutes: rand(3..7),
-    composer: ["Verdi", "Mozart", "Puccini", "Bizet", "Rossini"].sample,
-    oeuvre: ["La Traviata", "Don Giovanni", "Carmen", "La Bohème", "Le Barbier de Séville"].sample,
-    character: ["Violetta", "Don Giovanni", "Carmen", "Rodolfo", "Figaro"].sample,
+  # Create 2 airs for SemiImposedWork (1 opera, 1 French melody)
+  candidate_opera_air = Air.create!(
+    title: Faker::Music::Opera.send([:rossini, :verdi, :donizetti, :bellini, :mozart].sample), # Faker opera titles
+    composer: OPERA_COMPOSERS.sample,
+    oeuvre: OPERA_OEUVRES_SAMPLE.sample,
+    length_minutes: rand(3..5),
     tonality: ["C Major", "D Minor", "G Major", "A Minor", "F Major"].sample,
-    infos: "Informations supplémentaires sur cette pièce en français. Contexte historique et conseils d'interprétation.",
-    infos_english: "Additional information about this piece in English. Historical context and performance tips."
+    infos: "Candidate chosen opera aria for semi-imposed work.",
+    infos_english: "Candidate chosen opera aria for semi-imposed work (English)."
   )
 
-  air2 = Air.create!(
-    title: Faker::Music::Opera.send([:rossini, :verdi, :donizetti, :bellini, :mozart].sample),
-    length_minutes: rand(3..7),
-    composer: ["Verdi", "Mozart", "Puccini", "Bizet", "Rossini"].sample,
-    oeuvre: ["La Traviata", "Don Giovanni", "Carmen", "La Bohème", "Le Barbier de Séville"].sample,
-    character: ["Violetta", "Don Giovanni", "Carmen", "Rodolfo", "Figaro"].sample,
-    tonality: ["C Major", "D Minor", "G Major", "A Minor", "F Major"].sample,
-    infos: "Informations supplémentaires sur cette pièce en français. Contexte historique et conseils d'interprétation.",
-    infos_english: "Additional information about this piece in English. Historical context and performance tips."
+  french_melody_sample = FRENCH_MELODIES_POOL.sample
+  candidate_french_melody = Air.create!(
+    title: french_melody_sample[:title],
+    composer: french_melody_sample[:composer],
+    oeuvre: french_melody_sample[:oeuvre],
+    length_minutes: rand(2..4),
+    tonality: ["A Minor", "E Major", "Db Major", "F# Minor"].sample,
+    infos: "Candidate chosen French melody for semi-imposed work.",
+    infos_english: "Candidate chosen French melody for semi-imposed work (English)."
   )
 
-  SemiImposedWorkAir.create(
-    inscription: i,
-    air: air1,
-    semi_imposed_work: categ.semi_imposed_works.first
+  # Associate these airs with the Inscription via SemiImposedWorkAir
+  SemiImposedWorkAir.create!(
+    inscription: inscription,
+    air: candidate_opera_air,
+    semi_imposed_work: semi_imposed_work_definition
   )
-  SemiImposedWorkAir.create(
-    inscription: i,
-    air: air2,
-    semi_imposed_work: categ.semi_imposed_works.first
-  )
-  Performance.create(
-    inscription: i,
-    tour: categ.tours.first,
-    air_selection: [air1.id, air2.id],
-    ordered_air_selection: [air1.id, air2.id]
+  SemiImposedWorkAir.create!(
+    inscription: inscription,
+    air: candidate_french_melody,
+    semi_imposed_work: semi_imposed_work_definition
   )
 
-  file_path = [Rails.root.join('app', 'assets', 'images', 'john.jpeg'), Rails.root.join('app', 'assets', 'images', 'paul.jpg')].sample
-  file = File.open(file_path, 'rb')
-  p "Attaching portrait"
-  u.candidat.portrait.attach(
-    io: file,
-    filename: File.basename(file_path),
-    content_type: "image/#{File.extname(file_path).delete('.')}"
+  # Performance for Tour 1 (Quarts de finale)
+  # Uses the 2 airs from SemiImposedWork submission
+  Performance.create!(
+    inscription: inscription,
+    tour: tour1_quarter_finals,
+    air_selection: [candidate_opera_air.id, candidate_french_melody.id],
+    ordered_air_selection: [candidate_opera_air.id, candidate_french_melody.id] # Order can be same for seeding
   )
-  p "saving candidat"
-  file.close
+
+  # Performance for Tour 2 (Demi-finales)
+  # Uses the global imposed_air + candidate opera_air from semi-imposed
+  Performance.create!(
+    inscription: inscription,
+    tour: tour2_semi_finals,
+    air_selection: [imposed_air.id, candidate_opera_air.id],
+    ordered_air_selection: [imposed_air.id, candidate_opera_air.id]
+  )
+
+  # Candidate selects 2 airs for the Final from ChoiceImposedWork list
+  airs_for_final_choices = choice_imposed_work_for_final.airs.sample(2)
+  unless airs_for_final_choices.count == 2
+    puts "Warning: Could not select 2 distinct airs for final for candidate #{u.candidat.id}. Available: #{choice_imposed_work_for_final.airs.count}"
+    # Fallback if not enough airs in choice_imposed_work_for_final (should not happen with current seed)
+    airs_for_final_choices = choice_imposed_work_for_final.airs.first(2)
+    airs_for_final_choices << choice_imposed_work_for_final.airs.first if airs_for_final_choices.count < 2 && choice_imposed_work_for_final.airs.any? # ensure 2 if possible
+  end
+
+
+  # Performance for Tour 3 (Finale)
+  # Uses the 2 airs selected by the candidate from ChoiceImposedWork
+  if airs_for_final_choices.count == 2
+    Performance.create!(
+      inscription: inscription,
+      tour: tour3_finals,
+      air_selection: airs_for_final_choices.map(&:id),
+      ordered_air_selection: airs_for_final_choices.map(&:id) # Order can be same
+    )
+  else
+     puts "Skipping final performance for candidate #{u.candidat.id} due to insufficient airs in choice list."
+  end
+
+
+  # Attach portrait (same logic as before, simplified)
+  # Assuming 'john.jpeg' and 'paul.jpg' are in 'app/assets/images/'
+  # For robustness, ensure these files exist or handle potential errors
+  begin
+    portraits_path = Rails.root.join('app', 'assets', 'images')
+    available_portraits = [portraits_path.join('john.jpeg'), portraits_path.join('paul.jpg')]
+    portrait_file_path = available_portraits.sample
+
+    if File.exist?(portrait_file_path)
+      File.open(portrait_file_path, 'rb') do |file|
+        u.candidat.portrait.attach(
+          io: file,
+          filename: File.basename(portrait_file_path),
+          content_type: "image/#{File.extname(portrait_file_path).delete('.')}"
+        )
+      end
+    else
+      puts "Warning: Portrait file #{portrait_file_path} not found. Skipping portrait attachment for candidate #{u.candidat.id}."
+    end
+  rescue => e
+    puts "Error attaching portrait for candidate #{u.candidat.id}: #{e.message}"
+  end
 end
 
-# Assigner les tessitures
-voice_types = Candidat.voice_types.keys - ["non_singer"]
-candidates = Candidat.all.shuffle
-voice_cycle = voice_types.cycle
-current_voice = voice_cycle.next
-candidates.each do |candidate|
-  candidate.update(voice_type: current_voice)
-  current_voice = voice_cycle.next
+puts "Finished seeding 120 candidates for Mâcon."
+
+# Assigner les tessitures (same logic as before)
+puts "Assigning voice types to candidates..."
+voice_types_for_assignment = Candidat.voice_types.keys - ["non_singer"]
+# Ensure we only update those who need it or re-assign 'non_singer', and only for the category we are seeding for.
+# Find candidates associated with the macon_category that need voice_type assignment
+candidates_in_macon_category_ids = macon_category.inscriptions.pluck(:candidat_id)
+candidates_to_assign_voice = Candidat.where(id: candidates_in_macon_category_ids)
+                                      .where(voice_type: [nil, 'non_singer'])
+                                      .shuffle
+
+voice_cycle = voice_types_for_assignment.cycle
+
+candidates_to_assign_voice.each do |candidate|
+  candidate.update!(voice_type: voice_cycle.next)
 end
+puts "Finished assigning voice types."
+
+puts "Seed for Mâcon competition completed."
+
+# The original candidate seeding loop (20.times do) should be removed or commented out if this new block replaces it.
+# Make sure this new block is placed after the initial setup of Macon competition data.

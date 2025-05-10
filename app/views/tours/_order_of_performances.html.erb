@@ -72,18 +72,18 @@
               <div class="d-flex flex-wrap justify-content-center gap-3">
                 <% pianist_counts = {} %>
                 <% @organism.pianist_accompagnateurs.each do |pianist| %>
-                  <% count = @tour.performances.count { |p| p.pianist_accompagnateur_id == pianist.id } %>
+                  <% count =  @ordered_performances_accepted.count { |p| p.pianist_accompagnateur_id == pianist.id } %>
                   <% pianist_counts[pianist.id] = count %>
                   <div class="d-inline-block pianist-cell px-3 py-2 shadow-sm" data-pianist-id="<%= pianist.id %>">
                     <strong><%= pianist.full_name %></strong> <span class="badge bg-light text-dark ms-1"><%= count %></span>
                   </div>
                 <% end %>
 
-                <% if @tour.performances.any? { |p| p.inscription.candidate_brings_pianist_accompagnateur } %>
+                <% if  @ordered_performances_accepted.any? { |p| p.inscription.candidate_brings_pianist_accompagnateur } %>
                   <div class="d-inline-block px-3 py-2 bg-secondary bg-opacity-10 rounded shadow-sm">
                     <strong>Pianistes externes</strong>
                     <span class="badge bg-secondary ms-1">
-                      <%= @tour.performances.count { |p| p.inscription.candidate_brings_pianist_accompagnateur } %>
+                      <%=  @ordered_performances_accepted.count { |p| p.inscription.candidate_brings_pianist_accompagnateur } %>
                     </span>
                   </div>
                 <% end %>
@@ -91,7 +91,7 @@
             </div>
           <% end %>
               <div class="text-secondary">
-                <%= @tour.performances.count %> <%= t('global.performance').pluralize(@tour.performances.count) %>
+                <%=  @ordered_performances_accepted.count %> <%= t('global.performance').pluralize( @ordered_performances_accepted.count) %>
               </div>
         </div>
       <% end %>
@@ -112,7 +112,7 @@
           </tr>
         </thead>
         <tbody>
-          <% if @tour.performances.none? %>
+          <% if @ordered_performances_accepted.none? %>
             <tfoot>
               <tr>
                 <td colspan="4" class="bg-light">
@@ -121,7 +121,7 @@
               </tr>
             </tfoot>
           <% else %>
-            <% @tour.performances.order(:order).each do |performance| %>
+            <% @ordered_performances_accepted.each do |performance| %>
               <tr>
                 <td class="p-2 bg-light align-middle">
                   <div class="d-flex align-items-center">
