@@ -80,6 +80,7 @@ class ImposedWorksController < ApplicationController
         title
         composer
         length_minutes
+        fach
         tonality
         character
         infos

@@ -2214,3 +2214,33 @@ en:
     dpi: "DPI"
     resolution: "Resolution"
     px: "px"
+  fachs:
+    none: "Not specified",
+    light_soprano_coloratura: "Light coloratura soprano",
+    dramatic_soprano_coloratura: "Dramatic coloratura soprano",
+    light_soprano_lyric: "Light lyric soprano",
+    lyric_soprano: "Lyric soprano",
+    spinto_soprano: "Spinto soprano",
+    dramatic_soprano_lyric: "Dramatic lyric soprano",
+    dramatic_soprano: "Dramatic soprano",
+    falcon_soprano: "Falcon soprano",
+    soubrette: "Soubrette",
+    coloratura_mezzo_soprano: "Coloratura mezzo-soprano",
+    lyric_mezzo_soprano: "Lyric mezzo-soprano",
+    dramatic_mezzo_soprano: "Dramatic mezzo-soprano",
+    alto: "Alto",
+    contralto: "Contralto",
+    countertenor: "Countertenor",
+    light_tenor: "Light tenor",
+    lyric_tenor: "Lyric tenor",
+    spinto_tenor: "Spinto tenor",
+    dramatic_tenor: "Dramatic tenor",
+    heldentenor: "Heldentenor (heroic tenor)",
+    light_baritone: "Light baritone",
+    lyric_baritone: "Lyric baritone",
+    verdi_baritone: "Verdi baritone",
+    dramatic_baritone: "Dramatic baritone",
+    bass_baritone: "Bass baritone",
+    chanting_bass: "Chanting bass",
+    noble_bass: "Noble bass",
+    deep_bass: "Deep bass"

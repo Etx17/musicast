@@ -106,8 +106,27 @@ SemiImposedWork.create(
   max_length_minutes: 8
 )
 
-
-
+ChoiceImposedWork.create(
+  title: "Liste d'airs d'opéra pour la finale",
+  title_english: "List of opera arias for the finals",
+  guidelines: "Liste d'airs d'opéra pour la finale",
+  guidelines_english: "List of opera arias for the finals",
+  number_to_select: 2,
+  category: categ,
+  airs: [
+    Air.create(
+      title: "Che gelida manina",
+      composer: "Gioachino Rossini",
+      character: "Rodolfo",
+      fach: ""
+      length_minutes: 3,
+      tonality: "C Major",
+      oeuvre: "La Bohème",
+      infos: "Informations supplémentaires sur cette pièce en français. Contexte historique et conseils d'interprétation.",
+      infos_english: "Additional information about this piece in English. Historical context and performance tips."
+    )
+  ]
+)
 
 # Creating Tours for the Category
 Tour.create!(

@@ -66,6 +66,7 @@ class ChoiceImposedWorksController < ApplicationController
         id
         title
         composer
+        fach
         infos
         infos_english
         length_minutes

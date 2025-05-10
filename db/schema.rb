@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_09_122537) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_10_130715) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -71,6 +71,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_09_122537) do
     t.bigint "semi_imposed_work_id"
     t.text "infos"
     t.text "infos_english"
+    t.integer "fach", default: 0
     t.index ["choice_imposed_work_id"], name: "index_airs_on_choice_imposed_work_id"
     t.index ["imposed_work_id"], name: "index_airs_on_imposed_work_id"
     t.index ["semi_imposed_work_id"], name: "index_airs_on_semi_imposed_work_id"

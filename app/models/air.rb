@@ -14,6 +14,38 @@ class Air < ApplicationRecord
   validates :composer, length: { maximum: 50 }
   validates :oeuvre, length: { maximum: 50 }
 
+  enum :fach, {
+    none: 0,
+    light_soprano_coloratura: 1, # Soprano colorature légère
+    dramatic_soprano_coloratura: 2, # Soprano colorature dramatique
+    light_soprano_lyric: 3, # Soprano lyrique léger
+    lyric_soprano: 4, # Soprano lyrique
+    spinto_soprano: 5, # Soprano spinto
+    dramatic_soprano_lyric: 6, # Soprano lyrique dramatique
+    dramatic_soprano: 7, # Soprano dramatique
+    falcon_soprano: 8, # Soprano falcon
+    soubrette: 9, # Soubrette
+    coloratura_mezzo_soprano: 10, # Mezzo-soprano colorature
+    lyric_mezzo_soprano: 11, # Mezzo-soprano lyrique
+    dramatic_mezzo_soprano: 12, # Mezzo-soprano dramatique
+    alto: 13, # Alto
+    contralto: 14, # Contralto
+    countertenor: 15, # Contre-ténor
+    light_tenor: 16, # Ténor léger
+    lyric_tenor: 17, # Ténor lyrique
+    spinto_tenor: 18, # Ténor spinto
+    dramatic_tenor: 19, # Ténor dramatique
+    heldentenor: 20, # Heldentenor (ténor héroïque)
+    light_baritone: 21, # Baryton léger
+    lyric_baritone: 22, # Baryton lyrique
+    verdi_baritone: 23, # Baryton Verdi
+    dramatic_baritone: 24, # Baryton dramatique
+    bass_baritone: 25, # Baryton-basse
+    chanting_bass: 26, # Basse chantante
+    noble_bass: 27, # Basse noble
+    deep_bass: 28 # Basse profonde
+  }
+
   def self.tonalities_selection
     [
       'Aucune / None',

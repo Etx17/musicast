@@ -82,6 +82,6 @@ class AirsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def air_params
-    params.require(:air).permit(:title, :length_minutes, :composer, :infos, :oeuvre, :character, :tonality, :infos_english)
+    params.require(:air).permit(:title, :length_minutes, :composer, :infos, :oeuvre, :character, :tonality, :infos_english, :fach)
   end
 end
