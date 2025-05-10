@@ -213,6 +213,7 @@ class CandidatsController < ApplicationController
   def candidat_params
     params.require(:candidat).permit(:user_id, :nationality,
     :artistic_photo, :banner_color, :NEW_RECORD,
+    :voice_type,
     :first_name, :last_name, :birthdate, :short_bio_en, :medium_bio_en, :long_bio_en, :cv_english, :short_bio, :medium_bio, :long_bio, :repertoire, :portrait, :last_teacher, :iban,
     experiences_attributes: [:id, :title, :english_title, :company, :location, :start_date, :end_date, :description, :english_description, :_destroy, :logo],
     educations_attributes: [:id, :title, :english_title, :organism, :location, :start_date, :end_date, :description, :english_description, :_destroy, :logo],
