@@ -4,33 +4,33 @@
 		<script>
 				$(function () {
 
-						function crop_<%= field %>_<%= item_count %>_image_load(data) {
-								var $crop_x = $("input#upload_<%= field %>_<%= item_count %>_crop_x"),
-										$crop_y = $("input#upload_<%= field %>_<%= item_count %>_crop_y"),
-										$crop_w = $("input#upload_<%= field %>_<%= item_count %>_crop_w"),
-										$crop_h = $("input#upload_<%= field %>_<%= item_count %>_crop_h");
+						// function crop_<%= field %>_<%= item_count %>_image_load(data) {
+						// 		var $crop_x = $("input#upload_<%= field %>_<%= item_count %>_crop_x"),
+						// 				$crop_y = $("input#upload_<%= field %>_<%= item_count %>_crop_y"),
+						// 				$crop_w = $("input#upload_<%= field %>_<%= item_count %>_crop_w"),
+						// 				$crop_h = $("input#upload_<%= field %>_<%= item_count %>_crop_h");
 
-								 $crop_x.val('');
-								 $crop_y.val('');
-								 $crop_h.val('');
-								 $crop_w.val('');
+						// 		 $crop_x.val('');
+						// 		 $crop_y.val('');
+						// 		 $crop_h.val('');
+						// 		 $crop_w.val('');
 
-								 $crop_x.val(Math.round(data.left));
-								 $crop_y.val(Math.round(data.top));
-								 $crop_h.val(Math.round(data.height));
-								 $crop_w.val(Math.round(data.width));
+						// 		 $crop_x.val(Math.round(data.left));
+						// 		 $crop_y.val(Math.round(data.top));
+						// 		 $crop_h.val(Math.round(data.height));
+						// 		 $crop_w.val(Math.round(data.width));
 
-						}
+						// }
 
-						var $crop_x = $("input#upload_<%= field %>_<%= item_count %>_crop_x"),
-								$crop_y = $("input#upload_<%= field %>_<%= item_count %>_crop_y"),
-								$crop_w = $("input#upload_<%= field %>_<%= item_count %>_crop_w"),
-								$crop_h = $("input#upload_<%= field %>_<%= item_count %>_crop_h");
+						// var $crop_x = $("input#upload_<%= field %>_<%= item_count %>_crop_x"),
+						// 		$crop_y = $("input#upload_<%= field %>_<%= item_count %>_crop_y"),
+						// 		$crop_w = $("input#upload_<%= field %>_<%= item_count %>_crop_w"),
+						// 		$crop_h = $("input#upload_<%= field %>_<%= item_count %>_crop_h");
 
-						$crop_x.val('');
-						$crop_y.val('');
-						$crop_h.val('');
-						$crop_w.val('');
+						// $crop_x.val('');
+						// $crop_y.val('');
+						// $crop_h.val('');
+						// $crop_w.val('');
 
 						var $image = $('#upload_<%= field %>_<%= item_count %>_image');
 						var $button = $('#button_<%= field %>_<%= item_count %>');
@@ -560,10 +560,6 @@
 
     <!-- Input file pour permettre la sélection du fichier -->
     <input type="file" id="upload_<%= field %>_<%= item_count %>_file_field" class="custom-file-input" accept="image/*">
-
-		<% %w[x y w h].each do |attribute| %>
-			<input type="hidden" name="<%= model %>[upload_<%= field %>_crop_<%= attribute %>]" id="upload_<%= field %>_<%= item_count %>_crop_<%= attribute %>">
-		<% end %>
 
 	    <!-- Modal -->
     <div class="modal fade bg-gray modal-cropper" id="upload-<%= field %>-<%= item_count %>-modal" aria-labelledby="modalLabel" role="dialog" tabindex="-1">
