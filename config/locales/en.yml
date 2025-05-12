@@ -678,10 +678,10 @@ en:
       files_to_evaluate: "Your files to evaluate (grouped by categories)"
       view_applications: "View %{count} applications"
     organiser:
-      rehearsal_rooms: "Salles de répétition"
-      add_room: "Ajouter une salle"
-      edit_room: "Modifier la salle"
-      confirm_delete_room: "Êtes-vous sûr de vouloir supprimer cette salle ?"
+      rehearsal_rooms: "Rehearsal rooms"
+      add_room: "Add a rehearsal room"
+      edit_room: "Edit the rehearsal room"
+      confirm_delete_room: "Are you sure you want to delete this rehearsal room ?"
       jury_members: Jury members
       add_jury: Add jury
       confirm_delete_pianist: "Delete pianist ?"
@@ -1952,7 +1952,6 @@ en:
       pianist: "Pianist accompanist"
       no_rehearsals_scheduled: "No rehearsals scheduled"
       jury_form_description: "Select the fields you want to include in the jury document"
-      program_options: "Program Options"
       detailed_program: "Detailed Program"
       simple_air: "Simple Piece"
       biography_options: "Biography Options"
