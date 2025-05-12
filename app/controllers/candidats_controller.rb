@@ -50,7 +50,12 @@ class CandidatsController < ApplicationController
     # end
 
     if @candidat.update(candidat_params)
-      redirect_to candidat_url(@candidat), notice: "Candidat was successfully updated."
+      if session[:redirect_url].present?
+        redirect_to session[:redirect_url], notice: "Candidat was successfully updated."
+        session[:redirect_url] = nil
+      else
+        redirect_to candidat_url(@candidat), notice: "Candidat was successfully updated."
+      end
     else
       render :edit, status: :unprocessable_entity
     end

@@ -4,3 +4,36 @@
 <div class="container">
   <%= render "form", candidat: @candidat %>
 </div>
+
+<% if !@candidat.portrait.attached? || !@candidat.artistic_photo.attached? %>
+  <!-- Modal using the modal_controller.js Stimulus controller -->
+  <div data-controller="modal">
+    <div class="modal fade" data-modal-target="modal" tabindex="-1" aria-labelledby="missingPhotosModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="missingPhotosModalLabel"><%= t('candidats.edit.photos_required.title', default: 'Photos Required') %></h5>
+            <button type="button" class="btn-close" data-action="modal#close" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p><%= t('candidats.edit.photos_required.message', default: 'Before continuing with your registration, you need to upload:') %></p>
+            <ul>
+              <% if !@candidat.portrait.attached? %>
+                <li><strong><%= t('candidats.edit.photos_required.portrait', default: 'A portrait photo') %></strong></li>
+              <% end %>
+              <% if !@candidat.artistic_photo.attached? %>
+                <li><strong><%= t('candidats.edit.photos_required.artistic_photo', default: 'An artistic photo') %></strong></li>
+              <% end %>
+            </ul>
+            <p><%= t('candidats.edit.photos_required.instructions', default: 'Please upload the required photos in the form below.') %></p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-action="modal#close"><%= t('global.understood', default: 'I Understand') %></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<%#  %>

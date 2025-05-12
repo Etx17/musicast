@@ -362,6 +362,7 @@ en:
       iban: "IBAN"
       iban_hint: "Your IBAN number for prize payments"
     edit:
+
       title: "Edit your information"
       subtitle: "This information is necessary to register for a competition."
       warning_prefix: "Warning"
@@ -370,6 +371,12 @@ en:
       show: "Show this candidate"
       back_to_list: "Back to candidates"
       minimum_informations_for_inscription: "You must have completed your information (photos, bios, experiences, repertoire, etc...) to be able to register"
+      photos_required:
+        title: "Photos Required"
+        message: "Before continuing with your registration, you need to upload:"
+        portrait: "A portrait photo"
+        artistic_photo: "An artistic photo"
+        instructions: "Please upload the required photos in the form below."
     index:
       title: "Candidates"
       show: "Show this candidate"
@@ -1068,6 +1075,10 @@ en:
       copy: "Copy"
     messages:
       copied_to_clipboard: "Copied to clipboard"
+    back: "Back"
+    home: "Home"
+    profile: "Profile"
+    understood: "I Understand"
   inscription_orders:
     new:
       title: "New secure payment"

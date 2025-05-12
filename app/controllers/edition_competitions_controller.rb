@@ -13,6 +13,7 @@ class EditionCompetitionsController < ApplicationController
     if current_user&.organises_edition_competition?(@edition_competition)
       render :show
     else
+      session[:redirect_url] = organism_competition_edition_competition_url(@organism, @competition, @edition_competition)
       render :candidate_edition_competition
     end
   end

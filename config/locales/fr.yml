@@ -361,14 +361,20 @@ fr:
       new_record: "NOUVEAU"
       delete: "Supprimer"
     edit:
-      title: "Modifier vos informations"
-      subtitle: "Ces informations sont nécessaires pour vous inscrire à une compétition."
+      title: "Éditer vos informations"
+      subtitle: "Ces informations sont nécessaires pour s'inscrire à un concours."
       warning_prefix: "Attention"
-      warning: "Les informations que vous fournissez ici seront utilisées pour vous contacter et vous inscrire à une compétition. Veuillez les remplir avec soin. Vous pourrez les modifier plus tard."
+      warning: "les informations que vous renseignez ici serviront à vous contacter et à vous inscrire à un concours. Merci de bien les remplir. Vous pourrez les modifier par la suite."
       back: "Retour"
       show: "Voir ce candidat"
       back_to_list: "Retour aux candidats"
       minimum_informations_for_inscription: "Vous devez avoir complêté vos informations (photos, bios, expériences, répertoire, etc...) pour pouvoir vous inscrire"
+      photos_required:
+        title: "Photos Requises"
+        message: "Avant de continuer votre inscription, vous devez télécharger :"
+        portrait: "Une photo de portrait"
+        artistic_photo: "Une photo artistique"
+        instructions: "Veuillez télécharger les photos requises dans le formulaire ci-dessous."
     index:
       title: "Candidats"
       show: "Voir ce candidat"
@@ -1035,6 +1041,10 @@ fr:
       violin: "Violon"
     messages:
       copied_to_clipboard: "Copié dans le presse-papier"
+    back: "Retour"
+    home: "Accueil"
+    profile: "Profil"
+    understood: "J'ai compris"
   inscription_orders:
     new:
       title: "Nouveau paiement sécurisé"
