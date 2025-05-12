@@ -21,9 +21,43 @@
   <% end %>
   <% choice_imposed_work.number_to_select.times do |i| %>
     <% choice_imposed_work_air = inscription.choice_imposed_work_airs.filter{|ciwa| ciwa.choice_imposed_work_id == choice_imposed_work.id}[i] || choice_imposed_work.choice_imposed_work_airs.build %>
+
+    <%# Prepare grouped collection for optgroups %>
+    <% airs = choice_imposed_work.airs.includes(:imposed_work, :choice_imposed_work, :semi_imposed_work).order(:fach, :title) %>
+    <% grouped_airs = airs.group_by(&:fach) %>
+    <% grouped_collection = [] %>
+
+    <% Air.defined_enums["fach"].each do |fach_name, fach_value| %>
+      <% fach_key = fach_name.to_s %>
+      <% if grouped_airs.key?(fach_key) %>
+        <% group_options = grouped_airs[fach_key].map { |air| ["#{air.title} - #{air.composer}", air.id] } %>
+        <% grouped_collection << [fach_name.humanize, group_options] %>
+      <% end %>
+    <% end %>
+
     <%= f.simple_fields_for :choice_imposed_work_airs, choice_imposed_work_air do |choice_imposed_work_air_fields| %>
       <%= choice_imposed_work_air_fields.input :choice_imposed_work_id, as: :hidden, input_html: { value: choice_imposed_work.id } %>
-      <%= choice_imposed_work_air_fields.input :air_id, collection: choice_imposed_work.airs.map { |air| [air.title, air.id] }, selected: choice_imposed_work_air.persisted? ? choice_imposed_work_air.air_id : nil, label: t('inscriptions.choice_imposed_work_section.select_air', number: i+1), include_blank: t('inscriptions.choice_imposed_work_section.select_an_air'), input_html: { class: 'form-control' } %>
+
+      <% if grouped_collection.present? %>
+        <%= choice_imposed_work_air_fields.input :air_id,
+              collection: grouped_collection,
+              as: :grouped_select,
+              group_label_method: :first,
+              group_method: :last,
+              option_value_method: :second,
+              option_key_method: :first,
+              selected: choice_imposed_work_air.persisted? ? choice_imposed_work_air.air_id : nil,
+              label: t('inscriptions.choice_imposed_work_section.select_air', number: i+1, default: "Select air #{i+1}"),
+              include_blank: t('inscriptions.choice_imposed_work_section.select_an_air', default: "Select an air"),
+              input_html: { class: 'form-control' } %>
+      <% else %>
+        <%= choice_imposed_work_air_fields.input :air_id,
+              collection: choice_imposed_work.airs.map { |air| ["#{air.title} - #{air.composer.capitalize}", air.id] },
+              selected: choice_imposed_work_air.persisted? ? choice_imposed_work_air.air_id : nil,
+              label: t('inscriptions.choice_imposed_work_section.select_air', number: i+1, default: "Select air #{i+1}"),
+              include_blank: t('inscriptions.choice_imposed_work_section.select_an_air', default: "Select an air"),
+              input_html: { class: 'form-control' } %>
+      <% end %>
     <% end %>
   <% end %>
 <% end %>
