@@ -250,12 +250,12 @@
         <% inscription.category.tours.order(:tour_number).each do |tour| %>
           <% performance = inscription.performances.find_by(tour: tour) %>
 
-          <div class="p-3 bg-infobox-light mb-3 rounded">
+          <div class="p-3 bg-light mb-3 rounded">
             <div class="card-header d-flex justify-content-between border-0">
               <% if I18n.locale == :en && tour.title_english.present? %>
-                <h5><%= tour.title_english %> - <%= t('inscriptions.inscription.round_number', number: tour.tour_number) %></h5>
+                <h3><%= tour.title_english %> - <%= t('inscriptions.inscription.round_number', number: tour.tour_number) %></h3>
               <% else %>
-                <h5><%= tour.title %> - <%= t('inscriptions.inscription.round_number', number: tour.tour_number) %></h5>
+                <h3><%= tour.title %> - <%= t('inscriptions.inscription.round_number', number: tour.tour_number) %></h3>
               <% end %>
             </div>
             <div class="card-body">
@@ -288,7 +288,7 @@
               <% end %>
 
               <%# accompaniment section  %>
-              <%= render 'pianist_accompanist', performance: performance if tour.requires_pianist_accompanist %>
+              <%= render 'pianist_accompanist', performance: performance, tour: tour if tour.requires_pianist_accompanist %>
 
               <% if tour.requires_orchestra %>
                 <div class="d-flex justify-content-start gap-3 pb-2 mt-2">
@@ -326,6 +326,10 @@
               <% end %>
 
               <% if performance.present? %>
+                <%# s'il manque un air sur la performance, on affiche un message %>
+                <% if performance.ordered_air_selection.count < tour.tour_requirement&.min_number_of_works %>
+                  <p class="small text-danger"><%= t('inscriptions.inscription.missing_air', count: tour.tour_requirement&.min_number_of_works - performance.ordered_air_selection.count) %></p>
+                <% end %>
                 <%# Standard form for updating the performance %>
                 <%= simple_form_for(performance, url: performance_path(performance), method: :patch) do |f| %>
                   <ul class="list-unstyled">
@@ -358,7 +362,6 @@
               <% else %>
                 <div class="d-flex flex-column rounded">
                   <small class="bg-grey p-2 text-secondary">
-                    <span class="badge rounded-pill text-danger border-danger border"><%= t('inscriptions.inscription.days_remaining', count: tour.remaining_days) %></span>
                     <i class="fas fa-info-circle text-secondary px-1"></i><%= t('inscriptions.inscription.no_program_yet_html', deadline: tour.final_performance_submission_deadline.strftime("%d/%m/%Y")) %>
                   </small>
                 </div>

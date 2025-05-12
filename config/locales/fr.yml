@@ -1081,7 +1081,7 @@ fr:
     scores:
       scores_info: "Déposez impérativement les partitions des pièces que vous interprêtez pour ce tour. Elles seront accessibles aux jurys et à votre pianiste accompagnateur assigné, s'il y en a un. L'organisme du concours peut également vous envoyer des partitions sur cet espace."
       scores_section: "Partitions"
-      upload_scores: "Télécharger les partitions"
+      upload_scores: "Envoyer ces partitions"
       upload_hint:
         one: "Vous pouvez encore ajouter 1 fichier"
         other: "Vous pouvez encore ajouter %{count} fichiers"
@@ -1222,6 +1222,7 @@ fr:
       youtube_hint: "Lien vers votre vidéo YouTube"
       replace_document: "Remplacer le document"
     inscription:
+      missing_air: "Il vous manque %{count} air(s) pour ce tour!"
       in_review_message: "Votre dossier est en cours de validation. Vous recevrez un mail dès que cela sera terminé."
       accepted_message: "Félicitations ! Votre dossier a été accepté ! Veuillez finaliser le programme de chaque tour avant sa date limite"
       pianist_assignment_pending: "En attente"

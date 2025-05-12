@@ -73,7 +73,9 @@
           </span>
         <% end %>
       </div>
-      <small class="mb-0 text-secondary"><%= t('inscriptions.inscription.pianist_assignment_explanation') %></small>
+      <% if tour.requires_pianist_accompanist %>
+        <small class="mb-0 text-secondary"><%= t('inscriptions.inscription.pianist_assignment_explanation') %></small>
+      <% end %>
     </div>
   <% end %>
 <% end %>
