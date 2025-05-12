@@ -1222,6 +1222,8 @@ fr:
       youtube_hint: "Lien vers votre vidéo YouTube"
       replace_document: "Remplacer le document"
     inscription:
+      in_review_message: "Votre dossier est en cours de validation. Vous recevrez un mail dès que cela sera terminé."
+      accepted_message: "Félicitations ! Votre dossier a été accepté ! Veuillez finaliser le programme de chaque tour avant sa date limite"
       pianist_assignment_pending: "En attente"
       orchestra_accompaniment: "Accompagnement orchestral"
       pianist_assignment_explanation: "Le concours vous assignera un pianiste accompagnateur une fois la date limite de dépôt des candidatures atteinte. Veuillez consulter régulièrement cette page pour voir les informations de contact de votre pianiste."

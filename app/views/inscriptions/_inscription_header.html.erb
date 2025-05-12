@@ -82,6 +82,18 @@
         <div></div>
         <% end %>
     </div>
+    <% if inscription.accepted? %>
+      <div class="text-center mt-3 text-success border border-success p-3 rounded-8 bg-success-secondary mx-auto" style="width: fit-content;">
+        <i class="fas fa-check-circle me-2"></i>
+        <%= t('inscriptions.inscription.accepted_message') %>
+      </div>
+    <% end %>
+    <% if inscription.in_review? %>
+      <div class="text-center mt-3 text-warning p-3 rounded-8 bg-warning-secondary mx-auto" style="width: fit-content;">
+        <i class="fas fa-spinner fa-spin me-2"></i>
+        <%= t('inscriptions.inscription.in_review_message') %>
+      </div>
+    <% end %>
     <div class="d-flex flex-wrap py-3 align-items-start gap-3">
       <%= render 'payed_pill', inscription: inscription %>
       <%= render 'items_pill', inscription: inscription %>
