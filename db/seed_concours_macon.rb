@@ -276,7 +276,6 @@ Tour.create!(
 )
 
 Tour.create!(
-  imposed_air_selection: ["1", "2", "3"],
   final_performance_submission_deadline: Date.new(2025, 11, 15),
   tour_number: 3,
   category_id: categ.id,
