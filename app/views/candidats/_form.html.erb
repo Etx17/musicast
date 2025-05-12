@@ -48,7 +48,7 @@
           <div class="text-center mb-3">
           <% if @candidat.portrait.attached? %>
               <div class="position-relative d-inline-block">
-                <%= image_tag url_for(@candidat.portrait), class: "img-fluid rounded", style: "max-height: 200px;", id: "upload_portrait_portrait_file_preview" %>
+                <%= image_tag url_for(@candidat.portrait), class: "img-fluid rounded", style: "max-height: 200px;", id: "portrait_preview_image" %>
                 <%= link_to purge_portrait_candidat_path(@candidat),
                       class: "btn btn-sm btn-outline-secondary rounded-circle position-absolute",
                       style: "width: 28px; height: 28px; padding: 0; display: flex; align-items: center; justify-content: center; background-color: rgba(255,255,255,0.8); top: 5px; right: 5px;",
@@ -60,30 +60,19 @@
                 <small class="text-success"><i class="fas fa-check-circle"></i> <%= t('image_cropper.image_saved') %></small>
             </div>
           <% else %>
-              <div class="upload-placeholder p-3 border rounded d-flex flex-column align-items-center justify-content-center"
-                   style="height: 200px; cursor: pointer;"
-                   id="upload_portrait_portrait_file_preview">
-                <i class="fas fa-upload fa-3x mb-3 text-muted"></i>
-                <p class="text-muted"><%= t('image_cropper.click_to_select_photo') %></p>
-              </div>
-            <% end %>
+            <%# Placeholder for when no image is attached, also serves as preview area %>
+            <img id="portrait_preview_image" class="img-fluid rounded d-none" style="max-height: 200px; margin-bottom: 10px;"/>
+            <div class="upload-placeholder p-3 border rounded d-flex flex-column align-items-center justify-content-center"
+                 id="portrait_upload_placeholder"
+                 style="height: 200px; cursor: default;">
+              <i class="fas fa-image fa-3x mb-3 text-muted"></i>
+              <p class="text-muted"><%= "No image selected" %></p>
+            </div>
+          <% end %>
           </div>
 
-          <!-- Ajouter un attribut data pour l'ID du candidat -->
-          <div data-candidat-id="<%= @candidat.id %>">
-            <%= render "common/image_cropper",
-                model: "candidat",
-                field: "portrait",
-                aspect_ratio: 0.75, # 3:4 vertical portrait ratio
-                display_width: 500,
-                item_count: "portrait" %>
-            </div>
-
-          <%= f.input :portrait, as: :hidden,
-                     input_html: {
-                       class: "image-hidden-input",
-                       id: "candidat_portrait"
-                     } %>
+          <%# Standard file input for portrait %>
+          <%= f.file_field :portrait, class: "form-control", accept: "image/*", onchange: "previewStandardImage(this, 'portrait_preview_image', 'portrait_upload_placeholder')" %>
         </div>
       </div>
       <div class="col-md-4">
@@ -315,257 +304,28 @@
       }
     }
 
-    // Direct override of the AJAX upload function for portrait
-    document.addEventListener('DOMContentLoaded', function() {
-      // Make the placeholder clickable to trigger the file input
-      const portraitPlaceholder = document.getElementById('upload_portrait_portrait_file_preview');
-      if (portraitPlaceholder && portraitPlaceholder.classList.contains('upload-placeholder')) {
-        portraitPlaceholder.addEventListener('click', function() {
-          document.getElementById('upload_portrait_portrait_file_field').click();
-        });
+    function previewStandardImage(input, previewImageId, placeholderId) {
+      const file = input.files[0];
+      const preview = document.getElementById(previewImageId);
+      const placeholder = document.getElementById(placeholderId);
+
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          preview.src = e.target.result;
+          preview.classList.remove('d-none');
+          if (placeholder) {
+            placeholder.classList.add('d-none');
+          }
+        }
+        reader.readAsDataURL(file);
+      } else {
+        preview.src = "#"; // Clear preview if no file selected or selection cancelled
+        preview.classList.add('d-none');
+        if (placeholder) {
+          placeholder.classList.remove('d-none');
+        }
       }
-
-      // Get the candidate ID
-      const candidatId = document.querySelector('[data-candidat-id]')?.dataset?.candidatId;
-      if (!candidatId) return;
-
-      // Override the AJAX call completely
-      const originalAjax = $.ajax;
-      $.ajax = function(options) {
-        // Check if this is the image upload AJAX call
-        if (options.url && options.url.includes('upload_item_image')) {
-          console.log('Intercepting AJAX call to upload_item_image');
-
-          // Replace with our candidat upload endpoint
-          const locale = document.documentElement.lang || 'fr';
-          options.url = `/${locale}/candidats/${candidatId}/upload_portrait`;
-          console.log('Redirecting to:', options.url);
-
-          // Make sure we're sending the image correctly
-          if (options.data instanceof FormData) {
-            // Keep only the image data and remove item_id
-            const image = options.data.get('image');
-            options.data = new FormData();
-            options.data.append('image', image);
-          }
-        }
-
-        // Call the original AJAX function with our modified options
-        return originalAjax.apply(this, arguments);
-      };
-
-      // Also handle the delete button to use turbo correctly
-      document.querySelectorAll('a[href*="purge_portrait"]').forEach(function(link) {
-        link.addEventListener('click', function(e) {
-          e.preventDefault();
-
-          if (confirm(this.dataset.turboConfirm || "<%= t('image_cropper.delete_confirm') %>")) {
-            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-
-            fetch(this.href, {
-              method: 'DELETE',
-              headers: {
-                'X-CSRF-Token': csrfToken,
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-              },
-              credentials: 'same-origin'
-            }).then(response => {
-              if (response.ok) {
-                // Reload the page to show the updated state
-                window.location.reload();
-              } else {
-                console.error('Error deleting portrait:', response.statusText);
-                alert("<%= t('image_cropper.upload_error', message: '') %>" + response.statusText);
-              }
-            }).catch(error => {
-              console.error('Error deleting portrait:', error);
-              alert("<%= t('image_cropper.upload_error', message: '') %>" + error);
-            });
-          }
-        });
-      });
-    });
-
-    // Direct patch for the image cropper
-    document.addEventListener('DOMContentLoaded', function() {
-      // Wait for the cropper script to be fully loaded
-      setTimeout(function() {
-        // Check if we're on a candidat form
-        const candidatId = document.querySelector('[data-candidat-id]')?.dataset?.candidatId;
-        if (candidatId) {
-          console.log('Detected candidat form with ID:', candidatId);
-
-          // Find the button element that triggers the AJAX upload
-          const cropButton = document.getElementById('button_portrait_portrait');
-          if (cropButton) {
-            // Store the original click handler
-            const originalClickHandler = cropButton.onclick;
-
-            // Replace with our custom handler
-            cropButton.onclick = function(event) {
-              console.log('Intercepting crop button click');
-
-              // Get the cropper instance
-              const image = document.getElementById('upload_portrait_portrait_image');
-              if (!image || !image.cropper) {
-                console.error('Cropper not initialized');
-                return originalClickHandler.call(this, event);
-              }
-
-              // Get the cropped canvas - using 3:4 aspect ratio for portrait
-              const croppedCanvas = image.cropper.getCroppedCanvas({
-                maxWidth: 2000,
-                maxHeight: 2000,
-                aspectRatio: 0.75 // 3:4 vertical portrait ratio
-              });
-
-              if (!croppedCanvas) {
-                console.error('Failed to get cropped canvas');
-                return originalClickHandler.call(this, event);
-              }
-
-              // Convert to blob
-              croppedCanvas.toBlob(function(blob) {
-                // Create a new file object
-                const fileName = "portrait.jpg";
-                const newFile = new File([blob], fileName, {type: "image/jpeg"});
-
-                // Update preview
-                const preview = document.getElementById('upload_portrait_portrait_file_preview');
-                if (preview) {
-                  preview.src = croppedCanvas.toDataURL('image/jpeg');
-                  if (preview.classList.contains('upload-placeholder')) {
-                    preview.classList.remove('upload-placeholder');
-                    preview.innerHTML = '';
-                    preview.className = 'img-fluid rounded';
-                    preview.style.maxHeight = '200px';
-                  }
-                }
-
-                // Create FormData
-                const formData = new FormData();
-                formData.append('image', newFile);
-
-                // Get CSRF token
-                const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-
-                // Construct the upload URL for candidat
-                const locale = document.documentElement.lang || 'fr';
-                const uploadUrl = `/${locale}/candidats/${candidatId}/upload_portrait`;
-
-                console.log('Uploading to candidat endpoint:', uploadUrl);
-
-                // Show loading indicator
-                const statusDiv = document.getElementById('upload-status-portrait') ||
-                                 document.createElement('div');
-                statusDiv.id = 'upload-status-portrait';
-                statusDiv.className = 'mt-2';
-                statusDiv.innerHTML = '<div class="spinner-border spinner-border-sm text-primary" role="status"></div> <small><%= t("image_cropper.uploading") %></small>';
-
-                if (!document.getElementById('upload-status-portrait')) {
-                  const container = preview.parentNode;
-                  container.parentNode.appendChild(statusDiv);
-                }
-
-                // Send AJAX request
-                fetch(uploadUrl, {
-                  method: 'POST',
-                  body: formData,
-                  headers: {
-                    'X-CSRF-Token': csrfToken
-                  },
-                  credentials: 'same-origin'
-                })
-                .then(response => response.json())
-                .then(data => {
-                  console.log('Upload successful:', data);
-                  var statusMessage = '<small class="text-success"><i class="fas fa-check-circle"></i> <%= t("image_cropper.upload_success") %></small>';
-
-                  if (data.metadata) {
-                    var meta = data.metadata;
-                    if (meta.dimensions && meta.resolution) {
-                      // Créer une section dédiée pour les métadonnées avec un style plus visible
-                      statusMessage += '<div class="metadata-info mt-2 p-2 border rounded bg-light">';
-                      statusMessage += '<h6 class="mb-1"><i class="fas fa-info-circle"></i> <%= t("image_cropper.image_info") %></h6>';
-                      statusMessage += '<div class="d-flex flex-column">';
-
-                      // Dimensions avec icône
-                      statusMessage += '<div class="mb-1"><i class="fas fa-ruler-combined text-primary me-1"></i> <strong><%= t("image_cropper.dimensions") %>:</strong> ' + meta.dimensions.width + ' × ' + meta.dimensions.height + ' <%= t("image_cropper.px") %></div>';
-
-                      // DPI avec icône et mise en évidence
-                      var dpiX = meta.resolution[0];
-                      var dpiY = meta.resolution[1];
-
-                      // Ajouter une classe de couleur en fonction de la valeur du DPI
-                      var dpiClass = 'text-success';
-                      if (dpiX < 300) dpiClass = 'text-warning';
-                      if (dpiX < 150) dpiClass = 'text-danger';
-
-                      statusMessage += '<div class="' + dpiClass + '"><i class="fas fa-compress-arrows-alt me-1"></i> <strong><%= t("image_cropper.resolution") %>:</strong> ' +
-                        dpiX + ' × ' + dpiY + ' <%= t("image_cropper.dpi") %></div>';
-
-                      // Taille du fichier si disponible
-                      if (meta.size) {
-                        var fileSizeKB = Math.round(meta.size / 1024);
-                        var fileSizeMB = (fileSizeKB / 1024).toFixed(2);
-                        var sizeText = fileSizeKB > 1024 ? fileSizeMB + ' MB' : fileSizeKB + ' KB';
-                        statusMessage += '<div><i class="fas fa-file-alt text-secondary me-1"></i> <strong><%= t("image_cropper.size") %>:</strong> ' + sizeText + '</div>';
-                      }
-
-                      statusMessage += '</div></div>';
-                    }
-                  }
-
-                  // Update hidden input
-                  const hiddenInput = document.getElementById('candidat_portrait');
-                  if (hiddenInput) {
-                    // Create a new FileList-like object
-                    const dataTransfer = new DataTransfer();
-                    dataTransfer.items.add(newFile);
-
-                    // Set the file to the hidden input
-                    hiddenInput.files = dataTransfer.files;
-
-                    // Trigger change event
-                    const event = new Event('change', { bubbles: true });
-                    hiddenInput.dispatchEvent(event);
-                  }
-
-                  // Close the modal
-                  const modalElement = document.getElementById('upload-portrait-portrait-modal');
-                  if (modalElement) {
-                    const modalInstance = bootstrap.Modal.getInstance(modalElement);
-                    if (modalInstance) {
-                      modalInstance.hide();
-                    }
-                  }
-
-                  // Update the status div with our message
-                  statusDiv.innerHTML = statusMessage;
-                })
-                .catch(error => {
-                  console.error('Upload failed:', error);
-                  statusDiv.innerHTML = '<small class="text-danger"><i class="fas fa-exclamation-circle"></i> <%= t("image_cropper.upload_error", message: "") %>' + error.message + '</small>';
-                });
-
-                // Prevent the original handler from executing
-                event.stopPropagation();
-                return false;
-              }, 'image/jpeg', 0.9);
-
-              // Prevent the original handler from executing
-              event.preventDefault();
-              event.stopPropagation();
-              return false;
-            };
-
-            console.log('Successfully patched crop button click handler');
-          } else {
-            console.error('Could not find crop button');
-          }
-        }
-      }, 1000); // Wait for everything to be loaded
-    });
+    }
   </script>
 <% end %>
