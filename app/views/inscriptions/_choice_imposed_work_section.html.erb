@@ -30,8 +30,8 @@
     <% Air.defined_enums["fach"].each do |fach_name, fach_value| %>
       <% fach_key = fach_name.to_s %>
       <% if grouped_airs.key?(fach_key) %>
-        <% group_options = grouped_airs[fach_key].map { |air| ["#{air.title} - #{air.composer}", air.id] } %>
-        <% grouped_collection << [fach_name.humanize, group_options] %>
+        <% group_options = grouped_airs[fach_key].map { |air| ["#{air.title} - #{air.composer.capitalize}", air.id] } %>
+        <% grouped_collection << [I18n.t("fachs.#{fach_name}", default: fach_name.humanize), group_options] %>
       <% end %>
     <% end %>
 

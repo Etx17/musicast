@@ -8,8 +8,9 @@
                       <i class="fas fa-check-circle text-success pe-1"></i><%= t('inscriptions.inscription.proof_submitted') %>
                     </span>
                   <% end %>
-
-                  <%= render Pill::StatusComponent.new(text: t("inscriptions.payment_statuses.#{inscription.payment_status}"), color: get_payment_status_color(inscription.payment_status)) %>
+                  <% if inscription.category.payment_after_approval? %>
+                    <%= render Pill::StatusComponent.new(text: t("inscriptions.payment_statuses.#{inscription.payment_status}"), color: get_payment_status_color(inscription.payment_status)) %>
+                  <% end %>
                 </div>
 
                  <% if inscription.category.competition.organism.iban.present? %>
