@@ -6,9 +6,9 @@
   <% end %>
 
   <% if I18n.locale == :en && choice_imposed_work.guidelines_english.present? %>
-    <small class="text-english"><%= choice_imposed_work.guidelines_english %></small>
+    <%= render InfoboxComponent.new(title: t('inscriptions.semi_imposed_work_section.guidelines'), text: choice_imposed_work.guidelines_english) %>
   <% else %>
-    <small><%= choice_imposed_work.guidelines %></small>
+    <%= render InfoboxComponent.new(title: t('inscriptions.semi_imposed_work_section.guidelines'), text: choice_imposed_work.guidelines) %>
   <% end %>
   <% if f.object.errors[:base].any? %>
     <div class="d-flex flex-column">

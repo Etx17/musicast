@@ -1176,6 +1176,7 @@ fr:
       select_air: "Sélectionner l'air #%{number}"
       select_an_air: "Sélectionner un air"
     semi_imposed_work_section:
+      guidelines: "Consignes"
       select_air: "Sélectionner l'air #%{number}"
       select_an_air: "Sélectionner un air"
       air_validation_failed: "La validation d'un air a échoué"
@@ -1190,6 +1191,7 @@ fr:
       character_placeholder: "ex: Le duc de Mantoue"
       character_hint: "Si air d'opéra seulement"
       base_tonality: "Tonalité de base"
+      duration_warning: "Attention : La durée totale dépasse la durée maximale autorisée de %{max} minutes"
     form:
       pianist_preferences: "Pianiste accompagnateur"
       platform_terms_acceptance: "J'accepte les conditions générales de la plateforme"

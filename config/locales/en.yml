@@ -1207,6 +1207,7 @@ en:
       select_air: "Select air #%{number}"
       select_an_air: "Select an air"
     semi_imposed_work_section:
+      guidelines: "Guidelines"
       select_air: "Select air #%{number}"
       select_an_air: "Select an air"
       air_validation_failed: "Air validation failed"
@@ -1221,6 +1222,7 @@ en:
       character_placeholder: "e.g.: The Duke of Mantua"
       character_hint: "For opera arias only"
       base_tonality: "Base tonality"
+      duration_warning: "Warning: The total duration exceeds the maximum allowed duration of %{max} minutes"
     time_preferences:
       no_preference: "No preference"
       morning: "Morning"
