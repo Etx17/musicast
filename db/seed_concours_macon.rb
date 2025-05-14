@@ -432,8 +432,7 @@ OPERA_OEUVRES_SAMPLE = ["La Traviata", "Don Giovanni", "Carmen", "La Bohème", "
 
 
 puts "Seeding 120 candidates, their inscriptions, semi-imposed airs, and performances for Mâcon Opéra category..."
-# 120.times do |i|
-20.times do |i|
+120.times do |i|
   puts "Creating candidate #{i+1}/120"
   user_email = Faker::Internet.unique.email(domain: "example-candidate.com") # Ensure unique emails
   u = User.create!(
