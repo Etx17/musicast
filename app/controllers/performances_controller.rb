@@ -13,11 +13,11 @@ class PerformancesController < ApplicationController
     @inscription = Inscription.find(params[:inscription_id])
     @tour = Tour.find(params[:performance][:tour_id])
 
-    
+
     processed_params = performance_params
     processed_params[:air_selection] = processed_params[:air_selection].reject(&:empty?) if processed_params[:air_selection].present?
 
-    
+
     if @tour.imposed_air_selection.present?
       processed_params[:air_selection] ||= []
       processed_params[:air_selection] += @tour.imposed_air_selection
@@ -53,7 +53,7 @@ class PerformancesController < ApplicationController
     end
 
     if moved && air_id_to_move
-      
+
       ordered_airs = @performance.ordered_air_selection || []
       index = ordered_airs.index(air_id_to_move)
 
@@ -65,15 +65,12 @@ class PerformancesController < ApplicationController
 
       new_index = direction == :up ? index - 1 : index + 1
 
-      
+
       if new_index >= 0 && new_index < ordered_airs.length
         ordered_airs.insert(new_index, ordered_airs.delete_at(index))
         @performance.ordered_air_selection = ordered_airs
-        
         save_successful = @performance.save
       else
-        
-        
         save_successful = true
       end
 
@@ -81,16 +78,16 @@ class PerformancesController < ApplicationController
         redirect_to inscription_path(@performance.inscription), notice: 'Air order updated.'
       else
         flash[:alert] = "Failed to reorder airs."
-        
+
         redirect_to inscription_path(@performance.inscription), status: :unprocessable_entity
       end
 
     else
-      
+
       if @performance.update(performance_params)
         redirect_to inscription_path(@performance.inscription), notice: 'Performance was successfully updated.'
       else
-        render :edit, status: :unprocessable_entity 
+        render :edit, status: :unprocessable_entity
       end
     end
   end
@@ -113,25 +110,25 @@ class PerformancesController < ApplicationController
   end
 
   def download_scores
-    @performance = Performance.find(params[:id]) 
-    scores_to_zip = @performance.scores.attached? ? @performance.scores.to_a : [] 
+    @performance = Performance.find(params[:id])
+    scores_to_zip = @performance.scores.attached? ? @performance.scores.to_a : []
 
     if scores_to_zip.empty?
       redirect_back fallback_location: root_path, alert: "No scores found attached to this specific performance."
       return
     end
 
-    
+
     temp_file = Tempfile.new(["performance_#{@performance.id}_scores", '.zip'])
-    
+
     participant_name = @performance.inscription&.candidat&.full_name || "performance_#{@performance.id}"
     zip_filename = "#{participant_name}_scores.zip"
 
     begin
-      
+
       Zip::File.open(temp_file.path, Zip::File::CREATE) do |zipfile|
         scores_to_zip.each do |score|
-          
+
           blob_data = score.blob.download
           zipfile.get_output_stream(score.filename.to_s) do |f|
             f.write(blob_data)
@@ -139,13 +136,13 @@ class PerformancesController < ApplicationController
         end
       end
 
-      
+
       zip_data = File.read(temp_file.path)
-      
+
       send_data(zip_data, type: 'application/zip', disposition: 'attachment', filename: zip_filename)
 
     ensure
-      
+
       temp_file.close
       temp_file.unlink
     end
@@ -167,6 +164,7 @@ class PerformancesController < ApplicationController
       :tour_id,
       :inscription_id,
       :pianist_accompagnateur_id,
+      :is_qualified_for_current_tour,
       :id,
       scores: [],
       ordered_air_selection: [],

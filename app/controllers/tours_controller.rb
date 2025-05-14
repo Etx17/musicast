@@ -13,10 +13,14 @@ class ToursController < ApplicationController
     @performances = @tour.performances
     @room = Room.build
     @tour.generate_initial_performance_order if @tour.performances.any? { |p| p.order.nil? && p.inscription.accepted? }
-    @ordered_performances_accepted = @tour.performances
-                                      .joins(:inscription)
-                                      .where(inscriptions: { status: 'accepted' })
-                                      .order(:order)
+    if @tour.tour_number == 1
+      @ordered_performances_accepted = @tour.performances
+                                        .joins(:inscription)
+                                        .where(inscriptions: { status: 'accepted' })
+                                        .order(:order)
+    else
+      @ordered_performances_accepted = @tour.performances.where(is_qualified_for_current_tour: true).order(:order)
+    end
 
   end
 

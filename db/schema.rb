@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_10_130715) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_14_085107) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -463,6 +463,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_10_130715) do
     t.integer "status", default: 0
     t.text "ordered_air_selection", default: [], array: true
     t.bigint "pianist_accompagnateur_id"
+    t.boolean "is_qualified_for_current_tour", default: false
     t.index ["inscription_id"], name: "index_performances_on_inscription_id"
     t.index ["pianist_accompagnateur_id"], name: "index_performances_on_pianist_accompagnateur_id"
     t.index ["tour_id"], name: "index_performances_on_tour_id"

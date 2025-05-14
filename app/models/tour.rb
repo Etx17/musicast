@@ -46,17 +46,31 @@ class Tour < ApplicationRecord
 
     tour_next = self.next_tour
     return if tour_next == self || tour_next.nil?
-    # On filtre déja par les performances dont les inscriptions sont acceptées.
-    performances.joins(:inscription).where(inscriptions: { status: 'accepted' }).each_with_index do |performance, index|
-      # On bouge que les performances qui ont été qualifiées.
-      if performance.is_qualified
+    puts "tour_next: #{tour_next.inspect}"
+    puts "self.tour_number: #{self.tour_number}"
+    if self.tour_number == 1
+    # Si c'est le premier tour on filtre déja par les performances dont les inscriptions sont acceptées.
+      index = 1
+      performances.joins(:inscription).where(inscriptions: { status: 'accepted' }).each do |performance|
+        # On bouge que les performances qui ont été qualifiées.
+        if performance.is_qualified
           next_tour_perf = Performance.find_or_create_by(tour: tour_next, inscription: performance.inscription)
           total_air_selection = performance.air_selection + next_tour.imposed_air_selection
+          next_tour_perf.update(air_selection: total_air_selection, order: index, pianist_accompagnateur: performance.pianist_accompagnateur, is_qualified_for_current_tour: true)
+          index += 1
+        end
+      end
+    else
+      # Si c'est pasl e premier tour, on itere sur les performance qui sont qualified_for_current_tour
+      index = 1
+      performances.where(is_qualified_for_current_tour: true, is_qualified: true).each do |performance|
+        next_tour_perf = Performance.find_or_create_by(tour: tour_next, inscription: performance.inscription)
+        total_air_selection = performance.air_selection + next_tour.imposed_air_selection
 
-          next_tour_perf.update(air_selection: total_air_selection, order: index + 1, pianist_accompagnateur: performance.pianist_accompagnateur)
+        next_tour_perf.update(air_selection: total_air_selection, order: index, pianist_accompagnateur: performance.pianist_accompagnateur, is_qualified_for_current_tour: true)
+        index += 1
       end
     end
-    raise "Not the same number of performances in the next tour than in the current tour" if tour_next.performances.count != performances.select(&:is_qualified).count
   end
 
   def next_tour
@@ -66,7 +80,12 @@ class Tour < ApplicationRecord
   end
 
   def generate_initial_performance_order
-    performances_with_airs, performances_without_airs = performances.partition { |performance| performance.airs.any? }
+    @performances = if tour_number == 1
+      performances.joins(:inscription).where(inscriptions: { status: 'accepted' })
+    else
+      performances.where(is_qualified_for_current_tour: true)
+    end
+    performances_with_airs, performances_without_airs = @performances.partition { |performance| performance.airs.any? }
     performances_by_air = performances_with_airs.group_by { |performance| performance.airs.map(&:title) }
 
     final_order = []
@@ -196,10 +215,16 @@ class Tour < ApplicationRecord
   end
 
   def generate_performance_schedule
-    performances = self.performances.order(:order)
+    if tour_number == 1
+      performances = self.performances.order(:order)
+    else
+      performances = self.performances.where(is_qualified_for_current_tour: true).order(:order)
+    end
+
     current_start_time = start_time
     current_start_date = start_date
     raise "empty durations"if performances.any?{|p| p.air_selection.any?{|air| air.blank?}}
+
     performances.each do |performance|
       # Si la performance actuelle n'a pas renseignée sa durée, lui assigner le temps max du tour.
       next_performance_end_time = current_start_time + performance.minutes.minutes

@@ -44,7 +44,10 @@ class Performance < ApplicationRecord
     airs.sum(&:length_minutes)
   end
 
-
+  def previous_performance
+    previous_tour = tour.previous_tour
+    previous_tour.performances.find_by(inscription: inscription)
+  end
 
   def update_ordered_air_selection
     # Convert all IDs to strings for consistent comparison
