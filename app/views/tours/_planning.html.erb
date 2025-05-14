@@ -109,7 +109,7 @@
               <th scope="col" class="table-cell" style="min-width: 200px;"><%= t('tours.planning.candidate') %></th>
               <th scope="col" class="table-cell"><%= t('tours.planning.passage_time') %></th>
               <th scope="col" class="table-cell"><%= t('tours.planning.order') %></th>
-              <% if @tour.requires_pianist_accompanist %>
+              <% if @tour.requires_pianist_accompanist && !@tour.requires_orchestra %>
                 <th scope="col" class="table-cell" style="min-width: 200px;"><%= t('tours.planning.pianist') %></th>
               <% end %>
               <th scope="col" class="table-cell table-cell--actions" style="min-width: 100px;"><%= t('global.action').pluralize %></th>
@@ -133,7 +133,7 @@
                     </td>
                     <td class="table-cell" data-date="<%= item.start_date.strftime('%Y-%m-%d') %>"><%= item.start_time.strftime('%H:%M') %></td>
                     <td class="table-cell"><%= item.order %></td>
-                    <% if @tour.requires_pianist_accompanist %>
+                    <% if @tour.requires_pianist_accompanist && !@tour.requires_orchestra %>
                       <td class="table-cell">
                         <% if item.pianist_accompagnateur %>
                           <div class="d-flex align-items-center">
@@ -158,7 +158,7 @@
                     </td>
                     <td class="table-cell" id="pause_time_<%= day %>_<%= index %>"><%= item.start_time.strftime('%H:%M') %> - <%= item.end_time.strftime('%H:%M') %></td>
                     <td class="table-cell">-</td>
-                    <% if @tour.requires_pianist_accompanist %>
+                    <% if @tour.requires_pianist_accompanist && !@tour.requires_orchestra %>
                       <td class="table-cell">-</td>
                     <% end %>
                     <td class="table-cell table-cell--actions">

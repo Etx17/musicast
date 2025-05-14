@@ -288,7 +288,7 @@
               <% end %>
 
               <%# accompaniment section  %>
-              <%= render 'pianist_accompanist', performance: performance, tour: tour if tour.requires_pianist_accompanist %>
+              <%= render 'pianist_accompanist', performance: performance, tour: tour if tour.requires_pianist_accompanist && !tour.requires_orchestra %>
 
               <% if tour.requires_orchestra %>
                 <div class="d-flex justify-content-start gap-3 pb-2 mt-2">

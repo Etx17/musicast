@@ -18,7 +18,7 @@
           <%= t('tours.order_of_performances.shuffle_randomly') %>
         <% end %>
 
-        <% if @tour.requires_pianist_accompanist %>
+        <% if @tour.requires_pianist_accompanist && !@tour.requires_orchestra %>
           <%= button_tag type: 'button', class: "btn btn-primary rounded-8", style: "height: 38px;", data: { bs_toggle: "modal", bs_target: "#assignPianistModal" }, disabled: @tour.performances.none?  do %>
             <i class="fas fa-user pe-1"></i>
             <%= t('tours.order_of_performances.assign_pianists') %>
@@ -66,7 +66,7 @@
       <% if @category.is_accompagnated_by_pianist? && @tour.performances.any? %>
 
           <!-- Légende des couleurs -->
-          <% if @organism.pianist_accompagnateurs.any? %>
+          <% if @organism.pianist_accompagnateurs.any? && !@tour.requires_orchestra %>
 
             <div class="mt-3 mb-4">
               <div class="d-flex flex-wrap justify-content-center gap-3">
@@ -103,7 +103,7 @@
             <th class="p-2 text-center bg-grey align-middle" style="min-width: 200px;"><%= t('tours.order_of_performances.candidate') %></th>
             <th class="p-2 text-center bg-grey align-middle"><%= t('tours.order_of_performances.order') %></th>
             <th class="p-2 text-center bg-grey align-middle" style="min-width: 450px;"><%= t('tours.order_of_performances.presented_airs') %></th>
-            <% if @category.is_accompagnated_by_pianist? %>
+            <% if @category.is_accompagnated_by_pianist? && !@tour.requires_orchestra %>
               <th class="p-2 text-center bg-grey align-middle " style="min-width: 200px;"><%= t('tours.order_of_performances.pianist_accompanist') %></th>
             <% end %>
             <th class="p-2 text-center bg-grey align-middle"><%= t('tours.order_of_performances.timing') %></th>
@@ -188,7 +188,7 @@
                     </div>
                   </div>
                 </td>
-                <% if @category.is_accompagnated_by_pianist? %>
+                <% if @category.is_accompagnated_by_pianist? && !@tour.requires_orchestra %>
                   <td class="p-2 text-center bg-light text-secondary align-middle"  >
                     <% if !performance.inscription.candidate_brings_pianist_accompagnateur %>
                       <%= form_with url: assign_pianist_to_performance_manually_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour, performance_id: performance.id), method: :post, html: { id: "pianist-form-#{performance.id}" } do |form| %>

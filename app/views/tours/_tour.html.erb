@@ -80,7 +80,7 @@
             </a>
           </div>
         </li>
-        <% if @tour.needs_rehearsal? %>
+        <% if @tour.needs_rehearsal? && !@tour.requires_orchestra %>
         <li class="nav-item col-md-3" role="presentation">
           <div class="nav-tab-wrapper position-relative">
 
@@ -99,10 +99,18 @@
                   <i class="fas fa-music"></i>
                 </div>
                 <div class="fw-bold">
-                  <%= t("tours.rehearsal_types.#{@tour.rehearsal_type}") %>
+                  <% if @tour.requires_orchestra %>
+                    <%= t("tours.rehearsal_types.orchestra_rehearsal") %>
+                  <% else %>
+                    <%= t("tours.rehearsal_types.#{@tour.rehearsal_type}") %>
+                  <% end %>
                 </div>
                 <small class="text-muted d-block mt-1">
-                  <%= t("tours.rehearsal_types.description.#{@tour.rehearsal_type}") %>
+                  <% if @tour.requires_orchestra %>
+                    <%= t("tours.rehearsal_types.description.orchestra_rehearsal") %>
+                  <% else %>
+                    <%= t("tours.rehearsal_types.description.#{@tour.rehearsal_type}") %>
+                  <% end %>
                 </small>
               </div>
             </a>
@@ -242,7 +250,7 @@
       <% end %>
     </div>
 
-     <% if @tour.needs_rehearsal? %>
+     <% if @tour.needs_rehearsal? && !@tour.requires_orchestra %>
       <!-- tab répétitions -->
       <div class="tab-pane fade <%= 'show active' if session[:tour_tab] == "rehearsal" %>" id="rehearsal" role="tabpanel" aria-labelledby="rehearsal-tab">
         <%= render @tour.rehearsal_type, tour: @tour %>
