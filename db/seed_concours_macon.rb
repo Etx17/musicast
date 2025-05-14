@@ -284,6 +284,8 @@ Tour.create!(
   end_date: Date.new(2025, 11, 16),
   end_time: Time.new(2025, 11, 16, 18, 0),
   is_online: false,
+  requires_orchestra: true,
+  needs_pianist_accompanist: false,
   title: "Finale",
   title_english: "Finals",
   description: "Finale avec accompagnement orchestre",
