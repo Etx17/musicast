@@ -367,20 +367,29 @@ class ToursController < ApplicationController
 
   def download_schedule_pdf
     # @tour is set by before_action :set_tour
-    @performances_accepted = @tour.performances
-    .joins(:inscription)
-    .where(inscriptions: { status: 'accepted' })
-    .order(:start_date, :start_time)
+    # @performances_accepted = @tour.performances
+    # .joins(:inscription)
+    # .where(inscriptions: { status: 'accepted' })
+    # .order(:start_date, :start_time)
+    @performances_accepted = @tour.performances.where(is_qualified_for_current_tour: true).order(:start_date, :start_time)
     @pauses = @tour.pauses.order(:date, :start_time)
     all_items = (@performances_accepted.to_a + @pauses.to_a)
 
-    grouped_by_day = all_items.group_by { |item| item.respond_to?(:start_date) ? item.start_date : item.date }
+    # Filtrer les items sans date
+    grouped_by_day = all_items.reject { |item|
+      date = item.respond_to?(:start_date) ? item.start_date : item.date
+      date.nil?
+    }.group_by { |item|
+      item.respond_to?(:start_date) ? item.start_date : item.date
+    }
 
     sorted_items_within_day = grouped_by_day.transform_values do |items_on_day|
-      items_on_day.sort_by(&:start_time)
+      # Tri sécurisé en cas de start_time nil
+      items_on_day.sort_by { |item| item.start_time || Time.new(0) }
     end
 
-    @schedule_items_by_day = sorted_items_within_day.sort_by { |day, _| day }.to_h
+    # Tri sécurisé des jours (ils ne devraient plus contenir de nil après le filtrage)
+    @schedule_items_by_day = sorted_items_within_day.sort_by { |day, _| day || Date.new(0) }.to_h
 
     respond_to do |format|
       format.pdf do
