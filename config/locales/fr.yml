@@ -873,7 +873,7 @@ fr:
       published: "Publié"
       ready_to_publish: "Prêt à publier"
       publish_after_configuration: "Vous pouvez publier après avoir configuré au moins un tour sur chaque catégorie"
-      next_transfers: "Prochains virements"
+      next_transfers: "Paiements"
       registration_fees_sum: "Somme des frais d'inscription"
       no_registrations: "Aucune inscription pour le moment"
       amount: "Montant"
@@ -964,6 +964,7 @@ fr:
     not_available_abbr: "Indisponible"
     rounds: "tours"
     actions:
+      to_start: "pour commencer"
       view_with_correct_format: "Voir avec le format correct"
       clear: "Effacer"
       search: "Rechercher"

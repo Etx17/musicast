@@ -12,12 +12,12 @@ class ToursController < ApplicationController
     authorize @tour
     @performances = @tour.performances
     @room = Room.build
-    @tour.generate_initial_performance_order if @performances.any? { |p| p.order.nil? }
-
+    @tour.generate_initial_performance_order if @tour.performances.any? { |p| p.order.nil? && p.inscription.accepted? }
     @ordered_performances_accepted = @tour.performances
                                       .joins(:inscription)
                                       .where(inscriptions: { status: 'accepted' })
                                       .order(:order)
+
   end
 
   def edit;
@@ -62,7 +62,6 @@ class ToursController < ApplicationController
           @tour.performances.update_all(start_time: nil)
           @tour.candidate_rehearsals.destroy_all
         end
-
         @tour.generate_performance_schedule
         redirect_to organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour), notice: "Tour schedule has been updated." and return
       elsif params[:tour][:is_finished] == "true"
@@ -363,9 +362,12 @@ class ToursController < ApplicationController
 
   def download_schedule_pdf
     # @tour is set by before_action :set_tour
-    @performances = @tour.performances.order(:start_date, :start_time)
+    @performances_accepted = @tour.performances
+    .joins(:inscription)
+    .where(inscriptions: { status: 'accepted' })
+    .order(:start_date, :start_time)
     @pauses = @tour.pauses.order(:date, :start_time)
-    all_items = (@performances.to_a + @pauses.to_a)
+    all_items = (@performances_accepted.to_a + @pauses.to_a)
 
     grouped_by_day = all_items.group_by { |item| item.respond_to?(:start_date) ? item.start_date : item.date }
 

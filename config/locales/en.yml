@@ -897,7 +897,7 @@ en:
       published: "Published"
       ready_to_publish: "Ready to publish"
       publish_after_configuration: "You can publish after configuring at least one round for each category"
-      next_transfers: "Next transfers"
+      next_transfers: "Payments"
       registration_fees_sum: "Sum of registration fees"
       no_registrations: "No registrations yet"
       amount: "Amount"
@@ -1031,6 +1031,7 @@ en:
       tuba: "Tuba"
       violin: "Violin"
     actions:
+      to_start: "to start"
       view_with_correct_format: "View with correct format"
       clear: "Clear"
       all: "All"

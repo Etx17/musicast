@@ -41,8 +41,7 @@
         <i class="fas fa-envelope text-secondary  "></i> Envoyer un mail aux candidats non qualifiés
       <% end %>
     </div>
-
-    <% @tour.performances.where(is_qualified: false).order(:order).each do |performance| %>
+    <% @ordered_performances_accepted.where(is_qualified: false).order(:order).each do |performance| %>
       <div class="d-flex justify-content-between align-items-center p-1 bg-light-grey w-100 mt-1 ">
         <div class="d-flex align-items-center">
         <%= image_tag performance.candidat.portrait_or_default, alt: "Photo of candidate", class: "rounded-circle", style: "object-fit: cover; aspect-ratio: 1 / 1; overflow: hidden;", loading: 'lazy', width: 50, height: 50 %>
@@ -68,13 +67,13 @@
 
   <div class="col bg-grey">
     <div class="d-flex flex-column align-items-center">
-    <h2 class="text-center py-2">Qualifiés ( <%= @tour.performances.where(is_qualified: true).count %> )</h2>
+    <h2 class="text-center py-2">Qualifiés ( <%= @ordered_performances_accepted.where(is_qualified: true).count %> )</h2>
 
-      <%= mail_to @tour.performances.where(is_qualified: true).map { |performance| performance.inscription.candidat.user.email }.join(','), class: 'btn btn-primary mb-3 shadow-sm rounded-8' do %>
+      <%= mail_to @ordered_performances_accepted.where(is_qualified: true).map { |performance| performance.inscription.candidat.user.email }.join(','), class: 'btn btn-primary mb-3 shadow-sm rounded-8' do %>
         <i class="fas fa-envelope text-secondary  "></i> Envoyer un mail aux qualifiés
       <% end %>
     </div>
-    <% @tour.performances.where(is_qualified: true).each do |performance| %>
+    <% @ordered_performances_accepted.where(is_qualified: true).each do |performance| %>
       <div class="d-flex justify-content-between align-items-center p-1 bg-light-grey w-100 mt-2">
         <div class="d-flex align-items-center">
         <%= image_tag performance.candidat.portrait_or_default, alt: "Photo of candidate", class: "rounded-circle", style: "object-fit: cover; aspect-ratio: 1 / 1; overflow: hidden;", loading: 'lazy', width: 50, height: 50 %>

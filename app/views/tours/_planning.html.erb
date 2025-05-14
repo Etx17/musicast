@@ -11,7 +11,7 @@
         </button>
 
         <%# Email Candidates Button %>
-        <% email_list = @performances.map { |p| p.candidat.user.email }.join(',') %>
+        <% email_list = @ordered_performances_accepted.map { |p| p.candidat.user.email }.join(',') %>
         <a href="mailto:<%= email_list %>?subject=<%= t('tours.planning.email_subject') %>&body=<%= t('tours.planning.email_body') %>" class="btn btn-primary btn-md">
           <i class="fas fa-envelope me-2"></i>
           <span><%= t('tours.planning.send_email_to_all_candidates') %></span>
@@ -109,8 +109,8 @@
             </tr>
           </thead>
           <tbody>
-            <% unless @tour.performances.any?{|p| p.start_time.nil?} %>
-              <% items = (@tour.performances.to_a + @tour.pauses.to_a).select { |item|
+            <% unless @ordered_performances_accepted.any?{|p| p.start_time.nil?} %>
+              <% items = (@ordered_performances_accepted.to_a + @tour.pauses.to_a).select { |item|
                 (item.is_a?(Performance) && item.start_date == day) ||
                 (item.is_a?(Pause) && item.date == day)
               }.sort_by { |item| item.start_time.strftime('%H:%M') } %>

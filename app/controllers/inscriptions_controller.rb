@@ -188,6 +188,8 @@ class InscriptionsController < ApplicationController
       category_first_tour = @inscription.category.tours.order(:tour_number).first
       performance = Performance.find_or_create_by(tour: category_first_tour, inscription: @inscription)
       total_air_selection = performance.air_selection + (category_first_tour.imposed_air_selection || [])
+
+      # Il y avait déja des order sur les perf quand j'ai raise
       performance.update(air_selection: total_air_selection, order: category_first_tour.performances.where.not(order: nil).count + 1)
     end
 

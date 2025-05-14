@@ -14,9 +14,9 @@ class Tour < ApplicationRecord
   validates :title, :description, :start_date, :final_performance_submission_deadline, presence: true
   validates :title, uniqueness: { scope: :category_id, message: "should be unique per category" }
   validates :max_end_of_day_time, :new_day_start_time, presence: true, if: :creating_schedule
-  validates :max_end_of_day_time, :comparison => { :greater_than => :new_day_start_time, message: "Doit finir après le début " }, if: :creating_schedule
-  validates :max_end_of_day_time, :comparison => { :greater_than => :start_time, message: "Doit finir après le début " }, if: :creating_schedule
-  validates :new_day_start_time, :comparison => { :less_than => :max_end_of_day_time, message: "Doit commencer avant la fin " }, if: :creating_schedule
+  # validates :max_end_of_day_time, :comparison => { :greater_than => :new_day_start_time, message: "Doit finir après le début " }, if: :creating_schedule
+  # validates :max_end_of_day_time, :comparison => { :greater_than => :start_time, message: "Doit finir après le début " }, if: :creating_schedule
+  # validates :new_day_start_time, :comparison => { :less_than => :max_end_of_day_time, message: "Doit commencer avant la fin " }, if: :creating_schedule
   validates :title, length: { maximum: 50 }
   validates :description, length: { maximum: 500 }
   validates :final_performance_submission_deadline, comparison: { less_than: :start_date, message: "must be before the start date" }
@@ -44,10 +44,11 @@ class Tour < ApplicationRecord
 
   def move_qualified_candidates_to_next_tour
 
-    tour_next= self.next_tour
+    tour_next = self.next_tour
     return if tour_next == self || tour_next.nil?
-
-    performances.each_with_index do |performance, index|
+    # On filtre déja par les performances dont les inscriptions sont acceptées.
+    performances.joins(:inscription).where(inscriptions: { status: 'accepted' }).each_with_index do |performance, index|
+      # On bouge que les performances qui ont été qualifiées.
       if performance.is_qualified
           next_tour_perf = Performance.find_or_create_by(tour: tour_next, inscription: performance.inscription)
           total_air_selection = performance.air_selection + next_tour.imposed_air_selection
@@ -198,9 +199,7 @@ class Tour < ApplicationRecord
     performances = self.performances.order(:order)
     current_start_time = start_time
     current_start_date = start_date
-
     raise "empty durations"if performances.any?{|p| p.air_selection.any?{|air| air.blank?}}
-
     performances.each do |performance|
       # Si la performance actuelle n'a pas renseignée sa durée, lui assigner le temps max du tour.
       next_performance_end_time = current_start_time + performance.minutes.minutes
