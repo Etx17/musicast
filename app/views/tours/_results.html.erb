@@ -35,10 +35,10 @@
 
   <div class="col bg-grey ">
     <div class="d-flex flex-column align-items-center">
-      <h2 class="text-center py-2">Candidats</h2>
+      <h2 class="text-center py-2"><%= t('tours.results.candidates_title') %></h2>
 
       <%= mail_to @tour.performances.where(is_qualified: false).map { |performance| performance.inscription.candidat.user.email }.join(','), class: 'btn btn-primary mb-3 shadow-sm rounded-8' do %>
-        <i class="fas fa-envelope text-secondary  "></i> Envoyer un mail aux candidats non qualifiés
+        <i class="fas fa-envelope text-secondary  "></i> <%= t('tours.results.email_not_qualified') %>
       <% end %>
     </div>
     <% @ordered_performances_accepted.where(is_qualified: false).order(:order).each do |performance| %>
@@ -47,15 +47,15 @@
         <%= image_tag performance.candidat.portrait_or_default, alt: "Photo of candidate", class: "rounded-circle", style: "object-fit: cover; aspect-ratio: 1 / 1; overflow: hidden;", loading: 'lazy', width: 50, height: 50 %>
           <div class="d-flex flex-column align-items-start ps-3">
             <p class="mb-0"> <%= link_to performance.candidat.full_name, inscription_path(performance.inscription) %></p>
-            <p class="mb-0">Ordre: <%= performance.order %></p>
+            <p class="mb-0"><%= t('tours.results.order') %>: <%= performance.order %></p>
           </div>
         </div>
           <% if @tour.is_finished %>
             <%= mail_to performance.candidat.user.email, class: 'btn btn-light text-dark shadow-sm' do %>
-              <i class="fas fa-envelope text-secondary"></i> Mail personnalisé
+              <i class="fas fa-envelope text-secondary"></i> <%= t('tours.results.personalized_email') %>
             <% end %>
           <% else %>
-            <%= button_to 'Qualifier', qualify_performance_organism_competition_edition_competition_category_tour_path(
+            <%= button_to t('tours.results.qualify'), qualify_performance_organism_competition_edition_competition_category_tour_path(
               @organism, @competition, @edition_competition, @category, @tour, performance_id: performance.id
             ), method: :put, class: 'btn btn-primary ml-auto rounded-4' %>
           <% end %>
@@ -67,10 +67,10 @@
 
   <div class="col bg-grey">
     <div class="d-flex flex-column align-items-center">
-    <h2 class="text-center py-2">Qualifiés ( <%= @ordered_performances_accepted.where(is_qualified: true).count %> )</h2>
+    <h2 class="text-center py-2"><%= t('tours.results.qualified_title', count: @ordered_performances_accepted.where(is_qualified: true).count) %></h2>
 
       <%= mail_to @ordered_performances_accepted.where(is_qualified: true).map { |performance| performance.inscription.candidat.user.email }.join(','), class: 'btn btn-primary mb-3 shadow-sm rounded-8' do %>
-        <i class="fas fa-envelope text-secondary  "></i> Envoyer un mail aux qualifiés
+        <i class="fas fa-envelope text-secondary  "></i> <%= t('tours.results.email_qualified') %>
       <% end %>
     </div>
     <% @ordered_performances_accepted.where(is_qualified: true).each do |performance| %>
@@ -79,15 +79,15 @@
         <%= image_tag performance.candidat.portrait_or_default, alt: "Photo of candidate", class: "rounded-circle", style: "object-fit: cover; aspect-ratio: 1 / 1; overflow: hidden;", loading: 'lazy', width: 50, height: 50 %>
           <div class="d-flex flex-column align-items-start ps-3">
             <p class="mb-0"><%= link_to performance.candidat.full_name, inscription_path(performance.inscription), target: '_blank', rel: "noopener" %></p>
-            <p class="mb-0">Ordre: <%= performance.order %></p>
+            <p class="mb-0"><%= t('tours.results.order') %>: <%= performance.order %></p>
           </div>
         </div>
         <% if @tour.is_finished %>
           <%= mail_to performance.candidat.user.email, class: 'btn btn-light text-dark shadow-sm' do %>
-            <i class="fas fa-envelope text-secondary"></i> Envoyer un mail personnalisé
+            <i class="fas fa-envelope text-secondary"></i> <%= t('tours.results.personalized_email') %>
           <% end %>
         <% else %>
-          <%= button_to 'Annuler la qualification', qualify_performance_organism_competition_edition_competition_category_tour_path(
+          <%= button_to t('tours.results.cancel_qualification'), qualify_performance_organism_competition_edition_competition_category_tour_path(
             @organism, @competition, @edition_competition, @category, @tour, performance_id: performance.id
           ), method: :put, class: 'btn btn-outline-warning ml-auto rounded-4'  unless @tour.is_finished %>
         <% end %>

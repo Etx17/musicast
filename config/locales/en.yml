@@ -1822,6 +1822,13 @@ en:
       see_more: "see more"
       tour_finished: "The tour is finished"
       candidates_have_been_notified: "Candidates have been notified of the results."
+      candidates_title: "Candidates"
+      email_not_qualified: "Email non-qualified candidates"
+      personalized_email: "Personalized email"
+      qualify: "Qualify"
+      qualified_title: "Qualified (%{count})"
+      email_qualified: "Email qualified candidates"
+      cancel_qualification: "Cancel qualification"
     tour_configuration_form:
       start_time: "Start time"
       start_time_hint: "Indicate the start time of the tour."
