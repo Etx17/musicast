@@ -242,7 +242,7 @@ class Tour < ApplicationRecord
   end
 
   def days_of_performances
-    days = performances.map(&:start_date).uniq || []
+    days = performances.where(is_qualified_for_current_tour: true).map(&:start_date).uniq || []
     days.reject(&:blank?).sort
   end
 
