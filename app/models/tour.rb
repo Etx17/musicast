@@ -123,7 +123,7 @@ class Tour < ApplicationRecord
   end
 
   def pianist_accompagnateurs
-    performances.map(&:pianist_accompagnateur).uniq
+    performances.map(&:pianist_accompagnateur).uniq.compact
   end
 
   def generate_solo_warmup_schedule

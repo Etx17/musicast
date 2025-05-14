@@ -1802,6 +1802,8 @@ fr:
       qualified_title: "Qualifiés (%{count})"
       email_qualified: "Envoyer un mail aux qualifiés"
       cancel_qualification: "Annuler la qualification"
+      qualification_success: "Statut de qualification de la performance mis à jour avec succès."
+      qualification_error: "Erreur lors de la mise à jour du statut de qualification."
     candidate: "Candidat"
     order: "Ordre"
     presented_airs: "Airs présentés"

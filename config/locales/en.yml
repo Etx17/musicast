@@ -1829,6 +1829,8 @@ en:
       qualified_title: "Qualified (%{count})"
       email_qualified: "Email qualified candidates"
       cancel_qualification: "Cancel qualification"
+      qualification_success: "Performance qualification status updated successfully."
+      qualification_error: "Error updating performance qualification status."
     tour_configuration_form:
       start_time: "Start time"
       start_time_hint: "Indicate the start time of the tour."

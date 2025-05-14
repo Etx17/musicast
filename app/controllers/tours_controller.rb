@@ -182,8 +182,32 @@ class ToursController < ApplicationController
 
   def qualify_performance
     performance = Performance.find(params[:performance_id])
+
+    # Assure-toi de préserver la locale explicitement
+    current_locale = I18n.locale
+
     if performance.update(is_qualified: !performance.is_qualified)
-      redirect_to [@organism, @competition, @edition_competition, @category, @tour], notice: "Performance qualified successfully."
+      # Force la préservation de la locale en session
+      session[:locale] = current_locale
+      # Et l'utilise explicitement dans la redirection
+      redirect_to organism_competition_edition_competition_category_tour_path(
+        @organism.slug,
+        @competition.slug,
+        @edition_competition.id,
+        @category.slug,
+        @tour.id,
+        locale: current_locale
+      ), notice: t('tours.results.qualification_success')
+    else
+      session[:locale] = current_locale
+      redirect_to organism_competition_edition_competition_category_tour_path(
+        @organism.slug,
+        @competition.slug,
+        @edition_competition.id,
+        @category.slug,
+        @tour.id,
+        locale: current_locale
+      ), notice: t('tours.results.qualification_error')
     end
   end
 
