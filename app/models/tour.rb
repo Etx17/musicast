@@ -220,7 +220,6 @@ class Tour < ApplicationRecord
     else
       performances = self.performances.where(is_qualified_for_current_tour: true).order(:order)
     end
-
     current_start_time = start_time
     current_start_date = start_date
     raise "empty durations"if performances.any?{|p| p.air_selection.any?{|air| air.blank?}}
