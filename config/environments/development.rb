@@ -9,8 +9,8 @@ Rails.application.configure do
     address:              'smtp-relay.brevo.com',
     port:                 587,
     domain:               'localhost:3000',
-    user_name:            '8d1d1e001@smtp-brevo.com',
-    password:             '6RErfU3cLPDpJyka',
+    user_name:            Rails.application.credentials.brevo.user_name,
+    password:             Rails.application.credentials.brevo.password,
     authentication:       :plain,
     enable_starttls_auto: true
   }
