@@ -871,8 +871,8 @@ en:
       country: "Country"
       specific_details_placeholder: "Specify the new terms of this edition if necessary (original language)"
       specific_details_placeholder_english: "Specify the new terms of this edition if necessary (English)"
-      competition_rules: "Competition rules (PDF, PNG, JPG)"
-      competition_rules_english: "Competition rules in English (PDF, PNG, JPG)"
+      competition_rules: "Competition rules (PDF)"
+      competition_rules_english: "Competition rules in English (PDF)"
       save: "Save"
 
     candidate_edition_competition:
