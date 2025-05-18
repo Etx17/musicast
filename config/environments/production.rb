@@ -4,7 +4,6 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: "TO CHANGE" }
   # Settings specified here will take precedence over those in config/application.rb.
 
-  # config.action_mailer.delivery_method = :letter_opener
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     address:              'smtp-relay.brevo.com',
