@@ -468,6 +468,7 @@ en:
       description: "Description"
       description_english: "Description (English)"
       allow_own_pianist: "Allow candidates to bring their own accompanying pianist"
+      allow_own_pianist_hint: "If your competition requires an accompanying pianist for one or more of its rounds, you can allow candidates to bring their own accompanying pianist."
       registration_fee: "Registration Fee (in %{currency})"
       payment_after_approval: "Payment after approval"
       enter_price_in_euros: "Enter price in euros"

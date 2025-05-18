@@ -501,6 +501,7 @@ fr:
       description: "Description"
       description_english: "Description (Anglais)"
       allow_own_pianist: "Autoriser les candidats à apporter leur pianiste accompagnateur"
+      allow_own_pianist_hint: "Si votre concours requiert un pianiste accompagnateur pour un ou plusieurs de ses tours, vous pouvez autoriser les candidats à apporter leur pianiste accompagnateur."
       registration_fee: "Frais d'inscription (en %{currency})"
       enter_price_in_euros: "Entrez le prix en euros"
       payment_after_approval: "Paiement après approbation "
