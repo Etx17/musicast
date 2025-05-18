@@ -17,7 +17,7 @@ class PagesController < ApplicationController
   end
 
   def home
-    redirect_to jury_dashboard_path if user_signed_in? && current_user.jury.present?
+    redirect_to jury_dashboard_path if user_signed_in? && current_user.jury.present? && !current_user.candidat.present?
     # change the params country "France" to it's short country code equivalent if there is a params country. Then make it session
     if params[:country].present?
       country = ISO3166::Country.all.find { |c| c.iso_short_name == params[:country] }

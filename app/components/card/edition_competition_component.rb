@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Card::EditionCompetitionComponent < ViewComponent::Base
-  def initialize(edition_competition:, height: 570, image: nil, has_shadow: false, links: nil, redirect: nil, bottom_left_label: nil, bottom_button_links: [], ratio: "350/235", top_left_pill: nil, bottom_left_pill: nil, image_style: nil, highlight_card: false)
+  def initialize(edition_competition:, height: 582, image: nil, has_shadow: false, links: nil, redirect: nil, bottom_left_label: nil, bottom_button_links: [], ratio: "350/235", top_left_pill: nil, bottom_left_pill: nil, image_style: nil, highlight_card: false)
     @edition_competition = edition_competition
     @height = height
     @image = image

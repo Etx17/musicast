@@ -19,7 +19,7 @@
 
     <span class=" text-secondary "><i class="fi fi-rs-calendar-day text-dark me-2"></i><%= t('pages.edition_competition_card.from') %> <span class="text-dark" style="font-size: 1.2em"><strong><%= l(@edition_competition.start_date, format: :short_month_day) %></strong></span> <%= t('pages.edition_competition_card.to') %> <span style="font-size: 1.2em" class="text-dark "><strong><%= l(@edition_competition.end_date, format: :long) %></strong></span></span>
 
-    <small class="text-secondary my-2">CATEGORIES (<%= @edition_competition.categories.count %>)</small>
+    <small class="text-secondary mt-2">CATEGORIES (<%= @edition_competition.categories.count %>)</small>
     <% if @edition_competition.categories.count > 1 %>
       <div class="d-flex flex-wrap overflow-scroll gap-2" style="height: 60px">
         <% @edition_competition.categories.each do |category| %>
