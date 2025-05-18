@@ -53,6 +53,13 @@ class ApplicationController < ActionController::Base
 
   end
 
+  def require_admin
+    unless current_user && current_user.admin
+      flash[:alert] = "Stop it. I see you. You cannot access this page"
+      redirect_to root_path
+    end
+  end
+
   private
 
   def user_not_authorized
@@ -72,4 +79,5 @@ class ApplicationController < ActionController::Base
   def default_url_options
     { locale: session[:locale] || I18n.locale }
   end
+
 end

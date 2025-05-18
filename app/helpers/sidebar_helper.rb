@@ -8,7 +8,7 @@ module SidebarHelper
 
         # Add admin organism management link
         links << { label: content_tag(:i, '', class: 'fas fa-building pe-2') + "Gestion des organismes", url: admin_dashboard_path() }
-
+        links << { label: content_tag(:i, '', class: 'fas fa-trophy pe-2') + "Gestion des éditions de compétitions", url: admin_edition_competitions_path() }
 
       elsif current_user.candidat.present?
         links << { label: content_tag(:i, '', class: 'fis fi-rs-home pe-2') + I18n.t('sidebar.home'), url: candidat_dashboard_path() }

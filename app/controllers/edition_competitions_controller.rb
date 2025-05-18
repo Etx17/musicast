@@ -1,6 +1,7 @@
 class EditionCompetitionsController < ApplicationController
   before_action :set_organism_and_competition, only: %i[remove_document show new edit create update destroy]
   before_action :set_edition_competition, only: %i[remove_document show edit update destroy]
+  before_action :require_admin, only: %i[index]
 
   def index
     @edition_competitions = EditionCompetition.all
@@ -95,4 +96,6 @@ class EditionCompetitionsController < ApplicationController
       documents_attributes: %i[file file_url document_type]
     )
   end
+
+
 end

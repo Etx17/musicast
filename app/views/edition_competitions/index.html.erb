@@ -1,14 +1,25 @@
-<p style="color: green"><%= notice %></p>
-
-<h1><%= t('edition_competitions.index.title') %></h1>
-
-<div id="edition_competitions">
-  <% @edition_competitions.each do |edition_competition| %>
-    <%= render edition_competition %>
-    <p>
-      <%= link_to t('edition_competitions.index.show'), edition_competition %>
-    </p>
-  <% end %>
-</div>
-
-<%= link_to t('edition_competitions.index.new'), new_edition_competition_path %>
+<%= render Table::BaseComponent.new(
+  rows: @edition_competitions,
+  columns: [
+    {
+      label: "Organisme",
+      value: ->(edition_competition) { edition_competition.competition.organism.nom }
+    },
+    {
+      label: "Nom de la compétition",
+      value: ->(edition_competition) { edition_competition.competition.nom_concours }
+    },
+    {
+      label: "Organisateur",
+      value: ->(edition_competition) { edition_competition.competition.organisateur.user.name_and_email.split(' - ').first }
+    },
+    {
+      label: "Statut",
+      value: ->(edition_competition) { edition_competition.status }
+    }
+  ],
+  client: nil,
+  links: [
+  ],
+  empty_message: "Aucune édition de compétition trouvée"
+) %>

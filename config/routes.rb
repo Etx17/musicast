@@ -14,7 +14,7 @@ Rails.application.routes.draw do
     # Admin routes
     get 'admin_dashboard', to: 'pages#admin_dashboard'
     post 'admin_create_organism_user', to: 'pages#admin_create_organism_user'
-
+    get 'admin_edition_competitions', to: 'edition_competitions#index', as: 'admin_edition_competitions'
     # Candidate rehearsals routes
     resources :candidate_rehearsals, only: [] do
       member do
@@ -66,7 +66,7 @@ Rails.application.routes.draw do
       resources :organism_juries, only: [:new, :create, :destroy]
       resources :pianist_accompagnateurs
       resources :competitions do
-        resources :edition_competitions do
+        resources :edition_competitions, except: [:index] do
           delete :remove_document, on: :member
           resources :categories do
             member do
