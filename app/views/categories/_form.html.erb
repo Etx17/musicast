@@ -79,42 +79,42 @@
           </div>
         </div>
       </div>
+    <% if false %>
+      <div class="mt-4">
+        <h5><%= t('categories.form.program_configuration') %></h5>
 
-    <div class="mt-4">
-      <h5><%= t('categories.form.program_configuration') %></h5>
-
-      <div class="form-group mb-3">
-        <div class="d-flex align-items-center">
-          <%= f.input :includes_choice_imposed_works,
-                      as: :boolean,
-                      label: t('categories.form.include_choices_in_list'),
-                      wrapper_html: { class: "form-check form-switch" },
-                      input_html: { class: "form-check-input", role: "switch" },
-                      hint: t('categories.form.include_choices_hint') %>
+        <div class="form-group mb-3">
+          <div class="d-flex align-items-center">
+            <%= f.input :includes_choice_imposed_works,
+                        as: :boolean,
+                        label: t('categories.form.include_choices_in_list'),
+                        wrapper_html: { class: "form-check form-switch" },
+                        input_html: { class: "form-check-input", role: "switch" },
+                        hint: t('categories.form.include_choices_hint') %>
+          </div>
+        </div>
+        <div class="form-group mb-3">
+          <div class="d-flex align-items-center">
+            <%= f.input :includes_semi_imposed_works,
+                        as: :boolean,
+                        label: t('categories.form.include_semi_imposed_works'),
+                        wrapper_html: { class: "form-check form-switch" },
+                        input_html: { class: "form-check-input", role: "switch" },
+                        hint: t('categories.form.include_semi_imposed_hint') %>
+          </div>
+        </div>
+        <div class="form-group mb-3">
+          <div class="d-flex align-items-center">
+            <%= f.input :includes_imposed_works,
+                        as: :boolean,
+                        label: t('categories.form.include_imposed_works'),
+                        wrapper_html: { class: "form-check form-switch" },
+                        input_html: { class: "form-check-input", role: "switch" },
+                        hint: t('categories.form.include_imposed_hint') %>
+          </div>
         </div>
       </div>
-      <div class="form-group mb-3">
-        <div class="d-flex align-items-center">
-          <%= f.input :includes_semi_imposed_works,
-                      as: :boolean,
-                      label: t('categories.form.include_semi_imposed_works'),
-                      wrapper_html: { class: "form-check form-switch" },
-                      input_html: { class: "form-check-input", role: "switch" },
-                      hint: t('categories.form.include_semi_imposed_hint') %>
-        </div>
-      </div>
-      <div class="form-group mb-3">
-        <div class="d-flex align-items-center">
-          <%= f.input :includes_imposed_works,
-                      as: :boolean,
-                      label: t('categories.form.include_imposed_works'),
-                      wrapper_html: { class: "form-check form-switch" },
-                      input_html: { class: "form-check-input", role: "switch" },
-                      hint: t('categories.form.include_imposed_hint') %>
-        </div>
-      </div>
-    </div>
-
+    <% end %>
     </div>
 
 

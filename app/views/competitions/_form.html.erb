@@ -22,7 +22,7 @@
         <div data-controller="image-preview" data-image-preview-url="<%= @competition.photo.attached? ? url_for(@competition.photo) : '' %>">
           <%= f.input :photo, as: :file, input_html: { data: { image_preview_target: "input" } }, label: t('competitions.form.banner_label') %>
           <div class="w-100" style="height: 150px; background: #f8f9fa; max-width: 500px;">
-            <div data-image-preview-target="preview" class="h-100 w-100" style="background-size: contain; display: none;"></div>
+            <div data-image-preview-target="preview" class="h-100 w-100" style="background-size: cover; display: none;"></div>
             <div data-image-preview-target="placeholder" class="text-center p-5"><%= t('competitions.form.no_image') %></div>
           </div>
         </div>
