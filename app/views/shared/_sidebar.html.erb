@@ -9,8 +9,8 @@
     <% if current_user.present? %>
       <div class="dropdown">
         <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-          <% if current_user.inscription_role == "organiser" %>
-            <%= image_tag current_user.organisateur.organism.logo_or_default, class: "rounded-circle border border-light", style: "width: 66px; height: 66px; object-fit: contain; background-color: white;" %>
+          <% if current_user.inscription_role == "organiser" && current_user.organisateur.organism.present? %>
+            <%= image_tag current_user.organisateur.organism&.logo_or_default, class: "rounded-circle border border-light", style: "width: 66px; height: 66px; object-fit: contain; background-color: white;" %>
           <% elsif current_user.inscription_role == "candidate" %>
             <%= image_tag current_user.candidat.portrait_or_default, class: "rounded-circle border border-light", style: "width: 66px; height: 66px; object-fit: cover;" %>
            <% elsif current_user.jury.present? %>
@@ -29,7 +29,7 @@
           <% end %>
         </ul>
       </div>
-      <% if current_user&.inscription_role == "organiser" %>
+      <% if current_user&.inscription_role == "organiser" && current_user.organisateur.organism.present? %>
         <%= link_to edit_organism_path(current_user.organisateur.organism), class: "text-decoration-none mt-2" do %>
           <span class="text-center mt-3 text-white"><%= current_user.organisateur&.organism&.nom %></span>
         <% end %>

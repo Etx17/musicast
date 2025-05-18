@@ -25,21 +25,14 @@ class PagesController < ApplicationController
   def admin_create_organism_user
     @user = User.new(
       email: params[:email],
-      password: params[:password],
-      password_confirmation: params[:password],
+      password: "password",
+      password_confirmation: "password",
       inscription_role: 'organiser',
-      accepted_terms: params[:accepted_terms]
+      accepted_terms: params[:accepted_terms],
     )
 
     if @user.save
-      # Create organism for the new organiser
-      if @user.organisateur && params[:organism_name].present?
-        organism = Organism.new(name: params[:organism_name])
-        organism.organisateur = @user.organisateur
-        organism.save
-      end
-
-      flash[:notice] = "Organism user created successfully"
+      flash[:notice] = "Organisateur user created successfully"
       redirect_to admin_dashboard_path
     else
       flash[:alert] = "Failed to create user: #{@user.errors.full_messages.join(', ')}"

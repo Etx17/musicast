@@ -8,7 +8,7 @@ class User < ApplicationRecord
 
   TERMS_VERSION = 1
 
-  has_one :organiser
+  has_one :organisateur
   has_one :partner
   has_one :jury
   has_one :candidat
@@ -70,6 +70,10 @@ class User < ApplicationRecord
     Organisateur.find_by(user: self)
   end
 
+  def organism
+    Organism.find_by(organisateur: organisateur)
+  end
+
   def candidat
     Candidat.find_by(user: self)
   end
@@ -89,7 +93,7 @@ class User < ApplicationRecord
   def first_name
     case inscription_role
     when "organiser"
-      organisateur&.first_name || "Mr. Organisateur"
+      organisateur&.nom_organisme || "Mr. Organisateur"
     when "candidate"
       candidat&.first_name || "Mr. Candidat"
     when "jury"
