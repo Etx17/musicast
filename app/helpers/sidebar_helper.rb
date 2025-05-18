@@ -3,7 +3,14 @@ module SidebarHelper
     links = []
 
     if user_signed_in?
-      if current_user.candidat.present?
+      if current_user.admin
+        links << { label: content_tag(:i, '', class: 'fas fa-tachometer-alt pe-2') + "Tableau de bord admin", url: admin_dashboard_path() }
+
+        # Add admin organism management link
+        links << { label: content_tag(:i, '', class: 'fas fa-building pe-2') + "Gestion des organismes", url: admin_dashboard_path() }
+
+
+      elsif current_user.candidat.present?
         links << { label: content_tag(:i, '', class: 'fis fi-rs-home pe-2') + I18n.t('sidebar.home'), url: candidat_dashboard_path() }
         links << { label: content_tag(:i, '', class: 'fis fi-rs-user pe-2') + I18n.t('sidebar.profile'), url: candidat_path(current_user.candidat) }
         user_inscriptions = current_user.candidat.inscriptions.includes(:category)
@@ -90,61 +97,14 @@ module SidebarHelper
         end
 
 
-      elsif current_user.admin?
-        links << { label: content_tag(:i, '', class: 'fas fa-tachometer-alt pe-2') + I18n.t('sidebar.admin_dashboard'), url: admin_dashboard_path() }
 
-        # Add admin categories section
-        admin_categories = Category.all.includes(:edition_competition)
-        if admin_categories.present?
-          admin_categories_link = {
-            label: content_tag(:i, '', class: 'fas fa-list pe-2') + I18n.t('sidebar.categories'),
-            url: admin_categories_path(),
-            collapsible: true,
-            collapsed: false,
-            children: []
-          }
-
-          admin_categories.each do |category|
-            category_link = {
-              label: content_tag(:i, '', class: 'fi fi-rs-music-alt pe-2') + "#{category.name}",
-              url: admin_category_path(category),
-              collapsible: true,
-              collapsed: false,
-              children: []
-            }
-
-            # Add category actions for admin
-            category_link[:children] << {
-              label: content_tag(:i, '', class: 'fas fa-users pe-2') + I18n.t('sidebar.candidates_list'),
-              url: admin_category_candidates_path(category)
-            }
-
-            category_link[:children] << {
-              label: content_tag(:i, '', class: 'fas fa-clipboard-list pe-2') + I18n.t('sidebar.inscriptions'),
-              url: admin_category_inscriptions_path(category)
-            }
-
-            # Add rounds (tours) if they exist
-            category.tours.each do |round|
-              category_link[:children] << {
-                label: content_tag(:i, '', class: 'fas fa-medal pe-2') + "#{round.title}",
-                url: admin_category_tour_path(category, round)
-              }
-            end
-
-            admin_categories_link[:children] << category_link
-          end
-
-          links << admin_categories_link
-        end
-      end
       if current_user.jury
         links << { label: content_tag(:i, '', class: 'fas fa-user pe-2') + I18n.t('sidebar.profile_jury'), url: edit_jury_path(current_user.jury), dropdown: false }
         links << { label: content_tag(:i, '', class: 'fas fa-gavel pe-2') + I18n.t('sidebar.home_jury'), url: jury_dashboard_path(), dropdown: false }
       end
+      end
     else
       links << { label: content_tag(:i, '', class: 'fas fa-sign-in-alt pe-2') + I18n.t('sidebar.sign_in'), url: new_user_session_path() }
-      links << { label: content_tag(:i, '', class: 'fas fa-user-plus pe-2') + I18n.t('sidebar.sign_up'), url: new_user_registration_path() }
     end
 
     links

@@ -1,6 +1,8 @@
 require 'music_categories'
 class PagesController < ApplicationController
   # skip_before_action :authenticate_user!, only: [ :home ]
+  before_action :authenticate_user!, :require_admin, only: [:admin_dashboard, :admin_create_organism_user]
+
   def landing
   end
 
@@ -14,6 +16,35 @@ class PagesController < ApplicationController
   end
 
   def platform_terms
+  end
+
+  def admin_dashboard
+    @organisateurs = Organisateur.all
+  end
+
+  def admin_create_organism_user
+    @user = User.new(
+      email: params[:email],
+      password: params[:password],
+      password_confirmation: params[:password],
+      inscription_role: 'organiser',
+      accepted_terms: params[:accepted_terms]
+    )
+
+    if @user.save
+      # Create organism for the new organiser
+      if @user.organisateur && params[:organism_name].present?
+        organism = Organism.new(name: params[:organism_name])
+        organism.organisateur = @user.organisateur
+        organism.save
+      end
+
+      flash[:notice] = "Organism user created successfully"
+      redirect_to admin_dashboard_path
+    else
+      flash[:alert] = "Failed to create user: #{@user.errors.full_messages.join(', ')}"
+      redirect_to admin_dashboard_path
+    end
   end
 
   def home
@@ -46,5 +77,14 @@ class PagesController < ApplicationController
       .where('edition_competitions.start_date > ?', Time.now)
       .pluck('addresses.country')
       .uniq
+  end
+
+  private
+
+  def require_admin
+    unless current_user.admin
+      flash[:alert] = "You are not authorized to access this page."
+      redirect_to root_path
+    end
   end
 end

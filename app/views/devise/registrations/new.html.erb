@@ -12,10 +12,12 @@
           <%= f.error_notification %>
 
           <div class="form-inputs">
-            <%= f.input :inscription_role,
+            <% if false %>
+              <%= f.input :inscription_role,
                         label: t('devise.registrations.new.role'),
                         collection: User.inscription_roles.keys.reject { |role| %w[jury partner].include? role }.map { |role| [role.humanize, role] },
                         input_html: { class: "form-control mb-3" } %>
+            <% end %>
 
             <%= f.input :email,
                         required: true,

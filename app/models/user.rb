@@ -18,7 +18,7 @@ class User < ApplicationRecord
   has_many :inscription_orders
   has_many :documents
 
-  enum :inscription_role, { candidate: 0, organiser: 1, jury: 2, partner: 3 }
+  enum :inscription_role, { candidate: 0, organiser: 1, jury: 2, partner: 3, admin: 4 }
   validates :inscription_role, presence: true
   validates :accepted_terms, acceptance: { accept: true }
 
@@ -96,6 +96,8 @@ class User < ApplicationRecord
       jury&.first_name || "Utilisateur (prénom à modifier)"
     when "partner"
       partner&.first_name || "Utilisateur (prénom à modifier)"
+    when "admin"
+      "Admin"
     end
   end
 

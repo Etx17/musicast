@@ -1,3 +1,5 @@
+User.create(email: "hello@musikast.com", password: "password", password_confirmation: "password", inscription_role: "admin", admin: true)
+
 10.times do |n|
 
   u = User.create(email: "candidat#{n}@example.com", password: "password", password_confirmation: "password")
@@ -358,5 +360,5 @@ candidates.each do |candidate|
 end
 
 
-# load Rails.root.join('db', 'seed_concours_honneur.rb')
+load Rails.root.join('db', 'seed_concours_honneur.rb')
 load Rails.root.join('db', 'seed_concours_macon.rb')
