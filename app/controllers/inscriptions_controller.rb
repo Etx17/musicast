@@ -2,9 +2,7 @@ class InscriptionsController < ApplicationController
   before_action :set_inscription, only: %i[show edit update destroy]
 
   def index
-    if current_user.candidat
-      @inscriptions = Inscription.by_candidat(current_user.candidat.id)
-    elsif current_user.organisateur
+    if current_user.organisateur || current_user.admin
       if params[:category_id].present?
         @category = Category.friendly.find(params[:category_id])
         @tour = @category.tours.order(:tour_number).first
@@ -20,8 +18,7 @@ class InscriptionsController < ApplicationController
       end
     end
 
-    render :index if current_user.organisateur
-    render :candidate_index if current_user.candidat
+    render :index if current_user.organisateur || current_user.admin
   end
 
   def jury_index

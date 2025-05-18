@@ -15,6 +15,21 @@
       {
         label: "Statut",
         value: ->(category) { category.status }
+      },
+      {
+        label: "Inscriptions",
+        value: ->(category) {
+          link_to(
+            "Voir les inscriptions",
+            organism_competition_edition_competition_category_inscriptions_path(
+              category.edition_competition.competition.organism,
+              category.edition_competition.competition,
+              category.edition_competition,
+              category
+            ),
+            class: "btn btn-sm btn-info"
+          )
+        }
       }
     ],
     client: current_user,
