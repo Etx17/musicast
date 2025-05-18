@@ -89,9 +89,7 @@ module SidebarHelper
           end
         end
 
-      elsif current_user.jury
-        links << { label: content_tag(:i, '', class: 'fas fa-user pe-2') + I18n.t('sidebar.profile'), url: edit_jury_path(current_user.jury), dropdown: false }
-        links << { label: content_tag(:i, '', class: 'fas fa-gavel pe-2') + I18n.t('sidebar.home'), url: jury_dashboard_path(), dropdown: false }
+
       elsif current_user.admin?
         links << { label: content_tag(:i, '', class: 'fas fa-tachometer-alt pe-2') + I18n.t('sidebar.admin_dashboard'), url: admin_dashboard_path() }
 
@@ -139,6 +137,10 @@ module SidebarHelper
 
           links << admin_categories_link
         end
+      end
+      if current_user.jury
+        links << { label: content_tag(:i, '', class: 'fas fa-user pe-2') + I18n.t('sidebar.profile_jury'), url: edit_jury_path(current_user.jury), dropdown: false }
+        links << { label: content_tag(:i, '', class: 'fas fa-gavel pe-2') + I18n.t('sidebar.home_jury'), url: jury_dashboard_path(), dropdown: false }
       end
     else
       links << { label: content_tag(:i, '', class: 'fas fa-sign-in-alt pe-2') + I18n.t('sidebar.sign_in'), url: new_user_session_path() }

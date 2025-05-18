@@ -33,6 +33,8 @@ fr:
       html: "<span class='required'>*</span>"
   date:
     formats:
+      day_month: "%d %B"
+      day_month_year: "%d %B %Y"
       short_month_day: "%d %B"
     month_names: [nil, "Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"]
     abbr_month_names: [nil, "Janv", "Févr", "Mars", "Avr", "Mai", "Juin", "Juil", "Août", "Sept", "Oct", "Nov", "Déc"]
@@ -40,6 +42,10 @@ fr:
       - :year
       - :month
       - :day
+  time:
+    formats:
+      day_month: "%d %B"
+      day_month_year: "%d %B %Y"
   activerecord:
     models:
       competition: "Concours"
@@ -2105,6 +2111,8 @@ fr:
   sidebar:
     home: "Accueil"
     profile: "Profil"
+    profile_jury: "Profil (jury)"
+    home_jury: "Accueil (jury)"
     applications: "Candidatures"
     dashboard: "Tableau de bord"
     sign_in: "Connexion"

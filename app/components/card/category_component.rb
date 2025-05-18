@@ -21,6 +21,7 @@ class Card::CategoryComponent < ViewComponent::Base
     @discipline = category.discipline
     @prize_pool_total_amount = category.prize_pool_total_amount
     @biggest_prize_amount = category.biggest_prize_amount
+
   end
 
   def before_render
@@ -28,7 +29,10 @@ class Card::CategoryComponent < ViewComponent::Base
       @image = helpers.url_for(@photo)
     end
 
-
+    # @bottom_right_pill = {
+    #   label: "#{I18n.l(category.tours.first.start_date, format: :day_month)} - #{I18n.l(category.tours.last.start_date, format: :day_month_year)}",
+    #   class: "badge rounded-pill bg-light text-dark me-1"
+    # }
 
     price_text = @price_cents > 0 ?
       helpers.humanized_money_with_symbol(Money.new(@price_cents, @price_currency)) :
