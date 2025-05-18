@@ -4,7 +4,7 @@ class EditionCompetitionsController < ApplicationController
   before_action :require_admin, only: %i[index]
 
   def index
-    @edition_competitions = EditionCompetition.all
+    @edition_competitions = EditionCompetition.all.includes(competition: [:organism, :organisateur])
   end
 
   def show
@@ -97,5 +97,11 @@ class EditionCompetitionsController < ApplicationController
     )
   end
 
+  def require_admin
+    unless current_user && current_user.admin
+      flash[:alert] = "Vous n'êtes pas autorisé à accéder à cette page."
+      redirect_to root_path
+    end
+  end
 
 end

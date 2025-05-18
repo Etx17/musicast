@@ -5,7 +5,6 @@ class CategoriesController < ApplicationController
   before_action :set_category, only: %i[show edit update destroy]
   before_action :set_parent_resources, only: %i[show new edit create update destroy]
 
-  # GET /categories or /categories.json
   def index
     @categories = Category.all
   end
@@ -88,8 +87,6 @@ class CategoriesController < ApplicationController
     @inscriptions = Kaminari.paginate_array(inscriptions_query.to_a)
                            .page(params[:page]).per(30)
   end
-
-
 
   private
 

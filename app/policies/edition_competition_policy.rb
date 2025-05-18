@@ -27,6 +27,7 @@ class EditionCompetitionPolicy < ApplicationPolicy
   private
 
   def allowed_to_edit?
+    return true if user.admin
     if user.organisateur
       record.has_same_organisateur_as?(user.organisateur.id)
     else

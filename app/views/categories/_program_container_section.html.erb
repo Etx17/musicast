@@ -18,7 +18,7 @@
         <% if current_user.organisateur %>
           <%= render 'imposed_works_section', category: category %>
         <% else %>
-          <%= render 'imposed_works_section', category: category if category.imposed_work.any? %>
+          <%= render 'imposed_works_section', category: category if category.imposed_work.present? %>
         <% end %>
       </div>
 

@@ -1,34 +1,37 @@
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-md-12">
-      <div class="d-flex justify-content-between align-items-center mb-3">
-        <h1><%= t('categories.index.title') %></h1>
-        <div>
-          <%= link_to t('categories.index.new'), new_organism_competition_edition_competition_category_path, class: "btn btn-success" %>
-        </div>
-      </div>
+<div class="container mt-4">
+  <h1 class="mb-4">Liste des catégories</h1>
 
-      <div class="row">
-        <% @categories.each do |category| %>
-          <div class="col-md-4 mb-4">
-            <div class="card h-100">
-              <div class="card-body">
-                <h5 class="card-title"><%= category.name %></h5>
-                <p class="card-text"><%= category.description %></p>
-                <div class="d-flex justify-content-between">
-                  <span class="badge bg-primary"><%= category.discipline %></span>
-                  <span class="badge bg-secondary"><%= category.min_age %> - <%= category.max_age %> <%= t('categories.index.years') %></span>
-                </div>
-              </div>
-              <div class="card-footer">
-                <%= link_to t('categories.index.show'), organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, category), class: "btn btn-sm btn-outline-primary" %>
-                <%= link_to t('categories.index.edit'), edit_organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, category), class: "btn btn-sm btn-outline-secondary" %>
-                <%= button_to t('categories.index.delete'), organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, category), method: :delete, data: { confirm: t('categories.common.confirm_delete') }, class: "btn btn-sm btn-outline-danger" %>
-              </div>
-            </div>
-          </div>
-        <% end %>
-      </div>
-    </div>
-  </div>
+  <%= render Table::BaseComponent.new(
+    rows: @categories,
+    columns: [
+      {
+        label: "Nom de la catégorie",
+        value: ->(category) { category.name }
+      },
+      {
+        label: "Édition de compétition",
+        value: ->(category) { "#{category.edition_competition.competition.nom_concours} #{category.edition_competition.annee}" }
+      },
+      {
+        label: "Statut",
+        value: ->(category) { category.status }
+      }
+    ],
+    client: current_user,
+    links: [
+      {
+        path: ->(category) {
+          organism_competition_edition_competition_category_path(
+            category.edition_competition.competition.organism,
+            category.edition_competition.competition,
+            category.edition_competition,
+            category
+          )
+        },
+        icon: 'eye',
+        text: "Voir"
+      }
+    ],
+    empty_message: "Aucune catégorie trouvée"
+  ) %>
 </div>
