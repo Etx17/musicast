@@ -136,7 +136,6 @@
 
             <% if @category.hundred_points? %>
               <div class="col-12">
-                <h2><%= t('categories.show.sections.jury') %></h2>
                 <%= render "juries_section", category: @category %>
               </div>
             <% end %>

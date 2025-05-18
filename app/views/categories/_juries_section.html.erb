@@ -1,4 +1,4 @@
-<div class="card shadow">
+<div class="">
   <div class="card-header d-flex justify-content-between align-items-center">
     <h2 style="font-size: 3em;"><%= t('categories.juries_section.title', count: category.juries.count) %></h2>
   </div>
@@ -30,9 +30,10 @@
               <div class="card-body " style="height: 200px; overflow: auto; " >
                 <div class="d-flex flex-column justify-content-between align-items-center gap-2 w-100">
                   <!-- You can add more details about the jury here -->
-                  <%= image_tag 'icons/jury.png', width: 70, height: 70 %>
+                  <%= image_tag categories_jury.jury.avatar_or_default, width: 70, height: 70, class:"rounded-circle", style:"object-fit: cover;" %>
 
-                  <p class="card-text"><%= categories_jury.jury.first_name %> <%= categories_jury.jury.last_name %></p>
+                  <p class="card-text mb-0"><%= categories_jury.jury.first_name %> <%= categories_jury.jury.last_name %></p>
+                  <p class="text-secondary mb-0"><%= categories_jury.jury.short_bio %></p>
                 </div>
               </div>
             </div>

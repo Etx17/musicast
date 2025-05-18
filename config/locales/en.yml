@@ -478,7 +478,7 @@ en:
       no_vote: "No vote"
       hundred_points: "Vote on 100 points"
       add_photo: "Add Photo"
-      add_photo_hint: "Only images (jpg, png, etc.) are accepted. Do not upload PDF or other file types. Ideal ratio: 16/9"
+      add_photo_hint: "Only images (jpg, png, etc.) are accepted. Do not upload PDF or other file types"
       no_image_added: "No image added"
       program_configuration: "Program Configuration"
       include_choices_in_list: "Include optional works from a list"
@@ -1139,7 +1139,7 @@ en:
     steps:
       program:
         important: "Important"
-        important_text: "Choose the pieces for each round in a second time to build the program. You can modify the choices of this step until the application deadline. Once the deadline has passed, you can still modify the program of each round, until the modification deadline of the program of each round."
+        important_text: "Choose the pieces for each round in a second time to build the program. You can modify the choices of this step until the application deadline. Once the deadline has passed, you cannot pick different pieces, but you can still modify the program of each round, until the modification deadline of the program of each round."
       item_requirements:
         click_here_to_reload: "Click HERE to reload if portrait use button doesn't respond"
         title: "Required documents"

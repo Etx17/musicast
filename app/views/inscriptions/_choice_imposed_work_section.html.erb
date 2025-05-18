@@ -10,15 +10,7 @@
   <% else %>
     <%= render InfoboxComponent.new(title: t('inscriptions.semi_imposed_work_section.guidelines'), text: choice_imposed_work.guidelines) %>
   <% end %>
-  <% if f.object.errors[:base].any? %>
-    <div class="d-flex flex-column">
-      <small class="text-danger">
-        <% f.object.errors[:base].each do |error| %>
-          <%= error %>
-        <% end %>
-      </small>
-    </div>
-  <% end %>
+
   <% choice_imposed_work.number_to_select.times do |i| %>
     <% choice_imposed_work_air = inscription.choice_imposed_work_airs.filter{|ciwa| ciwa.choice_imposed_work_id == choice_imposed_work.id}[i] || choice_imposed_work.choice_imposed_work_airs.build %>
 

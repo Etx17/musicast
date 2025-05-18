@@ -30,11 +30,10 @@
       <% end %>
     </div>
   <% end %>
-
+  <%= semi_imposed_work.max_length_minutes %> mins max total
   <% semi_imposed_work.number.times do |i| %>
     <% semi_imposed_work_air = inscription.semi_imposed_work_airs[air_counter] || inscription.semi_imposed_work_airs.build(semi_imposed_work_id: semi_imposed_work.id) %>
     <% air_counter += 1 %>
-    <%# <%=  raise if semi_imposed_work_air.id.nil? %>
     <%= f.simple_fields_for :semi_imposed_work_airs, semi_imposed_work_air do |semi_imposed_work_air_fields| %>
       <%= semi_imposed_work_air_fields.input :semi_imposed_work_id, as: :hidden, input_html: { value: semi_imposed_work.id } %>
         <%= semi_imposed_work_air_fields.simple_fields_for (semi_imposed_work_air.persisted? ? :air : :air_attributes) do |air_fields| %>

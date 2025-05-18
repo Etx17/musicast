@@ -1,13 +1,8 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-12">
-      <div class="d-flex justify-content-between align-items-center mb-3">
-        <h1><%= t('categories.edit.title') %></h1>
-        <div>
-          <%= link_to t('categories.edit.back'), organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category), class: "btn btn-outline-secondary" %>
-        </div>
-      </div>
-
+      <h1><%= t('categories.edit.title') %></h1>
+      <%= render Navigation::BackLinkComponent.new(link_path: organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category), link_text: @category.name) %>
       <%= render 'form', category: @category %>
     </div>
   </div>
