@@ -7,7 +7,7 @@
         <h5><%= semi_imposed_work.title %></h5>
       <% end %>
 
-      <div id="warning-<%= semi_imposed_work.id %>" class="duration-warning text-danger fw-bold mb-2" style="display: none;">
+      <div id="warning-<%= semi_imposed_work.id %>" class="duration-warning text-danger fw-bold mb-2">
         <%= t('inscriptions.semi_imposed_work_section.duration_warning', max: semi_imposed_work.max_length_minutes) %>
       </div>
 
@@ -93,6 +93,7 @@
 
       // Use change event for when user leaves the field
       input.addEventListener('change', function() {
+        console.log('change event triggered');
         const workId = this.dataset.workId;
         validateWorkDuration(workId);
       });
@@ -129,21 +130,22 @@
     // Get the max duration from the data attribute
     const maxMinutes = parseInt(inputs[0].dataset.maxMinutes, 10) || 0;
 
-    // Get the warning element directly by ID for more reliable selection
     const warningId = `warning-${workId}`;
+    // console.log(`Attempting to find warning element with ID: '${warningId}'`); // Kept for reference, can be noisy
     const warning = document.getElementById(warningId);
 
     if (warning) {
-      // Display the warning with direct style manipulation
+      // console.log(`Found warning element:`, warning); // Kept for reference, can be noisy
       if (totalMinutes > maxMinutes && maxMinutes > 0) {
-        warning.style.display = 'block';
+        warning.style.setProperty('display', 'block', 'important');
         console.log(`Semi-imposed work ${workId}: Total ${totalMinutes} mins exceeds max ${maxMinutes} mins - Warning shown`);
       } else {
-        warning.style.display = 'none';
-        console.log(`Semi-imposed work ${workId}: Total ${totalMinutes} mins within max ${maxMinutes} mins - Warning hidden`);
+        warning.style.setProperty('display', 'none', 'important');
+        console.log(`Semi-imposed work ${workId}: Total ${totalMinutes} mins within max ${maxMinutes} mins OR maxMinutes not positive - Warning hidden`);
       }
     } else {
-      console.error(`Warning element with ID ${warningId} not found!`);
+      console.error(`CRITICAL: Warning element with ID '${warningId}' was NOT FOUND in the DOM!`);
+      // Fallback logic from previous step can be kept if needed, but if getElementById found it, this won't run.
     }
   }
 </script>
