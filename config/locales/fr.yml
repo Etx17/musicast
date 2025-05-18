@@ -485,6 +485,10 @@ fr:
         edit: "Modifier cette œuvre à choix imposé"
         destroy: "Supprimer cette œuvre à choix imposé"
     form:
+      general_information: "Informations générales"
+      payment_configuration: "Configuration du paiement"
+      jury_configuration: "Configuration du jury"
+      category_image: "Image de la catégorie"
       enter_payment_guidelines: "Entrez les consignes pour le paiement"
       enter_payment_guidelines_english: "Entrez les consignes pour le paiement (Anglais)"
       payment_guidelines: "Consignes pour le paiement"

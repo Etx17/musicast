@@ -4,18 +4,16 @@
 
   <div class="row bg-light p-3 shadow-sm mb-3" style="border-radius: 8px;">
     <div class="col-md-6">
-      <h3><%= t('categories.form.information') %></h3>
-
+      <h5 class="mt-3"><%= t('categories.form.general_information') %></h5>
+      <hr>
       <div class="form-inputs w-100">
         <div class="row">
           <div class="col-md-6">
             <%= f.input :name, required: true, label: t('categories.form.name') %>
           </div>
-
           <div class="col-md-6">
             <%= f.input :discipline, label: t('categories.form.discipline'), as: :select, collection: Category.disciplines.keys.map { |discipline| [t("global.instruments.#{discipline}"), discipline] }, input_html: { class: 'form-select', required: true } %>
           </div>
-
         </div>
         <div class="row">
           <div class="col-md-6">
@@ -30,22 +28,35 @@
           <%= f.label t('categories.form.description') + "*" %>
           <small class="text-secondary"><span data-character-counter-target="counter">0</span>/1000 </small>
           </div>
-          <%= f.input :description, label: false, placeholder: "", input_html: { class:"border border-0", data: { action: "input->character-counter#update", character_counter_target: "input", class:"border border-0 "} } %>
+          <%= f.input :description, label: false, placeholder: "", input_html: { class:"border border-0", data: { action: "input->character-counter#update", character_counter_target: "input"} } %>
         </div>
         <div class="form-group" data-controller="character-counter">
           <div class="d-flex gap-3 align-items-center">
           <%= f.label t('categories.form.description_english') + "*" %>
           <small class="text-secondary"><span data-character-counter-target="counter">0</span>/1000 </small>
           </div>
-          <%= f.input :description_english, label: false, placeholder: "", input_html: { class:"border border-0", data: { action: "input->character-counter#update", character_counter_target: "input", class:"border border-0 "} } %>
+          <%= f.input :description_english, label: false, placeholder: "", input_html: { class:"border border-0", data: { action: "input->character-counter#update", character_counter_target: "input"} } %>
         </div>
-        <div class="d-flex p-2 bg-light-grey rounded-8 align-items-center">
-          <%= f.input :allow_own_pianist_accompagnateur, as: :boolean, label: false, input_html: {style:"background-color: #28CF75;"} %>
-          <%= f.label t('categories.form.allow_own_pianist') %>
+        <div class="form-group mb-3">
+          <%= f.input :allow_own_pianist_accompagnateur,
+                      as: :boolean,
+                      label: t('categories.form.allow_own_pianist'),
+                      wrapper_html: { class: "form-check form-switch" },
+                      input_html: { class: "form-check-input", role: "switch", style:"background-color: #28CF75;" } %>
         </div>
+      </div>
+
+      <h5 class="mt-4"><%= t('categories.form.payment_configuration') %></h5>
+      <hr>
+      <div class="form-inputs w-100">
         <%= f.input :price_cents, label: t('categories.form.registration_fee', currency: @category.price_currency), class: "form-control",input_html: { value: @category.price_cents / 100, step: 1, min: 0, class: "form-control", id: "price_euros", placeholder: t('categories.form.enter_price_in_euros') }  %>
-        <div class="form-group w-100">
-          <%= f.input :payment_after_approval, as: :boolean, hint: t('categories.form.payment_after_approval_hint'), label: t('categories.form.payment_after_approval'), class: "form-check-input", input_html: { class: "form-check-input", role: "switch" } %>
+        <div class="form-group mb-3">
+          <%= f.input :payment_after_approval,
+                      as: :boolean,
+                      hint: t('categories.form.payment_after_approval_hint'),
+                      label: t('categories.form.payment_after_approval'),
+                      wrapper_html: { class: "form-check form-switch" },
+                      input_html: { class: "form-check-input", role: "switch" } %>
         </div>
         <div class="form-group w-100">
           <%= f.input :payment_guidelines, label: t('categories.form.payment_guidelines'), class: "form-control", input_html: { class: "form-control", id: "payment_guidelines", placeholder: t('categories.form.enter_payment_guidelines') } %>
@@ -53,6 +64,11 @@
         <div class="form-group w-100">
           <%= f.input :payment_guidelines_english, label: t('categories.form.payment_guidelines_english'), class: "form-control", input_html: { class: "form-control", id: "payment_guidelines_english", placeholder: t('categories.form.enter_payment_guidelines_english') } %>
         </div>
+      </div>
+
+      <h5 class="mt-4"><%= t('categories.form.jury_configuration') %></h5>
+      <hr>
+      <div class="form-inputs w-100">
         <div class="form-group w-100">
           <%= f.input :preselection_vote_type,
             collection: Category.preselection_vote_types.keys.map { |key| [t("categories.form.#{key}"), key] },
@@ -63,17 +79,18 @@
             item_wrapper_class: 'd-flex mb-2 mx-3 border border-light gap-3'
           %>
         </div>
-
-
       </div>
     </div>
 
     <div class="col-md-6">
+      <h5 class="mt-3"><%= t('categories.form.category_image') %></h5>
+      <hr>
       <div class="form-inputs col-12 d-flex flex-column gap-1">
         <div data-controller="image-preview" data-image-preview-url="<%= @category.photo.attached? ? url_for(@category.photo) : '' %>">
           <%= f.input :photo, as: :file, input_html: { data: { image_preview_target: "input" } }, label: t('categories.form.add_photo'), hint: t('categories.form.add_photo_hint') %>
 
           <div class="w-100" style="height: 400px; background: #f8f9fa;">
+            <small>Current photo:</small>
             <div data-image-preview-target="preview" class="h-100 w-100" style="background-size: cover; display: none;"></div>
             <div data-image-preview-target="placeholder" class="text-center text-muted border p-5 w-100"><%= t('categories.form.no_image_added') %></div>
           </div>
@@ -82,7 +99,7 @@
     <% if false %>
       <div class="mt-4">
         <h5><%= t('categories.form.program_configuration') %></h5>
-
+        <hr>
         <div class="form-group mb-3">
           <div class="d-flex align-items-center">
             <%= f.input :includes_choice_imposed_works,
@@ -116,11 +133,9 @@
       </div>
     <% end %>
     </div>
+  </div>
 
-
-  <div class="form-actions">
+  <div class="form-actions text-center mt-4">
     <%= f.button :submit, t('categories.form.save'), class:"btn btn-primary w-100 p-3 mb-5" %>
   </div>
-  </div>
-
 <% end %>
