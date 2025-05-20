@@ -10,7 +10,7 @@
     <%= render Navigation::BackLinkComponent.new(
       link_path: inscriptions_path,
       link_text: t('global.inscription').pluralize
-    ) %>
+    ) if current_user.organisateur || current_user.admin %>
 
     <%= render "inscriptions/inscription_header", inscription: inscription %>
     <!-- left column -->
