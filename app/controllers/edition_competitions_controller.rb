@@ -4,14 +4,14 @@ class EditionCompetitionsController < ApplicationController
   before_action :require_admin, only: %i[index]
 
   def index
-    @edition_competitions = EditionCompetition.all.includes(competition: [:organism, :organisateur])
+    @edition_competitions = EditionCompetition.all
   end
 
   def show
     authorize @edition_competition
     @categories = @edition_competition.categories.order(created_at: :desc)
 
-    if current_user&.organises_edition_competition?(@edition_competition)
+    if current_user&.organises_edition_competition?(@edition_competition) || current_user&.admin
       render :show
     else
       session[:redirect_url] = organism_competition_edition_competition_url(@organism, @competition, @edition_competition)
