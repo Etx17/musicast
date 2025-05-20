@@ -1,41 +1,44 @@
 <h2><%= t('devise.registrations.edit.title', resource: resource_name.to_s.humanize) %></h2>
+<%= link_to t('global.actions.back'), :back, class: "text-primary text-decoration-none lead" %>
+<div class="container">
+  <div class="rounded p-3 bg-light">
+    <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+      <%= f.error_notification %>
 
-<%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <%= f.error_notification %>
+      <div class="form-inputs">
+        <%= f.input :email, required: true, autofocus: true %>
 
-  <div class="form-inputs">
-    <%= f.input :email, required: true, autofocus: true %>
+        <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+          <p><%= t('devise.registrations.edit.waiting_confirmation', email: resource.unconfirmed_email) %></p>
+        <% end %>
 
-    <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-      <p><%= t('devise.registrations.edit.waiting_confirmation', email: resource.unconfirmed_email) %></p>
+        <%= f.input :password,
+                    label: t('devise.registrations.edit.password'),
+                    hint: t('devise.registrations.edit.leave_blank'),
+                    required: false,
+                    input_html: { autocomplete: "new-password" } %>
+        <%= f.input :password_confirmation,
+                    label: t('devise.registrations.edit.password_confirmation'),
+                    required: false,
+                    input_html: { autocomplete: "new-password" } %>
+        <%= f.input :current_password,
+                    label: t('devise.registrations.edit.current_password'),
+                    hint: t('devise.registrations.edit.need_current_password'),
+                    required: true,
+                    input_html: { autocomplete: "current-password" } %>
+        <div class="form-check form-switch">
+          <%= f.check_box :accepts_newsletter, class: "form-check-input" %>
+          <%= f.label :accepts_newsletter, class: "form-check-label text-secondary" do %>
+            <span>*</span> <%= t('devise.registrations.edit.newsletter_agreement') %>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <%= f.button :submit, t('devise.registrations.edit.update'), class: "btn btn-primary my-2" %>
+      </div>
     <% end %>
+  <div class="text-end"><small><%= t('devise.registrations.edit.unhappy') %> </small><%= button_to t('devise.registrations.edit.cancel_my_account'), registration_path(resource_name), data: { confirm: t('devise.registrations.edit.are_you_sure'), turbo_confirm: t('devise.registrations.edit.are_you_sure') }, class: "btn btn-outline-danger border-0 my-2", method: :delete %></div>
+</div>
 
-    <%= f.input :password,
-                hint: t('devise.registrations.edit.leave_blank'),
-                required: false,
-                input_html: { autocomplete: "new-password" } %>
-    <%= f.input :password_confirmation,
-                required: false,
-                input_html: { autocomplete: "new-password" } %>
-    <%= f.input :current_password,
-                hint: t('devise.registrations.edit.need_current_password'),
-                required: true,
-                input_html: { autocomplete: "current-password" } %>
-  <div class="d-flex align-items-start gap-2">
-      <%= f.check_box :accepts_newsletter, class: "mt-1" %>
-      <%= f.label :accepts_newsletter, class:"text-secondary"  do %>
-        <span>*</span> <%= t('devise.registrations.edit.newsletter_agreement') %>
-      <% end %>
-    </div>
-  </div>
-
-  <div class="form-actions">
-    <%= f.button :submit, t('devise.registrations.edit.update') %>
-  </div>
-<% end %>
-
-<h3><%= t('devise.registrations.edit.cancel_account') %></h3>
-
-<div><%= t('devise.registrations.edit.unhappy') %> <%= button_to t('devise.registrations.edit.cancel_my_account'), registration_path(resource_name), data: { confirm: t('devise.registrations.edit.are_you_sure'), turbo_confirm: t('devise.registrations.edit.are_you_sure') }, method: :delete %></div>
-
-<%= link_to t('devise.registrations.edit.back'), :back %>
+</div>

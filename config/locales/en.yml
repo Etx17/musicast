@@ -784,6 +784,9 @@ en:
         cancel_my_account: "Cancel my account"
         are_you_sure: "Are you sure?"
         back: "Back"
+        password: "New password"
+        password_confirmation: "New password confirmation"
+        current_password: "Current password"
       new:
         title: "Create my account"
         role: "Role"

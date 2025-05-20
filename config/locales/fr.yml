@@ -769,6 +769,9 @@ fr:
         cancel_my_account: "Supprimer mon compte"
         are_you_sure: "Êtes-vous sûr ?"
         back: "Retour"
+        password: "Nouveau mot de passe"
+        password_confirmation: "Confirmation du nouveau mot de passe"
+        current_password: "Mot de passe actuel"
       new:
         title: "Créer mon compte"
         role: "Rôle"
