@@ -539,6 +539,7 @@ DEPENDENCIES
   rqrcode
   rspec-rails
   ruby-openai
+  rubyzip
   sassc-rails
   selenium-webdriver
   simple_form!
