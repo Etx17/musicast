@@ -19,7 +19,6 @@ gem "country_select"
 gem "pg", "~> 1.1"
 gem 'rqrcode'
 gem 'wicked_pdf'
-gem 'wkhtmltopdf-binary'
 
 gem "countries"
 
@@ -77,7 +76,12 @@ gem "sassc-rails"
 
 gem "wicked"
 
+group :production do
+  gem 'wkhtmltopdf-heroku', '~> 2.12.6'
+end
+
 group :development, :test do
+  gem 'wkhtmltopdf-binary'
   gem "dotenv-rails"
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[mri mingw x64_mingw]
