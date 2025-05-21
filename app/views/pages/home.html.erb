@@ -3,7 +3,7 @@
 <%= render "dropdown_inputs" %>
 
 <main class="container mt-4">
-    <% @countries_with_upcoming_competitions.each do |country| %>
+    <% @countries_with_upcoming_competitions&.each do |country| %>
       <% country_data = ISO3166::Country.all.find { |c| c.iso_short_name == country }%>
       <% country_code = country_data&.alpha2 %>
       <div class="country-flag-link">
