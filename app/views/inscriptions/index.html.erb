@@ -82,6 +82,9 @@
                           <% if @category.hundred_points? %>
                             <%= score_badge(inscription.average_score) %>
                             <%# Render an info circle tooltip with the name of the jury that votes. %>
+                            <% if inscription.notes.any? %>
+                              <i class="fas fa-info-circle" data-bs-toggle="tooltip" data-bs-placement="top" title="<%= inscription.notes.map { |note| "#{note.jury.full_name}: #{note.note_value}/100" }.join(' | ') %>"></i>
+                            <% end %>
                           <% end %>
                         </small>
                       </div>
@@ -150,3 +153,9 @@
     <% end %>
   <% end %>
 </div>
+
+<script>
+  $(document).ready(function() {
+    $('[data-bs-toggle="tooltip"]').tooltip();
+  });
+</script>
