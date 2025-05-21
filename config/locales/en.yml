@@ -988,6 +988,7 @@ en:
       back: "Back to free choices"
       destroy: "Destroy this free choice"
   global:
+    dashboard: "Dashboard"
     inscription_status: "Inscription status"
     candidate: "Candidate"
     performance: "performance"
@@ -1421,6 +1422,7 @@ en:
 
     edit:
       edit_note: "Edit Note"
+      no_video_available: "The candidate has not provided any available video"
       candidate_videos: "Candidate Videos"
       view_video: "View video %{number}"
       no_video_available: "The candidate has not provided any available video"

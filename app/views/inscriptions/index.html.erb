@@ -81,6 +81,7 @@
                           <span class="text-capitalize"><%= I18n.t("candidats.form.voice_types.#{inscription.candidat.voice_type}") %></span>
                           <% if @category.hundred_points? %>
                             <%= score_badge(inscription.average_score) %>
+                            <%# Render an info circle tooltip with the name of the jury that votes. %>
                           <% end %>
                         </small>
                       </div>

@@ -9,18 +9,18 @@
           <% inscriptions_count = category_jury.category.inscriptions.where(status: "in_review").count %>
           <% if inscriptions_count > 0 %>
             <%= link_to jury_jury_inscriptions_path(@jury, category_id: category_jury.category.id), class:"text-decoration-none " do %>
-              <div class="card border-0 shadow rounded-8 card-hover border">
+              <div class="card border-0 rounded overflow-hidden bg-light card-hover border">
                 <div class="card-header">
                   <p><%= category_jury.category.edition_competition.organism.nom %></p>
-                  <h3><%= category_jury.category.name %></h3>
+                  <h3 class=mb-0><%= category_jury.category.name %></h3>
                 </div>
                 <div class="p-0 card-body d-flex flex-column justify-content-center align-items-center">
                   <div style="position: relative; display: inline-block;">
                     <%= category_discipline_image(category_jury.category) %>
                     <span class="badge rounded-pill border border-success bg-success-secondary text-success" style="position: absolute; bottom: 10px; right: 10px;">
-                      <%= category_jury.category.discipline %>
+                      <%= t("discipline.#{category_jury.category.discipline}") %>
                     </span>
-                   <span class="btn border-bottom" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; font-size: 20px; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">
+                   <span class="btn" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; font-size: 20px; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">
                       <%= t('dashboard.jury.view_applications', count: inscriptions_count) %>
                     </span>
                   </div>

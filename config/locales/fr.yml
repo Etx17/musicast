@@ -955,6 +955,7 @@ fr:
       back: "Retour aux choix libres"
       destroy: "Supprimer ce choix libre"
   global:
+    dashboard: "Tableau de bord"
     inscription_status: "Statut de l'inscription"
     candidate: "Candidat"
     action: "Action"
@@ -1386,6 +1387,7 @@ fr:
       save: "Enregistrer"
     edit:
       edit_note: "Modifier la note"
+      no_video_available: "Le candidat n'a pas transmis de vidéo disponible"
       candidate_videos: "Vidéos du candidat"
       view_video: "Voir la vidéo %{number}"
       no_video_available: "Le candidat n'a pas transmis de vidéo disponible"
