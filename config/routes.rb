@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
   get '/language/switch', to: 'language#switch', as: 'switch_language'
-  mount StripeEvent::Engine, at: '/stripe-webhooks'
+  # mount StripeEvent::Engine, at: '/stripe-webhooks'
 
   # Route for changing locale
   get '/change_locale/:locale', to: 'locales#change', as: :change_locale
