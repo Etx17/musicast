@@ -55,21 +55,23 @@ class PagesController < ApplicationController
     @disciplines = MusicCategories::DISCIPLINES
     @edition_competitions = EditionCompetition.published_and_upcoming
 
-    if session[:discipline].present?
-      @edition_competitions = @edition_competitions.joins(:categories).where(categories: { discipline: session[:discipline].to_i })
+    if @edition_competitions.present?
+      if session[:discipline].present?
+        @edition_competitions = @edition_competitions&.joins(:categories).where(categories: { discipline: session[:discipline].to_i })
+      end
+
+      if session[:country].present?
+        country = ISO3166::Country[session[:country]].iso_short_name
+        @edition_competitions = @edition_competitions&.joins(:address)
+                                                      .where(addresses: { country: country })
+      end
+
+
+      @countries_with_upcoming_competitions = EditionCompetition&.includes(:address)
+        .where('edition_competitions.start_date > ?', Time.now)
+        .pluck('addresses.country')
+        .uniq
     end
-
-    if session[:country].present?
-      country = ISO3166::Country[session[:country]].iso_short_name
-      @edition_competitions = @edition_competitions.joins(:address)
-                                                    .where(addresses: { country: country })
-    end
-
-
-    @countries_with_upcoming_competitions = EditionCompetition.includes(:address)
-      .where('edition_competitions.start_date > ?', Time.now)
-      .pluck('addresses.country')
-      .uniq
   end
 
   private
