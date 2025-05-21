@@ -1,9 +1,9 @@
-<h1>New air</h1>
+<h1><%= t('airs.new.title') %></h1>
 
 <%= render "form", air: @air %>
 
 <br>
 
 <div>
-  <%= link_to "Back to airs", airs_path %>
+  <%= link_to t('airs.common.actions.back'), airs_path %>
 </div>

@@ -1,5 +1,7 @@
-<div class="mt-4">
-  <%= link_to "Retour", :back, class:"btn btn-outline-dark mb-3" %>
-  <%= render "form", organism: @organism %>
-  <%= link_to "Retour", organisateur_dashboard_path, method: :get, data: { turbo_action: 'replace', turbo_frame: 'organism_frame' }, class: 'btn btn-outline-dark mt-2' %>
+<h1><%= @organism.nom %></h1>
+<%= render Navigation::BackLinkComponent.new(link_path: organisateur_dashboard_path, link_text: t('dashboard.admin.title')) %>
+<div class="container bg-light">
+  <div class="mt-4 p-3">
+    <%= render "form", organism: @organism %>
+  </div>
 </div>

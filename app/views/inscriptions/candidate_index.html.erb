@@ -1,5 +1,5 @@
 <div class="container mt-5">
-  <h1 class="mb-4">VOS CANDIDATURES</h1>
+  <h1 class="mb-4"><%= t('inscriptions.candidate_index.your_applications') %></h1>
 
   <div class="row">
     <% @inscriptions.each do |inscription| %>
@@ -11,7 +11,7 @@
                       <h5 class="card-title m-0"><%= inscription.category.edition_competition.competition.nom_concours %> - <%= inscription.category.name %> </h5>
                   </div>
                   <p class="card-text">
-                    Start Date: <%= inscription.category.edition_competition.start_date %><br>
+                    <%= t('inscriptions.candidate_index.start_date') %>: <%= inscription.category.edition_competition.start_date %><br>
                   </p>
                   <span class="badge rounded-pill <%= inscription.order_state == 'paid' ? 'text-success border border-success bg-success-secondary' : 'text-warning border border-warning bg-warning-secondary' %>">
                     <i class="fas fa-circle small"></i> <%= inscription.order_state.capitalize %>

@@ -14,7 +14,7 @@ export default class extends Controller {
   }
 
   dragOver(event) {
-    event.preventDefault()  // Necessary to allow dropping
+    event.preventDefault() 
   }
 
   drop(event) {

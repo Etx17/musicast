@@ -1,50 +1,90 @@
 <div id="<%= dom_id edition_competition %>">
   <dl class="row">
-    <div class="d-flex justify-content-between mb-2">
-      <%= button_to "Modifier", edit_organism_competition_edition_competition_path(@organism, @competition, edition_competition), method: :get, class: 'btn btn-outline-dark btn-sm', disabled: edition_competition.published? %>
-      <%= button_to "Supprimer cette édition", organism_competition_edition_competition_path(@organism, @competition, edition_competition), method: :delete, class: 'btn btn-outline-dark btn-sm', data: { confirm: "Supprimer l'édition?" }, disabled: edition_competition.published? %>
+      <div class="d-flex justify-content-end mb-2">
+      <% kebab_items = [
+        {
+          icon: "fas fa-edit",
+          text: t('edition_competitions.edition_competition.edit'),
+          path: edit_organism_competition_edition_competition_path(@organism, @competition, edition_competition),
+          method: :get,
+        },
+        {
+          icon: "fas fa-trash",
+          text: t('edition_competitions.edition_competition.delete'),
+          path: organism_competition_edition_competition_path(@organism, @competition, edition_competition),
+          method: :delete,
+          data: { confirm: t('edition_competitions.edition_competition.confirm_delete'), turbo_confirm: t('edition_competitions.edition_competition.confirm_delete') },
+          class: "deletion-button",
+          state: edition_competition.published? ? "disabled" : "enabled"
+        }
+      ] %>
+
+      <%= render(Dropdown::KebabComponent.new(items: kebab_items, only_vertical_dots: false)) %>
     </div>
 
-    <dt class="col-sm-4">Annee:</dt>
+    <dt class="col-sm-4"><%= t('edition_competitions.edition_competition.year') %>:</dt>
     <dd class="col-sm-8"><%= edition_competition.annee %></dd>
 
-    <dt class="col-sm-4">Details specifiques:</dt>
+    <dt class="col-sm-4"><%= t('edition_competitions.edition_competition.specific_details') %>:</dt>
     <dd class="col-sm-8"><%= edition_competition.details_specifiques %></dd>
 
-    <dt class="col-sm-4">Start date:</dt>
+    <dt class="col-sm-4"><%= t('edition_competitions.edition_competition.specific_details_english') %>:</dt>
+    <dd class="col-sm-8"><%= edition_competition.specific_details_english %></dd>
+
+    <dt class="col-sm-4"><%= t('edition_competitions.edition_competition.start_date') %>:</dt>
     <dd class="col-sm-8"><%= edition_competition.start_date %></dd>
 
-    <dt class="col-sm-4">End date:</dt>
+    <dt class="col-sm-4"><%= t('edition_competitions.edition_competition.end_date') %>:</dt>
     <dd class="col-sm-8"><%= edition_competition.end_date %></dd>
 
-    <dt class="col-sm-4">End of registration:</dt>
+    <dt class="col-sm-4"><%= t('edition_competitions.edition_competition.end_of_registration') %>:</dt>
     <dd class="col-sm-8"><%= edition_competition.end_of_registration %></dd>
 
-    <dt class="col-sm-4">Rule Document:</dt>
+    <dt class="col-sm-4"><%= t('edition_competitions.edition_competition.rule_document') %>:</dt>
     <dd class="col-sm-8">
       <% if edition_competition.rule_document.attached? %>
       <div class="d-flex gap-2 align-items-center">
-        <%= link_to 'Voir', url_for(edition_competition.rule_document), target: "_blank", rel: "noopener"  %>
-        <%= button_to 'Supprimer', remove_document_organism_competition_edition_competition_path(@organism, @competition, edition_competition), method: :delete, class:"border btn btn-outline-dark", data: { turbo_confirm: "Supprimer le document?" } %>
+        <%= link_to t('edition_competitions.common.view'), url_for(edition_competition.rule_document), target: "_blank", rel: "noopener"  %>
+        <%= button_to t('edition_competitions.common.delete'), remove_document_organism_competition_edition_competition_path(@organism, @competition, edition_competition), method: :delete, class:"border btn btn-outline-dark", data: { turbo_confirm: t('edition_competitions.edition_competition.confirm_delete_document') } %>
       </div>
       <% else %>
-        No rule document attached.
+        <%= t('edition_competitions.edition_competition.no_document') %>
       <% end %>
     </dd>
     <% if edition_competition.rule_document.attached? %>
-      <div class="d-flex flex-column">
-        <embed src="<%= url_for(edition_competition.rule_document) %>"  height="375" type="application/pdf">
+      <div class="d-flex flex-column my-3">
+        <embed src="<%= url_for(edition_competition.rule_document) %>"  height="200" width="200" type="application/pdf">
+      </div>
+    <% end %>
+
+    <dt class="col-sm-4 mt-4"><%= t('edition_competitions.edition_competition.rule_document_english') %>:</dt>
+    <dd class="col-sm-8">
+      <% if edition_competition.rule_document_english.attached? %>
+      <div class="d-flex gap-2 align-items-center">
+        <%= link_to t('edition_competitions.common.view'), url_for(edition_competition.rule_document_english), target: "_blank", rel: "noopener"  %>
+        <%= button_to t('edition_competitions.common.delete'), remove_document_organism_competition_edition_competition_path(@organism, @competition, edition_competition), method: :delete, class:"border btn btn-outline-dark", data: { turbo: {confirm: t('edition_competitions.edition_competition.confirm_delete_document') } } %>
+      </div>
+      <% else %>
+        <%= t('edition_competitions.edition_competition.no_document') %>
+      <% end %>
+    </dd>
+    <% if edition_competition.rule_document.attached? %>
+      <div class="d-flex flex-column  my-3">
+        <embed src="<%= url_for(edition_competition.rule_document) %>"  height="200" width="200" type="application/pdf">
       </div>
     <% end %>
 
     <%# Links to copy past to share the competition %>
     <% if edition_competition.published? %>
-      <dt class="col-sm-4">Lien de partage:</dt>
+      <dt class="col-sm-4"><%= t('edition_competitions.edition_competition.share_link') %>:</dt>
       <dd class="col-sm-8"><span class="text-primary"><%= edition_competition.sharable_link %></span></dd>
-
+      <dt class="col-sm-4"><%= t('edition_competitions.edition_competition.share_link_english') %>:</dt>
+      <dd class="col-sm-8"><span class="text-primary"><%= edition_competition.sharable_link_english %></span></dd>
       <%# qr code %>
-      <dt class="col-sm-4">QR code:</dt>
+      <dt class="col-sm-4"><%= t('edition_competitions.edition_competition.qr_code') %>:</dt>
       <dd class="col-sm-8"><%= raw edition_competition.qr_code %></dd>
+      <dt class="col-sm-4"><%= t('edition_competitions.edition_competition.qr_code_english') %>:</dt>
+      <dd class="col-sm-8"><%= raw edition_competition.qr_code_english %></dd>
     <% end %>
   </dl>
 

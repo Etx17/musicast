@@ -1,14 +1,14 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Organisms</h1>
+<h1><%= t('organisms.index.organisms') %></h1>
 
 <div id="organisms">
   <% @organisms.each do |organism| %>
     <%= render organism %>
     <p>
-      <%= link_to "Show this organism", organism %>
+      <%= link_to t('organisms.index.show_organism'), organism %>
     </p>
   <% end %>
 </div>
 
-<%= link_to "New organism", new_organism_path %>
+<%= link_to t('organisms.index.new_organism'), new_organism_path %>

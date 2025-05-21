@@ -1,14 +1,14 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Semi imposed work airs</h1>
+<h1><%= t('semi_imposed_work_airs.index.semi_imposed_work_airs') %></h1>
 
 <div id="semi_imposed_work_airs">
   <% @semi_imposed_work_airs.each do |semi_imposed_work_air| %>
     <%= render semi_imposed_work_air %>
     <p>
-      <%= link_to "Show this semi imposed work air", semi_imposed_work_air %>
+      <%= link_to t('global.actions.show'), semi_imposed_work_air %>
     </p>
   <% end %>
 </div>
 
-<%= link_to "New semi imposed work air", new_semi_imposed_work_air_path %>
+<%= link_to t('semi_imposed_work_airs.index.new_semi_imposed_work_air'), new_semi_imposed_work_air_path %>

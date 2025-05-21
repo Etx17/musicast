@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>TestConcours</title>
+    <title><%= t('layouts.application.title') %></title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -9,45 +9,103 @@
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
 
+    <!-- jQuery (nécessaire pour cropper) -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropper/4.0.0/cropper.js" data-turbolinks-track="reload"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropper/4.0.0/cropper.css" data-turbolinks-track="reload">
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Imbue:opsz,wght@10..100,100..900&family=Taviraj:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Questrial&display=swap" rel="stylesheet">
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-thin-chubby/css/uicons-thin-chubby.css'>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-straight/css/uicons-regular-straight.css'>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-chubby/css/uicons-regular-chubby.css'>
   </head>
 
-  <body>
-  <!-- Navbar -->
-  <%= render "shared/navbar"%>
+  <body style="background-color: #e7eaf0">
 
-  <div class="px-2">
-    <div class="row">
 
-      <% if current_user&.organisateur || current_user&.jury %>
-        <div class="col-md-2 p-0 d-none d-md-block bg-light border-end">
-          <!-- Sidebar -->
+    <% if current_user.present? %>
+
+      <!-- Mobile sidebar toggle button (Position fixed relative to viewport) -->
+      <button class="btn btn-primary d-md-none position-fixed top-0 start-0 mt-2 ms-2 z-index-1050" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar" aria-controls="mobileSidebar">
+        <i class="fas fa-bars"></i>
+      </button>
+
+      <!-- Main Flex Container for Sidebar + Content -->
+      <div class="app-layout-container">
+
+        <!-- Desktop Sidebar -->
+
+        <aside class="desktop-sidebar d-none d-md-block bg-light">
+
           <%= render "shared/sidebar" %>
-        </div>
-      <% end %>
-      <div class=" p-0 col-md-<%= current_user.present? ? '10' : '12'%>">
-        <div class="d-flex flex-wrap d-md-none px-2 breadcrumbs-xs">
-          <%= render_breadcrumbs separator: '/' if current_user&.organisateur.present? %>
-        </div>
+        </aside>
 
-        <!-- Flash messages -->
-        <%= render "shared/flashes" %>
+        <!-- Main Content Area -->
 
-        <!-- Main content -->
-        <%= yield %>
+        <main class="main-content-area flex-grow-1">
+
+          <!-- Inner Container for Content -->
+
+          <div class="container-fluid p-3">
+
+
+            <% if current_user&.organisateur.present? %>
+              <div class="breadcrumbs-container mb-3">
+                <%= render_breadcrumbs separator: '  |    | ' %>
+              </div>
+            <% end %>
+
+
+            <%= render "shared/flashes" %>
+
+
+            <%= yield %>
+
+          </div>
+
+        </main>
+
       </div>
-      <% if current_user&.candidat %>
-        <div class="col-md-2 p-0 d-none d-md-block bg-light border-start">
-          <!-- Sidebar -->
+
+      <!-- Mobile sidebar (offcanvas - outside the flex layout) -->
+      <div class="offcanvas offcanvas-start" tabindex="-1" id="mobileSidebar" aria-labelledby="mobileSidebarLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="mobileSidebarLabel">Menu</h5>
+          <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body p-0">
           <%= render "shared/sidebar" %>
         </div>
-      <% end %>
+      </div>
 
 
-    </div>
-  </div>  <%# <a href="https://www.flaticon.com/free-icons/piano" title="piano icons">Piano icons created by surang - Flaticon</a> %>
-</body>
+    <% else %>
+      <%= render "shared/navbar" %>
+      <%= render "shared/flashes" %>
+      <%= yield %>
+    <% end %>
+
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const mobileSidebarElement = document.getElementById('mobileSidebar');
+        if (mobileSidebarElement) { // Check if element exists before attaching events
+          const mobileLinks = mobileSidebarElement.querySelectorAll('.nav-link');
+          const bsOffcanvas = new bootstrap.Offcanvas(mobileSidebarElement);
+
+          mobileLinks.forEach(link => {
+            link.addEventListener('click', function() {
+              bsOffcanvas.hide();
+            });
+          });
+        }
+      });
+    </script>
+  </body>
 </html>

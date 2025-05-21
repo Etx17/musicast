@@ -1,14 +1,14 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Requirement items</h1>
+<h1><%= t('requirement_items.index.requirement_items') %></h1>
 
 <div id="requirement_items">
   <% @requirement_items.each do |requirement_item| %>
     <%= render requirement_item %>
     <p>
-      <%= link_to "Show this requirement item", requirement_item %>
+      <%= link_to t('global.actions.show'), requirement_item %>
     </p>
   <% end %>
 </div>
 
-<%= link_to "New requirement item", new_requirement_item_path %>
+<%= link_to t('requirement_items.index.new_requirement_item'), new_requirement_item_path %>

@@ -7,7 +7,7 @@ class InscriptionItemRequirement < ApplicationRecord
   validate :submitted_content_is_youtube_url, if: :requirement_item_is_youtube_url?
   validate :submitted_file_is_correct_mime_type, if: :requirement_item_is_pdf?
 
-  validates :submitted_content, length: { maximum: 1000 }, if: :requirement_item_is_motivational_letter?
+  validates :submitted_content, length: { minimum: 1, maximum: 1000 }, if: :requirement_item_is_motivational_letter?
 
   def requirement_item_is_motivational_letter?
     item_type == "motivation_essay"
@@ -62,13 +62,14 @@ class InscriptionItemRequirement < ApplicationRecord
   end
 
   def has_submitted_content?
+    return true if requirement_item.is_photo? && submitted_file.attached?
     return true if requirement_item.is_pdf? && submitted_file.attached?
     return true if requirement_item.is_text? && submitted_content.present?
     return false
   end
 
 
-  enum verification_status: { not_checked_yet: 0, checked_valid: 1, checked_invalid: 2, ai_failed: 3, not_sure: 4, no_need_to_check: 5 }
+  enum :verification_status, { not_checked_yet: 0, checked_valid: 1, checked_invalid: 2, ai_failed: 3, not_sure: 4, no_need_to_check: 5 }
 
   def status_text
     case verification_status

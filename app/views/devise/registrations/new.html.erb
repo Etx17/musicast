@@ -1,49 +1,122 @@
-<div class=" mt-5 row justify-content-center align-items-center">
-<div class="col-8 col-sm-6 shadow p-3 bg-white rounded-8" style="background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.9)), url(<%= asset_path 'garnier.jpg' %>) no-repeat center center fixed; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;">
-<h2>Créer mon compte</h2>
+<div class="signin-container">
+  <div class="row vh-100 m-0">
+    <div class="col-12 col-md-4 p-0">
+      <div class="form-container d-flex flex-column justify-content-md-center h-100 px-4">
+        <div class="mb-4 text-center d-md-none">
+          <div class="musikast-logo">Musikast</span></div>
+        </div>
 
-<%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), data: { turbo: false }) do |f| %>
-  <%= f.error_notification %>
+        <h2 class="mb-4"><%= t('devise.registrations.new.title') %></h2>
 
-  <div class="form-inputs">
-    <%= f.input :inscription_role, label: "Role", collection: User.inscription_roles.keys.reject { |role| %w[jury partner].include? role }.map { |role| [role.humanize, role] } %>
+        <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), data: { turbo: false }) do |f| %>
+          <%= f.error_notification %>
 
-    <%= f.input :email,
-                required: true,
-                autofocus: true,
-                input_html: { autocomplete: "email" }%>
-    <%= f.input :password,
-                required: true,
-                label: 'Mot de passe',
-                hint: ("#{@minimum_password_length} caractères minimum" if @minimum_password_length),
-                input_html: { autocomplete: "new-password" } %>
-    <%= f.input :password_confirmation,
-                label: 'Confirmation du mot de passe',
-                required: true,
-                input_html: { autocomplete: "new-password" } %>
-    <div class="d-flex align-items-start gap-2">
-      <%= f.check_box :accepted_terms, required: true, class: "mt-1" %>
-      <%= f.label :accepted_terms, required: true, class:"text-secondary"  do %>
-        <span class="text-danger">*</span> En cochant cette case, je reconnais avoir pris connaissance et accepter les <%= link_to 'Conditions Générales d’Utilisation', pages_terms_of_use_path %>
-        et la <%= link_to "Politique de Confidentialité", pages_privacy_policy_path %> de la plateforme Musicast.
-      <% end %>
+          <div class="form-inputs">
+            <% if false %>
+              <%= f.input :inscription_role,
+                        label: t('devise.registrations.new.role'),
+                        collection: User.inscription_roles.keys.reject { |role| %w[jury partner].include? role }.map { |role| [role.humanize, role] },
+                        input_html: { class: "form-control mb-3" } %>
+            <% end %>
+
+            <%= f.input :email,
+                        required: true,
+                        autofocus: true,
+                        input_html: { autocomplete: "email", class: "form-control mb-3" } %>
+
+            <%= f.input :password,
+                        required: true,
+                        label: t('devise.registrations.new.password'),
+                        hint: (t('devise.registrations.new.characters_minimum', count: @minimum_password_length) if @minimum_password_length),
+                        input_html: { autocomplete: "new-password", class: "form-control mb-3" } %>
+
+            <%= f.input :password_confirmation,
+                        label: t('devise.registrations.new.password_confirmation'),
+                        required: true,
+                        input_html: { autocomplete: "new-password", class: "form-control mb-3" } %>
+
+            <div class="d-flex align-items-start gap-2 mb-3">
+              <%= f.check_box :accepted_terms, required: true, class: "mt-1" %>
+              <%= f.label :accepted_terms, required: true, class:"text-secondary"  do %>
+                <span class="text-danger">*</span> <%= t('devise.registrations.new.terms_agreement_html', terms_link: link_to(t('devise.registrations.new.terms_of_use'), pages_terms_of_use_path), privacy_link: link_to(t('devise.registrations.new.privacy_policy'), pages_privacy_policy_path)) %>
+              <% end %>
+            </div>
+
+            <div class="d-flex align-items-start gap-2 mb-3">
+              <%= f.check_box :accepts_newsletter, class: "mt-1" %>
+              <%= f.label :accepts_newsletter, class:"text-secondary"  do %>
+                <%= t('devise.registrations.new.newsletter_agreement') %>
+              <% end %>
+            </div>
+          </div>
+
+          <div class="form-actions mt-4">
+            <%= f.button :submit, t('devise.registrations.new.create'), class: "btn btn-primary w-100" %>
+          </div>
+        <% end %>
+
+        <div class="mt-4">
+          <%= render "devise/shared/links" %>
+        </div>
+      </div>
     </div>
 
-    <div class="d-flex align-items-start gap-2">
-      <%= f.check_box :accepts_newsletter, class: "mt-1" %>
-      <%= f.label :accepts_newsletter, class:"text-secondary"  do %>
-        <span>*</span> J'accepte de recevoir des mails (pas de spam, que des informations utiles) de la part de Musicast.
-
-      <% end %>
+    <!-- Right side - Background with text (hidden on small screens, 2/3 on medium and up) -->
+    <div class="col-md-8 p-0 d-none d-md-block">
+      <div class="bg-primary h-100 d-flex flex-column justify-content-center align-items-center text-white p-5 mt-5">
+        <div class="musikast-logo mb-4">Musi<span class="text-gradient">kast</span></div>
+        <h1 class="display-4 mb-4">Join Musikast Today</h1>
+        <p class="lead text-center mb-5">Create your account and start managing your music competitions</p>
+        <div class="feature-list">
+          <div class="row">
+            <div class="col-md-4 text-center mb-4">
+              <i class="fas fa-trophy fa-2x mb-3"></i>
+              <h5>Organize Competitions</h5>
+              <p>Create and manage music competitions with ease</p>
+            </div>
+            <div class="col-md-4 text-center mb-4">
+              <i class="fas fa-users fa-2x mb-3"></i>
+              <h5>Manage Participants</h5>
+              <p>Track applications and communicate with candidates</p>
+            </div>
+            <div class="col-md-4 text-center mb-4">
+              <i class="fas fa-chart-line fa-2x mb-3"></i>
+              <h5>Analyze Results</h5>
+              <p>Get insights and statistics about your events</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-
   </div>
-
-  <div class="form-actions d-flex flex-column justify-content-center align-items-center my-3">
-    <%= f.button :submit, "Créer", class: "btn btn-dark text-light w-50" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
 </div>
-</div>
+
+<style>
+  .signin-container {
+    overflow-x: hidden;
+  }
+
+  .form-container {
+    margin: 0 auto;
+    overflow-y: auto;
+  }
+
+  .musikast-logo {
+    font-family: 'Questrial', sans-serif;
+    font-size: 2.5em;
+    font-weight: 600;
+    letter-spacing: 1px;
+  }
+
+
+
+  .feature-list {
+    max-width: 800px;
+  }
+
+  @media (max-width: 767.98px) {
+    body {
+      background-color: #fff;
+    }
+  }
+</style>

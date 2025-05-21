@@ -1,0 +1,561 @@
+<div class="container mt-4">
+
+
+  <!-- Application file button - only displayed when complete -->
+  <% if @inscription.has_complete_requirement_items? && @inscription.is_payed? && @inscription.has_complete_airs? %>
+    <div class="d-flex justify-content-end mb-3">
+      <%= link_to inscription_path(@inscription), class: "btn btn-success" do %>
+        <i class="fas fa-folder-open me-2"></i> Votre dossier d'inscription
+      <% end %>
+    </div>
+  <% end %>
+
+  <!-- Include the progress bar partial -->
+  <%= render 'progress_bar' %>
+
+  <div class="card shadow-sm mb-4">
+    <div class="card-header bg-light">
+      <h2 class="mb-0"><%= t('inscriptions.steps.item_requirements.title') %></h2>
+    </div>
+    <div class="card-body">
+      <% if @inscription.errors.any? %>
+        <div class=" text-danger alert-danger">
+          <h4><%= @inscription.errors.count %> error(s) prevented this form from being saved:</h4>
+          <ul>
+            <% @inscription.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <% if flash[:alert] %>
+        <div class="alert alert-danger">
+          <%= flash[:alert] %>
+        </div>
+      <% end %>
+
+      <%= form_for @inscription, url: wizard_path(:item_requirements, action: "update"), method: :put, html: { id: "item-requirements-form", multipart: true } do |f| %>
+        <div class="d-flex flex-wrap gap-2">
+          <% @inscription.inscription_item_requirements.each do |item_requirement| %>
+            <div class="card m-2" style="width: calc(50% - 24px); max-height: 500px; overflow-y: auto;">
+              <div class="card-body bg-white">
+                <div class="d-flex align-items-center gap-3 p-2">
+                  <%= image_tag icon_for(item_requirement.item_type), class: 'item-icon', width: 50, height: 50 %>
+                  <% if I18n.locale == :en && item_requirement.requirement_item.title_english.present? %>
+                    <h3><%= item_requirement.requirement_item.title_english %></h3>
+                  <% else %>
+                    <h3><%= item_requirement.requirement_item.title %></h3>
+                  <% end %>
+                </div>
+
+                <% if I18n.locale == :en && item_requirement.requirement_item.description_item_english.present? %>
+                  <div class="d-flex align-items-start small text-secondary p-2 bg-infobox-light rounded-3 border mb-2">
+                    <i class="fas fa-info-circle mt-1 me-2"></i>
+                    <p class="mb-0"><%= item_requirement.requirement_item.description_item_english %></p>
+                  </div>
+                <% else %>
+                  <div class="d-flex align-items-start small text-secondary p-2 bg-infobox-light rounded-3 border mb-2">
+                    <i class="fas fa-info-circle mt-1 me-2"></i>
+                    <p class="mb-0"><%= item_requirement.requirement_item.description_item %></p>
+                  </div>
+                <% end %>
+
+                <%= f.simple_fields_for :inscription_item_requirements, item_requirement do |irf| %>
+                  <%= irf.hidden_field :requirement_item_id %>
+                  <% case item_requirement.requirement_item.type_item %>
+                  <% when 'motivation_essay' %>
+                    <div class="form-group" data-controller="character-counter">
+                      <div class="d-flex gap-3 align-items-center">
+                        <%= f.label t('inscriptions.steps.item_requirements.motivation_letter'), required: true %>
+                        <small class="text-secondary"><span data-character-counter-target="counter">0</span>/1000 </small>
+                      </div>
+                      <%= irf.input :submitted_content, label: false, as: :text,
+                                    input_html: {
+                                      style: 'height: 300px;',
+                                      data: {
+                                        action: "input->character-counter#update",
+                                        character_counter_target: "input",
+                                        class: "border border-0"
+                                      },
+                                      class: irf.object.submitted_content.present? ? "is-valid" : "",
+                                      required: true
+                                    } %>
+                    </div>
+                  <% when 'youtube_link' %>
+                    <%= irf.input :submitted_content, as: :url,
+                                  label: t('inscriptions.steps.item_requirements.youtube_link'),
+                                  hint: t('inscriptions.steps.item_requirements.youtube_link_hint'),
+                                  input_html: {
+                                    class: irf.object.submitted_content.present? ? "is-valid" : "",
+                                    data: { action: "input->file-validator#validateYouTubeUrl" }
+                                  },
+                                  required: true %>
+                  <% when 'photo' %>
+                    <div>
+                      <div class="mb-3">
+
+                        <!-- Prévisualisation qui agit comme bouton d'upload -->
+                        <div class="text-center mb-3">
+                          <% if irf.object.submitted_file.attached? && irf.object.submitted_file.persisted? %>
+                            <div class="position-relative d-inline-block">
+                              <%= image_tag url_for(irf.object.submitted_file), class: "img-fluid rounded", style: "max-height: 200px;", id: "upload_submitted_file_" + item_requirement.id.to_s + "_file_preview" %>
+                              <%= link_to purge_item_image_inscription_steps_path(@inscription, item_id: item_requirement.id),
+                                    class: "btn btn-sm btn-outline-secondary rounded-circle position-absolute",
+                                    style: "width: 28px; height: 28px; padding: 0; display: flex; align-items: center; justify-content: center; background-color: rgba(255,255,255,0.8); top: 5px; right: 5px;",
+                                    data: { confirm: "Êtes-vous sûr de vouloir supprimer cette image ?" } do %>
+                                <i class="fas fa-times" style="font-size: 14px;"></i>
+                              <% end %>
+                            </div>
+                            <%# DPI information %>
+
+                            <div class="mt-2" id="upload-status-<%= item_requirement.id %>">
+                              <small class="text-success"><i class="fas fa-check-circle"></i> Image enregistrée</small>
+                            </div>
+
+                          <% else %>
+                            <div class="upload-placeholder p-3 border rounded d-flex flex-column align-items-center justify-content-center"
+                                 style="height: 200px; cursor: pointer;"
+                                 id="upload_submitted_file_<%= item_requirement.id %>_file_preview">
+                              <i class="fas fa-upload fa-3x mb-3 text-muted"></i>
+                              <p class="text-muted"><%= t('inscriptions.steps.item_requirements.select_photo') || "Cliquez pour sélectionner une photo" %></p>
+                            </div>
+
+                            <% if @inscription.candidat.artistic_photo.attached? %>
+                              <div class="text-center mt-2">
+                                <button type="button" class="btn btn-outline-primary btn-sm"
+                                       id="use-artistic-photo-<%= item_requirement.id %>"
+                                       data-photo-url="<%= url_for(@inscription.candidat.artistic_photo) %>"
+                                       data-item-id="<%= item_requirement.id %>">
+                                  <i class="fas fa-image me-1"></i> <%= t('inscriptions.steps.item_requirements.use_artistic_photo') || "Utiliser ma photo artistique" %>
+                                </button>
+                                <%# Link to js reload page if portrait use button doesn't respond %>
+                              </div>
+                                <%= link_to "#", class: "small text-decoration-none", style: "font-size: 10px; color: 'gray'",onclick: "window.location.reload();" do %>
+                                  <small>
+                                    <i class="fas fa-redo-alt"></i>
+                                    <%= t('inscriptions.steps.item_requirements.click_here_to_reload') %>
+                                  </small>
+                                <% end %>
+                            <% end %>
+                          <% end %>
+                        </div>
+
+                        <% model_name = "inscription[inscription_item_requirements_attributes][#{item_requirement.id}]" %>
+
+                        <!-- Ajouter un attribut data pour l'ID de l'inscription -->
+                        <div data-inscription-id="<%= @inscription.id %>">
+                          <%= render "common/image_cropper",
+                              model: model_name,
+                              field: "submitted_file",
+                              aspect_ratio: item_requirement.requirement_item.ratio.present? ? item_requirement.requirement_item.ratio : 1.0,
+                              display_width: 500,
+                              item_count: item_requirement.id %>
+                        </div>
+                      </div>
+                      <%= irf.input :submitted_file, as: :hidden,
+                                   input_html: {
+                                     class: "image-hidden-input",
+                                     id: "inscription_inscription_item_requirements_attributes_#{item_requirement.id}_submitted_file"
+                                   } %>
+                    </div>
+                  <% else %>
+                    <div class="row">
+                      <div class="col">
+                        <% if irf.object.submitted_file.attached? && irf.object.submitted_file.persisted? %>
+                          <div class="mb-3">
+                            <label class="form-label"><%= t('inscriptions.steps.item_requirements.current_document') %></label>
+                            <div class="d-flex align-items-center">
+                              <span class="badge bg-success me-2"><i class="fas fa-check"></i> <%= t('inscriptions.steps.item_requirements.uploaded') %></span>
+                              <%= link_to t('global.actions.view'), url_for(irf.object.submitted_file), class: "btn btn-sm btn-outline-primary", target: "_blank" %>
+                            </div>
+                            <embed src="<%= url_for(irf.object.submitted_file) %>" width="100%" height="200" type="application/pdf" class="mt-2">
+                          </div>
+                          <%= irf.input :submitted_file, as: :file,
+                                       label: t('inscriptions.steps.item_requirements.replace_document'),
+                                       input_html: {
+                                         class: "file-input",
+                                         data: {
+                                           action: "change->file-validator#validateFile",
+                                           file_validator_accepted_types: "application/pdf",
+                                           file_validator_max_size: "10",
+                                           requirement_item_id: item_requirement.requirement_item.id
+                                         }
+                                       } %>
+                          <div class="invalid-feedback file-error-message" style="display: none;">
+                            <%= t('inscriptions.steps.item_requirements.pdf_file_error') %>
+                          </div>
+                        <% else %>
+                          <%= irf.input :submitted_file, as: :file,
+                                       label: t('inscriptions.steps.item_requirements.upload_pdf'),
+                                       input_html: {
+                                         class: "file-input",
+                                         data: {
+                                           action: "change->file-validator#validateFile",
+                                           file_validator_accepted_types: "application/pdf",
+                                           file_validator_max_size: "10",
+                                           requirement_item_id: item_requirement.requirement_item.id
+                                         }
+                                       },
+                                       required: true %>
+                          <div class="invalid-feedback file-error-message" style="display: none;">
+                            <%= t('inscriptions.steps.item_requirements.pdf_file_error') %>
+                          </div>
+                        <% end %>
+                      </div>
+                    </div>
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+
+        <div class="d-flex justify-content-between mt-4">
+          <%= link_to previous_wizard_path, class: "btn btn-outline-secondary" do %>
+            <i class="fas fa-arrow-left me-1"></i> Previous
+          <% end %>
+          <%= f.submit "Next", class: "btn btn-primary", id: "submit-button" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Gérer la soumission du formulaire pour éviter les problèmes avec ActiveStorage
+    const form = document.getElementById('item-requirements-form');
+    if (form) {
+      form.addEventListener('submit', function(event) {
+        document.querySelectorAll('[data-uploaded="true"]').forEach(function(input) {
+          input.disabled = true;
+          const itemId = input.dataset.itemId;
+          if (itemId) {
+            const idField = document.createElement('input');
+            idField.type = 'hidden';
+            idField.name = 'uploaded_items[]';
+            idField.value = itemId;
+            form.appendChild(idField);
+          }
+        });
+
+        return true;
+      });
+    }
+
+    // Gestion des boutons "Utiliser ma photo artistique"
+    document.querySelectorAll('[id^="use-artistic-photo-"]').forEach(function(button) {
+      button.addEventListener('click', function() {
+        const itemId = this.dataset.itemId;
+        const photoUrl = this.dataset.photoUrl;
+
+        if (photoUrl) {
+          console.log('Utilisation de la photo artistique pour item_id', itemId);
+
+          // Récupérer l'élément de la modal du cropper
+          const cropperModal = document.getElementById(`upload-submitted_file-${itemId}-modal`);
+
+          if (cropperModal) {
+            console.log('Modal trouvée, ouverture...');
+
+            // Récupérer l'image du cropper
+            const cropperImage = cropperModal.querySelector('img');
+
+            if (cropperImage) {
+              // Précharger l'image artistique
+              cropperImage.src = photoUrl;
+
+              // Ouvrir la modal directement avec Bootstrap
+              const modal = new bootstrap.Modal(cropperModal);
+              modal.show();
+
+              // Pas besoin de réinitialiser le cropper, car il sera initialisé automatiquement
+              // lors de l'événement shown.bs.modal
+            } else {
+              console.error('Image du cropper non trouvée dans la modal');
+            }
+          } else {
+            console.error('Modal du cropper non trouvée pour item_id', itemId);
+          }
+        } else {
+          console.error('URL de la photo artistique non trouvée');
+        }
+      });
+    });
+
+    const fileValidator = {
+      init() {
+        document.querySelectorAll('.file-input').forEach(input => {
+          input.addEventListener('change', this.validateFileInputEvent.bind(this));
+        });
+
+        document.querySelectorAll('[data-action*="input->file-validator#validateYouTubeUrl"]').forEach(input => {
+          input.addEventListener('input', this.validateYouTubeUrlEvent.bind(this));
+        });
+
+        const form = document.getElementById('item-requirements-form');
+        if (form) {
+          form.addEventListener('submit', this.validateFormSubmission.bind(this));
+        }
+      },
+
+      validateFileInputEvent(event) {
+        const input = event.target;
+        const file = input.files[0];
+        const errorElement = input.parentElement.nextElementSibling;
+        const formGroup = input.closest('.form-group');
+
+        if (!file) {
+          input.classList.remove('is-valid');
+          input.classList.remove('is-invalid');
+          if (errorElement) errorElement.style.display = 'none';
+          return true;
+        }
+
+        const acceptedTypes = input.dataset.fileValidatorAcceptedTypes.split(',');
+        const maxSizeMB = parseFloat(input.dataset.fileValidatorMaxSize);
+
+        const isValidType = acceptedTypes.includes(file.type);
+
+        const isValidSize = file.size <= (maxSizeMB * 1024 * 1024);
+
+        if (!isValidType || !isValidSize) {
+          input.classList.add('is-invalid');
+          input.classList.remove('is-valid');
+          if (errorElement) {
+            errorElement.style.display = 'block';
+            if (!isValidType) {
+              errorElement.textContent = t('inscriptions.form.invalid_file_type', { type: file.type });
+            } else {
+              errorElement.textContent = t('inscriptions.form.file_too_large', { max: maxSizeMB, current: (file.size / (1024 * 1024)).toFixed(2) });
+            }
+          }
+          return false;
+        } else {
+          input.classList.add('is-valid');
+          input.classList.remove('is-invalid');
+          if (errorElement) errorElement.style.display = 'none';
+          return true;
+        }
+      },
+
+      validateYouTubeUrlEvent(event) {
+        const input = event.target;
+        const url = input.value;
+        const errorElement = input.parentElement.nextElementSibling;
+        const formGroup = input.closest('.form-group');
+
+        if (!url) {
+          input.classList.remove('is-valid');
+          input.classList.remove('is-invalid');
+          if (errorElement) errorElement.style.display = 'none';
+          return true;
+        }
+
+        const youtubeRegex = /^(https?:\/\/)?(www\.)?youtube\.com\/watch\?v=[a-zA-Z0-9_-]{11}$/;
+        const isValid = youtubeRegex.test(url);
+
+        if (!isValid) {
+          input.classList.add('is-invalid');
+          input.classList.remove('is-valid');
+          if (errorElement) {
+            errorElement.style.display = 'block';
+            errorElement.textContent = t('inscriptions.form.invalid_youtube_url');
+          }
+          return false;
+        } else {
+          input.classList.add('is-valid');
+          input.classList.remove('is-invalid');
+          if (errorElement) errorElement.style.display = 'none';
+          return true;
+        }
+      },
+
+      validateFormSubmission(event) {
+        let isValid = true;
+
+        // Désactiver les champs de fichier téléchargés via AJAX
+        document.querySelectorAll('.image-hidden-input[data-uploaded="true"]').forEach(function(input) {
+          input.disabled = true;
+        });
+
+        // Vérifier si des images ont été croppées mais pas correctement attachées
+        document.querySelectorAll('[id^="cropped_image_flag_"]').forEach(flag => {
+          if (flag.value === "true") {
+            const itemId = flag.id.replace("cropped_image_flag_", "");
+            const fileInput = document.getElementById(`inscription_inscription_item_requirements_attributes_${itemId}_submitted_file`);
+
+            if (fileInput && (!fileInput.files || fileInput.files.length === 0)) {
+              console.error(`Image croppée non attachée pour l'élément ${itemId}`);
+              isValid = false;
+
+              // Afficher un message d'erreur
+              let errorMsg = document.createElement('div');
+              errorMsg.className = 'alert alert-danger mt-2';
+              errorMsg.textContent = "L'image a été croppée mais n'a pas été correctement attachée. Veuillez réessayer.";
+
+              const container = fileInput.closest('.form-group') || fileInput.parentElement;
+              if (container) {
+                container.appendChild(errorMsg);
+              }
+            }
+          }
+        });
+
+        document.querySelectorAll('.file-input').forEach(input => {
+          const requirementItemId = input.dataset.requirementItemId;
+          const isRequired = input.hasAttribute('required');
+
+          if (isRequired || input.files.length > 0) {
+            const inputValid = this.validateFileInputEvent({target: input});
+            isValid = isValid && inputValid;
+          }
+        });
+
+        document.querySelectorAll('[data-action*="input->file-validator#validateYouTubeUrl"]').forEach(input => {
+          const inputValid = this.validateYouTubeUrlEvent({target: input});
+          isValid = isValid && inputValid;
+        });
+
+        if (!isValid) {
+          event.preventDefault();
+          const firstError = document.querySelector('.is-invalid, .alert-danger');
+          if (firstError) {
+            firstError.scrollIntoView({behavior: 'smooth', block: 'center'});
+          }
+        }
+      }
+    };
+
+    document.querySelectorAll('[data-controller="character-counter"]').forEach(function(counterElement) {
+      const input = counterElement.querySelector('[data-character-counter-target="input"]');
+      const counter = counterElement.querySelector('[data-character-counter-target="counter"]');
+
+      if (input && counter) {
+        counter.textContent = input.value.length;
+
+        input.addEventListener('input', function() {
+          counter.textContent = input.value.length;
+
+          if (input.value.length > 1000) {
+            counter.classList.add('text-danger');
+            counter.classList.remove('text-secondary');
+            input.classList.add('is-invalid');
+            input.classList.remove('is-valid');
+          } else if (input.value.length > 0) {
+            counter.classList.add('text-secondary');
+            counter.classList.remove('text-danger');
+            input.classList.add('is-valid');
+            input.classList.remove('is-invalid');
+          } else {
+            counter.classList.add('text-secondary');
+            counter.classList.remove('text-danger');
+            input.classList.remove('is-valid');
+            input.classList.remove('is-invalid');
+          }
+        });
+
+        if (input.value) {
+          const event = new Event('input');
+          input.dispatchEvent(event);
+        }
+      }
+    });
+
+    fileValidator.init();
+
+    // Ajouter un écouteur d'événements pour marquer quand une image a été croppée
+    document.addEventListener('imageCropped', function(e) {
+      if (e.detail && e.detail.itemId) {
+        const flag = document.getElementById(`cropped_image_flag_${e.detail.itemId}`);
+        if (flag) {
+          flag.value = "true";
+          console.log(`Image croppée pour l'élément ${e.detail.itemId} marquée`);
+        }
+      }
+    });
+  });
+
+  // Script pour le cropper d'image
+  document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM loaded - initializing cropper connections');
+
+    // Éviter d'attacher plusieurs gestionnaires d'événements
+    let initialized = false;
+    if (initialized) return;
+    initialized = true;
+
+    // Connecter UNIQUEMENT les prévisualisations avec les sélecteurs de fichier
+    // Filtrer pour inclure seulement les éléments de prévisualisation, pas les autres éléments du cropper
+    document.querySelectorAll('.upload-placeholder, [id$="_file_preview"]').forEach(function(preview) {
+      const id = preview.id;
+      console.log('Found clickable preview element:', id);
+
+      // Ne pas connecter des éléments qui sont déjà des inputs
+      if (preview.tagName === 'INPUT') {
+        console.log('Skipping input element:', id);
+        return;
+      }
+
+      // Ne pas connecter plusieurs fois le même élément
+      if (preview.dataset.initialized === "true") {
+        console.log('Element already initialized:', id);
+        return;
+      }
+      preview.dataset.initialized = "true";
+
+      // Format correct: upload_submitted_file_99_file_preview
+      let itemId;
+
+      // Essayer d'extraire l'ID normalement
+      try {
+        const match = id.match(/upload_submitted_file_(\d+)_file_preview/);
+        if (match && match[1]) {
+          itemId = match[1];
+        } else {
+          // Si pas de correspondance, essayer de trouver un numérique dans l'ID
+          const numericMatch = id.match(/\d+/);
+          itemId = numericMatch ? numericMatch[0] : 'unknown';
+        }
+      } catch (e) {
+        console.error('Error extracting ID:', e);
+        itemId = 'fallback';
+      }
+
+      const fileInputId = 'upload_submitted_file_' + itemId + '_file_field';
+      console.log('Connecting preview to file input:', fileInputId);
+
+      // Utiliser un seul gestionnaire d'événements
+      preview.addEventListener('click', function handlePreviewClick(e) {
+        console.log('Preview clicked:', id);
+        e.preventDefault();
+        e.stopPropagation();
+
+        // Déclencher le clic sur l'input file correspondant une seule fois
+        const fileInput = document.getElementById(fileInputId);
+        if (fileInput) {
+          console.log('Triggering click on file input');
+          // Supprimer les gestionnaires d'événements existants pour éviter les doubles déclenchements
+          fileInput.onchange = null;
+
+          // Configurer un nouveau gestionnaire d'événements unique
+          fileInput.onchange = function(event) {
+            console.log('File input changed');
+            // Le gestionnaire d'événements du cropper dans _image_cropper.html.erb prendra le relais
+          };
+
+          fileInput.click();
+        } else {
+          console.error('Input file not found:', fileInputId);
+          // Méthode alternative pour trouver l'élément
+          const fileInputs = document.querySelectorAll('input[type="file"].custom-file-input');
+          if (fileInputs.length > 0) {
+            console.log('Found file input using alternative method');
+            fileInputs[0].click();
+          }
+        }
+      });
+    });
+  });
+</script>

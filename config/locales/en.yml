@@ -1,33 +1,2295 @@
-# Files in the config/locales directory are used for internationalization
-# and are automatically loaded by Rails. If you want to use locales other
-# than English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t "hello"
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t("hello") %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# The following keys must be escaped otherwise they will not be retrieved by
-# the default I18n backend:
-#
-# true, false, on, off, yes, no
-#
-# Instead, surround them with single quotes.
-#
-# en:
-#   "true": "foo"
-#
-# To learn more, please read the Rails Internationalization guide
-# available at https://guides.rubyonrails.org/i18n.html.
-
 en:
-  hello: "Hello world"
+  locales:
+    en: "English"
+    fr: "French"
+  simple_form:
+    placeholders:
+      defaults:
+        annee: "Enter a year"
+      edition_competition:
+        new:
+          annee: "Enter a year for the new edition"
+        annee: "Enter a year"
+      experience:
+        title: "Job title or role"
+        english_title: "English Title"
+        description: "Describe your responsibilities and achievements..."
+        english_description: "English Description"
+      education:
+        title: "Institution or Degree"
+        english_title: "English Institution"
+        description: "Describe the program, degree, or relevant details..."
+        english_description: "English Education"
+    hints:
+      defaults:
+        annee: "Year of the edition"
+      edition_competition:
+        new:
+          annee: "Year of the new edition"
+        annee: "Year of the edition"
+    required:
+      text: "required"
+      mark: "*"
+      html: "<span class='required'>*</span>"
+  date:
+    formats:
+      day_month: "%d %B"
+      day_month_year: "%d %B %Y"
+      short_month_day: "%d %B"
+    month_names: [nil, "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+    abbr_month_names: [nil, "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+    order:
+      - :year
+      - :month
+      - :day
+  time:
+    formats:
+      day_month: "%d %B"
+      day_month_year: "%d %B %Y"
+  activerecord:
+    models:
+      competition: "Competition"
+      document: "Document"
+      edition_competition: "Competition Edition"
+      education: "Education"
+      experience: "Experience"
+    attributes:
+      competition:
+        organism_id: "ID of the organism"
+        nom_concours: "Competition name"
+        description: "Description"
+        created_at: "Created at"
+        updated_at: "Updated at"
+        slug: "Slug"
+      document:
+        document_type: "Type of document"
+        file_url: "URL of the file"
+        user_id: "ID of the user"
+        created_at: "Created at"
+        updated_at: "Updated at"
+        parent_type: "Type of parent"
+        parent_id: "ID of the parent"
+      edition_competition:
+        competition_id: "ID of the competition"
+        annee: "Year"
+        details_specifiques: "Specific details"
+        created_at: "Created at"
+        updated_at: "Updated at"
+        end_of_registration: "End of registration"
+        start_date: "Start date"
+        end_date: "End date"
+        reglement_url: "URL of the regulation"
+        status: "Status"
+      education:
+        title: "Title"
+        english_title: "English Institution"
+        start_date: "Start date"
+        end_date: "End Date (or expected)"
+        description: "Description"
+        english_description: "Description in English"
+        logo: "Institution Logo (Optional)"
+        candidat_id: "ID of the candidate"
+        created_at: "Created at"
+        updated_at: "Updated at"
+        current_logo: "Current"
+      experience:
+        title: "Title"
+        english_title: "English Title"
+        start_date: "Start date"
+        end_date: "End date"
+        description: "Description"
+        english_description: "English Description"
+        logo: "Logo (Optional)"
+        candidat_id: "ID of the candidate"
+        created_at: "Created at"
+        updated_at: "Updated at"
+        current_logo: "Current"
+    errors:
+      models:
+        competition:
+          attributes:
+            nom_concours:
+              blank: "The competition name cannot be empty."
+              too_short: "The competition name is too short."
+      messages:
+        blank: "cannot be empty."
+        too_short: "is too short."
+  errors:
+    attributes:
+      nom_concours:
+        blank: "The competition name cannot be empty."
+        too_short: "The competition name is too short."
+    messages:
+      blank: "cannot be empty."
+      too_short: "is too short."
+  discipline:
+    alto: Viola
+    ancient_instruments_and_baroque_music: Ancient Instruments and Baroque Music
+    bassoon: Bassoon
+    cello: Cello
+    chamber_music: Chamber Music
+    choirs_and_choral_singing: Choirs and Choral Singing
+    clarinet: Clarinet
+    composition_and_musical_writing: Composition and Musical Writing
+    double_bass: Double Bass
+    flute: Flute
+    guitar: Guitar
+    harp: Harp
+    horn: Horn
+    lyrical_singing: Lyrical Singing
+    oboe: Oboe
+    orchestration_and_orchestra_conducting: Orchestration and Orchestra Conducting
+    percussion: Percussion
+    piano: Piano
+    trombone: Trombone
+    trumpet: Trumpet
+    tuba: Tuba
+    violin: Violin
+  type_item:
+    youtube_link: YouTube Link
+    recommendation_letter: Recommendation Letter
+    parental_authorization: Parental Authorization
+    motivation_essay: Motivation Essay
+  language_name: "English"
+  navbar:
+    home: "Home"
+    competitions: "Competitions"
+    about: "About"
+    contact: "Contact"
+    login: "Login"
+    signup: "Sign up"
+    switch_language: "Français"
+  airs:
+    common:
+      title: "Title"
+      length_minutes: "Duration (minutes)"
+      composer: "Composer"
+      oeuvre: "Work"
+      character: "Character"
+      tonality: "Tonality"
+      infos: "Additional information"
+      infos_english: "Additional information (English)"
+      actions:
+        show: "Show this piece"
+        edit: "Edit this piece"
+        destroy: "Delete this piece"
+        back: "Back to pieces"
+        new: "New piece"
+        submit: "Save"
+    index:
+      title: "Pieces"
+      new: "New piece"
+    show:
+      title: "Piece details"
+      notice: "Piece was successfully saved."
+    new:
+      title: "New piece"
+    edit:
+      title: "Edit piece"
+    form:
+      character_hint: "For opera arias only"
+      error: "Please correct the errors below:"
+  imposed_works:
+    card:
+      required_works: "Required works"
+      all_required: "All required works"
+    common:
+      title: "Title"
+      guidelines: "Guidelines"
+      airs: "Required pieces"
+      actions:
+        show: "View this required program"
+        edit: "Edit this required program"
+        destroy: "Delete this required program"
+        back: "Back to required programs"
+        new: "New required program"
+        submit: "Save changes"
+        add_piece: "Add a piece"
+    index:
+      title: "Required Programs"
+      new: "New required program"
+    show:
+      title: "Required Program Details"
+      notice: "Required program was successfully saved."
+      no_airs: "No pieces have been added to this program."
+    new:
+      title: "New Required Program"
+    edit:
+      title: "Edit Required Program"
+      back_button: "Back"
+    form:
+      title_placeholder: "e.g.: 2 works by Fauré"
+      guidelines_placeholder: "e.g.: These required works will be randomly distributed in the candidate's program between rounds"
+      title_english: "Title (English)"
+      guidelines_english: "Guidelines (English)"
+      error: "Please correct the errors below:"
+    air_fields:
+      new: "NEW"
+      delete: "Delete"
+      title_placeholder: "Title *"
+      composer_placeholder: "Composer *: ex G.Fauré, J.S. Bach, etc."
+      oeuvre_placeholder: "Work *: ex No. 1 in G minor, BWV 1001, etc."
+      character_hint: "For opera arias only"
+      character_placeholder: "Character"
+      minutes_placeholder: "Minutes *"
+      tonality_placeholder: "Tonality *: ex G major, C minor, etc."
+      additional_info_placeholder: "Additional information *: ex This piece is a setting of a poem by R.M.Rilke, etc."
+      additional_info_english_placeholder: "Additional information in English..."
+  candidats:
+    common:
+      profile: "Profile"
+      experiences: "Experiences"
+      education: "Education"
+      diplomas: "Diplomas"
+      actions:
+        view_payment: "View payment"
+        edit: "Edit"
+        back: "Back"
+        save: "Save"
+        delete: "Delete"
+        show: "View"
+        new: "New candidate"
+    profile_summary_section:
+      title: "Profile Summary"
+      name: "Name"
+      first_name: "First Name"
+      last_name: "Last Name"
+      birth_date: "Birth Date"
+      nationality: "Nationality"
+      address: "Address"
+      phone: "Phone"
+      email: "Email"
+      biography: "Biography"
+      website: "Website"
+      social_media: "Social Media"
+      teacher: "Teacher"
+      view_cv: "View CV (English)"
+      view_artistic_photo: "View artistic photo"
+      short_bio: "Short biography"
+      medium_bio: "Medium biography"
+      long_bio: "Long biography"
+      short_bio_en: "Short biography (English)"
+      medium_bio_en: "Medium biography (English)"
+      long_bio_en: "Long biography (English)"
+      repertoire: "Repertoire"
+      not_provided_short: "Not provided yet..."
+      not_provided_medium: "Medium biography not provided yet..."
+      not_provided_long: "Long biography not provided yet..."
+    experiences_section:
+      title: "Professional Experiences"
+      no_experiences: "No experiences provided"
+      add_experience: "Add Experience"
+      position: "Position"
+      company: "Company/Organization"
+      start_date: "Start Date"
+      end_date: "End Date"
+      current: "Current Position"
+      description: "Description"
+      delete_confirm: "Delete this experience?"
+      present: "Present"
+      title_label: "Title"
+      from: "From"
+      to: "to"
+      description_placeholder: "Describe your experience here"
+    education_section:
+      title: "Education"
+      no_education: "No education provided"
+      add_education: "Add Education"
+      institution: "Institution"
+      degree: "Degree/Certificate"
+      field: "Field of Study"
+      start_date: "Start Date"
+      end_date: "End Date"
+      current: "Current"
+      description: "Description"
+      delete_confirm: "Delete this education?"
+      present: "Present"
+      title_label: "Title"
+      from: "From"
+      to: "to"
+      description_placeholder: "Describe your education here"
+    diplomas:
+      title: "Diplomas & Certifications"
+      no_diplomas: "You haven't added any diplomas yet."
+      add_diploma: "Add Diploma"
+      name: "Diploma Name"
+      institution: "Institution"
+      date: "Date Obtained"
+      description: "Description"
+      view: "View"
+      delete: "Delete"
+      delete_confirm: "Are you sure?"
+      add: "Add"
+    form:
+      portrait_required_hint: "The portrait is essential for your application. Please ensure your portrait is of high quality (DPI > 300) as it will be printed by the competition organizers."
+      artistic_photo_required_hint: "The artistic photo is essential for your application. Please ensure your artistic photo is of high quality (DPI > 300) as it will be printed by the competition organizers."
+      voice_type: "Voice Type"
+      voice_types:
+        non_singer: "Non-singer"
+        soprano: "Soprano"
+        mezzo: "Mezzo"
+        alto: "Alto"
+        countertenor: "Countertenor"
+        tenor: "Tenor"
+        baritone: "Baritone"
+        bass: "Bass"
+      first_name: "First Name"
+      last_name: "Last Name"
+      birthdate: "Birth Date"
+      birthdate_hint: "Your identity will be verified on the day of the competition, please enter your exact birth date!"
+      nationality: "Nationality"
+      portrait: "Portrait (HD photo of your face)"
+      artistic_photo: "Artistic Photo (300dpi+)"
+      artistic_photo_hint: "A high-quality artistic photo, for competition juries"
+      cv_english: "CV (English)"
+      last_teacher: "Teacher's Name"
+      last_teacher_hint: "Enter the name of your current or last teacher"
+      banner_color: "Banner Color"
+      translation_info: "You can translate your biographies using Artificial Intelligence with"
+      short_bio: "Short biography*"
+      short_bio_placeholder: "A very short version of your background, for competition juries"
+      short_bio_en: "Short biography (English)*"
+      short_bio_en_placeholder: "A very short version of your background, for competition juries"
+      medium_bio: "Medium biography*"
+      medium_bio_placeholder: "A summarized version of your background, for competition juries"
+      medium_bio_en: "Medium biography (English)*"
+      medium_bio_en_placeholder: "A summarized version of your background, for competition juries"
+      long_bio: "Long biography*"
+      long_bio_placeholder: "A detailed version of your background, for competition juries"
+      long_bio_en: "Long biography (English)*"
+      long_bio_en_placeholder: "A detailed version of your background, for competition juries"
+      repertoire: "Repertoire*"
+      repertoire_placeholder: "A detailed version of your background, for competition juries"
+      experiences_title: "Experiences"
+      education_title: "Education"
+      save: "Save"
+      new_record: "NEW"
+      delete: "Delete"
+      iban: "IBAN"
+      iban_hint: "Your IBAN number for prize payments"
+    edit:
+
+      title: "Edit your information"
+      subtitle: "This information is necessary to register for a competition."
+      warning_prefix: "Warning"
+      warning: "the information you provide here will be used to contact you and register you for a competition. Please fill it out carefully. You can modify it later."
+      back: "Back"
+      show: "Show this candidate"
+      back_to_list: "Back to candidates"
+      minimum_informations_for_inscription: "You must have completed your information (photos, bios, experiences, repertoire, etc...) to be able to register"
+      photos_required:
+        title: "Photos Required"
+        message: "Before continuing with your registration, you need to upload:"
+        portrait: "A portrait photo"
+        artistic_photo: "An artistic photo"
+        instructions: "Please upload the required photos in the form below."
+    index:
+      title: "Candidates"
+      show: "Show this candidate"
+      new:
+        title: "New candidate"
+        back: "Back to candidates"
+  categories:
+    card:
+      view_details: "View details"
+      prize_pool: "Prize pool"
+      first_prize: "First prize"
+      years: "years"
+      application_fee: "Application fee"
+    common:
+      save: "Save"
+      close: "Close"
+      delete: "Delete"
+      confirm_delete: "Are you sure you want to delete this item?"
+    category:
+      edition_competition: "Competition Edition"
+      name: "Name"
+      description: "Description"
+      min_age: "Minimum Age"
+      max_age: "Maximum Age"
+      discipline: "Discipline"
+    choice_imposed_works_section:
+      title: "Optional Works"
+      what_is_it: "What is this?"
+      explanation: "This section allows you to define lists of works from which candidates must make a choice. For example, you can create a list of 5 opera arias and ask candidates to choose 2 to present."
+      create_instruction: "Create a list of works from which candidates will have to choose."
+      candidate_must_choose:
+        one: "The candidate must choose 1 work from this list"
+        other: "The candidate must choose %{count} works from this list"
+      add_new_list: "Add a new list of optional works"
+    choice_imposed_works:
+      choice_imposed_work:
+        programme_requirement: "Programme Requirement"
+        title: "Title"
+        guidelines: "Guidelines"
+        number_to_select: "Number to select"
+      form:
+        list_configuration: "List configuration"
+        title_placeholder: "ex: 2 German lieder"
+        title_english_placeholder: "ex: 2 German lieder (English)"
+        list_title: "List title"
+        list_title_english: "List title (English)"
+        number_placeholder: "ex: 2"
+        number_to_choose: "Number of works to choose"
+        guidelines_placeholder: "ex: Choose 2 German lieder from the early 20th century from the following list. Your selection should not exceed 30 minutes. You must have at least 2 different composers"
+        be_precise: "Be as precise as possible"
+        guidelines: "Guidelines"
+        air_list: "Liste d'airs"
+        add_piece: "Add a piece"
+        save_changes: "Save changes"
+      edit:
+        title: "Edit this imposed choice list"
+        back: "Back"
+      index:
+        title: "Imposed choice works"
+        show: "Show this imposed choice work"
+        new: "New imposed choice work"
+      new:
+        back: "Back"
+        title: "New imposed choice list"
+        explanation: "An imposed choice list allows you to require the candidate to select one or more airs from a list that you define. You can add guidelines to guide the candidate."
+      show:
+        edit: "Edit this imposed choice work"
+        destroy: "Destroy this imposed choice work"
+    form:
+      general_information: "General Information"
+      payment_configuration: "Payment Configuration"
+      jury_configuration: "Jury Configuration"
+      category_image: "Category Image"
+      enter_payment_guidelines: "Enter payment guidelines"
+      enter_payment_guidelines_english: "Enter payment guidelines (English)"
+      payment_guidelines: "Guidelines for payment"
+      payment_guidelines_english: "Guidelines for payment (English)"
+      information: "Category Information"
+      name: "Category Name"
+      discipline: "Discipline"
+      min_age: "Minimum Age"
+      max_age: "Maximum Age"
+      description: "Description"
+      description_english: "Description (English)"
+      allow_own_pianist: "Allow candidates to bring their own accompanying pianist"
+      allow_own_pianist_hint: "If your competition requires an accompanying pianist for one or more of its rounds, you can allow candidates to bring their own accompanying pianist."
+      registration_fee: "Registration Fee (in %{currency})"
+      payment_after_approval: "Payment after approval"
+      enter_price_in_euros: "Enter price in euros"
+      payment_after_approval_hint: "Candidates will have to pay the registration fee after their application has been approved"
+      preselection_vote_type: "Preselection Vote Type"
+      preselection_vote_hint: "Choose how jurors will vote for candidate preselection"
+      no_vote: "No vote"
+      hundred_points: "Vote on 100 points"
+      add_photo: "Add Photo"
+      add_photo_hint: "Only images (jpg, png, etc.) are accepted. Do not upload PDF or other file types"
+      no_image_added: "No image added"
+      program_configuration: "Program Configuration"
+      include_choices_in_list: "Include optional works from a list"
+      include_choices_hint: "Candidates will have to choose from a list of works that you will define a number of works that you define. You can add guidelines to guide the candidate."
+      include_semi_imposed_works: "Include semi-imposed works"
+      include_semi_imposed_hint: "Candidates will have to present a number of works that you will define according to specific criteria"
+      include_imposed_works: "Include imposed works"
+      include_imposed_hint: "Candidates will have to present specific works that you will impose"
+      save: "Save Category"
+    imposed_works_section:
+      title: "Imposed Works"
+      create_instruction: "Create a list of works that all candidates must present."
+      create_list: "Create a list of imposed works"
+      edit_list: "Edit list"
+    juries_section:
+      title:
+        zero: "Jury (no members)"
+        one: "Jury (1 member)"
+        other: "Jury (%{count} members)"
+      description: "Add jury members for this category."
+      add_member: "Add a jury member"
+      choose_member: "Choose a jury member"
+      no_members: "No jury members available? "
+      go_here: "Go here to create some"
+    new_imposed_work:
+      title: "New Imposed Work"
+    prizes_section:
+      title:
+        zero: "Prizes (none)"
+        one: "Prize (1)"
+        other: "Prizes (%{count})"
+      description: "Define the prizes that will be awarded to the winners of this category."
+      add_prize: "Add a prize"
+    program_container_section:
+      title: "Required Program"
+      description: "Define the program that candidates must present."
+    requirement_items_section:
+      details_english: "Details (English)"
+      details_english_placeholder: "Enter details in English..."
+      english_fields: "English Fields"
+      french_fields: "French Fields"
+      english_version: "English version"
+      title:
+        zero: "Required Documents (none)"
+        one: "Required Document (1)"
+        other: "Required Documents (%{count})"
+      add_required_item: "Add a required item"
+      description: "Create and modify the documents that the candidate must provide for registration (optional)"
+      info_text_1: "The candidate's profile already includes a portrait and a high-quality artistic/press photo (300dpi), biographies of different lengths, a repertoire, and an up-to-date CV that are directly accessible. For your competition, indicate if you need specific documents, such as a letter of recommendation or videos."
+      info_text_2: "Musicast is committed to respecting the privacy and security of its users' data, in accordance with GDPR. For this reason, we do not collect identity documents. This preventive measure aims to minimize risks related to the management of sensitive data and to protect our users against the potential consequences of a data breach, such as fraud or identity theft. We encourage secure alternatives for identity verification, thus ensuring the protection and security of personal information."
+      item_title: "Give a title to this item"
+      title_placeholder: "e.g.: Letter of recommendation from your teacher"
+      item_type: "Item type"
+      select_type: "Select a type"
+      details: "Details"
+      details_placeholder: "Specify requirements here, for example length for a cover letter, duration for a YouTube video, or other..."
+      ratio: "Cropping ratio"
+      ratio_preview: "Ratio preview"
+    semi_imposed_works_section:
+      title: "Semi-imposed Works"
+      what_is_it: "What is this?"
+      explanation: "This section allows you to define criteria for the works that candidates must present. For example, you can request a classical sonata, a contemporary piece, etc."
+      create_instruction: "Create criteria for the works that candidates must present."
+      add_new_list: "Add a new list of semi-imposed works"
+    show:
+      view_candidates: "View all candidates"
+      view_first_tour: "View the first tour"
+      confirm_delete: "Delete category ?"
+      years: "years"
+      edit: "Edit"
+      back: "Back"
+      description: "Description"
+      back_to_categories: "Back to categories"
+      edit_category: "Edit category"
+      view_applications: "Applications"
+      delete: "Delete"
+      finish_configuration: "I have finished configuring the category"
+      configure_program: "Configure program"
+      configure_tours: "Configure rounds"
+      configure_docs_prizes_jury: "Configure documents, prizes & jury"
+      published: "Your category has been published"
+      applications: "Applications"
+      badges:
+        create_program: "Create program"
+        create_tour: "Create tour"
+        create_requirement: "Create required document"
+        create_prize: "Create prize"
+        create_jury: "Create jury"
+      tabs:
+        program: "Program"
+        tours: "Tours"
+        docs_prizes_jury: "Documents, Prizes & Jury"
+      sections:
+        requirements: "Required documents"
+        prizes: "Prizes"
+        jury: "Jury"
+    edit:
+      title: "Edit Category"
+      back: "Back"
+    index:
+      title: "Categories"
+      new: "New Category"
+      show: "View"
+      edit: "Edit"
+      delete: "Delete"
+      years: "years"
+    new:
+      title: "New Category"
+      back: "Back"
+
+  categories_juries:
+    new:
+      choose_jurors: "Choose one or more jurors"
+      air_list: "Air list"
+      add_piece: "Add a piece"
+      save_changes: "Save changes"
+
+  choice_imposed_works:
+    card:
+      choose: "Choose"
+      works_from: "works from"
+      selection_required: "Selection required"
+    choice_imposed_work:
+      programme_requirement: "Programme Requirement"
+      title: "Title"
+      guidelines: "Guidelines"
+      number_to_select: "Number to select"
+      selection_required: "Selection required"
+    form:
+      list_configuration: "List configuration"
+      title_placeholder: "e.g.: 2 German lieder"
+      list_title: "List title"
+      list_title_english: "List title (English)"
+      guidelines_english: "Guidelines (English)"
+      number_placeholder: "e.g.: 2"
+      number_to_choose: "Number of works to choose"
+      guidelines_placeholder: "e.g.: Choose 2 German lieder from the early 20th century from the following list. Your selection should not exceed 30 minutes. You must have at least 2 different composers"
+      be_precise: "Be as precise as possible"
+      guidelines: "Guidelines"
+      air_list: "Air list"
+      add_piece: "Add a piece"
+      save_changes: "Save changes"
+
+    edit:
+      title: "Edit this imposed choice list"
+      back: "Back"
+
+    index:
+      title: "Choice imposed works"
+      show: "Show this choice imposed work"
+      new: "New choice imposed work"
+
+    new:
+      back: "Back"
+      title: "New choice list"
+      explanation: "A choice list allows you to require the candidate to select one or more airs from a list that you define. You can add guidelines to guide the candidate."
+
+    show:
+      edit: "Edit this choice imposed work"
+      destroy: "Destroy this choice imposed work"
+
+  competitions:
+    competition:
+      name: "Name"
+      description: "Description"
+      cover_photo: "Cover photo"
+
+    form:
+      warning: "Warning: do not include the year in the competition title. You will later publish editions of this competition with all the necessary details"
+      name_hint: "Often the same name as the organization"
+      banner_label: "Add a banner (you can do this later). Recommended dimensions: Full width, 100px height."
+      no_image: "No image yet"
+      save: "Save"
+
+    index:
+      title: "Competitions"
+      show: "Show this competition"
+      new: "New competition"
+
+    show:
+      confirm_delete: "Delete competition ?"
+      editions: "Editions"
+      configure_categories: "Configure categories for this edition"
+      published: "Published"
+      not_published: "Not published"
+      generate_edition: "Generate a competition edition"
+      add_edition: "Add an edition"
+      competition: "Competition"
+      information: "Information"
+
+  dashboard:
+    common:
+      close: "Close"
+      confirm_delete: "Are you sure you want to delete this item?"
+    jury_section:
+      title: "Jury"
+      associated_jury_members: "Associated jury members"
+      jury_description: "These are all the juries that you can later assign to your competitions"
+      dissociate_jury: "Dissociate this jury from your organization"
+      associate_member: "Associate a member with my organization"
+      associate_jury: "Associate a jury with your organization"
+      check_existing: "Check if the jury you want to add already has an account"
+      search_existing: "Search among existing juries"
+      associate_jury_button: "Associate Jury"
+      invite_new: "Otherwise invite them to create an account"
+      enter_email: "Enter an email"
+      guest_can_modify: "The guest can modify or correct this information"
+      invite_user: "Invite User"
+      existing_account: "If the person you wanted to invite already has an account but doesn't have a Jury account, you can assign them this role. Enter their email and then associate them with your organization."
+      email_label: "Email"
+      assign_jury_role: "Assign Jury Role"
+    admin:
+      title: "Admin Dashboard"
+    jury:
+      files_to_evaluate: "Your files to evaluate (grouped by categories)"
+      view_applications: "View %{count} applications"
+    organiser:
+      rehearsal_rooms: "Rehearsal rooms"
+      add_room: "Add a rehearsal room"
+      edit_room: "Edit the rehearsal room"
+      confirm_delete_room: "Are you sure you want to delete this rehearsal room ?"
+      jury_members: Jury members
+      add_jury: Add jury
+      confirm_delete_pianist: "Delete pianist ?"
+      dashboard: "Dashboard"
+      your_competitions: "Your competitions"
+      create_edition: "Create a competition edition"
+      view: "View"
+      create_competition: "Create a competition"
+      organism_info: "Organization information"
+      edit: "Edit"
+      partners: "Partners"
+      accompanying_pianists: "Accompanying Pianists"
+      add_pianist: "+ Add an accompanying pianist"
+
+  devise:
+    confirmations:
+      new:
+        title: "Resend confirmation instructions"
+        submit: "Resend confirmation instructions"
+
+    invitations:
+      edit:
+        welcome: "Welcome to Musicast"
+        setup_password: "Set up your password"
+        password_placeholder: "Enter your password"
+        password_confirmation_placeholder: "Enter your password again"
+        terms_agreement_html: "By checking this box, I acknowledge that I have read and accept the %{terms_link} and the %{privacy_link} of the Musicast platform."
+        terms_of_use: "Terms of Use"
+        privacy_policy: "Privacy Policy"
+        newsletter_agreement: "I agree to receive emails (no spam, only useful information) from Musicast."
+        save: "Save"
+        random_opera_image: "random opera image"
+      new:
+        header: "Send an invitation"
+        submit_button: "Send an invitation"
+
+    mailer:
+      confirmation_instructions:
+        welcome: "Welcome %{email}!"
+        confirm_link: "You can confirm your account email through the link below:"
+        confirm_account: "Confirm my account"
+      email_changed:
+        greeting: "Hello %{email}!"
+        changing: "We're contacting you to notify you that your email is being changed to %{email}."
+        changed: "We're contacting you to notify you that your email has been changed to %{email}."
+      password_change:
+        greeting: "Hello %{email}!"
+        message: "We're contacting you to notify you that your password has been changed."
+      reset_password_instructions:
+        greeting: "Hello %{email}!"
+        requested: "Someone has requested a link to change your password. You can do this through the link below."
+        change_link: "Change my password"
+        ignore: "If you didn't request this, please ignore this email."
+        wont_change: "Your password won't change until you access the link above and create a new one."
+      unlock_instructions:
+        greeting: "Hello %{email}!"
+        locked: "Your account has been locked due to an excessive number of unsuccessful sign in attempts."
+        click_link: "Click the link below to unlock your account:"
+        unlock_link: "Unlock my account"
+
+    passwords:
+      edit:
+        title: "Change your password"
+        new_password: "New password"
+        characters_minimum: "%{count} characters minimum"
+        confirm_password: "Confirm your new password"
+        change_password: "Change my password"
+      new:
+        title: "Forgot your password?"
+        send_instructions: "Send me reset password instructions"
+
+    registrations:
+      edit:
+        title: "Edit %{resource}"
+        waiting_confirmation: "Currently waiting confirmation for: %{email}"
+        leave_blank: "leave it blank if you don't want to change it"
+        need_current_password: "we need your current password to confirm your changes"
+        newsletter_agreement: "I agree to receive emails (no spam, only useful information) from Musicast."
+        update: "Update"
+        cancel_account: "Cancel my account"
+        unhappy: "Unhappy?"
+        cancel_my_account: "Cancel my account"
+        are_you_sure: "Are you sure?"
+        back: "Back"
+        password: "New password"
+        password_confirmation: "New password confirmation"
+        current_password: "Current password"
+      new:
+        title: "Create my account"
+        role: "Role"
+        password: "Password"
+        characters_minimum: "%{count} characters minimum"
+        password_confirmation: "Password confirmation"
+        terms_agreement_html: "By checking this box, I acknowledge that I have read and accept the %{terms_link} and the %{privacy_link} of the Musicast platform."
+        terms_of_use: "Terms of Use"
+        privacy_policy: "Privacy Policy"
+        newsletter_agreement: "I agree to receive emails (no spam, only useful information) from Musicast."
+        create: "Create"
+
+    sessions:
+      new:
+        title: "Sign in"
+        password: "Password"
+        remember_me: "Remember me"
+        sign_in: "Sign in"
+
+    shared:
+      links:
+        log_in: "Log in"
+        sign_up: "Sign up"
+        forgot_password: "Forgot your password?"
+        no_confirmation_instructions: "Didn't receive confirmation instructions?"
+        no_unlock_instructions: "Didn't receive unlock instructions?"
+        sign_in_with: "Sign in with %{provider}"
+
+    unlocks:
+      new:
+        title: "Resend unlock instructions"
+        resend_instructions: "Resend unlock instructions"
+
+  edition_competitions:
+    registration_deadline: "Inscriptions close on %{var}"
+    common:
+      continue: "Continue"
+      view: "View"
+      delete: "Delete"
+
+    category_modal_infos:
+      view_rules: "View competition rules"
+      view_rules_english: "View competition rules in English"
+      selection_instructions: "Selection instructions"
+      can_complete_application: "You can complete your application and select your works in the next step."
+      complete_profile_html: "You must have completed your %{profile_link} to be able to create an application. By clicking 'continue' you will be redirected to edit your information"
+      profile: "profile"
+      create_account_html: "You need to create an account to register for a competition. Follow this %{link}"
+      link: "link"
+      required_documents: "Required Documents"
+      required_elements: "Required Elements:"
+      category_description: "Category Description"
+      required_program: "Required Program"
+      imposed_works: "Imposed Works"
+      semi_imposed_works: "Semi-imposed Works"
+      choice_imposed_works: "Choice Works"
+      pieces: "pieces"
+      to_select: "to select"
+      prizes: "Prizes"
+      jury: "Jury"
+      jury_members: "Jury Members"
+      required_documents_summary: "Required Documents Summary"
+      no_rules_available: "No rules available"
+      create_application: "Create my application"
+    edition_competition:
+      edit: "Edit"
+      delete: "Delete this edition"
+      confirm_delete: "Delete the edition?"
+      year: "Year"
+      specific_details: "Specific details (original language)"
+      specific_details_english: "Specific details (English)"
+      start_date: "Start date"
+      end_date: "End date"
+      end_of_registration: "End of registration"
+      rule_document: "Rules"
+      rule_document_english: "Rules in English"
+      confirm_delete_document: "Delete the document?"
+      no_document: "No rule document attached."
+      share_link: "Share link"
+      share_link_english: "Share link in English"
+      qr_code: "QR code"
+      qr_code_english: "QR code in English"
+
+    form:
+      create_edition: "Create an edition"
+      edit_edition: "Edit edition"
+      year: "Year"
+      registration_closing: "Registration closing"
+      registration_closing_hint: "Date until which you accept applications. You will later be able to configure the date until which candidates can modify their program for each round."
+      event_start_date: "Event start date"
+      event_end_date: "Event end date"
+      street: "Street number and name"
+      street_placeholder: "3 Claude Debussy Street"
+      zipcode: "Zip code"
+      city: "City"
+      country: "Country"
+      specific_details_placeholder: "Specify the new terms of this edition if necessary (original language)"
+      specific_details_placeholder_english: "Specify the new terms of this edition if necessary (English)"
+      competition_rules: "Competition rules (PDF)"
+      competition_rules_english: "Competition rules in English (PDF)"
+      save: "Save"
+
+    candidate_edition_competition:
+      choose_category: "Choose a category"
+      available: "available"
+
+    edit:
+      back: "Back"
+
+    index:
+      title: "Competition editions"
+      show: "View this competition edition"
+      new: "New competition edition"
+
+    new:
+      cancel: "Cancel"
+
+    show:
+      confirm_delete: "Delete edition ?"
+      edition_published: "Your edition is published. Check the applications for each category and then generate the order of passage and schedule for each round below"
+      edition: "Edition"
+      published: "Published"
+      ready_to_publish: "Ready to publish"
+      publish_after_configuration: "You can publish after configuring at least one round for each category"
+      next_transfers: "Payments"
+      registration_fees_sum: "Sum of registration fees"
+      no_registrations: "No registrations yet"
+      amount: "Amount"
+      paid_registrations: "Paid registrations"
+      platform_fee: "Platform fee total"
+      total: "Total"
+      publish_confirmation: "Publication confirmation"
+      publish_warning: "Warning, once published, the edition can no longer be modified. Check that all categories are correctly configured:"
+      confirm_publish: "I confirm that I want to publish this edition"
+      publish: "Publish"
+      confirm: "Are you sure you want to publish this edition?"
+      not_yet: "Not yet"
+      categories: "Categories"
+      start_by_adding: "Start by adding a category"
+      add_category: "Add a category"
+      configure_category: "Configure category"
+      applications: "%{count} application(s)"
+      confirm_delete_category: "Are you sure you want to delete this category?"
+
+  free_choice_airs:
+    form:
+      free_choice: "Free choice"
+      air: "Air"
+      submit: "Save"
+
+    free_choice_air:
+      free_choice: "Free choice"
+      air: "Air"
+
+    edit:
+      title: "Editing free choice air"
+      show: "Show this free choice air"
+      back: "Back to free choice airs"
+
+    index:
+      title: "Free choice airs"
+      show: "Show this free choice air"
+      new: "New free choice air"
+
+    new:
+      title: "New free choice air"
+      back: "Back to free choice airs"
+
+    show:
+      edit: "Edit this free choice air"
+      back: "Back to free choice airs"
+      destroy: "Destroy this free choice air"
+
+  free_choices:
+    form:
+      programme_requirement: "Programme requirement"
+      number: "Number"
+      max_length_minutes: "Maximum length in minutes"
+      submit: "Save"
+
+    free_choice:
+      programme_requirement: "Programme requirement"
+      number: "Number"
+      max_length_minutes: "Maximum length in minutes"
+
+    edit:
+      title: "Editing free choice"
+      show: "Show this free choice"
+      back: "Back to free choices"
+    index:
+      title: "Free choices"
+      show: "Show this free choice"
+      new: "New free choice"
+    new:
+      title: "New free choice"
+      back: "Back to free choices"
+    show:
+      edit: "Edit this free choice"
+      back: "Back to free choices"
+      destroy: "Destroy this free choice"
+  global:
+    dashboard: "Dashboard"
+    inscription_status: "Inscription status"
+    candidate: "Candidate"
+    performance: "performance"
+    prize: "prize"
+    prizes: "prizes"
+    required_program: "Required program"
+    category: "Category"
+    profile: "Profile"
+    scores: "Scores"
+    competition: "Competition"
+    action: "Action"
+    back_to_var: "Back to %{var}"
+    terms: "Terms"
+    semi_imposed_works: "Semi-imposed works"
+    choice_imposed_works: "Choice imposed works"
+    imposed_works: "Imposed works"
+    inscription: "application"
+    free: "Free"
+    years: "years"
+    round: "round"
+    rounds: "rounds"
+    program: "Program"
+    confirmations:
+      are_you_sure: "Are you sure ?"
+      are_you_sure_delete_performance: "Are you sure you want to delete this performance ? This action is irreversible. The tour and rehearsal schedule will have to be regenerated and sent back to the candidates."
+    youtube_link: "YouTube link"
+    home: "Home"
+    offer: "Offer"
+    not_available_abbr: "N/A"
+    recommendation_letter: "Recommendation letter"
+    photo: "Photo"
+    parental_authorization: "Parental authorization"
+    motivation_essay: "Motivation essay"
+    instruments:
+      alto: "Alto"
+      ancient_instruments_and_baroque_music: "Ancient instruments and baroque music"
+      bassoon: "Bassoon"
+      cello: "Cello"
+      chamber_music: "Chamber music"
+      choirs_and_choral_singing: "Choirs and choral singing"
+      clarinet: "Clarinet"
+      composition_and_musical_writing: "Composition and musical writing"
+      double_bass: "Double bass"
+      flute: "Flute"
+      guitar: "Guitar"
+      harp: "Harp"
+      horn: "Horn"
+      lyrical_singing: "Lyrical singing"
+      oboe: "Oboe"
+      orchestration_and_orchestra_conducting: "Orchestration and orchestra conducting"
+      percussion: "Percussion"
+      piano: "Piano"
+      trombone: "Trombone"
+      trumpet: "Trumpet"
+      tuba: "Tuba"
+      violin: "Violin"
+    actions:
+      to_start: "to start"
+      view_with_correct_format: "View with correct format"
+      clear: "Clear"
+      all: "All"
+      search: "Search"
+      search_by_keywords: "Search by keywords"
+      filter_by: "Filter by"
+      view_payment: "View payment"
+      accept: "Accept"
+      reject: "Reject"
+      accept_wait_payment: "Approve and wait for payment"
+      confirm_payment: "Confirm payment"
+      payment_error: "Indicate a payment error"
+      report_payment_error: "Report a payment error"
+      click_to_view_pdf: "Click to view PDF"
+      click_to_enlarge: "Click to enlarge"
+      open_in_new_tab: "Open in new tab"
+      close: "Close"
+      create: "Create"
+      replace_file_hint: "To replace this file, download a new document below"
+      replace_image_hint: "To replace this image, download a new photo below"
+      remove: "Remove"
+      download: "Download"
+      upload: "Upload"
+      download_all: "Download All"
+      download_file: "Download %{filename}"
+      login: "Login"
+      logout: "Logout"
+      change_password: "Change password"
+      create_account: "Create account"
+      back: "Back"
+      edit: "Edit"
+      show: "View"
+      delete: "Delete"
+      destroy: "Delete"
+      continue: "Continue"
+      save: "Save"
+      submit: "Submit"
+      next: "Next"
+      view: "View"
+      previous: "Previous"
+      cancel: "Cancel"
+      copy: "Copy"
+    messages:
+      copied_to_clipboard: "Copied to clipboard"
+    back: "Back"
+    home: "Home"
+    profile: "Profile"
+    understood: "I Understand"
+  inscription_orders:
+    new:
+      title: "New secure payment"
+      about_to_pay: "You are about to pay for your competition registration"
+      certification_html: "You certify that your application is perfectly complete according to the stated requirements (check again <a href='#'>here</a>)"
+      no_refund: "Registration is not refundable by Musicast."
+
+    show:
+      congratulations: "Congratulations, your registration has been successfully recorded"
+      order_number: "Registration Order #%{id}"
+      issued_on: "ISSUED ON"
+      user: "USER"
+      inscription: "REGISTRATION"
+      total: "TOTAL"
+      reminder: "Reminder: Finish completing your application if it is not finished. Incomplete applications are automatically rejected and are not refundable."
+      view_application: "View my application"
+
+  inscriptions:
+    modals:
+      payment_required:
+        title_accepted: "Congratulations! Your application has been accepted"
+        title_payment_error: "Warning: Payment Issue"
+        accepted_message: "Your application has been approved by the competition organizers. To complete your registration, please proceed with the payment of the registration fee in the 'DETAILS' section of this page (upload a proof of payment)."
+        payment_error_message: "An error was detected in your previous payment. To complete your registration, please proceed with a new payment of the registration fee in the 'DETAILS' section of this page (upload a new proof of payment)."
+        close: "Close"
+      incorrect_duration:
+        title: "Warning: Incorrect Program Duration"
+        message: "Your program duration does not meet the requirements for this round. You have two options to fix this issue:"
+        option1: "Choose a different piece from your list of available pieces for this round, as long as you still have time (until the performance submission deadline)."
+        option2: "Return to the program selection step to modify your selection, as long as you still have time (until the program modification deadline of each round)."
+        deadline_warning: "After the application submission deadline, you will no longer be able to modify the list of pieces available for the competition. After the performance submission deadline, you will no longer be able to modify your program for this round."
+        choose_carefully: "Please choose carefully."
+        edit_program: "Edit my program"
+        close: "Close"
+    payment_proof: "Payment proof"
+    scores:
+      scores_info: "Upload imperatively the scores of the pieces you will perform for this round. They will be accessible to the jury and your assigned accompanist, if there is one. The competition organization can also send you scores through this area."
+      scores_section: "Scores"
+      upload_scores: "Upload scores"
+      upload_hint:
+        one: "You can still add 1 file"
+        other: "You can still add %{count} files"
+      max_files_reached: "Maximum number of files reached (10)"
+      download: "Download"
+      delete: "Delete"
+    steps:
+      program:
+        important: "Important"
+        important_text: "Choose the pieces for each round in a second time to build the program. You can modify the choices of this step until the application deadline. Once the deadline has passed, you cannot pick different pieces, but you can still modify the program of each round, until the modification deadline of the program of each round."
+      item_requirements:
+        click_here_to_reload: "Click HERE to reload if portrait use button doesn't respond"
+        title: "Required documents"
+        current_document: "Current document"
+        use_artistic_photo: "Use my artistic photo"
+        uploaded: "Uploaded"
+        pdf_file_error: "Please upload a valid PDF file"
+        file_too_large: "The file is too large. Maximum: %{max}MB. Current: %{current}MB"
+        invalid_file_type: "The file is not valid. Current type: %{type}"
+        replace_document: "Replace document"
+        upload_pdf: "Upload PDF"
+        youtube_link: "YouTube link"
+        youtube_link_hint: "Link to your YouTube video"
+        motivation_letter: "Motivation letter"
+        youtube_hint: "Link to your YouTube video"
+        photo: "Photo"
+        crop_image: "Crop image"
+        apply_crop: "Apply cropping"
+        crop_ratio_message: "Please crop the image with a ratio of %{ratio}"
+        select_photo: "Click to select a photo"
+      preferences:
+        i_accept: "I accept"
+        rule_document_english: "the competition rules (in English)"
+        rule_document: "the competition rules"
+        time_justification: "Time justification"
+        time_justification_info: "Please justify your time preference"
+        title: "Preferences"
+        time_preferences: "Time preferences"
+        time_justification_placeholder: "e.g.: I'm not available in the morning because my train leaves at 9am"
+        terms: "Terms"
+        payment: "Payment"
+        payment_info: "Payment information"
+        payment_method: "Payment method"
+        time_preference: "Time preference"
+        time_preference_info: "It's not guaranted that your time of passage will be matching your preference, but we will do our best to accomodate you."
+        select_time_preference: "Select a time preference"
+        registration_fee: "Registration fee"
+    progress:
+      completed: "Completed"
+      of: "of"
+      steps: "steps"
+      program: "Program"
+      item_requirements: "Required documents"
+      preferences: "Preferences"
+    controller:
+      application_under_review: "Your application is being reviewed. You will receive an email when the process is complete."
+      inscription_updated: "The application has been successfully updated."
+      changes_requested_success: "Changes have been requested successfully. The candidate has been notified."
+      changes_requested_error: "There was an error requesting changes."
+    new:
+      same_air_multiple_times: "You can't pick the same air more than once."
+      cancel: "Cancel"
+      title: "New registration"
+      fill_application_file: "Fill my application file"
+      competition_category: "Competition: %{competition} | Category: %{category}"
+      warning_message:
+        can_modify_until: "You can modify your file until %{date}"
+        will_be_submitted: "Your file will be submitted on this date if you have paid your registration."
+        not_required_now: "You are not required to provide the requested documents now, but make sure to do so before the submission date."
+        fill_works_now: "However, fill in the works to choose, even if you modify them later."
+        understood: "I understand"
+    pills:
+      items:
+        complete: "Complete documents"
+        incomplete: "Incomplete documents"
+      airs:
+        complete: "Complete airs"
+        incomplete: "Incomplete airs"
+      payment:
+        paid: "Paid"
+        unpaid: "Unpaid"
+        proof_submitted: "Proof submitted"
+      performances:
+        complete: "Program completed"
+        incomplete: "Program to complete"
+    choice_imposed_work_section:
+      select_air: "Select air #%{number}"
+      select_an_air: "Select an air"
+    semi_imposed_work_section:
+      guidelines: "Guidelines"
+      select_air: "Select air #%{number}"
+      select_an_air: "Select an air"
+      air_validation_failed: "Air validation failed"
+      piece_title: "Piece title %{number}"
+      title_placeholder: "e.g.: La Donna è Mobile"
+      minutes_placeholder: "e.g.: 2"
+      round_to_unit: "Round to the nearest unit"
+      duration: "Duration"
+      work: "Work"
+      work_placeholder: "e.g.: Rigoletto"
+      character: "Character"
+      character_placeholder: "e.g.: The Duke of Mantua"
+      character_hint: "For opera arias only"
+      base_tonality: "Base tonality"
+      duration_warning: "Warning: The total duration exceeds the maximum allowed duration of %{max} minutes"
+    time_preferences:
+      no_preference: "No preference"
+      morning: "Morning"
+      afternoon: "Afternoon"
+    form:
+      pianist_preferences: "Pianist preferences"
+      platform_terms_acceptance: "I accept the general conditions of the platform"
+      terms_acceptance_html: "I accept the terms and conditions of the competition"
+      candidate_brings_pianist_accompagnateur_email: "Email of the accompanying pianist"
+      candidate_brings_pianist_accompagnateur_full_name: "Full name of the accompanying pianist"
+      imposed_airs: "Imposed airs"
+      bring_own_pianist: "I'm bringing my own accompanying pianist"
+      time_preference: "Time preference"
+      time_preference_info: "It's not guaranted that your time of passage will be matching your preference, but we will do our best to accomodate you."
+      select_time_preference: "Select a time preference"
+      registration_fee: "Registration fee"
+    items_form_section:
+      required_documents: "Required documents"
+      motivation_letter: "Motivation letter"
+      upload_pdf: "Upload PDF"
+      youtube_link: "YouTube link"
+      youtube_hint: "Link to your YouTube video"
+      replace_document: "Replace document"
+    inscription:
+      missing_air: "You are missing %{count} air(s) for this round!"
+      accepted_message: "Congratulations! Your application has been accepted. Please complete the program for each round before the deadline."
+      in_review_message: "Your application is being reviewed. You will receive an email when the process is complete."
+      orchestra_accompaniment: "Orchestral accompaniment"
+      payment_proof: "Payment proof"
+      current_payment_proof: "Current payment proof"
+      replace_payment_proof: "Replace payment proof"
+      upload_payment_proof_instruction: "Please upload a proof of your payment (bank transfer receipt, screenshot, etc.)"
+      payment_proof_file: "Payment proof file"
+      payment_proof_formats: "Accepted formats: PDF, PNG, JPEG"
+      upload_proof: "Upload proof"
+      proof_submitted: "Proof submitted"
+      change_payment_proof: "Change payment proof"
+      pianist_assignment_pending: "pending"
+      pianist_assignment_explanation: "The competition will assign you an accompanying pianist after the application deadline. Please check this page regularly to see your pianist's contact information."
+      pianist_assignment_date: "Expected assignment date: after %{date}"
+      payment_iban_label: "IBAN"
+      inscription_fee: "Inscription fee"
+      application_file: "Application file"
+      competition_category: "%{competition} - %{category}"
+      view_cv_new_tab: "View CV (new tab)"
+      send_email: "Send email"
+      registration_details: "Details"
+      date_range: "From %{start} to %{end}"
+      candidate_brings_pianist: "The candidate brings their own accompanying pianist"
+      time_preference: "Time preference"
+      payment: "Payment"
+      not_paid_yet: "You haven't paid for your registration yet"
+      pay: "Pay"
+      refresh_if_problem: "Refresh the page if you encounter a problem"
+      file: "File"
+      to_complete: "To complete"
+      days_remaining_to_edit: "%{count} day(s) remaining to edit"
+      nothing_here_yet: "Nothing here yet"
+      ok: "OK"
+      video_not_available: "Video not available"
+      air_list: "Your airs"
+      imposed_airs: "Imposed airs"
+      round_by_round_program: "Round by round program"
+      round_number: "Round #%{number}"
+      imposed_airs_in_round: "%{count} imposed air(s)"
+      round_rules: "Round rules"
+      works: "Works"
+      works_count: "%{count} work(s)"
+      works_range: "Between %{min} and %{max} works"
+      piano: "Piano"
+      duration_range: "Between %{min} and %{max} minutes"
+      accompanying_pianist: "Accompanying pianist"
+      pianist: "Pianist"
+      program: "Program"
+      invalid_program_duration: "Invalid duration: %{minutes} minutes"
+      valid_program_duration: "Valid program duration: %{minutes} minutes"
+      imposed: " (imposed)"
+      update_order: "Update order"
+      edit_program: "Edit program"
+      days_remaining: "%{count} day(s) remaining"
+      no_program_yet_html: "You haven't created your program for this round yet. Deadline: %{deadline}"
+      create_my_program: "Create the program"
+      request_changes_button: "Request Changes"
+      request_changes_title: "Request Changes to Application"
+      changes_requested_label: "Changes Requested"
+      changes_requested_placeholder: "Please describe the changes needed for this application..."
+      changes_requested_hint: "Be specific about what needs to be corrected or added. The candidate will see this message."
+      changes_requested_title: "Changes Requested by Organizer"
+      submit_changes_request: "Submit Request"
+      edit_changes_request: "Edit Requested Changes"
+      edit_changes_title: "Edit Requested Changes"
+    edit:
+      title: "Edit registration"
+      modify_application: "Modify your application file"
+      can_modify_until: "You can modify your file until %{date}"
+      will_be_submitted: "Your file will be submitted to the pre-selection jury on this date if you have paid your registration."
+      edit_application_deadline: "Application file submission deadline"
+      edit_performances_deadline: "Performance submission deadline"
+    index:
+      title: "Registrations"
+      new: "New registration"
+      applications: "Applications"
+      view_first_round_order: "View first round order"
+      add_late_registration: "+ Add late registration"
+      late_registration_explanation: "You can invite a user to register late. The invited user will receive an email with a link to register."
+      enter_email: "Enter an email"
+      invited_user_can_modify: "The invited user can modify or correct this information"
+      invite_user: "Invite user"
+      late_invitations_sent: "Late registration invitations sent"
+    note_card:
+      view_video_and_vote: "View video & vote"
+    candidate_index:
+      email: "Email"
+      send_email: "Send email"
+      no_candidates_found: "No candidates found"
+      search_placeholder: "Search by candidate name"
+      your_applications: "YOUR APPLICATIONS"
+      start_date: "Start Date"
+      title: "Candidates for category %{category}"
+      back: "Back to category"
+      portrait: "Photo"
+      name: "Name"
+      status: "Status"
+      payment_status: "Payment status"
+      created_at: "Registration date"
+      filter_by_status: "Filter by status"
+      view: "View"
+    jury_index:
+      applications_to_rate: "Applications to rate"
+    upload_payment_proof_instruction: "Please upload a proof of your payment (bank transfer receipt, screenshot, etc.)"
+    payment_proof_file: "Payment proof file"
+    payment_proof_formats: "Accepted formats: PDF, PNG, JPEG"
+    upload_proof: "Upload proof"
+    proof_submitted: "Proof submitted"
+    change_payment_proof: "Change payment proof"
+    update_proof: "Update proof"
+    remove_proof: "Remove proof"
+    confirm_remove_proof: "Are you sure you want to remove this payment proof?"
+    proof_removed: "Payment proof has been removed successfully."
+    statuses:
+      draft: "Draft"
+      in_review: "In review"
+      pending: "Pending"
+      accepted: "Accepted"
+      accepted_waiting_payment: "Accepted, waiting for payment"
+      approved_waiting_payment: "Approved, waiting for payment"
+      new_payment_submitted: "New payment submitted"
+      payment_error_waiting_payment: "Payment error, waiting for payment"
+      rejected: "Rejected"
+      request_changes: "Request changes"
+      waiting_for_jury: "Waiting for jury"
+      waiting_for_payment: "Waiting for payment"
+      cancelled: "Cancelled"
+    payment_statuses:
+      no_proof_joined_yet: "No proof of payment"
+      waiting_for_approval: "Waiting for approval"
+      paid: "Paid"
+      payment_error: "Payment error"
+  juries:
+    form:
+      update: "Update"
+    jury:
+      user: "User"
+      other_information: "Other information"
+    edit:
+      modify_information: "Modify your information"
+    new:
+      new_jury: "New jury"
+
+  layouts:
+    application:
+      title: "TestConcours"
+
+  notes:
+    form:
+      note_value: "Note Value"
+      note_hint: "Give a score between 1 and 100 to this candidate"
+      details: "Details"
+      details_hint: "Provide feedback here. This feedback is anonymous."
+      save: "Save"
+
+    edit:
+      edit_note: "Edit Note"
+      no_video_available: "The candidate has not provided any available video"
+      candidate_videos: "Candidate Videos"
+      view_video: "View video %{number}"
+      no_video_available: "The candidate has not provided any available video"
+      candidate_motivation_letter: "Candidate's Motivation Letter"
+
+    new:
+      new_note: "New Note"
+      candidate_videos: "Candidate Videos"
+      view_video: "View video %{number}"
+      no_video_available: "The candidate has not provided any available video"
+      candidate_motivation_letter: "Candidate's Motivation Letter"
+
+  organisateurs:
+    form:
+      organization_name: "Organization Name"
+      organization_description: "Organization Description"
+
+    organisateur:
+      user: "User"
+      organization_name: "Organization Name"
+      organization_description: "Organization Description"
+
+    edit:
+      edit_organizer: "Edit Organizer"
+
+    index:
+      organizers: "Organizers"
+      new_organizer: "New Organizer"
+
+    new:
+      new_organizer: "New Organizer"
+
+    show:
+      edit: "Edit this organizer"
+      destroy: "Destroy this organizer"
+
+  organisms:
+    organism:
+      name: "Name of your organization"
+      description: "Description"
+      iban: "IBAN"
+      iban_hint: "Enter your IBAN to receive payments from candidates"
+      placeholder: "e.g: The Met Opera House, Association Pavarotti, etc..."
+
+    edit:
+      back: "Back"
+
+    index:
+      organisms: "Organisms"
+      show_organism: "Show this organism"
+      new_organism: "New organism"
+
+    new:
+      welcome: "Welcome to Musicast."
+      create_organism_prompt: "To get started, create your organism"
+
+    show:
+      modify: "Modify"
+
+  pages:
+    dropdown_inputs:
+      discipline: "Discipline"
+
+    edition_competition_card:
+      days_remaining: "days remaining"
+      from: "from"
+      to: "to"
+      first_prize: "1st prize"
+
+    home:
+      competitions: "Competitions"
+      no_competition_found: "No competition found 🥲. Come back later or change the filters of research."
+
+    landing:
+      musikast: "Musikast"
+      organize_publish_competitions: "Organize & publish your competitions"
+      musicast_provides: "Musicast provides you with a set of professional tools specialized in organizing, managing and promoting your competitions to a wide audience of artists."
+      get_started: "Get Started"
+      registration_without_card: "Registration <span class=\"text-success\">without card</span> or subscription"
+      launch_bonus: "Launch bonus: exclusive access to the <span class=\"text-success\">schedule generator</span>"
+      simplify_management: "Simplify management."
+      ai_validation: "AI pre-validation of registration files"
+      ai_validation_description: "Only receive complete and paid files through our platform. Our system uses artificial intelligence to validate some of the required additional documents."
+      intelligent_schedule: "Intelligent schedule generator"
+      intelligent_schedule_description: "You can easily generate and modify the order of passage once registrations are closed, and generate a customizable schedule."
+      jury_file: "Generate a file for the jury"
+      jury_file_description: "Instantly generate a customized PDF file for the jury during the tests so they can follow the proceedings and rate the candidates"
+      communicate_easily: "Communicate with candidates easily"
+      communicate_easily_description: "Send notifications to your candidates with one click. Notify acceptance or rejection of their file, their selection to move to the next round, send them the generated schedule."
+      create_jury: "Create a voting pre-selection jury"
+      create_jury_description: "You can invite people of your choice to be part of a pre-selection jury for one of the categories of your competition. This jury can assign a score from 1 to 100 to each file."
+
+    pricing:
+      pricing: "Pricing"
+      competitions: "Competitions"
+      competitions_description: "For competitions, Musicast earns revenue by taking a commission per registration file. This commission is paid by the competition."
+      user_fees: "The user covers the payment fees, which are €0.25 plus 1.5% of the registration fee."
+      commission_cap: "However, once the total amount of commissions reaches €1000 (which corresponds to 200 applications), we no longer take a commission. Beyond this point, we only take the Stripe payment fees to cover costs."
+      other_services: "Auditions, Masterclasses, and Internships"
+      other_services_description: "For auditions, masterclasses, and internships, Musicast earns revenue from the deposit of the announcement and its duration."
+
+    privacy_policy:
+      title: "**Musicast Privacy Policy**"
+      section1:
+        title: "**1. Collection and Use of Personal Data**"
+        p1: "Musicast collects personal data when you create an account, participate in a competition, or use our services. This data may include your name, email address, phone number, postal address, and payment information."
+        p2: "We use this information to manage your account, process your competition registrations, facilitate payments, and provide you with our services."
+        p3: "We may also use your data to send you communications related to our services, updates, and information about competitions you are registered for."
+        p4: "With your consent, we may use your data to send you marketing communications about our services and competitions available on our platform."
+        p5: "We do not sell your personal data to third parties. We may share your data with competition organizers you register with, but only to the extent necessary to facilitate your participation."
+        p6: "We retain your personal data for as long as necessary to provide you with our services and comply with our legal obligations."
+      section2:
+        title: "**2. Your Rights**"
+        p1: "As a Musicast user, you have certain rights regarding your personal data:"
+        rights: "- Right of access: You can request a copy of your personal data.\n- Right to rectification: You can request correction of inaccurate data.\n- Right to erasure: You can request deletion of your data in certain circumstances.\n- Right to restriction of processing: You can request limitation of processing of your data.\n- Right to data portability: You can request transfer of your data to another service.\n- Right to object: You can object to processing of your data in certain circumstances."
+        p2: "To exercise these rights, please contact us at privacy@musicast.io."
+        p3: "If you believe we have not respected your rights, you can file a complaint with the competent data protection authority."
+        p4: "We reserve the right to modify this privacy policy at any time. Any changes will be posted on this page."
+      section3:
+        title: "**3. Contact**"
+        p1: "If you have any questions regarding this privacy policy, please contact us at privacy@musicast.io."
+
+    terms_of_use:
+      title: "Terms of Use of the Musicast Web Platform"
+      section1:
+        title: "**1. Acceptance of Terms**"
+        p1: "By accessing the Musicast platform, you agree to be bound by these Terms of Use. If you do not accept these terms, please do not use our platform."
+        p2: "Musicast reserves the right to modify these terms at any time. Modifications will take effect upon publication on the platform. It is your responsibility to regularly review these terms."
+        p3: "Continued use of the platform after publication of modifications constitutes your acceptance of these modifications."
+      section2:
+        title: "**2. Use of the Platform**"
+        p1: "You are responsible for maintaining the confidentiality of your account and password. You agree to notify us immediately of any unauthorized use of your account."
+        p2: "You agree not to use the platform in a way that could damage, disable, overburden, or impair the platform or interfere with other users' use of the platform."
+        p3: "You agree not to attempt to access parts of the platform you are not authorized to access."
+      section3:
+        title: "**3. Intellectual Property**"
+        p1: "All content on the platform, including text, graphics, logos, icons, images, audio clips, digital downloads, and data compilations, is the property of Musicast or its content providers and is protected by French and international copyright laws."
+        p2: "You agree not to reproduce, duplicate, copy, sell, resell, or exploit any portion of the platform without our express written permission."
+
+  partners:
+    form:
+      partner_role: "Partner role"
+      authorization_level: "Authorization level"
+
+    partner:
+      user: "User"
+      organism: "Organism"
+      partner_role: "Partner role"
+      authorization_level: "Authorization level"
+
+    edit:
+      editing_partner: "Editing partner"
+
+    index:
+      partners: "Partners"
+      new_partner: "New partner"
+
+    new:
+      new_partner: "New partner"
+
+    show:
+      edit: "Edit this partner"
+      destroy: "Destroy this partner"
+
+  payments:
+    new:
+      checkout_summary: "Checkout summary"
+      purchase_of: "Purchase of <strong>%{inscription}</strong> for <strong>%{amount}</strong>"
+      pay: "Pay"
+
+  performances:
+    form:
+      tour_requirements: "Tour Requirements"
+      description: "Description"
+      number_of_works: "Number of Works"
+      duration: "Duration"
+      minutes: "minutes"
+      already_used: "Already used"
+      available_works: "Available works for this round"
+      change_airs: "Change airs (reselect airs from your registration)"
+      save: "Save"
+      description_english: "Description (English)"
+      selected_works: "Currently Selected Works"
+      keep: "Keep"
+      imposed: "Imposed"
+      no_works_selected: "No works selected yet"
+      works_used_in_other_rounds: "Works Used in Other Rounds"
+      current_duration: "Current Program Duration"
+      duration_warning: "Warning: This duration does not meet the requirements for this round"
+      imposed_works: "Imposed Works for This Round"
+      imposed_works_explanation: "These works are required for this round and cannot be removed."
+      no_optional_works_selected: "No optional works selected yet"
+      no_more_available_works: "No more works available for selection"
+
+    performance:
+      inscription: "Registration"
+      tour: "Round"
+      performance_time: "Performance time"
+      result: "Result"
+
+    edit:
+      modify_performance: "Modify your performance"
+
+    index:
+      performances: "Performances"
+      show_performance: "Show this performance"
+      new_performance: "New performance"
+
+    new:
+      my_program: "My program for this round"
+      choose_airs_instructions: "Choose which airs you want to perform. Please note, if there are required airs, you will only see them after creating your program and you will need to adapt accordingly. \nYou can change the order of the airs you perform from your file on the previous page, by dragging and dropping the airs to rearrange their order and clicking on \"Update program\""
+
+    show:
+      edit_performance: "Edit this performance"
+      back_to_performances: "Back to performances"
+      destroy_performance: "Destroy this performance"
+    update:
+      success: "Performance updated successfully"
+    create:
+      success: "Performance created successfully"
+  pianist_accompagnateurs:
+    form:
+      errors_prohibited: "prohibited this pianist from being saved:"
+      full_name: "Full name"
+      phone_number: "Phone number"
+      save: "Save"
+      close: "Close"
+
+    pianist:
+      confirm_delete: "Are you sure?"
+
+  prizes:
+    form:
+      create_prize: "Create Prize"
+      title: "Title"
+      prize_types:
+        monetary: "Monetary prizes"
+        non_monetary: "Non-monetary prizes (roles, concerts, etc.)"
+        recognition: "Recognition prizes"
+      prize_type: "Prize type"
+      prize_type_hint: "Choose the type of prize"
+      prize_type_monetary: "Monetary prizes"
+      prize_type_non_monetary: "Non-monetary prizes"
+      prize_type_recognition: "Recognition prizes"
+      title_english: "Title (English)"
+      title_placeholder: "Enter prize title..."
+      title_english_placeholder: "Enter prize title in English..."
+      amount: "Amount"
+      amount_hint: "Enter the monetary value of the prize"
+      amount_placeholder: "e.g. 1000"
+      other_reward: "Other Reward"
+      other_reward_english: "Other Reward (English)"
+      other_reward_placeholder: "Enter any non-monetary rewards...(roles, concerts, etc.)"
+      other_reward_english_placeholder: "Enter any non-monetary rewards in English...(roles, concerts, etc.)"
+      other_reward_hint: "e.g. Concert opportunity, recording contract, etc."
+      other_reward_english_hint: "Same as above, but in English"
+      description: "Description"
+      description_english: "Description (English)"
+      description_placeholder: "Enter a detailed description of the prize..."
+      description_english_placeholder: "Enter a detailed description of the prize in English..."
+      save: "Save"
+      french_fields: "French Fields"
+      english_fields: "English Fields"
+      common_fields: "Common Fields"
+    prize:
+      title: "Title"
+      amount: "Amount"
+      other_reward: "Other Reward"
+      description: "Description"
+      category: "Category"
+      english: "English"
+
+    index:
+      prizes: "Prizes"
+      show_prize: "Show this prize"
+      new_prize: "New prize"
+
+    new:
+      back: "Back"
+
+  programme_requirements:
+    form:
+      category: "Category"
+
+    programme_requirement:
+      category: "Category"
+
+    edit:
+      editing_programme_requirement: "Editing programme requirement"
+      show: "Show this programme requirement"
+      back: "Back to programme requirements"
+
+    index:
+      programme_requirements: "Programme requirements"
+      show: "Show this programme requirement"
+      new: "New programme requirement"
+
+    new:
+      new_programme_requirement: "New programme requirement"
+      back: "Back to programme requirements"
+
+    show:
+      edit: "Edit this programme requirement"
+      back: "Back to programme requirements"
+      destroy: "Destroy this programme requirement"
+
+  requirement_items:
+    form:
+      category: "Category"
+      type_item: "Item Type"
+      description_item: "Description"
+      description_item_english: "Description (English)"
+      title: "Title"
+      title_english: "Title (English)"
+      french_fields: "French Fields"
+      english_fields: "English Fields"
+    requirement_item:
+      category: "Category"
+      type_item: "Item Type"
+      description_item: "Description"
+      description_item_english: "Description (English)"
+      title: "Title"
+    edit:
+      editing_requirement_item: "Editing requirement item"
+    index:
+      requirement_items: "Requirement items"
+      new_requirement_item: "New requirement item"
+    new:
+      new_requirement_item: "New requirement item"
+
+  semi_imposed_work_airs:
+    form:
+      semi_imposed_work: "Semi-imposed work"
+      air: "Air"
+
+    semi_imposed_work_air:
+      semi_imposed_work: "Semi-imposed work"
+      air: "Air"
+
+    edit:
+      editing_semi_imposed_work_air: "Editing semi-imposed work air"
+
+    index:
+      semi_imposed_work_airs: "Semi-imposed work airs"
+      new_semi_imposed_work_air: "New semi-imposed work air"
+
+    new:
+      new_semi_imposed_work_air: "New semi-imposed work air"
+  semi_imposed_works:
+    card:
+      present: "Present"
+      works: "works"
+      number: "Number of works to present in this instruction"
+      max_length_minutes: "Maximum total duration in minutes"
+      min_max_total: "minutes max in total"
+      time_requirement: "Time requirement"
+      number_requirement: "Number required"
+      choose_yourself: "Choose yourself"
+    form:
+      title: "Title"
+      title_english: "Title (English)"
+      title_hint: "Give a title to your line, for example \"German Lieds\""
+      guidelines: "Guidelines"
+      guidelines_hint: "Describe your instruction here as precisely as possible"
+      guidelines_hint_english: "Describe your instruction here as precisely as possible in English"
+      guidelines_english: "Guidelines (English)"
+      number: "Number of works"
+      number_hint: "How many works are required in this instruction?"
+      max_length_minutes: "Maximum total duration (in minutes)"
+      max_length_minutes_hint: "This duration will help calculate the schedule"
+
+    semi_imposed_work:
+      guidelines: "Guidelines"
+      number: "Number"
+      max_length_minutes: "Maximum length in minutes"
+
+    edit:
+      edit_semi_imposed_work: "Edit a listing of works with specific constraints"
+
+    index:
+      semi_imposed_works: "Semi-imposed works"
+      show_semi_imposed_work: "Show this semi-imposed work"
+      new_semi_imposed_work: "New semi-imposed work"
+
+    new:
+      new_semi_imposed_work: "New semi-imposed work"
+      back_to_semi_imposed_works: "Back to semi-imposed works"
+
+    show:
+      edit_semi_imposed_work: "Edit this semi-imposed work"
+      back_to_semi_imposed_works: "Back to semi-imposed works"
+      destroy_semi_imposed_work: "Destroy this semi-imposed work"
+  tours:
+    shuffle:
+      success: "Order of passage shuffled successfully."
+    results:
+      save_results_and_finish_tour: "Save results and finish tour"
+      finish_tour_confirm: "Are you sure you want to finish this tour? This action is irreversible and candidates will be notified of the results."
+      candidates_will_be_notified: "Candidates will be notified of the results."
+      tour_finished_title: "Tour finished."
+      notification_instruction: "Send a notification to each candidate to inform them of their result."
+      use_buttons_below: "Use the buttons below to notify candidates"
+      qualified_sent_to_next_tour: "Qualified candidates have been sent to the next tour."
+      next_tour: "Next tour"
+      no_next_tour: "There is no next tour. Congratulations to the finalists!"
+      send_qualified_to_next_tour: "Send qualified candidates to the next tour"
+      candidate: "Candidate"
+      order: "Order"
+      presented_airs: "Presented airs"
+      result: "Result"
+      no_performances_yet: "No performances have been added to this tour yet."
+      and_others: "and %{count} others"
+      see_more: "see more"
+      tour_finished: "The tour is finished"
+      candidates_have_been_notified: "Candidates have been notified of the results."
+      candidates_title: "Candidates"
+      email_not_qualified: "Email non-qualified candidates"
+      personalized_email: "Personalized email"
+      qualify: "Qualify"
+      qualified_title: "Qualified (%{count})"
+      email_qualified: "Email qualified candidates"
+      cancel_qualification: "Cancel qualification"
+      qualification_success: "Performance qualification status updated successfully."
+      qualification_error: "Error updating performance qualification status."
+    tour_configuration_form:
+      start_time: "Start time"
+      start_time_hint: "Indicate the start time of the tour."
+      max_end_of_day_time: "Maximum end of day time"
+      max_end_of_day_time_hint: "Indicate the maximum end time of the day."
+      new_day_start_time: "New day start time"
+      new_day_start_time_hint: "If the tour extends to another day due to the number of candidates, you can indicate a different start time for this new day."
+      confirm_and_generate: "Confirm configuration and generate schedule"
+    tour:
+      order_of_passage_description: "Configure the order of passage and accompaniments"
+      schedule_of_performances: "Schedule of performances"
+      qualified_candidates: "Qualified candidates"
+      tour: "Round"
+      next_tour: "Next round"
+      previous_tour: "Previous round"
+      add_tour: "Add a round"
+      drag_and_drop_info: "Drag and drop the tours to change their order"
+      title: "Title"
+      description: "Description"
+      english_description: "Description (English)"
+      start_date: "Start date"
+      final_performance_submission_deadline: "Final performance submission deadline"
+      category: "Category"
+      tour_configuration: "Tour configuration"
+      order_of_passage: "Order of passage"
+      planning: "Planning"
+      results: "Results"
+      tour_is_finished: "The tour is finished."
+      no_planning_yet: "You don't have a schedule yet."
+      generate_planning_instruction: "You can generate one by clicking on the button below."
+      generate_with_current_order: "You will generate a schedule with the current order of passage."
+      generate_planning: "Generate schedule"
+      can_generate_after_deadline: "You can only generate the schedule once the performance submission deadline for the tour has passed, on:"
+    edit:
+      editing_tour: "Editing tour"
+      edit_tour: "Edit tour"
+    index:
+      tours: "Tours"
+      show_this_tour: "Show this tour"
+      new_tour: "New tour"
+    new:
+      new_tour: "New tour"
+    show:
+      tour_details: "Tour details"
+      description: "Description"
+      start_date: "Start date"
+      final_performance_submission_deadline: "Final performance submission deadline"
+      performances: "Performances"
+      planning: "Planning"
+      results: "Results"
+      configure_tour_planning: "Configure tour planning"
+      start_time: "Start time"
+      time_between_performances: "Time between performances (minutes)"
+      performances_per_day: "Performances per day"
+    schedule:
+      your_planning: "Your schedule (You can modify it as long as you haven't sent the invitations)"
+      can_modify_later: "You can modify it later of course, but you will have to notify the candidates yourself."
+    show_jury_pdf:
+      required_item_photo: "Required item photo"
+      years_old: "years old"
+      notes: "NOTES"
+    show_pdf:
+      candidate: "Candidate"
+      passage_time: "Passage time"
+      order: "Order"
+      break: "Break"
+    rehearsal_type: "Rehearsal type"
+    rehearsal_types:
+      nothing: "No rehearsal or warmup"
+      solo_warmup: "Solo warmup"
+      pianist_warmup: "Short rehearsal with pianist"
+      pianist_rehearsal: "Pianist rehearsal (not the same day than performance)"
+      orchestra_rehearsal: "Orchestra rehearsal (not the same day than performance)"
+      default: "Rehearsal schedule"
+      description:
+        solo_warmup: "Solo warm-up room"
+        pianist_warmup: "Short rehearsal with pianist"
+        pianist_rehearsal: "Full rehearsal with pianist"
+        orchestra_rehearsal: "Rehearsal with orchestra"
+        default: "Rehearsal schedule"
+    form:
+      rehearse_time_slot_per_candidate: "Rehearsal duration per candidate (in minutes)"
+      rehearsal_type: "Rehearsal type"
+      needs_rehearsal: "Do you need to configure a rehearsal planning for this tour?"
+      needs_rehearsal_hint: "If yes, you can configure a rehearsal planning for this tour in the 'Planning' section of the tour."
+      info: "You can upload scores here to send to candidates (for example for an imposed work of composition). Candidates also have a space to upload their scores, in their folder."
+      tour_scores: "Tour Scores (optional)"
+      download: "Download"
+      accepted_formats: "Accepted formats: PDF, JPG, PNG (max 10 files)"
+      max_files_reached: "Maximum number of files reached (10)"
+      requires_orchestra: "Requires orchestra accompaniment ?"
+      requires_orchestra_hint: "Check if this round requires an orchestra accompaniment"
+      title_placeholder: "e.g.: Preliminaries, Semi-finals, Finals..."
+      description_placeholder: "Describe the specific rules for this round..."
+      start_date: "Start date"
+      start_time: "Start time"
+      final_performance_submission_deadline: "Final performance submission deadline"
+      imposed_air_selection_label: "Imposed air selection"
+      imposed_air_selection_label_optional: "Imposed air selection (optional)"
+      none: "None"
+      multiple_selection_help: "Hold Ctrl (or Cmd on Mac) to select multiple options"
+      create_imposed_work_first: "You must first create an imposed work for this category before you can select imposed airs."
+      requires_pianist_accompanist: "Requires a pianist accompanist"
+      requires_pianist_accompanist_hint: "Check if <span class='text-primary'>either you or the candidate</span> brings a pianist accompanist for this round"
+      accompaniment_settings: "Accompaniment settings & Rehearsals"
+      configurations: "Configurations"
+      tour_requirement_description_placeholder: "Describe the specific requirements for this round..."
+      min_number_of_works: "Minimum number of works"
+      max_number_of_works: "Maximum number of works"
+      min_duration_minute: "Minimum duration (minutes)"
+      max_duration_minute: "Maximum duration (minutes)"
+      title_english_placeholder: "Enter tour title in English"
+      description_english_placeholder: "Enter tour description in English"
+      tour_requirement_description_english_placeholder: "Enter requirements description in English"
+    order_of_performances:
+      min_consecutive_performances: "Minimum number of consecutive performances per pianist"
+      current_order: "Current order"
+      shuffle_confirm: "Are you sure you want to randomly shuffle the order of performances?"
+      shuffle_randomly: "Shuffle randomly"
+      assign_pianists: "Assign pianists"
+      assign_pianist: "Assign pianist"
+      pianists_for_tour: "Pianists for this tour"
+      select_pianists: "Select pianists"
+      pianist_assignment_config: "Pianist assignment configuration"
+      max_consecutive_performances: "Maximum number of consecutive performances per pianist"
+      assign: "Assign"
+      change_order_instructions: "Change the order by modifying the number and clicking on"
+      or_shuffle: "or shuffle with"
+      candidate: "Candidate"
+      order: "Order"
+      presented_airs: "Presented airs"
+      pianist_accompanist: "Pianist accompanist"
+      timing: "Timing"
+      passage_preference: "Passage preference"
+      actions: "Actions"
+      no_performances_yet: "No performances have been added to this tour yet."
+      and_others: "and %{count} others"
+      see_more: "see more"
+      change_order_confirm: "Are you sure you want to change the order?"
+      select_pianist: "Select pianist"
+      brings_own_pianist: "Brings own pianist"
+    planning:
+      rehearsal_start: "Rehearsal start"
+      rehearsal_end: "Rehearsal end"
+      pianist: "Pianist accompanist"
+      no_rehearsals_scheduled: "No rehearsals scheduled"
+      jury_form_description: "Select the fields you want to include in the jury document"
+      detailed_program: "Detailed Program"
+      simple_air: "Simple Piece"
+      biography_options: "Biography Options"
+      short_bio: "Short Bio"
+      medium_bio: "Medium Bio"
+      long_bio: "Long Bio"
+      short_bio_en: "Short Bio (EN)"
+      medium_bio_en: "Medium Bio (EN)"
+      long_bio_en: "Long Bio (EN)"
+      photo_options: "Photo Options"
+      profile_photo: "Profile Photo"
+      artistic_photo: "Artistic Photo"
+      additional_options: "Additional Options"
+      notes_space: "Notes Space"
+      order_of_passage: "Order of Passage"
+      candidate_information: "Candidate Information"
+      candidate_number: "Candidate Number"
+      full_name: "Full Name"
+      nationality: "Nationality"
+      birth_date: "Birth Date"
+      voice_type: "Voice Type"
+      performance_information: "Performance Information"
+      performance_time: "Performance Time"
+      program: "Program"
+      accompanist: "Accompanist"
+      include_scoring_grid: "Include Scoring Grid"
+      include_notes_section: "Include Notes Section"
+      reconfigure_planning: "Reconfigure Planning"
+      modify_constraints: "Modify Constraints"
+      email_subject: "Information about your competition passage"
+      email_body: "Hello, here is the information regarding your competition passage..."
+      send_email_to_all_candidates: "Send email to all candidates"
+      recipients: "recipients"
+      email_example: "e.g.: Hello, here is the information regarding your passage..."
+      download_planning_pdf: "Download planning (PDF)"
+      configure_jury_folder: "Configure jury folder"
+      download_jury_folder_pdf: "Download jury folder (PDF)"
+      jury_planning_configuration: "Jury planning configuration"
+      tour_planning: "Tour planning"
+      planning_generated_success: "The planning has been successfully generated"
+      add_breaks_instructions: "You can add breaks by clicking on the + Add break button"
+      change_date_confirm: "Are you sure you want to change the date? This will affect all performances on this day."
+      add_break: "Add break"
+      breaks_chronological_order: "Breaks must be added in chronological order"
+      start_time: "Start time"
+      end_time: "End time"
+      candidate: "Candidate"
+      passage_time: "Passage time"
+      order: "Order"
+      break: "Break"
+      program_options: "Program options"
+      delete_break_confirm: "Are you sure you want to delete this break?"
+      management_and_exports: "Management and exports"
+      you_can_now_manage: "You can now manage the planning or export documents."
+      manage_planning: "Manage planning"
+      exports_and_documents: "Exports and documents"
+      planning_not_generated_yet: "Planning has not been generated yet."
+      download_schedule: "Download schedule"
+      rehearsal_schedule: "Rehearsal schedule"
+      room: "Room"
+      rehearsals: "rehearsals"
+    solo_warmup:
+      configure_rehearsal_schedule: "Configure rehearsal schedule"
+      rehearsal_schedule_configuration: "Rehearsal schedule configuration"
+      time_slot_duration: "Time slot duration (in minutes)"
+      time_slot_hint: "Defines the duration of each rehearsal slot"
+      buffer_time: "Buffer time before performance (minutes)"
+      buffer_time_hint: "Time needed between the end of the rehearsal and the start of the performance"
+      select_available_rooms: "Select available rooms"
+      select_rooms_hint: "Select one or more rehearsal rooms to distribute candidates before their performance"
+      create_room: "Create a room"
+      no_rooms_registered: "You have not registered any rooms yet."
+      add_rooms_in_organization: "Add rooms in your organization space"
+      to_start: "to get started"
+      save_config_and_generate: "Save configuration and generate rehearsal schedule"
+      add_room: "Add a room"
+      room_name: "Room name"
+      notes: "Notes"
+      opening_time: "Opening time"
+      closing_time: "Closing time"
+      description: "Description"
+      description_english: "Description (English)"
+      rehearsal_start: "Rehearsal start"
+      rehearsal_end: "Rehearsal end"
+      download_warmup_schedule: "Download warmup schedule (PDF)"
+    planning_jury_form:
+      detailed_program: "Detailed program"
+      simple_air: "Simple air"
+      notes_space: "Notes space"
+      profile_photo: "Profile photo"
+      artistic_photo: "Artistic photo"
+      short_bio: "Short bio"
+      medium_bio: "Medium bio"
+      long_bio: "Long bio"
+      short_bio_en: "Short bio (EN)"
+      medium_bio_en: "Medium bio (EN)"
+      long_bio_en: "Long bio (EN)"
+      order_of_passage: "Order of passage"
+    pianist_rehearsal_planning:
+      candidate_column: "Candidate"
+      date_column: "Date"
+      start_time_column: "Start Time"
+      end_time_column: "End Time"
+      room_column: "Room"
+      actions_column: "Actions"
+      no_rehearsals: "No pianist rehearsals scheduled yet. Configure the schedule to generate rehearsals."
+      no_rehearsals_for_pianist: "No rehearsals scheduled for this pianist in this room."
+      move_up_button: "Move this rehearsal up"
+      move_down_button: "Move this rehearsal down"
+      first_position: "First in the list"
+      last_position: "Last in the list"
+      statistics:
+        candidates_singular: "candidate"
+        candidates_plural: "candidates"
+    pianist_rehearsal:
+      configure_button: "Configure Pianist Rehearsal Schedule"
+      download_schedule: "Download Full Schedule"
+      download_room_schedule: "Download Room Schedule"
+      room_label: Room
+      configuration_title: "Pianist Rehearsal Schedule Configuration"
+      rehearsal_start_datetime: "Rehearsal Start Date and Time"
+      rehearsal_start_hint: "When pianist rehearsals will begin"
+      time_slot_duration: "Time Slot Duration (minutes)"
+      time_slot_hint: "Duration of each candidate's rehearsal slot"
+      select_available_rooms: "Select Available Rooms"
+      select_rooms_hint: "Select rooms available for rehearsals"
+      create_room: "Create Room"
+      no_rooms_registered: "No rooms registered for this organization"
+      add_rooms: "Add rooms in organization settings"
+      save_config_and_generate: "Save Configuration and Generate Schedule"
+      add_room_modal_title: "Add Room"
+      schedule_title: "Pianist Rehearsal Schedule"
+  candidate_rehearsals:
+    move_up:
+      success: "Rehearsal order successfully modified."
+      error: "Unable to move this rehearsal up."
+    move_down:
+      success: "Rehearsal order successfully modified."
+      error: "Unable to move this rehearsal down."
+  sidebar:
+    home: "Home"
+    profile: "Profile"
+    profile_jury: "Profile (jury)"
+    home_jury: "Home (jury)"
+    applications: "Applications"
+    dashboard: "Dashboard"
+    sign_in: "Sign In"
+    sign_up: "Sign Up"
+    candidates_list: "Candidates list"
+    inscriptions: "Inscriptions"
+    rounds: "Rounds"
+  shared:
+    components:
+      music_search_component:
+        search_composer: "Search for Composer..."
+        loading: "Loading..."
+    flashes:
+      close: "Close"
+    air_fields:
+      select_tonality: "Select a tonality"
+      delete: "Delete"
+      title: "Title"
+      composer: "Composer"
+      work: "Work"
+      character: "Character"
+      character_hint: "For opera arias only"
+      duration: "Duration"
+      duration_hint: "Round up to the next minute"
+      tonality: "Tonality"
+      tonality_hint: "Original tonality except for lieder"
+      additional_info: "Additional Information"
+      additional_info_english: "Additional Information (English)"
+      additional_info_placeholder: "Enter additional information..."
+      additional_info_english_placeholder: "Enter additional information in English..."
+      minutes: "Minutes *"
+      character_placeholder: "(optional) e.g.: Duke of Mantua"
+      title_placeholder: "e.g.: La Donna è Mobile"
+      composer_placeholder: "e.g.: G.Verdi"
+      work_placeholder: "e.g.: Rigoletto"
+    navbar:
+      dropdown_menu: "dropdown menu"
+  scores:
+    show:
+      title: "Competition Category: %{category_name}"
+      reload_notice: "Reload the page to see if new scores have been updated."
+      organisation_scores_title: "Scores from Organization for the tour"
+      no_organisation_scores: "No scores uploaded by the organization for this tour."
+      pianist_scores_title: "Scores for %{pianist_name}"
+      download_performance_score_title: "Download %{filename} (Performance Score)"
+      download_tour_score_title: "Download %{filename} (Tour Score)"
+      no_scores_available: "No scores available"
+      download_participant_scores_action: "Download Scores for %{participant_name}"
+      scores_title: "Scores: %{category_name}"
+      send_link_button: "Send link to pianists"
+      email_subject: "Scores Available for Category: %{category_name}"
+      email_body: "You can view the scores for this category here:\n%{url}"
+      columns:
+        file_name: "File Name"
+        added: "Added"
+        participant: "Participant"
+        scores: "Scores"
+        last_score_uploaded: "Last Score Uploaded"
+  time:
+    formats:
+      short_month_day: "%d %B"
+  rooms:
+    create:
+      success: "Room successfully created."
+    update:
+      success: "Room successfully updated."
+    destroy:
+      success: "Room successfully deleted."
+    index:
+      title: "Rooms"
+      new: "New room"
+    new:
+      title: "New room"
+      back: "Back"
+    edit:
+      title: "Edit room"
+      back: "Back"
+    form:
+      name: "Room name"
+      notes: "Notes"
+      opening_time: "Opening time"
+      closing_time: "Closing time"
+      description: "Description"
+      description_english: "Description (English)"
+      save: "Save"
+  views:
+    pagination:
+      first: "&laquo; First"
+      last: "Last &raquo;"
+      previous: "&lsaquo; Previous"
+      next: "Next &rsaquo;"
+      truncate: "&hellip;"
+
+  image_cropper:
+    adjust_image: "Adjust the image"
+    save: "Save"
+    image_requirements: "Your original image should be at least %{width} pixels wide."
+    square_format: "The final image will be resized to be square."
+    portrait_format: "The final image will be resized to a vertical portrait format (3:4)."
+    landscape_format: "The final image will be resized to a horizontal landscape format (4:3)."
+    custom_ratio_format: "The final image will be resized to a ratio of %{ratio}."
+    best_format: "The best image format for upload is .png. Only the following file types are accepted: PNG, JPEG, JPG."
+    dpi_recommendation: "For best quality, we recommend a resolution of at least 300 DPI."
+    image_metadata: "Image Metadata"
+    analyzing_image: "Analyzing image..."
+    dimensions: "Dimensions"
+    format: "Format"
+    size: "Size"
+    waiting_for_dpi: "Waiting for DPI data..."
+    click_to_select_photo: "Click to select a photo"
+    image_saved: "Image saved"
+    uploading: "Uploading..."
+    upload_success: "Image uploaded successfully"
+    image_info: "Image Information"
+    delete_confirm: "Are you sure you want to delete this image?"
+    upload_error: "Error: %{message}"
+    dpi: "DPI"
+    resolution: "Resolution"
+    px: "px"
+  fachs:
+    not_specified: "Not specified"
+    light_soprano_coloratura: "Light coloratura soprano"
+    dramatic_soprano_coloratura: "Dramatic coloratura soprano"
+    light_soprano_lyric: "Light lyric soprano"
+    lyric_soprano: "Lyric soprano"
+    spinto_soprano: "Spinto soprano"
+    dramatic_soprano_lyric: "Dramatic lyric soprano"
+    dramatic_soprano: "Dramatic soprano"
+    falcon_soprano: "Falcon soprano"
+    soubrette: "Soubrette"
+    coloratura_mezzo_soprano: "Coloratura mezzo-soprano"
+    lyric_mezzo_soprano: "Lyric mezzo-soprano"
+    dramatic_mezzo_soprano: "Dramatic mezzo-soprano"
+    alto: "Alto"
+    contralto: "Contralto"
+    countertenor: "Countertenor"
+    light_tenor: "Light tenor"
+    lyric_tenor: "Lyric tenor"
+    spinto_tenor: "Spinto tenor"
+    dramatic_tenor: "Dramatic tenor"
+    heldentenor: "Heldentenor (heroic tenor)"
+    light_baritone: "Light baritone"
+    lyric_baritone: "Lyric baritone"
+    verdi_baritone: "Verdi baritone"
+    dramatic_baritone: "Dramatic baritone"
+    bass_baritone: "Bass baritone"
+    chanting_bass: "Chanting bass"
+    noble_bass: "Noble bass"
+    deep_bass: "Deep bass"
+    bass: "Bass"
+    baritone: "Baritone"
+    soprano: "Soprano"
+    mezzo_soprano: "Mezzo-soprano"
+    mezzo: "Mezzo"
+    tenor: "Tenor"

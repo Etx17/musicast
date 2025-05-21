@@ -4,17 +4,19 @@ class Candidat < ApplicationRecord
   has_many :experiences, dependent: :destroy
   has_many :educations, dependent: :destroy
 
-  has_one_attached :portrait
-  has_one_attached :artistic_photo
-  has_one_attached :banner
-  has_one_attached :cv_english
+  has_one_attached :portrait, dependent: :destroy
+  has_one_attached :artistic_photo, dependent: :destroy
+  has_one_attached :banner, dependent: :destroy
+  has_one_attached :cv_english, dependent: :destroy
 
   has_many_attached :diplomas
+  has_many :candidate_rehearsals, dependent: :destroy
+  has_many :rehearsal_rooms, through: :candidate_rehearsals, source: :room
 
-  accepts_nested_attributes_for :experiences
-  accepts_nested_attributes_for :educations
+  accepts_nested_attributes_for :experiences, allow_destroy: true, reject_if: :all_blank
+  accepts_nested_attributes_for :educations, allow_destroy: true, reject_if: :all_blank
 
-
+  enum :voice_type, { non_singer: 0, soprano: 1, mezzo: 2, alto: 3, countertenor: 4, tenor: 5, baritone: 6, bass: 7 }
   # Validations to comment for seed
   # validate :correct_document_mime_type
   # validate :correct_portrait_mime_type
@@ -42,6 +44,14 @@ class Candidat < ApplicationRecord
 
   def artistic_photo_attached
     errors.add(:artistic_photo, "Artistic photo must be attached") unless artistic_photo.attached?
+  end
+
+  def portrait_or_default
+    if portrait.attached?
+      Rails.application.routes.url_helpers.rails_blob_path(portrait, only_path: true)
+    else
+      ActionController::Base.helpers.asset_path('default_portrait.jpg')
+    end
   end
 
   def has_minimum_informations_for_inscription?

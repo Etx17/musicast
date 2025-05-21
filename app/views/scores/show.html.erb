@@ -1,0 +1,199 @@
+<div class="container my-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+      <h1 class="my-0"><%= t('.title', category_name: @category.name) %></h1>
+    <% if @pianist_emails.present? %>
+      <%
+        mailto_recipient = @pianist_emails.join(',')
+        mailto_subject = t('.email_subject', category_name: @category.name)
+        mailto_body = t('.email_body', url: request.original_url) + "\n\n"
+      %>
+      <%= mail_to mailto_recipient,
+            raw("<i class='fas fa-envelope me-2'></i>") + t('.send_link_button'),
+            subject: mailto_subject,
+            body: mailto_body,
+            class: "btn btn-outline-secondary"
+      %>
+    <% end %>
+  </div>
+  <%= render InfoboxComponent.new(text: t('scores.show.reload_notice')) %>
+
+  <%# Tabs for rounds %>
+  <ul class="nav nav-tabs mb-4">
+    <% @tours.each_with_index do |tour, index| %>
+      <li class="nav-item">
+        <a class="nav-link <%= 'active' if index.zero? %>"
+           data-bs-toggle="tab"
+           href="#round<%= tour.id %>">
+          <%= tour.title.upcase %>
+        </a>
+      </li>
+    <% end %>
+  </ul>
+
+  <%# Tab content %>
+  <div class="tab-content">
+    <% @tours.each_with_index do |tour, index| %>
+      <div class="tab-pane fade <%= 'show active' if index.zero? %>"
+           id="round<%= tour.id %>">
+
+        <%# Tour scores from organism %>
+        <% if tour.scores.attached? %>
+          <div class="p-3">
+            <div class="d-flex justify-content-between align-items-center pb-2">
+              <h3 class="h5 mb-0"><%= t('.organisation_scores_title') %></h3>
+            </div>
+
+              <%= render Table::BaseComponent.new(
+                rows: tour.scores,
+                columns: [
+                  {
+                    label: t('.columns.file_name'),
+                    value: ->(score_attachment) do
+                      link = link_to(
+                        score_attachment.filename.to_s,
+                        rails_blob_path(score_attachment.blob, disposition: "attachment"),
+                        class: "text-white text-decoration-none",
+                        # Translate only the title text
+                        title: t('global.actions.download_file', filename: score_attachment.filename)
+                      )
+                      content_tag(:span, link, class: "badge bg-primary me-1 mb-1").html_safe
+                    end
+                  },
+                  {
+                    # Translate the label
+                    label: t('.columns.added'),
+                    value: ->(score_attachment) { l(score_attachment.created_at, format: :short) }
+                  }
+                ],
+                links: [
+                  {
+                    # Translate the link text
+                    text: t('global.actions.download'),
+                    path: ->(score_attachment) { rails_blob_path(score_attachment.blob, disposition: "attachment") },
+                    icon: "fas fa-download",
+                  }
+                ],
+                client: nil
+              ) %>
+            </div>
+          <% else %>
+           <div class="p-3 text-muted">
+            <%= t('.no_organisation_scores') %>
+          </div>
+         <% end %>
+
+        <%# Unassigned scores section (currently disabled) %>
+        <% if false %>
+          <%# ... If enabled, would translate "Unassigned Scores" heading ... %>
+          <%# ... and table labels/link text inside ... %>
+        <% end %>
+
+        <%# Assigned scores grouped by pianist %>
+        <% tour.performances.group_by(&:pianist_accompagnateur).each do |pianist, performances| %>
+          <% next if pianist.nil? %>
+            <div class="p-3">
+              <div class="d-flex justify-content-between align-items-center pb-2">
+                 <%# Translate the heading, using interpolation %>
+                 <h3 class="h5 mb-0"><%= t('.pianist_scores_title', pianist_name: pianist.full_name) %></h3>
+                 <% has_scores = performances.any? { |p| p.scores.attached? } %>
+                 <% if has_scores %>
+                   <%= link_to t('global.actions.download_all'),
+                         download_category_tour_pianist_scores_path(
+                           @category,
+                           tour,
+                           pianist_id: pianist.id,
+                         ),
+                         class: "btn btn-sm btn-outline-primary" %>
+                 <% else %>
+                   <%# Translate the text on the disabled button %>
+                   <span class="btn btn-sm btn-outline-secondary disabled"><%= t('global.actions.download_all') %></span>
+                 <% end %>
+              </div>
+
+              <%= render Table::BaseComponent.new(
+                rows: performances,
+                columns: [
+                  {
+                    # Translate the label
+                    label: t('.columns.participant'),
+                    value: ->(performance) { performance.inscription.candidat.full_name }
+                  },
+                  {
+                    # Translate the label
+                    label: t('.columns.scores'),
+                    value: ->(performance) do
+                      score_pills = []
+                      if performance.scores.attached?
+                        performance.scores.each do |score_attachment|
+                          link = link_to(
+                            score_attachment.filename.to_s,
+                            rails_blob_path(score_attachment.blob, disposition: "attachment"),
+                            class: "text-white text-decoration-none",
+                             # Translate the title text
+                            title: t('.download_performance_score_title', filename: score_attachment.filename)
+                          )
+                          score_pills << content_tag(:span, link, class: "badge bg-primary me-1 mb-1")
+                        end
+                      end
+                      if performance.tour.scores.attached?
+                        performance.tour.scores.each do |tour_score_attachment|
+                          tour_link = link_to(
+                            tour_score_attachment.filename.to_s,
+                            rails_blob_path(tour_score_attachment.blob, disposition: "attachment"),
+                            class: "text-white text-decoration-none",
+                             # Translate the title text
+                            title: t('.download_tour_score_title', filename: tour_score_attachment.filename)
+                          )
+                          score_pills << content_tag(:span, tour_link, class: "badge bg-secondary me-1 mb-1")
+                        end
+                      end
+                      if score_pills.empty?
+                         # Translate the message
+                        content_tag(:span, t('.no_scores_available'), class: "text-muted small")
+                      else
+                        score_pills.join.html_safe
+                      end
+                    end
+                  },
+                  {
+                    # Translate the label
+                    label: t('.columns.last_score_uploaded'),
+                    value: ->(performance) do
+                      if performance.scores.attached? && performance.scores.any?
+                        latest_timestamp = performance.scores.map(&:created_at).max
+                        l(latest_timestamp, format: :short) if latest_timestamp
+                      else
+                         # Translate N/A abbreviation
+                        t('global.not_available_abbr')
+                      end
+                    end
+                  }
+                ],
+                links: [
+                  {
+                    # Translate dynamic link text
+                    text: ->(performance) { t('.download_participant_scores_action', participant_name: performance.inscription.candidat.first_name) },
+                    path: ->(performance) { download_scores_performance_path(performance) },
+                    icon: "fas fa-download",
+                    show_item: ->(performance) { performance.scores.attached? && performance.scores.any? }
+                  }
+                ],
+                client: nil
+              ) %>
+            </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<% content_for :javascript do %>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var triggerTabList = [].slice.call(document.querySelectorAll('a[data-bs-toggle="tab"]'))
+      triggerTabList.forEach(function(triggerEl) {
+        new bootstrap.Tab(triggerEl)
+      })
+    })
+  </script>
+<% end %>

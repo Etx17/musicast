@@ -1,7 +1,7 @@
 <div class=" mt-5 row justify-content-center align-items-center">
   <div class="col-8 col-sm-6 shadow p-3">
-    <%= link_to 'Retour', :back, class: 'btn btn-secondary' %>
-    <h1>Modifier un listing d'oeuvres à contraintes spécifiques</h1>
+    <%= link_to t('global.actions.back'), :back, class: 'btn btn-secondary' %>
+    <h1><%= t('semi_imposed_works.edit.edit_semi_imposed_work') %></h1>
     <%= render "form", semi_imposed_work: @semi_imposed_work %>
   </div>
 </div>

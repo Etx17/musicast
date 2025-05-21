@@ -1,9 +1,9 @@
 <div data-controller="music-autocomplete">
   <!-- Composer Search Input -->
   <%# <input data-music-autocomplete-target="composerInput" data-action="input->music-autocomplete#searchComposer" type="text" class="form-control" placeholder="Search for Composer..."> %>
-  <%= f.input :composer, input_html: { 'data-music-autocomplete-target': "composerInput", 'data-action': "input->music-autocomplete#searchComposer", class: "form-control bg-white w-50", placeholder: "Search for Composer..." } %>
+  <%= f.input :composer, input_html: { 'data-music-autocomplete-target': "composerInput", 'data-action': "input->music-autocomplete#searchComposer", class: "form-control bg-white w-50", placeholder: t('shared.components.music_search_component.search_composer') } %>
   <div class="loader spinner-grow" role="status" style="display: none;">
-    <span class="sr-only">Loading...</span>
+    <span class="sr-only"><%= t('shared.components.music_search_component.loading') %></span>
   </div>
   <!-- Work Search Input -->
   <%# <input data-music-autocomplete-target="workInput" data-action="input->music-autocomplete#searchWork" type="text" class="form-control" placeholder="Search for Work..." disabled> %>

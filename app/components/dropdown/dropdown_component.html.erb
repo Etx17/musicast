@@ -1,0 +1,18 @@
+<div class="filter-dropdown <%= @align %>" data-controller="dropdown">
+  <button class="dropdown-button" data-action="click->dropdown#toggle" data-dropdown-target="button">
+    <i class="<%= @icon %> icon"></i>
+    <span class="filter-text"><%= @label %></span>
+  </button>
+  <div role="menu" class="dropdown-menu" data-dropdown-target="menu" aria-labelledby="dropdownMenuButton">
+    <% @items.each do |item| %>
+      <% next if item.show_item == false %>
+      <li>
+        <%= link_to item.path, method: item.method, remote: item.remote,
+                    class: "dropdown-item#{' disabled' if item.state == 'disabled'}#{' ' + item.class if item.class.present?}",
+                    title: item.hint, data: item.data, id: item.id, target: item.target do %>
+          <i style="margin-right:6px;" class="<%= item.icon %>"></i> <%= item.text %>
+        <% end %>
+      </li>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,19 @@
+// .btn-danger-rounded {
+//   @extend .btn-danger;
+//   border-radius: 15px;
+// }
+
+.btn-danger {
+  @extend .btn-danger;
+  color: white;
+}
+
+.btn-success {
+  @extend .btn-success;
+  color: white;
+}
+
+.btn-primary {
+  @extend .btn-primary;
+  color: white;
+}

@@ -1,12 +1,11 @@
-
 <%= simple_form_for([@jury, @inscription, @note]) do |f| %>
    <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
   <div class="form-inputs">
-    <%= f.input :note_value, label: 'Note Value', hint: "Donnez une note entre 1 et 100 à ce candidat", required: true, autofocus: true  %>
-    <%= f.input :details, label: 'Détails', hint: "Donnez un feedback ici. Ce feedback est anonyme." %>
+    <%= f.input :note_value, label: t('notes.form.note_value'), hint: t('notes.form.note_hint'), required: true, autofocus: true  %>
+    <%= f.input :details, label: t('notes.form.details'), hint: t('notes.form.details_hint') %>
   </div>
   <div class="actions">
-    <%= f.button :submit , "Enregistrer", class:"btn btn-dark my-2"%>
+    <%= f.button :submit, t('notes.form.save'), class:"btn btn-primary my-2"%>
   </div>
 <% end %>

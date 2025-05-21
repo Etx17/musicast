@@ -1,0 +1,27 @@
+<%= simple_form_for([@organism, room]) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="form-inputs">
+    <%= f.input :name, label: t('rooms.form.name') %>
+    <%= f.input :notes, label: t('rooms.form.notes') %>
+    <%= f.input :organism_id, as: :hidden, input_html: { value: @organism.id } %>
+
+    <div class="row">
+      <div class="col">
+        <%= f.input :start_time, label: t('rooms.form.opening_time') %>
+      </div>
+      <div class="col">
+        <%= f.input :end_time, label: t('rooms.form.closing_time') %>
+      </div>
+    </div>
+
+    <%= f.input :description, label: t('rooms.form.description') %>
+    <%= f.input :description_english, label: t('rooms.form.description_english') %>
+  </div>
+
+  <div class="form-actions text-center">
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><%= t('global.actions.cancel') %></button>
+    <%= f.button :submit, room.new_record? ? t('global.actions.create') : t('global.actions.update'), class: "btn btn-primary" %>
+  </div>
+<% end %>

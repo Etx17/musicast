@@ -1,21 +1,38 @@
 <div id="<%= dom_id prize %>">
   <p>
-    <strong>Title:</strong>
+    <strong><%= t('prizes.prize.title') %>:</strong>
     <%= prize.title %>
+    <% if prize.title_english.present? %>
+      <br>
+      <em><%= t('prizes.prize.english') %>: <%= prize.title_english %></em>
+    <% end %>
   </p>
 
   <p>
-    <strong>Amount:</strong>
+    <strong><%= t('prizes.prize.amount') %>:</strong>
     <%= prize.amount %>
   </p>
 
   <p>
-    <strong>Description:</strong>
-    <%= prize.description %>
+    <strong><%= t('prizes.prize.other_reward') %>:</strong>
+    <%= prize.other_reward %>
+    <% if prize.other_reward_english.present? %>
+      <br>
+      <em><%= t('prizes.prize.english') %>: <%= prize.other_reward_english %></em>
+    <% end %>
   </p>
 
   <p>
-    <strong>Category:</strong>
+    <strong><%= t('prizes.prize.description') %>:</strong>
+    <%= prize.description %>
+    <% if prize.description_english.present? %>
+      <br>
+      <em><%= t('prizes.prize.english') %>: <%= prize.description_english %></em>
+    <% end %>
+  </p>
+
+  <p>
+    <strong><%= t('prizes.prize.category') %>:</strong>
     <%= prize.category_id %>
   </p>
 

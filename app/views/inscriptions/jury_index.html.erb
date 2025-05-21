@@ -1,7 +1,6 @@
 <div class="container">
-  <%# <p class="text-center p-3 bg-success-secondary rounded-8 mt-2" style="color: green"><%= notice %>
-  <%= link_to "Retour", jury_dashboard_path, class:"mt-2 btn btn-outline-dark" %>
-  <h1>Candidatures a noter</h1>
+  <%= render Navigation::BackLinkComponent.new( link_text: t('global.dashboard'), link_path: jury_dashboard_path, ) %>
+  <h1><%= t('inscriptions.jury_index.applications_to_rate') %></h1>
 
  <div id="inscriptions" class="h-100 d-flex flex-column flex-md-row flex-wrap ">
   <% @inscriptions.where(status: "in_review").each do |inscription| %>

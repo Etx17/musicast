@@ -27,6 +27,7 @@ class CompetitionPolicy < ApplicationPolicy
   private
 
   def allowed_to_edit?
+    return true if user.admin
     if user.organisateur
       user.organisateur == record.organisateur
     else

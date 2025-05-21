@@ -8,16 +8,17 @@ class User < ApplicationRecord
 
   TERMS_VERSION = 1
 
-  has_one :organiser
+  has_one :organisateur
   has_one :partner
   has_one :jury
   has_one :candidat
+  has_many :notifications, as: :recipient, dependent: :destroy, class_name: 'Noticed::Notification'
   has_many :inscriptions_paiements
 
   has_many :inscription_orders
   has_many :documents
 
-  enum inscription_role: { candidate: 0, organiser: 1, jury: 2, partner: 3 }
+  enum :inscription_role, { candidate: 0, organiser: 1, jury: 2, partner: 3, admin: 4 }
   validates :inscription_role, presence: true
   validates :accepted_terms, acceptance: { accept: true }
 
@@ -29,7 +30,7 @@ class User < ApplicationRecord
       admin_dashboard_path
     elsif current_user.role == "organisateur"
       organisateur_dashboard_path
-    elsif current_user.role == "candidat"
+    elsif current_user.role == "candidate"
       candidat_dashboard_path
     elsif current_user.role == "jury"
       jury_dashboard_path
@@ -49,12 +50,40 @@ class User < ApplicationRecord
     end
   end
 
+  def is_organisateur?
+    inscription_role == "organisateur" || Organisateur.exists?(user: self)
+  end
+
+  def is_candidat?
+    inscription_role == "candidate" || Candidat.exists?(user: self)
+  end
+
+  def is_jury?
+    inscription_role == "jury" || Jury.exists?(user: self)
+  end
+
+  def is_partner?
+    inscription_role == "partner" || Partner.exists?(user: self)
+  end
+
   def organisateur
     Organisateur.find_by(user: self)
   end
 
+  def organism
+    Organism.find_by(organisateur: organisateur)
+  end
+
   def candidat
     Candidat.find_by(user: self)
+  end
+
+  def organises_category?(category)
+    category.competition.organism.organisateur == organisateur
+  end
+
+  def organises_edition_competition?(edition_competition)
+    edition_competition.organism.organisateur == organisateur
   end
 
   def needs_to_accept_terms?
@@ -64,13 +93,15 @@ class User < ApplicationRecord
   def first_name
     case inscription_role
     when "organiser"
-      organisateur&.first_name || "Utilisateur (prénom à modifier)"
+      organisateur&.nom_organisme || "Mr. Organisateur"
     when "candidate"
-      candidat&.first_name || "Utilisateur (prénom à modifier)"
+      candidat&.first_name || "Mr. Candidat"
     when "jury"
       jury&.first_name || "Utilisateur (prénom à modifier)"
     when "partner"
       partner&.first_name || "Utilisateur (prénom à modifier)"
+    when "admin"
+      "Admin"
     end
   end
 
@@ -78,7 +109,7 @@ class User < ApplicationRecord
     case inscription_role
     when "organisateur"
       organisateur&.last_name || "Utilisateur (nom à modifier)"
-    when "candidat"
+    when "candidate"
       candidat&.last_name || "Utilisateur (nom à modifier)"
     when "jury"
       jury&.last_name || "Utilisateur (nom à modifier)"

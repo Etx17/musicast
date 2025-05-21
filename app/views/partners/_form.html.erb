@@ -1,4 +1,3 @@
-
 <%= simple_form_for(@partner) do |f| %>
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
@@ -6,11 +5,11 @@
   <div class="form-inputs">
     <%= f.association :user %>
     <%= f.association :organism %>
-    <%= f.input :role_partenaire %>
-    <%= f.input :niveau_autorisation %>
+    <%= f.input :role_partenaire, label: t('partners.form.partner_role') %>
+    <%= f.input :niveau_autorisation, label: t('partners.form.authorization_level') %>
   </div>
 
   <div class="form-actions">
-    <%= f.button :submit %>
+    <%= f.button :submit, t('global.actions.submit') %>
   </div>
 <% end %>

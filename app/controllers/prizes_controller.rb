@@ -16,6 +16,7 @@ class PrizesController < ApplicationController
   def create
     @prize = Prize.new(prize_params)
     @prize.category = @category
+    session[:active_tab] = "docs-prizes-jury-tab"
     respond_to do |format|
       if @prize.save
         format.html { redirect_to [@organism, @competition, @edition_competition, @category], notice: "Prize was successfully created." }
@@ -40,7 +41,7 @@ class PrizesController < ApplicationController
   # DELETE /prizes/1 or /prizes/1.json
   def destroy
     @prize.destroy
-
+    session[:active_tab] = "docs-prizes-jury-tab"
     respond_to do |format|
       format.html { redirect_to [@organism, @competition, @edition_competition, @category], notice: "Prize was successfully destroyed." }
     end
@@ -60,6 +61,13 @@ class PrizesController < ApplicationController
     end
     # Only allow a list of trusted parameters through.
     def prize_params
-      params.require(:prize).permit(:title, :other_reward, :amount, :description, :category_id)
+      params.require(:prize).permit(
+        :title, :title_english,
+        :other_reward, :other_reward_english,
+        :amount,
+        :prize_type,
+        :description, :description_english,
+        :category_id
+      )
     end
 end

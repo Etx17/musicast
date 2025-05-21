@@ -1,18 +1,112 @@
 <% inscription.category.choice_imposed_works&.each do |choice_imposed_work| %>
-        <h3><%= choice_imposed_work.title %></h3>
-        <small><%= choice_imposed_work.guidelines %></small>
-        <% if f.object.errors[:choice_imposed_work_airs_attributes].any? %>
-          <div class="d-flex flex-column">
-            <small class="text-danger">
-              <%= f.object.errors[:choice_imposed_work_airs_attributes].first %>
-            </small>
-          </div>
-        <% end %>
-        <% choice_imposed_work.number_to_select.times do |i| %>
-          <% choice_imposed_work_air = inscription.choice_imposed_work_airs.filter{|ciwa| ciwa.choice_imposed_work_id == choice_imposed_work.id}[i] || choice_imposed_work.choice_imposed_work_airs.build %>
-          <%= f.simple_fields_for :choice_imposed_work_airs, choice_imposed_work_air do |choice_imposed_work_air_fields| %>
-            <%= choice_imposed_work_air_fields.input :choice_imposed_work_id, as: :hidden, input_html: { value: choice_imposed_work.id } %>
-            <%= choice_imposed_work_air_fields.input :air_id, collection: choice_imposed_work.airs.map { |air| [air.title, air.id] }, selected: choice_imposed_work_air.persisted? ? choice_imposed_work_air.air_id : nil, label: "Select Air #{i+1}", include_blank: "Select an air", input_html: { class: 'form-control' } %>
-          <% end %>
-        <% end %>
+  <% if I18n.locale == :en && choice_imposed_work.title_english.present? %>
+    <h5><%= choice_imposed_work.title_english %></h5>
+  <% else %>
+    <h5><%= choice_imposed_work.title %></h5>
+  <% end %>
+
+  <% if I18n.locale == :en && choice_imposed_work.guidelines_english.present? %>
+    <%= render InfoboxComponent.new(title: t('inscriptions.semi_imposed_work_section.guidelines'), text: choice_imposed_work.guidelines_english) %>
+  <% else %>
+    <%= render InfoboxComponent.new(title: t('inscriptions.semi_imposed_work_section.guidelines'), text: choice_imposed_work.guidelines) %>
+  <% end %>
+
+  <% choice_imposed_work.number_to_select.times do |i| %>
+    <% choice_imposed_work_air = inscription.choice_imposed_work_airs.filter{|ciwa| ciwa.choice_imposed_work_id == choice_imposed_work.id}[i] || choice_imposed_work.choice_imposed_work_airs.build %>
+
+    <%# Prepare grouped collection for optgroups %>
+    <% airs = choice_imposed_work.airs.includes(:imposed_work, :choice_imposed_work, :semi_imposed_work).order(:fach, :title) %>
+    <% grouped_airs = airs.group_by(&:fach) %>
+    <% grouped_collection = [] %>
+
+    <% Air.defined_enums["fach"].each do |fach_name, fach_value| %>
+      <% fach_key = fach_name.to_s %>
+      <% if grouped_airs.key?(fach_key) %>
+        <% group_options = grouped_airs[fach_key].map { |air| ["#{air.title} - #{air.composer.capitalize}", air.id] } %>
+        <% grouped_collection << [I18n.t("fachs.#{fach_name}", default: fach_name.humanize), group_options] %>
       <% end %>
+    <% end %>
+
+    <%= f.simple_fields_for :choice_imposed_work_airs, choice_imposed_work_air do |choice_imposed_work_air_fields| %>
+      <%= choice_imposed_work_air_fields.input :choice_imposed_work_id, as: :hidden, input_html: { value: choice_imposed_work.id } %>
+
+      <% if grouped_collection.present? %>
+        <%= choice_imposed_work_air_fields.input :air_id,
+              collection: grouped_collection,
+              as: :grouped_select,
+              group_label_method: :first,
+              group_method: :last,
+              option_value_method: :second,
+              option_key_method: :first,
+              selected: choice_imposed_work_air.persisted? ? choice_imposed_work_air.air_id : nil,
+              label: t('inscriptions.choice_imposed_work_section.select_air', number: i+1, default: "Select air #{i+1}"),
+              include_blank: t('inscriptions.choice_imposed_work_section.select_an_air', default: "Select an air"),
+              input_html: { class: 'form-control' } %>
+      <% else %>
+        <%= choice_imposed_work_air_fields.input :air_id,
+              collection: choice_imposed_work.airs.map { |air| ["#{air.title} - #{air.composer.capitalize}", air.id] },
+              selected: choice_imposed_work_air.persisted? ? choice_imposed_work_air.air_id : nil,
+              label: t('inscriptions.choice_imposed_work_section.select_air', number: i+1, default: "Select air #{i+1}"),
+              include_blank: t('inscriptions.choice_imposed_work_section.select_an_air', default: "Select an air"),
+              input_html: { class: 'form-control' } %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const airSelects = document.querySelectorAll('select[name*="[choice_imposed_work_airs_attributes]"][name*="[air_id]"]');
+
+    function updateAvailableOptions() {
+      const selectedValues = new Map();
+
+      airSelects.forEach(select => {
+        if (select.value && select.value !== '') {
+          selectedValues.set(select, select.value);
+        }
+      });
+
+      airSelects.forEach(currentSelect => {
+        Array.from(currentSelect.options).forEach(option => {
+          if (option.value === '') return;
+
+          let isSelectedElsewhere = false;
+
+          selectedValues.forEach((value, select) => {
+            if (select !== currentSelect && value === option.value) {
+              isSelectedElsewhere = true;
+            }
+          });
+
+          if (isSelectedElsewhere) {
+            option.disabled = true;
+            option.style.color = '#aaa';
+          } else {
+            option.disabled = false;
+            option.style.color = '';
+          }
+        });
+      });
+
+      const errorDivs = document.querySelectorAll('.text-danger');
+      if (errorDivs) {
+        const allSelected = Array.from(airSelects).every(select => {
+          return select.disabled || select.value !== '';
+        });
+
+        if (allSelected) {
+          errorDivs.forEach(div => {
+            div.style.display = 'none';
+          });
+        }
+      }
+    }
+
+    airSelects.forEach(select => {
+      select.addEventListener('change', updateAvailableOptions);
+    });
+
+    updateAvailableOptions();
+  });
+</script>

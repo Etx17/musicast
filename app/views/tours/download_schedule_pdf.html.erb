@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8' />
+  <title><%= @tour.title %> - Schedule</title>
+  <%# Include any specific CSS for PDF rendering if needed via wicked_pdf_stylesheet_link_tag %>
+  <%# Example: wicked_pdf_stylesheet_link_tag "pdf" %>
+  <style>
+    /* Basic styling for the PDF table */
+    body { font-family: sans-serif; }
+    table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+    th { background-color: #f2f2f2; }
+    .day-header { font-size: 1.2em; font-weight: bold; margin-top: 20px; margin-bottom: 10px; border-bottom: 2px solid #666; padding-bottom: 5px; }
+    .pause-row td { background-color: #eef; font-style: italic; }
+  </style>
+</head>
+<body>
+
+  <h1><%= @tour.title %> - <%= t('tours.planning.schedule', default: 'Schedule') %></h1>
+  <p>
+    <strong><%= t('tours.form.category', default: 'Category') %>:</strong> <%= @tour.category.name %><br>
+    <strong><%= t('tours.form.edition_competition', default: 'Edition') %>:</strong> <%= @tour.category.edition_competition.annee %>
+  </p>
+
+  <% if @schedule_items_by_day.empty? %>
+    <p><%= t('tours.planning.no_schedule_items', default: 'No schedule items found.') %></p>
+  <% else %>
+    <% @schedule_items_by_day.each do |day, items| %>
+      <div class="day-header">
+        <%= l(day, format: :long) %> <%# Format the date nicely %>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th><%= t('tours.planning.time', default: 'Time') %></th>
+            <th><%= t('tours.planning.candidate_or_event', default: 'Candidat') %></th>
+            <%# Add other relevant columns if needed, e.g., Order, Pianist %>
+          </tr>
+        </thead>
+        <tbody>
+          <% items.each do |item| %>
+            <% if item.is_a?(Performance) %>
+              <tr>
+                <td><%= item.start_time&.strftime('%H:%M') %></td>
+                <td><%= item.candidat&.full_name || t('tours.planning.unknown_candidate', default: 'Unknown Candidate') %></td>
+                <%# Add other cells for performance %>
+              </tr>
+            <% elsif item.is_a?(Pause) %>
+              <tr class="pause-row">
+                <td><%= item.start_time&.strftime('%H:%M') %> - <%= item.end_time&.strftime('%H:%M') %></td>
+                <td><%= t('tours.planning.break', default: 'Break') %></td>
+                <%# Add other cells for pause if needed, maybe colspan %>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
+  <% end %>
+
+</body>
+</html>

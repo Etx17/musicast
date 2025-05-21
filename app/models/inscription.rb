@@ -9,23 +9,56 @@ class Inscription < ApplicationRecord
   has_many :choice_imposed_work_airs, dependent: :destroy
   has_many :semi_imposed_work_airs, dependent: :destroy
 
-  validates :terms_accepted, acceptance: { accept: true }
   accepts_nested_attributes_for :inscription_item_requirements, allow_destroy: true
-  accepts_nested_attributes_for :choice_imposed_work_airs
-  accepts_nested_attributes_for :semi_imposed_work_airs
+  accepts_nested_attributes_for :choice_imposed_work_airs, allow_destroy: true
+  accepts_nested_attributes_for :semi_imposed_work_airs, allow_destroy: true
   accepts_nested_attributes_for :notes
 
+  has_one_attached :payment_proof
+
+    with_options on: :program do |program|
+      validate :validate_choice_imposed_works
+      validate :validate_semi_imposed_works
+    end
+
+    with_options on: :item_requirements do |items|
+      items.validate :validate_required_documents
+    end
+
+    with_options on: :preferences do |prefs|
+      # prefs.validates :accept_platform_terms, acceptance: { accept: true, message: "must be accepted" }, allow_nil: false
+      prefs.validates :terms_accepted, acceptance: { accept: true, message: "must be accepted" }, allow_nil: false
+      prefs.validates :payment_proof, presence: true, if: -> { category.payment_after_approval == false }
+    end
+  attr_accessor :remove_payment_proof
+
+  before_save :check_remove_payment_proof
 
   scope :by_category, -> (category_id) { where(category_id: category_id).includes(candidat: :user) }
   scope :by_candidat, ->(candidat_id) { where(candidat_id: candidat_id) }
 
-  enum status: {
+  enum :status, {
     draft: 0,
     in_review: 1,
-    accepted: 2,
-    rejected: 3
+    request_changes: 2,
+    approved_waiting_payment: 3,
+    payment_error_waiting_payment: 4,
+    new_payment_submitted: 5,
+    accepted: 6,
+    rejected: 7,
+    cancelled: 8
   }
-  enum time_preference: {
+
+  # Only relevant for categories with payment_after_approval set to true
+  # On refait passer de 3 a 0 si la proof de payment nous allait pas. DIsplay interface pour candidat
+  enum :payment_status, {
+    no_proof_joined_yet: 0,
+    waiting_for_approval: 1,
+    paid: 2,
+    payment_error: 3,
+  }
+
+  enum :time_preference, {
     no_preference: 0,
     morning: 1,
     afternoon: 2,
@@ -68,17 +101,23 @@ class Inscription < ApplicationRecord
   end
 
   def associated_airs
-    airs = []
-    airs += self.choice_imposed_work_airs&.map(&:air)
-    airs += self.semi_imposed_work_airs&.map(&:air)
-    airs.uniq!
-    # Exclude airs that have already been used in other performances
-    # But for the current tour, i need to still see the ones that are selected
-    self.performances.map(&:air_selection).flatten.reject { |air_id| air_id.blank? }.map{ |air_id| Air.find(air_id) }
-    airs
+    # Collect all unique airs associated with this inscription
+    airs = (self.choice_imposed_work_airs&.map(&:air) + self.semi_imposed_work_airs&.map(&:air)).uniq
+
+    # Collect IDs of airs already selected in this inscription's performances
+    selected_air_ids = self.performances.map(&:air_selection).flatten.reject(&:blank?)
+
+    # Find all airs that have been selected in other inscriptions' performances
+    # Exclude these airs unless they are selected in the current inscription's performances
+    already_used_air_ids = Performance.where.not(inscription_id: self.id).map(&:air_selection).flatten.uniq.reject(&:blank?)
+    airs_to_exclude = already_used_air_ids - selected_air_ids
+
+    # Filter the airs to exclude the ones used in other inscriptions' performances
+    airs.reject! { |air| airs_to_exclude.include?(air.id.to_s) }
 
     airs
   end
+
 
   def used_airs
     # self.performances.map(&:air_selection).flatten.reject { |air_id| air_id.blank? }.map{ |air_id| Air.find(air_id) }
@@ -93,15 +132,19 @@ class Inscription < ApplicationRecord
   end
 
   def is_payed?
-    inscription_order.present? && inscription_order&.paid?
+    # Soit c'est payé, soit il y a une preuve de paiement # si c'est une preuve caduque, on peut toujours request changes avec un message
+    (inscription_order.present? && inscription_order&.paid?) || payment_proof.attached?
   end
 
   def has_complete_requirement_items?
-    # TOFIX
     return false if category.requirement_items.count != inscription_item_requirements.count
     return false if inscription_item_requirements.any?{|i| i.has_submitted_content? == false }
     return false if inscription_item_requirements.any?{|i| i.verification_status == "checked_invalid" }
     true
+  end
+
+  def is_ready_to_be_reviewed?
+    valid?(:program) && valid?(:item_requirements) && valid?(:preferences)
   end
 
   def has_complete_airs?
@@ -119,5 +162,65 @@ class Inscription < ApplicationRecord
 
   def motivation_essay
     inscription_item_requirements.filter{|i| i.item_type == "motivation_essay"}.first
+  end
+
+  def self.find_or_create_without_validation(attributes)
+    result = find_by(attributes)
+    return result if result
+
+    record = new(attributes)
+    record.status = 'draft' if record.status.blank?
+    record.save(validate: false)
+    record
+  end
+
+  private
+
+  def check_remove_payment_proof
+    if remove_payment_proof == "1" && payment_proof.attached?
+      payment_proof.purge
+    end
+  end
+
+  def validate_semi_imposed_works
+    if category.semi_imposed_works.any?
+      category.semi_imposed_works&.each do |semi_imposed_work|
+        if semi_imposed_work.number > semi_imposed_work_airs.length
+          errors.add(:base, :missing_airs, message: "You must select #{semi_imposed_work.number} airs for #{semi_imposed_work.title}")
+        end
+      end
+    end
+  end
+
+  def validate_choice_imposed_works
+    choice_imposed_work_airs.group_by(&:air_id).each do |air_id, choice_imposed_work_airs|
+      if choice_imposed_work_airs.count > 1
+        errors.add(:base, :duplicate_air_id, message: "You can't select twice the same air")
+      end
+    end
+  end
+
+  def validate_required_documents
+    if category.requirement_items.any?
+      category.requirement_items&.each do |requirement_item|
+        if requirement_item && inscription_item_requirements.none? { |i| i.item_type == requirement_item.type_item }
+          errors.add(:base, :missing_document, message: "You must upload a #{requirement_item.title}")
+        end
+      end
+    end
+  end
+
+  def validate_pianist_details
+    if candidate_brings_pianist_accompagnateur?
+      if candidate_brings_pianist_accompagnateur_full_name.blank?
+        errors.add(:candidate_brings_pianist_accompagnateur_full_name, :blank)
+      end
+
+      if candidate_brings_pianist_accompagnateur_email.blank?
+        errors.add(:candidate_brings_pianist_accompagnateur_email, :blank)
+      elsif !candidate_brings_pianist_accompagnateur_email.match?(URI::MailTo::EMAIL_REGEXP)
+        errors.add(:candidate_brings_pianist_accompagnateur_email, :invalid)
+      end
+    end
   end
 end

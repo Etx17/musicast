@@ -7,13 +7,13 @@ class Organism < ApplicationRecord
   has_many :edition_competitions, through: :competitions
   has_many :organism_juries
   has_many :juries, through: :organism_juries
-
+  has_many :rooms, dependent: :destroy
   extend FriendlyId
   friendly_id :nom, use: :slugged
 
   before_save :should_generate_new_friendly_id?
   before_update :should_generate_new_friendly_id?
-  has_one_attached :logo
+  has_one_attached :logo, dependent: :destroy
 
   validates :nom, :description, presence: true
   validates :nom, length: { minimum: 2, maximum: 50 }
@@ -23,4 +23,12 @@ class Organism < ApplicationRecord
     self.slug = nom.parameterize if nom_changed?
   end
 
+  def logo_or_default
+    if logo.attached?
+      # Rails.application.routes.url_helpers.rails_blob_path(logo, only_path: true)
+      Rails.application.routes.url_helpers.rails_blob_url(logo, host: Rails.application.config.action_mailer.default_url_options[:host])
+    else
+      "https://placehold.co/40x40"
+    end
+  end
 end

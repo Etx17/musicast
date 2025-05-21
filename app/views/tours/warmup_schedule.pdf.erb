@@ -1,0 +1,183 @@
+<div class="container-fluid">
+  <!-- VERSION FRANÇAISE -->
+  <div class="row">
+    <div class="col-12">
+      <!-- Entête avec nom du concours et catégorie -->
+      <div class="competition-header mb-4">
+        <h1 class="text-center"><%= @tour.category.competition.nom_concours %></h1>
+        <h3 class="text-center"><%= @tour.category.name %></h3>
+      </div>
+
+      <h2 class="text-center mb-4"><%= t('tours.planning.rehearsal_schedule') %> - <%= @tour.title %></h2>
+
+      <% if @rehearsals_by_day.any? %>
+        <% @rehearsals_by_day.each do |day, day_rehearsals| %>
+          <div class="rehearsal-day-container mb-4">
+            <h4><%= l(day, format: "%A %d %B %Y") %></h4>
+
+            <table class="table table-bordered table-striped" style="width: 100%;">
+              <thead>
+                <tr>
+                  <th style="width: 30%;"><%= t('global.candidate') %></th>
+                  <th style="width: 20%;"><%= t('tours.planning.rehearsal_start') %></th>
+                  <th style="width: 20%;"><%= t('tours.planning.rehearsal_end') %></th>
+                  <th style="width: 30%;"><%= t('tours.planning.room') %></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% day_rehearsals.each do |rehearsal| %>
+                  <tr>
+                    <td>
+                      <%= rehearsal.candidat.full_name %>
+                    </td>
+                    <td>
+                      <%= l(rehearsal.start_time, format: "%H:%M") if rehearsal.start_time %>
+                    </td>
+                    <td>
+                      <%= l(rehearsal.end_time, format: "%H:%M") if rehearsal.end_time %>
+                    </td>
+                    <td>
+                      <%= rehearsal.room&.name || "-" %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        <% end %>
+      <% else %>
+        <div class="alert alert-info">
+          <%= t('tours.planning.no_rehearsals_scheduled') %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE BREAK -->
+<div style="page-break-before: always;"></div>
+
+<!-- VERSION ANGLAISE -->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <% I18n.with_locale(:en) do %>
+        <!-- Entête avec nom du concours et catégorie en anglais -->
+        <div class="competition-header mb-4">
+          <h1 class="text-center"><%= @tour.category.competition.nom_concours %></h1>
+          <h3 class="text-center"><%= @tour.category.name %></h3>
+        </div>
+
+        <h2 class="text-center mb-4"><%= t('tours.planning.rehearsal_schedule') %> - <%= @tour.title %></h2>
+
+        <% if @rehearsals_by_day.any? %>
+          <% @rehearsals_by_day.each do |day, day_rehearsals| %>
+            <div class="rehearsal-day-container mb-4">
+              <h4><%= l(day, format: "%A %d %B %Y") %></h4>
+
+              <table class="table table-bordered table-striped" style="width: 100%;">
+                <thead>
+                  <tr>
+                    <th style="width: 30%;"><%= t('global.candidate') %></th>
+                    <th style="width: 20%;"><%= t('tours.planning.rehearsal_start') %></th>
+                    <th style="width: 20%;"><%= t('tours.planning.rehearsal_end') %></th>
+                    <th style="width: 30%;"><%= t('tours.planning.room') %></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% day_rehearsals.each do |rehearsal| %>
+                    <tr>
+                      <td>
+                        <%= rehearsal.candidat.full_name %>
+                      </td>
+                      <td>
+                        <%= l(rehearsal.start_time, format: "%H:%M") if rehearsal.start_time %>
+                      </td>
+                      <td>
+                        <%= l(rehearsal.end_time, format: "%H:%M") if rehearsal.end_time %>
+                      </td>
+                      <td>
+                        <%= rehearsal.room&.name || "-" %>
+                      </td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          <% end %>
+        <% else %>
+          <div class="alert alert-info">
+            <%= t('tours.planning.no_rehearsals_scheduled') %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Styles globaux pour le PDF */
+  body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+  }
+
+  /* Style pour les en-têtes */
+  h1 {
+    font-size: 22px;
+    margin-bottom: 5px;
+    color: #333;
+  }
+
+  h2 {
+    font-size: 18px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  h3 {
+    font-size: 16px;
+    margin-bottom: 20px;
+    font-style: italic;
+    color: #555;
+  }
+
+  h4 {
+    font-size: 14px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+
+  /* Assurer que les tableaux prennent toute la largeur */
+  table {
+    width: 100% !important;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+
+  th, td {
+    padding: 8px;
+    text-align: left;
+    border: 1px solid #ddd;
+  }
+
+  th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+  }
+
+  /* Ajustements pour le container */
+  .container-fluid {
+    width: 100%;
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  /* Style pour l'entête du concours */
+  .competition-header {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+  }
+</style>

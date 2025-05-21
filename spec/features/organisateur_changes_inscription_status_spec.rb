@@ -14,16 +14,11 @@ RSpec.feature "Organisateur changes candidate status", type: :feature do
     fill_in "Mot de passe", with: organisateur.user.password
     click_button "Se connecter"
 
-    # Go to the candidate management page: I need a concours, an édition, a catégorie, and an inscription
-    visit organism_competition_edition_competition_category_inscriptions_path(organism, competition, edition_competition, category)
+    visit organism_competition_edition_competition_category_inscriptions_path(organism_id: organism.id, competition_id: competition.id, edition_competition_id: edition_competition.id, category_id: category.id)
 
-    # Click on a in_review inscription " Accept"
     click_button "Accept"
 
-    # Expect the inscription status to change to 'accepted'
     expect(inscription.reload.status).to eq("accepted")
-
-    # Expect the card of inscirptino to be in the column "accepted"
 
     within("#accepted") do
       expect(page).to have_content(inscription.candidat.full_name)

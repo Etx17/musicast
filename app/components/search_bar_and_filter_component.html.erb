@@ -1,0 +1,264 @@
+<div class="search-action w-100 d-flex justify-content-between gap-2 pb-2">
+  <!-- Searchbar on the left -->
+  <% if @show_search_bar %>
+    <%= form_tag @search_path, method: :get, class: "options-search-form w-sm-100", id: "search-form", remote: @remote, format: @format do %>
+      <div class="search-bar-container border-0 position-relative">
+        <% @hidden_params.each do |k,v| %>
+          <input type="hidden" name="<%= k %>" value="<%= v %>">
+        <% end %>
+        <input class="caret-client-primary" type="text" name="filters[text]" id="search-input" value="<%= filter_text %>" placeholder="<%= t('global.actions.search_by_keywords') %>">
+        <% if @remote %>
+          <a href="#" class="clear-search-text search-action-button-bg">
+            <i class="fa fa-times"></i>
+          </a>
+        <% elsif filter_text.present? %>
+          <%= link_to @clear_path, class: "clear-search-text search-action-button-bg" do %>
+            <i class="fa fa-times"></i>
+          <% end %>
+        <% end %>
+        <button type="submit" id="second_search" class="search-action-button-bg">
+          <i class="fa fa-search text-client-primary"></i>
+        </button>
+      </div>
+    <% end %>
+  <% else %>
+    <div></div>
+  <% end %>
+
+  <!-- Filters and action buttons on the right -->
+  <div class="d-flex">
+    <div class="btn-group dropstart filter-options">
+
+
+      <!-- Button no mobile -->
+      <% unless @filters_options.blank? %>
+        <button type="button" class="btn small-btn no-mobile" data-bs-toggle="dropdown" id="<%= @filter_id %>" aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-sliders-h me-1"></i>
+          <%= t('filters.title_plural') %>
+          <% if filters_applied > 0 %>
+            <span class="filter-count"><%= filters_applied %></span>
+          <% end %>
+        </button>
+      <% end %>
+
+      <div class="dropdown-menu px-3 track-filter" aria-labelledby="<%= @filter_id %>" style="width: 300px;">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h3 class="py-1 mb-0 text-dark"><%= t('global.actions.filter_by').capitalize %></h3>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <%= form_tag @search_path, method: :get, remote: @remote, format: @format do %>
+          <% @hidden_params.each do |k,v| %>
+            <input type="hidden" name="<%= k %>" value="<%= v %>">
+          <% end %>
+          <% @filters_options.each do |option| %>
+            <% if option[:type] == 'select' %>
+              <label for="<%= option[:name] %>" class="pb-2 text-dark"><%= option[:label].capitalize %></label>
+              <select name="<%= option[:name] %>" id="<%= option[:name] %>" class="w-100 mb-2  <%= 'has-selection' if option[:selected].present? && option[:selected] != '' && option[:selected] != '0' %>" style="color: #757575;" onchange="updateSelectionClass(this)">
+                <option value=""><%= option[:label] %></option>
+                <% if option[:choices].first.is_a?(Hash) && option[:choices].first.key?(:group) %>
+                <option value=""><%= option[:label] %></option>
+                  <% option[:choices].each do |group| %>
+                    <optgroup label="<%= group[:group] %>">
+                      <% group[:choices].each do |choice| %>
+                        <option value="<%= choice[:id] %>" <%= "selected " if (option[:selected].to_i == choice[:id] ) || (option[:selected] == choice[:id]) %>><%= choice[:title] %></option>
+                      <% end %>
+                    </optgroup>
+                  <% end %>
+                <% else %>
+                  <% option[:choices].each do |choice| %>
+                    <option value="<%= choice[1] %>" <%= "selected " if (option[:selected].to_i == choice[1]) || (option[:selected].to_s == choice[1].to_s) %>><%= choice[0] %></option>
+                  <% end %>
+                <% end %>
+              </select>
+            <% end %>
+            <% if option[:type] == 'checkbox_group' %>
+              <div class="checkbox-group">
+                <label class="pb-2 text-dark"><%= option[:label].capitalize %></label>
+                <% option[:choices].each do |choice| %>
+                  <div class="input-group mb-2">
+                    <div class="input-group-text">
+                      <input class="form-check-input mt-0 profile-filter custom-checkbox"
+                            type="checkbox"
+                            name="<%= option[:name] %>"
+                            value="<%= choice[:value] %>"
+                            <%= "checked" if option[:selected]&.include?(choice[:value]) %>>
+                    </div>
+                    <div class="form-control" style="color: #757575;"><%= choice[:label] %></div>
+                  </div>
+                <% end %>
+              </div>
+            <% end %>
+            <% if option[:type] == 'country_select' %>
+              <label for="<%= option[:name] %>" class="pb-2 text-dark"><%= option[:label].capitalize %></label>
+              <%= country_select('', option[:name],
+                  {
+                    only: option[:only],
+                    selected: option[:selected],
+                    include_blank: t("global.choose_country"),
+                  },
+                  {
+                    class: 'w-100 mb-2',
+                    style: 'color: #757575;'
+                  })
+              %>
+            <% end %>
+          <% end %>
+          <div class="d-flex justify-content-between align-items-center my-2">
+            <%= link_to t('global.actions.clear'), @clear_path, class: "text-decoration-underline text-dark" %>
+            <button class="btn btn-primary" type="submit">
+              <span class="text-white"><%= t('global.actions.apply') %></span>
+            </button>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="dropdown-menu px-3 track-filter" aria-labelledby="<%= @filter_id %>" style="width: <%= @filters_options.length > 6 ? '600px' : '300px' %>;">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3 class="py-1 mb-0 text-dark"><%= t('global.actions.filter_by').capitalize %></h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <%= form_tag @search_path, method: :get, remote: @remote, format: @format do %>
+        <!-- Grid layout for filters -->
+        <div class="row" style="margin-right: <%= @filters_options.length > 6 ? '-10px' : '-5px' %>; margin-left: <%= @filters_options.length > 6 ? '-10px' : '-5px' %>;">
+          <% @filters_options.each do |option| %>
+            <!-- Each filter in a column -->
+            <div class="<%= @filters_options.length > 6 ? 'col-md-6' : 'col-12' %>" style="padding-right: <%= @filters_options.length > 6 ? '10px' : '5px' %>; padding-left: <%= @filters_options.length > 6 ? '10px' : '5px' %>;">
+              <% if option[:type] == 'select' %>
+                <label for="<%= option[:name] %>" class="pb-2 text-dark"><%= option[:label].capitalize %></label>
+                <select name="<%= option[:name] %>" id="<%= option[:name] %>" class="w-100 mb-2  <%= 'has-selection' if option[:selected].present? && option[:selected] != '' && option[:selected] != '0' %>" style="color: #757575;" onchange="updateSelectionClass(this)">
+                  <option value=""><%= option[:label] %></option>
+                  <% if option[:choices].first.is_a?(Hash) && option[:choices].first.key?(:group) %>
+                    <% option[:choices].each do |group| %>
+                      <optgroup label="<%= group[:group] %>">
+                        <% group[:choices].each do |choice| %>
+                          <option value="<%= choice[:id] %>" <%= "selected " if (option[:selected].to_i == choice[:id] ) || (option[:selected] == choice[:id]) %>><%= choice[:title] %></option>
+                        <% end %>
+                      </optgroup>
+                    <% end %>
+                  <% else %>
+                    <% option[:choices].each do |choice| %>
+                      <option value="<%= choice[1] %>" <%= "selected " if (option[:selected].to_i == choice[1]) || (option[:selected].to_s == choice[1].to_s) %>><%= choice[0] %></option>
+                    <% end %>
+                  <% end %>
+                </select>
+              <% end %>
+
+              <% if option[:type] == 'checkbox_group' %>
+                <div class="checkbox-group">
+                  <label class="pb-2 text-dark"><%= option[:label].capitalize %></label>
+                  <% option[:choices].each do |choice| %>
+                    <div class="input-group mb-2">
+                      <div class="input-group-text">
+                        <input class="form-check-input mt-0 profile-filter custom-checkbox"
+                              type="checkbox"
+                              name="<%= option[:name] %>"
+                              value="<%= choice[:value] %>"
+                              <%= "checked" if option[:selected]&.include?(choice[:value]) %>>
+                      </div>
+                      <div class="form-control" style="color: #757575;"><%= choice[:label] %></div>
+                    </div>
+                  <% end %>
+                </div>
+              <% end %>
+
+              <% if option[:type] == 'country_select' %>
+                <label for="<%= option[:name] %>" class="pb-2 text-dark"><%= option[:label].capitalize %></label>
+                <%= country_select('', option[:name],
+                    {
+                      only: option[:only],
+                      prompt: option[:prompt],
+                      include_blank: true,
+                      selected: option[:selected]
+                    },
+                    {
+                      class: 'w-100 mb-2',
+                      style: 'color: #757575;'
+                    })
+                %>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center my-2">
+          <%= link_to t('global.actions.clear'), @clear_path, class: "text-decoration-underline text-dark" %>
+          <button class="btn btn-primary" type="submit">
+            <span class="text-white"><%= t('global.actions.apply') %></span>
+          </button>
+        </div>
+      <% end %>
+    </div>
+
+    <%= content %>
+
+    <% @buttons.each do |button| %>
+      <% if button[:data].present? %>
+        <%= form_with(url: button[:path], method: :post, class: "d-inline") do |form| %>
+          <%= form.button(type: (button[:type].present? ? button[:type] : 'submit'), class: "btn small-btn ms-2 d-flex align-items-center #{button[:class]}", title: button[:title], data: button[:data]) do %>
+            <i class='<%= button[:icon] %>'></i><%= button[:label] %>
+          <% end %>
+        <% end %>
+      <% else %>
+        <%= link_to raw("<i class='#{button[:icon]}'></i>#{button[:label]}"),
+                    button[:path].present? ? button[:path] : nil,
+                    class: "btn small-btn ms-2 d-flex align-items-center #{button[:class]}",
+                    title: button[:title],
+                    data: button[:data] %>
+      <% end %>
+    <% end %>
+
+    <!-- Settings button - hide for now -->
+    <% if @settings_path.present? && 1==0 %>
+      <%= link_to @settings_path, title: t('global.var_settings', var: translate_for_client(@client.mailer_name_space, 'global.profile').titleize), class: "btn small-btn ms-2 no-mobile d-flex justify-content-center align-items-center" do %>
+        <i class='far fa-cog'></i>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+
+<style>
+  .has-selection {
+    background-color: <%= @client.button_color %>1A !important;
+    border-color: <%= @client.button_color %> !important;
+  }
+</style>
+
+<script>
+  function updateSelectionClass(select) {
+    if (select.value && select.value !== '') {
+      select.classList.add('has-selection');
+    } else {
+      select.classList.remove('has-selection');
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var searchInput = document.getElementById('search-input');
+    var searchContainer = searchInput && searchInput.closest('.search-bar-container');
+
+    if (searchInput && searchContainer) {
+      function updateSearchContainerClass() {
+        if (searchInput.value.trim() !== '') {
+          searchContainer.classList.add('has-search-text');
+        } else {
+          searchContainer.classList.remove('has-search-text');
+        }
+      }
+
+      updateSearchContainerClass();
+      searchInput.addEventListener('input', updateSearchContainerClass);
+
+      var clearButton = document.querySelector('.clear-search-text');
+      if (clearButton) {
+        clearButton.addEventListener('click', function(e) {
+          e.preventDefault();
+          searchInput.value = '';
+          document.getElementById('search-form').submit();
+        });
+      }
+    }
+
+  });
+</script>

@@ -10,9 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_26_105129) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_14_085107) do
   # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+  enable_extension "pg_catalog.plpgsql"
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -70,6 +70,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_26_105129) do
     t.bigint "choice_imposed_work_id"
     t.bigint "semi_imposed_work_id"
     t.text "infos"
+    t.text "infos_english"
+    t.integer "fach", default: 0
     t.index ["choice_imposed_work_id"], name: "index_airs_on_choice_imposed_work_id"
     t.index ["imposed_work_id"], name: "index_airs_on_imposed_work_id"
     t.index ["semi_imposed_work_id"], name: "index_airs_on_semi_imposed_work_id"
@@ -91,6 +93,27 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_26_105129) do
     t.index ["inscription_id"], name: "index_candidate_programs_on_inscription_id"
   end
 
+  create_table "candidate_rehearsals", force: :cascade do |t|
+    t.bigint "room_id", null: false
+    t.bigint "tour_id", null: false
+    t.bigint "candidat_id", null: false
+    t.bigint "pianist_accompagnateur_id"
+    t.datetime "start_time", null: false
+    t.datetime "end_time", null: false
+    t.boolean "confirmed", default: false
+    t.text "notes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "performance_id"
+    t.index ["candidat_id", "tour_id"], name: "index_candidate_rehearsals_on_candidate_and_tour", unique: true
+    t.index ["candidat_id"], name: "index_candidate_rehearsals_on_candidat_id"
+    t.index ["performance_id"], name: "index_candidate_rehearsals_on_performance_id"
+    t.index ["pianist_accompagnateur_id"], name: "index_candidate_rehearsals_on_pianist_accompagnateur_id"
+    t.index ["room_id", "start_time", "end_time"], name: "index_candidate_rehearsals_on_room_and_time", unique: true
+    t.index ["room_id"], name: "index_candidate_rehearsals_on_room_id"
+    t.index ["tour_id"], name: "index_candidate_rehearsals_on_tour_id"
+  end
+
   create_table "candidats", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
@@ -108,6 +131,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_26_105129) do
     t.text "long_bio_en"
     t.string "banner_color"
     t.string "last_teacher"
+    t.integer "voice_type", default: 0
+    t.string "iban"
     t.index ["user_id"], name: "index_candidats_on_user_id"
   end
 
@@ -126,6 +151,14 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_26_105129) do
     t.integer "status", default: 0
     t.boolean "allow_own_pianist_accompagnateur"
     t.integer "preselection_vote_type", default: 0
+    t.boolean "includes_semi_imposed_works", default: false
+    t.boolean "includes_imposed_works", default: false
+    t.boolean "includes_free_choices", default: false
+    t.boolean "includes_choice_imposed_works", default: false
+    t.text "description_english"
+    t.text "payment_guidelines"
+    t.text "payment_guidelines_english"
+    t.boolean "payment_after_approval", default: false
     t.index ["edition_competition_id"], name: "index_categories_on_edition_competition_id"
     t.index ["slug"], name: "index_categories_on_slug", unique: true
   end
@@ -157,6 +190,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_26_105129) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "category_id", null: false
+    t.string "title_english"
+    t.text "guidelines_english"
     t.index ["category_id"], name: "index_choice_imposed_works_on_category_id"
   end
 
@@ -194,6 +229,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_26_105129) do
     t.date "end_date"
     t.string "reglement_url"
     t.integer "status", default: 0
+    t.text "specific_details_english", default: ""
     t.index ["competition_id"], name: "index_edition_competitions_on_competition_id"
   end
 
@@ -205,6 +241,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_26_105129) do
     t.bigint "candidat_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "english_title"
+    t.text "english_description"
     t.index ["candidat_id"], name: "index_educations_on_candidat_id"
   end
 
@@ -216,6 +254,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_26_105129) do
     t.bigint "candidat_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "english_title"
+    t.text "english_description"
     t.index ["candidat_id"], name: "index_experiences_on_candidat_id"
   end
 
@@ -254,6 +294,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_26_105129) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "category_id", null: false
+    t.string "title_english"
+    t.text "guidelines_english"
     t.index ["category_id"], name: "index_imposed_works_on_category_id"
   end
 
@@ -264,6 +306,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_26_105129) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "verification_status", default: 0
+    t.integer "dpi_x"
+    t.integer "dpi_y"
     t.index ["inscription_id"], name: "index_inscription_item_requirements_on_inscription_id"
     t.index ["requirement_item_id"], name: "index_inscription_item_requirements_on_requirement_item_id"
   end
@@ -293,6 +337,12 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_26_105129) do
     t.boolean "terms_accepted", default: false
     t.boolean "is_late_inscription", default: false
     t.integer "time_preference", default: 0
+    t.text "changes_requested", default: ""
+    t.string "candidate_brings_pianist_accompagnateur_email"
+    t.string "candidate_brings_pianist_accompagnateur_full_name"
+    t.text "time_justification"
+    t.integer "payment_status", default: 0
+    t.boolean "accept_platform_terms", default: false
     t.index ["candidat_id"], name: "index_inscriptions_on_candidat_id"
     t.index ["category_id"], name: "index_inscriptions_on_category_id"
   end
@@ -324,6 +374,30 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_26_105129) do
     t.text "details"
   end
 
+  create_table "noticed_events", force: :cascade do |t|
+    t.string "type"
+    t.string "record_type"
+    t.bigint "record_id"
+    t.jsonb "params"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "notifications_count"
+    t.index ["record_type", "record_id"], name: "index_noticed_events_on_record"
+  end
+
+  create_table "noticed_notifications", force: :cascade do |t|
+    t.string "type"
+    t.bigint "event_id", null: false
+    t.string "recipient_type", null: false
+    t.bigint "recipient_id", null: false
+    t.datetime "read_at", precision: nil
+    t.datetime "seen_at", precision: nil
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_noticed_notifications_on_event_id"
+    t.index ["recipient_type", "recipient_id"], name: "index_noticed_notifications_on_recipient"
+  end
+
   create_table "organisateurs", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "nom_organisme"
@@ -349,6 +423,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_26_105129) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "slug"
+    t.string "iban"
     t.index ["organisateur_id"], name: "index_organisms_on_organisateur_id"
     t.index ["slug"], name: "index_organisms_on_slug", unique: true
   end
@@ -388,6 +463,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_26_105129) do
     t.integer "status", default: 0
     t.text "ordered_air_selection", default: [], array: true
     t.bigint "pianist_accompagnateur_id"
+    t.boolean "is_qualified_for_current_tour", default: false
     t.index ["inscription_id"], name: "index_performances_on_inscription_id"
     t.index ["pianist_accompagnateur_id"], name: "index_performances_on_pianist_accompagnateur_id"
     t.index ["tour_id"], name: "index_performances_on_tour_id"
@@ -411,6 +487,10 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_26_105129) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "other_reward"
+    t.string "title_english"
+    t.text "description_english"
+    t.string "other_reward_english"
+    t.integer "prize_type", default: 0
     t.index ["category_id"], name: "index_prizes_on_category_id"
   end
 
@@ -428,7 +508,30 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_26_105129) do
     t.string "title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "description_item_english"
+    t.string "title_english"
+    t.float "ratio"
     t.index ["category_id"], name: "index_requirement_items_on_category_id"
+  end
+
+  create_table "rooms", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "name"
+    t.string "notes"
+    t.bigint "organism_id", null: false
+    t.time "start_time"
+    t.time "end_time"
+    t.text "description"
+    t.text "description_english"
+    t.index ["organism_id"], name: "index_rooms_on_organism_id"
+  end
+
+  create_table "rooms_tours", id: false, force: :cascade do |t|
+    t.bigint "room_id", null: false
+    t.bigint "tour_id", null: false
+    t.index ["room_id", "tour_id"], name: "index_rooms_tours_on_room_id_and_tour_id"
+    t.index ["tour_id", "room_id"], name: "index_rooms_tours_on_tour_id_and_room_id"
   end
 
   create_table "semi_imposed_work_airs", force: :cascade do |t|
@@ -450,6 +553,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_26_105129) do
     t.datetime "updated_at", null: false
     t.bigint "category_id", null: false
     t.string "title"
+    t.string "title_english"
+    t.text "guidelines_english"
     t.index ["category_id"], name: "index_semi_imposed_works_on_category_id"
   end
 
@@ -463,6 +568,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_26_105129) do
     t.boolean "organiser_creates_program"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "description_english"
     t.index ["tour_id"], name: "index_tour_requirements_on_tour_id"
   end
 
@@ -484,7 +590,15 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_26_105129) do
     t.integer "tour_number", default: 1
     t.datetime "final_performance_submission_deadline"
     t.text "imposed_air_selection", default: [], array: true
-    t.boolean "no_pianist_accompagnateur"
+    t.boolean "requires_pianist_accompanist", default: true
+    t.string "title_english"
+    t.text "description_english"
+    t.boolean "requires_orchestra", default: false
+    t.boolean "needs_rehearsal", default: false
+    t.integer "rehearsal_type", default: 0
+    t.integer "rehearse_time_slot_per_candidate"
+    t.integer "buffer_time_minutes", default: 0
+    t.datetime "pianist_rehearsal_start_datetime"
     t.index ["category_id"], name: "index_tours_on_category_id"
   end
 
@@ -524,6 +638,11 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_26_105129) do
   add_foreign_key "candidate_program_airs", "airs"
   add_foreign_key "candidate_program_airs", "candidate_programs"
   add_foreign_key "candidate_programs", "inscriptions"
+  add_foreign_key "candidate_rehearsals", "candidats"
+  add_foreign_key "candidate_rehearsals", "performances"
+  add_foreign_key "candidate_rehearsals", "pianist_accompagnateurs"
+  add_foreign_key "candidate_rehearsals", "rooms"
+  add_foreign_key "candidate_rehearsals", "tours"
   add_foreign_key "candidats", "users"
   add_foreign_key "categories", "edition_competitions"
   add_foreign_key "categories_juries", "categories"
@@ -562,6 +681,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_26_105129) do
   add_foreign_key "prizes", "categories"
   add_foreign_key "programme_requirements", "categories"
   add_foreign_key "requirement_items", "categories"
+  add_foreign_key "rooms", "organisms"
   add_foreign_key "semi_imposed_work_airs", "airs"
   add_foreign_key "semi_imposed_work_airs", "inscriptions"
   add_foreign_key "semi_imposed_work_airs", "semi_imposed_works"

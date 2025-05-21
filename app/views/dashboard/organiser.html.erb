@@ -1,15 +1,15 @@
 <div class="container mt-5">
   <div class="row">
-    <h1 class="text-center" style='font-size: 5em;'>Tableau de Bord</h1>
+    <h1 class="text-center" style='font-size: 5em;'><%= t('dashboard.organiser.dashboard') %></h1>
     <div class="col-12 col-md-6">
       <div class="card border-0 shadow-sm rounded" style="background: #EEEEEE;">
         <div class="card-body">
-          <h1 class="mb-4">Vos concours</h1>
+          <h1 class="mb-4"><%= t('dashboard.organiser.your_competitions') %></h1>
           <div class="list-group ">
             <% @competitions&.each do |competition| %>
               <%= link_to organism_competition_path(@organism, competition) do %>
                 <div class="card mb-3" data-controller="hover" data-action="mouseenter->hover#hover mouseleave->hover#unhover" style="width: 100%; height: 300px; background-image: url('https://source.unsplash.com/random/?applications/300/200'); background-size: cover; position: relative;">
-                  <div class="btn btn-<%=  competition.edition_competitions.blank? ? 'success' : 'secondary'%>" style="position: absolute; top: 10px; left: 10px; z-index: 1;"><%=  competition.edition_competitions.blank? ? 'Créer une édition du concours' : 'Voir' %></div>
+                  <div class="btn btn-<%=  competition.edition_competitions.blank? ? 'success' : 'secondary'%>" style="position: absolute; top: 10px; left: 10px; z-index: 1;"><%=  competition.edition_competitions.blank? ? t('dashboard.organiser.create_edition') : t('dashboard.organiser.view') %></div>
                   <div class="card-img-overlay d-flex justify-content-center align-items-center" style="background-color: rgba(0, 0, 0, 0.7);" >
                     <h2 class="card-title text-white text-center" style="font-size: 3em;" data-hover-target="text"><%= competition.nom_concours %></h2>
                   </div>
@@ -17,38 +17,86 @@
               <% end %>
             <% end %>
           </div>
-          <%= link_to 'Créer un concours', new_organism_competition_path(@organism), class: 'btn btn-success mt-3' %>
+          <%= link_to t('dashboard.organiser.create_competition'), new_organism_competition_path(@organism), class: 'btn btn-success mt-3' %>
         </div>
       </div>
     </div>
 
     <div class="col-12 col-md-6">
       <div class="card border-0 shadow-sm rounded mb-4" style="background: #EEEEEE;">
-        <div class="card-body d-flex flex-column">
-          <h2 class="mb-4">Informations de l'organisme</h2>
-          <div class="d-flex flex-column">
+        <div class="card-header border border-transparent d-flex justify-content-between align-items-center">
+            <div>
+              <i class="fas fa-building"> </i> <%= t('dashboard.organiser.organism_info') %>
+            </div>
+            <% kebab_items = [
+              {
+                icon: "fas fa-edit",
+                text: t('global.actions.edit'),
+                path: edit_organism_path(@organism)
+              }
+            ] %>
+            <%= render(Dropdown::KebabComponent.new(items: kebab_items, only_vertical_dots: false)) %>
+        </div>
+        <div class="card-body bg-light d-flex flex-column">
             <div class="text-center">
-              <%= image_tag(@organism.logo.attached? ? url_for(@organism.logo) : "https://source.unsplash.com/random", class: "", height: 100, width: "auto") %>
+              <%= image_tag(@organism.logo_or_default, height: "auto", width: "100%") %>
             </div>
             <p><%= @organism.nom %></p>
             <p><%= @organism.description %></p>
-          </div>
-          <%= link_to "Modifier", edit_organism_path(@organism), class: "btn btn-outline-dark mx-auto mt-3" %>
+            <p>IBAN</p>
+            <%= @organism.iban %>
         </div>
       </div>
 
       <div class="card border-0 shadow-sm rounded mb-4" style="background: #EEEEEE;">
-        <div class="card-body">
-          <h2 class="mb-4">Partenaires</h2>
-          <h5>Pianistes Accompagnateurs</h5>
+        <div class="card-header border border-transparent">
+          <i class="fas fa-person"> </i> <%= t('dashboard.organiser.partners') %>
+        </div>
+        <div class="card-body bg-light">
+          <p> <%= image_tag 'icons/piano', width: 20 %> <%= t('dashboard.organiser.accompanying_pianists') %></p>
           <%= turbo_frame_tag 'new_pianist_frame' do %>
-            <%= link_to '+ Ajouter un pianiste accompagnateur', new_organism_pianist_accompagnateur_path(@organism), class: 'btn btn-outline-dark mb-3', data: { turbo_frame: 'new_pianist_frame' } %>
+            <%= link_to t('dashboard.organiser.add_pianist'), new_organism_pianist_accompagnateur_path(@organism), class: 'btn btn-outline-dark mb-3', data: { turbo_frame: 'new_pianist_frame' } %>
           <% end %>
-          <ul>
+          <ul class="list-unstyled">
             <%= turbo_frame_tag 'organism_pianists' do %>
               <% @organism.pianist_accompagnateurs.each do |pianist| %>
-                <%= render "pianist_accompagnateurs/pianist", pianist: pianist %>
+                <li class="d-flex justify-content-between align-items-center mb-2">
+                  <span><%= pianist.full_name %></span>
+                  <% pianist_kebab_items = [
+                    {
+                      icon: "fas fa-edit",
+                      text: t('global.actions.edit'),
+                      path: edit_organism_pianist_accompagnateur_path(@organism, pianist)
+                    },
+                    {
+                      icon: "fas fa-trash",
+                      text: t('global.actions.delete'),
+                      path: organism_pianist_accompagnateur_path(@organism, pianist),
+                      method: :delete,
+                      data: { confirm: t('dashboard.organiser.confirm_delete_pianist'), turbo_confirm: t('dashboard.organiser.confirm_delete_pianist') },
+                      class: "deletion-button"
+                    }
+                  ] %>
+                  <%= render(Dropdown::KebabComponent.new(items: pianist_kebab_items, only_vertical_dots: true)) %>
+                </li>
               <% end %>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Section Rooms -->
+      <div class="card border-0 shadow-sm rounded mb-4" style="background: #EEEEEE;">
+        <div class="card-header border border-transparent">
+          <i class="fas fa-door-open"></i> <%= t('dashboard.organiser.rehearsal_rooms') %>
+        </div>
+        <div class="card-body bg-light">
+          <button type="button" class="btn btn-outline-dark mb-3" data-bs-toggle="modal" data-bs-target="#newRoomModal">
+            <i class="fas fa-plus"></i> <%= t('dashboard.organiser.add_room') %>
+          </button>
+          <ul class="list-unstyled" id="rooms-list">
+            <% @organism.rooms.each do |room| %>
+              <%= render 'rooms/room', room: room %>
             <% end %>
           </ul>
         </div>
@@ -58,6 +106,21 @@
       <%= render "jury_section", organism: @organism %>
 
 
+    </div>
+  </div>
+</div>
+
+<!-- Modal pour créer une salle -->
+<div class="modal fade" id="newRoomModal" tabindex="-1" aria-labelledby="newRoomModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="newRoomModalLabel"><%= t('dashboard.organiser.add_room') %></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <%= render 'rooms/form', room: Room.new %>
+      </div>
     </div>
   </div>
 </div>

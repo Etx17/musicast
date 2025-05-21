@@ -1,14 +1,14 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Organisateurs</h1>
+<h1><%= t('organisateurs.index.organizers') %></h1>
 
 <div id="organisateurs">
   <% @organisateurs.each do |organisateur| %>
     <%= render organisateur %>
     <p>
-      <%= link_to "Show this organisateur", organisateur %>
+      <%= link_to t('global.actions.show'), organisateur %>
     </p>
   <% end %>
 </div>
 
-<%= link_to "New organisateur", new_organisateur_path %>
+<%= link_to t('organisateurs.index.new_organizer'), new_organisateur_path %>

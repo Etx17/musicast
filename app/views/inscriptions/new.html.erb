@@ -1,23 +1,26 @@
-
 <div class="d-flex align-items-center justify-content-center gap-3 w-100 border-bottom bg-white">
   <%= image_tag "icons/folder.png", width: 50 %>
-  <h1 class="text-center pt-3" style="font-size: 3.4em"> Remplir mon dossier d'inscription</h1>
+  <h1 class="text-center pt-3" style="font-size: 3.4em"><%= t("inscriptions.new.fill_application_file") %></h1>
   <%= image_tag "icons/folder.png", width: 50 %>
 </div>
-<h5 class="text-center text-secondary mb-5">Concours: <%= @inscription.category.competition.nom_concours %> | Catégorie: <%= @inscription.category.name %></h5>
-
+<h5 class="text-center text-secondary mb-5"><%= t("inscriptions.new.competition_category", competition: @inscription.category.competition.nom_concours, category: @inscription.category.name) %></h5>
 <% if current_user.candidat.present? %>
   <div id="warning-message" class=" mb-3 mx-auto rounded-8 bg-danger-secondary border border-danger d-flex flex-column align-items-center col-md-6 text-center">
     <i class="fas fa-exclamation-triangle fa-5x text-danger"></i>
-    <p class="text-center text-dark">Vous pourrez modifier votre dossier jusqu'au <%= @inscription.category.edition_competition.end_of_registration.strftime("%d %B %Y à %H:%M") %></p>
-    <p class="text-center text-dark">Votre dossier sera soumis a cette date si vous avez reglé votre inscription.</p>
-    <p class="text-center text-dark">Vous n'êtes pas obligés de fournir les documents demandés maintenant, mais veillez à le faire avant la date de soumission.</p>
-    <p class="text-center text-dark">Remplissez néanmoins les oeuvres à choisir, quitte a les modifier plus tard.</p>
-    <button id="close-button" class="btn btn-danger text-white mb-2">J'ai compris</button>
+    <p class="text-center text-dark"><%= t("inscriptions.new.warning_message.can_modify_until", date: @inscription.category.edition_competition.end_of_registration.strftime("%d %B %Y à %H:%M")) %></p>
+    <p class="text-center text-dark"><%= t("inscriptions.new.warning_message.will_be_submitted") %></p>
+    <p class="text-center text-dark"><%= t("inscriptions.new.warning_message.not_required_now") %></p>
+    <p class="text-center text-dark"><%= t("inscriptions.new.warning_message.fill_works_now") %></p>
+    <button id="close-button" class="btn btn-danger text-white mb-2"><%= t("inscriptions.new.warning_message.understood") %></button>
   </div>
 <% end %>
 
-<%= render "form", inscription: @inscription %>
+<div class="container">
+  <%= render "form", inscription: @inscription %>
+  <div>
+    <%= link_to t('global.actions.back'), inscriptions_path %>
+  </div>
+</div>
 
 <br>
 

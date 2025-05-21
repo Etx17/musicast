@@ -1,4 +1,27 @@
-<%# <p style="color: green"><%= notice %>
+<h1 class="">
+  <% if I18n.locale != :en %>
+    <%= @tour.title.upcase %>
+  <% else %>
+    <%= @tour.title_english.upcase %>
+  <% end %>
+</h1>
 
+<div class="pb-2">
+  <%= render Navigation::BackLinkComponent.new(link_path: organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category), link_text: @tour.category.name) %>
+</div>
+  <div class="d-flex justify-content-between align-items-center mb-3 ">
+    <div class=>
+      <% if @tour.previous_tour.present? %>
+        <%= link_to organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour.previous_tour), class: "btn btn-outline-primary border mt-2 px-5" do %>
+          <i class="fas fa-arrow-left me-1"></i> <%= t('tours.tour.previous_tour') %>
+        <% end %>
+      <% end %>
+    </div>
 
+    <% if @tour.next_tour.present? %>
+      <%= link_to organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour.next_tour), class: "btn btn-primary border mt-2 px-5" do %>
+        <%= t('tours.tour.next_tour') %> <i class="fas fa-arrow-right ms-1"></i>
+      <% end %>
+    <% end %>
+  </div>
 <%= render @tour if current_user.organisateur %>

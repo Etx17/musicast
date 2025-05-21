@@ -1,6 +1,8 @@
 require 'music_categories'
 class PagesController < ApplicationController
   # skip_before_action :authenticate_user!, only: [ :home ]
+  before_action :authenticate_user!, :require_admin, only: [:admin_dashboard, :admin_create_organism_user]
+
   def landing
   end
 
@@ -13,8 +15,33 @@ class PagesController < ApplicationController
   def terms_of_use
   end
 
+  def platform_terms
+  end
+
+  def admin_dashboard
+    @organisateurs = Organisateur.all
+  end
+
+  def admin_create_organism_user
+    @user = User.new(
+      email: params[:email],
+      password: "password",
+      password_confirmation: "password",
+      inscription_role: 'organiser',
+      accepted_terms: params[:accepted_terms],
+    )
+
+    if @user.save
+      flash[:notice] = "Organisateur user created successfully"
+      redirect_to admin_dashboard_path
+    else
+      flash[:alert] = "Failed to create user: #{@user.errors.full_messages.join(', ')}"
+      redirect_to admin_dashboard_path
+    end
+  end
 
   def home
+    redirect_to jury_dashboard_path if user_signed_in? && current_user.jury.present? && !current_user.candidat.present?
     # change the params country "France" to it's short country code equivalent if there is a params country. Then make it session
     if params[:country].present?
       country = ISO3166::Country.all.find { |c| c.iso_short_name == params[:country] }
@@ -43,5 +70,14 @@ class PagesController < ApplicationController
       .where('edition_competitions.start_date > ?', Time.now)
       .pluck('addresses.country')
       .uniq
+  end
+
+  private
+
+  def require_admin
+    unless current_user.admin
+      flash[:alert] = "You are not authorized to access this page."
+      redirect_to root_path
+    end
   end
 end

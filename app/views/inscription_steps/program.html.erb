@@ -1,0 +1,66 @@
+<div class="container mt-4">
+  <% if @inscription.has_complete_requirement_items? && @inscription.is_payed? && @inscription.has_complete_airs? %>
+    <div class="d-flex justify-content-end mb-3">
+      <%= link_to inscription_path(@inscription), class: "btn btn-success" do %>
+        <i class="fas fa-folder-open me-2"></i> Votre dossier d'inscription
+      <% end %>
+    </div>
+  <% end %>
+
+  <%= render 'progress_bar' %>
+
+  <h2 class="mb-4"><%= t('inscriptions.progress.program') %></h2>
+  <%= render InfoboxComponent.new(
+    title: t('inscriptions.steps.program.important'),
+    text: t('inscriptions.steps.program.important_text'),
+    icon: "fas fa-exclamation-triangle"
+  ) %>
+  <%= form_for @inscription, url: wizard_path(:program, action: "update"), method: :put do |f| %>
+
+    <% if @inscription.category.semi_imposed_works.any? %>
+    <div class="card bg-light mb-4">
+      <div class="card-body">
+        <h4 class="card-title mb-3"><%= t('global.semi_imposed_works') %></h4>
+        <%= render "inscriptions/semi_imposed_work_section", inscription: @inscription, f: f %>
+      </div>
+    </div>
+    <% end %>
+
+
+    <% if @inscription.category.choice_imposed_works.any? %>
+    <div class="card bg-light mb-4">
+      <div class="card-body">
+        <h4 class="card-title mb-3"><%= t('global.choice_imposed_works') %></h4>
+        <%= render "inscriptions/choice_imposed_work_section", inscription: @inscription, f: f %>
+      </div>
+    </div>
+    <% end %>
+
+    <% if @inscription.category.imposed_work&.airs&.any? %>
+      <div class="card bg-light mb-4">
+        <div class="card-body">
+          <h4 class="card-title mb-3"><%= t('global.imposed_works') %></h4>
+          <ul class="list-group mb-3">
+            <% @inscription.category&.imposed_work&.airs&.each do |air| %>
+              <li class="list-group-item">
+                <strong><%= air.title %></strong> - <%= air.composer %> - <%= air.oeuvre %>
+                <div class="mt-1 text-muted">
+                  <% if I18n.locale == :en && air.infos_english.present? %>
+                    <%= air.infos_english %>
+                  <% else %>
+                    <%= air.infos %>
+                  <% end %>
+                </div>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="d-flex justify-content-between mt-4">
+      <%= link_to t('global.actions.cancel'), inscription_path(@inscription), class: "btn btn-outline-secondary" %>
+      <%= f.submit t('global.actions.next'), class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>

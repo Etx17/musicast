@@ -1,9 +1,9 @@
-<h1>New tour</h1>
+<h1><%= t('tours.new.new_tour') %></h1>
 
 <%= render "form", tour: @tour %>
 
 <br>
 
 <div>
-  <%= link_to "Retour", :back %>
+  <%= link_to t('global.actions.back'), :back %>
 </div>

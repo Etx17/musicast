@@ -1,0 +1,622 @@
+		<% item_count ||= 0 %>
+		<% aspect_ratio = local_assigns[:aspect_ratio].present? ? local_assigns[:aspect_ratio] : 1.0 %>
+		<% display_width = local_assigns[:display_width].present? ? local_assigns[:display_width].to_i+2 : 502 %>
+		<script>
+				$(function () {
+
+						// function crop_<%= field %>_<%= item_count %>_image_load(data) {
+						// 		var $crop_x = $("input#upload_<%= field %>_<%= item_count %>_crop_x"),
+						// 				$crop_y = $("input#upload_<%= field %>_<%= item_count %>_crop_y"),
+						// 				$crop_w = $("input#upload_<%= field %>_<%= item_count %>_crop_w"),
+						// 				$crop_h = $("input#upload_<%= field %>_<%= item_count %>_crop_h");
+
+						// 		 $crop_x.val('');
+						// 		 $crop_y.val('');
+						// 		 $crop_h.val('');
+						// 		 $crop_w.val('');
+
+						// 		 $crop_x.val(Math.round(data.left));
+						// 		 $crop_y.val(Math.round(data.top));
+						// 		 $crop_h.val(Math.round(data.height));
+						// 		 $crop_w.val(Math.round(data.width));
+
+						// }
+
+						// var $crop_x = $("input#upload_<%= field %>_<%= item_count %>_crop_x"),
+						// 		$crop_y = $("input#upload_<%= field %>_<%= item_count %>_crop_y"),
+						// 		$crop_w = $("input#upload_<%= field %>_<%= item_count %>_crop_w"),
+						// 		$crop_h = $("input#upload_<%= field %>_<%= item_count %>_crop_h");
+
+						// $crop_x.val('');
+						// $crop_y.val('');
+						// $crop_h.val('');
+						// $crop_w.val('');
+
+						var $image = $('#upload_<%= field %>_<%= item_count %>_image');
+						var $button = $('#button_<%= field %>_<%= item_count %>');
+						var $result = $('#upload_<%= field %>_<%= item_count %>_result');
+						var croppable = true;
+						var cropBoxData;
+						var canvasData;
+						var img = new Image();
+				//    var img_tag = $('#profile_avatar').parent().find("#preview_avatar").children("img");
+
+						function initializeCropper() {
+							$image.cropper({
+									preview: '#upload_<%= field %>_<%= item_count %>_preview',
+									viewMode: 1,
+									dragMode: 'move',
+									aspectRatio: <%= aspect_ratio %>,
+									restore: false,
+									guides: false,
+									highlight: false,
+									cropBoxMovable: true,
+									cropBoxResizable: true,
+									scalable: false,
+									zoomable: true,
+									rotatable: false,
+									getData: true,
+									checkCrossOrigin: true,
+									modal: true,
+									center: true,
+
+									ready: function () {
+											$image.cropper('setCanvasData', canvasData);
+											$image.cropper('setCropBoxData', cropBoxData);
+									},
+
+									crop: function (event) {
+											var evt = $image.cropper('getCropBoxData');
+											crop_<%= field %>_<%= item_count %>_image_load(evt)
+
+									}
+							});
+						}
+
+						$('#upload-<%= field %>-<%= item_count %>-modal').on('shown.bs.modal', function () {
+							initializeCropper();
+						}).on('hidden.bs.modal', function () {
+								// Nettoyer le cropper
+								$image.cropper('destroy');
+								$result.html('');
+								$image.attr('src','');
+
+								// Résoudre le problème d'accessibilité en déplaçant le focus après la fermeture
+								setTimeout(function() {
+									// Trouver l'élément qui a déclenché le modal et lui rendre le focus
+									const fileInput = document.getElementById('upload_<%= field %>_<%= item_count %>_file_field');
+									if (fileInput && fileInput.parentElement) {
+										const previewElement = fileInput.parentElement.querySelector('.upload-placeholder, [id$="_file_preview"]');
+										if (previewElement) {
+											previewElement.focus();
+										} else {
+											// Fallback - focus on a safe element outside the modal
+											const safeElement = document.querySelector('main h1, main .btn, main a');
+											if (safeElement) {
+												safeElement.focus();
+											}
+										}
+									}
+								}, 50);
+						});
+
+						$button.on('click', function () {
+								console.log("Save button clicked, applying crop");
+								var croppedCanvas;
+								var roundedCanvas;
+
+								if (!croppable) {
+									alert('not croppable');
+										return;
+								}
+
+								console.log("Getting cropped canvas");
+								croppedCanvas = $image.cropper('getCroppedCanvas', {
+									maxWidth: 2000,
+									maxHeight: 2000,
+								});
+
+								if (!croppedCanvas) {
+									console.error("Failed to get cropped canvas");
+									return;
+								}
+
+								console.log("Converting cropped canvas to base64");
+								var croppedImageDataURL = croppedCanvas.toDataURL("image/jpeg", 0.9);
+								$result.html('<img src="' + croppedImageDataURL + '">');
+
+								// Update the preview image
+								$('#upload_<%= field %>_<%= item_count %>_file_preview').attr('src', croppedImageDataURL);
+								console.log("Preview image updated with cropped image");
+
+								// Convert to blob and update the file input
+								croppedCanvas.toBlob(function(blob) {
+									// Create a new file object
+									var fileName = "cropped_image.jpg";
+									if ($("#upload_<%= field %>_<%= item_count %>_file_field")[0].files.length > 0) {
+										fileName = $("#upload_<%= field %>_<%= item_count %>_file_field")[0].files[0].name;
+									}
+
+									var newFile = new File([blob], fileName, {type: "image/jpeg"});
+
+									// Update the file input
+									var dataTransfer = new DataTransfer();
+									dataTransfer.items.add(newFile);
+									$("#upload_<%= field %>_<%= item_count %>_file_field")[0].files = dataTransfer.files;
+
+									console.log("File input updated with cropped image");
+
+									// Construire l'URL d'upload manuellement car nous n'avons pas accès aux helpers de route
+									var inscriptionId = $('[data-inscription-id]').data('inscription-id');
+									var candidatId = $('[data-candidat-id]').data('candidat-id');
+									var uploadUrl;
+									var locale = document.documentElement.lang || 'fr';
+
+									// Check if we're on a candidat form
+									if (candidatId) {
+										console.log("Detected candidat form with ID:", candidatId);
+										uploadUrl = '/' + locale + '/candidats/' + candidatId + '/upload_portrait';
+									} else {
+										// Default to inscription path
+									if (!inscriptionId) {
+										inscriptionId = window.location.pathname.match(/\/inscriptions\/(\d+)/);
+										inscriptionId = inscriptionId ? inscriptionId[1] : null;
+									}
+									console.log("Uploading image for inscription ID:", inscriptionId);
+										uploadUrl = '/' + locale + '/inscriptions/' + inscriptionId + '/steps/upload_item_image';
+									}
+
+									// Soumettre l'image via AJAX
+									var formData = new FormData();
+									formData.append('image', newFile);
+
+									// Only add item_id for inscriptions, not for candidats
+									if (!candidatId) {
+									formData.append('item_id', '<%= item_count %>');
+									}
+
+									// Afficher un indicateur de chargement
+									$('#upload_<%= field %>_<%= item_count %>_file_preview').after('<div id="upload-status-<%= item_count %>" class="mt-2"><div class="spinner-border spinner-border-sm text-primary" role="status"></div> <small>Téléchargement en cours...</small></div>');
+
+									// Soumettre l'image via AJAX
+									$.ajax({
+										url: uploadUrl,
+										type: 'POST',
+										data: formData,
+										processData: false,
+										contentType: false,
+										headers: {
+											'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+										},
+										success: function(response) {
+											console.log("Image uploaded successfully via AJAX");
+
+											// Mettre à jour la prévisualisation
+											$('#upload_<%= field %>_<%= item_count %>_file_preview').attr('src', response.image_url);
+
+											// Récupérer le conteneur parent
+											var previewContainer = $('#upload_<%= field %>_<%= item_count %>_file_preview').closest('.text-center');
+											var inscriptionId = $('[data-inscription-id]').data('inscription-id');
+											var locale = document.documentElement.lang || 'fr';
+											var purgeUrl = '/' + locale + '/inscriptions/' + inscriptionId + '/steps/purge_item_image?item_id=<%= item_count %>';
+
+											// Si c'est un placeholder, le transformer en image réelle avec bouton de suppression
+											if (previewContainer.find('.upload-placeholder').length) {
+												var imageHTML = '<div class="position-relative d-inline-block">' +
+													'<img src="' + response.image_url + '" class="img-fluid rounded" style="max-height: 200px;" id="upload_<%= field %>_<%= item_count %>_file_preview">' +
+													'<a href="' + purgeUrl + '" class="btn btn-sm btn-outline-secondary rounded-circle position-absolute" style="width: 28px; height: 28px; padding: 0; display: flex; align-items: center; justify-content: center; background-color: rgba(255,255,255,0.8); top: 5px; right: 5px;" data-confirm="<%= I18n.t("image_cropper.delete_confirm") %>">' +
+													'<i class="fas fa-times" style="font-size: 14px;"></i>' +
+													'</a>' +
+													'</div>';
+
+												previewContainer.html(imageHTML);
+
+												// Ajouter les infos DPI si disponibles
+												if (response.metadata && response.metadata.resolution) {
+													previewContainer.append('<div>DPI: ' + response.metadata.resolution[0] + 'x' + response.metadata.resolution[1] + '</div>');
+												}
+											}
+
+											var statusMessage = '<small class="text-success"><i class="fas fa-check-circle"></i> <%= I18n.t("image_cropper.upload_success") %></small>';
+
+											if (response.metadata) {
+												var meta = response.metadata;
+												if (meta.dimensions && meta.resolution) {
+													// Créer une section dédiée pour les métadonnées avec un style plus visible
+													statusMessage += '<div class="metadata-info mt-2 p-2 border rounded bg-light">';
+													statusMessage += '<h6 class="mb-1"><i class="fas fa-info-circle"></i> <%= I18n.t("image_cropper.image_info") %></h6>';
+													statusMessage += '<div class="d-flex flex-column">';
+
+													// Dimensions avec icône
+													statusMessage += '<div class="mb-1"><i class="fas fa-ruler-combined text-primary me-1"></i> <strong><%= I18n.t("image_cropper.dimensions") %>:</strong> ' + meta.dimensions.width + ' × ' + meta.dimensions.height + ' <%= I18n.t("image_cropper.px") %></div>';
+
+													// DPI avec icône et mise en évidence
+													var dpiX = meta.resolution[0];
+													var dpiY = meta.resolution[1];
+
+													// Ajouter une classe de couleur en fonction de la valeur du DPI
+													var dpiClass = 'text-success';
+													if (dpiX < 300) dpiClass = 'text-warning';
+													if (dpiX < 150) dpiClass = 'text-danger';
+
+													statusMessage += '<div class="' + dpiClass + '"><i class="fas fa-compress-arrows-alt me-1"></i> <strong><%= I18n.t("image_cropper.resolution") %>:</strong> ' +
+														dpiX + ' × ' + dpiY + ' <%= I18n.t("image_cropper.dpi") %></div>';
+
+													// Taille du fichier si disponible
+													if (meta.size) {
+														var fileSizeKB = Math.round(meta.size / 1024);
+														var fileSizeMB = (fileSizeKB / 1024).toFixed(2);
+														var sizeText = fileSizeKB > 1024 ? fileSizeMB + ' MB' : fileSizeKB + ' KB';
+														statusMessage += '<div><i class="fas fa-file-alt text-secondary me-1"></i> <strong><%= I18n.t("image_cropper.size") %>:</strong> ' + sizeText + '</div>';
+													}
+
+													statusMessage += '</div></div>';
+												}
+											}
+
+											$('#upload-status-<%= item_count %>').html(statusMessage);
+
+											// Trouver correctement le champ caché d'input et lui attribuer le bon fichier
+											console.log("Searching for field with model: <%= model %>, field: <%= field %>");
+											var expectedName = "<%= model %>[<%= field %>]";
+											var modelParts = "<%= model %>".replace(/\[|\]/g, '_').replace(/\[|\]/g, '_');
+											if (modelParts.endsWith('_')) modelParts = modelParts.slice(0, -1);
+											var expectedId = modelParts + "_" + "<%= field %>";
+
+											var submitFileInput = $('#' + expectedId);
+											if (submitFileInput.length === 0) {
+												submitFileInput = $('input[name="' + expectedName + '"]');
+											}
+
+											if (submitFileInput.length > 0) {
+												console.log("Found hidden input field:", submitFileInput.attr('id') || submitFileInput.attr('name'));
+
+												// Marquer le champ comme ayant un fichier déjà téléchargé
+												submitFileInput.attr('data-uploaded', 'true');
+
+												// Créer un champ caché indiquant que l'image est déjà téléchargée
+												var hiddenFlag = $('<input type="hidden" name="' + expectedName + '_uploaded" value="true">');
+												submitFileInput.after(hiddenFlag);
+											}
+										},
+										error: function(xhr, status, error) {
+											console.error("Error uploading image:", error);
+											$('#upload-status-<%= item_count %>').html('<small class="text-danger"><i class="fas fa-exclamation-circle"></i> <%= I18n.t("image_cropper.upload_error", message: "") %>' + (xhr.responseJSON?.message || error) + '</small>');
+										}
+									});
+
+									var expectedName = "<%= model %>[<%= field %>]";
+									console.log("Expected input name: ", expectedName);
+
+									// Construire l'ID attendu (format standard Rails)
+									var modelParts = "<%= model %>".replace(/\[|\]/g, '_').replace(/\[|\]/g, '_');
+									if (modelParts.endsWith('_')) modelParts = modelParts.slice(0, -1);
+									var expectedId = modelParts + "_" + "<%= field %>";
+									console.log("Expected input ID: ", expectedId);
+
+									// Rechercher par ID exact en premier
+									var submitFileInput = $('#' + expectedId);
+
+									if (submitFileInput.length === 0) {
+										// Puis rechercher par le format de formulaire nested (pour les nested attributes)
+										submitFileInput = $('input[name="' + expectedName + '"]');
+									}
+
+									if (submitFileInput.length === 0) {
+										// Dernier essai: utiliser un sélecteur plus générique qui correspond au pattern du nom
+										submitFileInput = $('input[name$="[<%= field %>]"]').first();
+									}
+
+									if (submitFileInput.length > 0) {
+										console.log("Found hidden input field:", submitFileInput.attr('id') || submitFileInput.attr('name'));
+
+										// Créer un nouvel événement de fichier
+										try {
+											// Mettre à jour les fichiers sur l'input caché
+											submitFileInput[0].files = dataTransfer.files;
+											console.log("Hidden input updated with cropped image");
+
+											// Trigger change event
+											submitFileInput.trigger('change');
+											console.log("Change event triggered on hidden input");
+
+											// Définir explicitement un attribut data pour indiquer que le fichier a été croppé
+											submitFileInput.attr('data-cropped', 'true');
+
+											// Déclencher un événement personnalisé pour signaler que l'image a été croppée
+											document.dispatchEvent(new CustomEvent('imageCropped', {
+												detail: {
+													itemId: '<%= item_count %>',
+													field: '<%= field %>',
+													success: true
+												}
+											}));
+										} catch (e) {
+											console.error("Error updating hidden input:", e);
+											console.error("Error details:", e.message);
+
+											// Fallback: créer un input de type file temporaire
+											// puis le soumettre avec le formulaire
+											var tempInput = $('<input type="file" name="' + expectedName + '" style="display:none">');
+											tempInput[0].files = dataTransfer.files;
+											var form = $('form').first();
+											form.append(tempInput);
+											console.log("Fallback: created temporary file input with name:", expectedName);
+
+											// Déclencher un événement personnalisé pour signaler que l'image a été croppée
+											document.dispatchEvent(new CustomEvent('imageCropped', {
+												detail: {
+													itemId: '<%= item_count %>',
+													field: '<%= field %>',
+													success: true
+												}
+											}));
+										}
+									} else {
+										console.warn("Hidden input not found. Creating a new hidden input for the cropped image");
+										console.warn("Looked for ID:", expectedId);
+										console.warn("Looked for name:", expectedName);
+
+										// Créer un nouvel input caché et l'ajouter au formulaire
+										var form = $('form').first();
+										var tempInput = $('<input type="file" name="' + expectedName + '" style="display:none">');
+										tempInput[0].files = dataTransfer.files;
+										form.append(tempInput);
+										console.log("Created new hidden input with name:", expectedName);
+
+										document.dispatchEvent(new CustomEvent('imageCropped', {
+											detail: {
+												itemId: '<%= item_count %>',
+												field: '<%= field %>',
+												success: true
+											}
+										}));
+									}
+
+									setTimeout(function() {
+										var modalElement = document.getElementById('upload-<%= field %>-<%= item_count %>-modal');
+										if (modalElement) {
+											var modalInstance = bootstrap.Modal.getInstance(modalElement);
+											if (modalInstance) {
+												// Shift focus before closing
+												document.body.focus();
+												modalInstance.hide();
+											}
+										}
+									}, 100);
+								}, 'image/jpeg', 0.9);
+						});
+
+						function readURL(input) {
+								if (input.files && input.files[0]) {
+										var reader = new FileReader();
+
+										reader.onload = function (e) {
+												$('#upload_<%= field %>_<%= item_count %>_image').attr('src', e.target.result);
+										}
+
+										reader.readAsDataURL(input.files[0]);
+								}
+						}
+
+						$("#upload_<%= field %>_<%= item_count %>_ignore_crop").click(function () {
+							if ($("#upload_<%= field %>_<%= item_count %>_ignore_crop").prop("checked")) {
+								$image.cropper('destroy');
+							} else {
+								initializeCropper();
+							}
+						});
+
+						$("#upload_<%= field %>_<%= item_count %>_file_field").change(function () {
+
+							 console.log("File selected, showing modal and initializing cropper");
+							 let cropperModal = new bootstrap.Modal(document.getElementById("upload-<%= field %>-<%= item_count %>-modal"), {});
+							 cropperModal.show();
+
+							$("#upload_<%= field %>_<%= item_count %>_ignore_crop").prop('checked', false);
+
+							readURL(this);
+
+								var canvas  = $("#upload_<%= field %>_<%= item_count %>_canvas"),
+										context = canvas.get(0).getContext("2d"),
+										$result = $('#upload_<%= field %>_<%= item_count %>_result');
+
+								if (this.files && this.files[0]) {
+										if ( this.files[0].type.match(/^image\//) ) {
+												var reader = new FileReader();
+												reader.onload = function(evt) {
+														var img = new Image();
+														img.onload = function() {
+																console.log("Image loaded in canvas, dimensions:", img.width, "x", img.height);
+																context.canvas.height = img.height;
+																context.canvas.width  = img.width;
+																context.drawImage(img, 0, 0);
+
+																var cropper = canvas.cropper({
+																		aspectRatio: <%= aspect_ratio %>,
+																		cropBoxResizable: true,
+																		scalable: false,
+																		zoomable: false,
+																		rotatable: false,
+																		getData: true
+																});
+
+																$('#btnCrop_<%= field %>_<%= item_count %>').click(function() {
+																		var evt = $image.cropper('getCropBoxData')
+																		console.log(evt)
+																		crop_<%= field %>_<%= item_count %>_image_load(evt)
+																		// Get a string base 64 data url
+																		var croppedImageDataURL = $image.cropper('getCroppedCanvas').toDataURL("image/png");
+																		$result.html( $('<img>').attr('src', croppedImageDataURL) );
+																});
+
+																$('#btnRestore_<%= field %>_<%= item_count %>').click(function() {
+																		$image.cropper('reset');
+																		$result.empty();
+																});
+														};
+														img.src = evt.target.result;
+												};
+												reader.readAsDataURL(this.files[0]);
+										}
+										else {
+												alert("Invalid file type! Please select an image file.");
+										}
+								}
+								else {
+										alert('No file(s) selected.');
+								}
+						});
+
+				});
+
+				$('#upload_<%= field %>_<%= item_count %>_file_preview').on('click', function() {
+					$('#upload_<%= field %>_<%= item_count %>_file_field').click();
+				})
+
+				function loadCroppedImageData<%= item_count %>() {
+					// ... existing code ...
+				}
+
+				function initCropper<%= item_count %>() {
+					// ... existing code ...
+				}
+
+				function handleFileSelect<%= item_count %>(evt) {
+					var file = evt.target.files[0];
+					if(!file) return;
+
+					// Reset error state
+					document.getElementById('crop_<%= field %>_<%= item_count %>_error').style.display = 'none';
+
+					// Vérifier les métadonnées de l'image et les afficher
+					displayImageMetadata<%= item_count %>(file);
+
+					// ... existing code ...
+				}
+
+				// Fonction pour afficher les métadonnées de l'image
+				function displayImageMetadata<%= item_count %>(file) {
+					var metadataPanel = document.getElementById('image-metadata-<%= item_count %>');
+					var metadataContent = document.getElementById('metadata-content-<%= item_count %>');
+					var dpiBadge = document.getElementById('dpi-badge-<%= item_count %>');
+
+					// Afficher immédiatement le panneau avec un message de chargement
+					metadataPanel.style.display = 'block';
+					metadataContent.innerHTML = '<%= I18n.t("image_cropper.analyzing_image") %>';
+
+					// Créer un FileReader pour lire l'image
+					var reader = new FileReader();
+					reader.onload = function(e) {
+						var img = new Image();
+						img.onload = function() {
+							// Dimensions de l'image
+							var width = this.width;
+							var height = this.height;
+
+							// Format de l'image
+							var format = file.type.split('/')[1].toUpperCase();
+
+							// Taille du fichier
+							var fileSizeKB = Math.round(file.size / 1024);
+							var fileSizeMB = (fileSizeKB / 1024).toFixed(2);
+							var fileSize = fileSizeKB < 1024 ? fileSizeKB + ' KB' : fileSizeMB + ' MB';
+
+							// Récupérer les DPI depuis la réponse AJAX après le téléchargement
+							// Pour l'instant, afficher que les dimensions et la taille sont disponibles
+							var html = '<i class="fas fa-expand-arrows-alt"></i> <%= I18n.t("image_cropper.dimensions") %>: ' + width + 'x' + height + ' <%= I18n.t("image_cropper.px") %><br>' +
+									   '<i class="fas fa-file-image"></i> <%= I18n.t("image_cropper.format") %>: ' + format + '<br>' +
+									   '<i class="fas fa-weight-hanging"></i> <%= I18n.t("image_cropper.size") %>: ' + fileSize;
+
+							metadataContent.innerHTML = html;
+
+							// Par défaut, utiliser DPI estimé basé sur dimensions (considérer 300 DPI comme référence)
+							dpiBadge.textContent = "<%= I18n.t("image_cropper.waiting_for_dpi") %>";
+							dpiBadge.className = "badge badge-secondary";
+						};
+						img.src = e.target.result;
+					};
+					reader.readAsDataURL(file);
+				}
+
+		</script>
+
+		<style>
+      img {
+        max-width: 100%;
+      }
+
+      .custom-file-input {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        border: 0;
+      }
+    </style>
+
+    <!-- Input file pour permettre la sélection du fichier -->
+    <input type="file" id="upload_<%= field %>_<%= item_count %>_file_field" class="custom-file-input" accept="image/*">
+
+	    <!-- Modal -->
+    <div class="modal fade bg-gray modal-cropper" id="upload-<%= field %>-<%= item_count %>-modal" aria-labelledby="modalLabel" role="dialog" tabindex="-1">
+      <div class="modal-dialog" role="document" style="width:<%= display_width+2 %>px;max-width:<%= display_width+2 %>px;">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title"><%= t('image_cropper.adjust_image') %></h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+
+          <div class="modal-body" style="padding:1px;">
+            <div>
+            <img id="upload_<%= field %>_<%= item_count %>_image" width="100%" src="">
+          </div>
+          <div style="margin:5px;text-align:center;">
+            <span class="text-gray">
+              <%= t('image_cropper.image_requirements', width: local_assigns[:display_width].present? ? local_assigns[:display_width] : 500) %>
+              <% if local_assigns[:aspect_ratio].present? %>
+                <% if local_assigns[:aspect_ratio] == 1.0 %>
+                  <%= t('image_cropper.square_format') %>
+                <% elsif local_assigns[:aspect_ratio] == 0.75 %>
+                  <%= t('image_cropper.portrait_format') %>
+                <% elsif local_assigns[:aspect_ratio] == 1.33 %>
+                  <%= t('image_cropper.landscape_format') %>
+                <% else %>
+                  <%= t('image_cropper.custom_ratio_format', ratio: local_assigns[:aspect_ratio]) %>
+                <% end %>
+              <% end %>
+              <%= t('image_cropper.best_format') %>
+              <br><span class="text-primary"><%= t('image_cropper.dpi_recommendation') %></span>
+            </span>
+          </div>
+
+          <!-- Info panel pour les métadonnées de l'image -->
+          <div id="image-metadata-<%= item_count %>" class="p-2 border-top border-bottom my-2" style="display: none;">
+            <div class="d-flex justify-content-between">
+              <strong><%= t('image_cropper.image_metadata') %></strong>
+              <span class="badge" id="dpi-badge-<%= item_count %>">0 <%= t('image_cropper.dpi') %></span>
+            </div>
+            <div class="small" id="metadata-content-<%= item_count %>"></div>
+          </div>
+
+          <div id="upload_<%= field %>_<%= item_count %>_result"></div>
+          <div id="upload_<%= field %>_<%= item_count %>_preview"></div>
+          <div style="display:none;">
+            <canvas id="upload_<%= field %>_<%= item_count %>_canvas">
+              Your browser does not support the HTML5 canvas element.
+            </canvas>
+          </div>
+        </div>
+          <div class="modal-footer">
+            <div class="d-flex justify-content-center w-100">
+              <input type="button" class="btn btn-primary" id="button_<%= field %>_<%= item_count %>" value="<%= t('image_cropper.save') %>" data-bs-dismiss="modal">
+	          </div>
+        	</div>
+        </div>
+      </div>
+      </div>
+
+		<% @image_cropper_loaded = "done" %>

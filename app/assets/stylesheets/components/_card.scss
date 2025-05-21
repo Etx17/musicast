@@ -1,0 +1,33 @@
+.card-img {
+  background-size: cover;
+  width: 50%;
+  aspect-ratio: 1;
+}
+
+.background-image {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.contain {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.rounded-top-box {
+  border-radius: 6px 6px 0 0 !important;
+}
+
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+
+.curved-bottom-image {
+  clip-path: path('M 0 0 H 425 V 205 Q 326 416 -486 146 Z');
+}

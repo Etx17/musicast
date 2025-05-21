@@ -1,11 +1,11 @@
-<h1 class="text-center mt-5">Modifier votre dossier d'inscription</h1>
-<h2 class="text-center text-danger">Vous pouvez modifier votre dossier jusqu'au <%= @inscription.category.edition_competition.end_of_registration.strftime("%d %B %Y à %H:%M") %></h2>
-<h3 class="text-center text-danger">Votre dossier sera soumis au jury de préselection a cette date si vous avez reglé votre inscription.</h3>
+<h1 class="text-center mt-5"><%= t('inscriptions.edit.modify_application') %></h1>
+<h2 class="text-center text-danger"><%= t('inscriptions.edit.can_modify_until', date: @inscription.category.edition_competition.end_of_registration.strftime("%d %B %Y à %H:%M")) %></h2>
+<h3 class="text-center text-danger"><%= t('inscriptions.edit.will_be_submitted') %></h3>
 <%= render "form", inscription: @inscription %>
 
 <br>
 
 <div>
-  <%= link_to "Show this inscription", @inscription %> |
-  <%= link_to "Back to inscriptions", inscriptions_path %>
+  <%= link_to t('global.actions.show'), @inscription %> |
+  <%= link_to t('global.actions.back'), inscriptions_path %>
 </div>

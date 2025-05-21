@@ -76,10 +76,6 @@
   color: #EEEEEE; /* Adjust the color code to your preferred shade of grey */
 }
 
-body {
-  padding-top: 50px; /* Adjust this value based on the height of your navbar */
-}
-
 .card-hover {
   transition: transform 0.3s;
   &:hover {
@@ -192,6 +188,7 @@ body {
   padding: 10px;
   margin-bottom: 10px;
   transition: all 0.3s ease;
+  background: white;
 
   &:hover {
     background-color: #f8f9fa; // light gray
@@ -247,14 +244,11 @@ body {
 }
 
 .is-valid {
-  border-color: #0d6efd !important; /* This is Bootstrap's primary color */
+  border-color: $primary !important;
 }
 .is-valid:focus {
-  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25) !important; /* This adds a glow effect around the input field when it's focused */
+  box-shadow: 0 0 0 0.2rem rgba($primary, 0.25) !important;
 }
-// .form-control:valid, .is-valid {
-//   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3e%3cpath fill='rgba(13, 110, 253, 0.5)' d='M2.3 6.73L.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3e%3c/svg%3e");
-// }
 input::placeholder {
   color: rgb(175, 175, 175);
   font-style: italic;
@@ -286,4 +280,15 @@ html {
 .country-flag-link:hover {
   background-color: #f5f5f5;
   border-color: #999;
+}
+
+.competition-status {
+  font-size: 0.8em;
+  padding: 2px 5px;
+  border-radius: 3px;
+  margin-left: 5px;
+
+  &.active { background-color: #28a745; color: white; }
+  &.pending { background-color: #ffc107; color: black; }
+  &.closed { background-color: #dc3545; color: white; }
 }

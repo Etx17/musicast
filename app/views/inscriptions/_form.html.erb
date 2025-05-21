@@ -1,4 +1,3 @@
-
 <div class="container">
   <%= simple_form_for(@inscription) do |f| %>
     <%= f.error_notification %>
@@ -6,33 +5,61 @@
 
     <div class="form-inputs">
       <%= f.hidden_field :category_id, value: @inscription.category.id %>
+        <h4 class="mt-4"><%= t('inscriptions.items_form_section.required_documents') %>:</h4>
+      <div class="p-2 bg-white rounded-8">
+        <%= render "items_form_section", inscription: @inscription, f: f %>
+      </div>
 
-      <%= render "items_form_section", inscription: @inscription, f: f %>
+      <h4 class="mt-4"><%= t('global.program') %></h4>
+      <div class="p-2 bg-white rounded-8">
+        <%= render "semi_imposed_work_section", inscription: @inscription, f: f %>
 
-      <%= render "semi_imposed_work_section", inscription: @inscription, f: f %>
+        <%= render "choice_imposed_work_section", inscription: @inscription, f: f %>
 
-      <%= render "choice_imposed_work_section", inscription: @inscription, f: f %>
-
-      <% if inscription.category.imposed_work&.airs&.any? %>
-        <h3>Airs imposés</h3>
-        <ul>
-          <% inscription.category&.imposed_work&.airs&.each do |air| %>
-            <li> <%= air.title %> - <%= air.composer %> - <%= air.oeuvre %> </li>
-          <% end %>
-        </ul>
-      <% end %>
+        <% if inscription.category.imposed_work&.airs&.any? %>
+          <h5><%= t('inscriptions.form.imposed_airs') %></h5>
+          <ul>
+            <% inscription.category&.imposed_work&.airs&.each do |air| %>
+              <% if I18n.locale == :en && air.infos_english.present? %>
+                <li> <%= air.title %> - <%= air.composer %> - <%= air.oeuvre %> - <%= air.infos_english %> </li>
+              <% else %>
+                <li> <%= air.title %> - <%= air.composer %> - <%= air.oeuvre %> - <%= air.infos %> </li>
+              <% end %>
+            <% end %>
+          </ul>
+        <% end %>
+      </div>
     </div>
 
-    <%= f.input :candidate_brings_pianist_accompagnateur, as: :boolean, label: "Souhaitez vous emmener votre propre pianiste accompagnateur? (cochez pour OUI)" if inscription.category.allow_own_pianist_accompagnateur %>
-    <%= f.input :time_preference, label: "Préférence horaire de passage", collection: Inscription.time_preferences.keys.to_a, prompt: 'Select a time preference' %>
-    <div class="d-flex align-items-start gap-2">
-      <%= f.check_box :terms_accepted, required: true, class: "mt-1" %>
-      <%= f.label :terms_accepted, required: true, class:"text-secondary"  do %>
-        <span class="text-danger">*</span> Je confirme par la présente renoncer à mon droit de rétractation et je suis conscient que toute inscription payée mais incomplète après la date limite de soumission des candidatures n'est pas remboursable par Musicast. Pour toute demande de remboursement, veuillez contacter directement l'organisme concerné. Veuillez noter que la commission de Musicast n'est pas remboursable.
-      <% end %>
-    </div>
-    <div class="form-actions">
-      <%= f.button :submit, "Enregistrer", class: "btn btn-dark" %>
-    </div>
+    <div class="p-2 bg-white rounded-8 mt-3">
+      <%= f.input :candidate_brings_pianist_accompagnateur, as: :boolean, id: "inscription_candidate_brings_pianist_accompagnateur", label: t('inscriptions.form.bring_own_pianist'), input_html: { onchange: "togglePianistDetails()" } if inscription.category.allow_own_pianist_accompagnateur %>
+      <div id="pianist_details" style="display: <%= @inscription.candidate_brings_pianist_accompagnateur ? 'block' : 'none' %>;">
+        <%= f.input :candidate_brings_pianist_accompagnateur_email, label: t('inscriptions.form.candidate_brings_pianist_accompagnateur_email') %>
+        <%= f.input :candidate_brings_pianist_accompagnateur_full_name, label: t('inscriptions.form.candidate_brings_pianist_accompagnateur_full_name') %>
+      </div>
+      <%= f.input :time_preference, label: t('inscriptions.form.time_preference'), hint: t('inscriptions.form.time_preference_info'), collection: Inscription.time_preferences.keys.to_a, prompt: t('inscriptions.form.select_time_preference') %>
+      <div class="d-flex align-items-start gap-2">
+        <%= f.check_box :terms_accepted, required: true, class: "mt-1" %>
+        <%= f.label :terms_accepted, required: true, class:"text-secondary"  do %>
+          <span class="text-danger">*</span> <%= t('inscriptions.form.terms_acceptance_html') %>
+        <% end %>
+      </div>
+      <div class="form-actions">
+        <%= f.button :submit, t('global.actions.save'), class: "btn btn-primary" %>
+      </div>
+      </div>
   <% end %>
 </div>
+
+<script>
+  function togglePianistDetails() {
+    const pianistCheckbox = document.getElementById('inscription_candidate_brings_pianist_accompagnateur');
+    const pianistDetails = document.getElementById('pianist_details');
+
+    if (pianistCheckbox.checked) {
+      pianistDetails.style.display = 'block';
+    } else {
+      pianistDetails.style.display = 'none';
+    }
+  }
+</script>

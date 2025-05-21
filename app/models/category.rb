@@ -18,25 +18,21 @@ class Category < ApplicationRecord
   has_many :categories_juries, dependent: :destroy
   has_many :juries, through: :categories_juries
 
-  has_one_attached :photo
+  has_one_attached :photo, dependent: :destroy
   before_save :should_generate_new_friendly_id?, if: :name_changed?
   delegate :competition, to: :edition_competition
 
   accepts_nested_attributes_for :categories_juries, allow_destroy: true
 
-  enum status: {
-    draft: 0,
-    published: 1,
-    archived: 2
-  }
+  enum :status, { draft: 0, published: 1, archived: 2 }
 
-  enum preselection_vote_type: {
+  enum :preselection_vote_type, {
     no_vote: 0,
     hundred_points: 1,
   }
 
   # Dangereux, attention a la suppression des catégories et a l'ajout
-  enum discipline: {
+  enum :discipline, {
     alto: 1,
     ancient_instruments_and_baroque_music: 2,
     bassoon: 3,
@@ -89,6 +85,14 @@ class Category < ApplicationRecord
 
   def has_a_tour?
     tours.present? && tours.count > 0
+  end
+
+  def image_or_default
+    if photo.attached?
+      Rails.application.routes.url_helpers.rails_blob_path(photo, only_path: true)
+    else
+      ActionController::Base.helpers.asset_path('category.jpeg')
+    end
   end
 
   def has_a_requirement_item?

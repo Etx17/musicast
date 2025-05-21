@@ -1,0 +1,146 @@
+<div class="table-component" data-controller="table">
+  <table class="table-base" style="border-radius: 8px;">
+    <thead>
+      <tr class="table-header">
+        <% if @selectable %>
+          <th class="table-cell table-cell--checkbox">
+             <input type="checkbox" name="select_all" class="table-checkbox custom-checkbox"
+            data-table-target="selectAll" data-action="change->table#toggleAll">
+          </th>
+        <% end %>
+        <% if @image_column.present? %>
+          <th class="table-cell table-cell--image"></th>
+        <% end %>
+
+        <% columns[0..-1].each do |column| %>
+          <th class="px-3 table-cell <%= "table-cell--sortable" if column[:sortable] %> <%= "text-#{column[:align]}" if column[:align] %>"  style="height: auto; min-height: 48px; line-height: 1.2; padding: 12px 8px; vertical-align: middle; display: table-cell; min-width: <%= column[:min_width] || 40 %>px;">
+            <%= column[:label] %>
+            <%= sort_indicator(column) if column[:sortable] %>
+          </th>
+        <% end %>
+
+        <% if timestamp_column %>
+          <th class="table-cell table-cell--timestamp text-center" style="height: auto; min-height: 48px; line-height: 1.2; padding: 12px 8px; vertical-align: middle; display: table-cell;">
+            <%= timestamp_column[:label] %>
+          </th>
+        <% end %>
+        <% unless @no_action %>
+          <th class="table-cell table-cell--actions">
+            <%= t('global.action').pluralize %>
+          </th>
+        <% end %>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% if @rows.empty? %>
+        <tr>
+          <td colspan="<%= columns.size + (selectable ? 1 : 0) + (@image_column.present? ? 1 : 0) + (@no_action ? 1 : 0) + 1 %>" class="text-center">
+            <%= @empty_message %>
+          </td>
+        </tr>
+      <% else %>
+        <% @rows.each do |row| %>
+          <tr class="table-row">
+            <% if @selectable %>
+
+              <td class="table-cell table-cell--checkbox">
+                <%= check_box_tag "#{@checkbox_options&.dig(:name) || 'item'}_ids[]",
+                  row.email_group_id,
+                  false,
+                  class: ["table-checkbox", "custom-checkbox", @checkbox_options&.dig(:class)].compact.join(" "),
+                  style: "display: flex !important; margin-left: 0px !important;",
+                  data: {
+                    table_target: "rowCheckbox",
+                    **(@checkbox_options&.dig(:data)&.transform_values { |value| value.is_a?(Proc) ? value.call(row) : row.send(value) } || {})
+                  }
+                %>
+              </td>
+            <% end %>
+
+            <% if @image_column.present? %>
+              <td class="table-cell table-cell--image">
+                <div class="table-image lazy"
+                    style="background-image: url('<%= @image_column.call(row)[:default] %>')"
+                    data-src="<%= @image_column.call(row)[:lazy] %>">
+                </div>
+              </td>
+            <% end %>
+
+
+            <% columns[0..-1].each do |column| %>
+              <td class="table-cell <%= "text-#{column[:align]}" if column[:align] %>">
+                <%= column[:value].call(row) %>
+              </td>
+            <% end %>
+
+            <% if timestamp_column %>
+              <td class="table-cell table-cell--timestamp text-center gray-500">
+                <%= l(row.try(timestamp_column[:key]), format: "%d %b %Y") if row.try(timestamp_column[:key]).present? %>
+              </td>
+            <% end %>
+            <% unless @no_action %>
+              <td class="table-cell table-cell--actions">
+                <%= render Dropdown::KebabComponent.new(items: @links.map do |link|
+                  processed_data = if link[:data].is_a?(Hash)
+                    link[:data].transform_values { |value| value.is_a?(Proc) ? value.call(row) : value }
+                  else
+                    link[:data]
+                  end
+
+                  link.merge(
+                    path: link[:path].is_a?(Proc) ? link[:path].call(row) : link[:path],
+                    state: link[:state].is_a?(Proc) ? link[:state].call(row) : link[:state],
+                    text: link[:text].is_a?(Proc) ? link[:text].call(row) : link[:text],
+                    icon: link[:icon].is_a?(Proc) ? link[:icon].call(row) : link[:icon],
+                    data: processed_data,
+                    show_item: link[:show_item].is_a?(Proc) ? link[:show_item].call(row) : link[:show_item]
+                  )
+                end) %>
+              </td>
+            <% end %>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Listen to Bootstrap dropdown show event
+  document.addEventListener('shown.bs.dropdown', function(event) {
+    console.log('Dropdown opened');
+    const button = event.target; // The dropdown toggle button
+
+    const row = button.closest('tr');
+    if (!row) {
+      console.log('No row found');
+      return;
+    }
+
+    const table = button.closest('.table-component');
+    if (!table) {
+      console.log('No table component found');
+      return;
+    }
+
+    // Calculate if dropdown would be cut off
+    const rowBottom = row.offsetTop + row.offsetHeight;
+    const containerHeight = table.offsetHeight;
+    const containerScroll = table.scrollTop;
+    const containerBottom = containerScroll + containerHeight;
+
+    console.log('Row bottom:', rowBottom);
+    console.log('Container bottom:', containerBottom);
+
+    if (rowBottom > containerBottom) {
+      console.log('Scrolling into view');
+      table.scrollTo({
+        top: rowBottom - containerHeight + 100,
+        behavior: 'smooth'
+      });
+    }
+  });
+});
+</script>

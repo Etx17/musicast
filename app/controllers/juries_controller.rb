@@ -57,6 +57,6 @@ class JuriesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def jury_params
-    params.require(:jury).permit(:user_id, :first_name, :last_name, :email, :short_bio)
+    params.require(:jury).permit(:user_id, :first_name, :last_name, :email, :short_bio, :avatar)
   end
 end
