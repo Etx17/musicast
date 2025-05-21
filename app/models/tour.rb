@@ -113,9 +113,9 @@ class Tour < ApplicationRecord
     new_order = new_order.to_i
     Performance.transaction do
       if new_order < current_order
-        performances.where('"order" >= ? AND "order" < ?', new_order, current_order).update_all('"order" = "order" + 1')
+        performances.where('"order" >= ? AND "order" < ?', new_order, current_order).update_all(['"order" = "order" + ?', 1])
       elsif new_order > current_order
-        performances.where('"order" <= ? AND "order" > ?', new_order, current_order).update_all('"order" = "order" - 1')
+        performances.where('"order" <= ? AND "order" > ?', new_order, current_order).update_all(['"order" = "order" - ?', 1])
       end
 
       performance.update(order: new_order)
