@@ -1,0 +1,8 @@
+fr:
+  global:
+    actions:
+      filter: "Filtrer"
+      all: "Tous"
+  inscriptions:
+    candidate_index:
+      filter_by_status: "Filtrer par statut"

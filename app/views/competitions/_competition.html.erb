@@ -1,18 +1,18 @@
 <div id="<%= dom_id competition %>">
 
   <div class="mb-3">
-    <span class=" text-dark">Nom:</span>
+    <span class=" text-dark"><%= t('competitions.competition.name') %>:</span>
     <span class="ms-2"><%= competition.nom_concours %></span>
   </div>
 
   <div>
-    <span class="text-dark">Description:</span>
+    <span class="text-dark"><%= t('competitions.competition.description') %>:</span>
     <span class="ms-2"><%= competition.description %></span>
   </div>
 
   <%# Photo  %>
   <div class="d-flex flex-column mt-3 w-100">
-    <span class="text-dark">Photo de couverture:</span>
-     <%= image_tag competition.photo, height: 300, crop: :fill, class:"w-100" if competition.photo.attached? %>
+    <span class="text-dark"><%= t('competitions.competition.cover_photo') %>:</span>
+     <%= image_tag competition.image_or_default, height: 300, class:"w-100", style: "object-fit: cover;" %>
   </div>
 </div>

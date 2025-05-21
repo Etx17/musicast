@@ -66,6 +66,6 @@ class OrganismsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def organism_params
-    params.require(:organism).permit(:organisateur_id, :nom, :description, :photo, :address_id, :logo)
+    params.require(:organism).permit(:organisateur_id, :nom, :description, :photo, :address_id, :logo, :iban)
   end
 end

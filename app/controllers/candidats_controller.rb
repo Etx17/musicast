@@ -49,14 +49,15 @@ class CandidatsController < ApplicationController
     #   end
     # end
 
-    respond_to do |format|
-      if @candidat.update(candidat_params)
-        format.html { redirect_to candidat_url(@candidat), notice: "Candidat was successfully updated." }
-        format.json { render :show, status: :ok, location: @candidat }
+    if @candidat.update(candidat_params)
+      if session[:redirect_url].present?
+        redirect_to session[:redirect_url], notice: "Candidat was successfully updated."
+        session[:redirect_url] = nil
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @candidat.errors, status: :unprocessable_entity }
+        redirect_to candidat_url(@candidat), notice: "Candidat was successfully updated."
       end
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -83,6 +84,125 @@ class CandidatsController < ApplicationController
     redirect_to candidat_path(@candidat), notice: "Diplôme supprimé"
   end
 
+  def purge_attachment
+    @candidat = Candidat.find(params[:id])
+
+    # Find the specific attachment to purge
+    attachment_type = params[:attachment_type]
+
+    # Only purge attachments that belong to the candidat model
+    if %w[portrait artistic_photo cv_english].include?(attachment_type) && @candidat.send(attachment_type).attached?
+      @candidat.send(attachment_type).purge
+
+      respond_to do |format|
+        format.html { redirect_to edit_candidat_path(@candidat), notice: "Fichier supprimé avec succès" }
+        format.json { head :no_content }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to edit_candidat_path(@candidat), alert: "Impossible de supprimer ce fichier" }
+        format.json { render json: { error: "Attachment not found" }, status: :not_found }
+      end
+    end
+  end
+
+  def purge_portrait
+    @candidat = Candidat.find(params[:id])
+
+    if @candidat.portrait.attached?
+      @candidat.portrait.purge
+
+      respond_to do |format|
+        format.html { redirect_to edit_candidat_path(@candidat), notice: "Photo de portrait supprimée avec succès" }
+        format.json { head :no_content }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to edit_candidat_path(@candidat), alert: "Aucun portrait à supprimer" }
+        format.json { render json: { error: "No portrait attached" }, status: :not_found }
+      end
+    end
+  end
+
+  def upload_portrait
+    @candidat = Candidat.find(params[:id])
+
+    if params[:image].present?
+      # Store metadata if available
+      metadata = nil
+      if params[:image].tempfile.present?
+        begin
+          require 'mini_magick'
+          image = MiniMagick::Image.open(params[:image].tempfile.path)
+          metadata = {
+            dimensions: {
+              width: image.width,
+              height: image.height
+            },
+            size: params[:image].size,
+            format: image.type
+          }
+
+          # Try to get DPI information
+          if image.exif.present? && (image.exif["Resolution"] || image.exif["XResolution"])
+            resolution_x = image.exif["XResolution"] || image.exif["Resolution"]
+            resolution_y = image.exif["YResolution"] || resolution_x
+            metadata[:resolution] = [resolution_x.to_i, resolution_y.to_i]
+          else
+            # Default to 72 DPI if not specified
+            metadata[:resolution] = [72, 72]
+          end
+        rescue => e
+          Rails.logger.error "Error extracting image metadata: #{e.message}"
+        end
+      end
+
+      # Purge existing portrait if present
+      @candidat.portrait.purge if @candidat.portrait.attached?
+
+      # Attach new portrait
+      @candidat.portrait.attach(params[:image])
+      @candidat.save
+
+      if @candidat.portrait.attached?
+        begin
+          image_url = url_for(@candidat.portrait)
+          render json: {
+            success: true,
+            message: "Image téléchargée avec succès",
+            image_url: image_url,
+            metadata: metadata
+          }
+        rescue => e
+          blob = @candidat.portrait.blob
+          alt_url = Rails.application.routes.url_helpers.rails_blob_path(blob, only_path: true)
+          render json: {
+            success: true,
+            message: "Image téléchargée avec succès (URL alternative)",
+            image_url: alt_url,
+            metadata: metadata
+          }
+        end
+      else
+        render json: {
+          success: false,
+          message: "Impossible d'attacher l'image"
+        }, status: :unprocessable_entity
+      end
+    else
+      render json: {
+        success: false,
+        message: "Paramètres manquants"
+      }, status: :bad_request
+    end
+  rescue => e
+    Rails.logger.error "Erreur lors du téléchargement de l'image: #{e.message}"
+    render json: {
+      success: false,
+      message: "Une erreur s'est produite: #{e.message}"
+    }, status: :internal_server_error
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -98,9 +218,10 @@ class CandidatsController < ApplicationController
   def candidat_params
     params.require(:candidat).permit(:user_id, :nationality,
     :artistic_photo, :banner_color, :NEW_RECORD,
-    :first_name, :last_name, :birthdate, :short_bio_en, :medium_bio_en, :long_bio_en, :cv_english, :short_bio, :medium_bio, :long_bio, :repertoire, :portrait, :last_teacher,
-    experiences_attributes: [:id, :title, :company, :location, :start_date, :end_date, :description, :_destroy],
-    educations_attributes: [:id, :title, :organism, :location, :start_date, :end_date, :description, :_destroy],
+    :voice_type,
+    :first_name, :last_name, :birthdate, :short_bio_en, :medium_bio_en, :long_bio_en, :cv_english, :short_bio, :medium_bio, :long_bio, :repertoire, :portrait, :last_teacher, :iban,
+    experiences_attributes: [:id, :title, :english_title, :company, :location, :start_date, :end_date, :description, :english_description, :_destroy, :logo],
+    educations_attributes: [:id, :title, :english_title, :organism, :location, :start_date, :end_date, :description, :english_description, :_destroy, :logo],
     diplomas: []
     )
   end

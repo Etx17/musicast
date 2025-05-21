@@ -1,24 +1,35 @@
-<%= link_to "Retour", jury_jury_inscriptions_path( @jury, category_id: @inscription.category.id), class:"btn btn-outline-dark my-3" %>
-<h1>Modifier la note</h1>
-<%= render "form" %>
+<h1><%= t('notes.edit.edit_note') %></h1>
+<%= render Navigation::BackLinkComponent.new( link_text: t('global.inscription').pluralize, link_path: jury_jury_inscriptions_path( @jury, category_id: @inscription.category.id), ) %>
+<div class="container">
+  <div class="p-3 rounded bg-light">
+    <%= render "form" %>
 
-   <h2>Vidéos du candidat</h2>
- <% @inscription.inscription_item_requirements.filter{|i| i.item_type == "youtube_link"}.each_with_index do |item, index| %>
-  <% youtube_id = item.youtube_id %>
-    <% if youtube_id.present? %>
-      <div class="embed-responsive embed-responsive-16by9 d-none d-sm-block">
-        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/<%= youtube_id %>?rel=0" allowfullscreen></iframe>
-      </div>
-      <div class="d-block d-sm-none">
-        <%= link_to "Voir la vidéo #{index + 1}", item.submitted_content, class: "btn btn-dark", target: "_blank", rel: "noopener" %>
-      </div>
-    <% else %>
-      <p>Le candidat n'a pas transmi de vidéo disponible</p>
+
+  <h2><%= t('notes.edit.candidate_videos') %></h2>
+  <% if @inscription.inscription_item_requirements.filter{|i| i.item_type == "youtube_link"}.any? %>
+    <% @inscription.inscription_item_requirements.filter{|i| i.item_type == "youtube_link"}.each_with_index do |item, index| %>
+      <% youtube_id = item.youtube_id %>
+      <% if youtube_id.present? %>
+        <div class="embed-responsive embed-responsive-16by9 d-none d-sm-block">
+          <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/<%= youtube_id %>?rel=0" allowfullscreen></iframe>
+        </div>
+        <div class="d-block d-sm-none">
+          <%= link_to t('notes.edit.view_video', number: index + 1), item.submitted_content, class: "btn btn-primary", target: "_blank", rel: "noopener" %>
+        </div>
+      <% else %>
+        <p><%= t('notes.edit.no_video_available') %></p>
+      <% end %>
     <% end %>
-<% end %>
+  <% else %>
+    <div class="p-3 border rounded text-center text-secondary">
+      <%= t('notes.edit.no_video_available') %>
+    </div>
+  <% end %>
 
 
-<% if @inscription.motivation_essay&.present? %>
-  <h2>Lettre de motivation du candidat</h2>
-  <p><%= @inscription.motivation_essay.submitted_content %></p>
-<% end %>
+    <% if @inscription.motivation_essay&.present? %>
+      <h2><%= t('notes.edit.candidate_motivation_letter') %></h2>
+      <p><%= @inscription.motivation_essay.submitted_content %></p>
+    <% end %>
+  </div>
+</div>

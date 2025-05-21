@@ -1,64 +1,100 @@
-
 <%= form_with(url: store_form_data_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour), method: "post", local: true) do |f| %>
- <div>
-  <%= f.label :detailed_program, "Programme détaillé" %>
-  <%= f.check_box :detailed_program, checked: session[:detailed_program] %>
-</div>
+  <div class="mb-3">
+    <p class="text-secondary"><i class="fas fa-info-circle text-primary me-1"></i><%= t('tours.planning.jury_form_description') %></p>
+  </div>
 
-<div>
-  <%= f.label :simple_air, "Air simple" %>
-  <%= f.check_box :simple_air, checked: session[:simple_air] %>
-</div>
+  <div class="mb-3">
+    <h6><%= t('tours.planning.program_options') %></h6>
+    <div class="form-check form-switch">
+      <%= f.check_box :detailed_program, class: "form-check-input", role: "switch", checked: session[:detailed_program], id: "switchDetailedProgram" %>
+      <%= f.label :detailed_program, t('tours.planning.detailed_program'), class: "form-check-label", for: "switchDetailedProgram" %>
+    </div>
+    <div class="form-check form-switch">
+      <%= f.check_box :simple_air, class: "form-check-input", role: "switch", checked: session[:simple_air], id: "switchSimpleAir" %>
+      <%= f.label :simple_air, t('tours.planning.simple_air'), class: "form-check-label", for: "switchSimpleAir" %>
+    </div>
+  </div>
 
-<div>
-  <%= f.label :notes_space, "Espace pour les notes" %>
-  <%= f.check_box :notes_space, checked: session[:notes_space] %>
-</div>
+  <div class="mb-3">
+    <h6><%= t('tours.planning.biography_options') %></h6>
 
-<div>
-  <%= f.label :profile_photo, "Photo de profil" %>
-  <%= f.check_box :profile_photo, checked: session[:profile_photo] %>
-</div>
+    <!-- Biographie en français -->
+    <div class="mb-3">
+      <span class="small text-muted d-block mb-1"><%= t('tours.planning.french_biography', default: 'Biographie en français') %></span>
+      <div class="form-check">
+        <%= f.radio_button :bio_fr_type, "short", class: "form-check-input", checked: session[:short_bio], id: "radioShortBio" %>
+        <%= f.label :bio_fr_type, t('tours.planning.short_bio'), class: "form-check-label", for: "radioShortBio" %>
+      </div>
+      <div class="form-check">
+        <%= f.radio_button :bio_fr_type, "medium", class: "form-check-input", checked: session[:medium_bio], id: "radioMediumBio" %>
+        <%= f.label :bio_fr_type, t('tours.planning.medium_bio'), class: "form-check-label", for: "radioMediumBio" %>
+      </div>
+      <div class="form-check">
+        <%= f.radio_button :bio_fr_type, "none", class: "form-check-input", checked: !session[:short_bio] && !session[:medium_bio], id: "radioNoBio" %>
+        <%= f.label :bio_fr_type, t('tours.planning.no_bio', default: 'Aucune biographie'), class: "form-check-label", for: "radioNoBio" %>
+      </div>
+    </div>
 
-<div>
-  <%= f.label :artistic_photo, "Photo artistique" %>
-  <%= f.check_box :artistic_photo, checked: session[:artistic_photo] %>
-</div>
+    <!-- Biographie en anglais -->
+    <div>
+      <span class="small text-muted d-block mb-1"><%= t('tours.planning.english_biography', default: 'Biographie en anglais') %></span>
+      <div class="form-check">
+        <%= f.radio_button :bio_en_type, "short", class: "form-check-input", checked: session[:short_bio_en], id: "radioShortBioEn" %>
+        <%= f.label :bio_en_type, t('tours.planning.short_bio'), class: "form-check-label", for: "radioShortBioEn" %>
+      </div>
+      <div class="form-check">
+        <%= f.radio_button :bio_en_type, "medium", class: "form-check-input", checked: session[:medium_bio_en], id: "radioMediumBioEn" %>
+        <%= f.label :bio_en_type, t('tours.planning.medium_bio'), class: "form-check-label", for: "radioMediumBioEn" %>
+      </div>
+      <div class="form-check">
+        <%= f.radio_button :bio_en_type, "none", class: "form-check-input", checked: !session[:short_bio_en] && !session[:medium_bio_en], id: "radioNoBioEn" %>
+        <%= f.label :bio_en_type, t('tours.planning.no_bio', default: 'Aucune biographie'), class: "form-check-label", for: "radioNoBioEn" %>
+      </div>
+    </div>
+  </div>
 
-<div>
-  <%= f.label :short_bio, "Biographie courte" %>
-  <%= f.check_box :short_bio, checked: session[:short_bio] %>
-</div>
+  <div class="mb-3">
+    <h6><%= t('tours.planning.candidate_information') %></h6>
+    <div class="form-check form-switch">
+      <%= f.check_box :full_name, class: "form-check-input", role: "switch", checked: session[:full_name] || true, id: "switchFullName" %>
+      <%= f.label :full_name, t('tours.planning.full_name'), class: "form-check-label", for: "switchFullName" %>
+    </div>
+    <div class="form-check form-switch">
+      <%= f.check_box :nationality, class: "form-check-input", role: "switch", checked: session[:nationality] || true, id: "switchNationality" %>
+      <%= f.label :nationality, t('tours.planning.nationality'), class: "form-check-label", for: "switchNationality" %>
+    </div>
+    <div class="form-check form-switch">
+      <%= f.check_box :birth_date, class: "form-check-input", role: "switch", checked: session[:birth_date], id: "switchBirthDate" %>
+      <%= f.label :birth_date, t('tours.planning.birth_date'), class: "form-check-label", for: "switchBirthDate" %>
+    </div>
+    <div class="form-check form-switch">
+      <%= f.check_box :voice_type, class: "form-check-input", role: "switch", checked: session[:voice_type] || true, id: "switchVoiceType" %>
+      <%= f.label :voice_type, t('tours.planning.voice_type'), class: "form-check-label", for: "switchVoiceType" %>
+    </div>
+  </div>
 
-<div>
-  <%= f.label :medium_bio, "Biographie moyenne" %>
-  <%= f.check_box :medium_bio, checked: session[:medium_bio] %>
-</div>
+  <div class="mb-3">
+    <h6><%= t('tours.planning.photo_options') %></h6>
+    <div class="form-check form-switch">
+      <%= f.check_box :profile_photo, class: "form-check-input", role: "switch", checked: session[:profile_photo], id: "switchProfilePhoto" %>
+      <%= f.label :profile_photo, t('tours.planning.profile_photo'), class: "form-check-label", for: "switchProfilePhoto" %>
+    </div>
+  </div>
 
-<div>
-  <%= f.label :long_bio, "Biographie longue" %>
-  <%= f.check_box :long_bio, checked: session[:long_bio] %>
-</div>
+  <div class="mb-3">
+    <h6><%= t('tours.planning.additional_options') %></h6>
+    <div class="form-check form-switch">
+      <%= f.check_box :notes_space, class: "form-check-input", role: "switch", checked: session[:notes_space] || true, id: "switchNotesSpace" %>
+      <%= f.label :notes_space, t('tours.planning.notes_space'), class: "form-check-label", for: "switchNotesSpace" %>
+    </div>
+    <div class="form-check form-switch">
+      <%= f.check_box :order_of_passage, class: "form-check-input", role: "switch", checked: session[:order_of_passage] || true, id: "switchOrderOfPassage" %>
+      <%= f.label :order_of_passage, t('tours.planning.order_of_passage'), class: "form-check-label", for: "switchOrderOfPassage" %>
+    </div>
+  </div>
 
-<div>
-  <%= f.label :short_bio_en, "Biographie courte (english)" %>
-  <%= f.check_box :short_bio_en, checked: session[:short_bio_en] %>
-</div>
-
-<div>
-  <%= f.label :medium_bio_en, "Biographie moyenne (english)" %>
-  <%= f.check_box :medium_bio_en, checked: session[:medium_bio_en] %>
-</div>
-
-<div>
-  <%= f.label :long_bio_en, "Biographie longue (english)" %>
-  <%= f.check_box :long_bio_en, checked: session[:long_bio_en] %>
-</div>
-
-<div>
-  <%= f.label :order_of_passage, "Ordre de passage" %>
-  <%= f.check_box :order_of_passage, checked: session[:order_of_passage] %>
-</div>
-
-<%= f.submit "Enregistrer" %>
-  <% end %>
+  <div class="d-flex justify-content-end mt-4">
+    <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal"><%= t('global.actions.cancel') %></button>
+    <%= f.submit t('global.actions.save'), class: "btn btn-primary" %>
+  </div>
+<% end %>

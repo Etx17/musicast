@@ -1,10 +1,9 @@
-
 <% if inscription.has_complete_airs? %>
-<div class="rounded-pill border border-success text-secondary bg-success-secondary py-1 px-2">
-  <i class="fas fa-check text-success"></i> Airs/morceaux séléctionnés
+<div class="rounded-pill border-success text-success bg-primary-light py-1 px-2">
+  <i class="fas fa-check text-success"></i> <%= t('inscriptions.pills.airs.complete') %>
 </div>
 <% else %>
-   <div class="rounded-pill border text-secondary bg-secondary-secondary py-1 px-2">
-    <i class="fas fa-warning text-info"></i> Morceaux ou airs à renseigner
+   <div class="rounded-pill text-secondary bg-secondary-secondary py-1 px-2">
+    <i class="fas fa-warning text-info"></i> <%= t('inscriptions.pills.airs.incomplete') %>
   </div>
 <% end %>

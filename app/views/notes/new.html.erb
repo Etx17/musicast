@@ -1,11 +1,11 @@
 <div class="p-3">
-<%= link_to "Retour", jury_jury_inscriptions_path( @jury, category_id: @inscription.category.id), class:"btn btn-outline-dark my-3" %>
+<%= link_to t('global.actions.back'), jury_jury_inscriptions_path( @jury, category_id: @inscription.category.id), class:"btn btn-outline-dark my-3" %>
 
-<h1>Nouvelle note</h1>
+<h1><%= t('notes.new.new_note') %></h1>
 <%= render "form" %>
 
 
-  <h2>Vidéos du candidat</h2>
+  <h2><%= t('notes.new.candidate_videos') %></h2>
   <% @inscription.inscription_item_requirements.filter{|i| i.item_type == "youtube_link"}.each_with_index do |item, index| %>
     <% youtube_id = item.youtube_id %>
       <% if youtube_id.present? %>
@@ -13,15 +13,15 @@
           <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/<%= youtube_id %>?rel=0" allowfullscreen></iframe>
         </div>
         <div class="d-block d-sm-none">
-          <%= link_to "Voir la vidéo #{index + 1}", item.submitted_content, class: "btn btn-dark", target: "_blank", rel: "noopener" %>
+          <%= link_to t('notes.new.view_video', number: index + 1), item.submitted_content, class: "btn btn-primary", target: "_blank", rel: "noopener" %>
         </div>
       <% else %>
-        <p>Le candidat n'a pas transmi de vidéo disponible</p>
+        <p><%= t('notes.new.no_video_available') %></p>
       <% end %>
   <% end %>
 
   <% if @inscription.motivation_essay.present? %>
-  <h2>Lettre de motivation du candidat</h2>
+  <h2><%= t('notes.new.candidate_motivation_letter') %></h2>
   <p><%= @inscription.motivation_essay.submitted_content %></p>
 <% end %>
 </div>

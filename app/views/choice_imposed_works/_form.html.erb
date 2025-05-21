@@ -6,19 +6,21 @@
 
   <div class="form-inputs p-3">
     <div class="mb-5">
-      <h3 class=" py-3"><i class="fas fa-cogs text-secondary"></i> Configuration de la liste:</h3>
+      <h3 class=" py-3"><i class="fas fa-cogs text-secondary"></i> <%= t('choice_imposed_works.form.list_configuration') %>:</h3>
       <div class="row">
         <div class="col">
-          <%= f.input :title, placeholder: "ex: 2 lieder Allemands", label_html: { class: 'p' }, input_html: { class: 'p-2 border' }, label: 'Titre de la liste', required: true %>
+          <%= f.input :title, placeholder: t('choice_imposed_works.form.title_placeholder'), label_html: { class: 'p' }, input_html: { class: 'p-2 border' }, label: t('choice_imposed_works.form.list_title'), required: true %>
+          <%= f.input :title_english, placeholder: t('choice_imposed_works.form.title_placeholder'), label_html: { class: 'p' }, input_html: { class: 'p-2 border' }, label: t('choice_imposed_works.form.list_title_english'), required: true %>
         </div>
         <div class="col">
-          <%= f.input :number_to_select, placeholder: "ex: 2", label_html: { class: 'p' }, input_html: { class: 'p-2 border' }, label: 'Nombre d\'oeuvres à choisir', required: true %>
+          <%= f.input :number_to_select, placeholder: t('choice_imposed_works.form.number_placeholder'), label_html: { class: 'p' }, input_html: { class: 'p-2 border' }, label: t('choice_imposed_works.form.number_to_choose'), required: true %>
         </div>
       </div>
-      <%= f.input :guidelines, placeholder: "ex: Choisissez 2 lieder Allemands du début du 20è siecle dans la liste suivante. Votre sélection ne doit pas dépasser 30 minutes. Vous devez avoir au moins 2 auteurs différents",label_html: { class: 'p' }, input_html: { class: 'p-2 border' },hint: "Soyez le plus précis possible", label: 'Consignes', required: true %>
+      <%= f.input :guidelines, placeholder: t('choice_imposed_works.form.guidelines_placeholder'), label_html: { class: 'p' }, input_html: { class: 'p-2 border' }, hint: t('choice_imposed_works.form.be_precise'), label: t('choice_imposed_works.form.guidelines'), required: true %>
+      <%= f.input :guidelines_english, label_html: { class: 'p' }, input_html: { class: 'p-2 border' }, hint: t('choice_imposed_works.form.be_precise'), label: t('choice_imposed_works.form.guidelines_english'), required: true %>
     </div>
 
-    <h3 class="text-start mb-5"> <i class="fas fa-book text-secondary"></i> Liste d'airs:</h3>
+    <h3 class="text-start mb-5"> <i class="fas fa-book text-secondary"></i> <%= t('choice_imposed_works.form.air_list') %>:</h3>
 
     <div data-controller="airs">
       <div data-airs-target="container">
@@ -35,11 +37,11 @@
 
       <div class="d-flex gap-3 justify-content-center">
         <%= link_to '#', data: { action: 'airs#addAir' }, class: 'px-3 btn btn-outline-dark mb-5' do %>
-          <i class="fas fa-plus"></i> Ajouter un morceau
+          <i class="fas fa-plus"></i> <%= t('choice_imposed_works.form.add_piece') %>
         <% end %>
 
-        <%= button_tag(type: 'submit', class: 'px-3 btn btn-dark mb-5') do %>
-          <i class="fa-solid fa-floppy-disk"></i> Enregistrer les modifications
+        <%= button_tag(type: 'submit', class: 'px-3 btn btn-primary mb-5') do %>
+          <i class="fa-solid fa-floppy-disk"></i> <%= t('choice_imposed_works.form.save_changes') %>
         <% end %>
       </div>
     </div>

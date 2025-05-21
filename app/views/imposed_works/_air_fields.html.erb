@@ -1,38 +1,107 @@
-<div class="nested-fields row border shadow my-3 px-3 pt-2" data-new-record="<%= f.object.new_record? %>">
-  <div class="col-12">
-    <div class="d-flex justify-content-between align-items-center">
-      <h2><i class="fas fa-music text-gradient"></i> #<%= f.index.is_a?(Integer) ? f.index + 1 : 'NEW' %></h2>
-      <% if f.object.new_record? %>
-        <%= link_to '#', data: { action: 'removeAir' }, class: 'btn btn-primary' do %>
-          <i class="fas fa-trash pe-2"></i>Supprimer
-        <% end %>
+<div class="nested-fields bg-white rounded-3 shadow-sm my-4 p-4" data-new-record="<%= f.object.new_record? %>">
+  <%# Header avec numéro et bouton de suppression %>
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h5 class="mb-0">
+      <span class="badge bg-primary bg-gradient me-2">
+        #<%= f.index.is_a?(Integer) ? f.index + 1 : t('imposed_works.air_fields.new') %>
+      </span>
+    </h5>
+    <% if f.object.new_record? %>
+      <%= link_to '#', data: { action: 'airs#removeAir' }, class: 'btn btn-outline-danger btn-sm' do %>
+        <i class="fas fa-times me-1"></i><%= t('imposed_works.air_fields.delete') %>
       <% end %>
+    <% end %>
+  </div>
+
+  <%# Première ligne: Titre et Compositeur %>
+  <div class="row g-3 mb-3">
+    <div class="col-md-6">
+      <%= f.input :title,
+                  label: false,
+                  required: true,
+                  wrapper_html: { class: 'mb-0' },
+                  input_html: {
+                    class: 'form-control form-control border',
+                    placeholder: t('imposed_works.air_fields.title_placeholder')
+                  } %>
+    </div>
+    <div class="col-md-6">
+      <%= f.input :composer,
+                  label: false,
+                  required: true,
+                  wrapper_html: { class: 'mb-0' },
+                  input_html: {
+                    class: 'form-control form-control border',
+                    placeholder: t('imposed_works.air_fields.composer_placeholder')
+                  } %>
     </div>
   </div>
-  <div class="col-6 col-md-6">
-    <%= f.input :title, label: false, required: true, input_html: { class: 'p-2 border rounded-pill', placeholder: 'Title *' } %>
-  </div>
-  <div class="col-6 col-md-6">
-    <%= f.input :composer, label: false, required: true, input_html: { class: 'p-2 border rounded-pill', placeholder: 'Composer *' } %>
-  </div>
-  <div class="col-6">
-    <%= f.input :oeuvre, label: false, required: true, input_html: { class: 'p-2 border rounded-pill', placeholder: 'Oeuvre *' } %>
-  </div>
-  <div class="col-6 col-md-4">
-    <%= f.input :character, label: false, hint:"Si air d'opéra seulement", input_html: { class: 'p-2 border rounded-pill', placeholder: 'Character' } if true %>
-  </div>
-  <div class="col-6 col-md-4">
-    <%= f.input :length_minutes, label: false, required: true, input_html: { class: 'p-2 border rounded-pill', placeholder: 'Minutes *' } %>
-  </div>
-  <div class="col-6 col-md-4">
-    <%= f.input :tonality, label: false, required: true, input_html: { class: 'p-2 border rounded-pill', placeholder: 'Tonality *' } %>
+
+  <%# Ligne: Œuvre, Caractère, Tonalité, Minutes %>
+  <div class="row g-3 mb-3">
+    <div class="col-md-5">
+      <%= f.input :oeuvre,
+                  label: false,
+                  required: true,
+                  wrapper_html: { class: 'mb-0' },
+                  input_html: {
+                    class: 'form-control',
+                    placeholder: t('imposed_works.air_fields.oeuvre_placeholder')
+                  } %>
+    </div>
+    <div class="col-md-3">
+      <%= f.input :character,
+                  label: false,
+                  wrapper_html: { class: 'mb-0' },
+                  input_html: {
+                    class: 'form-control',
+                    placeholder: t('imposed_works.air_fields.character_placeholder')
+                  } %>
+    </div>
+    <div class="col-md-2">
+      <%= f.input :tonality,
+                  label: false,
+                  required: true,
+                  wrapper_html: { class: 'mb-0' },
+                  prompt: "Sélectionnez une tonalité",
+                  collection: Air.tonalities_selection,
+                  input_html: {
+                    class: 'form-select',
+                  } %>
+    </div>
+    <div class="col-md-2">
+      <%= f.input :length_minutes,
+                  label: false,
+                  required: true,
+                  wrapper_html: { class: 'mb-0' },
+                  input_html: {
+                    class: 'form-control',
+                    placeholder: t('imposed_works.air_fields.minutes_placeholder')
+                  } %>
+    </div>
   </div>
 
-  <div class="col-6 col-md-4">
-    <%= f.input :infos, label: false, required: true, input_html: { class: 'p-2 border rounded-pill', placeholder: 'Informations additionelles *' } %>
+  <div class="row g-3">
+    <div class="col-md-6">
+      <%= f.input :infos,
+                  label: false,
+                  required: true,
+                  wrapper_html: { class: 'mb-0' },
+                  input_html: {
+                    class: 'form-control',
+                    placeholder: t('imposed_works.air_fields.additional_info_placeholder')
+                  } %>
+    </div>
+    <div class="col-md-6">
+      <%= f.input :infos_english,
+                  label: false,
+                  wrapper_html: { class: 'mb-0' },
+                  input_html: {
+                    class: 'form-control',
+                    placeholder: t('imposed_works.air_fields.additional_info_english_placeholder')
+                  } %>
+    </div>
   </div>
 
-  <div class="col-6">
-    <%= f.input :_destroy, as: :hidden %>
-  </div>
+  <%= f.input :_destroy, as: :hidden %>
 </div>

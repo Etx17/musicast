@@ -28,7 +28,7 @@ class SemiImposedWorksController < ApplicationController
 
   def update
     if @semi_imposed_work.update(semi_imposed_work_params)
-      redirect_to [@semi_imposed_work.category.organism, @semi_imposed_work.category.competition, @semi_imposed_work.category.edition_competition, @semi_imposed_work.category],
+      redirect_to [@semi_imposed_work.category.competition.organism, @semi_imposed_work.category.competition, @semi_imposed_work.category.edition_competition, @semi_imposed_work.category],
                   notice: "Semi imposed work was successfully updated."
     else
       render :edit, status: :unprocessable_entity
@@ -59,7 +59,10 @@ class SemiImposedWorksController < ApplicationController
   end
 
   def semi_imposed_work_params
-    params.require(:semi_imposed_work).permit(:programme_requirement_id, :guidelines, :title, :number,
-                                              :max_length_minutes)
+    params.require(:semi_imposed_work).permit(
+      :programme_requirement_id, :guidelines, :guidelines_english,
+      :title, :title_english, :number,
+      :max_length_minutes
+    )
   end
 end

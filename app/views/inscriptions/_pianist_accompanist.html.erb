@@ -1,0 +1,81 @@
+
+<% if @inscription.candidate_brings_pianist_accompagnateur%>
+  <div class="card mb-3 border">
+    <div class="card-header bg-light">
+      <div class="d-flex align-items-center">
+        <%= image_tag 'icons/piano.png', alt: t('inscriptions.inscription.piano'), width: 30, class: "me-2" %>
+        <h6 class="mb-0"><%= t('inscriptions.inscription.accompanying_pianist') %></h6>
+      </div>
+    </div>
+    <div class="card-body py-2">
+      <div class="row align-items-center">
+        <div class="col-md-6">
+          <p class="mb-1 fw-bold"><%= @inscription.candidate_brings_pianist_accompagnateur_full_name %></p>
+        </div>
+        <div class="col-md-6">
+          <div class="d-flex flex-column gap-2">
+            <div class="d-flex align-items-center">
+              <i class="fas fa-envelope me-2 text-secondary"></i>
+              <a href="mailto:<%= @inscription.candidate_brings_pianist_accompagnateur_email %>" class="text-decoration-none text-secondary">
+                <%= @inscription.candidate_brings_pianist_accompagnateur_email %>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% else %>
+  <% if performance&.pianist_accompagnateur.present? %>
+    <div class="card mb-3 border">
+      <div class="card-header bg-light">
+        <div class="d-flex align-items-center">
+          <%= image_tag 'icons/piano.png', alt: t('inscriptions.inscription.piano'), width: 30, class: "me-2" %>
+          <h6 class="mb-0"><%= t('inscriptions.inscription.accompanying_pianist') %></h6>
+        </div>
+      </div>
+      <div class="card-body py-2">
+        <div class="row align-items-center">
+          <div class="col-md-6">
+            <p class="mb-1 fw-bold"><%= performance.pianist_accompagnateur.full_name %></p>
+          </div>
+          <div class="col-md-6">
+            <div class="d-flex flex-column gap-2">
+              <div class="d-flex align-items-center">
+                <i class="fas fa-envelope me-2 text-secondary"></i>
+                <a href="mailto:<%= performance.pianist_accompagnateur.email %>" class="text-decoration-none text-secondary">
+                  <%= performance.pianist_accompagnateur.email %>
+                </a>
+              </div>
+              <div class="d-flex align-items-center">
+                <i class="fas fa-phone me-2 text-secondary"></i>
+                <span><%= performance.pianist_accompagnateur.phone_number %></span>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% else %>
+    <div class="">
+      <div class="d-flex align-items-center" style="width: fit-content;">
+        <i class="fas fa-user me-2 p-3 rounded-circle text-secondary border bg-white"></i>
+        <h6 class="mb-0"><%= t('inscriptions.inscription.accompanying_pianist') %></h6>
+        <span class=" badge rounded-pill text-info bg-info-secondary"><i class="fas fa-clock me-1"></i><%= t('inscriptions.inscription.pianist_assignment_pending') %></span>
+      </div>
+
+      <div class="d-flex justify-content-start gap-3 mt-2">
+        <% if performance&.tour&.final_performance_submission_deadline.present? %>
+          <span class=" badge rounded-pill text-info bg-info-secondary">
+            <i class="fas fa-calendar-alt me-1"></i>
+            <%= t('inscriptions.inscription.pianist_assignment_date', date: l(performance.tour.final_performance_submission_deadline, format: :long)) %>
+          </span>
+        <% end %>
+      </div>
+      <% if tour.requires_pianist_accompanist %>
+        <small class="mb-0 text-secondary"><%= t('inscriptions.inscription.pianist_assignment_explanation') %></small>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>

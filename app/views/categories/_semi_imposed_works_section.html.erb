@@ -1,55 +1,129 @@
-<div class="col border-start border-5 p-3 d-flex flex-column justify-content-between w-100 align-items-center bg-white">
-  <div class="d-flex flex-column align-items-center justify-content-center">
-    <h4 style="font-size: 2em;" class="px-3 rounded-pill text-center">Oeuvres contraintes</h4>
+<div class="col p-3 d-flex flex-column align-items-center bg-white">
+  <h4 style="font-size: 2em;" class="px-3 rounded-pill "><%= t('categories.semi_imposed_works_section.title') %></h4>
+    <a href="#" class="text-secondary text-decoration-none mb-1" data-bs-toggle="collapse" data-bs-target="#info3Collapse" aria-expanded="false" aria-controls="infoCollapse">
+    <i class="fas fa-info-circle"></i> <%= t('categories.semi_imposed_works_section.what_is_it') %>
+  </a>
+  <div class="collapse" id="info3Collapse">
+    <p class="text-secondary">
+      <%= t('categories.semi_imposed_works_section.explanation') %>
+    </p>
+  </div>
+  <% if @category.semi_imposed_works.none? %>
+    <p class="text-secondary"><%= t('categories.semi_imposed_works_section.create_instruction') %></p>
+  <% end %>
+  <% @category.semi_imposed_works.each_with_index do |semi_imposed_work, index| %>
+    <div class="card w-100 mb-4 rounded-4 bg-white">
+      <div class="card-header d-flex justify-content-between w-100">
+          <h5 class="" style="font-weight: bold;"><%= index + 1 %>. <%= semi_imposed_work.title %></h5>
 
-  <p class="text-center mb-1"><a href="#" class="text-secondary text-center text-decoration-none" data-bs-toggle="collapse" data-bs-target="#infoCollapse" aria-expanded="false" aria-controls="infoCollapse"> <i class="fas fa-info-circle"></i> Qu'est-ce que c'est? </a></p>
-    <div class="collapse" id="infoCollapse">
-      <p class="text-secondary">
-        Les oeuvres contraintes sont le mode le plus courant pour imposer un programme a un candidat. Exemple: Vous voulez que votre candidat présente 3 airs d'opéra en anglais, 2 airs d'opéra en francais, et 1 mélodie italienne du 19e siècle. Vous avez ici 3 consignes a créer. Vous pouvez aussi préciser une durée maximale pour chaque groupement d'oeuvres. <br>Vous avez différentes manières de contraindre le programme que le candidat doit présenter par consigne. Vous pouvez dire aussi que vous voulez qu'ils propose 6 morceaux dont 3 seront sélectionnés par le jury pour le premier tour.
-        <br> Bref, tout est possible, et c'est ici que vous pouvez le faire.
-      </p>
-    </div>
-    <% if @category.semi_imposed_works.none? %>
-      <p class="text-secondary">Renseignez ici le programme à choix guidé du candidat...</p>
+          <% kebab_items = [
+            {
+              icon: "fas fa-edit",
+              text: t('global.actions.edit'),
+              data: { bs_toggle: "modal", bs_target: "#editSemiImposedWorkModal#{semi_imposed_work.id}" }
+            },
+            {
+              icon: "fas fa-trash",
+              text: t('global.actions.delete'),
+              path: organism_competition_edition_competition_category_semi_imposed_work_path(@organism, @competition, @edition_competition, @category, semi_imposed_work, redirect_path: organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category)),
+              method: :delete,
+              data: { confirm: t('categories.common.confirm_delete'), turbo_confirm: t('categories.common.confirm_delete') },
+              class: "deletion-button"
+            }
+          ] %>
 
-    <% end %>
-    <% @category.semi_imposed_works.each do |semi_imposed_work| %>
-      <div class="card w-100 mb-4 rounded-4 bg-white">
-        <div class="card-header align-items-center d-flex justify-content-between w-100">
-          <h5 class="" style="font-weight: bold;"> <%= semi_imposed_work.title %></h5>
-          <div class="d-flex justify-content-start align-items-center">
-            <%= button_to organism_competition_edition_competition_category_semi_imposed_work_path(@organism, @competition, @edition_competition, @category, semi_imposed_work), method: :delete, data: { confirm: 'Are you sure?', turbo_confirm: "Are you sure?" }, class: 'btn btn-outline-dark btn-sm border-0 mb-2' do %>
-              <i class="fas fa-trash"></i>
-            <% end %>
+          <%= render(Dropdown::KebabComponent.new(items: kebab_items, only_vertical_dots: false)) %>
+      </div>
+
+      <div class="d-flex flex-column p-2">
+        <div class="p-3 bg-infobox-light mb-3 text-start m-1 rounded-8" style="font-style: italic;">
+          <i class="fas fa-circle-info pe-1 text-secondary"></i>
+          <% if I18n.locale != :en %>
+            <%= semi_imposed_work.guidelines %>
+          <% else %>
+            <%= semi_imposed_work.guidelines_english %>
+          <% end %>
+          <%# Add number of works and maximal total duration of list %>
+          <div class="d-flex flex-column">
+            <span class="text-secondary"><%= t('semi_imposed_works.card.number') %> : <%= semi_imposed_work.number %></span>
+            <span class="text-secondary"><%= t('semi_imposed_works.card.max_length_minutes') %> : <%= semi_imposed_work.max_length_minutes %></span>
           </div>
         </div>
 
-        <div class="d-flex flex-column p-2">
-          <p class="pt-2">
-            Le candidat doit présenter
-            <span class="px-2 bg-info-secondary border border-warning text-warning rounded-pill me-1">
-              <%= semi_imposed_work.number %> oeuvres
-            </span>
-            pour une durée totale maximale de
-            <span class="px-2 bg-info-secondary border border-primary text-primary rounded-pill me-1">
-              <%= semi_imposed_work.max_length_minutes %> minutes
-            </span>
-            et respectant les contraintes suivantes: </p>
-          <div class=" p-3 bg-info-secondary mb-3 text-start  m-1 shadow-sm rounded-8" style="font-style: italic;">
-            <i class="fas fa-circle-info pe-1 text-secondary"></i>
-            <%= semi_imposed_work.guidelines %>
+        <% if false %>
+          <% semi_imposed_work.airs&.each_with_index do |work, index| %>
+            <div class="w-100">
+              <div class="d-flex justify-content-between align-items-start">
+                <div class="d-flex flex-column align-items-start w-100">
+                  <p class="pb-1 mb-0 text-secondary"> <%= index + 1 %> - <span class="text-dark" style="font-weight: bold"><%= work.title %></span>, <%= work.oeuvre %>, <%= work.composer %>, <%= work.tonality %> - <%= work.infos %></p>
+                </div>
+                <div class="d-flex flex-column align-items-end">
+                  <% air_kebab_items = [
+                    {
+                      icon: "fas fa-pencil",
+                      text: t('global.actions.edit'),
+                      path: edit_air_path(work, redirect_path: organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category))
+                    },
+                    {
+                      icon: "fas fa-trash",
+                      text: t('global.actions.delete'),
+                      path: air_path(work, redirect_path: organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category)),
+                      method: :delete,
+                      data: { confirm: t('categories.common.confirm_delete'), turbo_confirm: t('categories.common.confirm_delete') },
+                      class: "deletion-button"
+                    }
+                  ] %>
+
+                  <%= render(Dropdown::KebabComponent.new(items: air_kebab_items, only_vertical_dots: true)) %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Edit Modal for each semi_imposed_work -->
+    <div class="modal fade" id="editSemiImposedWorkModal<%= semi_imposed_work.id %>" tabindex="-1" aria-labelledby="editSemiImposedWorkModalLabel<%= semi_imposed_work.id %>" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="editSemiImposedWorkModalLabel<%= semi_imposed_work.id %>"><%= t('semi_imposed_works.edit.edit_semi_imposed_work') %></h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body bg-white">
+            <%= simple_form_for([@organism, @competition, @edition_competition, @category, semi_imposed_work]) do |f| %>
+              <%= f.error_notification %>
+              <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+              <div class="form-inputs">
+                <%= f.input :title, hint: t('semi_imposed_works.form.title_hint'), label: t('semi_imposed_works.form.title'), required: true %>
+                <%= f.input :title_english, label: t('semi_imposed_works.form.title_english'), required: true %>
+                <%= f.input :guidelines, hint: t('semi_imposed_works.form.guidelines_hint'), label: t('semi_imposed_works.form.guidelines'), required: true  %>
+                <%= f.input :guidelines_english, hint: t('semi_imposed_works.form.guidelines_hint_english'), label: t('semi_imposed_works.form.guidelines_english'), required: true  %>
+                <%= f.input :number, hint: t('semi_imposed_works.form.number_hint'), label: t('semi_imposed_works.form.number'), required: true  %>
+                <%= f.input :max_length_minutes, hint: t('semi_imposed_works.form.max_length_minutes_hint'), label: t('semi_imposed_works.form.max_length_minutes'), required: true  %>
+              </div>
+
+              <div class="form-actions">
+                <%= f.button :submit, t('global.actions.save'), class:"btn btn-primary" %>
+              </div>
+            <% end %>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><%= t('global.actions.close') %></button>
           </div>
         </div>
       </div>
-    <% end %>
-  </div>
+    </div>
+  <% end %>
 
-  <button type="button" class="align-self-end btn btn-success mx-auto border-1  mt-3" data-bs-toggle="modal" data-bs-target="#semiImposedWorkModal">
-    <i class="fas fa-plus"></i> Ajouter une nouvelle liste d'oeuvre contraintes par consigne
+  <button type="button" class="align-self-end btn btn-success mx-auto border-1 mt-3" data-bs-toggle="modal" data-bs-target="#semiImposedWorkModal">
+    <i class="fas fa-plus"></i> <%= t('categories.semi_imposed_works_section.add_new_list') %>
   </button>
 </div>
 
-<!-- Modal -->
+<!-- Modal for creating new semi_imposed_work -->
 <div class="modal fade" id="semiImposedWorkModal" tabindex="-1" aria-labelledby="semiImposedWorkModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">

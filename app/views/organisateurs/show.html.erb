@@ -3,8 +3,8 @@
 <%= render @organisateur %>
 
 <div>
-  <%= link_to "Edit this organisateur", edit_organisateur_path(@organisateur) %> |
-  <%= link_to "Back to organisateurs", organisateurs_path %>
+  <%= link_to t('organisateurs.show.edit'), edit_organisateur_path(@organisateur) %> |
+  <%= link_to t('global.actions.back'), organisateurs_path %>
 
-  <%= button_to "Destroy this organisateur", @organisateur, method: :delete %>
+  <%= button_to t('organisateurs.show.destroy'), @organisateur, method: :delete %>
 </div>

@@ -3,8 +3,8 @@
 <%= render @requirement_item %>
 
 <div>
-  <%= link_to "Edit this requirement item", edit_requirement_item_path(@requirement_item) %> |
-  <%= link_to "Back to requirement items", requirement_items_path %>
+  <%= link_to t('global.actions.edit'), edit_requirement_item_path(@requirement_item) %> |
+  <%= link_to t('global.actions.back'), requirement_items_path %>
 
-  <%= button_to "Destroy this requirement item", @requirement_item, method: :delete %>
+  <%= button_to t('global.actions.destroy'), @requirement_item, method: :delete %>
 </div>

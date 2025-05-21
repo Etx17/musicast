@@ -1,14 +1,40 @@
-<p style="color: green"><%= notice %></p>
+<div class="container mt-4">
+  <h1 class="mb-4">Liste des éditions de compétitions</h1>
 
-<h1>Edition competitions</h1>
+<%= render Table::BaseComponent.new(
+  rows: @edition_competitions,
+  columns: [
+    {
+      label: "Organisme",
+      value: ->(edition_competition) { edition_competition.competition.organism.nom }
+    },
+    {
+      label: "Nom de la compétition",
+      value: ->(edition_competition) { "#{edition_competition.competition.nom_concours} #{edition_competition.annee}" }
+    },
+    {
+      label: "Date",
+      value: ->(edition_competition) { "#{l(edition_competition.start_date, format: :short) if edition_competition.start_date} - #{l(edition_competition.end_date, format: :short) if edition_competition.end_date}" }
+    },
+    {
+      label: "Statut",
+      value: ->(edition_competition) { edition_competition.status }
+    }
+  ],
+  client: current_user,
+  links: [
+    {
+      path: ->(edition_competition) {
+        organism_competition_edition_competition_path(
+          edition_competition.competition.organism,
+          edition_competition.competition,
+          edition_competition
+        )
+      },
 
-<div id="edition_competitions">
-  <% @edition_competitions.each do |edition_competition| %>
-    <%= render edition_competition %>
-    <p>
-      <%= link_to "Show this edition competition", edition_competition %>
-    </p>
-  <% end %>
+      text: 'Voir'
+    }
+  ],
+  empty_message: "Aucune édition de compétition trouvée"
+) %>
 </div>
-
-<%= link_to "New edition competition", new_edition_competition_path %>

@@ -1,10 +1,10 @@
 require 'music_categories'
+require 'kaminari'
 
 class CategoriesController < ApplicationController
   before_action :set_category, only: %i[show edit update destroy]
   before_action :set_parent_resources, only: %i[show new edit create update destroy]
 
-  # GET /categories or /categories.json
   def index
     @categories = Category.all
   end
@@ -17,15 +17,15 @@ class CategoriesController < ApplicationController
     @tour.build_tour_requirement
     @tour.pauses.build
 
+    session[:active_tab] ||= 'program-tab'
+    @active_tab = session[:active_tab]
   end
 
-  # GET /categories/new
   def new
     @category = Category.new
     authorize @category
   end
 
-  # GET /categories/1/edit
   def edit
     authorize @category
   end
@@ -64,7 +64,29 @@ class CategoriesController < ApplicationController
     end
   end
 
+  def candidates
+    @category = Category.friendly.find(params[:id])
 
+    # Base query with includes
+    inscriptions_query = Inscription.by_category(@category.id).includes(:candidat)
+
+    # Apply search if provided
+    if params[:q].present?
+      search_term = "%#{params[:q]}%"
+      inscriptions_query = inscriptions_query.joins(:candidat)
+                           .where("candidats.first_name ILIKE ? OR candidats.last_name ILIKE ?",
+                                 search_term, search_term)
+    end
+
+    # Apply status filter if provided
+    if params[:status].present?
+      inscriptions_query = inscriptions_query.where(status: params[:status])
+    end
+
+    # Paginate results
+    @inscriptions = Kaminari.paginate_array(inscriptions_query.to_a)
+                           .page(params[:page]).per(30)
+  end
 
   private
 
@@ -85,9 +107,13 @@ class CategoriesController < ApplicationController
       :name,
       :preselection_vote_type,
       :description,
+      :description_english,
       :min_age, :max_age, :discipline,
       :price_cents,
       :allow_own_pianist_accompagnateur,
+      :payment_guidelines,
+      :payment_guidelines_english,
+      :payment_after_approval,
       :photo,
       tours_attributes: %i[id tour_number _destroy],
       ).tap do |whitelisted|

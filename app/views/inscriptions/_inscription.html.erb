@@ -1,148 +1,217 @@
 <div id="<%= dom_id inscription %>">
-  <div class="row p-5">
-    <%# Placeholder unsplash avatar picture %>
-    <div class="d-flex flex-column flex-lg-row align-items-center bg-white p-2 mb-3">
-      <div class="d-flex flex-column align-items-start justify-content-start">
-        <%= link_to 'Retour', :back, class: "btn btn-dark mx-auto mb-5", style: "width: 100px;" %>
-        <%= image_tag inscription.candidat.portrait.attached? ? inscription.candidat.portrait : "https://source.unsplash.com/random/?portrait/200x200", class: "shadow rounded-circle align-items-center p-0 m-0", style: "width: 200px; height: 200px; object-fit: cover;" %>
-      </div>
-
-      <div class="mx-5">
-        <div class="d-flex flex-column flex-md-row align-items-center justify-content-center py-5 gap-3 w-100 bg-white">
-          <%= image_tag "icons/folder.png", width: 50 %>
-          <h1 class="text-center text-primary pt-3" style="font-size: 3.4em"> Dossier d'inscription</h1>
-          <%= image_tag "icons/folder.png", width: 50 %>
-        </div>
-        <h5 class="text-center text-secondary mb-5">Concours: <%= @inscription.category.competition.nom_concours %> | Catégorie: <%= @inscription.category.name %></h5>
-        <h2 class="text-center"><%= inscription.candidat.first_name %> <%= inscription.candidat.last_name %></h2>
-        <% if current_user.organisateur || current_user.jury%>
-          <div class="d-flex align-items-center justify-content-center gap-3">
-            <%= link_to candidat_path(inscription.candidat), target: "_blank", class: "btn rounded-8 btn-secondary btn-sm " do %>
-              <i class="fas fa-eye pe-1"></i>Voir le CV dans un nouvel onglet
-            <% end %>
-
-            <%= mail_to inscription.candidat.user.email, class: 'btn rounded-8 btn-secondary btn-sm' do %>
-              <i class="fas fa-envelope pe-1"></i> Envoyer un email
-            <% end %>
-          </div>
-        <% end %>
-      </div>
+  <div class="d-flex flex-row justify-content-between align-items-center p-3 pb-0 gap-3 mx-2">
+    <div class="d-flex flex-row align-items-center gap-2">
+    <%= image_tag "icons/folder.png", width: 50 %>
+    <h1 class="text-dark pt-1 mb-0"> <%= t('inscriptions.inscription.application_file') %></h1>
     </div>
-    <div class="d-flex flex-wrap py-3 align-items-start gap-3">
-      <%= render 'payed_pill', inscription: inscription %>
-      <%= render 'items_pill', inscription: inscription %>
-      <%= render 'airs_pill', inscription: inscription %>
-    </div>
+    <%# <h1 class="px-4 py-1 rounded-pill text-info bg-infobox-light px-2" style="align-self: flex-end;">Date Limite: 29 mars</h1> %>
+  </div>
+  <div class="row">
+    <%= render Navigation::BackLinkComponent.new(
+      link_path: inscriptions_path,
+      link_text: t('global.inscription').pluralize
+    ) if current_user.organisateur || current_user.admin %>
 
-    <div class="col p-0">
-      <div class=" card shadow mb-3 bg-white rounded-8">
+    <%= render "inscriptions/inscription_header", inscription: inscription %>
+    <!-- left column -->
+    <div class="col-md-6 p-0">
+      <div class=" p-3  bg-transparent rounded-8">
+        <div>
           <div class="card-header d-flex justify-content-between align-items-center w-100">
-            <h5 class=mb-1>Détails de l'inscription</h5>
-             <span class=" badge rounded-pill <%= inscription.draft? ? 'text-secondary border border-secondary bg-grey' : inscription.in_review? ? 'text-info border border-info bg-info-secondary' : inscription.accepted? ? 'text-success border-success bg-success-secondary' : 'text-danger border-danger bg-danger-secondary' %>">
-              <i class="fas fa-circle small"></i> <%= inscription.status&.capitalize %>
-            </span>
+            <div class="d-flex flex-row align-items-center gap-2">
+              <h2 class="mb-1 text-secondary"><%= t('inscriptions.inscription.registration_details').upcase %></h2>
+              <%= link_to edit_inscription_step_path(inscription, :program), class: 'text-primary' do %>
+                    <i class="fas fa-edit fa-lg"></i>
+                <% end %>
+              </div>
+            <%= render Pill::StatusComponent.new(text: t("inscriptions.statuses.#{inscription.status}"), color: get_status_color(inscription.status)) %>
           </div>
-        <div class="card-body d-flex flex-column align-items-start">
-          <p><%= inscription.category.edition_competition.competition.nom_concours %> - <small><%= inscription.category.name %></small></p>
-          <p>Du: <%= inscription.category.edition_competition.start_date %> au <%= inscription.category.edition_competition.end_date %></p>
-          <p><%= inscription.category.edition_competition.address.line1 %> - <%= inscription.category.edition_competition.address.city %></p>
-          <% if inscription.candidate_brings_pianist_accompagnateur %>
-          <p>Ce candidat indique venir avec son propre pianiste accompagnateur</p>
-          <% end %>
-          <p>
-          Préférence horaire:
-          <%= inscription.time_preference %>
-          </p>
+
+          <!-- Details card -->
+          <div class="p-3 bg-light rounded mb-3 mt-1 d-flex flex-column align-items-start">
+            <h5><%= inscription.category.edition_competition.competition.nom_concours %> - <small><%= inscription.category.name %></small></h5>
+            <%# Status de l'inscription %>
+            <div class="mb-2">
+              <i class="fas fa-spinner me-2 p-3 bg-infobox-light rounded-pill"></i>
+              <%= t('global.inscription_status') %>: <%= t("inscriptions.statuses.#{inscription.status}") %>
+            </div>
+            <div class="mb-2">
+              <i class="fas fa-map-marker-alt me-2 p-3 bg-infobox-light rounded-pill"></i>
+              <%= inscription.category.edition_competition.address.line1 %> - <%= inscription.category.edition_competition.address.city %>
+            </div>
+
+            <div class="mb-2">
+              <i class="fas fa-edit me-2 p-3 bg-infobox-light rounded-pill"></i>
+              <%= t('inscriptions.edit.edit_application_deadline') %>:
+              <%= link_to inscription.category.edition_competition.end_of_registration.strftime("%d/%m/%Y"),
+                          edit_inscription_step_path(inscription, :program),
+                          class: "text-primary" %>
+            </div>
+
+            <div class="mb-2">
+              <i class="fas fa-music me-2 p-3 bg-infobox-light rounded-pill"></i>
+              <%= t('inscriptions.edit.edit_performances_deadline') %>:
+              <% inscription.category.tours.order(:tour_number).each do |tour| %>
+                <div class="ms-4 mt-1">
+                  <% if I18n.locale == :en && tour.title_english.present? %>
+                    <%= tour.title_english %>:
+                  <% else %>
+                    <%= tour.title %>:
+                  <% end %>
+                  <strong><%= tour.final_performance_submission_deadline.strftime("%d/%m/%Y") %></strong>
+                </div>
+              <% end %>
+            </div>
+
+            <div class="d-flex flex-wrap mb-2">
+              <div class="me-4">
+                <i class="fas fa-calendar-alt me-2 p-3 bg-infobox-light rounded-pill"></i>
+                <%= t('inscriptions.inscription.date_range', start: inscription.category.edition_competition.start_date, end: inscription.category.edition_competition.end_date) %>
+              </div>
+              <div>
+                <i class="fas fa-clock me-2 p-3 bg-infobox-light rounded-pill"></i>
+                <%= t('inscriptions.inscription.time_preference') %>: <%= inscription.time_preference %>
+              </div>
+            </div>
+
+            <% if inscription.candidate_brings_pianist_accompagnateur %>
+              <div class="mb-2">
+                <i class="fas fa-user-check me-2 p-3 bg-infobox-light rounded-pill"></i>
+                <%= t('inscriptions.inscription.candidate_brings_pianist') %>
+              </div>
+            <% end %>
+
+            <!-- Rules document links -->
+              <div class="mt-2">
+                <% if inscription.category.edition_competition.rule_document.attached? %>
+                  <%= link_to t('edition_competitions.category_modal_infos.view_rules'), rails_blob_path(inscription.category.edition_competition.rule_document), target: '_blank', class: "btn btn-outline-primary btn-sm rounded-4 me-2" %>
+                <% end %>
+                <% if inscription.category.edition_competition.rule_document_english.attached? %>
+                  <%= link_to t('edition_competitions.category_modal_infos.view_rules_english'), rails_blob_path(inscription.category.edition_competition.rule_document_english), target: '_blank', class: "btn btn-outline-primary btn-sm rounded-4" %>
+                <% end %>
+              </div>
+            </div>
 
           <!-- Rediriger vers le paiement si ca n'est pas encore fait -->
-          <% unless current_user.organisateur %>
-            <% if inscription.draft? %>
-              <div class="card shadow-sm mb-3 bg-light">
-                <div class="card-body d-flex flex-column align-items-start">
-                  <h5>Paiement</h5>
-                  <p class="text-secondary"> Vous n'avez pas encore payé votre inscription</p>
-                  <% if @inscription.inscription_order.present? %>
-                    <button id="pay" class="btn btn-primary">Payer</button>
-                    <small class="text-info">Rafraîchissez la page si vous rencontrez un problème</small>
-                    <script src="https://js.stripe.com/v3/"></script>
-                    <script>
-                      const paymentButton = document.getElementById('pay');
-                      paymentButton.addEventListener('click', () => {
-                        const stripe = Stripe('<%= Rails.application.credentials.dig(:stripe_test_pk) %>');
-                        stripe.redirectToCheckout({
-                          sessionId: '<%= @inscription.inscription_order.checkout_session_id %>'
-                        });
-                      });
-                    </script>
-                  <% else %>
-                    <%= form_tag inscription_orders_path do %>
-                      <%= hidden_field_tag :inscription_id, inscription.id %>
-                      <%= submit_tag 'Payer', class: 'btn btn-dark' %>
-                    <% end %>
-                  <% end %>
-                </div>
-              </div>
-            <% end %>
+
+          <%# Si la categorie est en mode paiement apres approbation, on affiche la section paiement qu'a ce moment la. Sinon on l'affiche tout le temps %>
+          <% if should_display_payment_section?(inscription) %>
+            <%= render 'payment_section', inscription: inscription %>
           <% end %>
+
         </div>
       </div>
-
-      <div class="p-3 shadow bg-white rounded-8">
-        <div class="d-flex justify-content-between align-items-center mb-2">
-          <h3 class="mb-0">Dossier</h3>
-
-          <% unless inscription.has_complete_requirement_items? %>
-            <div class=" badge d-inline-block rounded-pill py-1 px-2 border border-danger bg-danger-secondary text-danger ">
-              <i class="fas fa-exclamation-triangle"></i> à complêter
-            </div>
-          <% end %>
-
-          <% if current_user.organisateur %>
-            <%= link_to  edit_inscription_path(inscription), class: "btn btn-outline-dark w-50"  do %>
-              <div class="d-flex align-items-center justify-content-center">
-                <i class="fas fa-edit me-2"></i>
-                <span>Modifier</span>
-              </div>
+      <div class="px-3">
+        <%= render InfoboxComponent.new(title: t('inscriptions.modals.incorrect_duration.choose_carefully'), text: t('inscriptions.modals.incorrect_duration.deadline_warning'), icon: 'fas fa-exclamation-triangle') %>
+      </div>
+      <div class="px-3 card-body bg-transparent rounded-8">
+        <div class="d-flex justify-content-between gap-2 align-items-center mb-2">
+          <div class="d-flex justify-content-start align-items-center gap-2">
+            <h3 class=mb-0><%= t('inscriptions.inscription.air_list') %></h3>
+            <% if current_user.candidat && inscription.category.edition_competition.end_of_registration > Time.now %>
+              <%= link_to edit_inscription_step_path(inscription, :program), class: 'text-primary' do %>
+                  <i class="fas fa-edit fa-lg"></i>
+              <% end %>
             <% end %>
-          <% end %>
-          <% if current_user.candidat && inscription.is_late_inscription && Date.today < inscription.category.tours.first.final_performance_submission_deadline %>
-            <%= link_to  edit_inscription_path(inscription), class: "btn btn-outline-dark w-50"  do %>
-              <div class="d-flex align-items-center justify-content-center">
-                <i class="fas fa-edit me-2"></i>
-                <span>Modifier</span>
-              </div>
-            <% end %>
-          <% end %>
-          <% if current_user.candidat && inscription.category.edition_competition.end_of_registration > Date.today %>
-            <%= link_to  edit_inscription_path(inscription), class: "btn btn-outline-dark w-50"  do %>
-              <div class="d-flex align-items-center justify-content-center">
-                <i class="fas fa-edit me-2"></i>
-                <span>Modifier</span>
-              </div>
-            <% end %>
+          </div>
+
+          <% if inscription.remaining_days_before_end_of_registration > 0 %>
+            <%= render Pill::StatusComponent.new(text: t('inscriptions.inscription.days_remaining_to_edit', count: inscription.remaining_days_before_end_of_registration), color: "primary") %>
           <% end %>
         </div>
-        <% if inscription.remaining_days_before_end_of_registration > 0 %>
-          <span class="text-success"><%= inscription.remaining_days_before_end_of_registration %> jours restants pour modifier</span>
+        <% inscription.choice_imposed_work_airs.includes(:choice_imposed_work).map(&:choice_imposed_work).uniq.each do |choice_imposed_work| %>
+          <div class="p-3 rounded mb-3 bg-light">
+            <div class="card-body">
+              <h5 class="card-title"><%= choice_imposed_work.title %></h5>
+              <ul class="list-group list-group-flush">
+                <% inscription.choice_imposed_work_airs.where(choice_imposed_work: choice_imposed_work).each do |choice_imposed_work_air| %>
+                  <li class="list-group-item bg-white text-secondary"><%= choice_imposed_work_air.air.title %></li>
+                <% end %>
+              </ul>
+            </div>
+          </div>
         <% end %>
-      <% if inscription.inscription_item_requirements.none? %>
-          <p class="text-secondary"> Il n'y a rien ici pour l'instant</p>
+
+        <% inscription.semi_imposed_work_airs&.includes(:semi_imposed_work).map(&:semi_imposed_work).uniq.each do |semi_imposed_work| %>
+          <div class="p-3 rounded mb-3 bg-light">
+            <div class="card-body">
+              <h5 class="card-title"><%= semi_imposed_work.title %></h5>
+              <ul class="list-group list-group-flush">
+                <% inscription.semi_imposed_work_airs.where(semi_imposed_work: semi_imposed_work).each do |semi_imposed_work_air| %>
+                  <li class="list-group-item bg-light text-secondary"><%= semi_imposed_work_air.air.title %></li>
+                <% end %>
+              </ul>
+            </div>
+          </div>
+        <% end %>
+
+        <% if inscription.category.imposed_work.present? %>
+          <div class="p-3 rounded mb-3 bg-light">
+            <div class="card-body">
+              <h4 class="card-title"><%= t('inscriptions.inscription.imposed_airs') %></h4>
+              <ul class="list-group list-group-flush">
+                <% inscription.category.imposed_work&.airs&.each do |air| %>
+                  <li class="list-group-item bg-light text-secondary"><%= air.title %></li>
+                <% end %>
+              </ul>
+            </div>
+          </div>
+        <% end %>
+
+      </div>
+
+      <div class="px-3 bg-transparent rounded">
+        <div class="d-flex justify-content-between gap-2 align-items-center mb-2">
+          <div class="d-flex justify-content-start align-items-center gap-2">
+            <h3 class="mb-0"><%= t('inscriptions.inscription.file') %></h3>
+
+            <% unless inscription.has_complete_requirement_items? %>
+              <%= render Pill::StatusComponent.new(text: t('inscriptions.inscription.to_complete'), color: "danger") %>
+            <% end %>
+
+            <% if current_user.organisateur %>
+              <%= link_to edit_inscription_step_path(inscription, :item_requirements), class: "text-primary" do %>
+                  <i class="fas fa-edit fa-lg"></i>
+              <% end %>
+
+            <% end %>
+            <% if current_user.candidat && inscription.is_late_inscription && Time.now < inscription.category.tours.first.final_performance_submission_deadline %>
+              <%= link_to edit_inscription_step_path(inscription, :item_requirements), class: "text-primary" do %>
+                  <i class="fas fa-edit fa-lg"></i>
+              <% end %>
+            <% end %>
+
+            <% if current_user.candidat && inscription.category.edition_competition.end_of_registration > Time.now %>
+              <%= link_to edit_inscription_step_path(inscription, :item_requirements), class: "text-primary" do %>
+                  <i class="fas fa-edit fa-lg"></i>
+              <% end %>
+            <% end %>
+          </div>
+
+          <% if inscription.remaining_days_before_end_of_registration > 0 %>
+            <%= render Pill::StatusComponent.new(text: t('inscriptions.inscription.days_remaining_to_edit', count: inscription.remaining_days_before_end_of_registration), color: "primary") %>
+          <% end %>
+        </div>
+
+        <% if inscription.inscription_item_requirements.none? %>
+          <p class="text-secondary"> <%= t('inscriptions.inscription.nothing_here_yet') %></p>
         <% end %>
 
         <%# items requirements %>
         <% inscription.inscription_item_requirements&.each do |item| %>
-          <div class="p-3 shadow bg-light mb-3">
-            <div class="card-body border-0">
+          <div class="p-3 rounded bg-light mb-3">
+            <div class="card-body border-0 overflow-scroll">
               <div class="d-flex justify-content-between align-items-center mb-2">
               <h5 class="card-title text-muted"><%= item.requirement_item&.title %></h5>
               <% if item.item_type == "youtube_link"  %>
-                <% if item.submitted_content.empty? %>
-                  <span class="badge rounded-pill text-danger border-danger border">À compléter</span>
+                <% if item&.submitted_content&.empty? || item&.submitted_content&.nil? %>
+                  <%= render Pill::StatusComponent.new(text: t('inscriptions.inscription.to_complete'), color: "danger") %>
                 <% else %>
-                  <span class="badge rounded-pill text-success border-success border"> <i class="fas fa-check-circle text-success pe-1"></i>Ok</span>
+                  <%= render Pill::StatusComponent.new(text: "Ok", color: "primary") %>
                 <% end %>
               <% end %>
               <% unless item.item_type.in?(["motivation_essay", "youtube_link"]) %>
+                <%= render Pill::StatusComponent.new(text: item.status_text, color: item.status_color) %>
                 <span class="badge border border-<%= item.status_color%> rounded-pill text-<%= item.status_color%>"><%= item.status_text %></span>
               <% end %>
               </div>
@@ -156,7 +225,7 @@
                       <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/<%= youtube_id %>?rel=0" allowfullscreen></iframe>
                     </div>
                   <% else %>
-                    <p>Vidéo non disponible. Assurez vous d'avoir bien entré une URL youtube valide.</p>
+                    <p><%= t('inscriptions.inscription.video_not_available') %></p>
                   <% end %>
                 <% else %>
                 <p><%= simple_format(item.submitted_content) %></p>
@@ -165,179 +234,238 @@
               <% if item&.submitted_file.attached? %>
                 <div class="d-flex flex-column">
                 <embed src="<%= url_for(item.submitted_file) %>" width="500" height="375" type="application/pdf">
-                <%= link_to 'Voir', url_for(item.submitted_file), target: "_blank", rel: "noopener"  %>
+                <%= link_to t('global.actions.view_with_correct_format'), url_for(item.submitted_file), target: "_blank", rel: "noopener" %>
                 </div>
               <% end %>
             </div>
           </div>
         <% end %>
       </div>
-
-      <div class="p-3 card-body shadow my-3 bg-white rounded-8">
-
-        <div class="d-flex justify-content-between align-items-center mb-2">
-          <h3>Liste d'airs</h3>
-          <% if current_user.candidat && inscription.category.edition_competition.end_of_registration > Date.today %>
-            <%= link_to  edit_inscription_path(inscription), class: 'btn btn-outline-dark w-50'  do %>
-              <div class="d-flex align-items-center justify-content-center">
-                <i class="fas fa-edit me-2"></i>
-                <span>Modifier</span>
-              </div>
-            <% end %>
-          <% end %>
-        </div>
-        <% if inscription.remaining_days_before_end_of_registration > 0 %>
-          <span class="text-success"><%= inscription.remaining_days_before_end_of_registration %> jours restants pour modifier</span>
-        <% end %>
-        <% inscription.choice_imposed_work_airs.includes(:choice_imposed_work).map(&:choice_imposed_work).uniq.each do |choice_imposed_work| %>
-          <div class="p-3 rounded-4 shadow-sm mb-3 bg-light-grey">
-            <div class="card-body">
-              <h4 class="card-title"><%= choice_imposed_work.title %></h4>
-              <ul class="list-group list-group-flush">
-                <% inscription.choice_imposed_work_airs.where(choice_imposed_work: choice_imposed_work).each do |choice_imposed_work_air| %>
-                  <li class="list-group-item bg-light"><%= choice_imposed_work_air.air.title %></li>
-                <% end %>
-              </ul>
-            </div>
-          </div>
-        <% end %>
-
-        <% inscription.semi_imposed_work_airs&.includes(:semi_imposed_work).map(&:semi_imposed_work).uniq.each do |semi_imposed_work| %>
-          <div class="p-3 rounded-4 shadow-sm mb-3 bg-light-grey">
-            <div class="card-body">
-              <h4 class="card-title"><%= semi_imposed_work.title %></h4>
-              <ul class="list-group list-group-flush">
-                <% inscription.semi_imposed_work_airs.where(semi_imposed_work: semi_imposed_work).each do |semi_imposed_work_air| %>
-                  <li class="list-group-item bg-light"><%= semi_imposed_work_air.air.title %></li>
-                <% end %>
-              </ul>
-            </div>
-          </div>
-        <% end %>
-
-        <% if inscription.category.imposed_work.present? %>
-          <div class="p-3 rounded-4 shadow-sm mb-3 bg-light-grey">
-            <div class="card-body">
-              <h4 class="card-title">Airs imposés</h4>
-              <ul class="list-group list-group-flush">
-                <% inscription.category.imposed_work&.airs&.each do |air| %>
-                  <li class="list-group-item bg-light"><%= air.title %></li>
-                <% end %>
-              </ul>
-            </div>
-          </div>
-        <% end %>
-
-      </div>
-
     </div>
 
-    <div class="col pe-0">
-      <div class="rounded-8 bg-white p-3 shadow">
-        <h3>Programme tour par tour</h3>
+    <!-- right column -->
+    <div class="col-md-6 pe-0">
+      <div class="bg-transparent p-3">
+        <h2 class="text-secondary "><%= t('inscriptions.inscription.round_by_round_program').upcase %></h2>
         <% inscription.category.tours.order(:tour_number).each do |tour| %>
-          <div class="card bg-light mb-3 border-0 rounded-8 shadow">
+          <% performance = inscription.performances.find_by(tour: tour) %>
+
+          <div class="p-3 bg-light mb-3 rounded">
             <div class="card-header d-flex justify-content-between border-0">
-              <%= tour.title %> - tour n°<%= tour.tour_number %>
-               <% if tour.imposed_air_selection.present? %>
-              <small class="text-warning"><%= tour.imposed_air_selection.count %> airs imposés sur ce tour </small>
+              <% if I18n.locale == :en && tour.title_english.present? %>
+                <h3><%= tour.title_english %> - <%= t('inscriptions.inscription.round_number', number: tour.tour_number) %></h3>
+              <% else %>
+                <h3><%= tour.title %> - <%= t('inscriptions.inscription.round_number', number: tour.tour_number) %></h3>
               <% end %>
             </div>
             <div class="card-body">
-
               <% if tour.tour_requirement.present? %>
-                <h5 class="card-title">Règles et conditions du tour:</h5>
-                <p class="card-text text-secondary"><%= tour.tour_requirement&.description %></p>
-                <div class="d-flex justify-content-around">
-                  <p class="card-text"><strong><%= image_tag 'icons/book.png', alt: 'Oeuvres', width: 40 %></strong>
+                <% if I18n.locale == :en && tour.tour_requirement&.description_english.present? %>
+                  <p class="card-text text-secondary bg-infobox-light rounded p-2 mb-0">
+                    <i class="fas fa-info-circle text-secondary px-1"></i> <%= tour.tour_requirement&.description_english %>
+                  </p>
+                <% else %>
+                  <p class="card-text text-secondary bg-infobox-light rounded p-2 mb-0">
+                    <i class="fas fa-info-circle text-secondary px-1"></i><%= tour.tour_requirement&.description %>
+                  </p>
+                <% end %>
+
+                <div class="d-flex justify-content-start gap-3 pb-2">
+                  <span class="me-2">
+                    <strong><i class="fas fa-book p-3 rounded-pill text-secondary border bg-white"></i></strong>
                     <% if tour.tour_requirement&.min_number_of_works == tour.tour_requirement&.max_number_of_works %>
-                      <%= tour.tour_requirement&.min_number_of_works %> oeuvres
+                      <%= t('inscriptions.inscription.works_count', count: tour.tour_requirement&.min_number_of_works) %>
                     <% else %>
-                      <%= tour.tour_requirement&.min_number_of_works %> - <%= tour.tour_requirement&.max_number_of_works %> oeuvres</p>
+                      <%= t('inscriptions.inscription.works_range', min: tour.tour_requirement&.min_number_of_works, max: tour.tour_requirement&.max_number_of_works) %>
                     <% end %>
+                  </span>
 
-                  <p class="card-text"><strong><%= image_tag 'icons/hourglass.png', alt: 'Piano', width: 40 %></strong> <%= tour.tour_requirement&.min_duration_minute %> à <%= tour.tour_requirement&.max_duration_minute %> minutes</p>
+                  <span>
+                    <strong><i class="fas fa-clock p-3 rounded-pill text-secondary border bg-white"></i></strong>
+                    <%= t('inscriptions.inscription.duration_range', min: tour.tour_requirement&.min_duration_minute, max: tour.tour_requirement&.max_duration_minute) %>
+                  </span>
                 </div>
               <% end %>
 
-              <% performance = inscription.performances.find_by(tour: tour) %>
-              <% if performance&.pianist_accompagnateur.present? %>
-                <div class="d-flex align-items-center border-top py-3">
-                  <small>Pianiste accompagnateur</small>
-                  <div class="d-flex align-items-center">
-                    <%= image_tag 'icons/piano.png', alt: 'Piano', width: 40 %>
-                    Pianiste
-                  </div>
-                  <div class="d-flex flex-column justify-content-start gap-3 align-items-end">
-                    <div class="d-flex align-items-center gap-1 border p-1 rounded-4">
-                      <i class="fas fa-envelope"></i>
-                      <small><a href="mailto:<%= performance.pianist_accompagnateur.email %>" class="text-decoration-none text-secondary"><%= performance.pianist_accompagnateur.email %></a></small>
-                    </div>
-                    <div class="d-flex align-items-center gap-1 border p-1 rounded-4">
-                      <i class="fas fa-phone"></i>
-                      <small><%= performance.pianist_accompagnateur.phone_number %></small>
-                    </div>
-                  </div>
+              <%# accompaniment section  %>
+              <%= render 'pianist_accompanist', performance: performance, tour: tour if tour.requires_pianist_accompanist && !tour.requires_orchestra %>
+
+              <% if tour.requires_orchestra %>
+                <div class="d-flex justify-content-start gap-3 pb-2 mt-2">
+                  <span>
+                    <i class="fas fa-music p-3 rounded-pill text-secondary border bg-white"></i>
+                    <%= t('inscriptions.inscription.orchestra_accompaniment') %>
+                  </span>
                 </div>
               <% end %>
+
+              <%# Upload scores %>
+              <%= render 'scores', performance: performance %>
+
               <div class="d-flex justify-content-start align-items-center gap-2 mb-2 border-top pt-3">
-                <h5 class="card-title mb-0 ">Programme: </h5>
+                <h5 class="card-title mb-0 "><%= t('inscriptions.inscription.program') %>: </h5>
                 <% if tour.remaining_days > 0 %>
-                  <span class="badge rounded-pill text-warning border-warning border"><%= tour.remaining_days %> jours restants pour modifier</span>
+                  <span class=" badge rounded-pill text-info bg-info-secondary">
+                    <i class="fas fa-clock me-1"></i>
+                    <%= t('inscriptions.inscription.days_remaining_to_edit', count: tour.remaining_days) %>
+                  </span>
+                <% end %>
+                <% if performance.present? && performance.has_incorrect_duration? %>
+                  <span class=" badge rounded-pill text-danger bg-danger-secondary">
+                    <i class="fas fa-exclamation-triangle"></i> <%= t('inscriptions.inscription.invalid_program_duration', minutes: performance.minutes) %>
+                  </span>
+                <% elsif performance.present? %>
+                  <span class=" badge rounded-pill text-success bg-primary-light">
+                    <i class="fas fa-check-circle"></i> <%= t('inscriptions.inscription.valid_program_duration', minutes: performance.minutes) %>
+                  </span>
                 <% end %>
               </div>
+
+              <% if tour.imposed_air_selection.present? %>
+                <%= render Pill::StatusComponent.new(text: t('inscriptions.inscription.imposed_airs_in_round', count: tour.imposed_air_selection.count), color: 'warning') %>
+              <% end %>
+
               <% if performance.present? %>
-                <% if performance.has_incorrect_duration? %>
-                  <small class="text-danger">
-                    <i class="fas fa-exclamation-triangle"></i> Durée totale du programme invalide. (<%= performance.minutes %> min)
-                  </small>
-                <% else %>
-                  <small class="text-success">
-                    <i class="fas fa-check-circle"></i> Durée totale du programme valide (<%= performance.minutes %> min)
-                  </small>
+                <%# s'il manque un air sur la performance, on affiche un message %>
+                <% if performance.ordered_air_selection.count < tour.tour_requirement&.min_number_of_works %>
+                  <p class="small text-danger"><%= t('inscriptions.inscription.missing_air', count: tour.tour_requirement&.min_number_of_works - performance.ordered_air_selection.count) %></p>
                 <% end %>
-                <%= simple_form_for(performance, url: performance_path(performance), method: :patch, data: { controller: "reorder" }) do |f| %>
-                  <ul data-reorder-target="list" class="list-unstyled" >
+                <%# Standard form for updating the performance %>
+                <%= simple_form_for(performance, url: performance_path(performance), method: :patch) do |f| %>
+                  <ul class="list-unstyled">
+                    <% airs_count = performance.ordered_air_selection&.count || 0 %>
                     <% performance.ordered_air_selection&.each_with_index do |air_id, index| %>
-                      <% air = Air.find(air_id) %>
+                      <% air = Air.find_by(id: air_id) %>
+                      <% next unless air %> <%# Skip if air not found %>
                       <% imposed = performance.tour.imposed_air_selection&.include?(air_id.to_s) %>
-                      <li data-id="<%= air_id %>"
-                          data-action="dragstart->reorder#dragStart dragover->reorder#dragOver drop->reorder#drop dragend->reorder#dragEnd"
-                          draggable="true"
-                          class="draggable-item shadow-sm"
-                          style="cursor: move; border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; border-radius: 8px;"
-                          >
-                        <%= index + 1 %> - <%= air.title %>, <%= air.length_minutes %> min<%= ' (imposé)' if imposed %>
+
+                      <li class="d-flex align-items-center justify-content-between border p-2 mb-2 rounded" style="border: 1px solid #ccc; border-radius: 8px;">
+                        <div class="flex-grow-1 me-3">
+                          <%= index + 1 %> - <%= air.title %>, <%= air.length_minutes %> min<%= t('inscriptions.inscription.imposed') if imposed %>
+                        </div>
+                        <div class="d-flex flex-column">
+                          <button type="submit" name="move_up" value="<%= air_id %>" class="btn btn-sm btn-light p-0 mb-1 <%= 'invisible' if index == 0 %>" title="Move Up">
+                            <i class="fas fa-chevron-up text-secondary"></i>
+                          </button>
+                          <button type="submit" name="move_down" value="<%= air_id %>" class="btn btn-sm btn-light p-0 <%= 'invisible' if index == airs_count - 1 %>" title="Move Down">
+                            <i class="fas fa-chevron-down text-secondary"></i>
+                          </button>
+                        </div>
                       </li>
                     <% end %>
                   </ul>
-                  <%= f.hidden_field :ordered_air_selection, data: { reorder_target: "orderedSelection" } %>
-                  <%# Ces boutons apparaissent si l'utilisateur est l'organisateur %>
-                  <% if Date.today < tour.final_performance_submission_deadline || current_user.organisateur.present? %>
-                    <%= f.button :submit, "Mettre à jour l'ordre", data: { action: "reorder#submit", reorder_target: "submit" }, disabled: true, class: "btn btn-primary" %>
-                    <%= link_to 'Modifier le programme', edit_inscription_performance_path(inscription, performance, tour_id: tour.id), class: 'btn btn-primary ' %>
-                  <% end %>
+                <% end %>
+
+                <% if (Date.today < tour.final_performance_submission_deadline || current_user.organisateur.present?) && performance.persisted? %>
+                  <%= link_to t('inscriptions.inscription.edit_program'), edit_inscription_performance_path(inscription, performance, tour_id: tour.id), class: 'btn btn-success mt-2' %>
                 <% end %>
               <% else %>
-                <div class="d-flex flex-column  shadow rounded-4">
+                <div class="d-flex flex-column rounded">
                   <small class="bg-grey p-2 text-secondary">
-                    <span class="badge rounded-pill text-danger border-danger border"><%= tour.remaining_days %> jours restants</span>
-                    <i class="fas fa-info-circle text-secondary px-1"></i>Vous n'avez pas encore créé de programme pour ce tour. Créez le maintenat! Vous pourrez le modifier jusqu'au <%= tour.final_performance_submission_deadline.strftime("%d/%m/%Y") %>.
+                    <i class="fas fa-info-circle text-secondary px-1"></i><%= t('inscriptions.inscription.no_program_yet_html', deadline: tour.final_performance_submission_deadline.strftime("%d/%m/%Y")) %>
                   </small>
-
-                  <%= link_to  new_inscription_performance_path(inscription, tour_id: tour.id), class: 'btn btn-dark' do %>
-                    <span><i class="fas fa-plus me-2"></i> Créer mon programme</span>
-                  <% end %>
                 </div>
+                <%= link_to new_inscription_performance_path(inscription, tour_id: tour.id), class: 'btn btn-primary mt-3 text-white' do %>
+                  <span><i class="fas fa-plus me-2"></i> <%= t('inscriptions.inscription.create_my_program') %></span>
+                <% end %>
               <% end %>
-
             </div>
           </div>
         <% end %>
       </div>
-
-
     </div>
-
   </div>
 </div>
+
+  <% if inscription.approved_waiting_payment? || inscription.payment_error_waiting_payment? %>
+    <!-- Modal pour le paiement -->
+    <div class="modal" id="paymentRequiredModal" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header bg-success text-white">
+            <h5 class="modal-title" id="paymentRequiredModalLabel">
+              <% if inscription.approved_waiting_payment? %>
+                <%= t('inscriptions.modals.payment_required.title_accepted') %>
+              <% else %>
+                <%= t('inscriptions.modals.payment_required.title_payment_error') %>
+              <% end %>
+            </h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="<%= t('inscriptions.modals.payment_required.close') %>"></button>
+          </div>
+          <div class="modal-body">
+            <% if inscription.approved_waiting_payment? %>
+              <p><%= t('inscriptions.modals.payment_required.accepted_message') %></p>
+            <% elsif inscription.payment_error_waiting_payment? %>
+              <p class="text-danger"><%= t('inscriptions.modals.payment_required.payment_error_message') %></p>
+            <% end %>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><%= t('inscriptions.modals.payment_required.close') %></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        var modal = document.getElementById('paymentRequiredModal');
+        modal.style.display = 'block';
+        modal.classList.add('show');
+        document.body.classList.add('modal-open');
+
+        // Ajouter un backdrop manuellement
+        var backdrop = document.createElement('div');
+        backdrop.className = 'modal-backdrop fade show';
+        document.body.appendChild(backdrop);
+
+        // Gérer la fermeture de la modale
+        document.querySelectorAll('[data-bs-dismiss="modal"]').forEach(function(button) {
+          button.addEventListener('click', function() {
+            modal.style.display = 'none';
+            modal.classList.remove('show');
+            document.body.classList.remove('modal-open');
+
+            // Supprimer le backdrop
+            var backdrop = document.querySelector('.modal-backdrop');
+            if (backdrop) {
+              backdrop.parentNode.removeChild(backdrop);
+            }
+          });
+        });
+      });
+    </script>
+  <% end %>
+
+<%# Modale pour durée incorrecte %>
+<% if inscription.performances.any?(&:has_incorrect_duration?) %>
+  <div data-controller="modal" class="modal-container">
+    <div class="modal" id="incorrectDurationModal" data-modal-target="modal" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header bg-danger text-white">
+            <h5 class="modal-title" id="incorrectDurationModalLabel">
+              <%= t('inscriptions.modals.incorrect_duration.title') %>
+            </h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" data-action="click->modal#close" aria-label="<%= t('inscriptions.modals.incorrect_duration.close') %>"></button>
+          </div>
+          <div class="modal-body">
+            <p><%= t('inscriptions.modals.incorrect_duration.message') %></p>
+            <ol>
+              <li><%= t('inscriptions.modals.incorrect_duration.option1') %></li>
+              <li><%= t('inscriptions.modals.incorrect_duration.option2') %></li>
+            </ol>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-action="click->modal#close"><%= t('inscriptions.modals.incorrect_duration.close') %></button>
+            <% incorrect_performance = inscription.performances.find(&:has_incorrect_duration?) %>
+            <% if incorrect_performance %>
+              <%= link_to t('inscriptions.modals.incorrect_duration.edit_program'),
+                  edit_inscription_performance_path(inscription, incorrect_performance, tour_id: incorrect_performance.tour.id),
+                  class: 'btn btn-danger' %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

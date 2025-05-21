@@ -3,7 +3,7 @@
 <%= render @choice_imposed_work %>
 
 <div>
-  <%= link_to "Edit this choice imposed work", edit_choice_imposed_work_path(@choice_imposed_work) %> |
+  <%= link_to t('choice_imposed_works.show.edit'), edit_choice_imposed_work_path(@choice_imposed_work) %> |
 
-  <%= button_to "Destroy this choice imposed work", @choice_imposed_work, method: :delete %>
+  <%= button_to t('choice_imposed_works.show.destroy'), @choice_imposed_work, method: :delete %>
 </div>

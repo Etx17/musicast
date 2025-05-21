@@ -1,0 +1,144 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+
+
+      <!-- Bouton pour ouvrir la modale de configuration -->
+      <div class="d-flex mb-4">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#configModal">
+          <i class="fas fa-cog me-2"></i><%= t('tours.solo_warmup.configure_rehearsal_schedule') %>
+        </button>
+        <% if @tour.candidate_rehearsals.any? %>
+          <%= link_to download_warmup_schedule_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour, format: :pdf), class: "btn btn-outline-primary ms-2", target: "_blank" do %>
+            <i class="fas fa-download me-2"></i><%= t('tours.solo_warmup.download_warmup_schedule') %>
+          <% end %>
+        <% end %>
+      </div>
+
+      <!-- Espace réservé pour afficher le planning (à implémenter par l'utilisateur) -->
+      <div id="rehearsal-schedule">
+        <!-- Le planning de répétition généré sera affiché ici -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal pour la configuration du planning -->
+<div class="modal fade" id="configModal" tabindex="-1" aria-labelledby="configModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="configModalLabel"><%= t('tours.solo_warmup.rehearsal_schedule_configuration') %></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="<%= t('global.actions.close') %>"></button>
+      </div>
+      <div class="modal-body">
+        <%= simple_form_for [@organism, @competition, @edition_competition, @category, @tour],
+                          url: update_solo_warmup_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour),
+                          method: :patch do |f| %>
+          <div class="bg-light p-3 rounded mb-3">
+            <%= f.input :rehearse_time_slot_per_candidate,
+                       input_html: {
+                         style: "width: fit-content;",
+                         value: @tour.rehearse_time_slot_per_candidate || 15
+                       },
+                       label: t('tours.solo_warmup.time_slot_duration'),
+                       hint: t('tours.solo_warmup.time_slot_hint') %>
+
+            <%= f.input :buffer_time_minutes,
+                       input_html: {
+                         style: "width: fit-content;",
+                         value: @tour.buffer_time_minutes || 30
+                       },
+                       label: t('tours.solo_warmup.buffer_time'),
+                       hint: t('tours.solo_warmup.buffer_time_hint') %>
+
+            <% if @organism.rooms.exists? %>
+              <div class="d-flex align-items-center mb-3">
+                <div class="flex-grow-1">
+                  <%= f.association :rooms,
+                                  collection: @organism.rooms,
+                                  label: t('tours.solo_warmup.select_available_rooms'),
+                                  input_html: { data: { controller: "tom-select" } },
+                                  hint: t('tours.solo_warmup.select_rooms_hint') %>
+                </div>
+                <div class="ms-3 mt-4">
+                  <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#newRoomModal">
+                    <i class="fas fa-plus"></i> <%= t('tours.solo_warmup.create_room') %>
+                  </button>
+                </div>
+              </div>
+            <% else %>
+              <div class="alert alert-info">
+                <i class="fas fa-info-circle me-2"></i>
+                <%= t('tours.solo_warmup.no_rooms_registered') %>
+                <%= link_to t('tours.solo_warmup.add_rooms_in_organization'), organisateur_dashboard_path, class: "alert-link" %> <%= t('tours.solo_warmup.to_start') %>.
+              </div>
+              <div class="text-center mb-3">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newRoomModal">
+                  <i class="fas fa-plus"></i> <%= t('tours.solo_warmup.create_room') %>
+                </button>
+              </div>
+            <% end %>
+          </div>
+
+          <div class="text-center mt-3">
+            <%= f.submit t('tours.solo_warmup.save_config_and_generate'), class: "btn btn-primary", style: "width: fit-content;" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal pour créer une salle -->
+<div class="modal fade" id="newRoomModal" tabindex="-1" aria-labelledby="newRoomModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="newRoomModalLabel"><%= t('tours.solo_warmup.add_room') %></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="<%= t('global.actions.close') %>"></button>
+      </div>
+      <div class="modal-body">
+        <%= simple_form_for([@organism, Room.new]) do |f| %>
+          <%= f.error_notification %>
+
+          <div class="form-inputs">
+            <%= f.input :name, label: t('tours.solo_warmup.room_name') %>
+            <%= f.input :notes, label: t('tours.solo_warmup.notes') %>
+            <%= f.input :organism_id, as: :hidden, input_html: { value: @organism.id } %>
+
+            <!-- Hidden field for redirect path back to current page -->
+            <input type="hidden" name="redirect_path" value="<%= request.fullpath %>" />
+
+            <div class="row">
+              <div class="col">
+                <%= f.input :start_time, label: t('tours.solo_warmup.opening_time') %>
+              </div>
+              <div class="col">
+                <%= f.input :end_time, label: t('tours.solo_warmup.closing_time') %>
+              </div>
+            </div>
+
+            <%= f.input :description, label: t('tours.solo_warmup.description') %>
+            <%= f.input :description_english, label: t('tours.solo_warmup.description_english') %>
+          </div>
+
+          <div class="form-actions text-center">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><%= t('global.actions.cancel') %></button>
+            <%= f.button :submit, t('global.actions.create'), class: "btn btn-primary" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <h3 class="mb-4"><%= t('tours.planning.rehearsal_schedule') %></h3>
+      <%= render "tours/solo_warmup_planning", tour: @tour %>
+    </div>
+  </div>
+</div>

@@ -3,17 +3,25 @@
 
     <div class="overflow-auto p-3">
       <div class="d-flex justify-content-center gap-3">
-        <h2 class="text-center">Ordre de passage actuel </h2>
-
-        <%= button_to shuffle_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour), method: :post, class: "btn btn-outline-dark rounded-8", data: { turbo_confirm: "Si vous mélangez l'ordre de passage, vous devrez recréer le planning." }, disabled: @tour.performances.count <= 1 do %>
+        <h2 class="text-center"><%= t('tours.order_of_performances.current_order') %></h2>
+        <%= button_to shuffle_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour),
+          method: :post,
+          class: "btn btn-primary rounded-8",
+          data: {
+            bs_toggle: "tooltip",
+            bs_placement: "bottom",
+            bs_title: "Mélanger aléatoirement l'ordre de passage"
+          },
+          onclick: "if(confirm('⚠️ ATTENTION:\\n\\nSi vous mélangez l\\'ordre de passage, vous devrez regénérer le planning de performance et le planning de répétition dans les onglets suivants.\\n\\nContinuer?')) { return true; } else { return false; }",
+          disabled: @tour.performances.count <= 1 do %>
           <i class="fas fa-random pe-1"></i>
-          Mélanger aléatoirement
+          <%= t('tours.order_of_performances.shuffle_randomly') %>
         <% end %>
 
-        <% unless @tour.no_pianist_accompagnateur %>
-          <%= button_tag type: 'button', class: "btn btn-outline-dark rounded-8", style: "height: 38px;", data: { bs_toggle: "modal", bs_target: "#assignPianistModal" }, disabled: @tour.performances.none?  do %>
+        <% if @tour.requires_pianist_accompanist && !@tour.requires_orchestra %>
+          <%= button_tag type: 'button', class: "btn btn-primary rounded-8", style: "height: 38px;", data: { bs_toggle: "modal", bs_target: "#assignPianistModal" }, disabled: @tour.performances.none?  do %>
             <i class="fas fa-user pe-1"></i>
-            Assigner les pianistes accompagnateurs
+            <%= t('tours.order_of_performances.assign_pianists') %>
           <% end %>
         <% end %>
 
@@ -21,27 +29,28 @@
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="assignPianistModalLabel">Assign Pianist</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="modal-title" id="assignPianistModalLabel"><%= t('tours.order_of_performances.assign_pianist') %></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="<%= t('global.actions.close') %>"></button>
               </div>
               <div class="modal-body">
                 <%= form_with url: assign_pianist_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour), method: :post do |form| %>
                   <!-- Add your form fields here -->
                   <div class="mb-3">
-                    <%= form.label :pianist_accompagnateur_id, "Pianistes pour ce tour (Pour sélectionner plusieurs :maintenez la touche MAJ ou CMD enfoncée et cliquez)" %>
-                    <%= form.collection_select :pianist_accompagnateur_ids, @organism.pianist_accompagnateurs, :id, :full_name, {prompt: "Selectionnez un ou plusieurs pianistes "}, {class: "form-control", multiple: true, id: "pianist-select", onchange: "document.getElementById('submit-button').disabled = (this.value == '');"} %>
+                    <%= form.label :pianist_accompagnateur_id, t('tours.order_of_performances.pianists_for_tour') %>
+                    <%= form.collection_select :pianist_accompagnateur_ids, @organism.pianist_accompagnateurs, :id, :full_name, {prompt: t('tours.order_of_performances.select_pianists')}, {class: "form-control", multiple: true, id: "pianist-select", onchange: "document.getElementById('submit-button').disabled = (this.value == '');"} %>
                   </div>
 
                   <div class="mb-3">
-                    <h3>Configuration de l'assignation des pianistes</h3>
-                      <p>Combien de performance à la suite maximum par pianiste? (optionnel)</p>
+                    <h3><%= t('tours.order_of_performances.pianist_assignment_config') %></h3>
+                      <p class="mt-3"><%= t('tours.order_of_performances.min_consecutive_performances') || 'Nombre minimum de performances consécutives' %></p>
+                      <%= number_field_tag :min_consecutive_performances_per_pianist, 1, min: 1, class: "form-control" %>
+                      <p><%= t('tours.order_of_performances.max_consecutive_performances') %></p>
                       <%= number_field_tag :max_consecutive_performances_per_pianist, nil, min: 1, class: "form-control" %>
-
                   </div>
 
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <%= form.submit "Assign",id: "submit-button", class: "btn btn-primary", disabled: true %>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><%= t('global.actions.close') %></button>
+                    <%= form.submit t('tours.order_of_performances.assign'), id: "submit-button", class: "btn btn-success", disabled: true %>
                   </div>
                 <% end %>
               </div>
@@ -52,70 +61,126 @@
 
 
       </div>
-      <p class="text-center text-secondary">Changez manuellement l'ordre en entrant un numéro pour un candidat et cliquant sur  <i class="fas fa-check"></i> ou mélangez aléatoirement <i class="fas fa-random"></i></p>
+      <p class="text-center text-secondary"><%= t('tours.order_of_performances.change_order_instructions') %> <i class="fas fa-check"></i> <%= t('tours.order_of_performances.or_shuffle') %> <i class="fas fa-random"></i></p>
 
+      <% if @category.is_accompagnated_by_pianist? && @tour.performances.any? %>
 
+          <!-- Légende des couleurs -->
+          <% if @organism.pianist_accompagnateurs.any? && !@tour.requires_orchestra %>
 
+            <div class="mt-3 mb-4">
+              <div class="d-flex flex-wrap justify-content-center gap-3">
+                <% pianist_counts = {} %>
+                <% @organism.pianist_accompagnateurs.each do |pianist| %>
+                  <% count =  @ordered_performances_accepted.count { |p| p.pianist_accompagnateur_id == pianist.id } %>
+                  <% pianist_counts[pianist.id] = count %>
+                  <div class="d-inline-block pianist-cell px-3 py-2 shadow-sm" data-pianist-id="<%= pianist.id %>">
+                    <strong><%= pianist.full_name %></strong> <span class="badge bg-light text-dark ms-1"><%= count %></span>
+                  </div>
+                <% end %>
+
+                <% if  @ordered_performances_accepted.any? { |p| p.inscription.candidate_brings_pianist_accompagnateur } %>
+                  <div class="d-inline-block px-3 py-2 bg-secondary bg-opacity-10 rounded shadow-sm">
+                    <strong>Pianistes externes</strong>
+                    <span class="badge bg-secondary ms-1">
+                      <%=  @ordered_performances_accepted.count { |p| p.inscription.candidate_brings_pianist_accompagnateur } %>
+                    </span>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+              <div class="text-secondary">
+                <%=  @ordered_performances_accepted.count %> <%= t('global.performance').pluralize( @ordered_performances_accepted.count) %>
+              </div>
+        </div>
+      <% end %>
+
+      <div class="overflow-scroll rounded-8 px-2">
       <table class="table table-bordered caption-top">
         <thead>
           <tr>
-            <th class="p-2 text-center bg-grey ">Candidat</th>
-            <th class="p-2 text-center bg-grey ">Ordre</th>
-            <th class="p-2 text-center bg-grey ">Airs présentés (titre raccourci)</th>
-            <% if @category.is_accompagnated_by_pianist? %>
-              <th class="p-2 text-center bg-grey ">Pianiste accompagnateur</th>
+            <th class="p-2 text-center bg-grey align-middle" style="min-width: 200px;"><%= t('tours.order_of_performances.candidate') %></th>
+            <th class="p-2 text-center bg-grey align-middle"><%= t('tours.order_of_performances.order') %></th>
+            <th class="p-2 text-center bg-grey align-middle" style="min-width: 450px;"><%= t('tours.order_of_performances.presented_airs') %></th>
+            <% if @category.is_accompagnated_by_pianist? && !@tour.requires_orchestra %>
+              <th class="p-2 text-center bg-grey align-middle " style="min-width: 200px;"><%= t('tours.order_of_performances.pianist_accompanist') %></th>
             <% end %>
-            <th class="p-2 text-center bg-grey ">Minutage</th>
-            <th class="p-2 text-center bg-grey ">Préférence de passage</th>
-            <th class="p-2 text-center bg-grey ">Actions</th>
+            <th class="p-2 text-center bg-grey align-middle"><%= t('tours.order_of_performances.timing') %></th>
+            <th class="p-2 text-center bg-grey align-middle" style="min-width: 150px;"><%= t('tours.order_of_performances.passage_preference') %></th>
+            <th class="p-2 text-center bg-grey align-middle"><%= t('tours.order_of_performances.actions') %></th>
           </tr>
         </thead>
         <tbody>
-          <% if @tour.performances.none? %>
+          <% if @ordered_performances_accepted.none? %>
             <tfoot>
               <tr>
                 <td colspan="4" class="bg-light">
-                  <small class="text-center text-secondary pt-3">Il n'y a pas encore de performances prêtes pour ce tour.</small>
+                  <small class="text-center text-secondary pt-3"><%= t('tours.order_of_performances.no_performances_yet') %></small>
                 </td>
               </tr>
             </tfoot>
           <% else %>
-            <% @tour.performances.order(:order).each do |performance| %>
+            <% @ordered_performances_accepted.each do |performance| %>
               <tr>
-                <td class="p-2 bg-light ">
-                  <%= link_to performance.candidat.first_name, inscription_path(performance.inscription), target: '_blank', class: performance.minutes == 0 ? "text-danger" : ''%>
-                  <% if performance.minutes == 0 %>
-                    <i class="text-danger fas fa-circle-exclamation"></i>
-                  <% end %>
+                <td class="p-2 bg-light align-middle">
+                  <div class="d-flex align-items-center">
+                    <%= image_tag performance.candidat.portrait_or_default, class: "rounded-circle me-2", style: "width: 40px; height: 40px; object-fit: cover;" %>
+                    <div>
+                      <%= link_to "#{performance.candidat.first_name} #{performance.candidat.last_name}", inscription_path(performance.inscription), target: '_blank', class: performance.minutes == 0 ? "text-danger" : ''%>
+                      <% if performance.minutes == 0 %>
+                        <i class="text-danger fas fa-circle-exclamation ms-2"></i>
+                      <% end %>
+                    </div>
+                  </div>
                 </td>
-                <td class="p-2 text-center bg-light" style="min-width: 110px;">
+                <td class="p-2 text-center bg-light align-middle" style="min-width: 130px;">
                   <%= form_with url: update_order_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour, performance_id: performance.id), method: :post do %>
-                    <div class="d-flex">
-                    <%= number_field_tag "new_order", performance.order, class: "form-control", min: 1, max: @tour.performances.count %>
-                    <%= button_tag(type: 'submit', class: "btn btn-outline-dark", data: { turbo_confirm: "Changing an order will destroy the current planning. You will have to regenerate a planning when you finish setting orders. Are you sure you want to proceed?" }) do %>
-                      <i class="fas fa-check"></i> <!-- for check -->
-                    <% end %>
+                    <div class="d-flex justify-content-center">
+                      <%= number_field_tag "new_order", performance.order, class: "form-control", min: 1, max: @tour.performances.count, style: "width: 70px; margin-right: 5px;" %>
+                      <%= button_tag(type: 'submit', class: "btn btn-outline-dark btn-sm", data: { turbo_confirm: t('tours.order_of_performances.change_order_confirm') }) do %>
+                        <i class="fas fa-check"></i>
+                      <% end %>
                     </div>
                   <% end %>
+                </td>
                 <td class="p-2 text-center bg-light text-secondary w-75">
-                  <div class="accordion" id="accordionExample">
+                  <div class="accordion" id="accordion<%= performance.id %>">
                     <div class="accordion-item">
-                      <h2 class="accordion-header" id="headingOne">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                          <%= truncate(performance&.airs&.first&.title, length: 50) %> <% if performance.airs.count > 1 %> et (<%= performance.airs.count - 1 %>) autres <% end %> - Voir plus
+                      <h2 class="accordion-header" id="heading<%= performance.id %>">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapse<%= performance.id %>"
+                                aria-expanded="false" aria-controls="collapse<%= performance.id %>">
+                          <%= truncate(performance&.airs&.first&.title, length: 30) %> <% if performance.airs.count > 1 %> <%= t('tours.order_of_performances.and_others', count: performance.airs.count - 1) %> <% end %> - <%= t('tours.order_of_performances.see_more') %>
                         </button>
                       </h2>
-                      <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                      <div id="collapse<%= performance.id %>" class="accordion-collapse collapse"
+                           aria-labelledby="heading<%= performance.id %>"
+                           data-bs-parent="#accordion<%= performance.id %>">
                         <div class="accordion-body">
-                          <% performance&.airs&.each do |air| %>
-                            <div class="border border-secondary p-1">
-                            <span class="text-warning"><%= air.title %></span> -
-                            <%= air.composer %> -
-                            <%= air.length_minutes %> -
-                            <%= air.oeuvre %> -
-                            <%= air.character + '-' if air.character.present? %> -
-                            <%= air.tonality %>
-                            <%= '-' + air.infos if air.infos.present? %>
+                          <% performance&.airs&.each_with_index do |air, index| %>
+                            <div class="border p-2 mb-2 rounded">
+                              <div class="d-flex justify-content-between align-items-center mb-1">
+                                <strong class="text-primary"><%= air.title %></strong>
+                                <span class="badge bg-secondary"><%= air.length_minutes %> min</span>
+                              </div>
+                              <div class="small">
+                                <% if air.composer.present? %>
+                                  <div><strong>Compositeur:</strong> <%= air.composer %></div>
+                                <% end %>
+                                <% if air.oeuvre.present? %>
+                                  <div><strong>Œuvre:</strong> <%= air.oeuvre %></div>
+                                <% end %>
+                                <% if air.character.present? %>
+                                  <div><strong>Personnage:</strong> <%= air.character %></div>
+                                <% end %>
+                                <% if air.tonality.present? %>
+                                  <div><strong>Tonalité:</strong> <%= air.tonality %></div>
+                                <% end %>
+                                <% if air.infos.present? %>
+                                  <div class="text-muted mt-1 fst-italic"><%= air.infos %></div>
+                                <% end %>
+                              </div>
                             </div>
                           <% end %>
                         </div>
@@ -123,32 +188,194 @@
                     </div>
                   </div>
                 </td>
-                <% if @category.is_accompagnated_by_pianist? %>
-                  <td class="p-2 text-center bg-light text-secondary"  >
+                <% if @category.is_accompagnated_by_pianist? && !@tour.requires_orchestra %>
+                  <td class="p-2 text-center bg-light text-secondary align-middle"  >
                     <% if !performance.inscription.candidate_brings_pianist_accompagnateur %>
                       <%= form_with url: assign_pianist_to_performance_manually_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour, performance_id: performance.id), method: :post, html: { id: "pianist-form-#{performance.id}" } do |form| %>
                         <%= form.hidden_field :performance_id, value: performance.id %>
-                        <%= form.select :pianist_accompagnateur_id, @organism.pianist_accompagnateurs.map { |p| [p.full_name, p.id] }, { selected: performance.pianist_accompagnateur_id, prompt: "Select a pianist" }, { onchange: "document.getElementById('pianist-form-#{performance.id}').submit();" } %>
-                        <%# <%= form.submit "Update", class: "btn btn-primary mt-2" %>
+
+                        <div class="input-group">
+                          <%= form.select :pianist_accompagnateur_id,
+                            @organism.pianist_accompagnateurs.map { |p| [p.full_name, p.id] },
+                            { selected: performance.pianist_accompagnateur_id, prompt: t('tours.order_of_performances.select_pianist') },
+                            {
+                              class: "form-select pianist-select colored-select",
+                              onchange: "document.getElementById('pianist-form-#{performance.id}').submit();",
+                              data: { pianist_id: performance.pianist_accompagnateur_id }
+                            }
+                          %>
+                        </div>
                       <% end %>
                     <% else %>
-                      <p>Vient avec son pianiste</p>
+                      <p class="mb-0 p-2 rounded align-middle" style="background-color: #f8f9fa;">
+                        <i class="fas fa-user-check me-1"></i>
+                        <%= t('tours.order_of_performances.brings_own_pianist').truncate(20) %>
+                      </p>
                     <% end %>
                   </td>
                 <% end %>
-                <td class="p-2 text-center bg-light <%= performance.minutes == 0 ? 'text-danger' : 'text-secondary' %>">
-                  <%= performance.minutes %>
+                <td class="p-2 pt-4 text-center bg-light <%= performance.minutes == 0 ? 'text-danger' : 'text-secondary' %>">
+                  <span class="d-flex align-items-center">
+                    <%= performance.minutes %>'
+                    <% if performance.has_incorrect_duration? %>
+                      <i class="fas fa-circle-exclamation text-danger ms-2"></i>
+                    <% else %>
+                      <i class="fas fa-circle-check text-success ms-2"></i>
+                    <% end %>
+                  </span>
                 </td>
-                <td class="p-2 text-center bg-light text-secondary">
-                  <%= performance.inscription.time_preference %>
+                <td class="p-2 pt-4 text-center bg-light text-secondary">
+                  <%= render Pill::StatusComponent.new(text: performance.inscription.time_preference, color: time_preference_color(performance.inscription.time_preference)) %>
+                  <% if performance.inscription.time_preference != "no_preference" && performance.inscription.time_justification.present? %>
+                    <i class="fas fa-info-circle ms-2"
+                      data-bs-toggle="tooltip"
+                      data-bs-placement="top"
+                      title="<%= performance.inscription.time_justification %>"
+                      style="cursor: help;"></i>
+                  <% end %>
                 </td>
-                <td class="p-2 text-center bg-light">
-                  <%= link_to "Supprimer", organism_competition_edition_competition_category_inscription_path(@organism, @competition, @edition_competition, @category, performance.inscription, tour_id: @tour.id), method: :delete, data: { turbo_confirm: "Are you sure?", turbo_method: :delete}, class: "btn btn-danger" %>
+                <td class="p-2 align-middle">
+                  <%= render Dropdown::KebabComponent.new(items: [{
+                    icon: "fas fa-trash",
+                    text: t('global.actions.delete'),
+                    path: cancel_performance_organism_competition_edition_competition_category_inscription_path(@organism, @competition, @edition_competition, @category, performance.inscription, tour_id: @tour.id),
+                    method: :delete,
+                    data: { turbo_confirm: t('global.confirmations.are_you_sure_delete_performance'), turbo_method: :delete},
+                    # class: "text-danger"
+                  }], only_vertical_dots: false) %>
+                  <%# <%= link_to t('global.actions.delete'), organism_competition_edition_competition_category_inscription_path(@organism, @competition, @edition_competition, @category, performance.inscription, tour_id: @tour.id), method: :delete, data: { turbo_confirm: t('global.confirmations.are_you_sure'), turbo_method: :delete}, class: "text-danger" %>
                 </td>
               </tr>
             <% end %>
           <% end %>
         </tbody>
       </table>
+      </div>
     </div>
   </div>
+
+  <script>
+    document.addEventListener("turbo:load", function() {
+      // Initialiser les tooltips Bootstrap
+      var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+      var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+      })
+    });
+  </script>
+
+  <!-- Script pour les couleurs des pianistes -->
+  <script>
+    document.addEventListener("turbo:load", function() {
+      // Palette de couleurs prédéfinies distinctives
+      const colorPalette = [
+        '#4285F4', // Bleu Google
+        '#34A853', // Vert Google
+        '#EA4335', // Rouge Google
+        '#FBBC05', // Jaune Google
+        '#8E24AA', // Violet
+        '#00ACC1', // Cyan
+        '#FB8C00', // Orange
+        '#607D8B', // Bleu gris
+        '#E91E63', // Rose
+        '#9C27B0', // Pourpre
+        '#3F51B5', // Indigo
+        '#009688', // Teal
+        '#FF5722', // Orange profond
+        '#795548', // Marron
+        '#673AB7', // Violet profond
+      ];
+
+      // Récupérer tous les pianistes uniques
+      const pianistIds = Array.from(document.querySelectorAll('[data-pianist-id]')).map(el =>
+        el.getAttribute('data-pianist-id')
+      ).filter((v, i, a) => a.indexOf(v) === i && v); // Unique non-null values
+
+      // Assigner des couleurs aux pianistes
+      const pianistColors = {};
+      pianistIds.forEach((id, index) => {
+        pianistColors[id] = colorPalette[index % colorPalette.length];
+      });
+
+      // Appliquer les couleurs aux sélecteurs et aux cellules de pianiste
+      document.querySelectorAll('[data-pianist-id]').forEach(el => {
+        const pianistId = el.getAttribute('data-pianist-id');
+        if (pianistId && pianistColors[pianistId]) {
+          el.style.backgroundColor = pianistColors[pianistId] + '20'; // Ajoute transparence
+          el.style.borderLeft = `4px solid ${pianistColors[pianistId]}`;
+        }
+      });
+
+      // Colorier les options des sélecteurs
+      document.querySelectorAll('.pianist-select').forEach(select => {
+        Array.from(select.options).forEach(option => {
+          if (option.value && pianistColors[option.value]) {
+            option.style.backgroundColor = pianistColors[option.value] + '20';
+            option.style.borderLeft = `4px solid ${pianistColors[option.value]}`;
+          }
+        });
+      });
+
+      // Ajouter un style aux sélecteurs Bootstrap pour préserver les couleurs
+      const style = document.createElement('style');
+      style.textContent = `
+        .colored-select option {
+          padding: 8px;
+          margin: 3px;
+          border-radius: 4px;
+        }
+        .pianist-cell {
+          padding: 8px !important;
+          border-radius: 4px;
+          transition: all 0.2s;
+        }
+        .pianist-cell:hover {
+          filter: brightness(0.95);
+        }
+
+        /* Amélioration des accordéons */
+        .accordion-button {
+          text-align: left;
+          background-color: #f8f9fa;
+          border: none !important;
+          box-shadow: none !important;
+          padding: 0.75rem 1.25rem;
+          font-weight: 500;
+          color: #495057;
+          transition: all 0.2s;
+        }
+
+        .accordion-button:not(.collapsed) {
+          background-color: #e9ecef;
+          color: #212529;
+        }
+
+        .accordion-button::after {
+          background-size: 1rem;
+        }
+
+        .accordion-button:hover {
+          background-color: #e9ecef;
+        }
+
+        .accordion-body {
+          padding: 0.75rem;
+          background-color: #fff;
+        }
+
+        .accordion-body .border {
+          border-radius: 4px;
+          margin-bottom: 0.5rem;
+          background-color: #f8f9fa;
+          border-color: #dee2e6 !important;
+          padding: 0.75rem !important;
+          transition: all 0.2s;
+        }
+
+        .accordion-body .border:hover {
+          background-color: #e9ecef;
+        }
+      `;
+      document.head.appendChild(style);
+    });
+  </script>

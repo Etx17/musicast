@@ -8,10 +8,11 @@
         <%= f.input :first_name %>
         <%= f.input :last_name %>
         <%= f.input :short_bio %>
+        <%= f.input :avatar, as: :file %>
       </div>
 
       <div class="form-actions">
-        <%= f.button :submit, "Mettre à jour", class:"btn btn-dark" %>
+        <%= f.button :submit, t('juries.form.update'), class:"btn btn-primary" %>
       </div>
     <% end %>
   </div>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Pianist Rehearsal Schedule - <%= @tour.title %></title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      color: #333;
+      line-height: 1.5;
+      margin: 0;
+      padding: 0;
+      font-size: 10pt;
+    }
+    .container {
+      padding: 10px;
+    }
+    h1 {
+      font-size: 16pt;
+      color: #222;
+      text-align: center;
+      margin-bottom: 5px;
+    }
+    h2 {
+      font-size: 14pt;
+      color: #333;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 3px;
+      margin-bottom: 10px;
+    }
+    h3 {
+      font-size: 12pt;
+      color: #444;
+      margin-bottom: 8px;
+    }
+    .header-info {
+      text-align: center;
+      margin-bottom: 15px;
+      font-size: 11pt;
+    }
+    .room-pianist-section {
+      margin-bottom: 20px;
+      page-break-inside: avoid;
+    }
+    .room-badge {
+      display: inline-block;
+      padding: 4px 8px;
+      background-color: #eee;
+      border-radius: 4px;
+      font-weight: bold;
+      margin-right: 8px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 15px;
+      font-size: 9pt;
+    }
+    th {
+      background-color: #f5f5f5;
+      font-weight: bold;
+      text-align: left;
+      padding: 6px;
+      border-bottom: 1px solid #ddd;
+    }
+    td {
+      padding: 6px;
+      border-bottom: 1px solid #eee;
+      vertical-align: top;
+    }
+    .candidate-cell {
+      width: 25%;
+    }
+    .time-cell {
+      width: 15%;
+    }
+    .date-cell {
+      width: 20%;
+    }
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+    .no-rehearsals {
+      padding: 8px;
+      background-color: #f8f8f8;
+      border-radius: 4px;
+      color: #666;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div style="text-align: center; margin-bottom: 20px;">
+      <%= image_tag @tour.category.edition_competition.competition.organism.logo_or_default, style: "max-height: 120px; width: auto; margin: 0 auto; display: block;" %>
+    </div>
+    <h1><%= t('tours.pianist_rehearsal.schedule_title') %></h1>
+    <div class="header-info">
+      <strong><%= @tour.category.edition_competition.competition.nom_concours %></strong> -
+      <%= @tour.category.name %> -
+      <%= @tour.title %>
+    </div>
+
+    <% if @rehearsals_by_room_and_pianist.any? %>
+      <% @rehearsals_by_room_and_pianist.each do |key, group| %>
+        <div class="room-pianist-section">
+          <h2>
+            <span class="room-badge"><%= group[:room].name %></span>
+            <%= group[:pianist].full_name %>
+          </h2>
+
+          <% if group[:rehearsals].any? %>
+            <table>
+              <thead>
+                <tr>
+                  <th class="candidate-cell"><%= t('pianist_rehearsal_planning.candidate_column') %></th>
+                  <th class="date-cell"><%= t('pianist_rehearsal_planning.date_column') %></th>
+                  <th class="time-cell"><%= t('pianist_rehearsal_planning.start_time_column') %></th>
+                  <th class="time-cell"><%= t('pianist_rehearsal_planning.end_time_column') %></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% group[:rehearsals].each do |rehearsal| %>
+                  <tr>
+                    <td class="candidate-cell"><%= rehearsal.candidat.full_name %></td>
+                    <td class="date-cell"><%= l(rehearsal.start_time.to_date, format: "%A %d %B %Y") if rehearsal.start_time %></td>
+                    <td class="time-cell"><%= l(rehearsal.start_time, format: "%H:%M") if rehearsal.start_time %></td>
+                    <td class="time-cell"><%= l(rehearsal.end_time, format: "%H:%M") if rehearsal.end_time %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          <% else %>
+            <div class="no-rehearsals"><%= t('pianist_rehearsal_planning.no_rehearsals_for_pianist') %></div>
+          <% end %>
+        </div>
+      <% end %>
+    <% else %>
+      <div class="no-rehearsals">
+        <h3><%= t('pianist_rehearsal_planning.no_rehearsals') %></h3>
+        <p><%= t('tours.pianist_rehearsal.configuration_title') %></p>
+      </div>
+    <% end %>
+  </div>
+</body>
+</html>

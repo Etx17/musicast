@@ -1,14 +1,14 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Performances</h1>
+<h1><%= t('performances.index.performances') %></h1>
 
 <div id="performances">
   <% @performances.each do |performance| %>
     <%= render performance %>
     <p>
-      <%= link_to "Show this performance", performance %>
+      <%= link_to t('performances.index.show_performance'), performance %>
     </p>
   <% end %>
 </div>
 
-<%= link_to "New performance", new_performance_path %>
+<%= link_to t('performances.index.new_performance'), new_performance_path %>

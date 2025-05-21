@@ -1,0 +1,26 @@
+<div class="progress mb-4" style="height: 30px;">
+  <% wizard_steps.each_with_index do |s, index| %>
+    <% if wizard_steps.index(step) == index %>
+      <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+           style="width: <%= 100.0 / wizard_steps.count %>%;"
+           aria-valuenow="<%= ((index + 1) * 100) / wizard_steps.count %>"
+           aria-valuemin="0" aria-valuemax="100">
+        <%= t("inscriptions.steps.#{s}.title") %>
+      </div>
+    <% elsif wizard_steps.index(step) > index %>
+      <div class="progress-bar bg-success" role="progressbar"
+           style="width: <%= 100.0 / wizard_steps.count %>%;"
+           aria-valuenow="<%= ((index + 1) * 100) / wizard_steps.count %>"
+           aria-valuemin="0" aria-valuemax="100">
+        <%= t("inscriptions.steps.#{s}.title") %>
+      </div>
+    <% else %>
+      <div class="progress-bar bg-light text-dark" role="progressbar"
+           style="width: <%= 100.0 / wizard_steps.count %>%;"
+           aria-valuenow="<%= ((index + 1) * 100) / wizard_steps.count %>"
+           aria-valuemin="0" aria-valuemax="100">
+        <%= t("inscriptions.steps.#{s}.title") %>
+      </div>
+    <% end %>
+  <% end %>
+</div>

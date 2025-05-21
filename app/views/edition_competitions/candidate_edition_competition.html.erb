@@ -1,56 +1,19 @@
-<div class="bg-light" style="height: 100vh;">
+<div class="bg-light-grey" style="min-height: 100vh;">
 
-  <div class="text-center py-5 text-white" style="position: relative; background: url('https://source.unsplash.com/random/?opera/400/400') no-repeat center center; background-size: cover;">
-    <div style="position: absolute; top: 0; bottom: 0; left: 0; right: 0; background: rgba(0, 0, 0, 0.5);"></div>
-    <h1 class="display-4" style="position: relative; z-index: 1;"><%= @edition_competition.competition.nom_concours%> - <%= @edition_competition.annee %></h1>
+  <div class="text-center pt-5 text-white" style="position: relative; background: url('https://source.unsplash.com/random/?opera/400/400') no-repeat center center; background-size: cover;">
+    <h1 class="display-4 text-dark" style="position: relative; z-index: 1;"><%= @edition_competition.competition.nom_concours %> - <%= @edition_competition.annee %></h1>
   </div>
 
+  <div class="container mt-3 pb-5">
+    <h4 class="text-center pb-3 bold" style="font-size: 2rem;"><%= t('edition_competitions.candidate_edition_competition.choose_category') %></h4>
+    <p class="text-center mb-4"><%= @categories.count %> <%= t('edition_competitions.candidate_edition_competition.available') %></p>
 
-  <div class="container mt-5">
-      <h2 class="text-center pb-5" style="font-size: 3rem;">Choisissez une catégorie</h2>
-    <div class="row">
-      <!-- Modal -->
+    <div class="d-flex flex-wrap gap-4 justify-content-center">
       <% @categories.each do |category| %>
-        <div class="col-md-6 mb-4">
-          <% if category.photo.attached? %>
-            <div class="card position-relative" style="width: 100%; height: 300px; background-image: url('<%= rails_blob_path(category&.photo) %>'); background-size: cover;">
-            <% else %>
-            <div class="card position-relative" style="width: 100%; height: 300px; background-image: url('https://source.unsplash.com/random/?opera/300/200'); background-size: cover;">
-            <% end %>
-              <div class="card-img-overlay d-flex flex-column justify-content-between align-items-center" style="background-color: rgba(0, 0, 0, 0.5);">
-                <h2 class="card-title text-white" style="font-size: 3em;"><%= category.name %></h2>
-                <%= link_to "Voir les détails", "#categoryModal#{category.id}", class: "border  rounded btn btn-light", "data-bs-toggle" => "modal" %>
-
-                 <div class="d-flex w-100 justify-content-between">
-                  <% if category.prize_pool_total_amount.present? && category.prize_pool_total_amount > 0  %>
-                   <div class="d-flex flex-column">
-                    <small class=text-white>Prize Pool:</small>
-                    <span class="rounded-pill border border-secondary gradient-button mx-auto px-3"><%= humanized_money_with_symbol category.prize_pool_total_amount %></span>
-                  </div>
-
-                  <% end %>
-                  <% if category.biggest_prize_amount.present? && category.biggest_prize_amount > 0  %>
-                  <div class="d-flex flex-column">
-                    <small class=text-white>Premier Prix:</small>
-                    <span class="rounded-pill border border-secondary gradient-button mx-auto px-3"><%= humanized_money_with_symbol category.biggest_prize_amount %></span>
-                  </div>
-                  <% end %>
-
-                </div>
-
-                <div class="d-flex w-100 justify-content-between">
-                  <span class="badge rounded-pill border border-secondary bg-dark text-light mx-auto"><%= category.discipline %> </span>
-                  <span class="badge rounded-pill border border-secondary bg-dark text-light mx-auto"><%= category.min_age %> - <%= category.max_age %> ans </span>
-                  <span class="badge rounded-pill border border-secondary bg-dark text-light mx-auto">Frais de dossier: <%= humanized_money_with_symbol category.price %></span>
-                </div>
-
-              </div>
-            </div>
-
-        </div>
-
-       <%= render 'category_modal_infos', category: category %>
+        <%= render Card::CategoryComponent.new(category: category) %>
+        <%= render 'category_modal_infos', category: category %>
       <% end %>
     </div>
   </div>
+
 </div>

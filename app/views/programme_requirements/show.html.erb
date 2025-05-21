@@ -3,8 +3,8 @@
 <%= render @programme_requirement %>
 
 <div>
-  <%= link_to "Edit this programme requirement", edit_programme_requirement_path(@programme_requirement) %> |
-  <%= link_to "Back to programme requirements", programme_requirements_path %>
+  <%= link_to t('global.actions.edit'), edit_programme_requirement_path(@programme_requirement) %> |
+  <%= link_to t('global.actions.back'), programme_requirements_path %>
 
-  <%= button_to "Destroy this programme requirement", @programme_requirement, method: :delete %>
+  <%= button_to t('global.actions.destroy'), @programme_requirement, method: :delete %>
 </div>

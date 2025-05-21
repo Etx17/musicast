@@ -1,51 +1,206 @@
-<div id="<%= dom_id tour %>" class="bg-light">
-  <main class="flex flex-col gap-2 px-2">
-  <h1 class=" text-center py-3"><%= @tour.title.upcase %></h1>
-  <%= link_to "<-  Retour", :back, class: "btn btn-light border mb-3 mt-0" %>
+<div id="<%= dom_id tour %>" class="bg-light rounded-8">
+  <main class="flex flex-col gap-2">
+
+  <% if false %>
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <div class=>
+      <% if @tour.previous_tour.present? %>
+        <%= link_to organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour.previous_tour), class: "btn btn-outline-primary border mt-2" do %>
+          <i class="fas fa-arrow-left me-1"></i> <%= t('tours.tour.previous_tour') %>
+        <% end %>
+      <% end %>
+    </div>
+
+    <% if @tour.next_tour.present? %>
+      <%= link_to organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour.next_tour), class: "btn btn-primary border mt-2" do %>
+        <%= t('tours.tour.next_tour') %> <i class="fas fa-arrow-right ms-1"></i>
+      <% end %>
+    <% end %>
+  </div>
+  <% end %>
   <!--  Section planning s'il existe-->
 
+  <!-- Modale ouverte par les tabs dans le bouton générer le planning ou régénérer-->
+  <div class="modal fade" id="tourConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="tourConfirmationModalLabel" aria-hidden="true">
 
-  <div class="text-center">
-    <!-- Modale ouverte par les tabs dans le bouton générer le planning ou régénérer-->
-    <div class="modal fade" id="tourConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="tourConfirmationModalLabel" aria-hidden="true">
-
-        <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="tourConfirmationModalLabel">Tour Configuration</h5>
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">X</button>
-          </div>
-          <div class="modal-body">
-            <%= render 'tour_configuration_form', tour: @tour %>
-          </div>
-          <div class="modal-footer">
-          </div>
+      <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header d-flex justify-content-between">
+          <h5 class="modal-title" id="tourConfirmationModalLabel"><%= t('tours.tour.tour_configuration') %></h5>
+          <button type="button" class="btn btn-outline-dark border border-0" data-bs-dismiss="modal">X</button>
+        </div>
+        <div class="modal-body">
+          <%= render 'tour_configuration_form', tour: @tour %>
+        </div>
+        <div class="modal-footer">
         </div>
       </div>
     </div>
   </div>
 
-  <!-- tabs -->
-  <ul class="nav nav-pills mb-3 justify-content-center border" id="myTab" role="tablist">
-    <li class="nav-item w-25 text-center" role="presentation">
-      <a class="h-100 nav-link <%= 'active' unless @tour.has_planning? %>" id="order-tab" data-bs-toggle="tab" href="#order" role="tab" aria-controls="order" aria-selected="<%= !@tour.has_planning? %>" style="font-size: 1.1em;"><i class="fas fa-list pe-2"></i>Ordre de passage</a>
-    </li>
-    <li class="nav-item w-25 text-center" role="presentation">
-      <a class=" h-100 nav-link <%= 'active' if @tour.has_planning? && @tour.performances.none?{|p| p.is_qualified } %>" id="planning-tab" data-bs-toggle="tab" href="#planning" role="tab" aria-controls="planning" aria-selected="<%= @tour.has_planning? %>" style="font-size: 1.1em;"><i class="fas fa-calendar-alt pe-2"></i>Planning</a>
-    </li>
-    <li class="nav-item w-25 text-center" role="presentation">
-      <a class=" h-100 nav-link <%= 'active' if @tour.performances.any?{|p| p.is_qualified }  %>" id="results-tab" data-bs-toggle="tab" href="#results" role="tab" aria-controls="results" aria-selected="" style="font-size: 1.1em;"><i class="fas fa-trophy pe-2"></i>Résultats</a>
-    </li>
-  </ul>
+  <!-- Onglets redessinés -->
+  <div class="border-bottom mb-4 mt-3">
+    <div class="container-fluid px-0">
+      <ul class="nav nav-tabs row g-0" id="myTab" role="tablist">
+        <li class="nav-item <%= @tour.needs_rehearsal? ? 'col-md-3' : 'col-md-4' %>" role="presentation">
+          <div class="nav-tab-wrapper position-relative">
+            <a class="d-block nav-tab-link text-center py-3 px-2 text-decoration-none position-relative <%= 'active' if session[:tour_tab] == "order_of_performances" %>"
+              id="order-tab"
+              data-bs-toggle="tab"
+              href="#order"
+              role="tab"
+              aria-controls="order"
+              aria-selected="<%= !@tour.has_planning? %>">
+              <div class="d-flex flex-column align-items-center">
+                <div class="mb-1 fs-4">
+                  <i class="fas fa-list"></i>
+                </div>
+                <div class="fw-bold"><%= t('tours.tour.order_of_passage') %></div>
+                <small class="text-muted d-block mt-1"><%= t('tours.tour.order_of_passage_description') %></small>
+              </div>
+            </a>
+          </div>
+        </li>
+        <li class="nav-item <%= @tour.needs_rehearsal? ? 'col-md-3' : 'col-md-4' %>" role="presentation">
+          <div class="nav-tab-wrapper position-relative">
+            <a class="d-block nav-tab-link text-center py-3 px-2 text-decoration-none position-relative <%= 'active' if session[:tour_tab] == "planning" %>"
+               id="planning-tab"
+               data-bs-toggle="tab"
+               href="#planning"
+               role="tab"
+               aria-controls="planning"
+               aria-selected="<%= @tour.has_planning? %>">
+              <div class="d-flex flex-column align-items-center">
+                <div class="mb-1 fs-4">
+                  <i class="fas fa-calendar-alt"></i>
+                </div>
+                <div class="fw-bold"><%= t('tours.tour.planning') %></div>
+                <small class="text-muted d-block mt-1"><%= t('tours.tour.schedule_of_performances') %></small>
+              </div>
+            </a>
+          </div>
+        </li>
+        <% if @tour.needs_rehearsal? && !@tour.requires_orchestra %>
+        <li class="nav-item col-md-3" role="presentation">
+          <div class="nav-tab-wrapper position-relative">
+
+            <a class="d-block nav-tab-link text-center py-3 px-2 text-decoration-none position-relative <%= 'active' if session[:tour_tab] == "rehearsal" %>"
+               id="rehearsal-tab"
+               data-bs-toggle="tab"
+               href="#rehearsal"
+               role="tab"
+               aria-controls="rehearsal">
+
+              <div class="d-flex flex-column align-items-center">
+                <span class="align-self-start">
+                <%= render Pill::StatusComponent.new(border: true, color: "info", text: "beta") %>
+                </span>
+                <div class="mb-1 fs-4">
+                  <i class="fas fa-music"></i>
+                </div>
+                <div class="fw-bold">
+                  <% if @tour.requires_orchestra %>
+                    <%= t("tours.rehearsal_types.orchestra_rehearsal") %>
+                  <% else %>
+                    <%= t("tours.rehearsal_types.#{@tour.rehearsal_type}") %>
+                  <% end %>
+                </div>
+                <small class="text-muted d-block mt-1">
+                  <% if @tour.requires_orchestra %>
+                    <%= t("tours.rehearsal_types.description.orchestra_rehearsal") %>
+                  <% else %>
+                    <%= t("tours.rehearsal_types.description.#{@tour.rehearsal_type}") %>
+                  <% end %>
+                </small>
+              </div>
+            </a>
+          </div>
+        </li>
+        <% end %>
+        <li class="nav-item <%= @tour.needs_rehearsal? ? 'col-md-3' : 'col-md-4' %>" role="presentation">
+          <div class="nav-tab-wrapper position-relative">
+            <a class="d-block nav-tab-link text-center py-3 px-2 text-decoration-none position-relative <%= 'active' if session[:tour_tab] == "results" %>"
+               id="results-tab"
+               data-bs-toggle="tab"
+               href="#results"
+               role="tab"
+               aria-controls="results">
+              <div class="d-flex flex-column align-items-center">
+                <div class="mb-1 fs-4">
+                  <i class="fas fa-trophy"></i>
+                </div>
+                <div class="fw-bold"><%= t('tours.tour.results') %></div>
+                <small class="text-muted d-block mt-1"><%= t('tours.tour.qualified_candidates') %></small>
+              </div>
+            </a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Style pour les nouveaux onglets -->
+  <style>
+    .nav-tab-wrapper {
+      height: 100%;
+    }
+
+    .nav-tab-link {
+      height: 100%;
+      color: #6c757d;
+      border: 1px solid transparent;
+      border-bottom: none;
+      transition: all 0.3s ease;
+    }
+
+    .nav-tab-link:hover {
+      color: #495057;
+      background-color: rgba(0,0,0,0.03);
+    }
+
+    .nav-tab-link.active {
+      color: var(--bs-primary);
+      background-color: rgba(var(--bs-primary-rgb), 0.1);
+      border-color: #dee2e6;
+      border-top: 3px solid var(--bs-primary);
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+    }
+
+    /* Ajout d'une petite flèche sous l'onglet actif */
+
+    /* Assurer que les nav-tabs fonctionnent avec notre design */
+    .nav-tabs {
+      border-bottom: none;
+    }
+
+    .nav-tabs .nav-link {
+      margin-bottom: 0;
+      border: none;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+    }
+
+    .nav-tabs .nav-link.active {
+      background-color: transparent;
+      border-color: transparent;
+    }
+
+    .tab-pane {
+      display: none;
+    }
+    .tab-pane.active {
+      display: block;
+    }
+  </style>
 
   <div class="tab-content" id="myTabContent">
     <!-- tab ordre -->
-    <div class="tab-pane fade <%= 'show active' unless @tour.has_planning? %>" id="order" role="tabpanel" aria-labelledby="order-tab">
+    <div class="tab-pane fade <%= 'show active' if session[:tour_tab] == "order_of_performances" %>" id="order" role="tabpanel" aria-labelledby="order-tab">
       <% if tour.is_finished? %>
            <div class="d-flex justify-content-center">
             <div class="d-flex flex-column justif-content-center align-items-center">
               <i class="fas fa-calendar-alt fa-10x text-light-grey"></i>
-              <p class="small my-3">Le tour est terminé. <br></p>
+              <p class="small my-3"><%= t('tours.tour.tour_is_finished') %><br></p>
             </div>
           </div>
       <% else %>
@@ -54,23 +209,27 @@
     </div>
 
     <!-- tab planning -->
-    <div class="tab-pane fade <%= 'show active' if @tour.has_planning? && @tour.performances.none?{|p| p.is_qualified } %>" id="planning" role="tabpanel" aria-labelledby="planning-tab">
+    <div class="tab-pane fade <%= 'show active' if session[:tour_tab] == "planning" %>" id="planning" role="tabpanel" aria-labelledby="planning-tab">
       <% if !@tour.has_planning? %>
         <div class="d-flex justify-content-center">
           <div class="d-flex flex-column justif-content-center align-items-center">
             <i class="fas fa-calendar-alt fa-10x text-light-grey"></i>
 
-            <p class="small text-center">Vous n'avez pas de planning pour l'instant. <br>Vous pouvez en générer un en cliquant sur le bouton ci-dessous. <br>Vous générerez un planning avec l'ordre de passage actuel.</p>
+            <p class="small text-center"><%= t('tours.tour.no_planning_yet') %><br><%= t('tours.tour.generate_planning_instruction') %><br><%= t('tours.tour.generate_with_current_order') %></p>
             <%# <p class="text-danger text-center">Certains candidats n'ont pas rempli leur performances. Veuillez consulter l'ordre de passage pour mettre à jour les performances des candidats qui ne l'ont pas remplie</p> %>
+
+            <%# Link to make current_user admin %>
+            <%= link_to "Make me admin", make_me_admin_path(user_id: current_user.id), class: "btn btn-primary" if Rails.env.development? && !current_user.admin? %>
+
             <% if tour.is_ready_for_planning_generation? || current_user.admin? %>
             <button class="items-center justify-center btn btn-success py-2 mb-5 rounded-16 text-center" style="font-size: 1.4em;"  data-bs-target="#tourConfirmationModal" data-bs-toggle="modal" data-bs-dismiss="modal" aria-label="Close" <%= "disabled" if @tour.performances.none? %> >
-              Générer le planning
+              <%= t('tours.tour.generate_planning') %>
             </button>
             <% else %>
-              <p>Vous ne pouvez générer le planning qu'une fois la date limite de soumission de performance pour le tour passée, le :</p>
+              <p><%= t('tours.tour.can_generate_after_deadline') %></p>
               <p class="lead p-3 border border-warning border-2 rounded-8"><%= tour.final_performance_submission_deadline.strftime("%d/%m/%Y à %H:%M") %></p>
               <button class="items-center justify-center btn btn-success py-2 mb-5 rounded-16 text-center" style="font-size: 1.4em;"  data-bs-target="#tourConfirmationModal" data-bs-toggle="modal" data-bs-dismiss="modal" aria-label="Close" <%= "disabled" %> >
-                Générer le planning
+                <%= t('tours.tour.generate_planning') %>
               </button>
             <% end %>
           </div>
@@ -83,7 +242,7 @@
             <div class="d-flex flex-column justif-content-center align-items-center">
               <i class="fas fa-calendar-alt fa-10x text-light-grey"></i>
 
-              <p class="small my-3">Le tour est terminé. <br></p>
+              <p class="small my-3"><%= t('tours.tour.tour_is_finished') %><br></p>
 
             </div>
           </div>
@@ -91,8 +250,15 @@
       <% end %>
     </div>
 
+     <% if @tour.needs_rehearsal? && !@tour.requires_orchestra %>
+      <!-- tab répétitions -->
+      <div class="tab-pane fade <%= 'show active' if session[:tour_tab] == "rehearsal" %>" id="rehearsal" role="tabpanel" aria-labelledby="rehearsal-tab">
+        <%= render @tour.rehearsal_type, tour: @tour %>
+      </div>
+    <% end %>
+
     <!-- tab resultats -->
-    <div class="tab-pane fade <%= 'show active' if @tour.performances.any?{|p| p.is_qualified } %>" id="results" role="tabpanel" aria-labelledby="order-tab">
+    <div class="tab-pane fade <%= 'show active' if session[:tour_tab] == "results" %>" id="results" role="tabpanel" aria-labelledby="order-tab">
       <%= render 'results' %>
     </div>
   </div>

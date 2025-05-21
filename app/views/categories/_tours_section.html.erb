@@ -1,19 +1,18 @@
   <!--Tours section -->
-  <div class="card shadow mb-5">
+  <div class="card mb-5 border-0">
   <div class="bg-light-grey card-header d-flex justify-content-between align-items-center">
     <div class=mb-2>
-      <h2 style="font-size: 3em;">Tours</h2>
-      <small class="text-secondary bg-secondary-secondary p-2 rounded-8 border "><i class="fas fa-info-circle text-secondary pe-2"></i>Glissez déposez les tours pour changer leur ordre</small>
-    </div>
+      <h2 style="font-size: 3em;"><%= t("tours.tour.tour").pluralize %></h2>
+        <small class="text-secondary bg-secondary-secondary p-2 rounded-8 border "><i class="fas fa-info-circle text-secondary pe-2"></i><%= t("tours.tour.drag_and_drop_info") %></small>
+      </div>
 
     <div class="text-center ">
       <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addTourModal">
-        Ajouter un tour
+        <%= t("tours.tour.add_tour") %>
       </button>
     </div>
 
   </div>
-
   <div class="container bg-light card-body">
     <div class="row g-4 pb-3">
       <% if category.tours.none? %>
@@ -37,16 +36,20 @@
             <div class="card h-100">
               <div class="card-header bg-light-grey d-flex justify-content-between align-items-start">
                 <h4 class=" text-dark font-weight-bold m-0"> <%= tour.tour_number %> - <%= tour.title %> </h4>
-                <div class="d-flex">
-                  <%= button_to "Supprimer", organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, category, tour), method: :delete, data: { turbo_confirm: 'Are you sure?' }, class: 'btn btn-outline-dark btn-sm ms-2 border-0' %>
-                </div>
+                <%
+                  kebab_items = [
+                    { icon: 'fas fa-edit', text: t('global.actions.edit'), path: edit_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, category, tour) },
+                    { icon: 'fas fa-trash-alt', text: t('global.actions.delete'), path: organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, category, tour), method: :delete, data: { turbo_confirm: t('global.confirmations.are_you_sure', default: 'Are you sure?') } }
+                  ]
+                %>
+                <%= render Dropdown::KebabComponent.new(items: kebab_items, align: :right, only_vertical_dots: true) %>
               </div>
               <div class="card-body bg-white">
                 <div class="d-flex justify-content-between align-items-end py-2">
-                    <%= link_to "Planning", organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, category, tour), class:"btn btn-primary " %>
+                    <%= link_to "Planning", organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, category, tour), class:"btn btn-success " %>
 
                 <%= image_tag 'icons/winner.png', width: 70, height: 70, class:"" %>
-                  <%= link_to  "Modifier", edit_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, category, tour), class: 'btn btn-outline-primary  border border-primary' %>
+                  <%# Removed the Modifier link from here %>
 
                 </div>
 
@@ -70,18 +73,15 @@
 
 
     <!-- Modal New Tour-->
-    <div class="modal fade" id="addTourModal" tabindex="-1" aria-labelledby="addTourModalLabel" aria-hidden="true">
+    <div class="modal fade modal-lg" id="addTourModal" tabindex="-1" aria-labelledby="addTourModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="addTourModalLabel">Ajouter un tour</h5>
+            <h5 class="modal-title" id="addTourModalLabel"><%= t("tours.tour.add_tour") %></h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
             <%= render "tours/form", tour: @tour %>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
           </div>
         </div>
       </div>

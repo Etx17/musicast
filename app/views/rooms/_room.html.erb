@@ -1,0 +1,68 @@
+<li class="d-flex justify-content-between align-items-center mb-2" id="room_<%= room.id %>">
+  <div>
+    <strong><%= room.name %></strong>
+    <small class="d-block text-muted">
+      <%= room.start_time.strftime("%H:%M") %> - <%= room.end_time.strftime("%H:%M") %>
+    </small>
+  </div>
+  <%= render Dropdown::KebabComponent.new(
+    items:[
+      {
+        icon: "fas fa-edit",
+        text: t('global.actions.edit'),
+        path: "#",
+        data: {
+          bs_toggle: "modal",
+          bs_target: "#editRoomModal#{room.id}"
+        }
+      },
+      {
+        icon: "fas fa-trash",
+        text: t('global.actions.delete'),
+        path: organism_room_path(room.organism, room),
+        method: :delete,
+        data: {
+          confirm: "Êtes-vous sûr de vouloir supprimer cette salle ?",
+          turbo_confirm: "Êtes-vous sûr de vouloir supprimer cette salle ?"
+        }
+      }
+    ],
+    only_vertical_dots: true
+  ) %>
+</li>
+<!-- Modal d'édition spécifique à cette room -->
+<div class="modal fade" id="editRoomModal<%= room.id %>" tabindex="-1" aria-labelledby="editRoomModalLabel<%= room.id %>" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editRoomModalLabel<%= room.id %>">Modifier la salle</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <%= simple_form_for([room.organism, room]) do |f| %>
+          <div class="form-inputs">
+            <%= f.input :name, label: "Nom de la salle" %>
+            <%= f.input :notes, label: "Notes" %>
+            <%= f.input :organism_id, as: :hidden, input_html: { value: room.organism.id } %>
+
+            <div class="row">
+              <div class="col">
+                <%= f.input :start_time, label: "Heure d'ouverture" %>
+              </div>
+              <div class="col">
+                <%= f.input :end_time, label: "Heure de fermeture" %>
+              </div>
+            </div>
+
+            <%= f.input :description, label: "Description" %>
+            <%= f.input :description_english, label: "Description (Anglais)" %>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+            <%= f.button :submit, "Mettre à jour", class: "btn btn-primary" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

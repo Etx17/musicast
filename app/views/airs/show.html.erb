@@ -3,8 +3,8 @@
 <%= render @air %>
 
 <div>
-  <%= link_to "Edit this air", edit_air_path(@air) %> |
-  <%= link_to "Back to airs", airs_path %>
+  <%= link_to t('airs.common.actions.edit'), edit_air_path(@air) %> |
+  <%= link_to t('airs.common.actions.back'), airs_path %>
 
-  <%= button_to "Destroy this air", @air, method: :delete %>
+  <%= button_to t('airs.common.actions.destroy'), @air, method: :delete %>
 </div>

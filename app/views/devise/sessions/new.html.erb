@@ -1,27 +1,97 @@
-<div class="mt-5 row justify-content-center align-items-center" >
-  <div class="col-8 col-sm-6 shadow p-3 bg-white rounded-8" style="background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.9)), url(<%= asset_path 'garnier.jpg' %>) no-repeat center center fixed; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;">
-    <h2>Connexion</h2>
+<div class="signin-container">
+  <div class="row vh-100 m-0">
+    <div class="col-12 col-md-4 p-0">
+      <div class="form-container d-flex flex-column justify-content-md-center h-100 px-4 py-5">
+        <div class="mb-4 text-center d-md-none">
+          <div class="musikast-logo">Musikast</span></div>
+        </div>
 
-    <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-      <div class="form-inputs">
-        <%= f.input :email,
-                    required: false,
-                    autofocus: true,
-                    input_html: { autocomplete: "email" } %>
-        <%= f.input :password, label: "Mot de passe",
-                    required: false,
-                    input_html: { autocomplete: "current-password" } %>
-        <%= f.input :remember_me, as: :boolean, label: "Se souvenir de moi" if devise_mapping.rememberable? %>
+        <h2 class="mb-4"><%= t('devise.sessions.new.title') %></h2>
 
+        <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+          <div class="form-inputs">
+            <%= f.input :email,
+                      required: false,
+                      autofocus: true,
+                      input_html: { autocomplete: "email", class: "form-control mb-3" } %>
+            <%= f.input :password, label: t('devise.sessions.new.password'),
+                      required: false,
+                      input_html: { autocomplete: "current-password", class: "form-control mb-3" } %>
+            <%= f.input :remember_me, as: :boolean, label: t('devise.sessions.new.remember_me') if devise_mapping.rememberable? %>
+          </div>
+
+          <div class="form-actions mt-4">
+            <%= f.button :submit, t('devise.sessions.new.sign_in'), class: "btn btn-primary w-100" %>
+          </div>
+        <% end %>
+
+        <div class="mt-4">
+          <%= render "devise/shared/links" %>
+        </div>
       </div>
+    </div>
 
-      <div class="form-actions">
-        <%= f.button :submit, "Se connecter", class:"btn btn-dark " %>
+    <!-- Right side - Background with text (hidden on small screens, 2/3 on medium and up) -->
+    <div class="col-md-8 p-0 d-none d-md-block">
+      <div class="bg-primary h-100 d-flex flex-column justify-content-center align-items-center text-white p-5 mt-5">
+        <div class="musikast-logo mb-4">Musi<span class="text-gradient">kast</span></div>
+        <h1 class="display-4 mb-4">Welcome to Musikast</h1>
+        <p class="lead text-center mb-5">The professional platform for managing music competitions and events</p>
+        <div class="feature-list">
+          <div class="row">
+            <div class="col-md-4 text-center mb-4">
+              <i class="fas fa-trophy fa-2x mb-3"></i>
+              <h5>Organize Competitions</h5>
+              <p>Create and manage music competitions with ease</p>
+            </div>
+            <div class="col-md-4 text-center mb-4">
+              <i class="fas fa-users fa-2x mb-3"></i>
+              <h5>Manage Participants</h5>
+              <p>Track applications and communicate with candidates</p>
+            </div>
+            <div class="col-md-4 text-center mb-4">
+              <i class="fas fa-chart-line fa-2x mb-3"></i>
+              <h5>Analyze Results</h5>
+              <p>Get insights and statistics about your events</p>
+            </div>
+          </div>
+        </div>
       </div>
-    <% end %>
-
-    <div class="mt-3">
-      <%= render "devise/shared/links" %>
     </div>
   </div>
 </div>
+
+<style>
+  .signin-container {
+    overflow-x: hidden;
+  }
+
+  .form-container {
+    margin: 0 auto;
+  }
+
+  .musikast-logo {
+    font-family: 'Questrial', sans-serif;
+    font-size: 2.5em;
+    font-weight: 600;
+    letter-spacing: 1px;
+  }
+
+  .text-gradient {
+    background: linear-gradient(90deg, #ffffff, #e0e0e0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .feature-list {
+    max-width: 800px;
+  }
+
+  @media (max-width: 767.98px) {
+
+    body {
+      background-color: #fff;
+    }
+  }
+</style>

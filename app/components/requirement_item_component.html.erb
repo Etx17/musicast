@@ -1,0 +1,56 @@
+<li class="list-group-item p-0 border shadow-sm rounded overflow-hidden mb-3">
+  <div class="bg-primary-light p-2 border-bottom">
+    <div class="d-flex justify-content-between align-items-center">
+      <div class="d-flex align-items-center">
+        <% icon_class = case @requirement_item.type_item
+                        when 'document' then 'fa-file-alt'
+                        when 'video' then 'fa-video'
+                        when 'audio' then 'fa-headphones'
+                        when 'image' then 'fa-image'
+                        else 'fa-check-circle'
+                        end %>
+        <i class="fas <%= icon_class %> text-primary me-2"></i>
+        <span class="badge rounded-pill bg-white border text-primary px-3 py-1 me-2">
+          <%= t("global.#{@requirement_item.type_item}") %>
+        </span>
+      </div>
+
+    <% if false %>
+      <% if @requirement_item.required? %>
+        <span class="badge bg-danger px-2 py-1">
+          <i class="fas fa-asterisk me-1"></i>
+          <%= t("global.required") %>
+        </span>
+      <% else %>
+        <span class="badge bg-secondary bg-opacity-10 text-secondary px-2 py-1">
+          <%= t("global.optional") %>
+        </span>
+      <% end %>
+    <% end %>
+    </div>
+  </div>
+
+  <div class="p-3 bg-white">
+    <div class="border-start border-4 border-primary ps-3 py-1">
+      <p class="mb-0"><%= @description %></p>
+
+      <% if false # @requirement_item.file_types.present? %>
+        <div class="mt-2 d-flex gap-1 flex-wrap">
+          <% @requirement_item.file_types.split(',').each do |type| %>
+            <span class="badge bg-primary bg-opacity-10 text-primary px-2 py-1 small">
+              <i class="fas fa-file-code me-1"></i><%= type.strip.upcase %>
+            </span>
+          <% end %>
+        </div>
+      <% end %>
+
+      <% if false #@requirement_item.max_file_size.present? %>
+        <div class="mt-2">
+          <span class="badge bg-light text-secondary border px-2 py-1 small">
+            <i class="fas fa-weight me-1"></i><%= t("global.max_size") %>: <%= @requirement_item.max_file_size %> MB
+          </span>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</li>

@@ -1,18 +1,29 @@
 require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
-  config.action_mailer.default_url_options = { host: "http://localhost:3000" }
+  config.action_mailer.default_url_options = { host: "localhost:3000" }
+
   config.action_mailer.delivery_method = :letter_opener
+  # config.action_mailer.delivery_method = :smtp
+  # config.action_mailer.smtp_settings = {
+  #   address:              'smtp-relay.brevo.com',
+  #   port:                 587,
+  #   domain:               'localhost:3000',
+  #   user_name:            Rails.application.credentials.brevo.user_name,
+  #   password:             Rails.application.credentials.brevo.password,
+  #   authentication:       :plain,
+  #   enable_starttls_auto: true
+  # }
   config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = true
 
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Allow ngrok for testing webhooks
-  config.hosts << "e41c-95-178-109-242.ngrok-free.app"
+  config.hosts << "c8dd-2a04-cec0-11c2-3807-1127-1444-eea5-4cb6.ngrok-free.app"
 
-  # In the development environment your application's code is reloaded any time
-  # it changes. This slows down response time but is perfect for development
-  # since you don't have to restart the web server when you make code changes.
+  # Rails.application.routes.default_url_options[:host] = 'localhost:3000'
+
   config.cache_classes = false
 
   # Do not eager load code on boot.
@@ -23,7 +34,7 @@ Rails.application.configure do
 
   # Enable server timing
   config.server_timing = true
-  # config.i18n.default_locale = :fr
+  config.i18n.default_locale = :fr
 
   # Delivery method :letter_opener in development
 
@@ -72,8 +83,7 @@ Rails.application.configure do
   config.assets.quiet = true
 
   # Raises error for missing translations.
-  # config.i18n.raise_on_missing_translations = true
-
+  config.i18n.raise_on_missing_translations = true
   # Annotate rendered view with file names.
   # config.action_view.annotate_rendered_view_with_filenames = true
 

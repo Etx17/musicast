@@ -1,14 +1,14 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Partners</h1>
+<h1><%= t('partners.index.partners') %></h1>
 
 <div id="partners">
   <% @partners.each do |partner| %>
     <%= render partner %>
     <p>
-      <%= link_to "Show this partner", partner %>
+      <%= link_to t('global.actions.show'), partner %>
     </p>
   <% end %>
 </div>
 
-<%= link_to "New partner", new_partner_path %>
+<%= link_to t('partners.index.new_partner'), new_partner_path %>

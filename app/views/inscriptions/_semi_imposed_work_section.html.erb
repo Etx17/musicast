@@ -1,13 +1,28 @@
-  <% air_counter = 0 %>
-<% inscription.category.semi_imposed_works&.each do |semi_imposed_work| %>
-  <h3><%= semi_imposed_work.title %></h3>
-  <small><%= semi_imposed_work.guidelines %></small>
+<% air_counter = 0 %>
+<% inscription.category.semi_imposed_works&.each_with_index do |semi_imposed_work, work_index| %>
+    <div class="semi-imposed-work mb-4" data-work-id="<%= semi_imposed_work.id %>">
+      <% if I18n.locale == :en && semi_imposed_work.title_english.present? %>
+        <h5><%= semi_imposed_work.title_english %></h5>
+      <% else %>
+        <h5><%= semi_imposed_work.title %></h5>
+      <% end %>
+
+      <div id="warning-<%= semi_imposed_work.id %>" class="duration-warning text-danger fw-bold mb-2">
+        <%= t('inscriptions.semi_imposed_work_section.duration_warning', max: semi_imposed_work.max_length_minutes) %>
+      </div>
+
+      <% if I18n.locale == :en && semi_imposed_work.guidelines_english.present? %>
+        <%= render InfoboxComponent.new(title: t('inscriptions.semi_imposed_work_section.guidelines'), text: semi_imposed_work.guidelines_english) %>
+      <% else %>
+        <%= render InfoboxComponent.new(title: t('inscriptions.semi_imposed_work_section.guidelines'), text: semi_imposed_work.guidelines) %>
+      <% end %>
+
   <% if f.object.errors.any? %>
     <div class="d-flex flex-column">
       <% f.object.errors.details.each do |attribute, errors| %>
         <% if attribute.to_s.start_with?("semi_imposed_work_airs.air") %>
           <small class="text-danger">
-            La validation d'un air a échoué:
+            <%= t('inscriptions.semi_imposed_work_section.air_validation_failed') %>:
             <%= attribute.to_s.split('.').last %>
             <%= f.object.errors[attribute].uniq.join(", ") %>
           </small>
@@ -15,32 +30,43 @@
       <% end %>
     </div>
   <% end %>
-
+  <%= semi_imposed_work.max_length_minutes %> mins max total
   <% semi_imposed_work.number.times do |i| %>
     <% semi_imposed_work_air = inscription.semi_imposed_work_airs[air_counter] || inscription.semi_imposed_work_airs.build(semi_imposed_work_id: semi_imposed_work.id) %>
     <% air_counter += 1 %>
-    <%# <%=  raise if semi_imposed_work_air.id.nil? %>
     <%= f.simple_fields_for :semi_imposed_work_airs, semi_imposed_work_air do |semi_imposed_work_air_fields| %>
       <%= semi_imposed_work_air_fields.input :semi_imposed_work_id, as: :hidden, input_html: { value: semi_imposed_work.id } %>
         <%= semi_imposed_work_air_fields.simple_fields_for (semi_imposed_work_air.persisted? ? :air : :air_attributes) do |air_fields| %>
-          <div class="card card-body shadow-sm">
+          <div class="card card-body shadow-sm mb-3">
             <div class="row">
               <div class="col-12 col-md">
-                <%= air_fields.input :title, label: "Titre de la pièce #{i+1}", input_html: { class: 'form-control bg-white' }, placeholder: "ex: La Donna è Mobile" %>
+                <%= air_fields.input :title, label: t('inscriptions.semi_imposed_work_section.piece_title', number: i+1), input_html: { class: 'form-control bg-white' }, placeholder: t('inscriptions.semi_imposed_work_section.title_placeholder') %>
               </div>
               <div class="col-12 col-md">
-                <%= air_fields.input :length_minutes, as: :integer, placeholder: "ex: 2", hint: "Arrondissez a l'unité", label: "Minutage", input_html: { class: 'form-control bg-white' } %>
+                <%= air_fields.input :length_minutes, as: :integer,
+                    placeholder: t('inscriptions.semi_imposed_work_section.minutes_placeholder'),
+                    hint: t('inscriptions.semi_imposed_work_section.round_to_unit'),
+                    label: t('inscriptions.semi_imposed_work_section.duration'),
+                    input_html: {
+                      class: 'form-control bg-white semi-imposed-duration',
+                      id: "semi_imposed_work_#{semi_imposed_work.id}_air_#{i}_length_minutes",
+                      data: {
+                        work_id: semi_imposed_work.id,
+                        air_index: i,
+                        max_minutes: semi_imposed_work.max_length_minutes
+                      }
+                    } %>
               </div>
               <div class="col-12 col-md">
-                <%= air_fields.input :oeuvre, label: "Oeuvre", placeholder: "ex: Rigoletto", input_html: { class: 'form-control bg-white' } %>
+                <%= air_fields.input :oeuvre, label: t('inscriptions.semi_imposed_work_section.work'), placeholder: t('inscriptions.semi_imposed_work_section.work_placeholder'), input_html: { class: 'form-control bg-white' } %>
               </div>
               <%  if @inscription.category.lyrical_singing? %>
               <div class="col-12 col-md">
-                <%= air_fields.input :character, placeholder: "ex: Le duc de Mantoue", hint:"Si air d'opéra seulement", label: "Character", input_html: { class: 'form-control bg-white' } %>
+                <%= air_fields.input :character, placeholder: t('inscriptions.semi_imposed_work_section.character_placeholder'), hint: t('inscriptions.semi_imposed_work_section.character_hint'), label: t('inscriptions.semi_imposed_work_section.character'), input_html: { class: 'form-control bg-white' } %>
               </div>
               <% end %>
               <div class="col-12 col-md">
-                <%= air_fields.input :tonality, hint: "Tonalité de base", collection: Air.tonalities_selection, selected: 'Do majeur', input_html: { class:'bg-white' } %>
+                <%= air_fields.input :tonality, hint: t('inscriptions.semi_imposed_work_section.base_tonality'), collection: Air.tonalities_selection, selected: 'Do majeur', input_html: { class:'bg-white' } %>
               </div>
               <%= render 'shared/components/music_search_component', f: air_fields %>
 
@@ -49,4 +75,77 @@
       <% end %>
     <% end %>
   <% end %>
+  </div>
 <% end %>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Initial check of all works
+    validateAllWorkDurations();
+
+    // Add event listeners to all duration inputs
+    document.querySelectorAll('.semi-imposed-duration').forEach(input => {
+      // Use input event for immediate feedback as user types
+      input.addEventListener('input', function() {
+        const workId = this.dataset.workId;
+        validateWorkDuration(workId);
+      });
+
+      // Use change event for when user leaves the field
+      input.addEventListener('change', function() {
+        console.log('change event triggered');
+        const workId = this.dataset.workId;
+        validateWorkDuration(workId);
+      });
+    });
+  });
+
+  function validateAllWorkDurations() {
+    // Get all unique work IDs from the data attributes
+    const workIds = [...new Set(Array.from(document.querySelectorAll('.semi-imposed-duration'))
+      .map(input => input.dataset.workId))];
+
+    // Check each work's total duration
+    workIds.forEach(workId => {
+      validateWorkDuration(workId);
+    });
+  }
+
+  function validateWorkDuration(workId) {
+    // Get all duration inputs for this work using the data-work-id attribute
+    const inputs = document.querySelectorAll(`.semi-imposed-duration[data-work-id="${workId}"]`);
+    if (!inputs.length) return;
+
+    // Calculate the total duration
+    let totalMinutes = 0;
+    inputs.forEach(input => {
+      // Convert to integer and handle invalid values
+      const value = input.value.trim();
+      const minutes = value === '' ? 0 : parseInt(value, 10);
+      if (!isNaN(minutes)) {
+        totalMinutes += minutes;
+      }
+    });
+
+    // Get the max duration from the data attribute
+    const maxMinutes = parseInt(inputs[0].dataset.maxMinutes, 10) || 0;
+
+    const warningId = `warning-${workId}`;
+    // console.log(`Attempting to find warning element with ID: '${warningId}'`); // Kept for reference, can be noisy
+    const warning = document.getElementById(warningId);
+
+    if (warning) {
+      // console.log(`Found warning element:`, warning); // Kept for reference, can be noisy
+      if (totalMinutes > maxMinutes && maxMinutes > 0) {
+        warning.style.setProperty('display', 'block', 'important');
+        console.log(`Semi-imposed work ${workId}: Total ${totalMinutes} mins exceeds max ${maxMinutes} mins - Warning shown`);
+      } else {
+        warning.style.setProperty('display', 'none', 'important');
+        console.log(`Semi-imposed work ${workId}: Total ${totalMinutes} mins within max ${maxMinutes} mins OR maxMinutes not positive - Warning hidden`);
+      }
+    } else {
+      console.error(`CRITICAL: Warning element with ID '${warningId}' was NOT FOUND in the DOM!`);
+      // Fallback logic from previous step can be kept if needed, but if getElementById found it, this won't run.
+    }
+  }
+</script>

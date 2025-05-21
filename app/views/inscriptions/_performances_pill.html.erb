@@ -1,10 +1,9 @@
-
 <% if inscription.has_complete_performance? %>
 <div class="rounded-pill border border-success bg-success-secondary py-1 px-2">
-  <i class="fas fa-check text-success"></i> Programme complêté
+  <i class="fas fa-check text-success"></i> <%= t('inscriptions.pills.performances.complete') %>
 </div>
 <% else %>
   <div class="rounded-pill border border-warning text-secondary bg-warning-secondary py-1 px-2">
-    <i class="fas fa-warning text-warning"></i> Programme à complêter
+    <i class="fas fa-warning text-warning"></i> <%= t('inscriptions.pills.performances.incomplete') %>
   </div>
 <% end %>

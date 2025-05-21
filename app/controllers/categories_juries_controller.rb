@@ -23,8 +23,8 @@ class CategoriesJuriesController < ApplicationController
     @category = Category.friendly.find(params[:category_id])
 
     if @categories_jury.save
-      redirect_to organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category) + "#jury", notice: 'Le juré a bien été associé à cette catégorie'
-
+      session[:active_tab] = "docs-prizes-jury-tab"
+      redirect_to organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category ), notice: 'Le juré a bien été associé à cette catégorie'
     else
       render :new, status: :unprocessable_entity
     end
@@ -44,7 +44,9 @@ class CategoriesJuriesController < ApplicationController
     @competition = Competition.friendly.find(params[:competition_id])
     @edition_competition = EditionCompetition.find(params[:edition_competition_id])
     @category = Category.friendly.find(params[:category_id])
-    redirect_to organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category) + "#jury", notice: 'Le membre du jury a bien été retiré de cette catégorie.'
+
+    session[:active_tab] = "docs-prizes-jury-tab"
+    redirect_to organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category) +"#docs-prizes-jury-tab" , notice: 'Le membre du jury a bien été retiré de cette catégorie.'
   end
 
   private

@@ -1,2 +1,2 @@
-  <%= render "form", edition_competition: @edition_competition %>
-  <%= button_to 'Back', organism_competition_edition_competition_path(@organism, @competition, @edition_competition), method: :get, class: 'btn btn-secondary' %>
+<%= render Navigation::BackLinkComponent.new(link_path: organism_competition_edition_competition_path(@organism, @competition, @edition_competition), link_text: "Edition") %>
+<%= render "form", edition_competition: @edition_competition %>

@@ -1,10 +1,10 @@
-<h1>Editing partner</h1>
+<h1><%= t('partners.edit.editing_partner') %></h1>
 
 <%= render "form", partner: @partner %>
 
 <br>
 
 <div>
-  <%= link_to "Show this partner", @partner %> |
-  <%= link_to "Back to partners", partners_path %>
+  <%= link_to t('global.actions.show'), @partner %> |
+  <%= link_to t('global.actions.back'), partners_path %>
 </div>

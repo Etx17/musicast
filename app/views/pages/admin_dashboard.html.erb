@@ -1,0 +1,88 @@
+<div class="container mt-4">
+  <h1>Tableau de bord admin</h1>
+
+  <div class="row">
+    <div class="col-md-12 mb-4">
+
+            <a href="#newOrganismModal" data-bs-toggle="modal" class="btn btn-success">
+              <i class="fas fa-plus me-1"></i> Nouvel organisme
+            </a>
+
+          <%= render Table::BaseComponent.new(
+            rows: @organisateurs,
+            columns: [
+              {
+                label: "Email",
+                value: ->(organisateur) { organisateur.user.email }
+              },
+              {
+                label: "Nom",
+                value: ->(organisateur) { organisateur.user.name_and_email.split(' - ').first }
+              },
+              {
+                label: "Organisme",
+                value: ->(organisateur) { organisateur.organism&.nom || "Pas d'organisme" }
+              }
+            ],
+            timestamp_column: {
+              label: "Créé le",
+              key: :created_at
+            },
+            # links: [
+            #   {
+            #     text: "Voir",
+            #     icon: 'fas fa-eye',
+            #     path: ->(organisateur) { user.organisateur&.organism ? organism_path(user.organisateur.organism) : '#' },
+            #     show_item: ->(organisateur) { user.organisateur&.organism.present? }
+            #   }
+            # ],
+            client: OpenStruct.new(button_color: 'primary'),
+            empty_message: "Aucun utilisateur organisme trouvé"
+          ) %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal for creating new organism user -->
+<div class="modal fade" id="newOrganismModal" tabindex="-1" aria-labelledby="newOrganismModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title" id="newOrganismModalLabel">Créer un utilisateur organisme</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <%= form_with url: admin_create_organism_user_path, method: :post, data: { turbo: false } do |f| %>
+          <div class="mb-3">
+            <%= f.label :email, "Email", class: "form-label" %>
+            <%= f.email_field :email, class: "form-control", required: true %>
+          </div>
+
+          <div class="mb-3">
+            <%= f.label :password, "Mot de passe", class: "form-label" %>
+            <%= f.password_field :password, class: "form-control", required: true %>
+          </div>
+
+          <div class="mb-3">
+            <%= f.label :organism_name, "Nom de l'organisme", class: "form-label" %>
+            <%= f.text_field :organism_name, class: "form-control", required: true %>
+          </div>
+
+          <div class="form-check mb-3">
+            <%= f.check_box :accepted_terms, class: "form-check-input", required: true, checked: true %>
+            <%= f.label :accepted_terms, "J'accepte les conditions générales", class: "form-check-label" %>
+          </div>
+
+          <%= f.hidden_field :inscription_role, value: 1 %>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+            <%= f.submit "Créer", class: "btn btn-primary" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

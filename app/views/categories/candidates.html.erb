@@ -1,0 +1,94 @@
+<%# Title and back button %>
+<div class="container mt-4">
+  <h1><%= t('inscriptions.candidate_index.title', category: @category.name) %></h1>
+  <%= render Navigation::BackLinkComponent.new(
+    link_path: organism_competition_edition_competition_category_path(@category.edition_competition.competition.organism, @category.edition_competition.competition, @category.edition_competition, @category),
+    link_text: @category.name
+  ) %>
+
+  <div class="d-flex flex-column flex-md-row justify-content-md-between gap-3 my-4">
+    <%# Search bar component %>
+    <div style="width: 300px;">
+      <%= render SearchBarComponent.new(
+        search_path: candidates_organism_competition_edition_competition_category_path(@category.edition_competition.competition.organism, @category.edition_competition.competition, @category.edition_competition, @category),
+        clear_path: candidates_organism_competition_edition_competition_category_path(@category.edition_competition.competition.organism, @category.edition_competition.competition, @category.edition_competition, @category),
+        search_param: 'q',
+        placeholder: t('inscriptions.candidate_index.search_placeholder'),
+        current_search_term: params[:q]
+      ) %>
+    </div>
+
+    <%# Status filter component %>
+    <div style="width: 250px;">
+      <%= render SingleFilterComponent.new(
+        filter_path: candidates_organism_competition_edition_competition_category_path(@category.edition_competition.competition.organism, @category.edition_competition.competition, @category.edition_competition, @category),
+        clear_path: candidates_organism_competition_edition_competition_category_path(@category.edition_competition.competition.organism, @category.edition_competition.competition, @category.edition_competition, @category, q: params[:q]),
+        filter_param: 'status',
+        options: Inscription.statuses.map { |key, _value| [t("inscriptions.statuses.#{key}"), key] },
+        selected_value: params[:status],
+        label: t('inscriptions.candidate_index.filter_by_status')
+      ) %>
+    </div>
+  </div>
+
+  <%# Table component %>
+  <%= render Table::BaseComponent.new(
+    rows: @inscriptions,
+    client: nil,
+    empty_message: t('inscriptions.candidate_index.no_candidates_found'),
+    columns: [
+      {
+        label: t('inscriptions.candidate_index.portrait'),
+        value: ->(inscription) {
+          if inscription.candidat.portrait.attached?
+            image_tag(inscription.candidat.portrait, class: "rounded-circle", style: "width: 50px; height: 50px; object-fit: cover;")
+          else
+            content_tag(:div, "", class: "rounded-circle bg-secondary", style: "width: 50px; height: 50px;")
+          end
+        }
+      },
+      {
+        label: t('inscriptions.candidate_index.name'),
+        value: ->(inscription) { inscription.candidat.full_name }
+      },
+      {
+        label: t('inscriptions.candidate_index.email'),
+        value: ->(inscription) {
+          mail_to inscription.candidat.user.email,
+                  inscription.candidat.user.email,
+                  class: "text-primary text-decoration-none",
+                  title: t('inscriptions.candidate_index.send_email')
+              }
+      },
+      {
+        label: t('inscriptions.candidate_index.status'),
+        value: ->(inscription) {
+          status_class = inscription.status == 'accepted' ? 'bg-success' : 'bg-warning'
+          content_tag(:span, t("inscriptions.statuses.#{inscription.status}"), class: "badge #{status_class}")
+        }
+      },
+      (@category.payment_after_approval ? {
+        label: t('inscriptions.candidate_index.payment_status'),
+        value: ->(inscription) {
+          content_tag(:span, t("inscriptions.payment_statuses.#{inscription.payment_status}"))
+        }
+      } : nil),
+      {
+        label: t('inscriptions.candidate_index.created_at'),
+        value: ->(inscription) { l(inscription.created_at, format: :short) }
+      }
+    ].compact,
+    links: [
+      {
+        text: t('inscriptions.candidate_index.view'),
+        path: ->(inscription) { inscription_path(inscription) },
+        icon: 'eye'
+      }
+    ]
+  ) %>
+
+  <%# Pagination %>
+  <div class="d-flex justify-content-center mt-4">
+    <%= paginate @inscriptions %>
+  </div>
+</div>

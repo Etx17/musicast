@@ -1,0 +1,34 @@
+<div class="single-filter-container mb-3">
+  <%= form_tag filter_path, method: :get, class: "d-flex" do %>
+    <div class="input-group">
+      <% if label.present? %>
+        <span class="input-group-text"><%= label %></span>
+      <% end %>
+
+      <select
+        name="<%= filter_param %>"
+        id="filter-select"
+        class="form-select <%= 'has-selection' if filter_active? %>"
+        onchange="this.form.submit();"
+      >
+        <option value=""><%= t('global.actions.all') %></option>
+        <% options.each do |option_label, option_value| %>
+          <option value="<%= option_value %>" <%= 'selected' if option_value.to_s == selected_value.to_s %>><%= option_label %></option>
+        <% end %>
+      </select>
+
+      <% if filter_active? %>
+        <%= link_to clear_path, class: "btn btn-outline-secondary", title: t('global.actions.clear') do %>
+          <i class="fas fa-times"></i>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+
+<style>
+  .has-selection {
+    background-color: rgba(var(--bs-primary-rgb), 0.1);
+    border-color: var(--bs-primary) !important;
+  }
+</style>

@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby "3.3.0"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 7.0.8"
+gem "rails", "~> 8.0.1"
 gem 'faraday'
 gem 'nokogiri'
 gem 'devise_invitable', '~> 2.0.0'
@@ -24,7 +24,7 @@ gem 'wkhtmltopdf-binary'
 gem "countries"
 
 # Use the Puma web server [https://github.com/puma/puma]
-gem "puma", "~> 5.0"
+gem "puma", "~> 6.4"
 gem 'stripe'
 gem 'stripe_event'
 
@@ -44,7 +44,7 @@ gem "stimulus-rails"
 gem "jbuilder"
 
 # Use Redis adapter to run Action Cable in production
-gem "redis", "~> 4.0"
+gem "redis", "~> 5.0"
 
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
@@ -75,6 +75,8 @@ gem "font-awesome-sass", "~> 6.1"
 gem "simple_form", github: "heartcombo/simple_form"
 gem "sassc-rails"
 
+gem "wicked"
+
 group :development, :test do
   gem "dotenv-rails"
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -83,7 +85,7 @@ group :development, :test do
   gem 'pry-byebug'
   gem 'annotate'
   gem 'faker'
-  gem 'rspec-rails', '~> 5.0'
+  gem 'rspec-rails'
   gem 'factory_bot_rails'
   gem 'stripe-ruby-mock', '~> 3.1.0', :require => 'stripe_mock'
 end
@@ -97,7 +99,6 @@ group :development do
   gem 'binding_of_caller'
   gem 'meta_request'
   gem 'activerecord-explain-analyze'
-  gem 'rack-mini-profiler'
 
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler"
@@ -111,3 +112,15 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+gem "noticed", "~> 2.4"
+
+gem "view_component", "~> 3.13"
+
+gem 'i18n-debug'
+gem 'rails-i18n', '~> 8.0.0'
+
+# Gestion des images et métadonnées
+gem 'mini_magick'
+
+gem 'kaminari'

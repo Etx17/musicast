@@ -1,26 +1,19 @@
-<div class="navbar navbar-expand-sm navbar-lewagon fixed-top border-bottom p-0" style="background: #FFFFFF;">
+<div class="navbar navbar-expand-sm navbar-lewagon fixed-top  p-0" style="background: transparent;">
   <div class="container-fluid">
-    <div class="text-dark p-2" style="font-size: 1.8em">Musi<span class="text-gradient">kast</span></div>
-
-    <!-- Breadcrumbs -->
-    <div class="d-none d-md-block breadcrumbs">
-      <%= render_breadcrumbs separator: '/ ' if current_user&.organisateur&.present?%>
-    </div>
+    <div class="text-dark p-2" style="font-size: 1.8em">Musikast</span></div>
 
     <div class="d-flex">
-      <ul class="navbar-nav me-auto text-decoration-none d-flex flex-row"  style="list-style: none;">
+      <ul class="navbar-nav me-auto text-decoration-none d-flex flex-row align-items-center"  style="list-style: none;">
         <% navbar_links.each do |link| %>
           <li class="nav-item text-decoration-none me-4 d-flex">
-            <%= link_to link[:label], link[:url], class: "nav-link" %>
+            <%= link_to link[:label], link[:url], class: "btn btn-primary text-white mb-0" %>
           </li>
         <% end %>
-      </ul>
-
-      <% if user_signed_in? %>
+        <% if user_signed_in? %>
         <div class="ml-auto">
           <li class="nav-item dropdown text-decoration-none" style="list-style: none;">
-            <a href="#" class="avatar" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <%= image_tag "https://kitt.lewagon.com/placeholder/users/ssaunier", class: "avatar", alt: "dropdown menu" %>
+            <a href="#" class="avatar me-3" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <%= image_tag "https://placehold.co/40x40", class: "avatar" %>
             </a>
             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
               <% sidebar_links.each do |link| %>
@@ -35,6 +28,59 @@
           </li>
         </div>
       <% end %>
+      </ul>
+
+      <div id="notification-popup" class="col-10 col-lg-3"style="display: none; position: absolute; right: 20px; top: 60px; z-index: 1000;">
+        <div class="shadow p-3 bg-light border border-bottom">
+          <% current_user&.notifications&.each do |notification| %>
+              <%= link_to notification.message, notification.url %>
+              <div class="text-muted" style="font-size: 0.75rem;">
+                <%= notification.created_at.strftime("%Y-%m-%d %H:%M:%S") %>
+              </div>
+          <% end %>
+        </div>
+      </div>
+
+
+
+      <div class="ms-auto d-flex align-items-center">
+        <div class="dropdown btn btn-primary">
+          <a href="#" class="text-decoration-none dropdown-toggle d-flex align-items-center" id="languageDropdownNav" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fas fa-globe me-2 text-secondary"></i>
+            <span class="text-white"><%= t('language_name') %></span>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="languageDropdownNav">
+            <% I18n.available_locales.each do |locale| %>
+              <li>
+                <% if I18n.locale == locale %>
+                  <span class="dropdown-item active"><%= t(locale, scope: 'locales') %></span>
+                <% else %>
+                  <%= link_to t(locale, scope: 'locales'), url_for(locale: locale), class: "dropdown-item" %>
+                <% end %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 </div>
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const notificationIcon = document.querySelector('.notification-icon');
+    const notificationPopup = document.getElementById('notification-popup');
+
+    notificationIcon.addEventListener('click', function(event) {
+      event.stopPropagation();
+      notificationPopup.style.display = notificationPopup.style.display === 'none' ? 'block' : 'none';
+    });
+
+    document.addEventListener('click', function(event) {
+      if (event.target !== notificationIcon) {
+        notificationPopup.style.display = 'none';
+      }
+    });
+  });
+</script>

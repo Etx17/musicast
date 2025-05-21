@@ -1,2 +1,5 @@
-<%= link_to "Retour", :back, class: "btn btn-outline-dark my-3" %>
+<div class="p-3">
+<h1><%= t('prizes.form.create_prize') %></h1>
+<%= render Navigation::BackLinkComponent.new(link_text: @category.name, link_path: organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category)) %>
 <%= render "form", prize: @prize %>
+</div>

@@ -1,9 +1,9 @@
-<h1>New free choice air</h1>
+<h1><%= t('free_choice_airs.new.title') %></h1>
 
 <%= render "form", free_choice_air: @free_choice_air %>
 
 <br>
 
 <div>
-  <%= link_to "Back to free choice airs", free_choice_airs_path %>
+  <%= link_to t('free_choice_airs.new.back'), free_choice_airs_path %>
 </div>

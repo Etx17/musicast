@@ -25,6 +25,22 @@ class InscriptionPolicy < ApplicationPolicy
     allowed_to_edit?
   end
 
+  def request_changes?
+    record.has_same_organisateur_as?(user.organisateur.id)
+  end
+
+  def upload_item_image?
+    allowed_to_edit?
+  end
+
+  def candidates?
+    user.organises_category?(record.first.category)
+  end
+
+  def purge_item_image?
+    allowed_to_edit?
+  end
+
   # class Scope < Scope
   #   def resolve
   #     scope.includes(inscription: [:candidat, { category: { edition_competition: { competition: { organism: :organisateur } } } }])
@@ -35,6 +51,7 @@ class InscriptionPolicy < ApplicationPolicy
   private
 
   def allowed_to_edit?
+    return true if user.admin
     if user.organisateur
       record.has_same_organisateur_as?(user.organisateur.id)
     elsif user.candidat

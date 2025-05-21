@@ -1,19 +1,18 @@
-
 <%= simple_form_for(@air) do |f| %>
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
-    <%= f.input :title %>
-    <%= f.input :length_minutes %>
-    <%= f.input :composer %>
-    <%= f.input :oeuvre %>
-    <%= f.input :character, hint: "Si air d'opéra" %>
-    <%= f.input :infos %>
+    <%= f.input :title, label: t('airs.common.title') %>
+    <%= f.input :length_minutes, label: t('airs.common.length_minutes') %>
+    <%= f.input :composer, label: t('airs.common.composer') %>
+    <%= f.input :oeuvre, label: t('airs.common.oeuvre') %>
+    <%= f.input :character, label: t('airs.common.character'), hint: t('airs.form.character_hint') %>
+    <%= f.input :infos, label: t('airs.common.infos') %>
+    <%= f.input :infos_english, label: t('shared.air_fields.additional_info_english') %>
   </div>
 
-
   <div class="form-actions">
-    <%= f.button :submit %>
+    <%= f.button :submit, t('airs.common.actions.submit') %>
   </div>
 <% end %>

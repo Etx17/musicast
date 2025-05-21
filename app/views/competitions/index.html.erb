@@ -1,14 +1,14 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Competitions</h1>
+<h1><%= t('competitions.index.title') %></h1>
 
 <div id="competitions">
   <% @competitions.each do |competition| %>
     <%= render competition %>
     <p>
-      <%= link_to "Show this competition", competition %>
+      <%= link_to t('competitions.index.show'), competition %>
     </p>
   <% end %>
 </div>
 
-<%= link_to "New competition", new_competition_path %>
+<%= link_to t('competitions.index.new'), new_competition_path %>

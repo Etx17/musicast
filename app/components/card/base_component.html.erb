@@ -1,0 +1,95 @@
+<%
+  adjusted_height = case @ratio
+    when "1", "1/1"
+      @height * 1.2
+    when "4/3"
+      @height * 1.1
+    else
+      @height
+  end
+%>
+
+<div class="bg-white rounded-4 mb-3 mb-md-3 position-relative <%= @has_shadow ? "shadow-sm" : "" %> <%= @highlight_card ? "highlight-card" : "" %>" style="height: <%= adjusted_height %>px; <%= @has_shadow ? "border: 0.7px solid lightgray;" : "" %>; width: 330px;" >
+  <!-- Top left pill (label, class-->
+  <% if @top_left_pill.present? %>
+    <div class="position-absolute <%= @top_left_pill[:class] %>" style="top: 10px; left: 10px;z-index:2">
+      <%= @top_left_pill[:label].truncate(35) %>
+    </div>
+  <% end %>
+
+  <!-- Kebab dropdown -->
+  <% if @links.present? %>
+    <div class="kebab-dropdown resources-settings insights-btn-dots position-absolute" style="top: 10px; right: 10px; z-index:2">
+      <%= render(Dropdown::KebabComponent.new(items: @links, align: :right, rounded: true)) %>
+    </div>
+  <% end %>
+
+  <!-- Image -->
+  <% if @image.present? %>
+    <div class="position-relative">
+      <% image_container_class = "card-img background-image lazy rounded-top-box" %>
+      <% image_container_class += " curved-bottom-image" if @rounded_image %>
+
+      <% if @redirect.present? %>
+        <%= link_to @redirect do %>
+          <div class="<%= image_container_class %>" style="background-image: url('<%= @image %>');width:100%;aspect-ratio:<%=@ratio%>; <%= @image_style %>" data-src="<%= @image %>" loading="lazy" ></div>
+        <% end %>
+      <% else %>
+        <div class="<%= image_container_class %>" style="background-image: url('<%= @image %>');width:100%;aspect-ratio:<%=@ratio%>; <%= @image_style %>" data-src="<%= @image %>" loading="lazy" ></div>
+      <% end %>
+
+      <!-- Bottom left pill -->
+      <% if @bottom_left_pill.present? %>
+        <div class="position-absolute <%= @bottom_left_pill[:class] %>" style="bottom: 10px; left: 10px; z-index:2">
+          <%= @bottom_left_pill[:label] %>
+        </div>
+      <% end %>
+      <!-- Bottom right pill -->
+      <% if @bottom_right_pill.present? %>
+        <div class="position-absolute <%= @bottom_right_pill[:class] %>" style="bottom: 10px; right: 10px; z-index:2">
+          <%= @bottom_right_pill[:label] %>
+        </div>
+      <% end %>
+      <!-- Top right component -->
+      <% if @top_right_component.present? %>
+        <div class="position-absolute" style="top: 10px; right: 10px; z-index:2">
+          <%= @top_right_component %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <!-- yielded content -->
+  <%= content_tag :div do %>
+    <%= content %>
+  <% end %>
+
+
+ <!-- Bottom part (labels and buttons) -->
+<% if @bottom_left_label.present? || @bottom_button_links.any? %>
+  <div class="d-flex flex-row justify-content-between w-100 position-absolute px-3 pb-3 gap-1" style="bottom:0px;">
+    <% if @bottom_left_label.present? %>
+      <div class="d-flex align-items-center">
+        <i class="<%= @bottom_left_label[:icon] %> <%= @bottom_left_label[:class] %> me-1"></i>
+        <div class="<%= @bottom_left_label[:class] %>"> <%= @bottom_left_label[:label] %> </div>
+      </div>
+    <% else %>
+      <div></div>
+    <% end %>
+
+    <% if @bottom_button_links.any? %>
+      <div class="d-flex align-items-center justify-content-end gap-1">
+        <% @bottom_button_links.each do |link| %>
+          <%= render ButtonComponent.new(
+            icon: link[:icon],
+            text: link[:label],
+            data: link[:data],
+            path: link[:path],
+            button_type: link[:button_type],
+            ) %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+</div>

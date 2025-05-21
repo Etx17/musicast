@@ -3,8 +3,8 @@
 <%= render @semi_imposed_work_air %>
 
 <div>
-  <%= link_to "Edit this semi imposed work air", edit_semi_imposed_work_air_path(@semi_imposed_work_air) %> |
-  <%= link_to "Back to semi imposed work airs", semi_imposed_work_airs_path %>
+  <%= link_to t('global.actions.edit'), edit_semi_imposed_work_air_path(@semi_imposed_work_air) %> |
+  <%= link_to t('global.actions.back'), semi_imposed_work_airs_path %>
 
-  <%= button_to "Destroy this semi imposed work air", @semi_imposed_work_air, method: :delete %>
+  <%= button_to t('global.actions.destroy'), @semi_imposed_work_air, method: :delete %>
 </div>

@@ -1,0 +1,28 @@
+.nav-item {
+  .nav-link {
+    color: var(--bs-secondary) !important;
+    font-weight: normal;
+    border: none;
+    padding-bottom: 0.75rem;
+
+    i {
+      color: var(--bs-secondary);
+    }
+
+    &:hover:not(.active) {
+      color: var(--bs-dark) !important;
+      border-bottom: 3px solid var(--bs-gray-300);
+    }
+
+    &.active {
+      color: var(--bs-primary) !important;
+      font-weight: bold;
+      border-bottom: 3px solid var(--bs-primary);
+      background-color: transparent;
+
+      i {
+        color: var(--bs-primary);
+      }
+    }
+  }
+}

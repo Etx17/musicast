@@ -1,69 +1,161 @@
-<div class="container">
-<p style="color: green"><%= notice %></p>
-<%= link_to "Retour", :back, class:"btn btn-outline-dark" %>
-<h1>Candidatures <span class="badge rounded-pill bg-secondary"><%= link_to @category.name, organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category), class:"text-decoration-none text-white"%></span></h1>
+<div class="">
+  <!-- Header Section -->
+  <% if notice %>
+    <div class="alert alert-success" role="alert"><%= notice %></div>
+  <% end %>
 
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h1 class="mb-2">
+        <%= t('inscriptions.index.applications') %>
+        <%= link_to @category&.name,
+            organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category),
+            class: "text-decoration-none" %>
+      </h1>
 
-<%= link_to "Consulter l'ordre de passage du premier tour", organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour), class:"btn btn-success my-3" if @tour %>
-
-<%= link_to "+ Ajouter une inscription tardive", "#", class:"btn btn-success my-3", data: { bs_toggle: "modal", bs_target: "#myModal" } %>
-  <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Ajouter une inscription tardive</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <p> Vous pouvez inviter un utilisateur à s'inscrire tardivement. L'utilisateur invité recevra un email avec un lien pour s'inscrire. </p>
-          <%= simple_form_for(User.new, url: user_invitation_path, method: :post) do |f| %>
-            <%= f.input :email, required: true, placeholder: "Entrez un email", autofocus: true %>
-            <%= f.input :inscription_role, as: :hidden, input_html: { value: "candidate" } %>
-            <%= f.input :category_id, as: :hidden, input_html: { value: @category.id } %>
-
-            <% f.object.build_candidat %>
-            <%= f.simple_fields_for :candidat do |c| %>
-              <%= c.input :first_name, hint: "L'utilisateur invité(e) pourra modifier ou rectifier ces informations", required: true %>
-              <%= c.input :last_name, hint: "L'utilisateur invité(e) pourra modifier ou rectifier ces informations", required: true%>
-            <% end %>
-
-            <%= f.button :submit, "Inviter l'utilisateur", class:"btn btn-dark", data: {bs_dismiss: "modal"} %>
-          <% end %>
-        </div>
-
-      </div>
+      <%= render Navigation::BackLinkComponent.new(
+        link_path: organism_competition_edition_competition_category_path(@organism, @competition, @edition_competition, @category),
+        link_text: @category.name) %>
     </div>
-  </div>
-<p>Invitations pour s'inscrire tardivement envoyées: <span class="bg-info p-1"><%= @category.inscriptions.where(is_late_inscription: true).count %> </span></p>
 
-
-<div id="inscriptions" class="row">
-<% @category ||= inscriptions.first.category%>
-
-<% Inscription.statuses.keys.reject { |status| status == 'draft' }.each do |status| %>
-    <div class="col bg-light shadow-sm mb-1" style="border-radius: 0.25rem;" id="<%= status %>">
-      <h5 class="text-center text-capitalize"><%= status %> (<%= @inscriptions&.select { |inscription| inscription.status == status }&.count %>)</h5>
-      <% @inscriptions&.select { |inscription| inscription.status == status }&.each do |inscription| %>
-        <div class="card p-3 mb-2 ">
-
-            <div class="d-flex justify-content-between align-items-start">
-              <h6 class="card-title"><%= inscription_status_icon(inscription) %> <%= inscription.candidat.first_name %></h6>
-              <% if @category.hundred_points? %>
-                <span><%= inscription.average_score %>/100</span>
-              <% end %>
-
-              <p class="card-text mb-0">
-              </p>
-            </div>
-
-          <div class="d-flex justify-content-between">
-            <%= buttons_for_inscription(inscription).html_safe %>
-          </div>
-        </div>
+    <div class="d-flex gap-3 align-items-center">
+      <% if @tour %>
+        <%= link_to t('inscriptions.index.view_first_round_order'),
+            organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour),
+            class: "btn btn-primary" %>
       <% end %>
     </div>
+  </div>
+
+  <!-- Late Registration Stats -->
+  <% if false %>
+  <div class="mb-4">
+    <span class="text-secondary">
+      <%= t('inscriptions.index.late_invitations_sent') %>:
+      <span class="badge bg-info"><%= @category.inscriptions.where(is_late_inscription: true).count %></span>
+    </span>
+  </div>
+  <% end %>
+
+  <!-- Kanban Board -->
+  <div class="d-flex overflow-auto gap-2 pb-3">
+    <% @category ||= inscriptions.first.category %>
+    <% inscriptions_status_keys_for_table(@category).each do |status| %>
+      <div class="kanban-column" style="min-width: 320px; max-width: 320px;">
+        <!-- Column Header -->
+        <div class="d-flex justify-content-between align-items-center bg-secondary-secondary p-3 rounded-top border-bottom">
+          <h6 class="mb-0 fw-bold text-dark">
+            <%= t("inscriptions.statuses.#{status}").truncate(40) %>
+            <i class="fas fa-circle small text-<%= get_status_color(status) %>"></i>
+          </h6>
+          <span class="badge bg-primary-light text-primary border border-primary rounded-pill">
+            <%= @inscriptions&.select { |inscription| inscription.status == status }&.count %>
+          </span>
+        </div>
+
+        <!-- Column Content -->
+        <div class="h-100 p-2 bg-light rounded-bottom" style="min-height: 200px;">
+          <% @inscriptions&.select { |inscription| inscription.status == status }&.each do |inscription| %>
+            <div class="card border-0 shadow-sm mb-3 bg-white">
+              <div class="card-body">
+                <!-- Header with Image and Name -->
+                <div class="d-flex gap-3">
+                  <!-- Profile Image -->
+                  <div style="width: 48px; height: 48px; flex-shrink: 0; position: relative; overflow: hidden; border-radius: 50%;">
+                    <%= image_tag inscription.candidat.portrait_or_default,
+                        style: "width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0;" %>
+                  </div>
+
+                  <!-- Candidate Info -->
+                  <div class="flex-grow-1">
+                    <div class="d-flex justify-content-between align-items-start">
+                      <div>
+                        <div class="d-flex align-items-center gap-2 mb-1">
+                          <%= inscription_status_icon(inscription) %>
+                          <h6 class="mb-0 fw-semibold">
+                            <%= inscription.candidat.full_name %>
+                            <span class="ms-2"><%= flag_emoji(inscription.candidat.nationality) %></span>
+                          </h6>
+                        </div>
+                        <small class="text-muted d-flex align-items-center gap-2">
+                          <span class="text-capitalize"><%= I18n.t("candidats.form.voice_types.#{inscription.candidat.voice_type}") %></span>
+                          <% if @category.hundred_points? %>
+                            <%= score_badge(inscription.average_score) %>
+                            <%# Render an info circle tooltip with the name of the jury that votes. %>
+                            <% if inscription.notes.any? %>
+                              <i class="fas fa-info-circle" data-bs-toggle="tooltip" data-bs-placement="top" title="<%= inscription.notes.map { |note| "#{note.jury.full_name}: #{note.note_value}/100" }.join(' | ') %>"></i>
+                            <% end %>
+                          <% end %>
+                        </small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Actions Section -->
+                <div class="d-flex flex-wrap gap-1 mt-3 align-items-center">
+
+                  <!-- Other Action Buttons -->
+                  <%= buttons_for_inscription(inscription).html_safe %>
+                  <!-- Payment Proof Button -->
+                  <% if ['approved_waiting_payment', 'new_payment_submitted'].include?(inscription.status) && inscription.payment_proof.attached? %>
+                    <button class="btn bg-warning-secondary btn-sm w-100"
+                            data-bs-toggle="modal"
+                            data-bs-target="#paymentProofModal<%= inscription.id %>">
+                      <i class="fas <%= inscription.payment_proof.content_type.include?('pdf') ? 'fa-file-pdf' : 'fa-image' %> me-1"></i>
+                      <%= t('global.actions.view_payment') %>
+                    </button>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <!-- Payment Proof Modals -->
+  <% @inscriptions.each do |inscription| %>
+    <% if inscription.payment_proof.attached? %>
+      <div class="modal fade" id="paymentProofModal<%= inscription.id %>" tabindex="-1">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">
+                <%= t('inscriptions.payment_proof') %> - <%= inscription.candidat.full_name %>
+              </h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body text-center p-0">
+              <% if inscription.payment_proof.content_type.include?('pdf') %>
+                <embed src="<%= url_for(inscription.payment_proof) %>"
+                       width="100%" height="650" type="application/pdf">
+              <% else %>
+                <%= image_tag url_for(inscription.payment_proof), class: "img-fluid" %>
+              <% end %>
+            </div>
+            <div class="modal-footer">
+              <a href="<%= url_for(inscription.payment_proof) %>"
+                 class="btn btn-primary"
+                 target="_blank">
+                <%= t('global.actions.open_in_new_tab') %>
+              </a>
+              <button type="button"
+                      class="btn btn-secondary"
+                      data-bs-dismiss="modal">
+                <%= t('global.actions.close') %>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
   <% end %>
 </div>
 
-
-</div>
+<script>
+  $(document).ready(function() {
+    $('[data-bs-toggle="tooltip"]').tooltip();
+  });
+</script>

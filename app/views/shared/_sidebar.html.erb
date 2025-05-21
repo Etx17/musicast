@@ -1,12 +1,195 @@
+<div class="sidebar">
+  <!-- Logo at the top -->
+  <div class="sidebar-header p-3 d-flex flex-column align-items-center w-100">
+    <div class="musikast-logo text-center w-100 text-white">Musikast</span></div>
+  </div>
 
-<div class="sidebar bg-light w-100 px-4" style="position: sticky; top: 90px; height: 90vh;">
-  <% sidebar_links.each do |link| %>
-    <%# <%= link_to link[:label], link[:url], class: "nav-link mb-3 pt-3 " %>
-    <%= link_to link[:url], class: "nav-link mb-3 p-2 " do %>
-      <% if link[:status] %>
-        <span class="badge rounded-pill border bg-success-secondary border-success text-success"><%= link[:status] %></span>
+  <!-- User profile section -->
+  <div class="p-3 d-flex flex-column align-items-center">
+    <% if current_user.present? %>
+      <div class="dropdown">
+        <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+          <% if current_user.inscription_role == "organiser" && current_user.organisateur.organism.present? %>
+            <%= image_tag current_user.organisateur.organism&.logo_or_default, class: "rounded-circle border border-light", style: "width: 66px; height: 66px; object-fit: contain; background-color: white;" %>
+          <% elsif current_user.inscription_role == "candidate" %>
+            <%= image_tag current_user.candidat.portrait_or_default, class: "rounded-circle border border-light", style: "width: 66px; height: 66px; object-fit: cover;" %>
+           <% elsif current_user.jury.present? %>
+            <%= image_tag current_user.jury.avatar_or_default, class: "rounded-circle border border-light", style: "width: 66px; height: 66px; object-fit: cover;" %>
+          <% else %>
+            <%= image_tag "https://placehold.co/66x66", class: "rounded-circle border border-light", style: "width: 66px; height: 66px; object-fit: cover;" %>
+          <% end %>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end text-small shadow" aria-labelledby="userDropdown">
+          <% navbar_links_for_profile_pic.each do |link| %>
+            <% if link[:method] == :delete %>
+              <li><%= button_to link[:label], link[:url], method: link[:method], class: "dropdown-item" %></li>
+            <% else %>
+              <li><%= link_to link[:label], link[:url], class: "dropdown-item" %></li>
+            <% end %>
+          <% end %>
+        </ul>
+      </div>
+      <% if current_user&.inscription_role == "organiser" && current_user.organisateur.organism.present? %>
+        <%= link_to edit_organism_path(current_user.organisateur.organism), class: "text-decoration-none mt-2" do %>
+          <span class="text-center mt-3 text-white"><%= current_user.organisateur&.organism&.nom %></span>
+        <% end %>
+      <% else %>
+         <span class="text-center mt-2 text-white"><%= current_user.first_name %> <%= current_user.last_name %></span>
       <% end %>
-      <span><%= link[:label] %></span>
     <% end %>
-  <% end %>
+  </div>
+
+  <!-- Notification, messaging, and language icons -->
+  <div class="d-flex justify-content-around p-2">
+    <a href="#" class="text-decoration-none">
+      <i class="fas fa-envelope text-secondary fs-5"></i>
+    </a>
+    <a href="#" class="text-decoration-none position-relative notification-icon">
+      <i class="fas fa-bell text-secondary fs-5"></i>
+    </a>
+    <div class="dropdown">
+      <a href="#" class="text-decoration-none dropdown-toggle" id="languageDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+        <i class="fas fa-globe text-secondary fs-5"></i>
+      </a>
+      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="languageDropdown">
+        <% I18n.available_locales.each do |locale| %>
+          <li>
+            <% if I18n.locale == locale %>
+              <span class="dropdown-item active"><%= t(locale, scope: 'locales') %></span>
+            <% else %>
+              <%= link_to t(locale, scope: 'locales'), url_for(locale: locale), class: "dropdown-item" %>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Main navigation -->
+  <ul class="nav gap-3 flex-column mt-2">
+    <% sidebar_links.each do |link| %>
+      <li class="nav-item-sidebar text-white px-2">
+        <% if link[:collapsible] && link[:children].present? %>
+          <div class="d-flex align-items-center">
+            <%= link_to link[:url], class: "nav-link-sidebar text-white flex-grow-1 #{active_link?(link[:url])}" do %>
+              <%= link[:label].html_safe %>
+              <% if link[:status].present? %>
+                <span class="competition-status rounded-pill border border-info <%= link[:status] %>"><%= link[:status].capitalize %></span>
+              <% end %>
+            <% end %>
+            <button class="btn btn-link text-white p-0 toggle-collapse" data-bs-toggle="collapse" data-bs-target="#collapse-<%= link[:url].parameterize %>">
+              <i class="fas fa-chevron-down collapse-icon"></i>
+            </button>
+          </div>
+          <div class="collapse <%= 'show' unless link[:collapsed] %>" id="collapse-<%= link[:url].parameterize %>">
+            <% if link[:children].present? %>
+              <ul class="nav flex-column ms-3">
+                <% link[:children].each do |child_link| %>
+                  <li class="nav-item-sidebar text-white">
+                    <% if child_link[:collapsible] && child_link[:children].present? %>
+                      <div class="d-flex align-items-center">
+                        <%= link_to child_link[:url], class: "nav-link-sidebar text-white flex-grow-1 #{active_link?(child_link[:url])}" do %>
+                          <%= child_link[:label].html_safe %>
+                        <% end %>
+                        <button class="btn btn-link text-white p-0 toggle-collapse" data-bs-toggle="collapse" data-bs-target="#collapse-<%= child_link[:url].parameterize %>">
+                          <i class="fas fa-chevron-down collapse-icon"></i>
+                        </button>
+                      </div>
+                      <div class="collapse <%= 'show' unless child_link[:collapsed] %>" id="collapse-<%= child_link[:url].parameterize %>">
+                        <% if child_link[:children].present? %>
+                          <ul class="nav flex-column gap-2 ms-4 mt-2">
+                            <% child_link[:children].each do |action_link| %>
+                              <li class="nav-item-sidebar text-white">
+                                <%= link_to action_link[:url], class: "nav-link-sidebar text-white #{active_link?(action_link[:url])}" do %>
+                                  <%= action_link[:label].html_safe %>
+                                <% end %>
+                              </li>
+                            <% end %>
+                          </ul>
+                        <% end %>
+                      </div>
+                    <% else %>
+                      <%= link_to child_link[:url], class: "nav-link-sidebar text-white #{active_link?(child_link[:url])}" do %>
+                        <%= child_link[:label].html_safe %>
+                      <% end %>
+                    <% end %>
+                  </li>
+                <% end %>
+              </ul>
+            <% end %>
+          </div>
+        <% else %>
+          <%= link_to link[:url], class: "nav-link-sidebar text-white #{active_link?(link[:url])}" do %>
+            <%= link[:label].html_safe %>
+            <% if link[:status].present? %>
+              <span class="competition-status rounded-pill border border-info <%= link[:status] %>"><%= link[:status].capitalize %></span>
+            <% end %>
+          <% end %>
+          <% if link[:children].present? && !link[:collapsible] %>
+            <ul class="nav flex-column gap-3 ms-3">
+              <% link[:children].each do |child_link| %>
+                <li class="d-flex flex-column gap-3 nav-item-sidebar text-white">
+                  <%= link_to child_link[:url], class: "nav-link-sidebar text-white #{active_link?(child_link[:url])}" do %>
+                    <%= child_link[:label].html_safe %>
+                  <% end %>
+                </li>
+              <% end %>
+            </ul>
+          <% end %>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
 </div>
+
+<!-- Notification popup -->
+<div id="notification-popup" class="col-10 col-lg-3" style="display: none; position: absolute; left: 250px; top: 60px; z-index: 1000;">
+  <div class="shadow p-3 bg-light border">
+    <% current_user&.notifications&.each do |notification| %>
+      <%= link_to notification.message, notification.url %>
+      <div class="text-muted" style="font-size: 0.75rem;">
+        <%= notification.created_at.strftime("%Y-%m-%d %H:%M:%S") %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<style>
+  .musikast-logo {
+    font-family: 'Questrial', sans-serif;
+    font-size: 2.2em;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const notificationIcon = document.querySelector('.notification-icon');
+    const notificationPopup = document.getElementById('notification-popup');
+
+    notificationIcon.addEventListener('click', function(event) {
+      event.stopPropagation();
+      notificationPopup.style.display = notificationPopup.style.display === 'none' ? 'block' : 'none';
+    });
+
+    document.addEventListener('click', function(event) {
+      if (event.target !== notificationIcon) {
+        notificationPopup.style.display = 'none';
+      }
+    });
+
+    // Add event listeners for collapse toggles
+    const toggleButtons = document.querySelectorAll('.toggle-collapse');
+    toggleButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        const icon = this.querySelector('.collapse-icon');
+        if (icon.classList.contains('fa-chevron-down')) {
+          icon.classList.replace('fa-chevron-down', 'fa-chevron-up');
+        } else {
+          icon.classList.replace('fa-chevron-up', 'fa-chevron-down');
+        }
+      });
+    });
+  });
+</script>

@@ -1,11 +1,9 @@
-<%= link_to "Retour", :back, class:"btn btn-dark my-3 mx-3" %>
-<h1>Mon programme pour ce tour</h1>
+<div class="container">
+  <%= link_to t('global.actions.back'), :back, class:"btn btn-primary my-3" %>
+  <h1><%= t('performances.new.my_program') %></h1>
 
-<p class="text-secondary">Choisissez quels airs vous voudrez interprêter. Attention, s'il y a des airs imposés vous ne les verrez qu'après avoir crée votre programme et il faudra l'adapter en conséquence. <br>
-Vous pourrez changer l'ordre des airs que vous interprêtez depuis votre dossier sur la page précédente, en glissant-déposant les airs pour réarranger leur ordre et en cliquant sur "Mettre à jour le programme"</p>
-<%= render "form", performance: @performance %>
+  <p class="text-secondary"><%= t('performances.new.choose_airs_instructions') %></p>
+  <%= render "form", performance: @performance %>
 
-<br>
-
-<div>
+  <br>
 </div>

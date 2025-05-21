@@ -4,7 +4,7 @@ module NavbarHelper
 
     if user_signed_in?
         links << { label: '<i class="fas fa-envelope text-secondary custom-size"></i>'.html_safe, url: "#", dropdown: false }
-        links << { label: '<i class="fas fa-bell large text-secondary custom-size"></i>'.html_safe, url: "#", dropdown: false }
+        links << { label: '<i class="fas fa-bell large text-secondary custom-size notification-icon"></i>'.html_safe, url: "#", dropdown: false, html_options: { id: 'notification-icon-bell' } }
       if current_user.candidat.present?
         # Add links for candidat
         # links << { label: "Candidat", url: candidat_path(current_user.candidat), dropdown: false }
@@ -17,8 +17,8 @@ module NavbarHelper
         # Add more links for the organizer here
       elsif current_user.jury
         # Add links for jury
-        links << { label: "Profil", url: edit_jury_path(current_user.jury), dropdown: false }
-        links << { label: "Accueil", url: jury_dashboard_path, dropdown: false }
+        links << { label: t("global.profile"), url: edit_jury_path(current_user.jury), dropdown: false }
+        links << { label: t("global.home"), url: jury_dashboard_path, dropdown: false }
         # Add more links for the jury here
       else
         # Add general links
@@ -27,9 +27,10 @@ module NavbarHelper
         # Add more links for the user here
       end
     else
-      links << { label: "Offre", url: pages_pricing_path, dropdown: false }
-      links << { label: "Connexion", url: new_user_session_path, dropdown: false }
-      links << { label: "Créer mon compte", url: new_user_registration_path, dropdown: false }
+      # links << { label: t("global.offer"), url: pages_pricing_path, dropdown: false }
+      links << { label: t("navbar.home"), url: root_path, dropdown: false }
+      links << { label: t("global.actions.login"), url: new_user_session_path, dropdown: false }
+      links << { label: t("global.actions.create_account"), url: new_user_registration_path, dropdown: false }
     end
 
     links
@@ -40,8 +41,8 @@ module NavbarHelper
     [
       # { label: 'Mon compte', url: edit_user_registration_path },
       # { label: 'Moyens de paiement', url: "#" },
-      { label: 'Se déconnecter', url: destroy_user_session_path, method: :delete },
-      { label: "Changer mon mot de passe", url: edit_user_registration_path }
+      { label: t("global.actions.logout"), url: destroy_user_session_path, method: :delete },
+      { label: t("global.actions.change_password"), url: edit_user_registration_path }
     ]
   end
 end
