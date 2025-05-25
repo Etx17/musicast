@@ -1,100 +1,177 @@
-    <section class="text-dark py-5 bg-white">
-      <div class="container">
-        <div class="row align-items-center">
-          <div class="col-md-6">
+<!-- Hero Header Section avec arc vert sur fond blanc -->
+<section class="hero-section position-relative overflow-hidden" style="background: #fff;">
+  <!-- Arc vert en dégradé -->
+  <div class="position-absolute w-100 h-100" style="
+    pointer-events: none;
+    top: 0; left: 0;
+    z-index: 0;
+    background: radial-gradient(
+      120% 80% at 80% 60%,
+      rgba(76, 175, 80, 0.25) 0%,
+      rgba(76, 175, 80, 0.12) 40%,
+      rgba(76, 175, 80, 0.00) 70%
+    );
+  "></div>
 
-            <%# <h1 style="font-size: 60px">Welcome to <span style="font-size: 2em;" class="text-gradient">Musicast</span></h1> %>
-            <h1 style="font-size: 80px;"><span class="text-gradient", style="font-size: 1.1em;"><%= t('pages.landing.musikast') %></span> <br></h1>
-            <span style="font-size: 2.8em"><%= t('pages.landing.organize_publish_competitions') %></span>
-            <%# <p class="lead">Simplifies the process of organizing classic arts competitions and managing contestants. Adapts to your specific structure requirements.</p> %>
-            <p class="lead" style="color: rgb(100, 100, 100)"><%= t('pages.landing.musicast_provides') %></p>
+  <div class="container py-5 position-relative" style="z-index: 1;">
+    <div class="row align-items-center min-vh-75">
+      <!-- Contenu gauche -->
+      <div class="col-lg-6 pe-lg-5">
+        <!-- Tag de catégorie -->
+        <div class="mb-4">
+          <span class="badge bg-success bg-opacity-10 text-success px-3 py-2 rounded-pill">
+            <i class="fas fa-music me-2"></i>Arts Classiques
+          </span>
+        </div>
 
-            <%= link_to t('pages.landing.get_started'), new_user_registration_path, class: "btn btn-success my-3" %>
-            <div class="d-flex align-items-center gap-3">
-              <%= image_tag "icons/block.png", width: 60 %>
-              <p class="text-secondary mb-0"><i class="fas fa-check text-success"></i> <%= t('pages.landing.registration_without_card') %></p>
+        <!-- Titre principal avec grande taille -->
+        <h1 class="serif-title display-3 mb-4" style="font-size: 4.5rem;">
+          Musikast:<br/>
+          <span class="text-dark">L'Art de la Compétition</span>
+        </h1>
+
+        <!-- Sous-titre -->
+        <p class="lead mb-4 text-secondary" style="font-size: 1.25rem;">
+          La plateforme qui révolutionne l'organisation des concours d'arts classiques avec l'intelligence artificielle.
+        </p>
+
+        <!-- CTA Principal -->
+        <div class="d-flex align-items-center gap-3 mb-4">
+          <%= link_to new_user_registration_path, class: "btn btn-success btn-lg px-4 py-3 rounded-pill shadow-sm" do %>
+            Demander un accès
+            <i class="fas fa-arrow-right ms-2"></i>
+          <% end %>
+        </div>
+
+        <!-- Preuves sociales -->
+        <div class="social-proof mt-5">
+          <div class="d-flex align-items-center gap-4 flex-wrap">
+            <div class="d-flex align-items-center gap-2">
+              <i class="fas fa-check-circle text-success h4 mb-0"></i>
+              <p class="mb-0">Inscription sans CB</p>
             </div>
-            <div class="d-flex align-items-center gap-3">
-              <%= image_tag "icons/bonus.png", width: 60 %>
-              <p class="text-secondary mb-0"><i class="fas fa-check text-success"></i> <%= t('pages.landing.launch_bonus') %></p>
+            <div class="d-flex align-items-center gap-2">
+              <i class="fas fa-star text-success h4 mb-0"></i>
+              <p class="mb-0">Bonus de lancement</p>
             </div>
           </div>
-          <div class="col-md-6">
-            <%= image_tag "mockup.png", width: 550 %>
-          </div>
+        </div>
       </div>
 
-
-  <div class="container" style="margin-top: 100px;">
-    <h2 class="text-center my-5 p-3" style="font-size: 4em;"><%= t('pages.landing.simplify_management') %></h2>
-
-  <div class="row align-items-center">
-    <div class="col-md-5">
-      <img src="https://source.unsplash.com/random/?opera" alt="App Mockup" class="img-fluid rounded-lg shadow" style="height: 500px; width: 600px;">
-    </div>
-    <div class="col-md-7">
-     <h2 style="font-size: 4em;"  class="text-bordeau"><%= t('pages.landing.ai_validation') %></h2>
-      <p style="font-size: 2em" class="text-secondary"><%= t('pages.landing.ai_validation_description') %></p>
-    </div>
-  </div>
-  <div class="d-flex justify-content-center">
-    <%= link_to t('pages.landing.get_started'), new_user_registration_path, class: "btn btn-success my-3 text-center" %>
-  </div>
-
-  <div class="row align-items-center flex-row-reverse">
-    <div class="col-md-5">
-      <img src="https://source.unsplash.com/random/?opera" alt="App Mockup" class="img-fluid rounded-lg shadow" style="height: 500px; width: 600px;">
-    </div>
-    <div class="col-md-7 text-end">
-      <h2 style="font-size: 4.5em;" class="text-bordeau"><%= t('pages.landing.intelligent_schedule') %></h2>
-      <p style="font-size: 2em" class="text-secondary"><%= t('pages.landing.intelligent_schedule_description') %></p>
+      <!-- Image à droite -->
+      <div class="col-lg-6">
+        <div class="position-relative" style="
+          background: rgba(76, 175, 80, 0.1);
+          border-radius: 24px;
+          overflow: hidden;
+          aspect-ratio: 1;
+        ">
+          <%= image_tag "mockup.png", class: "w-100 h-100", style: "object-fit: cover;" %>
+        </div>
+      </div>
     </div>
   </div>
+</section>
 
-  <div class="d-flex justify-content-center">
-    <%= link_to t('pages.landing.get_started'), new_user_registration_path, class: "btn btn-success my-3 text-center" %>
-  </div>
+<!-- Section Fonctionnalités et Bénéfices -->
+<section class="features-section py-5 bg-light">
+  <div class="container">
+    <h2 class="text-center mb-5">Nos fonctionnalités principales</h2>
 
-  <div class="row align-items-center">
-    <div class="col-md-5">
-      <img src="https://source.unsplash.com/random/?opera" alt="App Mockup" class="img-fluid rounded-lg shadow" style="height: 500px; width: 600px;">
+    <div class="row g-4">
+      <!-- Carte Validation IA -->
+      <div class="col-md-4">
+        <div class="card h-100 border-0 shadow-sm">
+          <div class="card-img-top overflow-hidden" style="height: 200px;">
+            <img src="https://source.unsplash.com/random/?classical-music" alt="Validation IA" class="img-fluid w-100 h-100" style="object-fit: cover;">
+          </div>
+          <div class="card-body">
+            <h3 class="h4 text-bordeau mb-3">Validation intelligente par IA</h3>
+            <p class="card-text">Notre système d'IA vérifie automatiquement la conformité des candidatures, éliminant les erreurs et accélérant le processus de validation.</p>
+            <ul class="list-unstyled mt-3">
+              <li><i class="fas fa-check text-success me-2"></i>Vérification automatique</li>
+              <li><i class="fas fa-check text-success me-2"></i>Réduction des erreurs</li>
+              <li><i class="fas fa-check text-success me-2"></i>Gain de temps significatif</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Carte Planning Intelligent -->
+      <div class="col-md-4">
+        <div class="card h-100 border-0 shadow-sm">
+          <div class="card-img-top overflow-hidden" style="height: 200px;">
+            <img src="https://source.unsplash.com/random/?orchestra" alt="Planning" class="img-fluid w-100 h-100" style="object-fit: cover;">
+          </div>
+          <div class="card-body">
+            <h3 class="h4 text-bordeau mb-3">Planning intelligent</h3>
+            <p class="card-text">Générez automatiquement des plannings optimisés en tenant compte des disponibilités des jurys et des contraintes des candidats.</p>
+            <ul class="list-unstyled mt-3">
+              <li><i class="fas fa-check text-success me-2"></i>Optimisation automatique</li>
+              <li><i class="fas fa-check text-success me-2"></i>Gestion des conflits</li>
+              <li><i class="fas fa-check text-success me-2"></i>Planning personnalisé</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Carte Gestion des Jurys -->
+      <div class="col-md-4">
+        <div class="card h-100 border-0 shadow-sm">
+          <div class="card-img-top overflow-hidden" style="height: 200px;">
+            <img src="https://source.unsplash.com/random/?jury" alt="Gestion Jury" class="img-fluid w-100 h-100" style="object-fit: cover;">
+          </div>
+          <div class="card-body">
+            <h3 class="h4 text-bordeau mb-3">Gestion des jurys</h3>
+            <p class="card-text">Créez et gérez facilement vos jurys, avec un système de notation intuitif et des outils de collaboration intégrés.</p>
+            <ul class="list-unstyled mt-3">
+              <li><i class="fas fa-check text-success me-2"></i>Interface intuitive</li>
+              <li><i class="fas fa-check text-success me-2"></i>Notation simplifiée</li>
+              <li><i class="fas fa-check text-success me-2"></i>Collaboration en temps réel</li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="col-md-7">
-       <h2 style="font-size: 4em;" class="text-bordeau"><%= t('pages.landing.jury_file') %></h2>
-      <p style="font-size: 2em" class="text-secondary"><%= t('pages.landing.jury_file_description') %></p>
+
+    <!-- CTA intermédiaire -->
+    <div class="text-center mt-5">
+      <%= link_to "Découvrir toutes nos fonctionnalités", new_user_registration_path, class: "btn btn-outline-success btn-lg" %>
     </div>
   </div>
+</section>
 
-  <div class="d-flex justify-content-center">
-    <%= link_to t('pages.landing.get_started'), new_user_registration_path, class: "btn btn-success my-3 text-center" %>
-  </div>
-
-  <div class="row align-items-center flex-row-reverse">
-    <div class="col-md-5">
-      <img src="https://source.unsplash.com/random/?opera" alt="App Mockup" class="img-fluid rounded-lg shadow" style="height: 500px; width: 600px;">
-    </div>
-    <div class="col-md-7">
-       <h2 style="font-size: 4em;" class="text-bordeau text-end"><%= t('pages.landing.communicate_easily') %></h2>
-      <p class="text-end text-secondary" style="font-size: 2em"><%= t('pages.landing.communicate_easily_description') %></p>
-    </div>
-  </div>
-
-
-  <div class="d-flex justify-content-center">
-    <%= link_to t('pages.landing.get_started'), new_user_registration_path, class: "btn btn-success my-3 text-center" %>
-  </div>
-
-  <div class="row align-items-center">
-    <div class="col-md-5">
-      <img src="https://source.unsplash.com/random/?opera" alt="App Mockup" class="img-fluid rounded-lg shadow" style="height: 500px; width: 600px;">
-    </div>
-    <div class="col-md-7">
-      <h2 style="font-size: 4em;" class="text-bordeau text-start"><%= t('pages.landing.create_jury') %></h2>
-      <p class="text-start text-secondary" style="font-size: 2em"><%= t('pages.landing.create_jury_description') %></p>
+<!-- Section FAQ -->
+<section class="faq-section py-5 bg-light">
+  <div class="container">
+    <h2 class="text-center mb-5">Questions fréquentes</h2>
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="accordion" id="faqAccordion">
+          <div class="accordion-item">
+            <h3 class="accordion-header">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                Comment fonctionne la validation par IA ?
+              </button>
+            </h3>
+            <div id="faq1" class="accordion-collapse collapse show">
+              <div class="accordion-body">
+                Notre système d'IA analyse automatiquement les dossiers de candidature pour vérifier leur conformité aux règles du concours.
+              </div>
+            </div>
+          </div>
+          <!-- Ajoutez d'autres questions FAQ ici -->
+        </div>
+      </div>
     </div>
   </div>
+</section>
 
-
-</div>
-
+<!-- Section CTA Final -->
+<section class="cta-section py-5">
+  <div class="container text-center">
+    <h2 class="mb-4">Prêt à simplifier l'organisation de vos concours ?</h2>
+    <p class="lead mb-4">Rejoignez les organisateurs qui font confiance à Musikast</p>
+    <%= link_to "Commencer maintenant", new_user_registration_path, class: "btn btn-success btn-lg" %>
+  </div>
 </section>
