@@ -11,6 +11,8 @@ Rails.application.routes.draw do
       get 'make_me_admin/:user_id', to: 'application#make_me_admin', as: :make_me_admin
     end
 
+    get 'landing', to: 'pages#landing'
+
     # Admin routes
     get 'admin_dashboard', to: 'pages#admin_dashboard'
     post 'admin_create_organism_user', to: 'pages#admin_create_organism_user'
