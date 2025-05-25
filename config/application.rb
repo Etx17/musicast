@@ -29,5 +29,6 @@ module TestConcours
     config.i18n.default_locale = :fr
     config.i18n.fallbacks = [I18n.default_locale]
     config.i18n.raise_on_missing_translations = false
+    config.environment = ENV['RAILS_ENV']
   end
 end

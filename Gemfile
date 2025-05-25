@@ -76,6 +76,11 @@ gem "sassc-rails"
 gem 'rubyzip'
 gem "wicked"
 
+group :staging do
+  gem 'faker'
+  gem 'wkhtmltopdf-heroku', '~> 2.12.6'
+end
+
 group :production do
   gem 'wkhtmltopdf-heroku', '~> 2.12.6'
 end
