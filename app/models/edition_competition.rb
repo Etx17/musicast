@@ -37,7 +37,7 @@ class EditionCompetition < ApplicationRecord
     if photo.attached?
       Rails.application.routes.url_helpers.rails_blob_path(photo, only_path: true)
     else
-      ActionController::Base.helpers.asset_path('garnier.jpeg')
+      ActionController::Base.helpers.asset_path('garnier.jpg')
     end
   end
 
