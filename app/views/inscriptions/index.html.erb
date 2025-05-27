@@ -38,7 +38,7 @@
   <% end %>
 
   <!-- Kanban Board -->
-  <div class="d-flex gap-2 pb-3" style="height: calc(100vh - 200px); overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none;">
+  <div class="d-flex gap-2 pb-3" style="height: calc(100vh - 170px); overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none;">
     <% @category ||= inscriptions.first.category %>
     <% inscriptions_status_keys_for_table(@category).each do |status| %>
       <div class="kanban-column" style="min-width: 320px; max-width: 320px; height: 100%; flex: 0 0 auto;">
@@ -47,6 +47,12 @@
           <h6 class="mb-0 fw-bold text-dark">
             <%= t("inscriptions.statuses.#{status}").truncate(40) %>
             <i class="fas fa-circle small text-<%= get_status_color(status) %>"></i>
+            <% if status == 'request_changes' %>
+              <i class="fas fa-info-circle ms-1"
+                 data-bs-toggle="tooltip"
+                 data-bs-placement="top"
+                 title="Actualisez la page pour voir les inscriptions en cours de révision"></i>
+            <% end %>
           </h6>
           <span class="badge bg-primary-light text-primary border border-primary rounded-pill">
             <%= @inscriptions&.select { |inscription| inscription.status == status }&.count %>
