@@ -34,6 +34,11 @@ def buttons_for_inscription(inscription)
     when 'in_review'
       buttons << button_to(update_status_organism_competition_edition_competition_category_inscription_path(inscription.organism, inscription.competition, inscription.edition_competition, inscription.category, inscription, status: 'approved_waiting_payment'),
         method: :patch,
+        remote: true,
+        data: {
+          type: :json,
+          inscription_id: inscription.id
+        },
         class: 'btn btn-sm w-100 bg-success-secondary') do
           concat content_tag(:i, '', class: 'fa fa-check me-1 text-success ')
           concat I18n.t('global.actions.accept_wait_payment')
@@ -41,6 +46,11 @@ def buttons_for_inscription(inscription)
 
       buttons << button_to(update_status_organism_competition_edition_competition_category_inscription_path(inscription.organism, inscription.competition, inscription.edition_competition, inscription.category, inscription, status: 'rejected'),
         method: :patch,
+        remote: true,
+        data: {
+          type: :json,
+          inscription_id: inscription.id
+        },
         class: 'btn bg-secondary-secondary btn-sm w-100') do
           concat content_tag(:i, '', class: 'fa fa-times me-1 text-danger')
           concat I18n.t('global.actions.reject')
@@ -49,12 +59,22 @@ def buttons_for_inscription(inscription)
     when 'approved_waiting_payment', 'new_payment_submitted'
       buttons << button_to(update_status_organism_competition_edition_competition_category_inscription_path(inscription.organism, inscription.competition, inscription.edition_competition, inscription.category, inscription, status: 'payment_error_waiting_payment', payment_status: 'payment_error'),
         method: :patch,
+        remote: true,
+        data: {
+          type: :json,
+          inscription_id: inscription.id
+        },
         class: 'btn btn-sm w-100 bg-secondary-secondary') do
           concat content_tag(:i, '', class: 'fa fa-exclamation-triangle me-1 text-danger')
           concat I18n.t('global.actions.report_payment_error')
       end
       buttons << button_to(update_status_organism_competition_edition_competition_category_inscription_path(inscription.organism, inscription.competition, inscription.edition_competition, inscription.category, inscription, status: 'accepted', payment_status: 'paid'),
         method: :patch,
+        remote: true,
+        data: {
+          type: :json,
+          inscription_id: inscription.id
+        },
         class: 'btn btn-sm w-100 bg-success-secondary') do
           concat content_tag(:i, '', class: 'fa fa-check me-1 text-success')
           concat I18n.t('global.actions.confirm_payment')
@@ -66,6 +86,11 @@ def buttons_for_inscription(inscription)
     when 'in_review'
       buttons << button_to(update_status_organism_competition_edition_competition_category_inscription_path(inscription.organism, inscription.competition, inscription.edition_competition, inscription.category, inscription, status: 'accepted'),
         method: :patch,
+        remote: true,
+        data: {
+          type: :json,
+          inscription_id: inscription.id
+        },
         class: 'btn btn-sm w-100 bg-success-secondary') do
           concat content_tag(:i, '', class: 'fa fa-check me-1 text-success')
           concat I18n.t('global.actions.accept')
@@ -73,6 +98,11 @@ def buttons_for_inscription(inscription)
 
       buttons << button_to(update_status_organism_competition_edition_competition_category_inscription_path(inscription.organism, inscription.competition, inscription.edition_competition, inscription.category, inscription, status: 'rejected'),
         method: :patch,
+        remote: true,
+        data: {
+          type: :json,
+          inscription_id: inscription.id
+        },
         class: 'btn bg-secondary-secondary btn-sm w-100') do
           concat content_tag(:i, '', class: 'fa fa-times me-1 text-danger')
           concat I18n.t('global.actions.reject')
@@ -81,6 +111,11 @@ def buttons_for_inscription(inscription)
     when 'accepted'
       buttons << button_to(update_status_organism_competition_edition_competition_category_inscription_path(inscription.organism, inscription.competition, inscription.edition_competition, inscription.category, inscription, status: 'rejected'),
         method: :patch,
+        remote: true,
+        data: {
+          type: :json,
+          inscription_id: inscription.id
+        },
         class: 'btn bg-secondary-secondary btn-sm w-100') do
           concat content_tag(:i, '', class: 'fa fa-times me-1 text-danger')
           concat I18n.t('global.actions.reject')
@@ -89,6 +124,11 @@ def buttons_for_inscription(inscription)
     when 'rejected'
       buttons << button_to(update_status_organism_competition_edition_competition_category_inscription_path(inscription.organism, inscription.competition, inscription.edition_competition, inscription.category, inscription, status: 'accepted'),
         method: :patch,
+        remote: true,
+        data: {
+          type: :json,
+          inscription_id: inscription.id
+        },
         class: 'btn bg-success-secondary btn-sm w-100') do
           concat content_tag(:i, '', class: 'fa fa-check me-1 text-success')
           concat I18n.t('global.actions.accept')
