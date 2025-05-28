@@ -37,6 +37,7 @@ def buttons_for_inscription(inscription)
         remote: true,
         data: {
           type: :json,
+          turbo: false,
           inscription_id: inscription.id
         },
         class: 'btn btn-sm w-100 bg-success-secondary') do
@@ -49,6 +50,7 @@ def buttons_for_inscription(inscription)
         remote: true,
         data: {
           type: :json,
+          turbo: false,
           inscription_id: inscription.id
         },
         class: 'btn bg-secondary-secondary btn-sm w-100') do
@@ -62,6 +64,7 @@ def buttons_for_inscription(inscription)
         remote: true,
         data: {
           type: :json,
+          turbo: false,
           inscription_id: inscription.id
         },
         class: 'btn btn-sm w-100 bg-secondary-secondary') do
@@ -73,6 +76,7 @@ def buttons_for_inscription(inscription)
         remote: true,
         data: {
           type: :json,
+          turbo: false,
           inscription_id: inscription.id
         },
         class: 'btn btn-sm w-100 bg-success-secondary') do
@@ -89,7 +93,8 @@ def buttons_for_inscription(inscription)
         remote: true,
         data: {
           type: :json,
-          inscription_id: inscription.id
+          turbo: false,
+          inscription_id: inscription.id,
         },
         class: 'btn btn-sm w-100 bg-success-secondary') do
           concat content_tag(:i, '', class: 'fa fa-check me-1 text-success')
@@ -101,7 +106,8 @@ def buttons_for_inscription(inscription)
         remote: true,
         data: {
           type: :json,
-          inscription_id: inscription.id
+          inscription_id: inscription.id,
+          turbo: false
         },
         class: 'btn bg-secondary-secondary btn-sm w-100') do
           concat content_tag(:i, '', class: 'fa fa-times me-1 text-danger')
@@ -114,6 +120,7 @@ def buttons_for_inscription(inscription)
         remote: true,
         data: {
           type: :json,
+          turbo: false,
           inscription_id: inscription.id
         },
         class: 'btn bg-secondary-secondary btn-sm w-100') do
@@ -127,6 +134,7 @@ def buttons_for_inscription(inscription)
         remote: true,
         data: {
           type: :json,
+          turbo: false,
           inscription_id: inscription.id
         },
         class: 'btn bg-success-secondary btn-sm w-100') do
