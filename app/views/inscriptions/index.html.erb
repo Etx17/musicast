@@ -1,4 +1,4 @@
-<div class="">
+<div class="h-100">
   <!-- Header Section -->
   <% if notice %>
     <div class="alert alert-success" role="alert"><%= notice %></div>
@@ -38,15 +38,21 @@
   <% end %>
 
   <!-- Kanban Board -->
-  <div class="d-flex overflow-auto gap-2 pb-3">
+  <div class="d-flex gap-2 pb-3" style="height: calc(100vh - 170px); overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none;">
     <% @category ||= inscriptions.first.category %>
     <% inscriptions_status_keys_for_table(@category).each do |status| %>
-      <div class="kanban-column" style="min-width: 320px; max-width: 320px;">
+      <div class="kanban-column" style="min-width: 320px; max-width: 320px; height: 100%; flex: 0 0 auto;">
         <!-- Column Header -->
         <div class="d-flex justify-content-between align-items-center bg-secondary-secondary p-3 rounded-top border-bottom">
           <h6 class="mb-0 fw-bold text-dark">
             <%= t("inscriptions.statuses.#{status}").truncate(40) %>
             <i class="fas fa-circle small text-<%= get_status_color(status) %>"></i>
+            <% if status == 'request_changes' %>
+              <i class="fas fa-info-circle ms-1"
+                 data-bs-toggle="tooltip"
+                 data-bs-placement="top"
+                 title="Actualisez la page pour voir les inscriptions en cours de révision"></i>
+            <% end %>
           </h6>
           <span class="badge bg-primary-light text-primary border border-primary rounded-pill">
             <%= @inscriptions&.select { |inscription| inscription.status == status }&.count %>
@@ -54,16 +60,17 @@
         </div>
 
         <!-- Column Content -->
-        <div class="h-100 p-2 bg-light rounded-bottom" style="min-height: 200px;">
+        <div class="h-100 p-2 bg-light rounded-bottom overflow-y-auto">
           <% @inscriptions&.select { |inscription| inscription.status == status }&.each do |inscription| %>
-            <div class="card border-0 shadow-sm mb-3 bg-white">
+            <div class="card border-0 shadow-sm mb-3 bg-white" data-inscription-id="<%= inscription.id %>">
               <div class="card-body">
                 <!-- Header with Image and Name -->
                 <div class="d-flex gap-3">
-                  <!-- Profile Image -->
-                  <div style="width: 48px; height: 48px; flex-shrink: 0; position: relative; overflow: hidden; border-radius: 50%;">
-                    <%= image_tag inscription.candidat.portrait_or_default,
-                        style: "width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0;" %>
+                  <!-- Nationality Flag -->
+                  <div style="width: 48px; height: 48px; flex-shrink: 0; position: relative; overflow: hidden; border-radius: 50%; background-color: #f8f9fa;">
+                    <div class="d-flex align-items-center justify-content-center h-100">
+                      <span class="fs-4"><%= flag_emoji(inscription.candidat.nationality) %></span>
+                    </div>
                   </div>
 
                   <!-- Candidate Info -->
@@ -74,7 +81,6 @@
                           <%= inscription_status_icon(inscription) %>
                           <h6 class="mb-0 fw-semibold">
                             <%= inscription.candidat.full_name %>
-                            <span class="ms-2"><%= flag_emoji(inscription.candidat.nationality) %></span>
                           </h6>
                         </div>
                         <small class="text-muted d-flex align-items-center gap-2">
@@ -100,6 +106,7 @@
                   <!-- Payment Proof Button -->
                   <% if ['approved_waiting_payment', 'new_payment_submitted'].include?(inscription.status) && inscription.payment_proof.attached? %>
                     <button class="btn bg-warning-secondary btn-sm w-100"
+                            onclick="loadPaymentProof(<%= inscription.id %>, '<%= url_for(inscription.payment_proof) %>')"
                             data-bs-toggle="modal"
                             data-bs-target="#paymentProofModal<%= inscription.id %>">
                       <i class="fas <%= inscription.payment_proof.content_type.include?('pdf') ? 'fa-file-pdf' : 'fa-image' %> me-1"></i>
@@ -127,20 +134,14 @@
               </h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <div class="modal-body text-center p-0">
-              <% if inscription.payment_proof.content_type.include?('pdf') %>
-                <embed src="<%= url_for(inscription.payment_proof) %>"
-                       width="100%" height="650" type="application/pdf">
-              <% else %>
-                <%= image_tag url_for(inscription.payment_proof), class: "img-fluid" %>
-              <% end %>
+            <div class="modal-body text-center p-0" id="payment-proof-content-<%= inscription.id %>">
+              <div class="d-flex align-items-center justify-content-center" style="height: 650px;">
+                <div class="spinner-border text-primary" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+              </div>
             </div>
             <div class="modal-footer">
-              <a href="<%= url_for(inscription.payment_proof) %>"
-                 class="btn btn-primary"
-                 target="_blank">
-                <%= t('global.actions.open_in_new_tab') %>
-              </a>
               <button type="button"
                       class="btn btn-secondary"
                       data-bs-dismiss="modal">
@@ -155,7 +156,58 @@
 </div>
 
 <script>
+  function loadPortrait(inscriptionId, url) {
+    const img = document.getElementById(`portrait-${inscriptionId}`);
+    const placeholder = document.getElementById(`portrait-placeholder-${inscriptionId}`);
+
+    img.onload = function() {
+      img.style.display = 'block';
+      placeholder.style.display = 'none';
+    };
+
+    img.src = url;
+  }
+
+  function loadPaymentProof(inscriptionId, url) {
+    const content = document.getElementById(`payment-proof-content-${inscriptionId}`);
+
+    if (url.includes('.pdf')) {
+      content.innerHTML = `<embed src="${url}" width="100%" height="650" type="application/pdf">`;
+    } else {
+      const img = new Image();
+      img.onload = function() {
+        content.innerHTML = `<img src="${url}" class="img-fluid" alt="Payment proof">`;
+      };
+      img.src = url;
+    }
+  }
+
   $(document).ready(function() {
     $('[data-bs-toggle="tooltip"]').tooltip();
   });
+
+  $(document).on('ajax:success', 'button[data-inscription-id]', function(event) {
+    const [data, status, xhr] = event.detail;
+    const inscriptionId = $(this).data('inscription-id');
+    const card = $(`.card[data-inscription-id="${inscriptionId}"]`);
+    const newColumn = $(`#inscriptions-${data.new_status}`);
+
+    // Déplacer la carte
+    card.detach().appendTo(newColumn);
+
+    // Mettre à jour les compteurs
+    const oldColumn = card.closest('.kanban-column');
+    const oldBadge = oldColumn.find('.badge');
+    const newBadge = newColumn.closest('.kanban-column').find('.badge');
+
+    oldBadge.text(parseInt(oldBadge.text()) - 1);
+    newBadge.text(parseInt(newBadge.text()) + 1);
+  });
 </script>
+
+<style>
+  /* Cache la scrollbar pour Chrome, Safari et Opera */
+  .d-flex::-webkit-scrollbar {
+    display: none;
+  }
+</style>
