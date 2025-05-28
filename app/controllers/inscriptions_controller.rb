@@ -12,12 +12,6 @@ class InscriptionsController < ApplicationController
 
         if @category
           @inscriptions = Inscription.by_category(@category.id)
-            .includes(
-              :candidat,
-              :category,
-              candidat: { portrait_attachment: :blob },
-              payment_proof_attachment: :blob
-            )
         else
           flash[:alert] = "Category not found"
         end
@@ -187,6 +181,7 @@ class InscriptionsController < ApplicationController
     end
 
     if @inscription.accepted?
+      # Si jamais on update l'inscription en accepted, on doit find or create la performance du next tour.
       category_first_tour = @inscription.category.tours.order(:tour_number).first
       performance = Performance.find_or_create_by(tour: category_first_tour, inscription: @inscription)
       total_air_selection = performance.air_selection + (category_first_tour.imposed_air_selection || [])
@@ -194,15 +189,7 @@ class InscriptionsController < ApplicationController
       performance.update(air_selection: total_air_selection, order: category_first_tour.performances.where.not(order: nil).count + 1, is_qualified_for_current_tour: true)
     end
 
-    respond_to do |format|
-      format.json {
-        render json: {
-          id: @inscription.id,
-          new_status: @inscription.status,
-          success: true
-        }, content_type: 'application/json'
-      }
-    end
+    redirect_to inscriptions_path(category_id: @inscription.category_id)
   end
 
   def remove_payment_proof
