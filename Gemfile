@@ -75,9 +75,9 @@ gem "simple_form", github: "heartcombo/simple_form"
 gem "sassc-rails"
 gem 'rubyzip'
 gem "wicked"
+gem 'faker'
 
 group :staging do
-  gem 'faker'
   gem 'wkhtmltopdf-heroku', '~> 2.12.6'
 end
 
@@ -93,7 +93,6 @@ group :development, :test do
   gem 'pry-rails'
   gem 'pry-byebug'
   gem 'annotate'
-  gem 'faker'
   gem 'rspec-rails'
   gem 'factory_bot_rails'
   gem 'stripe-ruby-mock', '~> 3.1.0', :require => 'stripe_mock'

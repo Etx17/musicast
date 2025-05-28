@@ -174,22 +174,28 @@ class InscriptionsController < ApplicationController
 
   def update_status
     @inscription = Inscription.find(params[:id])
-    @inscription.update(status: params[:status], payment_status: params[:payment_status])
+    return unless @inscription.present?
 
-    if @inscription.rejected?
-      @inscription.performances.update_all(order: nil)
+    if @inscription.update(status: params[:status], payment_status: params[:payment_status])
+
+      if @inscription.rejected?
+        @inscription.performances.update_all(order: nil)
+      end
+
+      if @inscription.accepted?
+        # Si jamais on update l'inscription en accepted, on doit find or create la performance du next tour.
+        category_first_tour = @inscription.category.tours.order(:tour_number).first
+        performance = Performance.find_or_create_by(tour: category_first_tour, inscription: @inscription)
+        total_air_selection = performance.air_selection + (category_first_tour.imposed_air_selection || [])
+
+        performance.update(air_selection: total_air_selection, order: category_first_tour.performances.where.not(order: nil).count + 1, is_qualified_for_current_tour: true)
+
+      end
+
+      redirect_to inscriptions_path(category_id: @inscription.category_id), notice: 'Inscription updated'
+    else
+      redirect_to inscriptions_path(category_id: @inscription.category_id), notice: 'Error updating inscription'
     end
-
-    if @inscription.accepted?
-      # Si jamais on update l'inscription en accepted, on doit find or create la performance du next tour.
-      category_first_tour = @inscription.category.tours.order(:tour_number).first
-      performance = Performance.find_or_create_by(tour: category_first_tour, inscription: @inscription)
-      total_air_selection = performance.air_selection + (category_first_tour.imposed_air_selection || [])
-
-      performance.update(air_selection: total_air_selection, order: category_first_tour.performances.where.not(order: nil).count + 1, is_qualified_for_current_tour: true)
-    end
-
-    redirect_to inscriptions_path(category_id: @inscription.category_id)
   end
 
   def remove_payment_proof

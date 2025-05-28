@@ -13,14 +13,14 @@ o = Organism.create(
   nom: "Association Les Maîtres du Chant",
   description: "L'association Les Maîtres du Chant dont la présidence est assurée par Sylvie SULLÉ, artiste lyrique et professeure de chant à l'Ecole Normale de Musique-Alfred CORTOT, aide à la promotion de jeunes chanteurs-ses en organisant des concours de niveaux différents : « Honneur » pour les chanteurs en cours d'étude et Grands amateurs et « Excellence » pour les chanteurs en début de carrière. Les Maîtres du Chant organisent également un concours d'opérette et d'opéra-comique."
 )
-file_path = [Rails.root.join('app', 'assets', 'images', 'logo-maitre.png')].sample
-file = File.open(file_path, 'rb')
-o.logo.attach(
-  io: file,
-  filename: File.basename(file_path),
-  content_type: "image/#{File.extname(file_path).delete('.')}"
-)
-file.close
+# file_path = [Rails.root.join('app', 'assets', 'images', 'logo-maitre.png')].sample
+# file = File.open(file_path, 'rb')
+# o.logo.attach(
+#   io: file,
+#   filename: File.basename(file_path),
+#   content_type: "image/#{File.extname(file_path).delete('.')}"
+# )
+# file.close
 
 # Creer pianiste accompagnateur sur organisme
 PianistAccompagnateur.create(

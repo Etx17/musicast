@@ -13,14 +13,14 @@ o = Organism.create(
   nom: "Les Symphonies D'automne Macon",
   description: "Les Symphonies D'automne Macon est une association qui organise le Concours international de chant de Mâcon, édition 2025, du 10 au 16 novembre 2025. Le concours est ouvert aux jeunes chanteurs de moins de 35 ans (nés après le 1er janvier 1990). Les inscriptions sont ouvertes du 17 mars au 10 septembre 2025. Les récompenses incluent le 1er prix (5 000€), le 2e prix (3 000€), le 3e prix (2 000€), le prix spécial de la mélodie française (3 000€), le prix jeune talent (1 000€), le prix du public (500€), le prix de l'orchestre (500€), et le prix des lycéens. Les finalistes bénéficient d'une indemnité de 250€."
 )
-file_path = [Rails.root.join('app', 'assets', 'images', 'logo-maitre.png')].sample
-file = File.open(file_path, 'rb')
-o.logo.attach(
-  io: file,
-  filename: File.basename(file_path),
-  content_type: "image/#{File.extname(file_path).delete('.')}"
-)
-file.close
+# file_path = [Rails.root.join('app', 'assets', 'images', 'logo-maitre.png')].sample
+# file = File.open(file_path, 'rb')
+# o.logo.attach(
+#   io: file,
+#   filename: File.basename(file_path),
+#   content_type: "image/#{File.extname(file_path).delete('.')}"
+# )
+# file.close
 
 # Creer pianiste accompagnateur sur organisme
 PianistAccompagnateur.create(
@@ -557,25 +557,25 @@ puts "Seeding 120 candidates, their inscriptions, semi-imposed airs, and perform
   # Attach portrait (same logic as before, simplified)
   # Assuming 'john.jpeg' and 'paul.jpg' are in 'app/assets/images/'
   # For robustness, ensure these files exist or handle potential errors
-  begin
-    portraits_path = Rails.root.join('app', 'assets', 'images')
-    available_portraits = [portraits_path.join('john.jpeg'), portraits_path.join('paul.jpg')]
-    portrait_file_path = available_portraits.sample
+  # begin
+  #   portraits_path = Rails.root.join('app', 'assets', 'images')
+  #   available_portraits = [portraits_path.join('john.jpeg'), portraits_path.join('paul.jpg')]
+  #   portrait_file_path = available_portraits.sample
 
-    if File.exist?(portrait_file_path)
-      File.open(portrait_file_path, 'rb') do |file|
-        u.candidat.portrait.attach(
-          io: file,
-          filename: File.basename(portrait_file_path),
-          content_type: "image/#{File.extname(portrait_file_path).delete('.')}"
-        )
-      end
-    else
-      puts "Warning: Portrait file #{portrait_file_path} not found. Skipping portrait attachment for candidate #{u.candidat.id}."
-    end
-  rescue => e
-    puts "Error attaching portrait for candidate #{u.candidat.id}: #{e.message}"
-  end
+  #   if File.exist?(portrait_file_path)
+  #     File.open(portrait_file_path, 'rb') do |file|
+  #       u.candidat.portrait.attach(
+  #         io: file,
+  #         filename: File.basename(portrait_file_path),
+  #         content_type: "image/#{File.extname(portrait_file_path).delete('.')}"
+  #       )
+  #     end
+  #   else
+  #     puts "Warning: Portrait file #{portrait_file_path} not found. Skipping portrait attachment for candidate #{u.candidat.id}."
+  #   end
+  # rescue => e
+  #   puts "Error attaching portrait for candidate #{u.candidat.id}: #{e.message}"
+  # end
 end
 
 puts "Finished seeding 120 candidates for Mâcon."
