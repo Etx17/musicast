@@ -133,6 +133,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_14_085107) do
     t.string "last_teacher"
     t.integer "voice_type", default: 0
     t.string "iban"
+    t.index ["iban"], name: "index_candidats_on_iban", unique: true
     t.index ["user_id"], name: "index_candidats_on_user_id"
   end
 

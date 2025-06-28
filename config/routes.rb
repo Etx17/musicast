@@ -7,10 +7,6 @@ Rails.application.routes.draw do
   get '/change_locale/:locale', to: 'locales#change', as: :change_locale
 
   scope "(:locale)", locale: /#{I18n.available_locales.join("|")}/ do
-    if Rails.env.development?
-      get 'make_me_admin/:user_id', to: 'application#make_me_admin', as: :make_me_admin
-    end
-
     get 'landing', to: 'pages#landing'
 
     # Admin routes
