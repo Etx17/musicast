@@ -776,6 +776,8 @@ class ToursController < ApplicationController
   def set_current_tab
     if @tour.has_results?
       session[:tour_tab] = "results"
+    elsif @tour.has_convocation?
+      session[:tour_tab] = "convocations"
     elsif @tour.has_rehearsal?
       session[:tour_tab] = "rehearsal"
     elsif @tour.has_planning? && @tour.performances.none?{|p| p.is_qualified }

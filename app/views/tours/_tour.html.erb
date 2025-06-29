@@ -42,7 +42,7 @@
   <div class="border-bottom mb-4 mt-3">
     <div class="container-fluid px-0">
       <ul class="nav nav-tabs row g-0" id="myTab" role="tablist">
-        <li class="nav-item <%= @tour.needs_rehearsal? ? 'col-md-3' : 'col-md-4' %>" role="presentation">
+        <li class="nav-item <%= @tour.needs_rehearsal? ? 'col-md-2' : 'col-md-3' %>" role="presentation">
           <div class="nav-tab-wrapper position-relative">
             <a class="d-block nav-tab-link text-center py-3 px-2 text-decoration-none position-relative <%= 'active' if session[:tour_tab] == "order_of_performances" %>"
               id="order-tab"
@@ -61,7 +61,7 @@
             </a>
           </div>
         </li>
-        <li class="nav-item <%= @tour.needs_rehearsal? ? 'col-md-3' : 'col-md-4' %>" role="presentation">
+        <li class="nav-item <%= @tour.needs_rehearsal? ? 'col-md-2' : 'col-md-3' %>" role="presentation">
           <div class="nav-tab-wrapper position-relative">
             <a class="d-block nav-tab-link text-center py-3 px-2 text-decoration-none position-relative <%= 'active' if session[:tour_tab] == "planning" %>"
                id="planning-tab"
@@ -117,7 +117,25 @@
           </div>
         </li>
         <% end %>
-        <li class="nav-item <%= @tour.needs_rehearsal? ? 'col-md-3' : 'col-md-4' %>" role="presentation">
+        <li class="nav-item <%= @tour.needs_rehearsal? ? 'col-md-2' : 'col-md-3' %>" role="presentation">
+          <div class="nav-tab-wrapper position-relative">
+            <a class="d-block nav-tab-link text-center py-3 px-2 text-decoration-none position-relative <%= 'active' if session[:tour_tab] == "convocations" %>"
+               id="convocations-tab"
+               data-bs-toggle="tab"
+               href="#convocations"
+               role="tab"
+               aria-controls="convocations">
+              <div class="d-flex flex-column align-items-center">
+                <div class="mb-1 fs-4">
+                  <i class="fas fa-trophy"></i>
+                </div>
+                <div class="fw-bold"><%= t('tours.tour.convocations') %></div>
+                <small class="text-muted d-block mt-1"><%= t('tours.tour.convocations_description') %></small>
+              </div>
+            </a>
+          </div>
+        </li>
+        <li class="nav-item <%= @tour.needs_rehearsal? ? 'col-md-2' : 'col-md-3' %>" role="presentation">
           <div class="nav-tab-wrapper position-relative">
             <a class="d-block nav-tab-link text-center py-3 px-2 text-decoration-none position-relative <%= 'active' if session[:tour_tab] == "results" %>"
                id="results-tab"
@@ -247,12 +265,17 @@
       <% end %>
     </div>
 
-     <% if @tour.needs_rehearsal? && !@tour.requires_orchestra %>
+    <% if @tour.needs_rehearsal? && !@tour.requires_orchestra %>
       <!-- tab répétitions -->
       <div class="tab-pane fade <%= 'show active' if session[:tour_tab] == "rehearsal" %>" id="rehearsal" role="tabpanel" aria-labelledby="rehearsal-tab">
         <%= render @tour.rehearsal_type, tour: @tour %>
       </div>
     <% end %>
+
+    <!-- tab convocation -->
+    <div class="tab-pane fade <%= 'show active' if session[:tour_tab] == "convocations" %>" id="convocations" role="tabpanel" aria-labelledby="convocations-tab">
+      <%= render "convocations", tour: @tour %>
+    </div>
 
     <!-- tab resultats -->
     <div class="tab-pane fade <%= 'show active' if session[:tour_tab] == "results" %>" id="results" role="tabpanel" aria-labelledby="order-tab">

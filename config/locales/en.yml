@@ -1859,6 +1859,8 @@ en:
       order_of_passage_description: "Configure the order of passage and accompaniments"
       schedule_of_performances: "Schedule of performances"
       qualified_candidates: "Qualified candidates"
+      convocations: "Convocations"
+      convocations_description: "Send convocations to candidates"
       tour: "Round"
       next_tour: "Next round"
       previous_tour: "Previous round"

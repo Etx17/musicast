@@ -2011,6 +2011,8 @@ fr:
       order_of_passage_description: "Configurer l'ordre de passage et les accompagnements"
       schedule_of_performances: "Planning des performances"
       qualified_candidates: "Candidats qualifiés"
+      convocations: "Convocations"
+      convocations_description: "Envoyer les convocations aux candidats"
       next_tour: "Prochain tour"
       previous_tour: "Tour précédent"
       tour: "Tour"

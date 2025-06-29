@@ -41,6 +41,11 @@ class Tour < ApplicationRecord
     performances.filter{|p| p.inscription.accepted?}
   end
 
+  def has_convocation?
+    # TODO
+    true
+  end
+
 
   def move_qualified_candidates_to_next_tour
 
