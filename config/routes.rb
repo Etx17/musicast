@@ -82,6 +82,8 @@ Rails.application.routes.draw do
                 get :download_warmup_schedule
                 get :download_pianist_rehearsal_schedule
                 get 'download_room_pianist_rehearsal_schedule/:room_id', to: 'tours#download_room_pianist_rehearsal_schedule', as: :download_room_pianist_rehearsal_schedule
+                                    post :store_convocation_config
+                    get :preview_convocation
               end
               patch :reorder_tours, on: :collection
               post 'update_order', on: :member

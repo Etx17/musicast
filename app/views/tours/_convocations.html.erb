@@ -1,3 +1,212 @@
-<div class="row p-3 gap-3">
-<h1>Convocations !</h1>
+<div class="container-fluid px-0">
+  <div class="row p-3">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+          <h2 class="mb-1">Configuration des convocations</h2>
+          <p class="text-muted mb-0">
+            Configurez les informations à inclure dans les convocations
+          </p>
+        </div>
+        <div class="d-flex gap-2">
+          <button type="button" class="btn btn-outline-secondary"
+                  data-bs-toggle="modal" data-bs-target="#previewModal"
+                  onclick="generatePreview()">
+            Prévisualiser
+          </button>
+        </div>
+      </div>
+
+    <%= form_with url: store_convocation_config_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour),
+                  method: :post,
+                  local: true,
+                  class: "convocation-config-form",
+                  id: "convocation-form" do |f| %>
+
+
+        <div class="card mb-4">
+          <div class="card-header">
+            <h5 class="mb-0">Messages personnalisés</h5>
+          </div>
+
+          <div class="p-4 bg-light">
+            <div class="row">
+              <div class="col-lg-6">
+                <h6 class="mb-3">Version française</h6>
+
+                <div class="mb-3">
+                  <%= f.label :intro_message_fr, "Message d'introduction personnalisé", class: "form-label" %>
+                  <%= f.text_area :intro_message_fr,
+                        value: session[:convocation_intro_message_fr] || "Bonjour,\n\nNous avons le plaisir de vous confirmer votre participation au concours.\n\nVoici les détails de votre convocation :",
+                        class: "form-control",
+                        rows: 4 %>
+                </div>
+
+                <div class="mb-3">
+                  <%= f.label :additional_message_fr, "Message additionnel personnalisé", class: "form-label" %>
+                  <%= f.text_area :additional_message_fr,
+                        value: session[:convocation_additional_message_fr] || "Merci de vous présenter au moins 30 minutes avant votre passage.\n\nN'oubliez pas d'apporter une copie de votre programme imprimé.\n\nPour toute question, contactez-nous.\n\nCordialement,\nL'équipe organisatrice",
+                        class: "form-control",
+                        rows: 4 %>
+                </div>
+              </div>
+
+              <!-- Messages en anglais -->
+              <div class="col-lg-6">
+                <h6 class="mb-3">English version</h6>
+
+                <div class="mb-3">
+                  <%= f.label :intro_message_en, "Custom introduction message", class: "form-label" %>
+                  <%= f.text_area :intro_message_en,
+                        value: session[:convocation_intro_message_en] || "Dear participant,\n\nWe are pleased to confirm your participation in the competition.\n\nHere are the details of your summons:",
+                        class: "form-control",
+                        rows: 4 %>
+                </div>
+
+                <div class="mb-3">
+                  <%= f.label :additional_message_en, "Custom additional message", class: "form-label" %>
+                  <%= f.text_area :additional_message_en,
+                        value: session[:convocation_additional_message_en] || "Please arrive at least 30 minutes before your performance.\n\nDon't forget to bring a printed copy of your program.\n\nFor any questions, please contact us.\n\nBest regards,\nThe organizing team",
+                        class: "form-control",
+                        rows: 4 %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Informations à inclure -->
+        <div class="card mb-4">
+          <div class="card-header">
+            <h5 class="mb-0">Informations à inclure sur la convocation</h5>
+          </div>
+          <div class="p-4 bg-light">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-check mb-3">
+                  <%= f.check_box :include_candidate_name,
+                        checked: session[:convocation_include_candidate_name] != "0",
+                        class: "form-check-input" %>
+                  <%= f.label :include_candidate_name, "Nom du candidat", class: "form-check-label" %>
+                </div>
+
+                <div class="form-check mb-3">
+                  <%= f.check_box :include_tour_name,
+                        checked: session[:convocation_include_tour_name] != "0",
+                        class: "form-check-input" %>
+                  <%= f.label :include_tour_name, "Tour concerné", class: "form-check-label" %>
+                </div>
+
+                <div class="form-check mb-3">
+                  <%= f.check_box :include_performance_datetime,
+                        checked: session[:convocation_include_performance_datetime] != "0",
+                        class: "form-check-input" %>
+                  <%= f.label :include_performance_datetime, "Date et heure de passage", class: "form-check-label" %>
+                </div>
+
+                <div class="form-check mb-3">
+                  <%= f.check_box :include_performance_location,
+                        checked: session[:convocation_include_performance_location] != "0",
+                        class: "form-check-input" %>
+                  <%= f.label :include_performance_location, "Lieu de passage", class: "form-check-label" %>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-check mb-3">
+                  <%= f.check_box :include_program,
+                        checked: session[:convocation_include_program] != "0",
+                        class: "form-check-input" %>
+                  <%= f.label :include_program, "Programme soumis (liste d'œuvres)", class: "form-check-label" %>
+                </div>
+
+                <div class="form-check mb-3">
+                  <%= f.check_box :include_pianist_name,
+                        checked: session[:convocation_include_pianist_name] != "0",
+                        class: "form-check-input" %>
+                  <%= f.label :include_pianist_name, "Pianiste accompagnateur (nom)", class: "form-check-label" %>
+                </div>
+
+                <div class="form-check mb-3">
+                  <%= f.check_box :include_pianist_provided,
+                        checked: session[:convocation_include_pianist_provided] != "0",
+                        class: "form-check-input" %>
+                  <%= f.label :include_pianist_provided, "Pianiste fourni par l'organisme (oui/non)", class: "form-check-label" %>
+                </div>
+
+                <div class="form-check mb-3">
+                  <%= f.check_box :include_rehearsals,
+                        checked: session[:convocation_include_rehearsals] != "0",
+                        class: "form-check-input" %>
+                  <%= f.label :include_rehearsals, "Répétition(s) (heure + lieu)", class: "form-check-label" %>
+                </div>
+
+                <div class="form-check mb-3">
+                  <%= f.check_box :include_organism_logo,
+                        checked: session[:convocation_include_organism_logo] != "0",
+                        class: "form-check-input" %>
+                  <%= f.label :include_organism_logo, "Logo de l'organisme", class: "form-check-label" %>
+                  <% if @organism.logo.attached? %>
+                    <small class="d-block">Logo disponible</small>
+                  <% else %>
+                    <small class="d-block">Aucun logo configuré</small>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Boutons d'action -->
+        <div class="d-flex gap-3 mb-4">
+          <%= f.submit "Sauvegarder la configuration", class: "btn btn-primary btn-lg" %>
+          <button type="button" class="btn btn-outline-secondary btn-lg" onclick="previewConvocation()">
+            Prévisualiser
+          </button>
+        </div>
+
+
+    <% end %>
+  </div>
 </div>
+
+<script>
+function previewConvocation() {
+  const form = document.getElementById('convocation-form');
+  const formData = new FormData(form);
+
+  // Envoyer les données au serveur via AJAX puis ouvrir la prévisualisation
+  fetch('<%= store_convocation_config_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour) %>', {
+    method: 'POST',
+    body: formData,
+    headers: {
+      'X-CSRF-Token': document.querySelector('[name="csrf-token"]').content
+    }
+  }).then(() => {
+    // Ouvrir la prévisualisation dans un nouvel onglet
+    const previewUrl = '<%= preview_convocation_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour) %>';
+    window.open(previewUrl, '_blank');
+  }).catch(error => {
+    console.error('Erreur lors de la sauvegarde:', error);
+    alert('Erreur lors de la sauvegarde des données');
+  });
+}
+</script>
+
+<%
+  # Méthodes helper pour les messages par défaut
+  def default_intro_message_fr
+    "Bonjour [Nom du candidat],\n\nNous avons le plaisir de vous confirmer votre participation au [Nom du concours] - [Nom du tour].\n\nVoici les détails de votre convocation :"
+  end
+
+  def default_additional_message_fr
+    "Merci de vous présenter au moins 30 minutes avant votre passage.\n\nN'oubliez pas d'apporter une copie de votre programme imprimé.\n\nPour toute question, contactez-nous.\n\nCordialement,\nL'équipe organisatrice"
+  end
+
+  def default_intro_message_en
+    "Dear [Candidate name],\n\nWe are pleased to confirm your participation in [Competition name] - [Round name].\n\nHere are the details of your summons:"
+  end
+
+  def default_additional_message_en
+    "Please arrive at least 30 minutes before your performance.\n\nDon't forget to bring a printed copy of your program.\n\nFor any questions, please contact us.\n\nBest regards,\nThe organizing team"
+  end
+%>

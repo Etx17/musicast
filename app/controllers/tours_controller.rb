@@ -318,6 +318,67 @@ class ToursController < ApplicationController
     redirect_to show_jury_pdf_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour)
   end
 
+  def store_convocation_config
+    # Messages personnalisés
+    session[:convocation_intro_message_fr] = params[:intro_message_fr]
+    session[:convocation_intro_message_en] = params[:intro_message_en]
+    session[:convocation_additional_message_fr] = params[:additional_message_fr]
+    session[:convocation_additional_message_en] = params[:additional_message_en]
+
+    # Informations candidat
+    session[:convocation_include_candidate_name] = params[:include_candidate_name] == "1"
+
+    # Informations tour
+    session[:convocation_include_tour_name] = params[:include_tour_name] == "1"
+    session[:convocation_include_performance_datetime] = params[:include_performance_datetime] == "1"
+    session[:convocation_include_performance_location] = params[:include_performance_location] == "1"
+
+    # Programme
+    session[:convocation_include_program] = params[:include_program] == "1"
+    session[:convocation_program_format] = params[:program_format] # "simple" ou "detailed"
+
+    # Pianiste
+    session[:convocation_include_pianist_name] = params[:include_pianist_name] == "1"
+    session[:convocation_include_pianist_provided] = params[:include_pianist_provided] == "1"
+
+    # Répétitions
+    session[:convocation_include_rehearsals] = params[:include_rehearsals] == "1"
+    session[:convocation_rehearsal_format] = params[:rehearsal_format] # "time_only" ou "time_and_location"
+
+    # Logo organisme
+    session[:convocation_include_organism_logo] = params[:include_organism_logo] == "1"
+
+    # Langue
+    session[:convocation_language] = params[:convocation_language] || "fr"
+
+    redirect_to organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour),
+                notice: "Configuration des convocations sauvegardée avec succès!"
+  end
+
+  def preview_convocation
+    convocation_config = build_convocation_config_from_session
+
+    # Créer un candidat fictif pour la prévisualisation
+    sample_candidat = OpenStruct.new(
+      nom: "Sophie Martin",
+      prenom: "Sophie",
+      email: "preview@example.com"
+    )
+
+    # Générer et rendre le mailer
+    mail = ConvocationMailer.convocation_email(
+      sample_candidat,
+      nil, # inscription
+      @tour,
+      @category,
+      @competition,
+      @organism,
+      convocation_config
+    )
+
+    render html: mail.body.to_s.html_safe, layout: false
+  end
+
   def reorder_tours
     new_order = params[:new_order]
 
@@ -786,4 +847,41 @@ class ToursController < ApplicationController
       session[:tour_tab] = "order_of_performances"
     end
   end
+
+  # Helper methods pour les messages par défaut des convocations
+  def default_intro_message_fr
+    "Bonjour [Nom du candidat],\n\nNous avons le plaisir de vous confirmer votre participation au [Nom du concours] - [Nom du tour].\n\nVoici les détails de votre convocation :"
+  end
+
+  def default_additional_message_fr
+    "Merci de vous présenter au moins 30 minutes avant votre passage.\n\nN'oubliez pas d'apporter une copie de votre programme imprimé.\n\nPour toute question, contactez-nous.\n\nCordialement,\nL'équipe organisatrice"
+  end
+
+  def default_intro_message_en
+    "Dear [Candidate name],\n\nWe are pleased to confirm your participation in [Competition name] - [Round name].\n\nHere are the details of your summons:"
+  end
+
+  def default_additional_message_en
+    "Please arrive at least 30 minutes before your performance.\n\nDon't forget to bring a printed copy of your program.\n\nFor any questions, please contact us.\n\nBest regards,\nThe organizing team"
+  end
+
+  def build_convocation_config_from_session
+    {
+      intro_message_fr: session[:convocation_intro_message_fr],
+      intro_message_en: session[:convocation_intro_message_en],
+      additional_message_fr: session[:convocation_additional_message_fr],
+      additional_message_en: session[:convocation_additional_message_en],
+      include_candidate_name: session[:convocation_include_candidate_name],
+      include_tour_name: session[:convocation_include_tour_name],
+      include_performance_datetime: session[:convocation_include_performance_datetime],
+      include_performance_location: session[:convocation_include_performance_location],
+      include_program: session[:convocation_include_program],
+      include_pianist_name: session[:convocation_include_pianist_name],
+      include_pianist_provided: session[:convocation_include_pianist_provided],
+      include_rehearsals: session[:convocation_include_rehearsals],
+      include_organism_logo: session[:convocation_include_organism_logo]
+    }
+  end
+
+  helper_method :default_intro_message_fr, :default_additional_message_fr, :default_intro_message_en, :default_additional_message_en
 end

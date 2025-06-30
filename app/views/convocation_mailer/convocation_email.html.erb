@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Convocation - <%= @sample_data[:concours][:nom] %></title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #f8f9fa;
+    }
+    .convocation-container {
+      background-color: white;
+      border-radius: 8px;
+      padding: 40px;
+      margin-bottom: 30px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .logo-container {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .logo-placeholder {
+      background-color: #e9ecef;
+      padding: 20px;
+      border-radius: 4px;
+      color: #6c757d;
+      display: inline-block;
+    }
+    h1, h2, h3, h4, h5 {
+      color: #2c3e50;
+      margin-bottom: 15px;
+      margin-top: 25px;
+    }
+    h1 { font-size: 24px; }
+    h2 { font-size: 20px; }
+    h5 { font-size: 16px; }
+    p {
+      margin-bottom: 12px;
+    }
+    ul {
+      margin-bottom: 15px;
+      padding-left: 20px;
+    }
+    li {
+      margin-bottom: 5px;
+    }
+    .intro-message {
+      background-color: #f8f9fa;
+      padding: 20px;
+      border-radius: 4px;
+      margin-bottom: 25px;
+      border-left: 4px solid #6c757d;
+    }
+    .section {
+      margin-bottom: 25px;
+    }
+    .version-separator {
+      border-top: 3px solid #dee2e6;
+      margin: 50px 0 30px 0;
+      padding-top: 30px;
+    }
+    strong {
+      color: #495057;
+    }
+  </style>
+</head>
+<body>
+  <!-- Version française -->
+  <div class="convocation-container">
+    <h2>Version française</h2>
+
+    <% if @convocation_config[:include_organism_logo] && @organism.logo.attached? %>
+      <div class="logo-container">
+        <div class="logo-placeholder">Logo de l'organisme</div>
+      </div>
+    <% end %>
+
+    <% if @convocation_config[:intro_message_fr].present? %>
+      <div class="intro-message">
+        <%= simple_format(@convocation_config[:intro_message_fr]) %>
+      </div>
+    <% end %>
+
+    <div class="section">
+      <h5>Informations pratiques</h5>
+
+      <% if @convocation_config[:include_candidate_name] %>
+        <p><strong>Nom du candidat :</strong> <%= @sample_data[:candidat][:nom] %></p>
+      <% end %>
+
+      <% if @convocation_config[:include_tour_name] %>
+        <p><strong>Tour concerné :</strong> <%= @sample_data[:tour][:nom] %></p>
+      <% end %>
+
+      <% if @convocation_config[:include_performance_datetime] %>
+        <p><strong>Date et heure de passage :</strong> <%= @sample_data[:performance][:date] %> à <%= @sample_data[:performance][:heure] %></p>
+      <% end %>
+
+      <% if @convocation_config[:include_performance_location] %>
+        <p><strong>Lieu de passage :</strong><br><%= simple_format(@sample_data[:performance][:lieu]) %></p>
+      <% end %>
+    </div>
+
+    <% if @convocation_config[:include_program] %>
+      <div class="section">
+        <h5>Votre programme</h5>
+        <ul>
+          <% @sample_data[:programme].each_with_index do |oeuvre, index| %>
+            <li><%= index + 1 %>. <strong><%= oeuvre[:titre] %></strong> - <%= oeuvre[:compositeur] %> (<%= oeuvre[:duree] %>)</li>
+          <% end %>
+        </ul>
+        <p><em>Durée totale : 9 minutes</em></p>
+      </div>
+    <% end %>
+
+    <% if @convocation_config[:include_pianist_name] || @convocation_config[:include_pianist_provided] %>
+      <div class="section">
+        <h5>Accompagnement pianistique</h5>
+
+        <% if @convocation_config[:include_pianist_name] %>
+          <p><strong>Pianiste accompagnateur :</strong> <%= @sample_data[:pianiste][:nom] %></p>
+        <% end %>
+
+        <% if @convocation_config[:include_pianist_provided] %>
+          <p><strong>Pianiste fourni par l'organisation :</strong> Oui</p>
+        <% end %>
+      </div>
+    <% end %>
+
+    <% if @convocation_config[:include_rehearsals] %>
+      <div class="section">
+        <h5>Répétition</h5>
+        <p><strong>Heure de répétition :</strong> <%= @sample_data[:repetition][:heure] %></p>
+        <p><strong>Lieu de répétition :</strong> <%= @sample_data[:repetition][:lieu] %></p>
+      </div>
+    <% end %>
+
+    <% if @convocation_config[:additional_message_fr].present? %>
+      <div class="intro-message">
+        <%= simple_format(@convocation_config[:additional_message_fr]) %>
+      </div>
+    <% end %>
+  </div>
+
+  <!-- Version anglaise -->
+  <div class="convocation-container version-separator">
+    <h2>English version</h2>
+
+    <% if @convocation_config[:include_organism_logo] && @organism.logo.attached? %>
+      <div class="logo-container">
+        <div class="logo-placeholder">Organization logo</div>
+      </div>
+    <% end %>
+
+    <% if @convocation_config[:intro_message_en].present? %>
+      <div class="intro-message">
+        <%= simple_format(@convocation_config[:intro_message_en]) %>
+      </div>
+    <% end %>
+
+    <div class="section">
+      <h5>Practical Information</h5>
+
+      <% if @convocation_config[:include_candidate_name] %>
+        <p><strong>Candidate name:</strong> <%= @sample_data[:candidat][:nom] %></p>
+      <% end %>
+
+      <% if @convocation_config[:include_tour_name] %>
+        <p><strong>Round:</strong> <%= @sample_data[:tour][:nom_en] %></p>
+      <% end %>
+
+      <% if @convocation_config[:include_performance_datetime] %>
+        <p><strong>Performance date and time:</strong> <%= @sample_data[:performance][:date_en] %> at <%= @sample_data[:performance][:heure_en] %></p>
+      <% end %>
+
+      <% if @convocation_config[:include_performance_location] %>
+        <p><strong>Performance location:</strong><br><%= simple_format(@sample_data[:performance][:lieu_en]) %></p>
+      <% end %>
+    </div>
+
+    <% if @convocation_config[:include_program] %>
+      <div class="section">
+        <h5>Program</h5>
+        <ul>
+          <% @sample_data[:programme].each_with_index do |oeuvre, index| %>
+            <li><%= index + 1 %>. <strong><%= oeuvre[:titre] %></strong> - <%= oeuvre[:compositeur] %> (<%= oeuvre[:duree] %>)</li>
+          <% end %>
+        </ul>
+        <p><em>Total duration: 9 minutes</em></p>
+      </div>
+    <% end %>
+
+    <% if @convocation_config[:include_pianist_name] || @convocation_config[:include_pianist_provided] %>
+      <div class="section">
+        <h5>Piano accompaniment</h5>
+
+        <% if @convocation_config[:include_pianist_name] %>
+          <p><strong>Pianist:</strong> <%= @sample_data[:pianiste][:nom] %></p>
+        <% end %>
+
+        <% if @convocation_config[:include_pianist_provided] %>
+          <p><strong>Pianist provided by the organization:</strong> Yes</p>
+        <% end %>
+      </div>
+    <% end %>
+
+    <% if @convocation_config[:include_rehearsals] %>
+      <div class="section">
+        <h5>Rehearsal</h5>
+        <p><strong>Rehearsal time:</strong> <%= @sample_data[:repetition][:heure_en] %></p>
+        <p><strong>Rehearsal location:</strong> <%= @sample_data[:repetition][:lieu_en] %></p>
+      </div>
+    <% end %>
+
+    <% if @convocation_config[:additional_message_en].present? %>
+      <div class="intro-message">
+        <%= simple_format(@convocation_config[:additional_message_en]) %>
+      </div>
+    <% end %>
+  </div>
+</body>
+</html>
