@@ -356,26 +356,57 @@ class ToursController < ApplicationController
   end
 
   def preview_convocation
-    convocation_config = build_convocation_config_from_session
-
     # Créer un candidat fictif pour la prévisualisation
     sample_candidat = OpenStruct.new(
-      nom: "Sophie Martin",
+      nom: "Martin",
       prenom: "Sophie",
       email: "preview@example.com"
     )
 
-    # Générer et rendre le mailer
-    mail = ConvocationMailer.convocation_email(
-      sample_candidat,
-      nil, # inscription
-      @tour,
-      @category,
-      @competition,
-      @organism,
-      convocation_config
-    )
+    # Construire la config à partir de la session
+    config = {
+      # Messages personnalisés
+      intro_message_fr: session[:convocation_intro_message_fr],
+      intro_message_en: session[:convocation_intro_message_en],
+      additional_message_fr: session[:convocation_additional_message_fr],
+      additional_message_en: session[:convocation_additional_message_en],
 
+      # Informations à inclure
+      include_candidate_name: session[:convocation_include_candidate_name],
+      include_tour_name: session[:convocation_include_tour_name],
+      include_performance_datetime: session[:convocation_include_performance_datetime],
+      include_performance_location: session[:convocation_include_performance_location],
+      include_program: session[:convocation_include_program],
+      include_pianist_name: session[:convocation_include_pianist_name],
+      include_pianist_provided: session[:convocation_include_pianist_provided],
+      include_rehearsals: session[:convocation_include_rehearsals],
+      include_organism_logo: session[:convocation_include_organism_logo],
+
+      # Données d'exemple pour la prévisualisation
+      competition_name: @competition.nom_concours,
+      tour_name: @tour.nom,
+      tour_name_en: @tour.nom_en || @tour.nom,
+      performance_date: "15 janvier 2024",
+      performance_date_en: "January 15, 2024",
+      performance_time: "14h30",
+      performance_time_en: "2:30 PM",
+      performance_location: "Conservatoire de Lyon, Salle Berlioz\n14 rue du Conservatoire, 69002 Lyon",
+      performance_location_en: "Lyon Conservatory, Berlioz Hall\n14 rue du Conservatoire, 69002 Lyon",
+      program_list: [
+        { titre: "Nessun dorma", compositeur: "Giacomo Puccini", duree: "3 min" },
+        { titre: "O mio babbino caro", compositeur: "Giacomo Puccini", duree: "2 min" },
+        { titre: "Ave Maria", compositeur: "Franz Schubert", duree: "4 min" }
+      ],
+      pianist_name: "Jean Dubois",
+      pianist_provided: true,
+      rehearsal_time: "13h00",
+      rehearsal_time_en: "1:00 PM",
+      rehearsal_location: "Salle de répétition A",
+      rehearsal_location_en: "Rehearsal Room A"
+    }
+
+    # Générer et rendre le mailer
+    mail = ConvocationMailer.convocation_email(sample_candidat, config)
     render html: mail.body.to_s.html_safe, layout: false
   end
 

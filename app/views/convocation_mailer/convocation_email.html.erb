@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Convocation - <%= @sample_data[:concours][:nom] %></title>
+  <title>Convocation</title>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -71,156 +71,172 @@
   </style>
 </head>
 <body>
-  <!-- Version française -->
+  <!-- VERSION FRANÇAISE -->
   <div class="convocation-container">
     <h2>Version française</h2>
 
-    <% if @convocation_config[:include_organism_logo] && @organism.logo.attached? %>
+    <% if @config[:include_organism_logo] %>
       <div class="logo-container">
         <div class="logo-placeholder">Logo de l'organisme</div>
       </div>
     <% end %>
 
-    <% if @convocation_config[:intro_message_fr].present? %>
+    <!-- Message d'introduction personnalisé FR -->
+    <% if @config[:intro_message_fr].present? %>
       <div class="intro-message">
-        <%= simple_format(@convocation_config[:intro_message_fr]) %>
+        <%= simple_format(@config[:intro_message_fr]) %>
       </div>
     <% end %>
 
+    <!-- Informations sélectionnées -->
     <div class="section">
       <h5>Informations pratiques</h5>
 
-      <% if @convocation_config[:include_candidate_name] %>
-        <p><strong>Nom du candidat :</strong> <%= @sample_data[:candidat][:nom] %></p>
+      <% if @config[:include_candidate_name] %>
+        <p><strong>Nom du candidat :</strong> <%= @candidat.prenom %> <%= @candidat.nom %></p>
       <% end %>
 
-      <% if @convocation_config[:include_tour_name] %>
-        <p><strong>Tour concerné :</strong> <%= @sample_data[:tour][:nom] %></p>
+      <% if @config[:include_tour_name] %>
+        <p><strong>Tour concerné :</strong> <%= @config[:tour_name] %></p>
       <% end %>
 
-      <% if @convocation_config[:include_performance_datetime] %>
-        <p><strong>Date et heure de passage :</strong> <%= @sample_data[:performance][:date] %> à <%= @sample_data[:performance][:heure] %></p>
+      <% if @config[:include_performance_datetime] %>
+        <p><strong>Date et heure de passage :</strong> <%= @config[:performance_date] %> à <%= @config[:performance_time] %></p>
       <% end %>
 
-      <% if @convocation_config[:include_performance_location] %>
-        <p><strong>Lieu de passage :</strong><br><%= simple_format(@sample_data[:performance][:lieu]) %></p>
+      <% if @config[:include_performance_location] %>
+        <p><strong>Lieu de passage :</strong><br><%= simple_format(@config[:performance_location]) %></p>
       <% end %>
     </div>
 
-    <% if @convocation_config[:include_program] %>
+    <% if @config[:include_program] %>
       <div class="section">
         <h5>Votre programme</h5>
-        <ul>
-          <% @sample_data[:programme].each_with_index do |oeuvre, index| %>
-            <li><%= index + 1 %>. <strong><%= oeuvre[:titre] %></strong> - <%= oeuvre[:compositeur] %> (<%= oeuvre[:duree] %>)</li>
-          <% end %>
-        </ul>
-        <p><em>Durée totale : 9 minutes</em></p>
+        <% if @config[:program_list].present? %>
+          <ul>
+            <% @config[:program_list].each_with_index do |oeuvre, index| %>
+              <li><%= index + 1 %>. <strong><%= oeuvre[:titre] %></strong> - <%= oeuvre[:compositeur] %> (<%= oeuvre[:duree] %>)</li>
+            <% end %>
+          </ul>
+        <% end %>
       </div>
     <% end %>
 
-    <% if @convocation_config[:include_pianist_name] || @convocation_config[:include_pianist_provided] %>
+    <% if @config[:include_pianist_name] || @config[:include_pianist_provided] %>
       <div class="section">
         <h5>Accompagnement pianistique</h5>
 
-        <% if @convocation_config[:include_pianist_name] %>
-          <p><strong>Pianiste accompagnateur :</strong> <%= @sample_data[:pianiste][:nom] %></p>
+        <% if @config[:include_pianist_name] %>
+          <p><strong>Pianiste accompagnateur :</strong> <%= @config[:pianist_name] %></p>
         <% end %>
 
-        <% if @convocation_config[:include_pianist_provided] %>
-          <p><strong>Pianiste fourni par l'organisation :</strong> Oui</p>
+        <% if @config[:include_pianist_provided] %>
+          <p><strong>Pianiste fourni par l'organisation :</strong> <%= @config[:pianist_provided] ? 'Oui' : 'Non' %></p>
         <% end %>
       </div>
     <% end %>
 
-    <% if @convocation_config[:include_rehearsals] %>
+    <% if @config[:include_rehearsals] %>
       <div class="section">
         <h5>Répétition</h5>
-        <p><strong>Heure de répétition :</strong> <%= @sample_data[:repetition][:heure] %></p>
-        <p><strong>Lieu de répétition :</strong> <%= @sample_data[:repetition][:lieu] %></p>
+        <% if @config[:rehearsal_time] %>
+          <p><strong>Heure de répétition :</strong> <%= @config[:rehearsal_time] %></p>
+        <% end %>
+        <% if @config[:rehearsal_location] %>
+          <p><strong>Lieu de répétition :</strong> <%= @config[:rehearsal_location] %></p>
+        <% end %>
       </div>
     <% end %>
 
-    <% if @convocation_config[:additional_message_fr].present? %>
+    <!-- Message additionnel personnalisé FR -->
+    <% if @config[:additional_message_fr].present? %>
       <div class="intro-message">
-        <%= simple_format(@convocation_config[:additional_message_fr]) %>
+        <%= simple_format(@config[:additional_message_fr]) %>
       </div>
     <% end %>
   </div>
 
-  <!-- Version anglaise -->
+  <!-- VERSION ANGLAISE -->
   <div class="convocation-container version-separator">
     <h2>English version</h2>
 
-    <% if @convocation_config[:include_organism_logo] && @organism.logo.attached? %>
+    <% if @config[:include_organism_logo] %>
       <div class="logo-container">
         <div class="logo-placeholder">Organization logo</div>
       </div>
     <% end %>
 
-    <% if @convocation_config[:intro_message_en].present? %>
+    <!-- Message d'introduction personnalisé EN -->
+    <% if @config[:intro_message_en].present? %>
       <div class="intro-message">
-        <%= simple_format(@convocation_config[:intro_message_en]) %>
+        <%= simple_format(@config[:intro_message_en]) %>
       </div>
     <% end %>
 
+    <!-- Informations sélectionnées -->
     <div class="section">
       <h5>Practical Information</h5>
 
-      <% if @convocation_config[:include_candidate_name] %>
-        <p><strong>Candidate name:</strong> <%= @sample_data[:candidat][:nom] %></p>
+      <% if @config[:include_candidate_name] %>
+        <p><strong>Candidate name:</strong> <%= @candidat.prenom %> <%= @candidat.nom %></p>
       <% end %>
 
-      <% if @convocation_config[:include_tour_name] %>
-        <p><strong>Round:</strong> <%= @sample_data[:tour][:nom_en] %></p>
+      <% if @config[:include_tour_name] %>
+        <p><strong>Round:</strong> <%= @config[:tour_name_en] || @config[:tour_name] %></p>
       <% end %>
 
-      <% if @convocation_config[:include_performance_datetime] %>
-        <p><strong>Performance date and time:</strong> <%= @sample_data[:performance][:date_en] %> at <%= @sample_data[:performance][:heure_en] %></p>
+      <% if @config[:include_performance_datetime] %>
+        <p><strong>Performance date and time:</strong> <%= @config[:performance_date_en] || @config[:performance_date] %> at <%= @config[:performance_time_en] || @config[:performance_time] %></p>
       <% end %>
 
-      <% if @convocation_config[:include_performance_location] %>
-        <p><strong>Performance location:</strong><br><%= simple_format(@sample_data[:performance][:lieu_en]) %></p>
+      <% if @config[:include_performance_location] %>
+        <p><strong>Performance location:</strong><br><%= simple_format(@config[:performance_location_en] || @config[:performance_location]) %></p>
       <% end %>
     </div>
 
-    <% if @convocation_config[:include_program] %>
+    <% if @config[:include_program] %>
       <div class="section">
         <h5>Program</h5>
-        <ul>
-          <% @sample_data[:programme].each_with_index do |oeuvre, index| %>
-            <li><%= index + 1 %>. <strong><%= oeuvre[:titre] %></strong> - <%= oeuvre[:compositeur] %> (<%= oeuvre[:duree] %>)</li>
-          <% end %>
-        </ul>
-        <p><em>Total duration: 9 minutes</em></p>
+        <% if @config[:program_list].present? %>
+          <ul>
+            <% @config[:program_list].each_with_index do |oeuvre, index| %>
+              <li><%= index + 1 %>. <strong><%= oeuvre[:titre] %></strong> - <%= oeuvre[:compositeur] %> (<%= oeuvre[:duree] %>)</li>
+            <% end %>
+          </ul>
+        <% end %>
       </div>
     <% end %>
 
-    <% if @convocation_config[:include_pianist_name] || @convocation_config[:include_pianist_provided] %>
+    <% if @config[:include_pianist_name] || @config[:include_pianist_provided] %>
       <div class="section">
         <h5>Piano accompaniment</h5>
 
-        <% if @convocation_config[:include_pianist_name] %>
-          <p><strong>Pianist:</strong> <%= @sample_data[:pianiste][:nom] %></p>
+        <% if @config[:include_pianist_name] %>
+          <p><strong>Pianist:</strong> <%= @config[:pianist_name] %></p>
         <% end %>
 
-        <% if @convocation_config[:include_pianist_provided] %>
-          <p><strong>Pianist provided by the organization:</strong> Yes</p>
+        <% if @config[:include_pianist_provided] %>
+          <p><strong>Pianist provided by the organization:</strong> <%= @config[:pianist_provided] ? 'Yes' : 'No' %></p>
         <% end %>
       </div>
     <% end %>
 
-    <% if @convocation_config[:include_rehearsals] %>
+    <% if @config[:include_rehearsals] %>
       <div class="section">
         <h5>Rehearsal</h5>
-        <p><strong>Rehearsal time:</strong> <%= @sample_data[:repetition][:heure_en] %></p>
-        <p><strong>Rehearsal location:</strong> <%= @sample_data[:repetition][:lieu_en] %></p>
+        <% if @config[:rehearsal_time_en] || @config[:rehearsal_time] %>
+          <p><strong>Rehearsal time:</strong> <%= @config[:rehearsal_time_en] || @config[:rehearsal_time] %></p>
+        <% end %>
+        <% if @config[:rehearsal_location_en] || @config[:rehearsal_location] %>
+          <p><strong>Rehearsal location:</strong> <%= @config[:rehearsal_location_en] || @config[:rehearsal_location] %></p>
+        <% end %>
       </div>
     <% end %>
 
-    <% if @convocation_config[:additional_message_en].present? %>
+    <!-- Message additionnel personnalisé EN -->
+    <% if @config[:additional_message_en].present? %>
       <div class="intro-message">
-        <%= simple_format(@convocation_config[:additional_message_en]) %>
+        <%= simple_format(@config[:additional_message_en]) %>
       </div>
     <% end %>
   </div>
