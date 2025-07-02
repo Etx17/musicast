@@ -7,13 +7,6 @@
             Configurez les informations à inclure dans les convocations
           </p>
         </div>
-        <div class="d-flex gap-2">
-          <button type="button" class="btn btn-outline-secondary"
-                  data-bs-toggle="modal" data-bs-target="#previewModal"
-                  onclick="generatePreview()">
-            Prévisualiser
-          </button>
-        </div>
       </div>
 
     <%= form_with url: store_convocation_config_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour),
@@ -74,15 +67,13 @@
           </div>
         </div>
         <div class="d-flex gap-3 mb-4">
-          <%= f.submit "Sauvegarder la configuration", class: "btn btn-primary btn-lg" %>
-          <button type="button" class="btn btn-outline-secondary btn-lg" onclick="previewConvocation()">
+          <%# <%= f.submit "Sauvegarder la configuration", class: "btn btn-primary btn-lg" %>
+          <button type="button" class="btn btn-outline-primary btn-lg" onclick="previewConvocation()">
             Prévisualiser
           </button>
 
           <%# Ajouter un bouton pour envoyer les convocations en itérant sur les performances du tour %>
-          
-        </div>
-
+          <%= link_to "Envoyer les convocations", send_convocations_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour), class: "btn btn-primary btn-lg", method: :post %>
     <% end %>
   </div>
 </div>

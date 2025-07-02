@@ -329,9 +329,23 @@ class ToursController < ApplicationController
                 notice: "Configuration des convocations sauvegardée avec succès!"
   end
 
+  def send_convocations
+    @tour = Tour.find(params[:id])
+    # Construire la config à partir de la session
+    config = {
+      intro_message_fr: session[:convocation_intro_message_fr],
+      intro_message_en: session[:convocation_intro_message_en],
+      additional_message_fr: session[:convocation_additional_message_fr],
+      additional_message_en: session[:convocation_additional_message_en]
+    }
+    @tour.send_convocations(config)
+    redirect_to organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour),
+                notice: "Convocations envoyées avec succès!"
+  end
+
   def preview_convocation
     # Créer un candidat fictif pour la prévisualisation
-    sample_candidat = @tour.performances.first.inscription.candidat
+    sample_performance = @tour.performances.first
         # Construire la config à partir de la session (seulement les messages custom et flags)
     config = {
       # Messages personnalisés
@@ -342,7 +356,7 @@ class ToursController < ApplicationController
     }
 
     # Générer et rendre le mailer
-    mail = ConvocationMailer.convocation_email(@performance, config)
+    mail = ConvocationMailer.convocation_email(sample_performance, config)
     render html: mail.body.to_s.html_safe, layout: false
   end
 

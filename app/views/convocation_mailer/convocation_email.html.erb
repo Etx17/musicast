@@ -25,6 +25,10 @@
       text-align: center;
       margin-bottom: 30px;
     }
+    .logo {
+      max-height: 100px;
+      max-width: 200px;
+    }
     .logo-placeholder {
       background-color: #e9ecef;
       padding: 20px;
@@ -48,7 +52,7 @@
       padding-left: 20px;
     }
     li {
-      margin-bottom: 5px;
+      margin-bottom: 8px;
     }
     .intro-message {
       background-color: #f8f9fa;
@@ -65,6 +69,25 @@
       margin: 50px 0 30px 0;
       padding-top: 30px;
     }
+    .air-item {
+      background-color: #f8f9fa;
+      padding: 12px;
+      margin-bottom: 8px;
+      border-radius: 4px;
+      border-left: 3px solid #6c757d;
+    }
+    .air-title {
+      font-weight: bold;
+      color: #2c3e50;
+    }
+    .air-composer {
+      font-style: italic;
+      color: #495057;
+    }
+    .air-duration {
+      color: #6c757d;
+      font-size: 0.9em;
+    }
     strong {
       color: #495057;
     }
@@ -74,33 +97,86 @@
   <!-- VERSION FRANÇAISE -->
   <div class="convocation-container">
 
-    <% if @organism.logo.persisted? %>
+    <% if @organism.logo.attached? %>
       <div class="logo-container">
         <%= image_tag @organism.logo, class: "logo" %>
+      <h1>Convocation</h1>
       </div>
     <% end %>
 
     <!-- Message d'introduction personnalisé FR -->
     <% if @config[:intro_message_fr].present? %>
-      <div class="intro-message">
+      <div class="">
         <%= simple_format(@config[:intro_message_fr]) %>
       </div>
     <% end %>
 
     <!-- Informations sélectionnées -->
     <div class="section">
-      <h5>Informations pratiques</h5>
+      <h2>Informations</h2>
+      <p>
+        <span style="margin-right: 20px;"><strong>Candidat:</strong> <%= @candidat.full_name %></span>
+        <span style="margin-right: 20px;"><strong>Tour:</strong> <%= @tour.title %></span>
+        <span><strong>Catégorie:</strong> <%= @category.name %></span>
+      </p>
+      <p>
+        <% if @performance.start_date.present? %>
+          <span style="margin-right: 20px;"><strong>Date de passage :</strong> <%= @performance.start_date.strftime("%d %B %Y") %></span>
+        <% end %>
+
+        <% if @performance.start_time.present? %>
+          <span style="margin-right: 20px;"><strong>Heure de passage :</strong> <%= @performance.start_time.strftime("%H:%M") %></span>
+        <% end %>
+
+        <% if @performance.order.present? %>
+          <span><strong>Ordre de passage :</strong> N° <%= @performance.order %></span>
+        <% end %>
+      </p>
     </div>
 
-    <p><%= @candidat.full_name %></p>
-    <p><%= @tour.title %></p>
-    <%# <%= @performance %>
-    <p><%= @tour.start_date.to_date %></p>
+    <!-- Programme musical -->
+    <% if @performance.air_selection.present? %>
+      <div class="section">
+        <h2>Programme</h2>
+        <% Air.where(id: @performance.air_selection).each_with_index do |air, index| %>
+          <div class="">
+            <div class=""><%= index + 1 %>. <strong><%= air.title %></strong> de <%= air.composer %></div>
+            <div class="air-composer"></div>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
 
+    <!-- Accompagnement pianistique -->
+    <% if @performance.pianist_accompagnateur.present? %>
+      <div class="section">
+        <p><strong>Pianiste accompagnateur :</strong> <%= @performance.pianist_accompagnateur.full_name %></p>
+      </div>
+    <% end %>
+
+    <!-- Répétitions -->
+    <% if @performance.candidate_rehearsal.present? %>
+      <div class="section">
+        <h2>Répétition</h2>
+        <p>
+          <span style="margin-right: 20px;"><strong>Date :</strong> <%= @performance.candidate_rehearsal.start_time.strftime("%d %B %Y") %></span>
+          <span style="margin-right: 20px;"><strong>Horaire :</strong> <%= @performance.candidate_rehearsal.start_time.strftime("%H:%M") %> - <%= @performance.candidate_rehearsal.end_time.strftime("%H:%M") %></span>
+          <span><strong>Salle :</strong> <%= @performance.candidate_rehearsal.room.name %></span>
+        </p>
+        <p>
+          <% if @performance.candidate_rehearsal.pianist_accompagnateur.present? %>
+            <span style="margin-right: 20px;"><strong>Pianiste accompagnateur :</strong> <%= @performance.candidate_rehearsal.pianist_accompagnateur.full_name %></span>
+          <% end %>
+          <% if @performance.candidate_rehearsal.notes.present? %>
+            <span><strong>Notes :</strong> <%= @performance.candidate_rehearsal.notes %></span>
+          <% end %>
+        </p>
+      </div>
+    <% end %>
 
     <!-- Message additionnel personnalisé FR -->
     <% if @config[:additional_message_fr].present? %>
-      <div class="intro-message">
+      <div class="">
         <%= simple_format(@config[:additional_message_fr]) %>
       </div>
     <% end %>
@@ -109,72 +185,78 @@
   <!-- VERSION ANGLAISE -->
   <div class="convocation-container version-separator">
 
-    <% if @config[:include_organism_logo] %>
+    <% if @organism.logo.attached? %>
       <div class="logo-container">
-        <div class="logo-placeholder">Organization logo</div>
+        <%= image_tag @organism.logo, class: "logo" %>
+      <h1>Convocation</h1>
       </div>
     <% end %>
 
     <!-- Message d'introduction personnalisé EN -->
     <% if @config[:intro_message_en].present? %>
-      <div class="intro-message">
+      <div class="">
         <%= simple_format(@config[:intro_message_en]) %>
       </div>
     <% end %>
 
     <!-- Informations sélectionnées -->
     <div class="section">
-      <h5>Practical Information</h5>
+      <p>
+        <span style="margin-right: 20px;"><strong>Candidate:</strong> <%= @candidat.full_name %></span>
+        <span style="margin-right: 20px;"><strong>Round:</strong> <%= @tour.title_english || @tour.title %></span>
+        <span><strong>Category:</strong> <%= @category.name %></span>
+      </p>
+      <p>
+        <% if @performance.start_date.present? %>
+          <span style="margin-right: 20px;"><strong>Date:</strong> <%= @performance.start_date.strftime("%B %d, %Y") %></span>
+        <% end %>
 
-      <% if @config[:include_candidate_name] %>
-        <p><strong>Candidate name:</strong> <%= @candidat.prenom %> <%= @candidat.nom %></p>
-      <% end %>
+        <% if @performance.start_time.present? %>
+          <span style="margin-right: 20px;"><strong>Time:</strong> <%= @performance.start_time.strftime("%I:%M %p") %></span>
+        <% end %>
 
-      <% if @config[:include_tour_name] %>
-        <p><strong>Round:</strong> <%= @tour.title_english || @tour.title %></p>
-      <% end %>
-
-      <% if @config[:include_performance_datetime] %>
-        <p><strong>Performance date and time:</strong> <%= @tour.start_date.strftime("%B %d, %Y") %> at 2:30 PM</p>
-      <% end %>
-
-      <% if @config[:include_performance_location] %>
-        <p><strong>Performance location:</strong><br>Conservatory, Main Hall</p>
-      <% end %>
+        <% if @performance.order.present? %>
+          <span><strong>Order:</strong> No. <%= @performance.order %></span>
+        <% end %>
+      </p>
     </div>
 
-    <% if @config[:include_program] %>
+    <!-- Programme musical -->
+    <% if @performance.air_selection.present? %>
       <div class="section">
-        <h5>Program</h5>
-        <p><em>Program to be defined</em></p>
-      </div>
-    <% end %>
-
-    <% if @config[:include_pianist_name] || @config[:include_pianist_provided] %>
-      <div class="section">
-        <h5>Piano accompaniment</h5>
-
-        <% if @config[:include_pianist_name] %>
-          <p><strong>Pianist:</strong> Jean Dubois</p>
-        <% end %>
-
-        <% if @config[:include_pianist_provided] %>
-          <p><strong>Pianist provided by the organization:</strong> Yes</p>
+        <h2>Program</h2>
+        <% Air.where(id: @performance.air_selection).each_with_index do |air, index| %>
+          <div class="">
+            <div class=""><%= index + 1 %>. <strong><%= air.title %></strong> by <%= air.composer %></div>
+            <div class="air-composer"></div>
+          </div>
         <% end %>
       </div>
     <% end %>
 
-    <% if @config[:include_rehearsals] %>
+    <!-- Répétitions -->
+    <% if @performance.candidate_rehearsal.present? %>
       <div class="section">
-        <h5>Rehearsal</h5>
-        <p><strong>Rehearsal time:</strong> 1:00 PM</p>
-        <p><strong>Rehearsal location:</strong> Rehearsal Room A</p>
+        <h2>Rehearsal</h2>
+        <p>
+          <span style="margin-right: 20px;"><strong>Date:</strong> <%= @performance.candidate_rehearsal.start_time.strftime("%B %d, %Y") %></span>
+          <span style="margin-right: 20px;"><strong>Time:</strong> <%= @performance.candidate_rehearsal.start_time.strftime("%I:%M %p") %> - <%= @performance.candidate_rehearsal.end_time.strftime("%I:%M %p") %></span>
+          <span><strong>Room:</strong> <%= @performance.candidate_rehearsal.room.name %></span>
+        </p>
+        <p>
+          <% if @performance.candidate_rehearsal.pianist_accompagnateur.present? %>
+            <span style="margin-right: 20px;"><strong>Pianist:</strong> <%= @performance.candidate_rehearsal.pianist_accompagnateur.full_name %></span>
+          <% end %>
+          <% if @performance.candidate_rehearsal.notes.present? %>
+            <span><strong>Notes:</strong> <%= @performance.candidate_rehearsal.notes %></span>
+          <% end %>
+        </p>
       </div>
     <% end %>
 
     <!-- Message additionnel personnalisé EN -->
     <% if @config[:additional_message_en].present? %>
-      <div class="intro-message">
+      <div class="">
         <%= simple_format(@config[:additional_message_en]) %>
       </div>
     <% end %>

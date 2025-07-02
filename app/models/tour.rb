@@ -46,6 +46,9 @@ class Tour < ApplicationRecord
     true
   end
 
+  def send_convocations(config = {})
+    ConvocationBulkJob.perform_later(self, config)
+  end
 
   def move_qualified_candidates_to_next_tour
 
