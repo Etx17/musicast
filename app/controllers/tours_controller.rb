@@ -1,7 +1,7 @@
 require 'zip'
 class ToursController < ApplicationController
-  before_action :set_tour, only: %i[set_current_tab download_schedule_pdf download_pianist_scores download_all_scores download_score assign_pianist_to_performance_manually assign_pianist store_form_data move_to_next_tour qualify_performance shuffle show edit update destroy update_order update_day_of_performance_and_subsequent_performances]
-  before_action :set_context, only: %i[reorder_tours assign_pianist_to_performance_manually assign_pianist store_form_data move_to_next_tour qualify_performance shuffle new create show edit update destroy update_order update_day_of_performance_and_subsequent_performances]
+  before_action :set_tour, only: %i[store_convocation_config preview_convocation set_current_tab download_schedule_pdf download_pianist_scores download_all_scores download_score assign_pianist_to_performance_manually assign_pianist store_form_data move_to_next_tour qualify_performance shuffle show edit update destroy update_order update_day_of_performance_and_subsequent_performances]
+  before_action :set_context, only: %i[store_convocation_config preview_convocation reorder_tours assign_pianist_to_performance_manually assign_pianist store_form_data move_to_next_tour qualify_performance shuffle new create show edit update destroy update_order update_day_of_performance_and_subsequent_performances]
 
   before_action :set_current_tab, only: :show
   def index
@@ -325,32 +325,6 @@ class ToursController < ApplicationController
     session[:convocation_additional_message_fr] = params[:additional_message_fr]
     session[:convocation_additional_message_en] = params[:additional_message_en]
 
-    # Informations candidat
-    session[:convocation_include_candidate_name] = params[:include_candidate_name] == "1"
-
-    # Informations tour
-    session[:convocation_include_tour_name] = params[:include_tour_name] == "1"
-    session[:convocation_include_performance_datetime] = params[:include_performance_datetime] == "1"
-    session[:convocation_include_performance_location] = params[:include_performance_location] == "1"
-
-    # Programme
-    session[:convocation_include_program] = params[:include_program] == "1"
-    session[:convocation_program_format] = params[:program_format] # "simple" ou "detailed"
-
-    # Pianiste
-    session[:convocation_include_pianist_name] = params[:include_pianist_name] == "1"
-    session[:convocation_include_pianist_provided] = params[:include_pianist_provided] == "1"
-
-    # Répétitions
-    session[:convocation_include_rehearsals] = params[:include_rehearsals] == "1"
-    session[:convocation_rehearsal_format] = params[:rehearsal_format] # "time_only" ou "time_and_location"
-
-    # Logo organisme
-    session[:convocation_include_organism_logo] = params[:include_organism_logo] == "1"
-
-    # Langue
-    session[:convocation_language] = params[:convocation_language] || "fr"
-
     redirect_to organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour),
                 notice: "Configuration des convocations sauvegardée avec succès!"
   end
@@ -362,8 +336,7 @@ class ToursController < ApplicationController
       prenom: "Sophie",
       email: "preview@example.com"
     )
-
-    # Construire la config à partir de la session
+        # Construire la config à partir de la session (seulement les messages custom et flags)
     config = {
       # Messages personnalisés
       intro_message_fr: session[:convocation_intro_message_fr],
@@ -371,7 +344,7 @@ class ToursController < ApplicationController
       additional_message_fr: session[:convocation_additional_message_fr],
       additional_message_en: session[:convocation_additional_message_en],
 
-      # Informations à inclure
+      # Informations à inclure (flags)
       include_candidate_name: session[:convocation_include_candidate_name],
       include_tour_name: session[:convocation_include_tour_name],
       include_performance_datetime: session[:convocation_include_performance_datetime],
@@ -380,33 +353,11 @@ class ToursController < ApplicationController
       include_pianist_name: session[:convocation_include_pianist_name],
       include_pianist_provided: session[:convocation_include_pianist_provided],
       include_rehearsals: session[:convocation_include_rehearsals],
-      include_organism_logo: session[:convocation_include_organism_logo],
-
-      # Données d'exemple pour la prévisualisation
-      competition_name: @competition.nom_concours,
-      tour_name: @tour.nom,
-      tour_name_en: @tour.nom_en || @tour.nom,
-      performance_date: "15 janvier 2024",
-      performance_date_en: "January 15, 2024",
-      performance_time: "14h30",
-      performance_time_en: "2:30 PM",
-      performance_location: "Conservatoire de Lyon, Salle Berlioz\n14 rue du Conservatoire, 69002 Lyon",
-      performance_location_en: "Lyon Conservatory, Berlioz Hall\n14 rue du Conservatoire, 69002 Lyon",
-      program_list: [
-        { titre: "Nessun dorma", compositeur: "Giacomo Puccini", duree: "3 min" },
-        { titre: "O mio babbino caro", compositeur: "Giacomo Puccini", duree: "2 min" },
-        { titre: "Ave Maria", compositeur: "Franz Schubert", duree: "4 min" }
-      ],
-      pianist_name: "Jean Dubois",
-      pianist_provided: true,
-      rehearsal_time: "13h00",
-      rehearsal_time_en: "1:00 PM",
-      rehearsal_location: "Salle de répétition A",
-      rehearsal_location_en: "Rehearsal Room A"
+      include_organism_logo: session[:convocation_include_organism_logo]
     }
 
     # Générer et rendre le mailer
-    mail = ConvocationMailer.convocation_email(sample_candidat, config)
+    mail = ConvocationMailer.convocation_email(sample_candidat, @tour, @organism, @competition, @edition_competition, @category, config)
     render html: mail.body.to_s.html_safe, layout: false
   end
 

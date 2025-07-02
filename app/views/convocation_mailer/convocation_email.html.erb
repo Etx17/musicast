@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Convocation</title>
+  <title>Convocation - <%= @competition.nom_concours %></title>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -73,11 +73,10 @@
 <body>
   <!-- VERSION FRANÇAISE -->
   <div class="convocation-container">
-    <h2>Version française</h2>
 
-    <% if @config[:include_organism_logo] %>
+    <% if @organism.logo.persisted? %>
       <div class="logo-container">
-        <div class="logo-placeholder">Logo de l'organisme</div>
+        <%= image_tag @organism.logo, class: "logo" %>
       </div>
     <% end %>
 
@@ -97,28 +96,22 @@
       <% end %>
 
       <% if @config[:include_tour_name] %>
-        <p><strong>Tour concerné :</strong> <%= @config[:tour_name] %></p>
+        <p><strong>Tour concerné :</strong> <%= @tour.title %></p>
       <% end %>
 
       <% if @config[:include_performance_datetime] %>
-        <p><strong>Date et heure de passage :</strong> <%= @config[:performance_date] %> à <%= @config[:performance_time] %></p>
+        <p><strong>Date et heure de passage :</strong> <%= @tour.start_date.strftime("%d %B %Y") %> à 14h30</p>
       <% end %>
 
       <% if @config[:include_performance_location] %>
-        <p><strong>Lieu de passage :</strong><br><%= simple_format(@config[:performance_location]) %></p>
+        <p><strong>Lieu de passage :</strong><br>Conservatoire, Salle principale</p>
       <% end %>
     </div>
 
     <% if @config[:include_program] %>
       <div class="section">
         <h5>Votre programme</h5>
-        <% if @config[:program_list].present? %>
-          <ul>
-            <% @config[:program_list].each_with_index do |oeuvre, index| %>
-              <li><%= index + 1 %>. <strong><%= oeuvre[:titre] %></strong> - <%= oeuvre[:compositeur] %> (<%= oeuvre[:duree] %>)</li>
-            <% end %>
-          </ul>
-        <% end %>
+        <p><em>Programme à définir</em></p>
       </div>
     <% end %>
 
@@ -127,11 +120,11 @@
         <h5>Accompagnement pianistique</h5>
 
         <% if @config[:include_pianist_name] %>
-          <p><strong>Pianiste accompagnateur :</strong> <%= @config[:pianist_name] %></p>
+          <p><strong>Pianiste accompagnateur :</strong> Jean Dubois</p>
         <% end %>
 
         <% if @config[:include_pianist_provided] %>
-          <p><strong>Pianiste fourni par l'organisation :</strong> <%= @config[:pianist_provided] ? 'Oui' : 'Non' %></p>
+          <p><strong>Pianiste fourni par l'organisation :</strong> Oui</p>
         <% end %>
       </div>
     <% end %>
@@ -139,12 +132,8 @@
     <% if @config[:include_rehearsals] %>
       <div class="section">
         <h5>Répétition</h5>
-        <% if @config[:rehearsal_time] %>
-          <p><strong>Heure de répétition :</strong> <%= @config[:rehearsal_time] %></p>
-        <% end %>
-        <% if @config[:rehearsal_location] %>
-          <p><strong>Lieu de répétition :</strong> <%= @config[:rehearsal_location] %></p>
-        <% end %>
+        <p><strong>Heure de répétition :</strong> 13h00</p>
+        <p><strong>Lieu de répétition :</strong> Salle de répétition A</p>
       </div>
     <% end %>
 
@@ -158,7 +147,6 @@
 
   <!-- VERSION ANGLAISE -->
   <div class="convocation-container version-separator">
-    <h2>English version</h2>
 
     <% if @config[:include_organism_logo] %>
       <div class="logo-container">
@@ -182,28 +170,22 @@
       <% end %>
 
       <% if @config[:include_tour_name] %>
-        <p><strong>Round:</strong> <%= @config[:tour_name_en] || @config[:tour_name] %></p>
+        <p><strong>Round:</strong> <%= @tour.title_english || @tour.title %></p>
       <% end %>
 
       <% if @config[:include_performance_datetime] %>
-        <p><strong>Performance date and time:</strong> <%= @config[:performance_date_en] || @config[:performance_date] %> at <%= @config[:performance_time_en] || @config[:performance_time] %></p>
+        <p><strong>Performance date and time:</strong> <%= @tour.start_date.strftime("%B %d, %Y") %> at 2:30 PM</p>
       <% end %>
 
       <% if @config[:include_performance_location] %>
-        <p><strong>Performance location:</strong><br><%= simple_format(@config[:performance_location_en] || @config[:performance_location]) %></p>
+        <p><strong>Performance location:</strong><br>Conservatory, Main Hall</p>
       <% end %>
     </div>
 
     <% if @config[:include_program] %>
       <div class="section">
         <h5>Program</h5>
-        <% if @config[:program_list].present? %>
-          <ul>
-            <% @config[:program_list].each_with_index do |oeuvre, index| %>
-              <li><%= index + 1 %>. <strong><%= oeuvre[:titre] %></strong> - <%= oeuvre[:compositeur] %> (<%= oeuvre[:duree] %>)</li>
-            <% end %>
-          </ul>
-        <% end %>
+        <p><em>Program to be defined</em></p>
       </div>
     <% end %>
 
@@ -212,11 +194,11 @@
         <h5>Piano accompaniment</h5>
 
         <% if @config[:include_pianist_name] %>
-          <p><strong>Pianist:</strong> <%= @config[:pianist_name] %></p>
+          <p><strong>Pianist:</strong> Jean Dubois</p>
         <% end %>
 
         <% if @config[:include_pianist_provided] %>
-          <p><strong>Pianist provided by the organization:</strong> <%= @config[:pianist_provided] ? 'Yes' : 'No' %></p>
+          <p><strong>Pianist provided by the organization:</strong> Yes</p>
         <% end %>
       </div>
     <% end %>
@@ -224,12 +206,8 @@
     <% if @config[:include_rehearsals] %>
       <div class="section">
         <h5>Rehearsal</h5>
-        <% if @config[:rehearsal_time_en] || @config[:rehearsal_time] %>
-          <p><strong>Rehearsal time:</strong> <%= @config[:rehearsal_time_en] || @config[:rehearsal_time] %></p>
-        <% end %>
-        <% if @config[:rehearsal_location_en] || @config[:rehearsal_location] %>
-          <p><strong>Rehearsal location:</strong> <%= @config[:rehearsal_location_en] || @config[:rehearsal_location] %></p>
-        <% end %>
+        <p><strong>Rehearsal time:</strong> 1:00 PM</p>
+        <p><strong>Rehearsal location:</strong> Rehearsal Room A</p>
       </div>
     <% end %>
 

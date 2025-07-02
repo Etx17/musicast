@@ -73,97 +73,12 @@
             </div>
           </div>
         </div>
-
-        <!-- Informations à inclure -->
-        <div class="card mb-4">
-          <div class="card-header">
-            <h5 class="mb-0">Informations à inclure sur la convocation</h5>
-          </div>
-          <div class="p-4 bg-light">
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-check mb-3">
-                  <%= f.check_box :include_candidate_name,
-                        checked: session[:convocation_include_candidate_name] != "0",
-                        class: "form-check-input" %>
-                  <%= f.label :include_candidate_name, "Nom du candidat", class: "form-check-label" %>
-                </div>
-
-                <div class="form-check mb-3">
-                  <%= f.check_box :include_tour_name,
-                        checked: session[:convocation_include_tour_name] != "0",
-                        class: "form-check-input" %>
-                  <%= f.label :include_tour_name, "Tour concerné", class: "form-check-label" %>
-                </div>
-
-                <div class="form-check mb-3">
-                  <%= f.check_box :include_performance_datetime,
-                        checked: session[:convocation_include_performance_datetime] != "0",
-                        class: "form-check-input" %>
-                  <%= f.label :include_performance_datetime, "Date et heure de passage", class: "form-check-label" %>
-                </div>
-
-                <div class="form-check mb-3">
-                  <%= f.check_box :include_performance_location,
-                        checked: session[:convocation_include_performance_location] != "0",
-                        class: "form-check-input" %>
-                  <%= f.label :include_performance_location, "Lieu de passage", class: "form-check-label" %>
-                </div>
-              </div>
-
-              <div class="col-md-6">
-                <div class="form-check mb-3">
-                  <%= f.check_box :include_program,
-                        checked: session[:convocation_include_program] != "0",
-                        class: "form-check-input" %>
-                  <%= f.label :include_program, "Programme soumis (liste d'œuvres)", class: "form-check-label" %>
-                </div>
-
-                <div class="form-check mb-3">
-                  <%= f.check_box :include_pianist_name,
-                        checked: session[:convocation_include_pianist_name] != "0",
-                        class: "form-check-input" %>
-                  <%= f.label :include_pianist_name, "Pianiste accompagnateur (nom)", class: "form-check-label" %>
-                </div>
-
-                <div class="form-check mb-3">
-                  <%= f.check_box :include_pianist_provided,
-                        checked: session[:convocation_include_pianist_provided] != "0",
-                        class: "form-check-input" %>
-                  <%= f.label :include_pianist_provided, "Pianiste fourni par l'organisme (oui/non)", class: "form-check-label" %>
-                </div>
-
-                <div class="form-check mb-3">
-                  <%= f.check_box :include_rehearsals,
-                        checked: session[:convocation_include_rehearsals] != "0",
-                        class: "form-check-input" %>
-                  <%= f.label :include_rehearsals, "Répétition(s) (heure + lieu)", class: "form-check-label" %>
-                </div>
-
-                <div class="form-check mb-3">
-                  <%= f.check_box :include_organism_logo,
-                        checked: session[:convocation_include_organism_logo] != "0",
-                        class: "form-check-input" %>
-                  <%= f.label :include_organism_logo, "Logo de l'organisme", class: "form-check-label" %>
-                  <% if @organism.logo.attached? %>
-                    <small class="d-block">Logo disponible</small>
-                  <% else %>
-                    <small class="d-block">Aucun logo configuré</small>
-                  <% end %>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Boutons d'action -->
         <div class="d-flex gap-3 mb-4">
           <%= f.submit "Sauvegarder la configuration", class: "btn btn-primary btn-lg" %>
           <button type="button" class="btn btn-outline-secondary btn-lg" onclick="previewConvocation()">
             Prévisualiser
           </button>
         </div>
-
 
     <% end %>
   </div>
