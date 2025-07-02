@@ -90,52 +90,13 @@
     <!-- Informations sélectionnées -->
     <div class="section">
       <h5>Informations pratiques</h5>
-
-      <% if @config[:include_candidate_name] %>
-        <p><strong>Nom du candidat :</strong> <%= @candidat.prenom %> <%= @candidat.nom %></p>
-      <% end %>
-
-      <% if @config[:include_tour_name] %>
-        <p><strong>Tour concerné :</strong> <%= @tour.title %></p>
-      <% end %>
-
-      <% if @config[:include_performance_datetime] %>
-        <p><strong>Date et heure de passage :</strong> <%= @tour.start_date.strftime("%d %B %Y") %> à 14h30</p>
-      <% end %>
-
-      <% if @config[:include_performance_location] %>
-        <p><strong>Lieu de passage :</strong><br>Conservatoire, Salle principale</p>
-      <% end %>
     </div>
 
-    <% if @config[:include_program] %>
-      <div class="section">
-        <h5>Votre programme</h5>
-        <p><em>Programme à définir</em></p>
-      </div>
-    <% end %>
+    <p><%= @candidat.full_name %></p>
+    <p><%= @tour.title %></p>
+    <%# <%= @performance %>
+    <p><%= @tour.start_date.to_date %></p>
 
-    <% if @config[:include_pianist_name] || @config[:include_pianist_provided] %>
-      <div class="section">
-        <h5>Accompagnement pianistique</h5>
-
-        <% if @config[:include_pianist_name] %>
-          <p><strong>Pianiste accompagnateur :</strong> Jean Dubois</p>
-        <% end %>
-
-        <% if @config[:include_pianist_provided] %>
-          <p><strong>Pianiste fourni par l'organisation :</strong> Oui</p>
-        <% end %>
-      </div>
-    <% end %>
-
-    <% if @config[:include_rehearsals] %>
-      <div class="section">
-        <h5>Répétition</h5>
-        <p><strong>Heure de répétition :</strong> 13h00</p>
-        <p><strong>Lieu de répétition :</strong> Salle de répétition A</p>
-      </div>
-    <% end %>
 
     <!-- Message additionnel personnalisé FR -->
     <% if @config[:additional_message_fr].present? %>

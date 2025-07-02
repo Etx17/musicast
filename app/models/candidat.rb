@@ -32,6 +32,7 @@ class Candidat < ApplicationRecord
    # validates_length_of :short_bio_en, maximum: 300
   # validates_length_of :medium_bio_en, maximum: 1000
   # validates_length_of :long_bio_en, maximum: 3000
+  delegate :email, to: :user
 
   def full_name
     "#{first_name} #{last_name}"

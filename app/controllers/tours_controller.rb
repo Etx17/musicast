@@ -331,11 +331,7 @@ class ToursController < ApplicationController
 
   def preview_convocation
     # Créer un candidat fictif pour la prévisualisation
-    sample_candidat = OpenStruct.new(
-      nom: "Martin",
-      prenom: "Sophie",
-      email: "preview@example.com"
-    )
+    sample_candidat = @tour.performances.first.inscription.candidat
         # Construire la config à partir de la session (seulement les messages custom et flags)
     config = {
       # Messages personnalisés
@@ -343,21 +339,10 @@ class ToursController < ApplicationController
       intro_message_en: session[:convocation_intro_message_en],
       additional_message_fr: session[:convocation_additional_message_fr],
       additional_message_en: session[:convocation_additional_message_en],
-
-      # Informations à inclure (flags)
-      include_candidate_name: session[:convocation_include_candidate_name],
-      include_tour_name: session[:convocation_include_tour_name],
-      include_performance_datetime: session[:convocation_include_performance_datetime],
-      include_performance_location: session[:convocation_include_performance_location],
-      include_program: session[:convocation_include_program],
-      include_pianist_name: session[:convocation_include_pianist_name],
-      include_pianist_provided: session[:convocation_include_pianist_provided],
-      include_rehearsals: session[:convocation_include_rehearsals],
-      include_organism_logo: session[:convocation_include_organism_logo]
     }
 
     # Générer et rendre le mailer
-    mail = ConvocationMailer.convocation_email(sample_candidat, @tour, @organism, @competition, @edition_competition, @category, config)
+    mail = ConvocationMailer.convocation_email(@performance, config)
     render html: mail.body.to_s.html_safe, layout: false
   end
 

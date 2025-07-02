@@ -1,12 +1,14 @@
 class ConvocationMailer < ApplicationMailer
-  def convocation_email(candidat, tour, organism, competition, edition_competition, category, config = {})
-    @candidat = candidat
-    @tour = tour
-    @organism = organism
-    @competition = competition
-    @edition_competition = edition_competition
-    @category = category
+  def convocation_email(performance, config = {})
+    @performance = performance
     @config = config
+
+    @candidat = performance.inscription.candidat
+    @tour = performance.tour
+    @organism = performance.tour.organism
+    @competition = performance.tour.competition
+    @edition_competition = performance.tour.edition_competition
+    @category = performance.tour.category
 
     mail(
       to: candidat.email,
