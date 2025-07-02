@@ -17,6 +17,8 @@ Rails.application.configure do
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
 
+  config.active_job.queue_adapter = :solid_queue
+
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Allow ngrok for testing webhooks

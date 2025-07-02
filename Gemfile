@@ -129,3 +129,5 @@ gem 'mini_magick'
 
 gem 'kaminari'
 
+
+gem "solid_queue", "~> 1.1"

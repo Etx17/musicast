@@ -20,6 +20,9 @@ Rails.application.configure do
   config.cache_classes = true
   config.active_storage.service = :amazon
 
+  config.active_job.queue_adapter = :solid_queue
+  config.solid_queue.supervisor = true # Pour ne pas avoir a lancer de worker sur un autre dyno.
+
   # Eager load code on boot. This eager loads most of Rails and
   # your application in memory, allowing both threaded web servers
   # and those relying on copy on write to perform better.
