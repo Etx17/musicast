@@ -128,3 +128,4 @@ gem 'rails-i18n', '~> 8.0.0'
 gem 'mini_magick'
 
 gem 'kaminari'
+
