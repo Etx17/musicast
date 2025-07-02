@@ -1,7 +1,7 @@
 require 'zip'
 class ToursController < ApplicationController
-  before_action :set_tour, only: %i[store_convocation_config preview_convocation set_current_tab download_schedule_pdf download_pianist_scores download_all_scores download_score assign_pianist_to_performance_manually assign_pianist store_form_data move_to_next_tour qualify_performance shuffle show edit update destroy update_order update_day_of_performance_and_subsequent_performances]
-  before_action :set_context, only: %i[store_convocation_config preview_convocation reorder_tours assign_pianist_to_performance_manually assign_pianist store_form_data move_to_next_tour qualify_performance shuffle new create show edit update destroy update_order update_day_of_performance_and_subsequent_performances]
+  before_action :set_tour, only: %i[send_convocations store_convocation_config preview_convocation set_current_tab download_schedule_pdf download_pianist_scores download_all_scores download_score assign_pianist_to_performance_manually assign_pianist store_form_data move_to_next_tour qualify_performance shuffle show edit update destroy update_order update_day_of_performance_and_subsequent_performances]
+  before_action :set_context, only: %i[send_convocations store_convocation_config preview_convocation reorder_tours assign_pianist_to_performance_manually assign_pianist store_form_data move_to_next_tour qualify_performance shuffle new create show edit update destroy update_order update_day_of_performance_and_subsequent_performances]
 
   before_action :set_current_tab, only: :show
   def index
@@ -339,6 +339,7 @@ class ToursController < ApplicationController
       additional_message_en: session[:convocation_additional_message_en]
     }
     @tour.send_convocations(config)
+    # TODO
     redirect_to organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour),
                 notice: "Convocations envoyées avec succès!"
   end

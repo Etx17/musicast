@@ -51,10 +51,6 @@ class Tour < ApplicationRecord
     performances_to_send_convocation_to.each do |performance|
       ConvocationMailer.convocation_email(performance, config).deliver_later
     end
-
-    performances_to_send_convocation_to.count # Retourner le nombre
-    # If les mails se sont bien executés, on peut mettre à jour le tour pour indiquer que les convocations ont été envoyées.
-    # self.update(convocations_sent: true) TODO: migration
   end
 
   def move_qualified_candidates_to_next_tour
