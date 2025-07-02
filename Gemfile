@@ -77,11 +77,7 @@ gem 'rubyzip'
 gem "wicked"
 gem 'faker'
 
-group :staging do
-  gem 'wkhtmltopdf-heroku', '~> 2.12.6'
-end
-
-group :production do
+group :staging, :production do
   gem 'wkhtmltopdf-heroku', '~> 2.12.6'
 end
 
