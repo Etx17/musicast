@@ -344,6 +344,7 @@ class ToursController < ApplicationController
                 notice: "Convocations envoyées avec succès!"
   end
 
+
   def preview_convocation
     # Créer un candidat fictif pour la prévisualisation
     sample_performance = @tour.performances.first

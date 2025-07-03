@@ -357,6 +357,51 @@ class Tour < ApplicationRecord
     end
   end
 
+  def recent_convocation_jobs(since = 30.minutes.ago)
+    # Jobs de mailers récents pour les convocations
+    recent_jobs = SolidQueue::Job.where(
+      "created_at > ? AND class_name = ? AND arguments LIKE ?",
+      since,
+      "ActionMailer::MailDeliveryJob",
+      "%ConvocationMailer%"
+    )
+
+    tour_jobs = []
+
+    recent_jobs.each do |job|
+      begin
+        # job.arguments est déjà un Hash, pas besoin de JSON.parse
+        args = job.arguments
+
+        # Vérifier que c'est bien ConvocationMailer
+        if args.dig("arguments", 0) == "ConvocationMailer" &&
+           args.dig("arguments", 1) == "convocation_email"
+
+          # Extraire Performance ID comme "Performance/30" → 30
+          performance_gid = args.dig("arguments", 3, "args", 0, "_aj_globalid")
+          if performance_gid&.include?("Performance/")
+            performance_id = performance_gid.split("/").last.to_i
+            performance = Performance.find_by(id: performance_id)
+
+            # Check si appartient à ce tour
+            if performance&.tour_id == self.id
+              tour_jobs << {
+                job: job,
+                performance: performance,
+                candidate: performance.inscription.candidat,
+                status: job.finished_at ? 'completed' : 'pending'
+              }
+            end
+          end
+        end
+      rescue => e
+        Rails.logger.warn "Could not parse job #{job.id}: #{e.message}"
+      end
+    end
+
+    tour_jobs.sort_by { |tj| tj[:candidate].full_name }
+  end
+
   private
 
   def new_day_start_time_before_max_end_of_day_time
