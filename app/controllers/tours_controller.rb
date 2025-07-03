@@ -362,6 +362,22 @@ class ToursController < ApplicationController
     render html: mail.body.to_s.html_safe, layout: false
   end
 
+  def view_convocation
+    @tour = Tour.find(params[:id])
+    performance = @tour.performances.find(params[:performance_id])
+
+    config = {
+      intro_message_fr: session[:convocation_intro_message_fr],
+      intro_message_en: session[:convocation_intro_message_en],
+      additional_message_fr: session[:convocation_additional_message_fr],
+      additional_message_en: session[:convocation_additional_message_en],
+    }
+
+    # Générer et rendre le mailer pour cette performance spécifique
+    mail = ConvocationMailer.convocation_email(performance, config)
+    render html: mail.body.to_s.html_safe, layout: false
+  end
+
   def reorder_tours
     new_order = params[:new_order]
 

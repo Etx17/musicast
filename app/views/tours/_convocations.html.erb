@@ -123,56 +123,70 @@ function previewConvocation() {
 <!-- Statut des jobs -->
 <% recent_jobs = @tour.recent_convocation_jobs %>
 <% if recent_jobs.any? %>
-  <div class="card mt-4">
-    <div class="card-header d-flex justify-content-between align-items-center">
-      <h5 class="mb-0">
-        <i class="fas fa-tasks me-2"></i>Envois récents (30 dernières minutes)
-      </h5>
-      <%= link_to "Actualiser", request.fullpath, class: "btn btn-outline-secondary btn-sm" %>
-    </div>
-    <div class="card-body">
-
-      <%
-        completed = recent_jobs.count { |j| j[:status] == 'completed' }
-        pending = recent_jobs.count { |j| j[:status] == 'pending' }
-        failed = recent_jobs.count { |j| SolidQueue::FailedExecution.exists?(job_id: j[:job].id) }
-      %>
-
-      <div class="row mb-3">
-        <div class="col-md-4">
-          <div class="text-center">
-            <div class="h4 text-success mb-0"><%= completed %></div>
-            <small class="text-muted">✓ Envoyés</small>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="text-center">
-            <div class="h4 text-warning mb-0"><%= pending %></div>
-            <small class="text-muted">⏳ En cours</small>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="text-center">
-            <div class="h4 text-danger mb-0"><%= failed %></div>
-            <small class="text-muted">✗ Échecs</small>
-          </div>
-        </div>
+  <div class="p-3">
+    <div class="card mt-4">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">
+          <i class="fas fa-tasks me-2"></i>Envois récents (30 dernières minutes)
+        </h5>
+        <%= link_to "Actualiser", request.fullpath, class: "btn btn-outline-secondary btn-sm" %>
       </div>
+      <div class="card-body">
 
-      <!-- Liste des candidats -->
-      <div class="list-group list-group-flush">
-        <% recent_jobs.each do |job_data| %>
-          <div class="list-group-item d-flex justify-content-between align-items-center">
-            <span><%= job_data[:candidate].full_name %></span>
-            <% if SolidQueue::FailedExecution.exists?(job_id: job_data[:job].id) %>
-              <span class="badge bg-danger">✗ Échec</span>
-            <% elsif job_data[:status] == 'completed' %>
-              <span class="badge bg-success">✓ Envoyé</span>
-            <% else %>
-              <span class="badge bg-warning">⏳ En cours</span>
-            <% end %>
+        <%
+          completed = recent_jobs.count { |j| j[:status] == 'completed' }
+          pending = recent_jobs.count { |j| j[:status] == 'pending' }
+          failed = recent_jobs.count { |j| SolidQueue::FailedExecution.exists?(job_id: j[:job].id) }
+        %>
+
+        <div class="row mb-3">
+          <div class="col-md-4">
+            <div class="text-center">
+              <div class="h4 text-success mb-0"><%= completed %></div>
+              <small class="text-muted">✓ Envoyés</small>
+            </div>
           </div>
-        <% end %>
+          <div class="col-md-4">
+            <div class="text-center">
+              <div class="h4 text-warning mb-0"><%= pending %></div>
+              <small class="text-muted">⏳ En cours</small>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="text-center">
+              <div class="h4 text-danger mb-0"><%= failed %></div>
+              <small class="text-muted">✗ Échecs</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- Liste des candidats -->
+        <div class="list-group list-group-flush">
+          <% recent_jobs.each do |job_data| %>
+            <div class="list-group-item d-flex justify-content-between align-items-center">
+              <div class="d-flex align-items-center">
+                <span><%= job_data[:candidate].full_name %></span>
+                <% if job_data[:performance] %>
+                  <%= link_to "Voir le contenu",
+                      view_convocation_organism_competition_edition_competition_category_tour_path(
+                        @organism, @competition, @edition_competition, @category, @tour,
+                        performance_id: job_data[:performance].id
+                      ),
+                      class: "btn btn-outline-primary btn-sm ms-2",
+                      target: "_blank",
+                      title: "Voir le contenu de l'email envoyé" %>
+                <% end %>
+              </div>
+              <% if SolidQueue::FailedExecution.exists?(job_id: job_data[:job].id) %>
+                <span class="badge bg-danger">✗ Échec</span>
+              <% elsif job_data[:status] == 'completed' %>
+                <span class="badge bg-success">✓ Envoyé</span>
+              <% else %>
+                <span class="badge bg-warning">⏳ En cours</span>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>

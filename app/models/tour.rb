@@ -374,8 +374,7 @@ class Tour < ApplicationRecord
         args = job.arguments
 
         # Vérifier que c'est bien ConvocationMailer
-        if args.dig("arguments", 0) == "ConvocationMailer" &&
-           args.dig("arguments", 1) == "convocation_email"
+        if args.dig("arguments", 0) == "ConvocationMailer" && args.dig("arguments", 1) == "convocation_email"
 
           # Extraire Performance ID comme "Performance/30" → 30
           performance_gid = args.dig("arguments", 3, "args", 0, "_aj_globalid")
