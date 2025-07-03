@@ -72,10 +72,17 @@
             Prévisualiser
           </button>
 
-          <%# Ajouter un bouton pour envoyer les convocations en itérant sur les performances du tour %>
-          <%= link_to "Envoyer les convocations", send_convocations_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour), class: "btn btn-primary btn-lg", method: :post %>
-          <% if @tour.convocations_last_sent_at.present? %>
-            <small class="text-muted">*convocations last sent at: <%= @tour.convocations_last_sent_at.to_date %></small>
+          <%# Bouton d'envoi conditionnel %>
+          <% if convocation_previewed? %>
+            <%= link_to "Envoyer les convocations",
+                send_convocations_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour),
+                class: "btn btn-success btn-lg",
+                method: :post,
+                confirm: "Êtes-vous sûr de vouloir envoyer les convocations à tous les candidats ?" %>
+          <% else %>
+            <button type="button" class="btn btn-secondary btn-lg" disabled title="Vous devez d'abord prévisualiser les convocations">
+              <i class="fas fa-lock me-2"></i>Envoyer les convocations (prévisualisation requise)
+            </button>
           <% end %>
     <% end %>
   </div>
@@ -97,6 +104,10 @@ function previewConvocation() {
     // Ouvrir la prévisualisation dans un nouvel onglet
     const previewUrl = '<%= preview_convocation_organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour) %>';
     window.open(previewUrl, '_blank');
+
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
   }).catch(error => {
     console.error('Erreur lors de la sauvegarde:', error);
     alert('Erreur lors de la sauvegarde des données');
@@ -104,24 +115,6 @@ function previewConvocation() {
 }
 </script>
 
-<%
-  # Méthodes helper pour les messages par défaut
-  def default_intro_message_fr
-    "Bonjour [Nom du candidat],\n\nNous avons le plaisir de vous confirmer votre participation au [Nom du concours] - [Nom du tour].\n\nVoici les détails de votre convocation :"
-  end
-
-  def default_additional_message_fr
-    "Merci de vous présenter au moins 30 minutes avant votre passage.\n\nN'oubliez pas d'apporter une copie de votre programme imprimé.\n\nPour toute question, contactez-nous.\n\nCordialement,\nL'équipe organisatrice"
-  end
-
-  def default_intro_message_en
-    "Dear [Candidate name],\n\nWe are pleased to confirm your participation in [Competition name] - [Round name].\n\nHere are the details of your summons:"
-  end
-
-  def default_additional_message_en
-    "Please arrive at least 30 minutes before your performance.\n\nDon't forget to bring a printed copy of your program.\n\nFor any questions, please contact us.\n\nBest regards,\nThe organizing team"
-  end
-%>
 
 <!-- Statut des jobs -->
 

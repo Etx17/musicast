@@ -325,12 +325,23 @@ class ToursController < ApplicationController
     session[:convocation_additional_message_fr] = params[:additional_message_fr]
     session[:convocation_additional_message_en] = params[:additional_message_en]
 
+    # Réinitialiser le flag de prévisualisation car la config a changé
+    session.delete("convocation_previewed_#{@tour.id}")
+
     redirect_to organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour),
                 notice: "Configuration des convocations sauvegardée avec succès!"
   end
 
   def send_convocations
     @tour = Tour.find(params[:id])
+
+    # Vérifier qu'une prévisualisation a été faite
+    unless session["convocation_previewed_#{@tour.id}"]
+      redirect_to organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour),
+                  alert: "Vous devez prévisualiser les convocations avant de les envoyer."
+      return
+    end
+
     # Construire la config à partir de la session
     config = {
       intro_message_fr: session[:convocation_intro_message_fr],
@@ -339,8 +350,10 @@ class ToursController < ApplicationController
       additional_message_en: session[:convocation_additional_message_en]
     }
     @tour.send_convocations(config)
-    # TODO
-    # Update
+
+    # Réinitialiser le flag de prévisualisation après envoi
+    session.delete("convocation_previewed_#{@tour.id}")
+
     redirect_to organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour),
                 notice: "Convocations envoyées avec succès!"
   end
@@ -357,6 +370,9 @@ class ToursController < ApplicationController
       additional_message_fr: session[:convocation_additional_message_fr],
       additional_message_en: session[:convocation_additional_message_en],
     }
+
+    # Marquer qu'une prévisualisation a été faite pour ce tour
+    session["convocation_previewed_#{@tour.id}"] = true
 
     # Générer et rendre le mailer
     mail = ConvocationMailer.convocation_email(sample_performance, config)
@@ -883,5 +899,9 @@ class ToursController < ApplicationController
     }
   end
 
-  helper_method :default_intro_message_fr, :default_additional_message_fr, :default_intro_message_en, :default_additional_message_en
+  def convocation_previewed?
+    session["convocation_previewed_#{@tour.id}"].present?
+  end
+
+  helper_method :default_intro_message_fr, :default_additional_message_fr, :default_intro_message_en, :default_additional_message_en, :convocation_previewed?
 end
