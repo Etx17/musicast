@@ -340,6 +340,7 @@ class ToursController < ApplicationController
     }
     @tour.send_convocations(config)
     # TODO
+    # Update
     redirect_to organism_competition_edition_competition_category_tour_path(@organism, @competition, @edition_competition, @category, @tour),
                 notice: "Convocations envoyées avec succès!"
   end

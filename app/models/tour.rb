@@ -42,8 +42,7 @@ class Tour < ApplicationRecord
   end
 
   def has_convocation?
-    # TODO
-    true
+    convocations_last_sent_at.present?
   end
 
   def send_convocations(config = {})
@@ -51,6 +50,7 @@ class Tour < ApplicationRecord
     performances_to_send_convocation_to.each do |performance|
       ConvocationMailer.convocation_email(performance, config).deliver_later
     end
+    self.update(convocations_last_sent_at: Time.now)
   end
 
   def move_qualified_candidates_to_next_tour
