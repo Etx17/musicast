@@ -3,6 +3,9 @@ require "active_support/core_ext/integer/time"
 Rails.application.configure do
   config.action_mailer.default_url_options = { host: "https://musikast-staging-33f5f935fe91.herokuapp.com" }
 
+  # Configuration pour les URLs absolues Active Storage dans les emails
+  # Rails.application.routes.default_url_options = { host: "https://musikast-staging-33f5f935fe91.herokuapp.com" }
+
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     address:              'smtp-relay.brevo.com',

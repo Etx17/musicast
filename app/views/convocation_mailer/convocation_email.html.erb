@@ -99,7 +99,7 @@
 
     <% if @organism.logo.attached? %>
       <div class="logo-container">
-        <%= image_tag @organism.logo, class: "logo" %>
+        <%= image_tag url_for(@organism.logo), class: "logo" %>
       <h1>Convocation</h1>
       </div>
     <% end %>
@@ -187,7 +187,7 @@
 
     <% if @organism.logo.attached? %>
       <div class="logo-container">
-        <%= image_tag @organism.logo, class: "logo" %>
+        <%= image_tag url_for(@organism.logo), class: "logo" %>
       <h1>Convocation</h1>
       </div>
     <% end %>
