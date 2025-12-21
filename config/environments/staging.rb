@@ -1,13 +1,13 @@
 require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
-  config.action_mailer.default_url_options = { host: "https://musikast-staging-33f5f935fe91.herokuapp.com" }
+  config.action_mailer.default_url_options = { host: "#" }
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     address:              'smtp-relay.brevo.com',
     port:                 587,
-    domain:               'https://musikast-staging-33f5f935fe91.herokuapp.com',
+    domain:               '#',
     user_name:            Rails.application.credentials.brevo.user_name,
     password:             Rails.application.credentials.brevo.password,
     authentication:       :plain,
